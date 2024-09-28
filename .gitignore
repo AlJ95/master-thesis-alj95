@@ -1,1 +1,5 @@
+# Environment
 .venv/
+
+# Data 
+code/src/RAGBench/data/
