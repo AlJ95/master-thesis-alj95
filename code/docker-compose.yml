@@ -1,0 +1,50 @@
+services:
+  weaviate:
+    container_name: weaviate
+    command:
+    - --host
+    - 0.0.0.0
+    - --port
+    - '8080'
+    - --scheme
+    - http
+    image: cr.weaviate.io/semitechnologies/weaviate:1.25.4
+    ports:
+    - 8080:8080
+    - 50051:50051
+    volumes:
+    - weaviate-data:/var/lib/weaviate
+    restart: on-failure:0
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: 'text2vec-huggingface'
+      ENABLE_MODULES: 'text2vec-openai,qna-openai,text2vec-huggingface'
+      HUGGINGFACE_APIKEY: <HUGGINGFACE_API_KEY>
+      CLUSTER_HOSTNAME: 'huggingface-weaviate-cluster'
+    networks:
+      - RAGBench
+
+  ragbench:
+    container_name: ragbench
+    build:
+       context: ./services/backend
+    volumes:
+      - ./src/RAGBench:/RAGBench/
+      - weaviate-data:/data/
+    ports:
+      - "8000:8000" 
+    expose:
+      - "8000"
+    networks:
+      - RAGBench
+
+
+volumes:
+  weaviate-data:
+    driver: local
+
+networks:
+  RAGBench:
+    driver: bridge
