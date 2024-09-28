@@ -1,0 +1,6 @@
+pytest
+weaviate-client
+llama-index-core
+llama-index-embeddings-huggingface
+llama-index-vector-stores-weaviate==1.0.2
+# nltk==3.8.1
