@@ -29,9 +29,9 @@ services:
   ragbench:
     container_name: ragbench
     build:
-       context: ./services/backend
+       context: ./RAGBench/
     volumes:
-      - ./src/RAGBench:/RAGBench/
+      - ./RAGBench/src:/src/
       - weaviate-data:/data/
     ports:
       - "8000:8000" 
