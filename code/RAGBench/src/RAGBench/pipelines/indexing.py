@@ -5,8 +5,9 @@ from itertools import chain
 from weaviate.util import generate_uuid5
 import warnings as warning
 
-from ..config import Configuration
-from ..vector_db.weaviate import get_weaviate_client
+
+from RAGBench.config import Configuration
+from RAGBench.vector_db.weaviate import get_weaviate_client
 
 from llama_index.core import Document
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
@@ -18,7 +19,7 @@ from llama_index.core.node_parser import SentenceSplitter, TokenTextSplitter
 class IndexingPipeline:
     DATA_DIR = Path() / "data"
     LAWS_FILE = DATA_DIR / "laws.json"
-    EMBEDDING_MODEL_DEFAULT = "intfloat/multilingual-e5-large-instruct"
+    EMBEDDING_MODEL_DEFAULT = "cde-small-v1" # "intfloat/multilingual-e5-large-instruct"
         
 
     def __init__(self, config: Configuration):
@@ -139,7 +140,7 @@ if __name__ == "__main__":
     config = Configuration(
         chunk_size=512,
         chunk_overlap=128,
-        embedding_model="intfloat/multilingual-e5-large-instruct",
+        # embedding_model="intfloat/multilingual-e5-large-instruct",
     )
 
     indexing_pipeline = IndexingPipeline(config)
