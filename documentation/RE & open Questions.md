@@ -15,4 +15,4 @@ initialises a VectorDB and Runs the full Process of Indexing & Evaluation of Ret
 - Tests must be repeated and averaged
 
 ## User Interface
-- ToDo: Does the User need to have an UI like a simple Website (Vue) with a large configuration panel?
+- There is no WebGUI planned, the user will use a rich commented configuration file with 
