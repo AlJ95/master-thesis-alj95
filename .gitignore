@@ -3,3 +3,9 @@
 
 # Data 
 code/RAGBench/src/data/
+
+# DS_Store
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
