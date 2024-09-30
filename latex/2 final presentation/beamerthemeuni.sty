@@ -1,0 +1,222 @@
+\RequirePackage{tikz, datetime, graphicx, url}
+
+\usepackage{helvet}
+
+\usepackage[absolute,overlay]{textpos}
+\ifdefined\directlua
+  \setbeamerfont{section page}{size=\LARGE,series=\bfseries}
+  \setbeamerfont{title}{size=\LARGE,series=\bfseries}
+  \setbeamerfont{subtitle}{size=\large,series=\bfseries}
+  \setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\else
+  \setbeamerfont{section page}{size=\LARGE,series=\bfseries}
+  \setbeamerfont{title}{size=\LARGE,series=\bfseries}
+  \setbeamerfont{subtitle}{size=\large,series=\bfseries}
+  \setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\fi
+
+
+
+\yyyymmdddate \renewcommand{\dateseparator}{.}
+
+\definecolor{uni_grey}{RGB}{201, 201, 201}
+\definecolor{uni_granat}{RGB}{176, 47, 45}
+\definecolor{uni_karneol}{RGB}{214, 66, 66}
+\definecolor{uni_aquamarin}{RGB}{138, 194, 209}
+\definecolor{uni_basalt}{RGB}{38, 42, 49}
+
+\definecolor{color1}{RGB}{220,0,0}
+\definecolor{color2}{RGB}{180,0,0}
+\definecolor{color3}{RGB}{95,158,160}
+\definecolor{DarkOrange}{RGB}{255, 152, 0}
+
+\setbeamercolor*{title page header}{fg=black}
+\setbeamercolor*{title}{fg=black}
+\setbeamercolor*{subtitle}{fg=black}
+\setbeamercolor*{author}{fg=black}
+\setbeamercolor*{institute}{fg=black}
+\setbeamercolor*{date}{fg=black}
+\setbeamercolor*{item}{fg=uni_granat}
+\setbeamercolor*{frametitle}{fg=black}
+\setbeamercolor*{block title}{fg=white, bg=uni_granat}
+\setbeamercolor*{block body}{bg=uni_granat!20}
+\setbeamercolor*{section in toc}{fg=black}
+\setbeamercolor*{section page}{fg=black}
+\setbeamercolor*{foot}{fg=black}
+\setbeamercolor*{section in head/foot}{fg=uni_basalt}
+
+\setbeamerfont{author}{size=\large,series=\sffamily}
+\setbeamerfont{institute}{size=\small, series=\sffamily}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{$-$}
+\setbeamertemplate{itemize subitem}{$-$}
+\setbeamertemplate{itemize subsubitem}{$-$}
+\setbeamertemplate{sections/subsections in toc}[square]
+
+\newenvironment{xplainframe}{\bgroup\setbeamertemplate{background}{}\begin{frame}[plain]}{\end{frame}\egroup}
+
+
+\setbeamertemplate{title page}{
+	\begin{textblock*}{8cm}(1.5cm,4.8cm)
+    \begin{beamercolorbox}[wd=8cm,left]{title page header}
+        \usebeamerfont{title}\usebeamercolor{title}\inserttitle%
+    \end{beamercolorbox}
+    \end{textblock*}
+	\begin{textblock*}{8cm}(1.5cm,5.4cm)
+		\begin{beamercolorbox}[wd=8cm,left]{subtitle}
+			\usebeamerfont{subtitle}\usebeamercolor{subtitle}%
+			\insertsubtitle
+		\end{beamercolorbox}
+	\end{textblock*}
+    \begin{textblock*}{8cm}(1.5cm,6.2cm)
+	    \begin{beamercolorbox}[wd=8cm,left]{author}
+	      \usebeamerfont{author}\insertauthor%
+    	\end{beamercolorbox}
+    \end{textblock*}
+	\begin{textblock*}{8cm}(1.5cm,6.7cm)
+		\begin{beamercolorbox}[wd=8cm,left]{institute}
+			\usebeamerfont{institute}\insertinstitute%
+		\end{beamercolorbox}
+	\end{textblock*}
+}
+
+\newcommand{\TitlePageLayout}{
+	\setbeamertemplate{background}{
+    	\begin{tikzpicture}[remember picture, overlay,shift=(current page.north west)]
+    		\begin{scope}[x={(current page.north east)},y={(current page.south west)}]
+        		\draw[color3,fill=color3, thin] (0.6,1) -- (1,1) -- (1,0.6) -- cycle;
+        		\draw[color1, fill=color1, thin] (0.9,1) -- (1,1) -- (1,0.6) -- (0.933,0.665) -- cycle;
+        		\draw[color2, fill=color2,thin] (1,0.6) -- (0.933,0.665) -- (1,0) -- cycle;
+        		\node[xshift=4cm,yshift=2.5cm] (unilebig) at (current page.west)
+          		{\includegraphics[width=0.5\textwidth]{Logos/logo_leipzig.pdf}};
+       	 \end{scope}    
+    	\end{tikzpicture}
+	}
+	\setbeamertemplate{headline}{}
+	\setbeamertemplate{footline}{}
+}
+	
+	
+\newcommand{\maketitlepage}{{
+\TitlePageLayout
+\begin{frame}
+  \titlepage %
+\end{frame}
+}}	
+
+
+\newcommand{\SpecialPageLayout}{
+	\setbeamertemplate{background}{
+    	\begin{tikzpicture}[remember picture, overlay,shift=(current page.north west)]
+    		\node[yshift=0.6cm,xshift=2cm] (uni) at (current page.south west)
+      		{\includegraphics[width=0.1\textwidth]{Logos/logo_leipzig_small.pdf}};
+       	 	\begin{scope}[x={(current page.north east)},y={(current page.south west)}]
+        		\draw[color2,fill=color2, thin] (0.6,0) -- (1,0) --  (1,1) -- cycle;
+        		\draw[color3, fill=color3, thin] (0.7,1) -- (1,1) --  (0.845,0.61) -- cycle;
+        		\draw[color1, fill=color1, thin] (0.845,0.61) -- (1,1) --  (1,0.2) -- cycle;    	
+      			\draw[uni_granat, thin] (0.075,0.86) -- (0.725,0.86);
+        		\draw[uni_grey, thin] (0.075,0.865) -- (0.725,0.865);
+       	 	\end{scope}     
+    	\end{tikzpicture}
+	}
+	\setbeamertemplate{headline}{}
+	\setbeamertemplate{footline}{ 
+    	\begin{textblock*}{10cm}(4cm,8.33cm)
+    		\begin{beamercolorbox}{section in head/foot}
+            	\insertauthor \medspace $\mid$ \medspace \insertinstitute
+          	\end{beamercolorbox}
+      	\end{textblock*}
+	}
+}
+
+\AtBeginSection[]
+{{
+	\SpecialPageLayout
+	\ifnum\thepage>2\relax%
+	\frame{\sectionpage}
+	\fi
+}}
+
+\setbeamertemplate{section page}{
+	\begin{textblock*}{\paperwidth}(1.5cm,4cm)
+		\begin{beamercolorbox}[wd=\paperwidth, left]{section page}
+			\insertsectionhead
+		\end{beamercolorbox}
+	\end{textblock*}
+}
+
+\setbeamertemplate{headline}{
+	{\hbox{%
+		\begingroup
+		\begin{beamercolorbox}[wd=\paperwidth,ht=15pt,dp=2pt,left]{}%
+			\rule[2.5pt]{25pt}{1.5pt}\hskip 4pt \small\inserttitle{} $\mid$ \insertsubtitle{}
+		\end{beamercolorbox}%
+		\endgroup
+	}}
+}
+
+
+\setbeamertemplate{frametitle}{
+	\vspace{0.8cm}
+	\begin{beamercolorbox}{frametitle}
+			\insertframetitle
+	\end{beamercolorbox}
+}
+
+
+\setbeamertemplate{footline}{ 
+	\ifnum\thepage>1\relax%
+      \begin{textblock*}{8cm}(4cm,8.33cm)
+          \begin{beamercolorbox}{section in head/foot}
+            \insertauthor \medspace $\mid$ \medspace \insertinstitute
+          \end{beamercolorbox}
+      \end{textblock*}
+        
+      \begin{textblock*}{4cm}(14cm,8.33cm)
+          \begin{beamercolorbox}{section in head/foot}
+            \insertframenumber{}/\inserttotalframenumber
+          \end{beamercolorbox}
+      \end{textblock*}
+	\fi
+}
+
+\setbeamertemplate{background}{
+	\begin{tikzpicture}[remember picture, overlay,shift=(current page.north west)]
+        \node[yshift=0.6cm,xshift=2cm] (uni) at (current page.south west)
+      	{\includegraphics[width=0.1\textwidth]{Logos/logo_leipzig_small.pdf}};
+        \begin{scope}[x={(current page.north east)},y={(current page.south west)}]      	
+      		\draw[uni_granat, thin] (0.075,0.86) -- (0.925,0.86);
+        	\draw[uni_grey, thin] (0.075,0.865) -- (0.925,0.865);
+        \end{scope}       	
+    \end{tikzpicture}
+}
+
+\setbeamertemplate{endpage}{%
+	\TitlePageLayout
+	\begin{frame}
+    \begin{textblock*}{8cm}(1.5cm,4cm)
+    \begin{beamercolorbox}[wd=8cm,left]{title page header}
+        \usebeamerfont{title}\usebeamercolor{title}Thank you!%
+    \end{beamercolorbox}
+    \end{textblock*}
+    \begin{textblock*}{8cm}(1.5cm,5cm)
+	    \begin{beamercolorbox}[wd=8cm,left]{author}
+	      \usebeamerfont{author}\insertauthor%
+    	\end{beamercolorbox}
+    \end{textblock*}
+	\begin{textblock*}{8cm}(1.5cm,5.5cm)
+		\begin{beamercolorbox}[wd=8cm,left]{institute}
+			\usebeamerfont{institute}\insertinstitute%
+		\end{beamercolorbox}
+	\end{textblock*}
+	\begin{textblock*}{8cm}(1.5cm,7cm)
+		\begin{beamercolorbox}[wd=8cm,left]{institute}
+			\mail%
+		\end{beamercolorbox}
+	\end{textblock*}
+	\end{frame}
+}
+
+\AtEndDocument{\usebeamertemplate{endpage}}
+
