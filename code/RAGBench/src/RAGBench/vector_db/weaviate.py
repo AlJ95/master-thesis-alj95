@@ -9,7 +9,7 @@ def get_weaviate_client(distance_metric, host=None):
 
 
     if host is None:
-        host = os.getenv("WEAVIATE_HOST", "weaviate")
+        host = os.getenv("WEAVIATE_HOST", "localhost")
     http_port = os.getenv("WEAVIATE_HTTP_PORT", 8080)
     grpc_port = os.getenv("WEAVIATE_GRPC_PORT", 50051)
 

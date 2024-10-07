@@ -26,25 +26,25 @@ services:
     networks:
       - RAGBench
 
-  ragbench:
-    container_name: ragbench
-    build:
-       context: ./RAGBench/
-    volumes:
-      - ./RAGBench/src:/src/
-      - weaviate-data:/data/
-    ports:
-      - "8000:8000" 
-    expose:
-      - "8000"
-    networks:
-      - RAGBench
+  # ragbench:
+  #   container_name: ragbench
+  #   build:
+  #      context: ./RAGBench/
+  #   volumes:
+  #     - ./RAGBench/src:/src/
+  #     - weaviate-data:/data/
+  #   ports:
+  #     - "8000:8000" 
+  #   expose:
+  #     - "8000"
+  #   networks:
+  #     - RAGBench
 
 
-volumes:
-  weaviate-data:
-    driver: local
+# volumes:
+#   weaviate-data:
+#     driver: local
 
-networks:
-  RAGBench:
-    driver: bridge
+# networks:
+#   RAGBench:
+#     driver: bridge

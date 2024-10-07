@@ -1,13 +1,11 @@
-import json
 from pathlib import Path
 from typing import Generator
-from itertools import chain
-from weaviate.util import generate_uuid5
-import warnings as warning
 
+from weaviate.util import generate_uuid5
 
 from RAGBench.config import Configuration
 from RAGBench.vector_db.weaviate import get_weaviate_client
+from RAGBench.utils.loader.core import load_data
 
 from llama_index.core import Document
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
@@ -16,9 +14,14 @@ from llama_index.core.ingestion import IngestionPipeline
 from llama_index.core.node_parser import SentenceSplitter, TokenTextSplitter
 
 
+
+
+def get_embedding_model(model_name: str):
+    return HuggingFaceEmbedding(model_name=model_name)
+
 class IndexingPipeline:
     DATA_DIR = Path() / "data"
-    LAWS_FILE = DATA_DIR / "laws.json"
+    LAWS_FILE = DATA_DIR / "laws.json" # ToDo -> Muss in die Konfig mit 
     EMBEDDING_MODEL_DEFAULT = "cde-small-v1" # "intfloat/multilingual-e5-large-instruct"
         
 
@@ -32,36 +35,16 @@ class IndexingPipeline:
 
         self.distance_metric = "cosine"
 
-
-    def load_data(self, file_path: Path):
-        try:
-            with open(file_path) as f:
-                data = json.load(f)
-                if data is None:
-                    raise ValueError(f"File {file_path} is empty.")
-                if "data" not in data:
-                    raise ValueError(f"File {file_path} does not contain 'data' key.")
-                data = data["data"]
-                if data is None:
-                    raise ValueError(f"File {file_path} contains null data.")
-                return data
-        except FileNotFoundError:
-            raise FileNotFoundError(f"File {file_path} not found")
-        except json.JSONDecodeError as e:
-            raise ValueError(f"Error decoding JSON in {file_path}: {e}")
-
-    def documents_from_json(self, json_data: list, doc_type: str):
+    def documents_from_json(self, json_data: list):
         for doc in json_data:
-            metadata={"url": doc["url"], "title": doc["title"], "doc_type": doc_type}
+            metadata=doc["metadata"]
 
-            doc_uuid = generate_uuid5({"url": doc["url"], "title": doc["title"], "text": doc["text"]})
-            metadata["uuid"] = doc_uuid
-
-            # Only judgements have a date
-            if doc_type == self.JUDGEMENT_TYPE:
-                metadata["date"] = doc["date"]
+            if "uuid" in metadata:
+                doc_uuid = metadata["uuid"]
             else:
-                metadata["date"] = None
+                doc_uuid = generate_uuid5({"text": doc["text"]})
+                
+            metadata["uuid"] = doc_uuid
 
             yield Document(
                 text=doc["text"],
@@ -84,7 +67,7 @@ class IndexingPipeline:
         else:
             raise ValueError(f"Unknown splitting strategy: {self.config.splitting_strategy}. Using default sentence splitting")
 
-        transformations.append(self.get_embedding_model(embedding_model_name=self.config.embedding_model))
+        transformations.append(get_embedding_model(model_name=self.config.embedding_model))
 
         return transformations
 
@@ -128,12 +111,10 @@ class IndexingPipeline:
             print("No new documents.")
 
     def run(self):
-        laws = self.load_data(self.LAWS_FILE)
+        laws = load_data(self.LAWS_FILE)[:3]
         documents = self.documents_from_json(laws)
 
         self.index_documents(documents=documents, index_name="Documents")
-
-        return True # Return something meaningful here
 
 if __name__ == "__main__":
 
