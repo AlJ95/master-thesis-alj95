@@ -1,9 +1,8 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  30 SEP 2024 16:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  9 OCT 2024 09:16
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**thesis.tex
+**thesis
 (./thesis.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -541,66 +540,49 @@ al/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
 
 ]
 Chapter 1.
-
-Package natbib Warning: Citation `manning:1999' on page 1 undefined on input li
-ne 82.
-
-
-Package natbib Warning: Citation `manning:1999' on page 1 undefined on input li
-ne 83.
-
-
-Package natbib Warning: Citation `manning:1999' on page 1 undefined on input li
-ne 83.
-
-
-LaTeX Warning: Reference `introduction' on page 1 undefined on input line 86.
-
-
-LaTeX Warning: Reference `introduction' on page 1 undefined on input line 86.
-
-[1
+(./chapters/introduction.tex) [1
 
 
 ] [2]
 Appendix A.
-No file thesis.bbl.
+(./thesis.bbl (./thesis.brf)
+\tf@brf=\write5
+\openout5 = `thesis.brf'.
 
-Package natbib Warning: There were undefined citations.
+ [3
 
-[3
+]) [4
 
 ] (./thesis.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: B74A6F38524A353516FEA7210701F9EA;261.
+(rerunfilecheck)             Checksum: E379B672D22517329AB19DB628EE987C;343.
+Package rerunfilecheck Info: File `thesis.brf' has not changed.
+(rerunfilecheck)             Checksum: EA02B5AA6E956DA66B59E18DB2550270;132.
  ) 
 Here is how much of TeX's memory you used:
- 13745 strings out of 474116
- 220389 string characters out of 5743682
+ 13778 strings out of 474116
+ 220997 string characters out of 5743682
  1930187 words of memory out of 5000000
- 35923 multiletter control sequences out of 15000+600000
- 567350 words of font info for 54 fonts, out of 8000000 for 9000
+ 35943 multiletter control sequences out of 15000+600000
+ 568034 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 91i,12n,131p,992b,541s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 91i,12n,131p,988b,541s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb>
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></
 usr/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></us
 r/local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/
 local/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/lo
 cal/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/loca
-l/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb>
-Output written on thesis.pdf (7 pages, 126189 bytes).
+l/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb></usr/local/
+texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb>
+Output written on thesis.pdf (8 pages, 150830 bytes).
 PDF statistics:
- 84 PDF objects out of 1000 (max. 8388607)
- 60 compressed objects within 1 object stream
- 6 named destinations out of 1000 (max. 500000)
- 17 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 107 PDF objects out of 1000 (max. 8388607)
+ 80 compressed objects within 1 object stream
+ 8 named destinations out of 1000 (max. 500000)
+ 25 words of extra memory for PDF output out of 10000 (max. 10000000)
 
