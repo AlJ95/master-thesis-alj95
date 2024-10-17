@@ -1,5 +1,6 @@
 # Environment
 .venv/
+.venv-autorag/
 
 # Data 
 code/RAGBench/src/data/

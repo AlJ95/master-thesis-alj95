@@ -1,0 +1,2 @@
+filename,module_name,module_params,execution_time,average_prompt_token,is_best
+0.parquet,Fstring,{'prompt': 'Read the passages and answer the given question. \n Question: {query} \n Passage: {retrieved_contents} \n Answer : '},0.0006237030029296875,1975.4285714285713,True
