@@ -1,0 +1,4 @@
+node_line_name,node_type,best_module_filename,best_module_name,best_module_params,best_execution_time
+retrieve_node_line,retrieval,0.parquet,VectorDB,"{'top_k': 3, 'embedding_model': 'openai_embed_3_small'}",0.199976330711728
+post_retrieve_node_line,prompt_maker,0.parquet,Fstring,{'prompt': 'Read the passages and answer the given question. \n Question: {query} \n Passage: {retrieved_contents} \n Answer : '},0.0006556624457949
+post_retrieve_node_line,generator,0.parquet,OpenAILLM,"{'llm': 'gpt-4o-mini', 'batch': 16}",0.8364158584958031
