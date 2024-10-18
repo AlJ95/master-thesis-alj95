@@ -1,6 +1,9 @@
 # Environment
 .venv/
 .venv-autorag/
+.venv-RAGBench
+.venv-haystack
+.venv-fastrag
 
 # Data 
 code/RAGBench/src/data/
@@ -10,3 +13,5 @@ code/RAGBench/src/data/
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+.env
