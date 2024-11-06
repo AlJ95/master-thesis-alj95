@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2024)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: plain.bst
+Database file #1: refs.bib
+Warning--entry type for "Izsak_fastRAG_Efficient_Retrieval_2023" isn't style-file defined
+--line 100 of file refs.bib
+Warning--entry type for "Pietsch_Haystack_the_end-to-end_2019" isn't style-file defined
+--line 111 of file refs.bib
+You've used 14 entries,
+            2118 wiz_defined-function locations,
+            568 strings with 7178 characters,
+and the built_in function-call counts, 4798 in all, are:
+= -- 402
+> -- 400
+< -- 0
++ -- 158
+- -- 144
+* -- 344
+:= -- 849
+add.period$ -- 40
+call.type$ -- 14
+change.case$ -- 113
+chr.to.int$ -- 0
+cite$ -- 14
+duplicate$ -- 108
+empty$ -- 310
+format.name$ -- 144
+if$ -- 954
+int.to.chr$ -- 0
+int.to.str$ -- 14
+missing$ -- 2
+newline$ -- 70
+num.names$ -- 28
+pop$ -- 165
+preamble$ -- 1
+purify$ -- 99
+quote$ -- 0
+skip$ -- 105
+stack$ -- 0
+substring$ -- 70
+swap$ -- 15
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 56
+warning$ -- 0
+while$ -- 28
+width$ -- 16
+write$ -- 135
+(There were 2 warnings)

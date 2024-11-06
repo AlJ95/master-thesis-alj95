@@ -1,17 +1,19 @@
 
 
 \documentclass[letterpaper, 10 pt, conference]{ieeeconf}  
+\usepackage[hyperindex]{hyperref}
+\usepackage{url}
 
 \IEEEoverridecommandlockouts                              
 \overrideIEEEmargins
 
 
 \title{\LARGE \bf
-Developing a Benchmarking Framework for RAG Systems \newline Feedback Report
+Developing a Benchmarking Framework for RAG Systems \newline Feedback Bericht
 }
 
 
-\author{By Jan Albrecht}
+\author{von Jan Albrecht}
 
 
 \begin{document}
@@ -22,6 +24,12 @@ Developing a Benchmarking Framework for RAG Systems \newline Feedback Report
 \thispagestyle{plain}
 \pagestyle{plain}
 
+\section{Zusammenfassung der Präsentation}
+Ich habe in der Präsentation das Framework für RAG-Systeme vorgestellt und bin auf die Besonderheiten eingegangen, die bei der Umsetzung relevant sind.
+Darunter zählt sowohl der modulare Architektur eines RAG-Systems und die verschiedenen Aspekte der Evaluation. 
+Ersteres fokussiert sich darauf, dass möglichst viele RAG-Varianten und IRA-Methoden (Iterativ, Rekursiv, Adaptiv) mit dem Framework abgebildet werden können.
+Die Evaluation kann in End-to-End Evaluation und Komponenten-Evaluation unterschieden werden. 
+Während End-to-End Evaluation für den Endnutzer relevanter ist, kann Komponentenevaluation zur Fehleranalyse und Hyperparameter Tuning verwendet werden.\\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION - DONE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,61 +39,103 @@ Developing a Benchmarking Framework for RAG Systems \newline Feedback Report
 % - Mehr Fokus auf Implementierung der Re-Konfigurierbarkeit
 %   - Mehr Metriken (System / HW / Andere? -> siehe AISE)
 % - Weniger Fokus auf das eigentliche Benchmarken
-
+Das Feedback war positiv und der Plan zur Umsetzung stimmig. 
+Es wurde eingeworfen, den Fokus von gleichermaßen Framework und Benchmarks mehr auf das Framework zu rejustieren.
+Es kam die Befürchtung auf, dass mit zunehmender Arbeit für die Benchmarks, die eigentliche Umsetzung des Frameworks zu kurz kommt. Es soll ein hoher Fokus auf die Re-Konfigurierbarkeit gesetzt werden.
+Neben der potenziellen Evaluation durch typisch Task-Based Metriken wie Precision, Recall und F1-Score, sollten auch Hardware Metriken wie RAM, Inferenzzeit und CPU-Zeit verwendet werden, da diese in der Praxis eine wichtige Rolle spielen.
+Es wurde weiterhin angemerkt, dass das Paper der SWS-Abteilung "A Methodology for Evaluating RAG Systems: A Case Study On Configuration Dependency Validation" zu lesen und zu analysieren, wie der entwickelte Blueprint in der Umsetzung benutzt werden kann.
+Außerdem wurde darauf hingewiesen, dass SLURM für die Experimente eingesetzt werden kann.\\
 %%%%%%%%%%%%%%%%% .CREATING A .TEX FILE - DONE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Angepasste Umsetzung des Frameworks}
+\section{Angepasste Umsetzung}
+Für die Anpassung der Umsetzung muss die Implementierung des Frameworks und das Evaluieren durch einen Software Engineering Task angepasst werden. \\
+
+\subsection{Angepasste Umsetzung des Frameworks}
 % Mehr Fokus auf Implementierung der Re-Konfigurierbarkeit
 % Es müssen mehr Metriken zur Verfügung stehen -> Wie zum Beispiel die Inferenzzeit für eine Anfrage.
 % -> Daraus resultiert allerdings auch, dass Prozesse parallelisiert gestartet werden müssen. 
 %   -> Welche könenn denn parallel gestartet werden?
 %   -> Wie müssen die Prozesse experimentell ablaufen, sodass keine anderen Prozesse diese beeinflussen (interne Validität)
 %   -> Daraus folgen Hardware Herausforderungen, welche ich ohne Sebastian Simon nicht schaffen kann, da ich die Univerisitäts Infrastruktur nicht kenne
+Ein Framework, welches nach dem Blueprint des durch die SWS-Abteilung veröffentlichten Paper aufgebaut ist, muss folgende Voraussetzungen haben:\\
 
-\section{Angepasste Umsetzung der Benchmarks}
+\begin{itemize}
+   \item Easy integration of relevant context ressources
+   \item High coverage of RAG variants (including IRA methods and common special cases)
+   \item High coverage of evaluation metrics (e.g. Precision, Recall, F1-Score)
+   \item An LLM or Naive-RAG baseline
+   \item Splitting the dataset into Validation and Holdout-Testset, with the Validation set for failure analysis and hyperparameter tuning and the Holdout-Testset for evaluating the generalization of the system.\\
+\end{itemize}
+
+Weiterhin wurden die Anforderungen gestellt, dass das Framework einfach zu rekonfigurieren sein soll, sodass die Evaluationen nach Fehleranalyse einfach zu replizieren sind. 
+Replizierbarkeit und Interne Gültigkeit der Experimente sind Voraussetzungen für das Framework. 
+
+Das Framework wird neben Task-spezifischen Metriken auch Hawrdware-Metriken nutzen. Darunter zählen zum Beispiel Inferenzzeit, RAM und CPU-Zeit. 
+Daher ist es wichtig, dass die Evaluierungen nicht parallel gestartet werden, sondern isoliert von anderen Prozessen und sequenziell auf einer dedizierten Hardware. \\
+
+\subsubsection{Analyse bestehender Frameworks und Bibliotheken}
+
+Für die Neuausrichtung des Fokus, werde ich noch sicherstellen, dass ein solches Framework noch nicht existiert.\\
+
+\paragraph{AutoRAG\cite{AutoRAG}}
+AutoRAG ist ein Tool für Hyperparameter-Tuning für RAG-Systeme. Der Nutzer erstellt eine Konfigurationsdatei, welche 
+die sogenannten Nodes (Retriever, Generator, usw.) definiert und die Hyperparameter (e.g. Top-K, Models, Prompts, etc.) angibt. 
+Danach läuft die Analyse und es wird die Konfiguration des besten Systems angegeben. 
+
+Das Tool nutzt nur End-to-End Evaluation und ist auch schwierig anpassbar. Laut den Entwicklern im Discord sind auch fortgeschrittene Methoden (IRA) derzeit nicht möglich. 
+Es bietet auch keine Möglichkeit ein Baseline-LLM zu evaluieren. \\
+
+\paragraph{Llama-Index\cite{Liu_LlamaIndex_2022} \& Langchain\cite{Chase_LangChain_2022}}
+Llama-Index und Langchain sind umfangreiche Bibliotheken für die Entwicklung von RAG-Pipelines. 
+Sie bieten jedoch keine zeiteffiziente Möglichkeit zum Benchmarken vieler RAG-Systeme.\\
+
+\paragraph{RaLLe\cite{ralle}}
+RaLLe ist eine Bibliothek zur zeiteffizienten Entwicklung von RAG-Systemen. Der letzte Commit ist über ein Jahr alt und die Bibliothek scheint sehr restriktv. Unter anderem ist es nur möglich .tsv-Dateien mit einer vorgegebenen Struktur zu nutzen. Fortgeschrittene Methoden sind nicht möglich.\\
+
+\paragraph{FlashRAG\cite{FlashRAG}}
+
+FlashRAG ist ein Python Toolkit, dass eine ähnliche Motivation hat, wie ich sie hier versuche umzusetzen. 
+Es bietet eine Konfigurationsdatei als Start, es hat eine Auswahl von Task-spezifischen Metriken und eine Vielzahl an RAG-Komponenten. Es lassen sich viele RAG-Varianten und einige Spezialfälle damit umsetzen (IRA, Self-RAG\cite{Asai.10172023}, FLARE\cite{Jiang.5112023}, IRCoT\cite{Trivedi.12202022}).\\
+
+\paragraph{RAGLAB\cite{zhang-etal-2024-raglab}}
+RAGLAB ist das neueste Framework und bietet ähnliche Funktionalitäten wie dessen Vorgänger. Es führt auch "Fair Comparison" ein, einen faireren Vergleich für LLM's und Retriever zum Beispiel das Entfernen von Special Tokens im Training oder dem Seedsetzen in Retrieval und Generator Pipelines.\\
+
+
+\paragraph{Haystack\cite{Pietsch_Haystack_the_end-to-end_2019} \& FastRAG\cite{Izsak_fastRAG_Efficient_Retrieval_2023}}
+Haystack ist ähnlich wie Llama-Index und LangChain eine umfangreiche Bibliothek für die Entwicklung von RAG-Pipelines. Sie bietet Pipeline Definition mittels YAML oder JSON Dateien und ist stark modular aufgebaut. Es lassen sich IRA Methoden damit entwickeln. 
+FastRAG ist kompatibel mit Haystack und hat eine Vielzahl an RAG-Komponenten entwickelt, mit denen es auch möglich ist Spezialfälle aus Papers zu entwickeln. 
+Darunter zählen zum Beispiel REPLUG\cite{shi2023replugretrievalaugmentedblackboxlanguage}, PLAID\cite{santhanam2022plaidefficientenginelate}, ColBERT\cite{santhanam2022colbertv2effectiveefficientretrieval} oder quantized LLM's.\\
+
+\subsubsection{Einordnung bestehender Frameworks und Bibliotheken}
+
+Bei jeder Analyse wurden zwei Punkte betrachtet:\\
+\begin{itemize}
+   \item Bietet das untersuchte Frameworks bereits die Lösung für das in der Masterarbeit untersuchte Thema?
+   \item Kann ich das Framework als Fundament für mein Framework nutzen?\\
+\end{itemize}
+
+Keines der Frameworks bietet einen vollständige Pipeline für das Entwickeln von RAG-Varianten durch iteratives Re-Konfigurieren und systematischer replizierbarer Evaluierung mit Holdout-Testset. 
+Eine vordefinierte Untersuchung durch Einführung einer LLM-Baseline, ob ein RAG-System eine Verbesserung darstellt ist bei keines der Frameworks vorhanden.
+Weiterhin misst keines der Frameworks den Einfluss der Komplexität auf Metriken wie Inferenzzeit, RAM-Usage oder CPU-Time. 
+Damit ist der erste Punkt beantwortet. Für den zweiten Punkt können einige Frameworks herausgefiltert werden.
+RaLLe und AutoRAG sind sehr restriktiv und es lassen sich nur eine begrenzte Anzahl von RAG-Varianten umsetzen. Llama-Index und LangChain sind ebenfalls restriktiv und nicht zeiteffizient genug, um viele verschiedene RAG-Varianten zu testen.
+RAGLAB bietet keine Pipeline-Definition durch Konfigurationsdateien wie YAML oder JSON an. Dies könnte die Entwicklungsgeschwindigkeit stark reduzieren.
+
+FlashRAG und Haystack+FastRAG wären mögliche Kandidaten als Basis für das geplante Framework. 
+Ich werde Haystack und FastRAG nutzen, da Haystack stark modular aufgebaut ist und in zukunft eine UI bieten wird um RAG-Systeme per Drag\&Drop zu erstellen. 
+Die daraus resultierenden RAG-Varianten können in YAML's exportiert werden und für mein Framework benutzt werden.\\
+
+
+\subsection{Angepasste Umsetzung der Benchmarks}
 % Replikation von bereits durchgeführten Experimenten
+Der Fokus auf die Umsetzung des Frameworks bedeutet, dass der Umfang der Benchmark-Experiment reduziert werden muss. Anstelle eines eigenen Experiments werde ich mich auf bereits bestehenden Experimente fokussieren. 
+Mögliche Experimente sind Configuration Validation mit dem CTest Datensatz und Vulnerability Detection mit den Datensätzen SySeVR, diversful oder bifi.
 
-\section{How to: References}
-
-% Demonstrate how to set up the 	thebibliography environment
-%  Explain how to include each bibitem
-
-% Explain the following commands:
-% \label
-% \ref
-% \cite
-% Note: It will be helpful to use a previous figure as an example for \label and \ref
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section*{ACKNOWLEDGMENT}
-
-- Overleaf.com, for the template
-
-
-
-% For acknowledgements, thank anyone who personally helped you with this assignment.
-% If you read a general tutorial or watched an instructional YouTube video on LaTeX, but didn’t specifically reference it, thank the creators.
-% If you received help from a current CMPE 185 student, let us know.  
-
-% Anything you do specifically reference should, of course, be cited and included in the References section.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section*{APPENDIX}
-
-Appendixes should appear before the acknowledgment. 
-\newline
-\newline
-- Any sources?
-
-Overleaf.com
-
-References are important to the reader; therefore, each citation must be complete and correct. If at all possible, references should be commonly available publications.
-
-
-
+%% This section was initially prepared using BibTeX.  The .bbl file was
+%% placed here later
+\bibliography{refs}
+\bibliographystyle{plain}
+%% The file named.bst is a bibliography style file for BibTeX 0.99c
 
 
 

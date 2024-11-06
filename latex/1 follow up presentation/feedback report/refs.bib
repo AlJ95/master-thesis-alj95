@@ -1,0 +1,148 @@
+@misc{ralle,
+      title={RaLLe: A Framework for Developing and Evaluating Retrieval-Augmented Large Language Models}, 
+      author={Yasuto Hoshi and Daisuke Miyashita and Youyang Ng and Kento Tatsuno and Yasuhiro Morioka and Osamu Torii and Jun Deguchi},
+      url={https://arxiv.org/abs/2308.10633},
+      year={2023},
+      eprint={2308.10633},
+      howpublished = {\url{https://arxiv.org/abs/2308.10633}},
+      publisher={arXiv}
+}
+
+@article{FlashRAG,
+    author={Jiajie Jin and
+            Yutao Zhu and
+            Xinyu Yang and
+            Chenghao Zhang and
+            Zhicheng Dou},
+    title={FlashRAG: A Modular Toolkit for Efficient Retrieval-Augmented Generation Research},
+    journal={CoRR},
+    volume={abs/2405.13576},
+    year={2024},
+    url={https://arxiv.org/abs/2405.13576},
+    howpublished = {\url{https://arxiv.org/abs/2405.13576}},
+    eprinttype={arXiv},
+    eprint={2405.13576}
+}
+
+
+@misc{Asai.10172023,
+ abstract = {Despite their remarkable capabilities, large language models (LLMs) often produce responses containing factual inaccuracies due to their sole reliance on the parametric knowledge they encapsulate. Retrieval-Augmented Generation (RAG), an ad hoc approach that augments LMs with retrieval of relevant knowledge, decreases such issues. However, indiscriminately retrieving and incorporating a fixed number of retrieved passages, regardless of whether retrieval is necessary, or passages are relevant, diminishes LM versatility or can lead to unhelpful response generation. We introduce a new framework called Self-Reflective Retrieval-Augmented Generation (Self-RAG) that enhances an LM's quality and factuality through retrieval and self-reflection. Our framework trains a single arbitrary LM that adaptively retrieves passages on-demand, and generates and reflects on retrieved passages and its own generations using special tokens, called reflection tokens. Generating reflection tokens makes the LM controllable during the inference phase, enabling it to tailor its behavior to diverse task requirements. Experiments show that Self-RAG (7B and 13B parameters) significantly outperforms state-of-the-art LLMs and retrieval-augmented models on a diverse set of tasks. Specifically, Self-RAG outperforms ChatGPT and retrieval-augmented Llama2-chat on Open-domain QA, reasoning and fact verification tasks, and it shows significant gains in improving factuality and citation accuracy for long-form generations relative to these models.},
+ author = {Asai, Akari and Wu, Zeqiu and Wang, Yizhong and Sil, Avirup and Hajishirzi, Hannaneh},
+ date = {10/17/2023},
+ title = {Self-RAG: Learning to Retrieve, Generate, and Critique through  Self-Reflection},
+ howpublished = {\url{http://arxiv.org/pdf/2310.11511v1}},
+ url = {http://arxiv.org/pdf/2310.11511v1}
+}
+
+
+@misc{Jiang.5112023,
+ abstract = {Despite the remarkable ability of large language models (LMs) to comprehend and generate language, they have a tendency to hallucinate and create factually inaccurate output. Augmenting LMs by retrieving information from external knowledge resources is one promising solution. Most existing retrieval augmented LMs employ a retrieve-and-generate setup that only retrieves information once based on the input. This is limiting, however, in more general scenarios involving generation of long texts, where continually gathering information throughout generation is essential. In this work, we provide a generalized view of active retrieval augmented generation, methods that actively decide when and what to retrieve across the course of the generation. We propose Forward-Looking Active REtrieval augmented generation (FLARE), a generic method which iteratively uses a prediction of the upcoming sentence to anticipate future content, which is then utilized as a query to retrieve relevant documents to regenerate the sentence if it contains low-confidence tokens. We test FLARE along with baselines comprehensively over 4 long-form knowledge-intensive generation tasks/datasets. FLARE achieves superior or competitive performance on all tasks, demonstrating the effectiveness of our method. Code and datasets are available at https://github.com/jzbjyb/FLARE.},
+ author = {Jiang, Zhengbao and Xu, Frank F. and Gao, Luyu and Sun, Zhiqing and Liu, Qian and Dwivedi-Yu, Jane and Yang, Yiming and Callan, Jamie and Neubig, Graham},
+ date = {5/11/2023},
+ title = {Active Retrieval Augmented Generation},
+ howpublished = {\url{http://arxiv.org/pdf/2305.06983v2}},
+ url = {http://arxiv.org/pdf/2305.06983v2}
+}
+
+
+@misc{Trivedi.12202022,
+ abstract = {Prompting-based large language models (LLMs) are surprisingly powerful at generating natural language reasoning steps or Chains-of-Thoughts (CoT) for multi-step question answering (QA). They struggle, however, when the necessary knowledge is either unavailable to the LLM or not up-to-date within its parameters. While using the question to retrieve relevant text from an external knowledge source helps LLMs, we observe that this one-step retrieve-and-read approach is insufficient for multi-step QA. Here, \textit{what to retrieve} depends on \textit{what has already been derived}, which in turn may depend on \textit{what was previously retrieved}. To address this, we propose IRCoT, a new approach for multi-step QA that interleaves retrieval with steps (sentences) in a CoT, guiding the retrieval with CoT and in turn using retrieved results to improve CoT. Using IRCoT with GPT3 substantially improves retrieval (up to 21 points) as well as downstream QA (up to 15 points) on four datasets: HotpotQA, 2WikiMultihopQA, MuSiQue, and IIRC. We observe similar substantial gains in out-of-distribution (OOD) settings as well as with much smaller models such as Flan-T5-large without additional training. IRCoT reduces model hallucination, resulting in factually more accurate CoT reasoning. Code, data, and prompts are available at \url{https://github.com/stonybrooknlp/ircot}},
+ author = {Trivedi, Harsh and Balasubramanian, Niranjan and Khot, Tushar and Sabharwal, Ashish},
+ date = {12/20/2022},
+ title = {Interleaving Retrieval with Chain-of-Thought Reasoning for  Knowledge-Intensive Multi-Step Questions},
+ howpublished = {\url{http://arxiv.org/pdf/2212.10509v2}},
+ url = {http://arxiv.org/pdf/2212.10509v2}
+}
+
+@misc{Liu_LlamaIndex_2022,
+author = {Liu, Jerry},
+doi = {10.5281/zenodo.1234},
+month = {11},
+title = {{LlamaIndex}},
+howpublished = {\url{https://github.com/jerryjliu/llama_index}},
+url = {https://github.com/jerryjliu/llama_index},
+year = {2022}
+}
+
+@misc{Chase_LangChain_2022,
+author = {Chase, Harrison},
+month = oct,
+title = {{LangChain}},
+url = {https://github.com/langchain-ai/langchain},
+howpublished = {\url{https://github.com/langchain-ai/langchain}},
+year = {2022}
+}
+
+
+@misc{AutoRAG,
+author = {Kim, Jeffrey and Kim, Bobb},
+month = feb,
+title = {{AutoRAG}},
+url = {https://github.com/Marker-Inc-Korea/AutoRAG},
+howpublished = {\url{https://github.com/Marker-Inc-Korea/AutoRAG}},
+year = {2024}
+}
+
+
+@inproceedings{zhang-etal-2024-raglab,
+    title = "{RAGLAB}: A Modular and Research-Oriented Unified Framework for Retrieval-Augmented Generation",
+    author = "Zhang, Xuanwang and
+      Song, Yunze and
+      Wang, Yidong and
+      Tang, Shuyun and
+      others",
+    booktitle = "Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+    month = dec,
+    year = "2024",
+    publisher = "Association for Computational Linguistics",
+}
+
+@software{Izsak_fastRAG_Efficient_Retrieval_2023,
+author = {Izsak, Peter and Berchansky, Moshe and Fleischer, Daniel and Laperdon, Ronen},
+license = {Apache-2.0},
+month = feb,
+title = {{fastRAG: Efficient Retrieval Augmentation and Generation Framework}},
+howpublished = {\url{https://github.com/IntelLabs/fastrag}},
+url = {https://github.com/IntelLabs/fastrag},
+version = {1.0},
+year = {2023}
+}
+
+@software{Pietsch_Haystack_the_end-to-end_2019,
+author = {Pietsch, Malte and Möller, Timo and Kostic, Bogdan and Risch, Julian and Pippi, Massimiliano and Jobanputra, Mayank and Zanzottera, Sara and Cerza, Silvano and Blagojevic, Vladimir and Stadelmann, Thomas and Soni, Tanay and Lee, Sebastian},
+month = nov,
+title = {{Haystack: the end-to-end NLP framework for pragmatic builders}},
+howpublished = {\url{https://github.com/deepset-ai/haystack}},
+url = {https://github.com/deepset-ai/haystack},
+year = {2019}
+}
+
+@misc{shi2023replugretrievalaugmentedblackboxlanguage,
+      title={REPLUG: Retrieval-Augmented Black-Box Language Models}, 
+      author={Weijia Shi and Sewon Min and Michihiro Yasunaga and Minjoon Seo and Rich James and Mike Lewis and Luke Zettlemoyer and Wen-tau Yih},
+      year={2023},
+      eprint={2301.12652},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2301.12652}, 
+}
+
+@misc{santhanam2022plaidefficientenginelate,
+      title={PLAID: An Efficient Engine for Late Interaction Retrieval}, 
+      author={Keshav Santhanam and Omar Khattab and Christopher Potts and Matei Zaharia},
+      year={2022},
+      eprint={2205.09707},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/2205.09707}, 
+}
+
+@misc{santhanam2022colbertv2effectiveefficientretrieval,
+      title={ColBERTv2: Effective and Efficient Retrieval via Lightweight Late Interaction}, 
+      author={Keshav Santhanam and Omar Khattab and Jon Saad-Falcon and Christopher Potts and Matei Zaharia},
+      year={2022},
+      eprint={2112.01488},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/2112.01488}, 
+}
