@@ -1,0 +1,84 @@
+\begin{thebibliography}{10}
+
+\bibitem{Asai.10172023}
+Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, and Hannaneh Hajishirzi.
+\newblock Self-rag: Learning to retrieve, generate, and critique through
+  self-reflection.
+\newblock \url{http://arxiv.org/pdf/2310.11511v1}.
+
+\bibitem{Chase_LangChain_2022}
+Harrison Chase.
+\newblock {LangChain}.
+\newblock \url{https://github.com/langchain-ai/langchain}, October 2022.
+
+\bibitem{ralle}
+Yasuto Hoshi, Daisuke Miyashita, Youyang Ng, Kento Tatsuno, Yasuhiro Morioka,
+  Osamu Torii, and Jun Deguchi.
+\newblock Ralle: A framework for developing and evaluating retrieval-augmented
+  large language models.
+\newblock \url{https://arxiv.org/abs/2308.10633}, 2023.
+
+\bibitem{Izsak_fastRAG_Efficient_Retrieval_2023}
+Peter Izsak, Moshe Berchansky, Daniel Fleischer, and Ronen Laperdon.
+\newblock {fastRAG: Efficient Retrieval Augmentation and Generation Framework}.
+\newblock \url{https://github.com/IntelLabs/fastrag}, February 2023.
+
+\bibitem{Jiang.5112023}
+Zhengbao Jiang, Frank~F. Xu, Luyu Gao, Zhiqing Sun, Qian Liu, Jane Dwivedi-Yu,
+  Yiming Yang, Jamie Callan, and Graham Neubig.
+\newblock Active retrieval augmented generation.
+\newblock \url{http://arxiv.org/pdf/2305.06983v2}.
+
+\bibitem{FlashRAG}
+Jiajie Jin, Yutao Zhu, Xinyu Yang, Chenghao Zhang, and Zhicheng Dou.
+\newblock Flashrag: A modular toolkit for efficient retrieval-augmented
+  generation research.
+\newblock {\em CoRR}, abs/2405.13576, 2024.
+
+\bibitem{AutoRAG}
+Jeffrey Kim and Bobb Kim.
+\newblock {AutoRAG}.
+\newblock \url{https://github.com/Marker-Inc-Korea/AutoRAG}, February 2024.
+
+\bibitem{Liu_LlamaIndex_2022}
+Jerry Liu.
+\newblock {LlamaIndex}.
+\newblock \url{https://github.com/jerryjliu/llama_index}, 11 2022.
+
+\bibitem{Pietsch_Haystack_the_end-to-end_2019}
+Malte Pietsch, Timo Möller, Bogdan Kostic, Julian Risch, Massimiliano Pippi,
+  Mayank Jobanputra, Sara Zanzottera, Silvano Cerza, Vladimir Blagojevic,
+  Thomas Stadelmann, Tanay Soni, and Sebastian Lee.
+\newblock {Haystack: the end-to-end NLP framework for pragmatic builders}.
+\newblock \url{https://github.com/deepset-ai/haystack}, November 2019.
+
+\bibitem{santhanam2022plaidefficientenginelate}
+Keshav Santhanam, Omar Khattab, Christopher Potts, and Matei Zaharia.
+\newblock Plaid: An efficient engine for late interaction retrieval, 2022.
+
+\bibitem{santhanam2022colbertv2effectiveefficientretrieval}
+Keshav Santhanam, Omar Khattab, Jon Saad-Falcon, Christopher Potts, and Matei
+  Zaharia.
+\newblock Colbertv2: Effective and efficient retrieval via lightweight late
+  interaction, 2022.
+
+\bibitem{shi2023replugretrievalaugmentedblackboxlanguage}
+Weijia Shi, Sewon Min, Michihiro Yasunaga, Minjoon Seo, Rich James, Mike Lewis,
+  Luke Zettlemoyer, and Wen tau Yih.
+\newblock Replug: Retrieval-augmented black-box language models, 2023.
+
+\bibitem{Trivedi.12202022}
+Harsh Trivedi, Niranjan Balasubramanian, Tushar Khot, and Ashish Sabharwal.
+\newblock Interleaving retrieval with chain-of-thought reasoning for
+  knowledge-intensive multi-step questions.
+\newblock \url{http://arxiv.org/pdf/2212.10509v2}.
+
+\bibitem{zhang-etal-2024-raglab}
+Xuanwang Zhang, Yunze Song, Yidong Wang, Shuyun Tang, et~al.
+\newblock {RAGLAB}: A modular and research-oriented unified framework for
+  retrieval-augmented generation.
+\newblock In {\em Proceedings of the 2024 Conference on Empirical Methods in
+  Natural Language Processing: System Demonstrations}. Association for
+  Computational Linguistics, December 2024.
+
+\end{thebibliography}
