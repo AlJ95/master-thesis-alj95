@@ -25,11 +25,10 @@ Developing a Benchmarking Framework for RAG Systems \newline Feedback Bericht
 \pagestyle{plain}
 
 \section{Zusammenfassung der Präsentation}
-Ich habe in der Präsentation das Framework für RAG-Systeme vorgestellt und bin auf die Besonderheiten eingegangen, die bei der Umsetzung relevant sind.
-Darunter zählt sowohl der modulare Architektur eines RAG-Systems und die verschiedenen Aspekte der Evaluation. 
+Ich habe in der Präsentation das Framework für RAG-Systeme vorgestellt und bin auf die Besonderheiten eingegangen, die bei der Umsetzung relevant sind, insbesondere die modulare Architektur eines RAG-Systems und die verschiedenen Aspekte der Evaluation. 
 Ersteres fokussiert sich darauf, dass möglichst viele RAG-Varianten und IRA-Methoden (Iterativ, Rekursiv, Adaptiv) mit dem Framework abgebildet werden können.
-Die Evaluation kann in End-to-End Evaluation und Komponenten-Evaluation unterschieden werden. 
-Während End-to-End Evaluation für den Endnutzer relevanter ist, kann Komponentenevaluation zur Fehleranalyse und Hyperparameter Tuning verwendet werden.\\
+Die Evaluation kann in End-to-End-Evaluation und Komponenten-Evaluation unterschieden werden. 
+Während End-to-End-Evaluation für den Endnutzer relevanter ist, kann Komponentenevaluation zur Fehleranalyse und Hyperparameter Tuning verwendet werden.\\
 
 
 %%%%%%%%%%%%%%%%%%%%%%%% INTRODUCTION - DONE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,10 +39,10 @@ Während End-to-End Evaluation für den Endnutzer relevanter ist, kann Komponent
 %   - Mehr Metriken (System / HW / Andere? -> siehe AISE)
 % - Weniger Fokus auf das eigentliche Benchmarken
 Das Feedback war positiv und der Plan zur Umsetzung stimmig. 
-Es wurde eingeworfen, den Fokus von gleichermaßen Framework und Benchmarks mehr auf das Framework zu rejustieren.
-Es kam die Befürchtung auf, dass mit zunehmender Arbeit für die Benchmarks, die eigentliche Umsetzung des Frameworks zu kurz kommt. Es soll ein hoher Fokus auf die Re-Konfigurierbarkeit gesetzt werden.
-Neben der potenziellen Evaluation durch typisch Task-Based Metriken wie Precision, Recall und F1-Score, sollten auch Hardware Metriken wie RAM, Inferenzzeit und CPU-Zeit verwendet werden, da diese in der Praxis eine wichtige Rolle spielen.
-Es wurde weiterhin angemerkt, dass das Paper der SWS-Abteilung "A Methodology for Evaluating RAG Systems: A Case Study On Configuration Dependency Validation" zu lesen und zu analysieren, wie der entwickelte Blueprint in der Umsetzung benutzt werden kann.
+Es wurde eingeworfen, den Fokus mehr auf das Framework zu richten.
+Es kam die Befürchtung auf, dass mit zunehmender Arbeit für die Benchmarks, die eigentliche Umsetzung des Frameworks zu kurz kommt. Besonderer Fokus sollte auf die Rekonfigurierbarkeit gelegt werden.
+Neben der potenziellen Evaluation durch typische Performance-Metriken wie Precision, Recall und F1-Score, sollten Hardware Metriken wie RAM, Inferenzzeit und CPU-Zeit verwendet werden, da diese in der Praxis eine wichtige Rolle spielen.
+Zudem wurde empfohlen, das Paper der SWS-Abteilung "A Methodology for Evaluating RAG Systems: A Case Study On Configuration Dependency Validation" zu lesen und zu analysieren. Der entwickelte Blueprint soll dabei auf seine Anwendbarkeit in der praktischen Umsetzung überprüft werden.
 Außerdem wurde darauf hingewiesen, dass SLURM für die Experimente eingesetzt werden kann.\\
 %%%%%%%%%%%%%%%%% .CREATING A .TEX FILE - DONE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -57,53 +56,53 @@ Für die Anpassung der Umsetzung muss die Implementierung des Frameworks und das
 %   -> Welche könenn denn parallel gestartet werden?
 %   -> Wie müssen die Prozesse experimentell ablaufen, sodass keine anderen Prozesse diese beeinflussen (interne Validität)
 %   -> Daraus folgen Hardware Herausforderungen, welche ich ohne Sebastian Simon nicht schaffen kann, da ich die Univerisitäts Infrastruktur nicht kenne
-Ein Framework, welches nach dem Blueprint des durch die SWS-Abteilung veröffentlichten Paper aufgebaut ist, muss folgende Voraussetzungen haben:\\
+Das Framework, basierend auf dem von der SWS-Abteilung veröffentlichten Blueprint, sollte folgende Voraussetzungen erfüllen:\\[6pt]
 
 \begin{itemize}
-   \item Easy integration of relevant context ressources
-   \item High coverage of RAG variants (including IRA methods and common special cases)
-   \item High coverage of evaluation metrics (e.g. Precision, Recall, F1-Score)
-   \item An LLM or Naive-RAG baseline
-   \item Splitting the dataset into Validation and Holdout-Testset, with the Validation set for failure analysis and hyperparameter tuning and the Holdout-Testset for evaluating the generalization of the system.\\
+   \item Einfache Integration der benötigten Kontextressourcen
+   \item Hohe Abdeckung möglicher RAG-Varianten
+   \item Hohe Abdeckung möglicher Evaluatonsmetriken
+   \item Eine LLM- oder Naive-RAG-Baseline
+   \item Aufteilung der Daten in Validation \& Testdatensatz (Fehleranalyse/Hyperparameter-Tuning \& Bestimmung des Generalisierungsfehler)\\
 \end{itemize}
 
 Weiterhin wurden die Anforderungen gestellt, dass das Framework einfach zu rekonfigurieren sein soll, sodass die Evaluationen nach Fehleranalyse einfach zu replizieren sind. 
 Replizierbarkeit und Interne Gültigkeit der Experimente sind Voraussetzungen für das Framework. 
 
-Das Framework wird neben Task-spezifischen Metriken auch Hawrdware-Metriken nutzen. Darunter zählen zum Beispiel Inferenzzeit, RAM und CPU-Zeit. 
+Das Framework wird neben Task-spezifischen Metriken, Hardware-Metriken nutzen. Darunter zählen zum Beispiel Inferenzzeit, RAM und CPU-Zeit. 
 Daher ist es wichtig, dass die Evaluierungen nicht parallel gestartet werden, sondern isoliert von anderen Prozessen und sequenziell auf einer dedizierten Hardware. \\
 
 \subsubsection{Analyse bestehender Frameworks und Bibliotheken}
 
-Für die Neuausrichtung des Fokus, werde ich noch sicherstellen, dass ein solches Framework noch nicht existiert.\\
+Für die Neuausrichtung des Fokus, werde ich noch sicherstellen, dass ein solches Framework noch nicht existiert.
 
 \paragraph{AutoRAG\cite{AutoRAG}}
 AutoRAG ist ein Tool für Hyperparameter-Tuning für RAG-Systeme. Der Nutzer erstellt eine Konfigurationsdatei, welche 
-die sogenannten Nodes (Retriever, Generator, usw.) definiert und die Hyperparameter (e.g. Top-K, Models, Prompts, etc.) angibt. 
+die sogenannten Nodes (Retriever, Generator, Reranker) definiert und die Hyperparameter (Top-K, Models, Prompts) angibt. 
 Danach läuft die Analyse und es wird die Konfiguration des besten Systems angegeben. 
 
-Das Tool nutzt nur End-to-End Evaluation und ist auch schwierig anpassbar. Laut den Entwicklern im Discord sind auch fortgeschrittene Methoden (IRA) derzeit nicht möglich. 
-Es bietet auch keine Möglichkeit ein Baseline-LLM zu evaluieren. \\
+Das Tool nutzt nur End-to-End-Evaluation und ist schwierig anpassbar. Laut den Entwicklern im Discord sind fortgeschrittene Methoden (IRA) derzeit nicht möglich. 
+Es bietet keine Möglichkeit ein Baseline-LLM zu evaluieren. 
 
 \paragraph{Llama-Index\cite{Liu_LlamaIndex_2022} \& Langchain\cite{Chase_LangChain_2022}}
 Llama-Index und Langchain sind umfangreiche Bibliotheken für die Entwicklung von RAG-Pipelines. 
-Sie bieten jedoch keine zeiteffiziente Möglichkeit zum Benchmarken vieler RAG-Systeme.\\
+Sie bieten jedoch keine zeiteffiziente Möglichkeit zum Benchmarken vieler RAG-Systeme.
 
 \paragraph{RaLLe\cite{ralle}}
-RaLLe ist eine Bibliothek zur zeiteffizienten Entwicklung von RAG-Systemen. Der letzte Commit ist über ein Jahr alt und die Bibliothek scheint sehr restriktv. Unter anderem ist es nur möglich .tsv-Dateien mit einer vorgegebenen Struktur zu nutzen. Fortgeschrittene Methoden sind nicht möglich.\\
+RaLLe ist eine Bibliothek zur zeiteffizienten Entwicklung von RAG-Systemen. Der letzte Commit ist über ein Jahr alt und die Bibliothek scheint sehr restriktv. Unter anderem ist es nur möglich .tsv-Dateien mit einer vorgegebenen Struktur zu nutzen. Fortgeschrittene Methoden sind nicht möglich.
 
 \paragraph{FlashRAG\cite{FlashRAG}}
 
 FlashRAG ist ein Python Toolkit, dass eine ähnliche Motivation hat, wie ich sie hier versuche umzusetzen. 
-Es bietet eine Konfigurationsdatei als Start, es hat eine Auswahl von Task-spezifischen Metriken und eine Vielzahl an RAG-Komponenten. Es lassen sich viele RAG-Varianten und einige Spezialfälle damit umsetzen (IRA, Self-RAG\cite{Asai.10172023}, FLARE\cite{Jiang.5112023}, IRCoT\cite{Trivedi.12202022}).\\
+Es bietet eine Konfigurationsdatei als Start, es hat eine Auswahl von Task-spezifischen Metriken und eine Vielzahl an RAG-Komponenten. Es lassen sich viele RAG-Varianten und einige Spezialfälle damit umsetzen (IRA, Self-RAG\cite{Asai.10172023}, FLARE\cite{Jiang.5112023}, IRCoT\cite{Trivedi.12202022}).
 
 \paragraph{RAGLAB\cite{zhang-etal-2024-raglab}}
-RAGLAB ist das neueste Framework und bietet ähnliche Funktionalitäten wie dessen Vorgänger. Es führt auch "Fair Comparison" ein, einen faireren Vergleich für LLM's und Retriever zum Beispiel das Entfernen von Special Tokens im Training oder dem Seedsetzen in Retrieval und Generator Pipelines.\\
+RAGLAB ist das neueste Framework und bietet ähnliche Funktionalitäten wie dessen Vorgänger. Es führt "Fair Comparison" ein, einen faireren Vergleich für LLM's und Retriever zum Beispiel das Entfernen von Special Tokens im Training oder dem Seedsetzen in Retrieval und Generator Pipelines.
 
 
 \paragraph{Haystack\cite{Pietsch_Haystack_the_end-to-end_2019} \& FastRAG\cite{Izsak_fastRAG_Efficient_Retrieval_2023}}
 Haystack ist ähnlich wie Llama-Index und LangChain eine umfangreiche Bibliothek für die Entwicklung von RAG-Pipelines. Sie bietet Pipeline Definition mittels YAML oder JSON Dateien und ist stark modular aufgebaut. Es lassen sich IRA Methoden damit entwickeln. 
-FastRAG ist kompatibel mit Haystack und hat eine Vielzahl an RAG-Komponenten entwickelt, mit denen es auch möglich ist Spezialfälle aus Papers zu entwickeln. 
+FastRAG ist kompatibel mit Haystack und hat eine Vielzahl an RAG-Komponenten entwickelt, mit denen es möglich ist Spezialfälle aus Papers zu entwickeln. 
 Darunter zählen zum Beispiel REPLUG\cite{shi2023replugretrievalaugmentedblackboxlanguage}, PLAID\cite{santhanam2022plaidefficientenginelate}, ColBERT\cite{santhanam2022colbertv2effectiveefficientretrieval} oder quantized LLM's.\\
 
 \subsubsection{Einordnung bestehender Frameworks und Bibliotheken}
@@ -114,8 +113,8 @@ Bei jeder Analyse wurden zwei Punkte betrachtet:\\
    \item Kann ich das Framework als Fundament für mein Framework nutzen?\\
 \end{itemize}
 
-Keines der Frameworks bietet einen vollständige Pipeline für das Entwickeln von RAG-Varianten durch iteratives Re-Konfigurieren und systematischer replizierbarer Evaluierung mit Holdout-Testset. 
-Eine vordefinierte Untersuchung durch Einführung einer LLM-Baseline, ob ein RAG-System eine Verbesserung darstellt ist bei keines der Frameworks vorhanden.
+Keines der Frameworks bietet einen vollständige Pipeline für das Entwickeln von RAG-Varianten durch iteratives Rekonfigurieren und systematischer replizierbarer Evaluierung mit Holdout-Testset. 
+Eine LLM-Baseline zur Überprüfung, ob ein RAG-System eine Verbesserung darstellt, ist in keinem der Frameworks vorhanden.
 Weiterhin misst keines der Frameworks den Einfluss der Komplexität auf Metriken wie Inferenzzeit, RAM-Usage oder CPU-Time. 
 Damit ist der erste Punkt beantwortet. Für den zweiten Punkt können einige Frameworks herausgefiltert werden.
 RaLLe und AutoRAG sind sehr restriktiv und es lassen sich nur eine begrenzte Anzahl von RAG-Varianten umsetzen. Llama-Index und LangChain sind ebenfalls restriktiv und nicht zeiteffizient genug, um viele verschiedene RAG-Varianten zu testen.
@@ -125,11 +124,25 @@ FlashRAG und Haystack+FastRAG wären mögliche Kandidaten als Basis für das gep
 Ich werde Haystack und FastRAG nutzen, da Haystack stark modular aufgebaut ist und in zukunft eine UI bieten wird um RAG-Systeme per Drag\&Drop zu erstellen. 
 Die daraus resultierenden RAG-Varianten können in YAML's exportiert werden und für mein Framework benutzt werden.\\
 
+Zusammenfassend wird sich die Umsetzung des Frameworks auf die Erweiterung von Haystack und FastRAG beschränken, sodass ein Benchmarking für RAG-Systeme nach dem Blueprint des durch die SWS-Abteilung veröffentlichten Paper durchgeführt werden kann.
+
+Mit Haystack als Fundament werden einige Funktionalitäten bereits erfüllt sein. Die Vielfalt an Rag-Varianten durch Angabe einer Konfigurationsdatei ist bereits möglich.
+Weiterhin bietet Haystack sowohl eigene Metriken für Komponenten- und End-to-End-Evaluation an. 
+Das Framework mit DeepEval, UpTrain und RAGAS integrierbar. Somit lassen sich die meisten Performance-Metriken nur mit zusätzlichen Aufwand berechnen, da sie nicht durch die Konfigurationsdatei definiert werden können.
+
+Abschließend lässt sich zusammenfassen, dass Kontextressourcen und RAG-Architekturen vollständig durch Haystack abgedeckt sind. 
+Die Evaluierung wird in der Umsetzung dieses Frameworks a) nutzerfreundlicher gemacht, in dem sie in der Konfigurationsdatei angegeben werden kann und b) durch weitere relevante Metriken wie Hardware-Metriken erweitert.
+Das Framework wird per default für ein LLM und ein Naive-RAG als Baseline ausführen. Nachfolgend wird die Konfiguration der RAG-Architekur ausgelesen und die Evaluation durchgeführt.
+Die Konfigurationsdatei sollte Matrix-Schreibweisen zulassen, sodass verschiedene Hyperparameter getestet werden können. 
+Die Testdaten sollten automatisch in Validation \& Holdout-Testset aufgeteilt werden.
+
+Offen bleibt die Frage, wie die Fehleranalyse einfacher gestaltet werden kann.
 
 \subsection{Angepasste Umsetzung der Benchmarks}
 % Replikation von bereits durchgeführten Experimenten
-Der Fokus auf die Umsetzung des Frameworks bedeutet, dass der Umfang der Benchmark-Experiment reduziert werden muss. Anstelle eines eigenen Experiments werde ich mich auf bereits bestehenden Experimente fokussieren. 
+Der Fokus auf die Umsetzung des Frameworks bedeutet, dass der Umfang der Benchmark-Experiment reduziert werden muss. Anstelle eigener Experimente werde ich mich auf bereits existierende Experimente konzentrieren.
 Mögliche Experimente sind Configuration Validation mit dem CTest Datensatz und Vulnerability Detection mit den Datensätzen SySeVR, diversful oder bifi.
+
 
 %% This section was initially prepared using BibTeX.  The .bbl file was
 %% placed here later

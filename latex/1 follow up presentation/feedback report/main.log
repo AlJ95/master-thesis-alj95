@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  6 NOV 2024 12:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  7 NOV 2024 09:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -274,140 +274,98 @@ Package hyperref Info: Link coloring OFF on input line 19.
 \openout3 = `main.out'.
 
 
-Underfull \hbox (badness 5388) in paragraph at lines 28--33
+Underfull \hbox (badness 5388) in paragraph at lines 28--32
 \OT1/ptm/m/n/10 Systeme vorgestellt und bin auf die Beson-der-heiten
  []
 
 
-Underfull \hbox (badness 2065) in paragraph at lines 28--33
-\OT1/ptm/m/n/10 in End-to-End Eval-u-a-tion und Komponenten-Evaluation
+Underfull \hbox (badness 7649) in paragraph at lines 28--32
+\OT1/ptm/m/n/10 einge-gan-gen, die bei der Um-set-zung rel-e-vant sind,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 28--33
-
+Underfull \hbox (badness 5050) in paragraph at lines 28--32
+\OT1/ptm/m/n/10 in End-to-End-Evaluation und Komponenten-Evaluation
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--49
-\OT1/ptm/m/n/10 stim-mig. Es wurde einge-wor-fen, den Fokus von
- []
-
-
-Underfull \hbox (badness 3826) in paragraph at lines 42--49
-\OT1/ptm/m/n/10 gle-icher-ma^^Yen Frame-work und Bench-marks mehr auf
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 42--49
+Underfull \hbox (badness 10000) in paragraph at lines 28--32
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+Underfull \hbox (badness 1648) in paragraph at lines 41--48
+\OT1/ptm/m/n/10 stim-mig. Es wurde einge-wor-fen, den Fokus mehr auf
+ []
+
+
+Underfull \hbox (badness 2799) in paragraph at lines 41--48
+\OT1/ptm/m/n/10 Blueprint soll dabei auf seine An-wend-barkeit in der
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
 []\OT1/ptm/m/n/10 F[]ur die An-pas-sung der Um-set-zung muss die
  []
 
 
-Underfull \hbox (badness 3679) in paragraph at lines 51--52
+Underfull \hbox (badness 3679) in paragraph at lines 50--51
 \OT1/ptm/m/n/10 Im-ple-men-tierung des Frame-works und das Evaluieren
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+Underfull \hbox (badness 10000) in paragraph at lines 50--51
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--61
+Underfull \hbox (badness 1824) in paragraph at lines 59--60
+[]\OT1/ptm/m/n/10 Das Frame-work, basierend auf dem von der SWS-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
+\OT1/ptm/m/n/10 Abteilung ver[]offentlichten Blueprint, sollte fol-gende
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
 
  []
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 63.
+(Font)              <7> on input line 62.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 63.
+(Font)              <5> on input line 62.
 
-Underfull \hbox (badness 1655) in paragraph at lines 67--68
-[]\OT1/ptm/m/n/10 Splitting the dataset into Val-i-da-tion and Holdout-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 67--68
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
  []
 
 
-Underfull \hbox (badness 4454) in paragraph at lines 73--75
-\OT1/ptm/m/n/10 wer-den, son-dern isoliert von an-deren Prozessen und
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 73--75
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
 
  []
 
 
-Underfull \hbox (badness 3884) in paragraph at lines 78--79
-\OT1/ptm/m/n/10 F[]ur die Neuaus-rich-tung des Fokus, werde ich noch
- []
-
-
-Underfull \hbox (badness 3058) in paragraph at lines 78--79
-\OT1/ptm/m/n/10 sich-er-stellen, dass ein solches Frame-work noch nicht
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 78--79
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 81--84
+Underfull \hbox (badness 10000) in paragraph at lines 80--83
  \OT1/ptm/m/it/10 a) AutoRAG[[]]: [][] \OT1/ptm/m/n/10 Au-toRAG ist ein Tool f[
 ]ur
  []
 
 
-Underfull \hbox (badness 4217) in paragraph at lines 81--84
+Underfull \hbox (badness 4217) in paragraph at lines 80--83
 \OT1/ptm/m/n/10 Hyperparameter-Tuning f[]ur RAG-Systeme. Der Nutzer
  []
 
 
-Underfull \hbox (badness 4927) in paragraph at lines 81--84
-\OT1/ptm/m/n/10 Nodes (Re-triever, Gen-er-a-tor, usw.) definiert und die
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 85--87
-
- []
-
-
-Underfull \hbox (badness 6961) in paragraph at lines 89--91
- \OT1/ptm/m/it/10 b) Llama-Index[[]] & Langchain[[]]: [][] \OT1/ptm/m/n/10 Llam
-a-Index
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 89--91
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
- \OT1/ptm/m/it/10 c) RaLLe[[]]: [][] \OT1/ptm/m/n/10 RaLLe ist eine Bib-lio-the
-k zur
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
-\OT1/ptm/m/n/10 zeit-ef-fizien-ten En-twick-lung von RAG-Systemen. Der
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
-
+Underfull \hbox (badness 3780) in paragraph at lines 84--86
+[]\OT1/ptm/m/n/10 Das Tool nutzt nur End-to-End-Evaluation und ist
  []
 
 [1{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/l
@@ -415,84 +373,75 @@ ocal/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-Underfull \hbox (badness 1533) in paragraph at lines 97--99
-\OT1/ptm/m/n/10 RAG-Varianten und einige Spezialf[]alle damit um-set-zen
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 97--99
-
- []
-
-
-Underfull \hbox (badness 2772) in paragraph at lines 101--102
-\OT1/ptm/m/n/10 Es f[]uhrt auch "Fair Com-par-i-son" ein, einen fair-eren
- []
-
-
-Underfull \hbox (badness 1997) in paragraph at lines 101--102
-\OT1/ptm/m/n/10 Ver-gle-ich f[]ur LLM's und Re-triever zum Beispiel das
- []
-
-
-Underfull \hbox (badness 2181) in paragraph at lines 101--102
-\OT1/ptm/m/n/10 Ent-fer-nen von Spe-cial To-kens im Train-ing oder dem
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 101--102
-
- []
-
-
-Underfull \hbox (badness 7256) in paragraph at lines 105--108
+Underfull \hbox (badness 7256) in paragraph at lines 104--107
 \OT1/ptm/m/n/10 wie Llama-Index und LangChain eine um-fan-gre-iche
  []
 
 
-Underfull \hbox (badness 1688) in paragraph at lines 105--108
+Underfull \hbox (badness 1688) in paragraph at lines 104--107
 \OT1/ptm/m/n/10 und ist stark mod-u-lar aufge-baut. Es lassen sich IRA
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 105--108
+Underfull \hbox (badness 10000) in paragraph at lines 104--107
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--113
+Underfull \hbox (badness 10000) in paragraph at lines 110--112
  \OT1/ptm/m/it/10 2) Einord-nung beste-hen-der Frame-works und
  []
 
 
-Underfull \hbox (badness 2401) in paragraph at lines 111--113
+Underfull \hbox (badness 2401) in paragraph at lines 110--112
 \OT1/ptm/m/it/10 Bib-lio-theken: [][][] \OT1/ptm/m/n/10 Bei jeder Anal-yse wur-
 den zwei Punkte
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--113
+Underfull \hbox (badness 10000) in paragraph at lines 110--112
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--115
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
 
  []
 
 
-Underfull \hbox (badness 5345) in paragraph at lines 124--127
+Underfull \hbox (badness 5036) in paragraph at lines 116--122
+\OT1/ptm/m/n/10 f[]ur das En-twick-eln von RAG-Varianten durch it-er-a-
+ []
+
+
+Underfull \hbox (badness 4036) in paragraph at lines 116--122
+\OT1/ptm/m/n/10 tives Rekon-fig-uri-eren und sys-tem-a-tis-cher replizier-barer
+
+ []
+
+
+Underfull \hbox (badness 5105) in paragraph at lines 116--122
+[]\OT1/ptm/m/n/10 Uberpr[]ufung, ob ein RAG-System eine Verbesserung
+ []
+
+
+Underfull \hbox (badness 5345) in paragraph at lines 123--126
 []\OT1/ptm/m/n/10 FlashRAG und Haystack+FastRAG w[]aren m[]ogliche
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--127
+Underfull \hbox (badness 10000) in paragraph at lines 123--126
 
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 131--133
-\OT1/ptm/m/n/10 mich auf bere-its beste-hen-den Ex-per-i-mente fokussieren.
+Underfull \hbox (badness 4872) in paragraph at lines 127--128
+\OT1/ptm/m/n/10 works auf die Er-weiterung von Haystack und Fas-
+ []
+
+
+Underfull \hbox (badness 1715) in paragraph at lines 129--132
+\OT1/ptm/m/n/10 Weit-er-hin bi-etet Haystack sowohl eigene Metriken f[]ur
  []
 
 (./main.bbl
@@ -546,10 +495,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: A8E38DF699FDDF22DC81AE634A60EE0A;1771.
  ) 
 Here is how much of TeX's memory you used:
- 8171 strings out of 474116
- 129526 string characters out of 5743682
+ 8172 strings out of 474116
+ 129534 string characters out of 5743682
  1949187 words of memory out of 5000000
- 30447 multiletter control sequences out of 15000+600000
+ 30448 multiletter control sequences out of 15000+600000
  588736 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,9n,79p,378b,569s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -558,7 +507,7 @@ Here is how much of TeX's memory you used:
 cal/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texliv
 e/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/tex
 mf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (3 pages, 84832 bytes).
+Output written on main.pdf (3 pages, 85978 bytes).
 PDF statistics:
  121 PDF objects out of 1000 (max. 8388607)
  104 compressed objects within 2 object streams
