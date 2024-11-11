@@ -1,0 +1,27 @@
+The year 2017 can be stated as the beginning of the interesting journey of artificial intelligent language models. With the publication of "Attention is all you need" from \citet{vaswani2023attentionneed} the rapid development of language models and later large language models (LLM's) took of. 
+
+Today we have a variety of real world products that are using this technology, such as content generators like ChatGPT (\citet{OpenAI_2022}) or Claude (\citet{Anthropic_2023}), translators like DeepL (\citet{DeepL_SE}) and Coding Assistants like Github Copilot (\citet{Friedman_2022}). The list can be expanded with technologies like sentiment analysis, question answering systems, market research or education systems. For every technology there are open source models availlable, that are comparable opponents to proprietary services. 
+
+The remarkably capacity of large language models have lead to a wide acceptance in society. However LLM's have fundamental problems that can not be solved with more training or larger models. It is expensive to train models frequently, which means that a training can not be done on a daily basis. Therefore every new information such as elections, weather or sport results which occured between last training and user prompt are unknown to the model. On top of that, models can only be trained on availlable data. Private informations of users that might be relevant for the prompt are not considered in the generation process. LLM's struggle also with long-tail information, which occures rarely in the training data (\citet{Kandpal.15.11.2022}).
+
+Missing and under represented information may lead to outputs that deviate from user inputs, repeat previous outputs or may be made up by the LLM. (\citet{Zhang.03.09.2023}). 
+% Why is that bad?
+
+The solution to potential missing information in training is to provide all necessary information to the LLM beforehand within the prompt, so that the generator just have to construct a coherent text for the user. This can be achieved with so call Retrieval-Augmented Generation Systems (RAG-Systems), where the raw user prompt is used to retrieve relevant data from an database that get's summarised and inserted into the prompt for the generator. This method overcomes a lot of the problems LLM's suffer from. Data can be accessed from private and up-to-date sources. The frequence of occurence is no longer important for information as it does not get trained with. Model trainings are not required anymore for having recent information. 
+
+The price for RAG-Systems is high. The systems needs to do additional steps between prompt request and output. Most of those steps can not be parallelized. That results in longer inference times and also leads to the more ressource intensive system. RAG-Systems don't need to be significantly better systems than pure LLM's.\citet{PLACEHOLDER}
+
+Therefore there is an important question to be asked: 
+\begin{quotation}
+    Do you need to implement a fully working and advanced RAG-System for your specific use-case or is an standalone LLM sufficient?
+\end{quotation}
+The answer to this problem is hard to find, because you have to implement it, to test it on your data. The implementation of one RAG-Systems is not sufficient, because even if the systems performs significantly better than the standalone LLM, it does neither confirm or negate the superiority of all RAG-Variants. 
+
+The scientific landscape of Retrieval-Augmented Generation Systems is a vast community with rapid development. Staying up-to-date with that research topic is time consuming for companies.
+
+With that master thesis I will contribute with a benchmarking framework for RAG-Systems for 
+
+
+
+I will use the abbreviation LLM for large language models and RAG-System for Retrieval-Augmented Generation System predominantly in this master thesis.
+% LLMs haben ein fundamentelles Problem ... 
