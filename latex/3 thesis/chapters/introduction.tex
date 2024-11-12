@@ -7,21 +7,27 @@ The remarkably capacity of large language models have lead to a wide acceptance 
 Missing and under represented information may lead to outputs that deviate from user inputs, repeat previous outputs or may be made up by the LLM. (\citet{Zhang.03.09.2023}). 
 % Why is that bad?
 
-The solution to potential missing information in training is to provide all necessary information to the LLM beforehand within the prompt, so that the generator just have to construct a coherent text for the user. This can be achieved with so call Retrieval-Augmented Generation Systems (RAG-Systems), where the raw user prompt is used to retrieve relevant data from an database that get's summarised and inserted into the prompt for the generator. This method overcomes a lot of the problems LLM's suffer from. Data can be accessed from private and up-to-date sources. The frequence of occurence is no longer important for information as it does not get trained with. Model trainings are not required anymore for having recent information. 
+The solution to potential missing information in training is to provide all necessary information to the LLM beforehand within the prompt, so that the generator just have to construct a coherent text for the user. This can be achieved with so call Retrieval-Augmented Generation Systems (RAG-Systems), where the raw user prompt is used to retrieve relevant data from an database that get's summarised and inserted into the prompt for the generator. This method overcomes a lot of the problems LLM's suffer from. Data can be accessed from private and up-to-date sources. The frequence of occurence is no longer important for information as long as it is represented on the database for retrieval. For having recent information, it is not longer required to train the underlying model.
+% cite original RAG Paper
+% cite paper that shows the advantages of RAG
 
-The price for RAG-Systems is high. The systems needs to do additional steps between prompt request and output. Most of those steps can not be parallelized. That results in longer inference times and also leads to the more ressource intensive system. RAG-Systems don't need to be significantly better systems than pure LLM's.\citet{PLACEHOLDER}
+The price for RAG-Systems is high. The systems needs to do additional steps between prompt request and output. Most of those steps can not be parallelized. That results in longer inference times and also leads to the more ressource intensive system. Next to the increasing infrastructure costs, developing and maintaining a RAG-System is more time consuming than developing a LLM, because the LLM is a part of the larger system. RAG-Systems are not by default significantly better systems than pure LLM's as \citet{Simon.10112024} showed. Such complex systems react sensitively to small configuration changes.
 
 Therefore there is an important question to be asked: 
 \begin{quotation}
     Do you need to implement a fully working and advanced RAG-System for your specific use-case or is an standalone LLM sufficient?
 \end{quotation}
-The answer to this problem is hard to find, because you have to implement it, to test it on your data. The implementation of one RAG-Systems is not sufficient, because even if the systems performs significantly better than the standalone LLM, it does neither confirm or negate the superiority of all RAG-Variants. 
+\begin{quotation}
+    Is your RAG-System the best one for your specific use-case?
+\end{quotation}
 
-The scientific landscape of Retrieval-Augmented Generation Systems is a vast community with rapid development. Staying up-to-date with that research topic is time consuming for companies.
+The answers to this questions are hard to find, because you have to implement a RAG-System, to test it on your problem and your data. The scientific landscape of Retrieval-Augmented Generation Systems is a vast community with rapid development. Staying up-to-date with that research topic is time consuming for companies and research departments. 
 
-With that master thesis I will contribute with a benchmarking framework for RAG-Systems for 
+There are companies and research groups that successfully solved parts of this problem with developing tools, frameworks and libraries such as AutoRAG (\citeyear{AutoRAG}), Llama-Index (\citeyear{Liu_LlamaIndex_2022}), LangChain (\citeyear{Chase_LangChain_2022}), RaLLe (\citeyear{ralle}), FlashRAG (\citeyear{FlashRAG}), RAGLAB (\citeyear{zhang-etal-2024-raglab}), Haystack (\citeyear{Pietsch_Haystack_the_end-to-end_2019}) and FastRAG (\citeyear{Izsak_fastRAG_Efficient_Retrieval_2023}). While an in-depth analysis will follow later in this thesis, it can be stated, that all of those tools and frameworks are focussed on developing RAG-Variants, make them production-ready or evaluating them for performance, ignoring the fact, that RAG-Systems must be measured for hardware metrics like latency, inference time and CPU usage do determine if the benefits in perfomance comensate the disadvantages. Additional to this, \citet{Simon.10112024} showed there is lack of external validity in the development of RAG-Systems, because the iterative reconfiguration of those systems that leads to the best performance is an hyperparameter tuning process that overfits the model to the tested data and therefore needs like traditional model training an validation dataset and a holdout test dataset, which is only used to estimate the generalization error.
+
+With that master thesis I will make two contributions to the scientific landscape of RAG-Systems: (i) A novel benchmarking framework following the systematical blueprint showed by \citet{Simon.10112024} and evaluating hardware metrics next to performance, (ii) A RAG-System for the software engineering task configuration validation that is evaluated with the here presented benchmarking framework. \\[24pt]
 
 
-
-I will use the abbreviation LLM for large language models and RAG-System for Retrieval-Augmented Generation System predominantly in this master thesis.
+\large Here comes Chapter Outline ...
+% I will use the abbreviation LLM for large language models and RAG-System for Retrieval-Augmented Generation System predominantly in this master thesis.
 % LLMs haben ein fundamentelles Problem ... 

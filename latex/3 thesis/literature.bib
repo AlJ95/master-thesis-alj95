@@ -31,6 +31,18 @@
  file = {Zhang, Li et al. 03.09.2023 - Siren's Song in the AI:Attachments/Zhang, Li et al. 03.09.2023 - Siren's Song in the AI.pdf:application/pdf}
 }
 
+@misc{Simon.10112024,
+ abstract = {Retrieval-augmented generation (RAG) is an umbrella of different components, design decisions, and domain-specific adaptations to enhance the capabilities of large language models and counter their limitations regarding hallucination and outdated and missing knowledge. Since it is unclear which design decisions lead to a satisfactory performance, developing RAG systems is often experimental and needs to follow a systematic and sound methodology to gain sound and reliable results. However, there is currently no generally accepted methodology for RAG evaluation despite a growing interest in this technology. In this paper, we propose a first blueprint of a methodology for a sound and reliable evaluation of RAG systems and demonstrate its applicability on a real-world software engineering research task: the validation of configuration dependencies across software technologies. In summary, we make two novel contributions: (i) A novel, reusable methodological design for evaluating RAG systems, including a demonstration that represents a guideline, and (ii) a RAG system, which has been developed following this methodology, that achieves the highest accuracy in the field of dependency validation. For the blueprint's demonstration, the key insights are the crucial role of choosing appropriate baselines and metrics, the necessity for systematic RAG refinements derived from qualitative failure analysis, as well as the reporting practices of key design decision to foster replication and evaluation.},
+ author = {Simon, Sebastian and Mailach, Alina and Dorn, Johannes and Siegmund, Norbert},
+ date = {10/11/2024},
+ year = {2024},
+ title = {A Methodology for Evaluating RAG Systems: A Case Study On Configuration Dependency Validation},
+ url = {http://arxiv.org/pdf/2410.08801v1},
+ keywords = {Benchmarking;evaluation;Replicable;Validity},
+ file = {2410.08801v1:Attachments/2410.08801v1.pdf:application/pdf}
+}
+
+
 @misc{Kandpal.15.11.2022,
  abstract = {The Internet contains a wealth of knowledge -- from the birthdays of historical figures to tutorials on how to code -- all of which may be learned by language models. However, while certain pieces of information are ubiquitous on the web, others appear extremely rarely. In this paper, we study the relationship between the knowledge memorized by large language models and the information in pre-training datasets scraped from the web. In particular, we show that a language model's ability to answer a fact-based question relates to how many documents associated with that question were seen during pre-training. We identify these relevant documents by entity linking pre-training datasets and counting documents that contain the same entities as a given question-answer pair. Our results demonstrate strong correlational and causal relationships between accuracy and relevant document count for numerous question answering datasets (e.g., TriviaQA), pre-training corpora (e.g., ROOTS), and model sizes (e.g., 176B parameters). Moreover, while larger models are better at learning long-tail knowledge, we estimate that today's models must be scaled by many orders of magnitude to reach competitive QA performance on questions with little support in the pre-training data. Finally, we show that retrieval-augmentation can reduce the dependence on relevant pre-training information, presenting a promising approach for capturing the long-tail.},
  author = {Kandpal, Nikhil and Deng, Haikang and Roberts, Adam and Wallace, Eric and Raffel, Colin},
@@ -42,9 +54,6 @@
  file = {Kandpal, Deng et al. 15.11.2022 - Large Language Models Struggle:Attachments/Kandpal, Deng et al. 15.11.2022 - Large Language Models Struggle.pdf:application/pdf}
 }
 
-
-
-% This file was created with Citavi 6.19.2.1
 
 @inproceedings{Rashkin.,
  author = {Rashkin, Hannah and Reitter, David and Tomar, Gaurav Singh and Das, Dipanjan},
@@ -61,3 +70,92 @@
 }
 
 
+% RAG Frameworks
+@misc{Liu_LlamaIndex_2022,
+author = {Liu, Jerry},
+doi = {10.5281/zenodo.1234},
+month = {11},
+title = {{LlamaIndex}},
+howpublished = {\url{https://github.com/jerryjliu/llama_index}},
+url = {https://github.com/jerryjliu/llama_index},
+year = {2022}
+}
+
+@misc{Chase_LangChain_2022,
+author = {Chase, Harrison},
+month = oct,
+title = {{LangChain}},
+url = {https://github.com/langchain-ai/langchain},
+howpublished = {\url{https://github.com/langchain-ai/langchain}},
+year = {2022}
+}
+
+
+@misc{AutoRAG,
+author = {Kim, Jeffrey and Kim, Bobb},
+month = feb,
+title = {{AutoRAG}},
+url = {https://github.com/Marker-Inc-Korea/AutoRAG},
+howpublished = {\url{https://github.com/Marker-Inc-Korea/AutoRAG}},
+year = {2024}
+}
+
+
+@inproceedings{zhang-etal-2024-raglab,
+    title = "{RAGLAB}: A Modular and Research-Oriented Unified Framework for Retrieval-Augmented Generation",
+    author = "Zhang, Xuanwang and
+      Song, Yunze and
+      Wang, Yidong and
+      Tang, Shuyun and
+      others",
+    booktitle = "Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+    month = dec,
+    year = "2024",
+    publisher = "Association for Computational Linguistics",
+}
+
+@software{Izsak_fastRAG_Efficient_Retrieval_2023,
+author = {Izsak, Peter and Berchansky, Moshe and Fleischer, Daniel and Laperdon, Ronen},
+license = {Apache-2.0},
+month = feb,
+title = {{fastRAG: Efficient Retrieval Augmentation and Generation Framework}},
+howpublished = {\url{https://github.com/IntelLabs/fastrag}},
+url = {https://github.com/IntelLabs/fastrag},
+version = {1.0},
+year = {2023}
+}
+
+@software{Pietsch_Haystack_the_end-to-end_2019,
+author = {Pietsch, Malte and Möller, Timo and Kostic, Bogdan and Risch, Julian and Pippi, Massimiliano and Jobanputra, Mayank and Zanzottera, Sara and Cerza, Silvano and Blagojevic, Vladimir and Stadelmann, Thomas and Soni, Tanay and Lee, Sebastian},
+month = nov,
+title = {{Haystack: the end-to-end NLP framework for pragmatic builders}},
+howpublished = {\url{https://github.com/deepset-ai/haystack}},
+url = {https://github.com/deepset-ai/haystack},
+year = {2019}
+}
+
+@misc{ralle,
+      title={RaLLe: A Framework for Developing and Evaluating Retrieval-Augmented Large Language Models}, 
+      author={Yasuto Hoshi and Daisuke Miyashita and Youyang Ng and Kento Tatsuno and Yasuhiro Morioka and Osamu Torii and Jun Deguchi},
+      url={https://arxiv.org/abs/2308.10633},
+      year={2023},
+      eprint={2308.10633},
+      howpublished = {\url{https://arxiv.org/abs/2308.10633}},
+      publisher={arXiv}
+}
+
+@article{FlashRAG,
+    author={Jiajie Jin and
+            Yutao Zhu and
+            Xinyu Yang and
+            Chenghao Zhang and
+            Zhicheng Dou},
+    title={FlashRAG: A Modular Toolkit for Efficient Retrieval-Augmented Generation Research},
+    journal={CoRR},
+    volume={abs/2405.13576},
+    year={2024},
+    url={https://arxiv.org/abs/2405.13576},
+    howpublished = {\url{https://arxiv.org/abs/2405.13576}},
+    eprinttype={arXiv},
+    eprint={2405.13576}
+}
