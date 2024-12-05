@@ -1,0 +1,68 @@
+% 03.12.2024: 645 Words - 7
+%15 Min: 
+%(1) 139 Words - 4
+%(2) 315 - 2
+
+\begin{itemize}
+    \item NLP is a subfield of AI that focuses on the interaction between computers and humans through natural language. 
+    \item LLMs are a type of Deep neural network models that has been trained on a large corpus of text data.
+    \item predominantly focusses today on transformer architecture \boldred{cite! Finde Studie}
+\end{itemize}
+
+\paragraph{Transformer Architecture}
+
+\boldred{Zähle auf, in welchen Modellen, Transfomer Technologie drin ist: OpenAI Models, BERT, ...}
+\boldred{Include Graphic from Attention is all you need}
+
+\begin{itemize}
+    \item The transformer architecture was introduced by Vaswani et al. in 2017 \boldred{cite!}
+    \item The transformer architecture is based on the self-attention mechanism.
+    \item The self-attention mechanism allows the model to weigh the importance of each word in a sentence.
+    \item The transformer architecture has been shown to outperform other architectures in various NLP tasks.
+\end{itemize}
+
+
+\subparagraph{Tokens}
+\begin{itemize}
+    \item The input and output sequences are tokenized into subwords, words or characters. (depends on model)
+\end{itemize}
+\subparagraph{Input Embedding}
+\begin{itemize}
+    \item The input embedding layer converts the input tokens into a dense vector representation, so that words with semntantically similar meanings are closer in the vector space.
+    \item The input embedding layer is trained along with the rest of the model. 
+\end{itemize}
+
+\subparagraph{Positional Encoding}
+\begin{itemize}
+    \item The positional encoding layer adds information about the position of each token in the input sequence, so that the model can distinguish between words with the same token but different positions.
+    \item The positional encoding layer is added to the input embedding layer before it is passed to the encoder.
+\end{itemize}
+
+\subparagraph{Multi-Head Self-Attention Block}
+\begin{itemize}
+    \item The multi-head self-attention layer consists of multiple so called heads. 
+    \item Each head consists of a Query, Key and Value matrix, which are used to calculate the attention scores between the input tokens.
+    \item The attention scores are used to weigh the importance of each token in the input sequence for each other token. \boldred{Graphic (3 Matrices of a short sentence for QKV)} 
+    \item The formula is given by: 
+    $$Attention(Q,K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V$$
+    \item All matrices are learned during training. Query and Key are used to calculate the attention scores
+    \item The division by $\sqrt{d_k}$ is used to stabilize the gradients during training.
+    \item the softmax function is used to normalize the attention scores.
+    \item for the decoder part with the masked multi-head self-attention, the attention scores are masked with $-inf$ for every token after the current calculated one right before the softmax, so that the model can only attend to previous tokens in the output sequence, so that the next predicted token is based only on the previous tokens. 
+\end{itemize}
+
+All heads are gonna sumed up and passed through a linear layer, which is followed by a layer normalization \boldred{cite LN}.
+
+
+\subparagraph{Encoder}
+
+The encoder transforms the sequences in a list of tokens and passes them to the input embedding layer and to the the positional encoding layer. After that it gets passed to several layers of multi-head self-attention plus a feed forward neural network blocks. The outputs of the encoder is passed to the decoder, if the architecture is an encoder-decoder architecture. Encoders can also stand alone for tasks like text classification or sentiment analysis.
+
+\subparagraph{Decoder}
+
+The decoder can be used in an encoder-decoder architecture and can standalone too. 
+In the encoder-decoder architecture the decoder starts with an starting ouput sequence or an empty one. The output sequence is passed to the output embedding layer and to the positional encoding layer. After that it gets passed to several layers of masked and non-masked multi-head self-attention, plus a feed forward neural network blocks. The outputs of the decoder is passed to the output layer, which is a linear layer followed by a softmax function. The output layer predicts the next token in the output sequence. The output sequence is passed to the decoder again, so that the model can predict the next token based on the previous tokens. This process is called autoregressive generation.
+
+
+
+\boldred{Nenne Tuning Parameter wie Temperature, Top-K, Top-P, Beam-Search, Sampling, Greedy Decoding und ordne sie ein.}
