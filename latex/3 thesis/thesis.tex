@@ -43,12 +43,16 @@
 % -------------------------------
 \usepackage{xcolor}
 \usepackage{soul}
+
+% Graphical packages
+\usepackage{graphicx}
 \newcommand{\bscom}[2]{%
   % #1 Original text.
   % #2 Replacement text.
     \st{\scriptsize\,#1}{\color{blue}\scriptsize\,#2}%
   }
-
+  
+  \newcommand{\boldred}[1]{\textbf{\textcolor{red}{#1}}}
 % Create links in the pdf document
 % Hyperref has some incompatibilities with other packages
 % Some other packages must be loaded before, some after hyperref
@@ -77,14 +81,11 @@
 \end{frontmatter}
 
 \chapter{Introduction}\label{introduction}
-\input{chapters/introduction}
-
-\chapter{Preliminaries}\label{preliminaries}
-\input{chapters/preliminaries}
+\input{chapters/10_introduction}
 
 \chapter{Background}\label{background}
-\input{chapters/background}
-
+\section{Large Language Models}\label{llm}
+\input{chapters/21_Language_Models}
 
 % Appendix
 \appendix
