@@ -24,6 +24,19 @@ def run_evaluations(
 ):
     pass
 
+@app.command()
+def draw_pipeline(
+    configuration_file: str = typer.Argument(...),
+    output_file: str = typer.Option(
+        None,
+        "--output-file",
+        "-o",
+        help="The name of the output file.",
+    ),
+):
+    from .pipeline import config_to_pipeline
+    config_to_pipeline(configuration_file, output_file)
+
 def _version_callback(value: bool) -> None:
     if value:
         typer.echo(f"{__app_name__} v{__version__}")

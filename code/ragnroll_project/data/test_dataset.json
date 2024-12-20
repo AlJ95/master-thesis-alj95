@@ -1,0 +1,213 @@
+{
+    "test_cases": [
+        {
+            "input": "Muss ich Nachteile in Kauf nehmen, weil die W\u00e4rmez\u00e4hler zu sp\u00e4t und falsch eingebaut wurden, und h\u00e4tte der Verbrauch ab 11/2023 verbrauchsgerecht abgerechnet werden m\u00fcssen?",
+            "actual_output": "",
+            "expected_output": "Gem\u00e4\u00df \u00a7 12 Abs. 1 Satz 1 der Heizkostenverordnung (HKVO) hast du das Recht, die Heizkosten um 15 % zu k\u00fcrzen, wenn die W\u00e4rmez\u00e4hler nicht ordnungsgem\u00e4\u00df installiert wurden. Dies ber\u00fccksichtigt das Verursacherprinzip und erm\u00f6glicht eine Reduzierung der Heizkosten aufgrund der versp\u00e4teten und fehlerhaften Installation der Z\u00e4hler.",
+            "retrieval_context": [
+                "\u00a7 12 Abs. 1 Satz 1 Heizkostenverordnung (HKVO): (1) Soweit die Kosten der Versorgung mit W\u00e4rme oder Warmwasser entgegen den Vorschriften dieser Verordnung nicht verbrauchsabh\u00e4ngig abgerechnet werden, hat der Nutzer das Recht, bei der nicht verbrauchsabh\u00e4ngigen Abrechnung der Kosten den auf ihn entfallenden Anteil um 15 vom Hundert zu k\u00fcrzen. Wenn der Geb\u00e4udeeigent\u00fcmer entgegen \u00a7 5 Absatz 2 oder Absatz 3 keine fernablesbare Ausstattung zur Verbrauchserfassung installiert hat, hat der Nutzer das Recht, bei der Abrechnung der Kosten den auf ihn entfallenden Anteil um 3 vom Hundert zu k\u00fcrzen."
+            ]
+        },
+        {
+            "input": "Darf der Vermieter die Kosten f\u00fcr die Fensterwartung auf den Mieter umlegen, auch wenn dies nicht explizit im Mietvertrag vereinbart wurde?",
+            "actual_output": "",
+            "expected_output": "Laut \u00a7 2 BetrKV Punkt 17 k\u00f6nnen sonstige Betriebskosten nur umgelegt werden, wenn sie explizit im Mietvertrag genannt sind. Ein allgemeiner Verweis auf die Betriebskostenverordnung reicht nicht aus. Das Amtsgericht Rheine (AG Rheine) entschied am 10.10.2018 (10 C 112/18), dass Fensterwartungskosten explizit vereinbart werden m\u00fcssen, um umgelegt werden zu k\u00f6nnen. Fehlt eine solche Vereinbarung, ist die Umlage unzul\u00e4ssig.",
+            "retrieval_context": [
+                "$ 2 BetrKV Verordnung \u00fcber die Aufstellung von Betriebskosten (Betriebskostenverordnung - BetrKV) Absatz 1: Betriebskosten sind die Kosten, die dem Eigent\u00fcmer oder Erbbauberechtigten durch das Eigentum oder Erbbaurecht am Grundst\u00fcck oder durch den bestimmungsm\u00e4\u00dfigen Gebrauch des Geb\u00e4udes, der Nebengeb\u00e4ude, Anlagen, Einrichtungen und des Grundst\u00fccks laufend entstehen. Sach- und Arbeitsleistungen des Eigent\u00fcmers oder Erbbauberechtigten d\u00fcrfen mit dem Betrag angesetzt werden, der f\u00fcr eine gleichwertige Leistung eines Dritten, insbesondere eines Unternehmers, angesetzt werden k\u00f6nnte; die Umsatzsteuer des Dritten darf nicht angesetzt werden.",
+                "$ 2 BetrKV Verordnung \u00fcber die Aufstellung von Betriebskosten (Betriebskostenverordnung - BetrKV) Absatz 2:  Zu den Betriebskosten geh\u00f6ren nicht:\n1.\ndie Kosten der zur Verwaltung des Geb\u00e4udes erforderlichen Arbeitskr\u00e4fte und Einrichtungen, die Kosten der Aufsicht, der Wert der vom Vermieter pers\u00f6nlich geleisteten Verwaltungsarbeit, die Kosten f\u00fcr die gesetzlichen oder freiwilligen Pr\u00fcfungen des Jahresabschlusses und die Kosten f\u00fcr die Gesch\u00e4ftsf\u00fchrung (Verwaltungskosten),\n2.\ndie Kosten, die w\u00e4hrend der Nutzungsdauer zur Erhaltung des bestimmungsm\u00e4\u00dfigen Gebrauchs aufgewendet werden m\u00fcssen, um die durch Abnutzung, Alterung und Witterungseinwirkung entstehenden baulichen oder sonstigen M\u00e4ngel ordnungsgem\u00e4\u00df zu beseitigen (Instandhaltungs- und Instandsetzungskosten).\u00a7 2 BetrKV Punkt 17: sonstige Betriebskosten, hierzu geh\u00f6ren Betriebskosten im Sinne des \u00a7 1, die von den Nummern 1 bis 16 nicht erfasst sind."
+            ]
+        },
+        {
+            "input": "Handelt es sich bei dem Austausch einer defekten Heizungsanlage gegen eine neue, gleichwertige Anlage um eine Instandsetzung oder eine Modernisierung, und d\u00fcrfen die Kosten auf die Mieter umgelegt werden?",
+            "actual_output": "",
+            "expected_output": "Laut \u00a7 555b BGB handelt es sich um eine Modernisierungsma\u00dfnahme, wenn durch den Austausch der Heizungsanlage Endenergie nachhaltig eingespart wird. Wenn jedoch eine alte Anlage durch eine gleichwertige ersetzt wird, handelt es sich um eine Erhaltungsma\u00dfnahme (Instandhaltung oder Instandsetzung), und die Kosten d\u00fcrfen nicht auf die Mieter umgelegt werden. Der Vermieter muss die Modernisierungskosten genau vorrechnen und die notwendigen Ma\u00dfnahmen zur Reparatur der alten Anlage ber\u00fccksichtigen.",
+            "retrieval_context": [
+                "\u00a7 555b Modernisierungsma\u00dfnahmen: Modernisierungsma\u00dfnahmen sind bauliche Ver\u00e4nderungen,\n1.\ndurch die in Bezug auf die Mietsache Endenergie nachhaltig eingespart wird (energetische Modernisierung),\n1a.\ndurch die mittels Einbaus oder Aufstellung einer Heizungsanlage zum Zwecke der Inbetriebnahme in einem Geb\u00e4ude die Anforderungen des \u00a7 71 des Geb\u00e4udeenergiegesetzes erf\u00fcllt werden,\n2.\ndurch die nicht erneuerbare Prim\u00e4renergie nachhaltig eingespart oder das Klima nachhaltig gesch\u00fctzt wird, sofern nicht bereits eine energetische Modernisierung nach Nummer 1 vorliegt,\n3.\ndurch die der Wasserverbrauch nachhaltig reduziert wird,\n4.\ndurch die der Gebrauchswert der Mietsache nachhaltig erh\u00f6ht wird,\n4a.\ndurch die die Mietsache erstmalig mittels Glasfaser an ein \u00f6ffentliches Netz mit sehr hoher Kapazit\u00e4t im Sinne des \u00a7 3 Nummer 33 des Telekommunikationsgesetzes angeschlossen wird,\n5.\ndurch die die allgemeinen Wohnverh\u00e4ltnisse auf Dauer verbessert werden,\n6.\ndie auf Grund von Umst\u00e4nden durchgef\u00fchrt werden, die der Vermieter nicht zu vertreten hat, und die keine Erhaltungsma\u00dfnahmen nach \u00a7 555a sind, oder\n7.\ndurch die neuer Wohnraum geschaffen wird."
+            ]
+        },
+        {
+            "input": "Ist eine Mietminderung gerechtfertigt, wenn die vom Vermieter gestellte Waschmaschine seit 2 Monaten kaputt ist und der Vermieter keinen Handwerker beauftragt hat, um sie zu reparieren oder zu ersetzen?",
+            "actual_output": "",
+            "expected_output": "Laut \u00a7 536 BGB ist eine Mietminderung gerechtfertigt, wenn die Mietsache einen Mangel aufweist, der ihre Tauglichkeit zum vertragsgem\u00e4\u00dfen Gebrauch mindert. Da die Waschmaschine im Mietvertrag als Bestandteil der Mietsache aufgef\u00fchrt ist und seit 2 Monaten nicht funktioniert, ist eine Mietminderung f\u00fcr diesen Zeitraum gerechtfertigt. Der Vermieter ist verpflichtet, die Mietsache in einem vertragsgem\u00e4\u00dfen Zustand zu erhalten.",
+            "retrieval_context": [
+                "$ 536 BGB Mietminderung bei Sach- und Rechtsm\u00e4ngeln: (1) Hat die Mietsache zur Zeit der \u00dcberlassung an den Mieter einen Mangel, der ihre Tauglichkeit zum vertragsgem\u00e4\u00dfen Gebrauch aufhebt, oder entsteht w\u00e4hrend der Mietzeit ein solcher Mangel, so ist der Mieter f\u00fcr die Zeit, in der die Tauglichkeit aufgehoben ist, von der Entrichtung der Miete befreit. F\u00fcr die Zeit, w\u00e4hrend der die Tauglichkeit gemindert ist, hat er nur eine angemessen herabgesetzte Miete zu entrichten. Eine unerhebliche Minderung der Tauglichkeit bleibt au\u00dfer Betracht.",
+                "$ 536 BGB Mietminderung bei Sach- und Rechtsm\u00e4ngeln: (1a) F\u00fcr die Dauer von drei Monaten bleibt eine Minderung der Tauglichkeit au\u00dfer Betracht, soweit diese auf Grund einer Ma\u00dfnahme eintritt, die einer energetischen Modernisierung nach \u00a7 555b Nummer 1 dient.",
+                "$ 536 BGB Mietminderung bei Sach- und Rechtsm\u00e4ngeln: (2) Absatz 1 Satz 1 und 2 gilt auch, wenn eine zugesicherte Eigenschaft fehlt oder sp\u00e4ter wegf\u00e4llt.",
+                "$ 536 BGB Mietminderung bei Sach- und Rechtsm\u00e4ngeln: (3) Wird dem Mieter der vertragsgem\u00e4\u00dfe Gebrauch der Mietsache durch das Recht eines Dritten ganz oder zum Teil entzogen, so gelten die Abs\u00e4tze 1 und 2 entsprechend.",
+                "$ 536 BGB Mietminderung bei Sach- und Rechtsm\u00e4ngeln: (4) Bei einem Mietverh\u00e4ltnis \u00fcber Wohnraum ist eine zum Nachteil des Mieters abweichende Vereinbarung unwirksam."
+            ]
+        },
+        {
+            "input": "Wer muss f\u00fcr die Stromkostendifferenz aufkommen, wenn der Mieter aufgrund eines Zwischenz\u00e4hlers den Strom \u00fcber den Hauptz\u00e4hler des Nachbarn abrechnen muss, obwohl im Mietvertrag steht, dass der Strom direkt \u00fcber den Versorger abgerechnet werden soll?",
+            "actual_output": "",
+            "expected_output": "Der Vermieter muss den Strompreis ohne Auf- oder Abschlag an den Mieter weiterreichen, da der Mieter Vertragspartner des Vermieters ist. Der Vermieter ist verpflichtet, die technischen Voraussetzungen zu schaffen, damit der Mieter seinen Strom direkt beim Versorger abrechnen kann. Dies ergibt sich aus dem Messstellenbetriebsgesetz und der freien Lieferantenwahl in Deutschland. (\u00a7 675 Abs. 2 BGB, Messstellenbetriebsgesetz)",
+            "retrieval_context": [
+                "$ 675 Abs. 2 BGB: (2) Wer einem anderen einen Rat oder eine Empfehlung erteilt, ist, unbeschadet der sich aus einem Vertragsverh\u00e4ltnis, einer unerlaubten Handlung oder einer sonstigen gesetzlichen Bestimmung ergebenden Verantwortlichkeit, zum Ersatz des aus der Befolgung des Rates oder der Empfehlung entstehenden Schadens nicht verpflichtet."
+            ]
+        },
+        {
+            "input": "Wie lange hat der Vermieter Zeit, um auf eine Anfechtung der Heizkostenabrechnung zu reagieren?",
+            "actual_output": "",
+            "expected_output": "Es gibt keine festgelegte Frist im Gesetz, die den Vermieter verpflichtet, innerhalb einer bestimmten Zeit auf eine Anfechtung zu reagieren. Es handelt sich um eine Einzelfallentscheidung. Der Mieter sollte jedoch sicherstellen, dass er seine Einw\u00e4nde klar und nachvollziehbar darlegt und gegebenenfalls Akteneinsicht verlangt, um die Berechnungsgrundlagen zu \u00fcberpr\u00fcfen. Ein Verweis auf \u00a7 675 Abs. 2 BGB k\u00f6nnte hilfreich sein, um die Pflichten des Vermieters zu verdeutlichen.",
+            "retrieval_context": [
+                "$ 675 Abs. 2 BGB: (2) Wer einem anderen einen Rat oder eine Empfehlung erteilt, ist, unbeschadet der sich aus einem Vertragsverh\u00e4ltnis, einer unerlaubten Handlung oder einer sonstigen gesetzlichen Bestimmung ergebenden Verantwortlichkeit, zum Ersatz des aus der Befolgung des Rates oder der Empfehlung entstehenden Schadens nicht verpflichtet."
+            ]
+        },
+        {
+            "input": " Kann ein Mieter einen befristeten Mietvertrag vorzeitig k\u00fcndigen, wenn die im Vertrag genannten baulichen Ma\u00dfnahmen nicht konkret terminiert oder vorbereitet sind?",
+            "actual_output": "",
+            "expected_output": "Laut \u00a7 575 BGB muss die Begr\u00fcndung f\u00fcr die Befristung so umfassend sein, dass der Mieter erkennen kann, dass seine Wohnung w\u00e4hrend der geplanten Ma\u00dfnahmen nicht bewohnbar ist. Wenn die Begr\u00fcndung unklar ist oder keine konkreten Ma\u00dfnahmen und Termine genannt werden, kann die Befristung unwirksam sein und der Mietvertrag kann jederzeit mit gesetzlicher Frist gek\u00fcndigt werden. Ein Gerichtsurteil (AG Tempelhof-Kreuzberg vom 25.02.2019, Az.: 7 C 285/18) best\u00e4tigt, dass unklare Begr\u00fcndungen zur Unwirksamkeit der Befristung f\u00fchren k\u00f6nnen.",
+            "retrieval_context": [
+                "\u00a7 575 Zeitmietvertrag BGB (1): Ein Mietverh\u00e4ltnis kann auf bestimmte Zeit eingegangen werden, wenn der Vermieter nach Ablauf der Mietzeit\n1.\ndie R\u00e4ume als Wohnung f\u00fcr sich, seine Familienangeh\u00f6rigen oder Angeh\u00f6rige seines Haushalts nutzen will,\n2.\nin zul\u00e4ssiger Weise die R\u00e4ume beseitigen oder so wesentlich ver\u00e4ndern oder instand setzen will, dass die Ma\u00dfnahmen durch eine Fortsetzung des Mietverh\u00e4ltnisses erheblich erschwert w\u00fcrden, oder\n3.\ndie R\u00e4ume an einen zur Dienstleistung Verpflichteten vermieten will\nund er dem Mieter den Grund der Befristung bei Vertragsschluss schriftlich mitteilt. Anderenfalls gilt das Mietverh\u00e4ltnis als auf unbestimmte Zeit abgeschlossen.",
+                "\u00a7 575 Zeitmietvertrag BGB (2): Der Mieter kann vom Vermieter fr\u00fchestens vier Monate vor Ablauf der Befristung verlangen, dass dieser ihm binnen eines Monats mitteilt, ob der Befristungsgrund noch besteht. Erfolgt die Mitteilung sp\u00e4ter, so kann der Mieter eine Verl\u00e4ngerung des Mietverh\u00e4ltnisses um den Zeitraum der Versp\u00e4tung verlangen.",
+                "\u00a7 575 Zeitmietvertrag BGB (3): Tritt der Grund der Befristung erst sp\u00e4ter ein, so kann der Mieter eine Verl\u00e4ngerung des Mietverh\u00e4ltnisses um einen entsprechenden Zeitraum verlangen. Entf\u00e4llt der Grund, so kann der Mieter eine Verl\u00e4ngerung auf unbestimmte Zeit verlangen. Die Beweislast f\u00fcr den Eintritt des Befristungsgrundes und die Dauer der Verz\u00f6gerung trifft den Vermieter.",
+                "\u00a7 575 Zeitmietvertrag BGB (4): Eine zum Nachteil des Mieters abweichende Vereinbarung ist unwirksam."
+            ]
+        },
+        {
+            "input": "Was kann ich tun, wenn die Farbe von meinem Balkon herunterf\u00e4llt und die Vermieterin trotz mehrfacher Aufforderung das Problem nicht behebt?",
+            "actual_output": "",
+            "expected_output": "Der Mieter kann gem\u00e4\u00df \u00a7 536 BGB eine Mietminderung verlangen, wenn der Gebrauch der Mietsache erheblich beeintr\u00e4chtigt ist. Zudem kann der Mieter eine Frist zur M\u00e4ngelbeseitigung setzen und bei Fristablauf Schadensersatzanspr\u00fcche geltend machen. Es ist ratsam, die Vermieterin schriftlich aufzufordern, den Mangel innerhalb einer angemessenen Frist zu beheben.",
+            "retrieval_context": [
+                ""
+            ]
+        },
+        {
+            "input": "Kann der eigentliche Besitzer einer Garage, die ich bisher ohne Mietvertrag genutzt habe, r\u00fcckwirkend Miete von mir verlangen?",
+            "actual_output": "",
+            "expected_output": "Es k\u00f6nnte eine Nutzungsentsch\u00e4digung in Betracht kommen, da die Garage ohne Gegenleistung genutzt wurde. Dies k\u00f6nnte unter Umst\u00e4nden als Schadensersatzanspruch geltend gemacht werden, abh\u00e4ngig von den genauen Umst\u00e4nden und der rechtlichen Bewertung der Nutzung. (\u00a7 675 Abs. 2 BGB wurde erw\u00e4hnt).",
+            "retrieval_context": [
+                "\u00a7675 BGB (2): Wer einem anderen einen Rat oder eine Empfehlung erteilt, ist, unbeschadet der sich aus einem Vertragsverh\u00e4ltnis, einer unerlaubten Handlung oder einer sonstigen gesetzlichen Bestimmung ergebenden Verantwortlichkeit, zum Ersatz des aus der Befolgung des Rates oder der Empfehlung entstehenden Schadens nicht verpflichtet."
+            ]
+        },
+        {
+            "input": "Wer ist verantwortlich f\u00fcr die Beseitigung und die Kosten eines Schimmelflecks in einer Waschk\u00fcche, die sich in einem separaten Geb\u00e4ude auf dem Hof befindet und keine Heizung hat?",
+            "actual_output": "",
+            "expected_output": "Der Vermieter k\u00f6nnte verantwortlich sein, da der Raum keine Heizung hat und somit m\u00f6glicherweise ungeeignet f\u00fcr die Nutzung als Waschk\u00fcche ist. Dies k\u00f6nnte als baulicher Mangel betrachtet werden. Allerdings m\u00fcsste der Mieter nachweisen, dass der Schimmel nicht durch unsachgem\u00e4\u00dfe Nutzung entstanden ist. Laut \u00a7 675 Abs. 2 BGB haftet der Mieter nicht f\u00fcr Sch\u00e4den, f\u00fcr die er nicht verantwortlich ist.",
+            "retrieval_context": [
+                "\u00a7675 BGB (2): Wer einem anderen einen Rat oder eine Empfehlung erteilt, ist, unbeschadet der sich aus einem Vertragsverh\u00e4ltnis, einer unerlaubten Handlung oder einer sonstigen gesetzlichen Bestimmung ergebenden Verantwortlichkeit, zum Ersatz des aus der Befolgung des Rates oder der Empfehlung entstehenden Schadens nicht verpflichtet."
+            ]
+        },
+        {
+            "input": "Darf der Vermieter ohne Zustimmung des Mieters den Garten eines vermieteten Einfamilienhauses betreten, um notwendige Gartenarbeiten durchzuf\u00fchren, wenn der Mieter seinen Pflichten zur Gartenpflege nicht nachkommt?",
+            "actual_output": "",
+            "expected_output": "Laut \u00a7 555a BGB muss der Mieter notwendige Erhaltungsma\u00dfnahmen dulden, die rechtzeitig angek\u00fcndigt werden m\u00fcssen, es sei denn, sie sind nur mit einer unerheblichen Einwirkung auf die Mietsache verbunden oder ihre sofortige Durchf\u00fchrung ist zwingend erforderlich. Der Vermieter muss jedoch die Zustimmung des Mieters einholen, um den Garten zu betreten, und kann nicht ohne Weiteres eigenm\u00e4chtig handeln",
+            "retrieval_context": [
+                "\u00a7 555a BGB Erhaltungsma\u00dfnahmen (1): Der Mieter hat Ma\u00dfnahmen zu dulden, die zur Instandhaltung oder Instandsetzung der Mietsache erforderlich sind (Erhaltungsma\u00dfnahmen).",
+                "\u00a7 555a BGB Erhaltungsma\u00dfnahmen (2): Erhaltungsma\u00dfnahmen sind dem Mieter rechtzeitig anzuk\u00fcndigen, es sei denn, sie sind nur mit einer unerheblichen Einwirkung auf die Mietsache verbunden oder ihre sofortige Durchf\u00fchrung ist zwingend erforderlich.",
+                "\u00a7 555a BGB Erhaltungsma\u00dfnahmen (3): Aufwendungen, die der Mieter infolge einer Erhaltungsma\u00dfnahme machen muss, hat der Vermieter in angemessenem Umfang zu ersetzen. Auf Verlangen hat er Vorschuss zu leisten.",
+                "\u00a7 555a BGB Erhaltungsma\u00dfnahmen (4): Eine zum Nachteil des Mieters von Absatz 2 oder 3 abweichende Vereinbarung ist unwirksam."
+            ]
+        },
+        {
+            "input": "Kann ich als Vermieter das Mietverh\u00e4ltnis fristlos k\u00fcndigen, wenn der Mieter mit der Mietzahlung in Verzug ger\u00e4t?",
+            "actual_output": "",
+            "expected_output": "Ein Vermieter kann das Mietverh\u00e4ltnis fristlos k\u00fcndigen, wenn der Mieter mit der Mietzahlung in Verzug ger\u00e4t. Allerdings muss der Vermieter dem Mieter zuerst eine angemessene Frist zur Zahlung setzen (\u00a7 543 Abs. 3 BGB). Wenn der Mieter innerhalb dieser Frist nicht zahlt, kann der Vermieter das Mietverh\u00e4ltnis fristlos k\u00fcndigen (\u00a7 543 Abs. 1 BGB).",
+            "retrieval_context": [
+                "\u00a7 543 Abs. 1 BGB: Fristlose K\u00fcndigung aus wichtigem Grund. Ein Mietverh\u00e4ltnis kann von beiden Parteien ohne Einhaltung einer K\u00fcndigungsfrist gek\u00fcndigt werden, wenn ein wichtiger Grund vorliegt.",
+                "\u00a7 543 Abs. 2 Nr. 3 BGB: Ein wichtiger Grund zur fristlosen K\u00fcndigung liegt insbesondere vor, wenn der Mieter in zwei aufeinanderfolgenden Monaten mit der Entrichtung der Miete oder eines nicht unerheblichen Teils der Miete in Verzug ist oder wenn der Mieter in einem Zeitraum, der sich \u00fcber mehr als zwei Termine erstreckt, mit der Entrichtung der Miete in H\u00f6he eines Betrages in Verzug ist, der die Miete f\u00fcr zwei Monate erreicht.",
+                "\u00a7 543 Abs. 3 BGB: Vor der fristlosen K\u00fcndigung muss der Vermieter dem Mieter eine angemessene Frist zur Zahlung setzen, es sei denn, eine solche Fristsetzung ist aufgrund besonderer Umst\u00e4nde des Einzelfalls entbehrlich. Wenn der Mieter innerhalb dieser Frist nicht zahlt, kann der Vermieter das Mietverh\u00e4ltnis fristlos k\u00fcndigen."
+            ]
+        },
+        {
+            "input": "Wer ist f\u00fcr die Durchf\u00fchrung von Sch\u00f6nheitsreparaturen verantwortlich?",
+            "actual_output": "",
+            "expected_output": "Grunds\u00e4tzlich ist der Vermieter f\u00fcr die Durchf\u00fchrung von Sch\u00f6nheitsreparaturen verantwortlich (\u00a7 535 Abs. 1 Satz 2 BGB). Diese Pflicht kann jedoch im Mietvertrag auf den Mieter \u00fcbertragen werden, sofern die entsprechende Klausel klar und verst\u00e4ndlich formuliert ist. Unklare oder zu weitgehende Klauseln sind unwirksam (\u00a7 307 BGB). Sch\u00f6nheitsreparaturen umfassen Ma\u00dfnahmen, die den urspr\u00fcnglichen Zustand der Mietwohnung wiederherstellen oder erhalten sollen, wie das Streichen, Tapezieren und das Lackieren von Heizk\u00f6rpern, T\u00fcren und Fenstern von innen. Der Mieter darf die Wohnung w\u00e4hrend der Mietzeit nach seinen Vorstellungen gestalten, muss sie jedoch bei Auszug in einem neutralen Zustand zur\u00fcckgeben. Laut Rechtsprechung des Bundesgerichtshofs (BGH) m\u00fcssen extreme oder sehr dunkle Farben vor dem Auszug beseitigt werden, um eine problemlose Weitervermietung zu erm\u00f6glichen (BGH, Urteil vom 6. November 2013 \u2013 VIII ZR 416/12). Starre Fristen f\u00fcr die Durchf\u00fchrung von Sch\u00f6nheitsreparaturen sind unwirksam (BGH, Urteil vom 23. Juni 2004 \u2013 VIII ZR 361/03). Zusammengefasst ist der Vermieter f\u00fcr Sch\u00f6nheitsreparaturen verantwortlich, sofern nicht eine wirksame vertragliche Regelung diese Pflicht auf den Mieter \u00fcbertr\u00e4gt.",
+            "retrieval_context": [
+                "\u00a7 535 Abs. 1 Satz 2 BGB: Der Vermieter ist verpflichtet, die Mietsache in einem zum vertragsgem\u00e4\u00dfen Gebrauch geeigneten Zustand zu \u00fcberlassen und w\u00e4hrend der Mietzeit zu erhalten. Dies umfasst auch die Durchf\u00fchrung von Sch\u00f6nheitsreparaturen.",
+                "\u00a7 307 BGB: Inhaltskontrolle von Allgemeinen Gesch\u00e4ftsbedingungen. Eine Klausel im Mietvertrag, die die Sch\u00f6nheitsreparaturen auf den Mieter \u00fcbertr\u00e4gt, darf den Mieter nicht unangemessen benachteiligen. Unklare oder zu weitgehende Klauseln sind unwirksam.",
+                "BGH, Urteil vom 6. November 2013 \u2013 VIII ZR 416/12: Klauseln, die den Mieter verpflichten, extreme oder sehr dunkle Farben vor dem Auszug zu beseitigen, sind zul\u00e4ssig, um eine problemlose Weitervermietung zu erm\u00f6glichen.",
+                "BGH, Urteil vom 23. Juni 2004 \u2013 VIII ZR 361/03: Starre Fristen f\u00fcr die Durchf\u00fchrung von Sch\u00f6nheitsreparaturen sind unwirksam. Klauseln m\u00fcssen den tats\u00e4chlichen Zustand der Wohnung ber\u00fccksichtigen."
+            ]
+        },
+        {
+            "input": "Kann ich als Vermieter eine Wohnung gegen den Willen des Mieters r\u00e4umen lassen?",
+            "actual_output": "",
+            "expected_output": "Nein, als Vermieter k\u00f6nnen Sie eine Wohnung nicht gegen den Willen des Mieters r\u00e4umen lassen, ohne ein gerichtliches Verfahren einzuleiten. Eine Wohnung kann nur nach einem R\u00e4umungsprozess aufgrund eines R\u00e4umungsurteils oder R\u00e4umungsvergleichs zwangsger\u00e4umt werden. Ein R\u00e4umungsurteil setzt mindestens eine R\u00e4umungsklage voraus (\u00a7 546 Abs. 1 BGB), die wiederum erfordert, dass dem Mieter wirksam die K\u00fcndigung erkl\u00e4rt wurde und eine etwaige K\u00fcndigungsfrist abgelaufen ist (\u00a7 573 BGB). Die Polizei r\u00e4umt im Auftrag des Vermieters keine Wohnungen. Wenn der Vermieter selbst oder mit eigenen Helfern versucht, die Wohnung gegen den Willen des Mieters zu r\u00e4umen, macht er sich strafbar (\u00a7 123 StGB - Hausfriedensbruch; \u00a7 240 StGB - N\u00f6tigung). Zusammengefasst, eine Zwangsr\u00e4umung darf nur durch ein gerichtliches Verfahren erfolgen, wobei ein R\u00e4umungstitel durch eine R\u00e4umungsklage und ein entsprechendes Urteil erlangt werden muss. Eigenm\u00e4chtiges Handeln oder Selbsthilfe ist rechtlich nicht zul\u00e4ssig.",
+            "retrieval_context": [
+                "\u00a7 546 Abs. 1 BGB: Nach Beendigung des Mietverh\u00e4ltnisses ist der Mieter verpflichtet, die Mietsache an den Vermieter zur\u00fcckzugeben.",
+                "\u00a7 573 BGB: Ordentliche K\u00fcndigung des Mietverh\u00e4ltnisses durch den Vermieter. Eine K\u00fcndigung ist nur unter bestimmten Voraussetzungen zul\u00e4ssig, und der Vermieter muss die K\u00fcndigungsfristen einhalten.",
+                "\u00a7 123 StGB: Hausfriedensbruch. Der Vermieter macht sich strafbar, wenn er gegen den Willen des Mieters dessen Wohnung betritt oder r\u00e4umt.",
+                "\u00a7 240 StGB: N\u00f6tigung. Der Vermieter macht sich strafbar, wenn er versucht, den Mieter durch Gewalt oder Drohung zur R\u00e4umung der Wohnung zu zwingen."
+            ]
+        },
+        {
+            "input": "Darf ich als Vermieter ungefragt in die Wohnung eintreten?",
+            "actual_output": "",
+            "expected_output": "Gem\u00e4\u00df \u00a7 809 BGB muss der Mieter den Vermieter auf Anfrage in die Wohnung lassen, wenn der Vermieter einen berechtigten Grund hat, die Wohnung zu betreten. Solche Gr\u00fcnde k\u00f6nnen Renovierungs- und Wartungsarbeiten, Mess- und Ablesetermine sowie Gefahr oder konkreter Verdacht sein. Der Vermieter muss den Besuch rechtzeitig ank\u00fcndigen und sich an orts\u00fcbliche Zeiten halten. Der Mieter kann unberechtigten Zutritt verweigern, sollte jedoch darauf achten, dass er sich nicht schadensersatzpflichtig macht. Im Falle eines Mieterwechsels oder Verkaufs der Wohnung muss der Mieter dem Vermieter die M\u00f6glichkeit zur Wohnungsbesichtigung geben.",
+            "retrieval_context": [
+                "\u00a7 809 BGB: Der Besitzer einer Sache kann von demjenigen, der ein Recht an der Sache hat, verlangen, dass dieser ihm den Zutritt zu der Sache gestattet, soweit die Aus\u00fcbung des Rechts dies erfordert. Dazu geh\u00f6rt auch das Betreten einer Mietwohnung durch den Vermieter, wenn ein berechtigter Grund vorliegt.",
+                "\u00a7 535 Abs. 1 Satz 2 BGB: Der Vermieter ist verpflichtet, die Mietsache in einem zum vertragsgem\u00e4\u00dfen Gebrauch geeigneten Zustand zu \u00fcberlassen und w\u00e4hrend der Mietzeit zu erhalten. Dies kann Besuche des Vermieters zur \u00dcberpr\u00fcfung des Zustands der Wohnung erforderlich machen.",
+                "Rechtsprechung des Bundesgerichtshofs (BGH): Der Vermieter muss den Besuch rechtzeitig ank\u00fcndigen und sich an orts\u00fcbliche Zeiten halten. Unangek\u00fcndigte Besuche sind grunds\u00e4tzlich unzul\u00e4ssig.",
+                "\u00a7 541 BGB: Wenn der Mieter seine Pflicht zur Duldung des Zutritts verweigert, kann der Vermieter eine einstweilige Verf\u00fcgung zur Duldung des Zutritts erwirken."
+            ]
+        },
+        {
+            "input": "Wie kann ein Vermieter mit Mietnomaden umgehen, die spurlos verschwinden und die Wohnung besch\u00e4digt und verwahrlost zur\u00fccklassen?",
+            "actual_output": "",
+            "expected_output": "Der Vermieter sollte das Mietverh\u00e4ltnis ordnungsgem\u00e4\u00df k\u00fcndigen, um die Wohnung wieder vermietbar zu machen. Dazu ist eine fristlose K\u00fcndigung erforderlich, wenn der Mieter mit zwei aufeinanderfolgenden Monatsmieten im Verzug ist (\u00a7 543 II 1 Nr. 3a BGB). Die K\u00fcndigung muss schriftlich erfolgen und dem Mieter zugehen. Wenn der Mieter nicht auffindbar ist, kann eine \u00f6ffentliche Zustellung beim Amtsgericht beantragt werden. Nach Beendigung des R\u00e4umungsprozesses kann der Vermieter die Wohnung neu vermieten. Zus\u00e4tzlich hat der Vermieter Anspr\u00fcche auf Zahlung des Mietzinses bis zur Beendigung des Mietverh\u00e4ltnisses und auf Nutzungsentsch\u00e4digung danach (\u00a7 546a BGB). Schadensersatzanspr\u00fcche k\u00f6nnen bei Sch\u00e4den geltend gemacht werden, die \u00fcber den normalen Gebrauch hinausgehen. Es ist ratsam, einen erfahrenen Rechtsanwalt im Mietrecht hinzuzuziehen, um die rechtlichen Interessen des Vermieters zu wahren.",
+            "retrieval_context": [
+                "\u00a7 543 Abs. 2 Nr. 3a BGB: Der Vermieter kann das Mietverh\u00e4ltnis fristlos k\u00fcndigen, wenn der Mieter mit zwei aufeinander folgenden Monatsmieten im Verzug ist.",
+                "\u00a7 546a BGB: Der Mieter ist verpflichtet, die Mietsache nach Beendigung des Mietverh\u00e4ltnisses zur\u00fcckzugeben. F\u00fcr den Zeitraum bis zur R\u00fcckgabe der Mietsache ist der Mieter verpflichtet, die Miete weiter zu zahlen. Der Vermieter kann auch eine Nutzungsentsch\u00e4digung verlangen, wenn der Mieter die Wohnung nach Beendigung des Mietverh\u00e4ltnisses weiterhin nutzt.",
+                "\u00a7 562 BGB: Der Vermieter hat Anspruch auf Zahlung der Miete bis zum Ende des Mietverh\u00e4ltnisses, auch wenn die Wohnung durch den Mieter besch\u00e4digt oder verwahrlost zur\u00fcckgelassen wird.",
+                "Rechtsprechung: Schadensersatzanspr\u00fcche k\u00f6nnen geltend gemacht werden f\u00fcr Sch\u00e4den, die \u00fcber den normalen Gebrauch hinausgehen. Der Vermieter sollte auch die M\u00f6glichkeit der \u00f6ffentlichen Zustellung beim Amtsgericht pr\u00fcfen, wenn der Mieter nicht auffindbar ist.",
+                "Empfehlung: Es ist ratsam, einen erfahrenen Rechtsanwalt im Mietrecht hinzuzuziehen, um die rechtlichen Interessen des Vermieters im Falle von Mietnomaden zu wahren."
+            ]
+        },
+        {
+            "input": "Darf ich als Vermieter den Mietvertrag fristlos k\u00fcndigen, wenn der Mieter eine falsche Selbstauskunft bez\u00fcglich Mietschulden aus fr\u00fcheren Mietverh\u00e4ltnissen abgegeben hat?",
+            "actual_output": "",
+            "expected_output": "Gem\u00e4\u00df \u00a7 543 Abs. 2 Nr. 3 BGB kann der Vermieter das Mietverh\u00e4ltnis fristlos k\u00fcndigen, wenn der Mieter seine vertraglichen Pflichten schuldhaft nicht unerheblich verletzt. Eine arglistige T\u00e4uschung des Vermieters durch den Mieter kann eine solche Vertragsverletzung darstellen.",
+            "retrieval_context": [
+                "\u00a7 543 Abs. 2 Nr. 3 BGB: Der Vermieter kann das Mietverh\u00e4ltnis fristlos k\u00fcndigen, wenn der Mieter seine vertraglichen Pflichten schuldhaft nicht unerheblich verletzt. Eine solche Vertragsverletzung liegt vor, wenn der Mieter wesentliche Vertragspflichten verletzt, z.B. durch arglistige T\u00e4uschung.",
+                "Rechtsprechung: Arglistige T\u00e4uschung des Vermieters durch falsche Angaben in der Selbstauskunft kann als schwerwiegender Grund f\u00fcr eine fristlose K\u00fcndigung angesehen werden, da sie das Vertrauensverh\u00e4ltnis zwischen Mieter und Vermieter beeintr\u00e4chtigt.",
+                "\u00a7 280 BGB: Schadensersatzanspr\u00fcche k\u00f6nnen auch geltend gemacht werden, wenn durch die falsche Selbstauskunft Sch\u00e4den entstanden sind, die \u00fcber die Mietkaution hinausgehen."
+            ]
+        },
+        {
+            "input": "Ist der vertragliche Ausschluss von Schadensersatzanspr\u00fcchen des Mieters gegen den Vermieter wegen Sachsch\u00e4den, die durch M\u00e4ngel der Mietsache verursacht sind, f\u00fcr die der Vermieter aufgrund leichter Fahrl\u00e4ssigkeit einzustehen hat, durch die in einem vom Vermieter gestellten Formularmietvertrag \u00fcber Wohnraum enthaltene Klausel wirksam?",
+            "actual_output": "",
+            "expected_output": "Nein, der vertragliche Ausschluss von Schadensersatzanspr\u00fcchen des Mieters gegen den Vermieter wegen Sachsch\u00e4den, die durch M\u00e4ngel der Mietsache verursacht sind und f\u00fcr die der Vermieter aufgrund leichter Fahrl\u00e4ssigkeit einzustehen hat, ist in einem vom Vermieter gestellten Formularmietvertrag \u00fcber Wohnraum unwirksam. Nach \u00a7 307 Abs. 1 BGB sind Klauseln in Allgemeinen Gesch\u00e4ftsbedingungen unwirksam, wenn sie den Vertragspartner des Verwenders unangemessen benachteiligen. Ein Ausschluss der Haftung des Vermieters f\u00fcr leichte Fahrl\u00e4ssigkeit w\u00fcrde den Mieter unangemessen benachteiligen, da der Vermieter gem\u00e4\u00df \u00a7 536a Abs. 1 BGB f\u00fcr Sch\u00e4den einzustehen hat, die durch anf\u00e4ngliche M\u00e4ngel der Mietsache verursacht werden, wenn diese M\u00e4ngel durch eine Pflichtverletzung des Vermieters entstehen. Ferner stellt \u00a7 309 Nr. 7 BGB klar, dass ein Ausschluss der Haftung f\u00fcr leichte Fahrl\u00e4ssigkeit bei der Verletzung von Leben, K\u00f6rper oder Gesundheit des Vertragspartners unwirksam ist. Selbst wenn es um Sachsch\u00e4den geht, w\u00fcrde eine solche Klausel die gesetzlichen Rechte des Mieters erheblich einschr\u00e4nken und ist daher nach der Rechtsprechung des Bundesgerichtshofs (BGH) unwirksam.",
+            "retrieval_context": [
+                "\u00a7 307 Abs. 1 BGB: Klauseln in Allgemeinen Gesch\u00e4ftsbedingungen sind unwirksam, wenn sie den Vertragspartner des Verwenders unangemessen benachteiligen.",
+                "\u00a7 536a Abs. 1 BGB: Der Vermieter ist f\u00fcr Sch\u00e4den verantwortlich, die durch M\u00e4ngel der Mietsache verursacht werden, wenn diese M\u00e4ngel durch eine Pflichtverletzung des Vermieters entstehen.",
+                "\u00a7 309 Nr. 7 BGB: Ein Ausschluss der Haftung f\u00fcr leichte Fahrl\u00e4ssigkeit bei der Verletzung von Leben, K\u00f6rper oder Gesundheit des Vertragspartners ist unwirksam.",
+                "BGH-Rechtsprechung: Klauseln in Formularmietvertr\u00e4gen, die den Vermieter von der Haftung f\u00fcr leichte Fahrl\u00e4ssigkeit ausschlie\u00dfen, benachteiligen den Mieter unangemessen und sind daher unwirksam."
+            ]
+        },
+        {
+            "input": "Besteht ein Schadensersatzanspruch des Vermieters, wenn der Mieter die Mietsache bei R\u00fcckgabe bunt gestrichen hat?",
+            "actual_output": "",
+            "expected_output": "Ja, der Vermieter kann unter bestimmten Umst\u00e4nden einen Schadensersatzanspruch haben, wenn der Mieter die Mietsache bei R\u00fcckgabe bunt gestrichen hat. Nach \u00a7 535 Abs. 1 Satz 2 BGB ist der Mieter verpflichtet, die Mietsache in einem vertragsgem\u00e4\u00dfen Zustand zu erhalten. Wenn die Mietr\u00e4ume in neutralen Farben \u00fcbergeben wurden und im Mietvertrag festgelegt ist, dass Ver\u00e4nderungen in der Farbgebung bei Auszug r\u00fcckg\u00e4ngig zu machen sind, hat der Mieter daf\u00fcr Sorge zu tragen, dass die R\u00e4ume bei R\u00fcckgabe in einem Zustand sind, der eine Weitervermietung ohne weitere Ma\u00dfnahmen erm\u00f6glicht. Der Bundesgerichtshof (BGH) hat in mehreren Urteilen (z.B. BGH, Urteil vom 6. November 2013 \u2013 VIII ZR 416/12) entschieden, dass der Mieter verpflichtet ist, die W\u00e4nde in einer Dekoration zur\u00fcckzugeben, die dem durchschnittlichen Geschmack entspricht und eine schnelle Weitervermietung erm\u00f6glicht. Farbanstriche, die vom neutralen Zustand stark abweichen (z.B. kr\u00e4ftige oder ungew\u00f6hnliche Farben), m\u00fcssen daher vom Mieter vor der R\u00fcckgabe beseitigt werden. Unterl\u00e4sst der Mieter dies, kann der Vermieter Schadensersatz f\u00fcr die Kosten der notwendigen Renovierungsarbeiten verlangen, um die Mietsache wieder in einen vermietbaren Zustand zu versetzen.",
+            "retrieval_context": [
+                "\u00a7 535 Abs. 1 Satz 2 BGB: Der Mieter ist verpflichtet, die Mietsache in einem vertragsgem\u00e4\u00dfen Zustand zu erhalten und bei R\u00fcckgabe in einem Zustand zu \u00fcbergeben, der den vertraglichen Vereinbarungen entspricht.",
+                "BGH-Urteil vom 6. November 2013 \u2013 VIII ZR 416/12: Der Mieter muss die Wohnung bei Auszug in einem Zustand zur\u00fcckgeben, der dem durchschnittlichen Geschmack entspricht und eine schnelle Weitervermietung erm\u00f6glicht. Extreme Farbgestaltungen m\u00fcssen entfernt werden.",
+                "Allgemeine Richtlinien: Farbanstriche, die stark vom neutralen Zustand abweichen, m\u00fcssen vor der R\u00fcckgabe beseitigt werden, um den Zustand f\u00fcr die Wiedervermietung zu optimieren."
+            ]
+        },
+        {
+            "input": "Unter welchen Voraussetzungen hat der Vermieter einen Anspruch auf Zustimmung zur Mieterh\u00f6hung?",
+            "actual_output": "",
+            "expected_output": "Der Vermieter hat unter bestimmten Voraussetzungen einen Anspruch auf Zustimmung zur Mieterh\u00f6hung. Nach \u00a7 558 BGB kann der Vermieter vom Mieter die Zustimmung zu einer Erh\u00f6hung der Miete bis zur orts\u00fcblichen Vergleichsmiete verlangen, wenn seit der letzten Mieterh\u00f6hung mindestens 15 Monate vergangen sind. Die Mieterh\u00f6hung darf innerhalb von drei Jahren nicht mehr als 20 Prozent betragen (in angespannten Wohnungsm\u00e4rkten kann die Kappungsgrenze auf 15 Prozent reduziert sein, gem\u00e4\u00df \u00a7 558 Abs. 3 BGB). Der Vermieter muss die Mieterh\u00f6hung schriftlich begr\u00fcnden, etwa durch Verweis auf einen Mietspiegel, eine Auskunft aus einer Mietdatenbank oder ein Sachverst\u00e4ndigengutachten (\u00a7 558a BGB). Der Mieter hat dann eine \u00dcberlegungsfrist von zwei Monaten, um der Mieterh\u00f6hung zuzustimmen. Tut er dies nicht, kann der Vermieter auf Zustimmung klagen (\u00a7 558b BGB). Der Bundesgerichtshof (BGH) hat in mehreren Urteilen best\u00e4tigt, dass der Vermieter diese Zustimmung verlangen kann, wenn die Erh\u00f6hung den genannten gesetzlichen Bestimmungen entspricht (z.B. BGH, Urteil vom 13. Oktober 2010 \u2013 VIII ZR 26/10).",
+            "retrieval_context": [
+                "\u00a7 558 BGB: Der Vermieter kann die Zustimmung zur Mieterh\u00f6hung verlangen, wenn die Miete bis zur orts\u00fcblichen Vergleichsmiete erh\u00f6ht werden soll und seit der letzten Mieterh\u00f6hung mindestens 15 Monate vergangen sind.",
+                "\u00a7 558 Abs. 3 BGB: Die Mieterh\u00f6hung darf innerhalb von drei Jahren nicht mehr als 20 Prozent betragen. In angespannten Wohnungsm\u00e4rkten kann die Kappungsgrenze auf 15 Prozent reduziert sein.",
+                "\u00a7 558a BGB: Der Vermieter muss die Mieterh\u00f6hung schriftlich begr\u00fcnden, z.B. durch Verweis auf einen Mietspiegel, eine Auskunft aus einer Mietdatenbank oder ein Sachverst\u00e4ndigengutachten.",
+                "\u00a7 558b BGB: Der Mieter hat eine \u00dcberlegungsfrist von zwei Monaten, um der Mieterh\u00f6hung zuzustimmen. Wenn der Mieter nicht zustimmt, kann der Vermieter auf Zustimmung klagen.",
+                "BGH-Urteil vom 13. Oktober 2010 \u2013 VIII ZR 26/10: Der Vermieter kann die Zustimmung zur Mieterh\u00f6hung verlangen, wenn die Erh\u00f6hung den gesetzlichen Bestimmungen entspricht."
+            ]
+        },
+        {
+            "input": "Unter welchen Voraussetzungen ist eine Klausel zur Renovierungspflicht des Mieters bei Auszug wirksam, und wie stehen diese Pflichten im Verh\u00e4ltnis zu den Rechten des Vermieters?",
+            "actual_output": "",
+            "expected_output": "Eine Klausel zur Renovierungspflicht des Mieters bei Auszug ist nur unter bestimmten Voraussetzungen wirksam. Nach \u00a7 307 BGB d\u00fcrfen Allgemeine Gesch\u00e4ftsbedingungen, zu denen auch formularm\u00e4\u00dfige Mietvertr\u00e4ge z\u00e4hlen, den Mieter nicht unangemessen benachteiligen. Laut der Rechtsprechung des Bundesgerichtshofs (BGH) sind starre Fristenpl\u00e4ne und Klauseln, die den Mieter zur Renovierung unabh\u00e4ngig vom tats\u00e4chlichen Zustand der Wohnung verpflichten, unwirksam (BGH, Urteil vom 23. Juni 2004 \u2013 VIII ZR 361/03). Renovierungspflichten m\u00fcssen an den tats\u00e4chlichen Zustand der Wohnung ankn\u00fcpfen. Klauseln, die den Mieter verpflichten, unabh\u00e4ngig von der tats\u00e4chlichen Abnutzung regelm\u00e4\u00dfig zu renovieren oder bei Auszug zu renovieren, sind unwirksam (BGH, Urteil vom 18. M\u00e4rz 2015 \u2013 VIII ZR 185/14). Ein weiterer wichtiger Aspekt ist die Farbauswahl: Klauseln, die den Mieter verpflichten, bei Auszug in bestimmten Farben zu streichen, sind ebenfalls unwirksam, wenn sie den Gestaltungsspielraum des Mieters w\u00e4hrend der Mietzeit unangemessen einschr\u00e4nken (BGH, Urteil vom 18. Juni 2008 \u2013 VIII ZR 224/07). Der Vermieter hat jedoch das Recht, die Wohnung in einem Zustand zur\u00fcckzubekommen, der einer ordnungsgem\u00e4\u00dfen Abnutzung entspricht. Ist die Wohnung \u00fcberm\u00e4\u00dfig abgenutzt oder besch\u00e4digt, kann der Vermieter Schadensersatzanspr\u00fcche geltend machen (\u00a7 280 Abs. 1 BGB). Zusammengefasst sind Renovierungsklauseln im Mietvertrag nur dann wirksam, wenn sie den tats\u00e4chlichen Zustand der Wohnung ber\u00fccksichtigen und keine starren Fristen oder Vorgaben zur Farbauswahl enthalten. Andernfalls gelten sie als unangemessene Benachteiligung des Mieters und sind unwirksam.",
+            "retrieval_context": [
+                "\u00a7 307 BGB: Allgemeine Gesch\u00e4ftsbedingungen sind unwirksam, wenn sie den Vertragspartner unangemessen benachteiligen.",
+                "BGH-Urteil vom 23. Juni 2004 \u2013 VIII ZR 361/03: Starre Fristenpl\u00e4ne und Klauseln, die den Mieter zur Renovierung unabh\u00e4ngig vom tats\u00e4chlichen Zustand der Wohnung verpflichten, sind unwirksam.",
+                "BGH-Urteil vom 18. M\u00e4rz 2015 \u2013 VIII ZR 185/14: Renovierungspflichten m\u00fcssen an den tats\u00e4chlichen Zustand der Wohnung ankn\u00fcpfen. Regelm\u00e4\u00dfige Renovierungsverpflichtungen oder solche bei Auszug sind unwirksam, wenn sie nicht den tats\u00e4chlichen Zustand ber\u00fccksichtigen.",
+                "BGH-Urteil vom 18. Juni 2008 \u2013 VIII ZR 224/07: Klauseln, die den Mieter verpflichten, in bestimmten Farben zu streichen, sind unwirksam, wenn sie den Gestaltungsspielraum des Mieters unangemessen einschr\u00e4nken.",
+                "\u00a7 280 Abs. 1 BGB: Schadensersatzanspr\u00fcche k\u00f6nnen geltend gemacht werden, wenn die Wohnung \u00fcberm\u00e4\u00dfig abgenutzt oder besch\u00e4digt ist und dadurch eine Pflichtverletzung des Mieters vorliegt."
+            ]
+        }
+    ]
+}

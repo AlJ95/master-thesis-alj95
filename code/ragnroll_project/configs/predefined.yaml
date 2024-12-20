@@ -73,5 +73,5 @@ connections:
   sender: retriever.documents
 - receiver: retriever.query_embedding
   sender: text_embedder.embedding
-max_runs_per_component: 100
+max_runs_per_component: 10
 metadata: {}
