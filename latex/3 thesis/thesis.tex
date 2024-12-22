@@ -84,41 +84,19 @@
 \input{chapters/10_introduction}
 
 \chapter{Background}\label{background}
+
 \section{Large Language Models}\label{llm}
 \input{chapters/21_Language_Models}
 
+\section{Retrieval}\label{retrieval}
+\input{chapters/22_Retrieval}
+
+\section{Retrieval-Augmented Generation}\label{rag}
+\input{chapters/23_Retrieval-Augmented_Generation}
+
 % Appendix
-\appendix
-\chapter{Latex HowTo's}
-% Showing natbib citation commands
-Let us get started by citing \citet{manning:1999}!
-So what did \citeauthor{manning:1999} do in \citeyear{manning:1999}?
-Good question!
-% Showing hyperref reference commands
-Maybe it is answered in \autoref{introduction} on page~\pageref{introduction}?
-Just to have something show up in the list of figures, I included \autoref{fig:a}.
-\begin{figure}[bt]% bottom or top of page (for small figures/tables)
-  \begin{center}{\huge\bf A}\end{center}
-  \caption{The first letter in the Roman alphabet.}\label{fig:a}
-\end{figure}
-% \formatdate (or \formatdateshort)
-This date does not exist: \formatdateshort{30}{2}{2014}
-and is the same as \formatdate{30}{2}{2014}.
-% An example table
-And here is some table with some numbers (\autoref{tab:numbers})
-which deserves to be on an extra page.
-\begin{table}[p]% extra page (usually for large figures/tables)
-  \caption{Tables have their captions above, figures below.}
-  \begin{center}
-    \begin{tabular}{lccc}\toprule
-      \multicolumn{4}{c}{Some numbers}\\\midrule
-      & 1999 & 2000 & 2001 \\\cmidrule(l){2-4}
-      % cmidrule: A line from 2nd to 4th column, trimmed on the left hand side
-      Distance (km) & 23 & 18 & 42 \\
-      Awesomeness (aws) & 3.2 & 8.1 & 2.4 \\\bottomrule
-    \end{tabular}
-  \end{center}\label{tab:numbers}%
-\end{table}
+%\appendix
+%\chapter{Experiment Results}
 
 % Bibliography
 \bibliographystyle{plainnat} % requires package natbib. An alternative is apalike
