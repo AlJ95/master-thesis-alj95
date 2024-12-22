@@ -11,7 +11,7 @@ app = typer.Typer()
 
 @app.command()
 def split_data(
-    path: List[str] = typer.Argument(...),
+    path: List[str] | str = typer.Argument(...),
 ):
     """
     Process to split data manually
@@ -19,7 +19,7 @@ def split_data(
 
 @app.command()
 def run_evaluations(
-    configuration_file: str = typer.Argument(...),
+    configuration_file: List[str] | str = typer.Argument(...),
     output_directory: str = typer.Argument(...),
 ):
     pass
