@@ -1,7 +1,7 @@
 from haystack import Pipeline
 from pathlib import Path
 
-def config_to_pipeline(configuration_file_path: str, output_file_name: str) -> None:
+def config_to_pipeline(configuration_file_path: str) -> None:
     """
     Load a pipeline from a configuration file and draw it to a PNG file.
 
@@ -26,4 +26,4 @@ def config_to_pipeline(configuration_file_path: str, output_file_name: str) -> N
         output_file_name = Path(output_file_name)
 
     pipeline = Pipeline.load(open(configuration_file_path, "r"))
-    pipeline.draw(path=output_file_name)
+    return pipeline
