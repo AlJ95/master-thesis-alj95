@@ -14,28 +14,62 @@ app = typer.Typer()
 
 @app.command()
 def split_data(
-    path: str = typer.Argument(...),
-    testset_percentage: int = typer.Argument(...),
+    path: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
+    test_size: float = typer.Argument(..., help="Percentage of data for test set (0-100)"),
+    random_state: int = typer.Option(42, help="Random seed for reproducibility"),
 ):
     """
-    Process to split data manually
+    Split data into train, validation and test sets from JSON/CSV files.
+    Creates three directories: train, val, test
     """
+    from sklearn.model_selection import train_test_split
+    import pandas as pd
+    import json
+    from pathlib import Path
+    
     path = Path(path)
-    test_data_path = path / "holdout_testset"
-    test_data_path.mkdir(exist_ok=True)
-
+    
+    # Validate input parameters
+    if not (0 < test_size < 100):
+        raise typer.BadParameter("test_size must be between 0 and 100")
+    
+    # Create output directories
+    val_path = path / "val" 
+    test_path = path / "test"
+    val_path.mkdir(exist_ok=True)
+    test_path.mkdir(exist_ok=True)
+    
+    # Process files
     if path.is_dir():
-        files_to_split = list(path.iterdir())
-
-        sample_size = testset_percentage * len(files_to_split) // 100
-        test_data = sample(files_to_split, sample_size)
-
-        for test_file in test_data:
-            test_file.rename(test_data_path / test_file.name)
+        # Get only JSON/CSV files
+        files = [f for f in path.iterdir() if f.is_file() and f.suffix.lower() in ['.json', '.csv']]
         
-    else:
-        pass
-        # ToDo Handle Single File CSVs / JSONs / ...
+        if not files:
+            raise typer.BadParameter("No JSON or CSV files found in directory")
+            
+        # Process each file
+        for file in files:
+            # Load data
+            if file.suffix.lower() == '.json':
+                with open(file) as f:
+                    data = json.load(f)
+                df = pd.DataFrame(data)
+            else:  # CSV
+                df = pd.read_csv(file)
+                
+            # Split data
+            val_df, test_df = train_test_split(
+                df,
+                test_size=test_size/100,
+                random_state=random_state
+            )
+            
+            # Save splits
+            base_name = file.stem
+            val_df.to_json(val_path / f"{base_name}_val.json", orient='records')
+            test_df.to_json(test_path / f"{base_name}_test.json", orient='records')
+            
+        typer.echo(f"Successfully split data into train/val/test sets in {path}")
     
 
 

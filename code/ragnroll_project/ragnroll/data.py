@@ -25,16 +25,10 @@ def load_data_from_directory(data_path: str):
     
     data = load_dataset(path=str(data_path))
 
-    # for label_dir in label_dirs:
-    #     for f in label_dir.iterdir():
-    #         text = open(f).read()
-    #         label = label_dir.name
-    #         data.add_item(dict(text=text, label=label))
-
     return data
 
 
 if __name__ == "__main__":
-    path = "/Users/alj95/Projekte/master-thesis-alj95/code/ragnroll_project/data/se_vulnerabilities_test"
+    path = "C:/Users/Besitzer/Projekte/master-thesis-alj95/code/ragnroll_project/data/se_vulnerabilities_test"
     data = load_data_from_directory(path)
-    print(data)
+    print(data.data["test"].to_pandas())
