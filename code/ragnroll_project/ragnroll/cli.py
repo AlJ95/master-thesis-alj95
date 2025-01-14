@@ -81,9 +81,13 @@ def run_evaluations(
     output_directory: str = typer.Argument(...),
 ):
     from .pipeline import config_to_pipeline
-    pipeline = config_to_pipeline(configuration_file)
+    from .eval import evaluate
+    from .data import load_data_from_directory
+    llm_pipeline = config_to_pipeline("configs/llm_config.yaml")
     
-    pipeline.run()
+    data = load_data_from_directory(data_path)
+    metric = evaluate(data, llm_pipeline)
+    return metric
 
 
 @app.command()
