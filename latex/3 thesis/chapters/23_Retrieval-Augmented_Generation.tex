@@ -1,21 +1,26 @@
-There is a high variety in architectures and approaches for retrieval-augmented generation models (RAGs). In this section, we will give an overview of the most common approaches and architectures and start with the most basic ones.
+Large language models suffer from several fundamental issues, which are not entirely solvable through training or prompt engineering. 
+\cite{Gao.18.12.2023} stated that LLMs have significant limitations in knowledge-intesive or domain-specific tasks. Missing or unsufficient amount of information on a specific subject while training lead to wrong answers. For large language models this is called \textit{hallucinations} as defined in \cite{Huang.2023}. For retrieval-augmented generation systems (RAGs) the term hallucinations is defined for stating information without context. \cite{Rashkin.} defined hallucinations as any information that is neither inferable from nor stated by an external document. In this thesis I will use the definition for RAG systems. 
 
-The section will follow the definition of RAGs in \boldred{cite RAG Study Paper} with naive RAGS, advanced RAGs, a modular architecture, and special cases.
+Factual wrong output from an LLM can have several reasons. The required information to answer this question can be private, stored on a database that is not accessible during training. Another reason might be that training or fine-tuning the model is expensive and thus done less frequent. Therefore the required information can be published more recently then the last training run. All those problems can be solved if the LLM is not used for the answer itself, but rather used for building a coherent text passage given a question and its answer. Then a database would store all relevant information and would be updated as frequent as required. At inference time the prompt is used to determine relevant chunks of documents within the database, which are then used for the generation of the answer.
+
+This concept is very successful and as \cite{Shuster.} showed and \cite{Chen.2024}, \cite{Yu.2024} concluded. There is a high variety in architectures and approaches for retrieval-augmented generation models. In this section, we will give an overview of the most common approaches and architectures and start with the most basic ones.
+
+The section will follow the definition of RAGs in \cite{Gao.18.12.2023} with naive RAGS, advanced RAGs, a modular architecture, and special cases. 
 
 \subsection{Naive RAGs}
 \label{sec:naive_rags}
+Naive RAGs can be seen as the most basic form of a retrieval-augmented generation system. The core idea behind this concept is to give all relevant context for answering a question or solving a task into the prompt for the large language model. Then the LLM is only used for generating a coherent answer. Therefore it is required to ingest relevant data for the given use case beforehand. The system then retrieves relevant chunks or documents of this data at inference time. 
 
-\paragraph{General Architecture}
-\label{sec:general_architecture}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/LLM-vs-RAG.jpg}
+    \caption{Comparison of the process to the prompt, above a standalone LLM that has a prompt and generate a response, below a RAG system that performs on a given set of documents and encoding or indexing and searchs for the most similar documents for a given prompt at inference time. Both prompt and documents are used for the generation process.}
+    \label{fig:naive_rag}
+\end{figure}
 
-\paragraph{Indexing}
-\label{sec:indexing}
+This procedure can be seen in figure \ref{fig:naive_rag}. In the literature the generation process is often refered as \textit{read}, because it reads the prompt and the provided context. In \cite{Gao.18.12.2023} they define the naive RAG system as \textit{Retrieve-Read}. 
 
-\paragraph{Retrieval}
-\label{sec:retrieval}
-
-\paragraph{Generation}
-\label{sec:generation}
+The Retrieval can be done with sparse retrieval (TF-IDF, BM25), dense retrieval (DPR) or a hybrid version as showed in section \ref{retrieval}. 
 
 \subsection{Advanced RAGs}
 \label{sec:advanced_rags}
