@@ -4,6 +4,7 @@
 .venv-RAGBench
 .venv-haystack
 .venv-fastrag
+.venv-312
 
 # Data 
 code/RAGBench/src/data/
@@ -16,3 +17,11 @@ code/ragnroll_project/data/se_vulnerability
 **/._.DS_Store
 
 .env
+
+# deepeval
+.deepeval*
+
+# python cache
+__pycache__/
+*.pyc
+.cpython-*
