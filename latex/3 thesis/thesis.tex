@@ -1,4 +1,3 @@
-%\documentclass[german,bachelor]{swsLeipzig}
 \documentclass[english,master]{swsLeipzig}
 % When you change the language, pdflatex may halt on recompilation.
 % Just hit enter to continue and recompile again. This should fix it.
@@ -24,6 +23,13 @@
 \usepackage[sort&compress]{natbib}
 %   Allows citing in different ways (e.g., only the authors if you use the
 %   citation again within a short time).
+
+% Let us get started by citing \citet{manning:1999}!
+% So what did \citeauthor{manning:1999} do in \citeyear{manning:1999}?
+% Good question!
+
+
+
 %
 \usepackage{booktabs}
 %    For tables ``looking the right way''.
@@ -85,14 +91,15 @@
 
 \chapter{Background}\label{background}
 
+
 \section{Large Language Models}\label{llm}
 \input{chapters/21_Language_Models}
 
-\chapter{Text Retrieval}\label{retrieval}
+\section{Text Retrieval}\label{retrieval}
 \input{chapters/22_Text_Retrieval}
 
 \section{Retrieval-Augmented Generation Systems}\label{rag}
-\input{chapters/23_Retrieval_Augmented_Generation_Systems}
+\input{chapters/23_Retrieval_Augmented_Generation}
 
 % Appendix
 %\appendix
@@ -100,6 +107,6 @@
 
 % Bibliography
 \bibliographystyle{plainnat} % requires package natbib. An alternative is apalike
-\bibliography{literature}    % load file literature.bib
+\bibliography{literature.bib}    % load file literature.bib
 
 \end{document}
