@@ -30,6 +30,8 @@ The BM25 score is an advanced version of the TF-IDF score with two free paramete
 
 Dense Passage Retrieval as shown in \citet{karpukhin2020densepassageretrievalopendomain} utilizes Bidirectional Encoder Representation from Transformers (BERT, \citet{devlin2019bertpretrainingdeepbidirectional}). BERT can be seen as the encoders part of an sequence-to-sequence transformers architecture. Therefore it can be used to encode the text passages used as contexts at the classification token [CLS]. The text is thus mapped into an d-dimensional real-valued space with the assumption that semnatic similar passages are close to each other in this space. The query is also encoded into this space and the similarity between the mapped query vector and each passage vector is calculated. The similarity is calculated by the dot product or other similarity functions. The top-k similar passages are then selected and used for the generation.
 
+Nowadays there are highly specialized embedding models, that are benchmarked and listed on the Huggingface MTEB as described in \citet{muennighoff2022mteb}. Even though the MTEB leaderboard suggests a best-of-all embedding model, there is no such thing. Embedding models are language- and domain-sensitive as \citet{Gao.18.12.2023} points out. 
+
 \subsection{Hybrid Retrieval}
 \label{sec:hybrid_retrieval}
 
