@@ -1,28 +1,42 @@
+%!TEX encoding = UTF-8 Unicode
 
-There are several types of text retrieval for RAG systems. \cite{Zhao.29.02.2024} classified four different types of retrieval techniques regarding how the retrieved information are passed to the generation. In this thesis I will only focus on query-based retrievals as they are the most common and widely used retrieval techniques. The other three types are latent-representative-based retrieval, logit-based and speculative retrieval.
+There are several types of text retrieval for RAG systems. \citet{Zhao.29.02.2024} classifies four retrieval techniques based on how retrieved information is passed to the generation process. This thesis focuses exclusively on query-based retrieval techniques due to their prevalence and broad adoption. The other three types are latent-representative-based retrieval, logit-based and speculative retrieval.
 
-Another categorization of text retrieval can be done by the type of retrieval. There are three main types of retrieval: sparse retrieval, dense retrieval and hybrid retrieval. Sparse retrieval is based on traditional information retrieval techniques like TF-IDF or BM25. Dense retrieval is based on neural networks and embeddings like BERT or DPR. Hybrid retrieval combines both sparse and dense retrieval techniques. Following I
- will describe the most common retrieval techniques for each type of retrieval.
-
+Another categorization of text retrieval can be done by the type of retrieval. There are three main types of retrieval: sparse retrieval, dense retrieval and hybrid retrieval. Sparse retrieval is based on traditional information retrieval techniques like TF-IDF or BM25. Dense retrieval is based on transformers models and hybrid retrieval combines both sparse and dense retrieval techniques. Following I  will describe those techniques in more detail.
 \subsection{Sparse Retrieval}
 \label{sec:sparse_retrieval}
+
+TF-IDF and BM25 are widely implemented in libraries like LangChain (\citet{Chase_LangChain_2022}) and LlamaIndex (\citet{Liu_LlamaIndex_2022}), representing standard sparse retrieval approaches.
 
 \paragraph{TF-IDF}
 \label{sec:tfidf}
 
-The TF-IDF algorithm (term frequency - inverse document frequency) belongs to the 
+TF as shown in \citet{Manning.2009} refers to the term frequency of a term $t$ in a document $d$. The inverse document frequency (IDF) is calculated as the logarithm of the total number of documents $N$ divided by the number of documents containing the term $t$. Therefore the IDF factor is low for terms that occur in all documents and high for distinguishing terms that occur in frequently in a low number of documents. The position of the words is ignored.
+
+$$\textit{TF-IDF}(t, d, D) = \textit{TF}(t, d) \cdot \textit{IDF}(t, D) = \textit{TF}(t, d) \cdot \log\left(\frac{N}{\textit{DF}(t, D)}\right)
+$$
 
 \paragraph{BM25}
 \label{sec:bm25}
 
+\citet{Manning.2009} presents multiple variants of BM25. A simplified version is defined as follows:
+
+$$BM25(t, d, D) = IDF(t, D) \cdot \frac{(k_1 + 1) \cdot TF_{t, d}}{k_1((1-b)+b \cdot \frac{L_d}{L_{ave}}) + TF_{t, d}}$$
+
+
+The BM25 score is an advanced version of the TF-IDF score with two free parameters $k_1$ and $b$. The parameter $k_1$ is a scaling factor to determine how relevant term frequency is. The parameter $b$ is for document length scaling, reducing scores of long documents. 
+
 \subsection{Dense Retrieval}
 \label{sec:dense_retrieval}
 
-\paragraph{BERT}
-\label{sec:bert}
+Dense Passage Retrieval as shown in \citet{karpukhin2020densepassageretrievalopendomain} utilizes Bidirectional Encoder Representation from Transformers (BERT, \citet{devlin2019bertpretrainingdeepbidirectional}). BERT corresponds to the encoder component of a sequence-to-sequence Transformer architecture.Therefore it can be used to encode the text passages used as contexts at the classification token [CLS]. Text passages are mapped into a d-dimensional vector space under the assumption that semantically similar passages exhibit proximity. The query is also encoded into this space and the similarity between the mapped query vector and each passage vector is calculated. The similarity is calculated by the dot product or other similarity functions. The top-k similar passages are then selected and used for the generation.
 
-\paragraph{DPR}
-\label{sec:dpr}
+Contemporary specialized embedding models are benchmarked through frameworks like HuggingFace's MTEB (\citet{muennighoff2022mteb}). While MTEB rankings suggest optimal embedding models, no universal solution exists. Embedding models are language- and domain-sensitive as \citet{Gao.18.12.2023} points out. 
 
 \subsection{Hybrid Retrieval}
 \label{sec:hybrid_retrieval}
+
+Both sparse retrieval techniques TF-IDF and BM25 are good for keyword specific searches, but perform poorly on a semantic comparison of documents and query. Encoders like BERT, trained for language understanding, excel at semantic comparisons. Often it is not trivial to dertermine if a text retrieval needs a keyword-relevant sparse retrieval or dense retrieval considering semantics. 
+
+Hybrid models compute both dense and sparse retrieval scores, combining them through weighted summation: 
+$\alpha \cdot dense+(1 - \alpha )\cdot sparse$. An factor $\alpha=1$ results in using only dense retrieval. There is no universal performant value for $\alpha$. This makes $\alpha$ a tunable hyperparameter requiring optimization.

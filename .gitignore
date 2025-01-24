@@ -4,9 +4,11 @@
 .venv-RAGBench
 .venv-haystack
 .venv-fastrag
+.venv-312
 
 # Data 
 code/RAGBench/src/data/
+code/ragnroll_project/data/se_vulnerability
 
 # DS_Store
 .DS_Store
@@ -15,3 +17,57 @@ code/RAGBench/src/data/
 **/._.DS_Store
 
 .env
+
+# deepeval
+.deepeval*
+
+# python cache
+__pycache__/
+*.pyc
+.cpython-*
+
+# LaTeX intermediate and output files
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.ist
+*.loa
+*.loc
+*.lol
+*.maf
+*.mtc
+*.mtc0
+*.nav
+*.nlo
+*.nls
+*.snm
+*.synctex.gz
+*.tdo
+*.thm
+*.xdy
+
+# PDF files
+*.pdf
+
+# Backup files
+*~
+*.bak
+*.sav

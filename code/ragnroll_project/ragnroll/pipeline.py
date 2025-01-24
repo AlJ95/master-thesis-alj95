@@ -1,7 +1,8 @@
 from haystack import Pipeline
 from pathlib import Path
+from dotenv import load_dotenv
 
-def config_to_pipeline(configuration_file_path: str, output_file_name: str) -> None:
+def config_to_pipeline(configuration_file_path: str) -> None:
     """
     Load a pipeline from a configuration file and draw it to a PNG file.
 
@@ -17,13 +18,22 @@ def config_to_pipeline(configuration_file_path: str, output_file_name: str) -> N
     if configuration_file_path.suffix not in [".yaml", ".yml"]:
         raise ValueError("Configuration file must be a YAML file.")
     
-    if output_file_name is None:
-        output_file_name = configuration_file_path.with_suffix(".png")
-    else:
-        if not output_file_name.endswith(".png"):
-            raise ValueError("Output file must be a PNG file.")
-    
-        output_file_name = Path(output_file_name)
-
+    load_dotenv()
     pipeline = Pipeline.load(open(configuration_file_path, "r"))
-    pipeline.draw(path=output_file_name)
+    return pipeline
+
+
+def draw_pipeline(pipeline: Pipeline, output_file: str) -> None:
+    """
+    Draw a pipeline to a PNG file.
+
+    Args:
+        pipeline (Pipeline): The pipeline to draw.
+        output_file (str): The name of the output file.
+    """
+    
+    if not output_file.endswith(".png"):
+        raise ValueError("Output file must be a PNG file.")
+
+    pipeline.draw(output_file)
+    print(f"Pipeline drawn to {output_file}")
