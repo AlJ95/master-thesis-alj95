@@ -1,12 +1,9 @@
 """This module provides the RP To-Do CLI."""
 # rptodo/cli.py
 
-from genericpath import exists
 from typing import Optional, List
 
 import typer
-from pathlib import Path
-from random import sample
 
 from ragnroll import __app_name__, __version__
 
