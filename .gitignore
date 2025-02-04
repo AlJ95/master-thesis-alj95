@@ -9,6 +9,8 @@
 # Data 
 code/RAGBench/src/data/
 code/ragnroll_project/data/se_vulnerability
+data/xCodeEval/
+data/APIBench
 
 # DS_Store
 .DS_Store
