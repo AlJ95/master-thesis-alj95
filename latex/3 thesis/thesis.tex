@@ -86,30 +86,36 @@
   % optional: list of symbols/notation (e.g., using the nomencl package)
 \end{frontmatter}
 
-\chapter{Introduction}\label{introduction}
+\chapter{Introduction}\label{chap:introduction}
 \input{chapters/10_introduction}
 
-\chapter{Background}\label{background}
+\chapter{Background}\label{chap:background}
 
 
-\section{Large Language Models}\label{llm}
+\section{Large Language Models}\label{sec:llm}
 \input{chapters/21_Language_Models}
 
-\section{Text Retrieval}\label{retrieval}
+\section{Text Retrieval}\label{sec:retrieval}
 \input{chapters/22_Text_Retrieval}
 
-\section{Vector Databases}\label{vdbs}
+\section{Vector Databases}\label{sec:vdbs}
 \input{chapters/23_Vector_DBs}
 
-\section{Retrieval-Augmented Generation Systems}\label{rag}
+\section{Retrieval-Augmented Generation Systems}\label{sec:rag}
 \input{chapters/24_Retrieval_Augmented_Generation}
 
 
-\chapter{Relative Works}
-RAG vs LC LLM?
-\section{RAG Evaluation}
+\chapter{Relative Works}\label{chap:relwork}
+\input{chapters/30_Relative_Works.tex}
 
-\chapter{RAG-Evaluation Framework}
+\chapter{Design of valid RAG Experimentation}\label{chap:design}
+\input{chapters/40_Design_of_Valid_RAG_Evaluation.tex}
+
+\chapter{RAG Development Demonstration on XY}\label{chap:Experiment}
+\input{chapters/50_SE_Experiment.tex}
+
+\chapter{Conclusion}\label{chap:Conclusion}
+\input{chapters/60_Conclusion_Framework.tex}
 
 \section{Roter Faden ...}
 RAG seems to be a free lunch (see paper with RAG vs Long Context LLMs), but isn't. 
