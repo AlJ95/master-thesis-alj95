@@ -73,3 +73,6 @@ __pycache__/
 *~
 *.bak
 *.sav
+
+*/thesis.log
+*/thesis.fdb_latexmk
