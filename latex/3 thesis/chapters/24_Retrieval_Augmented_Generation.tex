@@ -1,10 +1,10 @@
-Large language models (LLMs) exhibit fundamental limitations that cannot be fully resolved through training or prompt engineering. \citet{Gao.18.12.2023} stated that LLMs have significant limitations in knowledge-intesive or domain-specific tasks. Insufficient domain-specific training data often results in erroneous outputs. For large language models this is called \textit{hallucinations} as defined in \citet{Huang.2023}. In retrieval-augmented generation (RAG) systems, hallucinations refer to outputs unsupported by provided context. \citet{Rashkin.} defined hallucinations as any information that is neither inferable from nor stated by an external document. In this thesis I will use the definition for RAG systems. 
+Large language models (LLMs) exhibit fundamental limitations that cannot be fully resolved through training or prompt engineering. Gao \cite{Gao.18.12.2023} stated that LLMs have significant limitations in knowledge-intesive or domain-specific tasks. Insufficient domain-specific training data often results in erroneous outputs. For large language models this is called \textit{hallucinations} as defined in Huang \cite{Huang.2023}. In retrieval-augmented generation (RAG) systems, hallucinations refer to outputs unsupported by provided context. Rashkin \cite{Rashkin.} defined hallucinations as any information that is neither inferable from nor stated by an external document. In this thesis we will use the definition for RAG systems. 
 
 Factual wrong output from an LLM can have several reasons. The required information to answer this question can be private, stored on a database that is not accessible during training. Additionally, the high cost of training/fine-tuning limits update frequency. This creates temporal gaps where post-training information remains unavailable. All those problems can be solved if the LLM is not used for the answer itself, but rather used for building a coherent text passage given a question and its answer. Then a database would store all relevant information and would be updated as frequent as required. During inference, the system retrieves relevant document chunks from the database to inform answer generation.
 
-This concept is very successful as \citet{Shuster.} showed. This approach reduces factual errors while enhancing open-domain conversational performance. \citet{Yu.2024} concluded that this improves the reliability and richnes of the produced content. \citet{Chen.2024} identifies external knowledge integration as crucial for improving LLM accuracy and reliability.
+This concept is very successful as Shuster \cite{Shuster.} showed. This approach reduces factual errors while enhancing open-domain conversational performance. Yu \cite{Yu.2024} concluded that this improves the reliability and richnes of the produced content. Chen \cite{Chen.2024} identifies external knowledge integration as crucial for improving LLM accuracy and reliability.
 
-There is a high variety in architectures and approaches for retrieval-augmented generation models. In this section, I will give an overview of the most common approaches and architectures and start with the most basic ones. The section will follow the definition of RAGs in \citet{Gao.18.12.2023} with naive RAGs, advanced RAGs, a modular architecture, and special cases. 
+There is a high variety in architectures and approaches for retrieval-augmented generation models. In this section, we will give an overview of the most common approaches and architectures and start with the most basic ones. The section will follow the definition of RAGs in Gao \cite{Gao.18.12.2023} with naive RAGs, advanced RAGs, a modular architecture, and special cases. 
 
 \subsection{Naive RAGs}
 \label{sec:naive_rags}
@@ -13,35 +13,36 @@ Naive RAGs represent the foundational implementation of retrieval-augmented gene
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{images/LLM-vs-RAG.jpg}
+    \includegraphics[width=\textwidth]{images/LLM-vs-RAG.pdf}
     \caption{Comparison of the process, above a standalone LLM that has a prompt and generate a response, below a minimalistic RAG system that performs on a given set of documents an embedding or indexing and searchs for the most similar documents for a given prompt at inference time. Both prompt and documents are used for the generation process.}
     \label{fig:naive_rag}
 \end{figure}
 
-This procedure can be seen in figure \ref{fig:naive_rag}. This generation phase is frequently termed the \textit{read} operation in literature. In \citet{Gao.18.12.2023} they define the naive RAG system as \textit{Retrieve-Read}. The retrieval can be done with sparse retrieval (TF-IDF, BM25), dense retrieval (DPR) or a hybrid version as showed in section \ref{retrieval}. 
+This procedure can be seen in figure \ref{fig:naive_rag}. This generation phase is frequently termed the \textit{read} operation in literature. Gao \cite{Gao.18.12.2023} defines the naive RAG system as \textit{Retrieve-Read}. The retrieval can be done with sparse retrieval (TF-IDF, BM25), dense retrieval (DPR) or a hybrid version as showed in section \ref{retrieval}. 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{images/VectorDB.jpg}
+    \includegraphics[width=\textwidth]{images/VectorDB.pdf}
     \caption{A vector space including mapped facts (documents) and a user query. The query and its correct answer have similar vectors}
     \label{fig:vectorDB}
 \end{figure}
 
 
-Before the system can be used, it is necessary to ingest data. The ingestion process includes preprocessing and selection of data, that users are likely to need for their questions or use-cases. Therefore it is relevant to know the user base. It is not feasible nor efficient to ingest all availlable data. The preprocessing pipeline converts raw data into document chunks using methods detailed in Section \ref{sec:chunk }. As described in \ref{sec:dense_retrieval}, the chunks are then embedded into a d-dimensional real-valued vector space. There is a simplistic minimal example of a vector space in figure \ref{fig:vectorDB}. The documents gets mapped in different loactions within the space. This assumes semantic alignment between queries and relevant documents in the embedding space. In reality there will be more documents close to each other, documents and queries are longer or more complex and each query will return the "Top-K" chunks or documents, which are not always as relevant as in this example. Top-K can be seen as hyperparamter for the system. The vectors are then stored in vector databases as described in section \ref{vdbs}.
+Before the system can be used, it is necessary to ingest data. The ingestion process includes preprocessing and selection of data, that users are likely to need for their questions or use-cases. Therefore it is relevant to know the user base. It is not feasible nor efficient to ingest all availlable data. The preprocessing pipeline converts raw data into document chunks using methods detailed in Section \ref{sec:chunk }. As described in \ref{sec:dense_retrieval}, the chunks are then embedded into a d-dimensional real-valued vector space. There is a simplistic minimal example of a vector space in figure \ref{fig:vectorDB}. The documents gets mapped in different loactions within the space. This assumes semantic alignment between queries and relevant documents in the embedding space. In reality there will be more documents close to each other, documents and queries are longer or more complex and each query will return the "Top-K" chunks or documents, which are not always as relevant as in this example. Top-K can be seen as hyperparamter for the system. The vectors are then stored in vector databases, specialized databases for vector representations.
+% as described in section \ref{vdbs}.
 
 
-\citet{Gao.18.12.2023} listed several drawbacks for naive RAGs. The basic retrieval suffers from unsufficient recall and precision scores leading in irrelevant documents, missing context and bias. The integration of the provided context is a challenging process. The generator often overrelies on the augmented information, by just repeating the retrieved content and missing insightful conclusions. Therefore this simplistic form of RAG needs advanced techniques to overcome those issues. 
+Gao \cite{Gao.18.12.2023} listed several drawbacks for naive RAGs. The basic retrieval suffers from unsufficient recall and precision scores leading in irrelevant documents, missing context and bias. The integration of the provided context is a challenging process. The generator often overrelies on the augmented information, by just repeating the retrieved content and missing insightful conclusions. Therefore this simplistic form of RAG needs advanced techniques to overcome those issues. 
 
 \subsection{Advanced RAGs}
 \label{sec:advanced_rags}
 
-There is no strict definition of advanced versions of retrieval-augmented generation systems. The term describes a loose bundle of techniques to improve the quality of such systems. Following is a list, which items I will explain in greater details afterwards.
+There is no strict definition of advanced versions of retrieval-augmented generation systems. The term describes a loose bundle of techniques to improve the quality of such systems. Following is a list, which items we will explain in greater details afterwards.
 
 \paragraph{Chunking}
 \label{sec:chunk}
 % graphic for techniques, such as overlap, fixed sized (sliding window approach), semantic chunks, ...
-Chunking's importance becomes clear through a practical example: Let us use a sentence from \citeauthor{LeipzigWikipedia.2025} for Leipzig from \citeyear{LeipzigWikipedia.2025}. In the section "Music" there is the following sentence. 
+Chunking's importance becomes clear through a practical example: Let us use a sentence from Wikipedia \cite{LeipzigWikipedia.2025} for Leipzig from \citeyear{LeipzigWikipedia.2025}. In the section "Music" there is the following sentence. 
 
 \begin{quote}
     "Johann Sebastian Bach spent the longest phase of his career in Leipzig, from 1723 until his death in 1750, conducting the Thomanerchor (St. Thomas Church Choir), at the St. Thomas Church, the St. Nicholas Church and the Paulinerkirche, the university church of Leipzig (destroyed in 1968)."
@@ -49,7 +50,7 @@ Chunking's importance becomes clear through a practical example: Let us use a se
 
 If there are thousands of wikipedia pages or websites to process, then this can not be splitted manually. What is the document or a good chunk in this context. If the query asks if Johann Sebastian Bach lived in Leipzig, then embedding the whole sentence would not guarantee a high similarity vector score in the retrieval process. This differs from domain to domain. While chunking facts from sentences might be a valid strategy for wikipedia, processing internal contracts in a large company would need less granular chunking. 
 
-Therefore there are several chunking techniques to consider for tuning the RAG-system. Fixed-size chunking divides text into uniform segments (e.g., 400-character blocks), while sliding window variants add overlapping regions. The sliding window approach adds a overlap of few characters. Semantic chunking splits with prior defined characters such as "\textit{$\backslash n$, $\backslash\backslash n$ or <br>}". There are also special use-case techniques such as Markdown, JSON, HTML and programming code chunkers. Almost all presented chunking techniques are offered in typical libraries e. g. Llama-Index (\citet{Liu_LlamaIndex_2022}) or Langchain (\citet{Chase_LangChain_2022}).
+Therefore there are several chunking techniques to consider for tuning the RAG-system. Fixed-size chunking divides text into uniform segments (e.g., 400-character blocks), while sliding window variants add overlapping regions. The sliding window approach adds a overlap of few characters. Semantic chunking splits with prior defined characters such as "\textit{$\backslash n$, $\backslash\backslash n$ or <br>}". There are also special use-case techniques such as Markdown, JSON, HTML and programming code chunkers. Almost all presented chunking techniques are offered in typical libraries e. g. Llama-Index \cite{Liu_LlamaIndex_2022} or Langchain \cite{Chase_LangChain_2022}.
 
 % \paragraph{Metadata-Filtering}
 % Additional to advanced chunking, it is recommended to enrich the resulting documents with metadata, which can be used at inference time for filtering. 
