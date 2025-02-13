@@ -218,7 +218,6 @@ year = {2024}
 @software{Izsak_fastRAG_Efficient_Retrieval_2023,
 author = {Izsak, Peter and Berchansky, Moshe and Fleischer, Daniel and Laperdon, Ronen},
 license = {Apache-2.0},
-month = feb,
 title = {{fastRAG: Efficient Retrieval Augmentation and Generation Framework}},
 howpublished = {\url{https://github.com/IntelLabs/fastrag}},
 url = {https://github.com/IntelLabs/fastrag},
@@ -431,8 +430,6 @@ Leipzig has long been a major centre for music, including classical and modern d
 }
 
 
-% This file was created with Citavi 7.0.4.0
-
 @article{Pan.2024,
  abstract = {There are now over 20 commercial vector database management systems (VDBMSs), all produced within the past five years. But embedding-based retrieval has been studied for over ten years, and similarity search a staggering half century and more. Driving this shift from algorithms to systems are new data intensive applications, notably large language models, that demand vast stores of unstructured data coupled with reliable, secure, fast, and scalable query processing capability. A variety of new data management techniques now exist for addressing these needs, however there is no comprehensive survey to thoroughly review these techniques and systems. We start by identifying five main obstacles to vector data management, namely the ambiguity of semantic similarity, large size of vectors, high cost of similarity comparison, lack of structural properties that can be used for indexing, and difficulty of efficiently answering ``hybrid'' queries that jointly search both attributes and vectors. Overcoming these obstacles has led to new approaches to query processing, storage and indexing, and query optimization and execution. For query processing, a variety of similarity scores and query types are now well understood; for storage and indexing, techniques include vector compression, namely quantization, and partitioning techniques based on randomization, learned partitioning, and ``navigable'' partitioning; for query optimization and execution, we describe new operators for hybrid queries, as well as techniques for plan enumeration, plan selection, distributed query processing, data manipulation queries, and hardware accelerated query execution. These techniques lead to a variety of VDBMSs across a spectrum of design and runtime characteristics, including ``native'' systems that are specialized for vectors and ``extended'' systems that incorporate vector capabilities into existing systems. We then discuss benchmarks, and finally outline research challenges and point the direction for future work.},
  author = {Pan, James Jie and Wang, Jianguo and Li, Guoliang},
@@ -532,6 +529,125 @@ Leipzig has long been a major centre for music, including classical and modern d
  title = {Chain-of-Thought Prompting Elicits Reasoning in Large Language Models},
  url = {http://arxiv.org/pdf/2201.11903},
  file = {Wei, Wang et al. 28.01.2022 - Chain-of-Thought Prompting Elicits Reasoning:Attachments/Wei, Wang et al. 28.01.2022 - Chain-of-Thought Prompting Elicits Reasoning.pdf:application/pdf}
+}
+
+
+% This file was created with Citavi 7.0.4.0
+
+@misc{Ru.15.08.2024,
+ abstract = {Despite Retrieval-Augmented Generation (RAG) showing promising capability in leveraging external knowledge, a comprehensive evaluation of RAG systems is still challenging due to the modular nature of RAG, evaluation of long-form responses and reliability of measurements. In this paper, we propose a fine-grained evaluation framework, RAGChecker, that incorporates a suite of diagnostic metrics for both the retrieval and generation modules. Meta evaluation verifies that RAGChecker has significantly better correlations with human judgments than other evaluation metrics. Using RAGChecker, we evaluate 8 RAG systems and conduct an in-depth analysis of their performance, revealing insightful patterns and trade-offs in the design choices of RAG architectures. The metrics of RAGChecker can guide researchers and practitioners in developing more effective RAG systems. This work has been open sourced at https://github.com/amazon-science/RAGChecker.},
+ author = {Ru, Dongyu and Qiu, Lin and Hu, Xiangkun and Zhang, Tianhang and Shi, Peng and Chang, Shuaichen and Jiayang, Cheng and Wang, Cunxiang and Sun, Shichao and Li, Huanyu and Zhang, Zizhao and Wang, Binjie and Jiang, Jiarong and He, Tong and Wang, Zhiguo and Liu, Pengfei and Zhang, Yue and Zhang, Zheng},
+ date = {15.08.2024},
+ title = {RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented  Generation},
+ url = {http://arxiv.org/pdf/2408.08067},
+ file = {Ru, Qiu et al 15082024 - RAGChecker:Attachments/Ru, Qiu et al 15082024 - RAGChecker.pdf:application/pdf;Ru, Qiu et al. 15.08.2024 - RAGChecker:Attachments/Ru, Qiu et al. 15.08.2024 - RAGChecker.pdf:application/pdf}
+}
+
+
+% This file was created with Citavi 7.0.4.0
+
+@misc{Chang.06.07.2023,
+ abstract = {Large language models (LLMs) are gaining increasing popularity in both academia and industry, owing to their unprecedented performance in various applications. As LLMs continue to play a vital role in both research and daily use, their evaluation becomes increasingly critical, not only at the task level, but also at the society level for better understanding of their potential risks. Over the past years, significant efforts have been made to examine LLMs from various perspectives. This paper presents a comprehensive review of these evaluation methods for LLMs, focusing on three key dimensions: what to evaluate, where to evaluate, and how to evaluate. Firstly, we provide an overview from the perspective of evaluation tasks, encompassing general natural language processing tasks, reasoning, medical usage, ethics, educations, natural and social sciences, agent applications, and other areas. Secondly, we answer the `where' and `how' questions by diving into the evaluation methods and benchmarks, which serve as crucial components in assessing performance of LLMs. Then, we summarize the success and failure cases of LLMs in different tasks. Finally, we shed light on several future challenges that lie ahead in LLMs evaluation. Our aim is to offer invaluable insights to researchers in the realm of LLMs evaluation, thereby aiding the development of more proficient LLMs. Our key point is that evaluation should be treated as an essential discipline to better assist the development of LLMs. We consistently maintain the related open-source materials at: https://github.com/MLGroupJLU/LLM-eval-survey.},
+ author = {Chang, Yupeng and Wang, Xu and Wang, Jindong and Wu, Yuan and Yang, Linyi and Zhu, Kaijie and Chen, Hao and Yi, Xiaoyuan and Wang, Cunxiang and Wang, Yidong and Ye, Wei and Zhang, Yue and Chang, Yi and Yu, Philip S. and Yang, Qiang and Xie, Xing},
+ date = {06.07.2023},
+ title = {A Survey on Evaluation of Large Language Models},
+ url = {http://arxiv.org/pdf/2307.03109},
+ file = {Chang, Wang et al. 06.07.2023 - A Survey on Evaluation:Attachments/Chang, Wang et al. 06.07.2023 - A Survey on Evaluation.pdf:application/pdf}
+}
+
+
+% Frameworks
+
+% This file was created with Citavi 7.0.4.0
+
+@misc{Li.13.01.2025,
+ abstract = {Retrieval-Augmented Generation (RAG) systems have recently shown remarkable advancements by integrating retrieval mechanisms into language models, enhancing their ability to produce more accurate and contextually relevant responses. However, the influence of various components and configurations within RAG systems remains underexplored. A comprehensive understanding of these elements is essential for tailoring RAG systems to complex retrieval tasks and ensuring optimal performance across diverse applications. In this paper, we develop several advanced RAG system designs that incorporate query expansion, various novel retrieval strategies, and a novel Contrastive In-Context Learning RAG. Our study systematically investigates key factors, including language model size, prompt design, document chunk size, knowledge base size, retrieval stride, query expansion techniques, Contrastive In-Context Learning knowledge bases, multilingual knowledge bases, and Focus Mode retrieving relevant context at sentence-level. Through extensive experimentation, we provide a detailed analysis of how these factors influence response quality. Our findings offer actionable insights for developing RAG systems, striking a balance between contextual richness and retrieval-generation efficiency, thereby paving the way for more adaptable and high-performing RAG frameworks in diverse real-world scenarios. Our code and implementation details are publicly available.},
+ author = {Li, Siran and Stenzel, Linus and Eickhoff, Carsten and Bahrainian, Seyed Ali},
+ date = {13.01.2025},
+ title = {Enhancing Retrieval-Augmented Generation: A Study of Best Practices},
+ url = {http://arxiv.org/pdf/2501.07391},
+ file = {Li, Stenzel et al. 13.01.2025 - Enhancing Retrieval-Augmented Generation:Attachments/Li, Stenzel et al. 13.01.2025 - Enhancing Retrieval-Augmented Generation.pdf:application/pdf}
+}
+
+
+
+% This file was created with Citavi 7.0.4.0
+
+@article{JintaoLiu.2024,
+ abstract = {A Comprehensive Full-chain Evaluation (CoFE-RAG) framework to facilitate thorough evaluation across the entire RAG pipeline, including chunking, retrieval, reranking, and generation, and a holistic benchmark dataset tailored for diverse data scenarios covering a wide range of document formats and query types is released. Retrieval-Augmented Generation (RAG) aims to enhance large language models (LLMs) to generate more accurate and reliable answers with the help of the retrieved context from external knowledge sources, thereby reducing the incidence of hallucinations. Despite the advancements, evaluating these systems remains a crucial research area due to the following issues: (1) Limited data diversity: The insufficient diversity of knowledge sources and query types constrains the applicability of RAG systems; (2) Obscure problems location: Existing evaluation methods have difficulty in locating the stage of the RAG pipeline where problems occur; (3) Unstable retrieval evaluation: These methods often fail to effectively assess retrieval performance, particularly when the chunking strategy changes. To tackle these challenges, we propose a Comprehensive Full-chain Evaluation (CoFE-RAG) framework to facilitate thorough evaluation across the entire RAG pipeline, including chunking, retrieval, reranking, and generation. To effectively evaluate the first three phases, we introduce multi-granularity keywords, including coarse-grained and fine-grained keywords, to assess the retrieved context instead of relying on the annotation of golden chunks. Moreover, we release a holistic benchmark dataset tailored for diverse data scenarios covering a wide range of document formats and query types. We demonstrate the utility of the CoFE-RAG framework by conducting experiments to evaluate each stage of RAG systems. Our evaluation method provides unique insights into the effectiveness of RAG systems in handling diverse data scenarios, offering a more nuanced understanding of their capabilities and limitations.},
+ author = {{Jintao Liu} and {Ruixue Ding} and {Linhao Zhang} and {Pengjun Xie} and {Fie Huang}},
+ year = {2024},
+ journal = {arXiv.org},
+ title = {CoFE-RAG: A Comprehensive Full-chain Evaluation Framework for Retrieval-Augmented Generation with Enhanced Data Diversity},
+ url = {https://www.semanticscholar.org/paper/CoFE-RAG%3A-A-Comprehensive-Full-chain-Evaluation-for-Liu-Ding/779797f595acb8dc35690c1252a8b415455a3ded},
+ file = {Jintao Liu, Ruixue Ding et al. 2024 - CoFE-RAG A Comprehensive Full-chain Evaluation:Attachments/Jintao Liu, Ruixue Ding et al. 2024 - CoFE-RAG A Comprehensive Full-chain Evaluation.pdf:application/pdf}
+ 
+}
+
+% This file was created with Citavi 7.0.4.0
+
+@inproceedings{Barnett.2024,
+ author = {Barnett, Scott and Kurniawan, Stefanus and Thudumu, Srikanth and Brannelly, Zach and Abdelrazek, Mohamed},
+ title = {Seven Failure Points When Engineering a Retrieval Augmented Generation System},
+ pages = {194--199},
+ publisher = {ACM},
+ isbn = {9798400705915},
+ editor = {Bosch, Jan and Lewis, Grace and Cleland-Huang, Jane and Muccini, Henry},
+ booktitle = {Proceedings of the IEEE/ACM 3rd International Conference on AI Engineering - Software Engineering for AI},
+ year = {2024},
+ address = {New York, NY, USA},
+ doi = {10.1145/3644815.3644945},
+ file = {3644815.3644945:Attachments/3644815.3644945.pdf:application/pdf}
+}
+
+
+
+% This file was created with Citavi 7.0.4.0
+
+@misc{Liu.06.07.2023,
+ abstract = {While recent language models have the ability to take long contexts as input, relatively little is known about how well they use longer context. We analyze the performance of language models on two tasks that require identifying relevant information in their input contexts: multi-document question answering and key-value retrieval. We find that performance can degrade significantly when changing the position of relevant information, indicating that current language models do not robustly make use of information in long input contexts. In particular, we observe that performance is often highest when relevant information occurs at the beginning or end of the input context, and significantly degrades when models must access relevant information in the middle of long contexts, even for explicitly long-context models. Our analysis provides a better understanding of how language models use their input context and provides new evaluation protocols for future long-context language models.},
+ author = {Liu, Nelson F. and Lin, Kevin and Hewitt, John and Paranjape, Ashwin and Bevilacqua, Michele and Petroni, Fabio and Liang, Percy},
+ date = {06.07.2023},
+ title = {Lost in the Middle: How Language Models Use Long Contexts},
+ url = {http://arxiv.org/pdf/2307.03172},
+ file = {Liu, Lin et al. 06.07.2023 - Lost in the Middle:Attachments/Liu, Lin et al. 06.07.2023 - Lost in the Middle.pdf:application/pdf}
+}
+
+
+% This file was created with Citavi 7.0.4.0
+
+@misc{Wagner.12.11.2024,
+ abstract = {In the short period since the release of ChatGPT in November 2022, large language models (LLMs) have changed the software engineering research landscape. While there are numerous opportunities to use LLMs for supporting research or software engineering tasks, solid science needs rigorous empirical evaluations. However, so far, there are no specific guidelines for conducting and assessing studies involving LLMs in software engineering research. Our focus is on empirical studies that either use LLMs as part of the research process (e.g., for data annotation) or studies that evaluate existing or new tools that are based on LLMs. This paper contributes the first set of guidelines for such studies. Our goal is to start a discussion in the software engineering research community to reach a common understanding of what our community standards are for high-quality empirical studies involving LLMs.},
+ author = {Wagner, Stefan and Bar{\'o}n, Marvin Mu{\~n}oz and Falessi, Davide and Baltes, Sebastian},
+ date = {12.11.2024},
+ title = {Towards Evaluation Guidelines for Empirical Studies involving LLMs},
+ url = {http://arxiv.org/pdf/2411.07668},
+ file = {Wagner, Bar{\'o}n et al 12112024 - Towards Evaluation Guidelines for Empirical:Attachments/Wagner, Bar{\'o}n et al 12112024 - Towards Evaluation Guidelines for Empirical.pdf:application/pdf;Wagner, Bar{\'o}n et al. 12.11.2024 - Towards Evaluation Guidelines for Empirical:Attachments/Wagner, Bar{\'o}n et al. 12.11.2024 - Towards Evaluation Guidelines for Empirical.pdf:application/pdf}
+}
+
+
+% This file was created with Citavi 7.0.4.0
+
+@article{M.A.Pimentel.2024,
+ abstract = {This paper provides an exploration and critical analysis of some of these evaluation methodologies, shedding light on their strengths, limitations, and impact on advancing the state-of-the-art in natural language processing. As large language models (LLMs) continue to evolve, the need for robust and standardized evaluation benchmarks becomes paramount. Evaluating the performance of these models is a complex challenge that requires careful consideration of various linguistic tasks, model architectures, and benchmarking methodologies. In recent years, various frameworks have emerged as noteworthy contributions to the field, offering comprehensive evaluation tests and benchmarks for assessing the capabilities of LLMs across diverse domains. This paper provides an exploration and critical analysis of some of these evaluation methodologies, shedding light on their strengths, limitations, and impact on advancing the state-of-the-art in natural language processing.},
+ author = {{M. A. Pimentel} and {Cl'ement Christophe} and {Tathagata Raha} and {Prateek Munjal} and {Praveen K Kanithi} and {Shadab Khan}},
+ year = {2024},
+ title = {Beyond Metrics: A Critical Analysis of the Variability in Large Language Model Evaluation Frameworks},
+ url = {https://www.semanticscholar.org/paper/Beyond-Metrics%3A-A-Critical-Analysis-of-the-in-Large-Pimentel-Christophe/c36873ca457af16e9d44be609e477d456706b2f5?utm_source=alert_email&utm_content=LibraryFolder&utm_campaign=AlertEmails_WEEKLY&utm_term=LibraryFolder+PaperCitation&email_index=0-6-6&utm_medium=41498835},
+ journal = {arXiv.org},
+ file = {M. A. Pimentel, Cl'ement Christophe et al. 2024 - Beyond Metrics:Attachments/M. A. Pimentel, Cl'ement Christophe et al. 2024 - Beyond Metrics.pdf:application/pdf}
+}
+
+
+% This file was created with Citavi 7.0.4.0
+
+@misc{Krishna.19.09.2024,
+ abstract = {Large Language Models (LLMs) have demonstrated significant performance improvements across various cognitive tasks. An emerging application is using LLMs to enhance retrieval-augmented generation (RAG) capabilities. These systems require LLMs to understand user queries, retrieve relevant information, and synthesize coherent and accurate responses. Given the increasing real-world deployment of such systems, comprehensive evaluation becomes crucial. To this end, we propose FRAMES (Factuality, Retrieval, And reasoning MEasurement Set), a high-quality evaluation dataset designed to test LLMs' ability to provide factual responses, assess retrieval capabilities, and evaluate the reasoning required to generate final answers. While previous work has provided datasets and benchmarks to evaluate these abilities in isolation, FRAMES offers a unified framework that provides a clearer picture of LLM performance in end-to-end RAG scenarios. Our dataset comprises challenging multi-hop questions that require the integration of information from multiple sources. We present baseline results demonstrating that even state-of-the-art LLMs struggle with this task, achieving 0.40 accuracy with no retrieval. The accuracy is significantly improved with our proposed multi-step retrieval pipeline, achieving an accuracy of 0.66 ({\textgreater}50{\%} improvement). We hope our work will help bridge evaluation gaps and assist in developing more robust and capable RAG systems.},
+ author = {Krishna, Satyapriya and Krishna, Kalpesh and Mohananey, Anhad and Schwarcz, Steven and Stambler, Adam and Upadhyay, Shyam and Faruqui, Manaal},
+ date = {19.09.2024},
+ title = {Fact, Fetch, and Reason: A Unified Evaluation of Retrieval-Augmented  Generation},
+ url = {http://arxiv.org/pdf/2409.12941},
+ file = {Krishna, Krishna et al 19092024 - Fact, Fetch:Attachments/Krishna, Krishna et al 19092024 - Fact, Fetch.pdf:application/pdf;Krishna, Krishna et al. 19.09.2024 - Fact, Fetch:Attachments/Krishna, Krishna et al. 19.09.2024 - Fact, Fetch.pdf:application/pdf}
 }
 
 

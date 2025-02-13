@@ -28,7 +28,7 @@ This procedure can be seen in figure \ref{fig:naive_rag}. This generation phase 
 \end{figure}
 
 
-Before the system can be used, it is necessary to ingest data. The ingestion process includes preprocessing and selection of data, that users are likely to need for their questions or use-cases. Therefore it is relevant to know the user base. It is not feasible nor efficient to ingest all availlable data. The preprocessing pipeline converts raw data into document chunks using methods detailed in Section \ref{sec:chunk }. As described in \ref{sec:dense_retrieval}, the chunks are then embedded into a d-dimensional real-valued vector space. There is a simplistic minimal example of a vector space in figure \ref{fig:vectorDB}. The documents gets mapped in different loactions within the space. This assumes semantic alignment between queries and relevant documents in the embedding space. In reality there will be more documents close to each other, documents and queries are longer or more complex and each query will return the "Top-K" chunks or documents, which are not always as relevant as in this example. Top-K can be seen as hyperparamter for the system. The vectors are then stored in vector databases, specialized databases for vector representations.
+Before the system can be used, it is necessary to ingest data. The ingestion process includes preprocessing and selection of data, that users are likely to need for their questions or use-cases. Therefore it is relevant to know the user base. It is not feasible nor efficient to ingest all availlable data. The preprocessing pipeline converts raw data into document chunks using methods detailed in Section \ref{sec:chunk}. As described in \ref{sec:dense_retrieval}, the chunks are then embedded into a d-dimensional real-valued vector space. There is a simplistic minimal example of a vector space in figure \ref{fig:vectorDB}. The documents gets mapped in different loactions within the space. This assumes semantic alignment between queries and relevant documents in the embedding space. In reality there will be more documents close to each other, documents and queries are longer or more complex and each query will return the "Top-K" chunks or documents, which are not always as relevant as in this example. Top-K can be seen as hyperparamter for the system. The vectors are then stored in vector databases, specialized databases for vector representations.
 % as described in section \ref{vdbs}.
 
 
@@ -78,3 +78,5 @@ Therefore there are several chunking techniques to consider for tuning the RAG-s
 \begin{itemize}
     \item 
 \end{itemize}
+
+\subsection{Do not forget to finish this here!}
