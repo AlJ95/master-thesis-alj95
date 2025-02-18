@@ -651,3 +651,133 @@ Leipzig has long been a major centre for music, including classical and modern d
 }
 
 
+% This file was created with Citavi 7.0.4.0
+
+@book{Es.2023,
+ abstract = {We introduce RAGAs (Retrieval Augmented Generation Assessment), a framework for reference-free evaluation of Retrieval Augmented Generation (RAG) pipelines. RAG systems are composed of a retrieval and an LLM based generation module, and provide LLMs with knowledge from a reference textual database, which enables them to act as a natural language layer between a user and textual databases, reducing the risk of hallucinations. Evaluating RAG architectures is, however, challenging because there are several dimensions to consider: the ability of the retrieval system to identify relevant and focused context passages, the ability of the LLM to exploit such passages in a faithful way, or the quality of the generation itself. With RAGAs, we put forward a suite of metrics which can be used to evaluate these different dimensions \textit{without having to rely on ground truth human annotations}. We posit that such a framework can crucially contribute to faster evaluation cycles of RAG architectures, which is especially important given the fast adoption of LLMs.},
+ author = {Es, Shahul and James, Jithin and Espinosa-Anke, Luis and Schockaert, Steven},
+ year = {2023},
+ title = {RAGAS: Automated Evaluation of Retrieval Augmented Generation},
+ keywords = {framework;RAGAS;Retrieval-Augmented Generation},
+ file = {Es, James et al. 2023 - RAGAS Automated Evaluation of Retrieval:Attachments/Es, James et al. 2023 - RAGAS Automated Evaluation of Retrieval.pdf:application/pdf}
+}
+
+
+@misc{Fadnis.26.04.2024,
+ abstract = {Large Language Models (LLM) have become a popular approach for implementing Retrieval Augmented Generation (RAG) systems, and a significant amount of effort has been spent on building good models and metrics. In spite of increased recognition of the need for rigorous evaluation of RAG systems, few tools exist that go beyond the creation of model output and automatic calculation. We present InspectorRAGet, an introspection platform for RAG evaluation. InspectorRAGet allows the user to analyze aggregate and instance-level performance of RAG systems, using both human and algorithmic metrics as well as annotator quality. InspectorRAGet is suitable for multiple use cases and is available publicly to the community. The demo video is available at https://youtu.be/MJhe8QIXcEc},
+ author = {Fadnis, Kshitij and Patel, Siva Sankalp and Boni, Odellia and Katsis, Yannis and Rosenthal, Sara and Sznajder, Benjamin and Danilevsky, Marina},
+ date = {26.04.2024},
+ title = {InspectorRAGet: An Introspection Platform for RAG Evaluation},
+ url = {http://arxiv.org/pdf/2404.17347},
+ file = {Fadnis, Patel et al. 26.04.2024 - InspectorRAGet:Attachments/Fadnis, Patel et al. 26.04.2024 - InspectorRAGet.pdf:application/pdf}
+}
+
+
+@misc{Rau.01.07.2024,
+ abstract = {Retrieval-Augmented Generation allows to enhance Large Language Models with external knowledge. In response to the recent popularity of generative LLMs, many RAG approaches have been proposed, which involve an intricate number of different configurations such as evaluation datasets, collections, metrics, retrievers, and LLMs. Inconsistent benchmarking poses a major challenge in comparing approaches and understanding the impact of each component in the pipeline. In this work, we study best practices that lay the groundwork for a systematic evaluation of RAG and present BERGEN, an end-to-end library for reproducible research standardizing RAG experiments. In an extensive study focusing on QA, we benchmark different state-of-the-art retrievers, rerankers, and LLMs. Additionally, we analyze existing RAG metrics and datasets. Our open-source library BERGEN is available under \url{https://github.com/naver/bergen}.},
+ author = {Rau, David and D{\'e}jean, Herv{\'e} and Chirkova, Nadezhda and Formal, Thibault and Wang, Shuai and Nikoulina, Vassilina and Clinchant, St{\'e}phane},
+ date = {01.07.2024},
+ title = {BERGEN: A Benchmarking Library for Retrieval-Augmented Generation},
+ url = {http://arxiv.org/pdf/2407.01102},
+ keywords = {Benchmarking;framework;Retrieval-Augmented Generation},
+ file = {Rau, D{\'e}jean et al. 01.07.2024 - BERGEN A Benchmarking Library:Attachments/Rau, D{\'e}jean et al. 01.07.2024 - BERGEN A Benchmarking Library.pdf:application/pdf}
+}
+
+
+
+@misc{SaadFalcon.16.11.2023,
+ abstract = {Evaluating retrieval-augmented generation (RAG) systems traditionally relies on hand annotations for input queries, passages to retrieve, and responses to generate. We introduce ARES, an Automated RAG Evaluation System, for evaluating RAG systems along the dimensions of context relevance, answer faithfulness, and answer relevance. By creating its own synthetic training data, ARES finetunes lightweight LM judges to assess the quality of individual RAG components. To mitigate potential prediction errors, ARES utilizes a small set of human-annotated datapoints for prediction-powered inference (PPI). Across eight different knowledge-intensive tasks in KILT, SuperGLUE, and AIS, ARES accurately evaluates RAG systems while using only a few hundred human annotations during evaluation. Furthermore, ARES judges remain effective across domain shifts, proving accurate even after changing the type of queries and/or documents used in the evaluated RAG systems. We make our code and datasets publicly available on Github.},
+ author = {Saad-Falcon, Jon and Khattab, Omar and Potts, Christopher and Zaharia, Matei},
+ date = {16.11.2023},
+ title = {ARES: An Automated Evaluation Framework for Retrieval-Augmented  Generation Systems},
+ url = {http://arxiv.org/pdf/2311.09476},
+ keywords = {answer faithfulness;answer relevance;ARES;Context Relevance;evaluation;prediction-powered inference;Retrieval-Augmented Generation;synthetic data generation},
+ file = {Saad-Falcon, Khattab et al. 16.11.2023 - ARES An Automated Evaluation Framework:Attachments/Saad-Falcon, Khattab et al. 16.11.2023 - ARES An Automated Evaluation Framework.pdf:application/pdf}
+}
+
+
+@misc{Tu.2024,
+ abstract = {Large language models have achieved remarkable success on general NLP tasks, but they may fall short for domain-specific problems. Recently, various Retrieval-Augmented Large Language Models (RALLMs) are proposed to address this shortcoming. However, existing evaluation tools only provide a few baselines and evaluate them on various domains without mining the depth of domain knowledge. In this paper, we address the challenges of evaluating RALLMs by introducing the R-Eval toolkit, a Python toolkit designed to streamline the evaluation of different RAG workflows in conjunction with LLMs. Our toolkit, which supports popular built-in RAG workflows and allows for the incorporation of customized testing data on the specific domain, is designed to be user-friendly, modular, and extensible. We conduct an evaluation of 21 RALLMs across three task levels and two representative domains, revealing significant variations in the effectiveness of RALLMs across different tasks and domains. Our analysis emphasizes the importance of considering both task and domain requirements when choosing a RAG workflow and LLM combination. We are committed to continuously maintaining our platform at this https URL to facilitate both the industry and the researchers.},
+ author = {Tu, Shangqing and Wang, Yuanchun and Yu, Jifan and Xie, Yuyang and Shi, Yaran and Wang, Xiaozhi and Zhang, Jing and Hou, Lei and Li, Juanzi},
+ date = {2024},
+ title = {R-Eval: A Unified Toolkit for Evaluating Domain Knowledge of Retrieval Augmented Large Language Models},
+ url = {http://arxiv.org/pdf/2406.11681},
+ doi = {10.1145/3637528.3671564},
+ file = {Tu, Wang et al. 2024 - R-Eval A Unified Toolkit:Attachments/Tu, Wang et al. 2024 - R-Eval A Unified Toolkit.pdf:application/pdf}
+}
+
+
+@misc{Wang.08.06.2023,
+ abstract = {Instruction tuning large language models (LLMs) remains a challenging task, owing to the complexity of hyperparameter selection and the difficulty involved in evaluating the tuned models. To determine the optimal hyperparameters, an automatic, robust, and reliable evaluation benchmark is essential. However, establishing such a benchmark is not a trivial task due to the challenges associated with evaluation accuracy and privacy protection. In response to these challenges, we introduce a judge large language model, named PandaLM, which is trained to distinguish the superior model given several LLMs. PandaLM's focus extends beyond just the objective correctness of responses, which is the main focus of traditional evaluation datasets. It addresses vital subjective factors such as relative conciseness, clarity, adherence to instructions, comprehensiveness, and formality. To ensure the reliability of PandaLM, we collect a diverse human-annotated test dataset, where all contexts are generated by humans and labels are aligned with human preferences. Our results indicate that PandaLM-7B achieves 93.75{\%} of GPT-3.5's evaluation ability and 88.28{\%} of GPT-4's in terms of F1-score on our test dataset. PandaLM enables the evaluation of LLM to be fairer but with less cost, evidenced by significant improvements achieved by models tuned through PandaLM compared to their counterparts trained with default Alpaca's hyperparameters. In addition, PandaLM does not depend on API-based evaluations, thus avoiding potential data leakage. All resources of PandaLM are released at https://github.com/WeOpenML/PandaLM.},
+ author = {Wang, Yidong and Yu, Zhuohao and Zeng, Zhengran and Yang, Linyi and Wang, Cunxiang and Chen, Hao and Jiang, Chaoya and Xie, Rui and Wang, Jindong and Xie, Xing and Ye, Wei and Zhang, Shikun and Zhang, Yue},
+ date = {08.06.2023},
+ title = {PandaLM: An Automatic Evaluation Benchmark for LLM Instruction Tuning  Optimization},
+ url = {http://arxiv.org/pdf/2306.05087},
+ file = {Wang, Yu et al. 08.06.2023 - PandaLM An Automatic Evaluation Benchmark:Attachments/Wang, Yu et al. 08.06.2023 - PandaLM An Automatic Evaluation Benchmark.pdf:application/pdf}
+}
+
+
+@misc{Hoshi.8212023b,
+ abstract = {Retrieval-augmented large language models (R-LLMs) combine pre-trained large language models (LLMs) with information retrieval systems to improve the accuracy of factual question-answering. However, current libraries for building R-LLMs provide high-level abstractions without sufficient transparency for evaluating and optimizing prompts within specific inference processes such as retrieval and generation. To address this gap, we present RaLLe, an open-source framework designed to facilitate the development, evaluation, and optimization of R-LLMs for knowledge-intensive tasks. With RaLLe, developers can easily develop and evaluate R-LLMs, improving hand-crafted prompts, assessing individual inference processes, and objectively measuring overall system performance quantitatively. By leveraging these features, developers can enhance the performance and accuracy of their R-LLMs in knowledge-intensive generation tasks. We open-source our code at https://github.com/yhoshi3/RaLLe.},
+ author = {Hoshi, Yasuto and Miyashita, Daisuke and Ng, Youyang and Tatsuno, Kento and Morioka, Yasuhiro and Torii, Osamu and Deguchi, Jun},
+ date = {8/21/2023},
+ title = {RaLLe: A Framework for Developing and Evaluating Retrieval-Augmented  Large Language Models},
+ url = {http://arxiv.org/pdf/2308.10633v2},
+ file = {2308.10633v2:Attachments/2308.10633v2.pdf:application/pdf}
+}
+
+
+@article{JenniferHsia.2024,
+ abstract = {RAGGED, a framework for analyzing RAG configurations across various DBQA tasks, discovers distinct LM behaviors in response to varying context quantities, context qualities, and retrievers and provides a deeper analysis of these differences. Retrieval-augmented generation (RAG) can significantly improve the performance of language models (LMs) by providing additional context for tasks such as document-based question answering (DBQA). However, the effectiveness of RAG is highly dependent on its configuration. To systematically find the optimal configuration, we introduce RAGGED, a framework for analyzing RAG configurations across various DBQA tasks. Using the framework, we discover distinct LM behaviors in response to varying context quantities, context qualities, and retrievers. For instance, while some models are robust to noisy contexts, monotonically performing better with more contexts, others are more noise-sensitive and can effectively use only a few contexts before declining in performance. This framework also provides a deeper analysis of these differences by evaluating the LMs{\&}{\#}39; sensitivity to signal and noise under specific context quality conditions. Using RAGGED, researchers and practitioners can derive actionable insights about how to optimally configure their RAG systems for their specific question-answering tasks.},
+ author = {{Jennifer Hsia} and {Afreen Shaikh} and {Zhiruo Wang} and {Graham Neubig}},
+ year = {2024},
+ title = {RAGGED: Towards Informed Design of Retrieval Augmented Generation Systems},
+ url = {https://www.semanticscholar.org/paper/RAGGED%3A-Towards-Informed-Design-of-Retrieval-Hsia-Shaikh/e1446fc9b11e73e9f1d867df9012fdc3d3df60d0},
+ journal = {arXiv.org},
+ file = {Jennifer Hsia, Afreen Shaikh et al. 2024 - RAGGED Towards Informed Design:Attachments/Jennifer Hsia, Afreen Shaikh et al. 2024 - RAGGED Towards Informed Design.pdf:application/pdf}
+}
+
+
+@misc{Jin.5222024,
+ abstract = {With the advent of Large Language Models (LLMs), the potential of Retrieval Augmented Generation (RAG) techniques have garnered considerable research attention. Numerous novel algorithms and models have been introduced to enhance various aspects of RAG systems. However, the absence of a standardized framework for implementation, coupled with the inherently intricate RAG process, makes it challenging and time-consuming for researchers to compare and evaluate these approaches in a consistent environment. Existing RAG toolkits like LangChain and LlamaIndex, while available, are often heavy and unwieldy, failing to meet the personalized needs of researchers. In response to this challenge, we propose FlashRAG, an efficient and modular open-source toolkit designed to assist researchers in reproducing existing RAG methods and in developing their own RAG algorithms within a unified framework. Our toolkit implements 12 advanced RAG methods and has gathered and organized 32 benchmark datasets. Our toolkit has various features, including customizable modular framework, rich collection of pre-implemented RAG works, comprehensive datasets, efficient auxiliary pre-processing scripts, and extensive and standard evaluation metrics. Our toolkit and resources are available at https://github.com/RUC-NLPIR/FlashRAG.},
+ author = {Jin, Jiajie and Zhu, Yutao and Yang, Xinyu and Zhang, Chenghao and Dou, Zhicheng},
+ date = {5/22/2024},
+ title = {FlashRAG: A Modular Toolkit for Efficient Retrieval-Augmented Generation  Research},
+ url = {http://arxiv.org/pdf/2405.13576v1},
+ keywords = {Computer Science - Computation and Language;Computer Science - Information Retrieval},
+ file = {2405.13576v1:Attachments/2405.13576v1.pdf:application/pdf}
+}
+
+
+@article{KaigeXie.2024,
+ abstract = {A novel evaluation framework based on sub-question coverage, which measures how well a RAG system addresses different facets of a question, is introduced, and it is demonstrated that leveraging core sub-questions enhances both retrieval and answer generation in a RAG system, resulting in a 74{\%} win rate over the baseline that lacks sub-questions. Evaluating retrieval-augmented generation (RAG) systems remains challenging, particularly for open-ended questions that lack definitive answers and require coverage of multiple sub-topics. In this paper, we introduce a novel evaluation framework based on sub-question coverage, which measures how well a RAG system addresses different facets of a question. We propose decomposing questions into sub-questions and classifying them into three types -- core, background, and follow-up -- to reflect their roles and importance. Using this categorization, we introduce a fine-grained evaluation protocol that provides insights into the retrieval and generation characteristics of RAG systems, including three commercial generative answer engines: You.com, Perplexity AI, and Bing Chat. Interestingly, we find that while all answer engines cover core sub-questions more often than background or follow-up ones, they still miss around 50{\%} of core sub-questions, revealing clear opportunities for improvement. Further, sub-question coverage metrics prove effective for ranking responses, achieving 82{\%} accuracy compared to human preference annotations. Lastly, we also demonstrate that leveraging core sub-questions enhances both retrieval and answer generation in a RAG system, resulting in a 74{\%} win rate over the baseline that lacks sub-questions.},
+ author = {{Kaige Xie} and {Philippe Laban} and {Prafulla Kumar Choubey} and {Caiming Xiong} and {Chien-Sheng Wu}},
+ year = {2024},
+ title = {Do RAG Systems Cover What Matters? Evaluating and Optimizing Responses with Sub-Question Coverage},
+ url = {https://www.semanticscholar.org/paper/Do-RAG-Systems-Cover-What-Matters-Evaluating-and-Xie-Laban/48cd27b420972e5d1af4f071682cc67708d42d73},
+ file = {Kaige Xie, Philippe Laban et al. 2024 - Do RAG Systems Cover What:Attachments/Kaige Xie, Philippe Laban et al. 2024 - Do RAG Systems Cover What.pdf:application/pdf}
+}
+
+
+@misc{Kim.10282024,
+ abstract = {Using LLMs (Large Language Models) in conjunction with external documents has made RAG (Retrieval-Augmented Generation) an essential technology. Numerous techniques and modules for RAG are being researched, but their performance can vary across different datasets. Finding RAG modules that perform well on specific datasets is challenging. In this paper, we propose the AutoRAG framework, which automatically identifies suitable RAG modules for a given dataset. AutoRAG explores and approximates the optimal combination of RAG modules for the dataset. Additionally, we share the results of optimizing a dataset using AutoRAG. All experimental results and data are publicly available and can be accessed through our GitHub repository https://github.com/Marker-Inc-Korea/AutoRAG{\_}ARAGOG{\_}Paper .},
+ author = {Kim, Dongkyu and Kim, Byoungwook and Han, Donggeon and Eibich, Matou{\v{s}}},
+ date = {10/28/2024},
+ title = {AutoRAG: Automated Framework for optimization of Retrieval Augmented  Generation Pipeline},
+ url = {http://arxiv.org/pdf/2410.20878v1},
+ file = {2410.20878v1:Attachments/2410.20878v1.pdf:application/pdf}
+}
+
+
+
+@misc{Zhang.8212024,
+ abstract = {Large Language Models (LLMs) demonstrate human-level capabilities in dialogue, reasoning, and knowledge retention. However, even the most advanced LLMs face challenges such as hallucinations and real-time updating of their knowledge. Current research addresses this bottleneck by equipping LLMs with external knowledge, a technique known as Retrieval Augmented Generation (RAG). However, two key issues constrained the development of RAG. First, there is a growing lack of comprehensive and fair comparisons between novel RAG algorithms. Second, open-source tools such as LlamaIndex and LangChain employ high-level abstractions, which results in a lack of transparency and limits the ability to develop novel algorithms and evaluation metrics. To close this gap, we introduce RAGLAB, a modular and research-oriented open-source library. RAGLAB reproduces 6 existing algorithms and provides a comprehensive ecosystem for investigating RAG algorithms. Leveraging RAGLAB, we conduct a fair comparison of 6 RAG algorithms across 10 benchmarks. With RAGLAB, researchers can efficiently compare the performance of various algorithms and develop novel algorithms.},
+ author = {Zhang, Xuanwang and Song, Yunze and Wang, Yidong and Tang, Shuyun and Li, Xinfeng and Zeng, Zhengran and Wu, Zhen and Ye, Wei and Xu, Wenyuan and Zhang, Yue and Dai, Xinyu and Zhang, Shikun and Wen, Qingsong},
+ date = {8/21/2024},
+ title = {RAGLAB: A Modular and Research-Oriented Unified Framework for  Retrieval-Augmented Generation},
+ url = {http://arxiv.org/pdf/2408.11381v2},
+ keywords = {framework;RAGLAB},
+ file = {2408.11381v2:Attachments/2408.11381v2.pdf:application/pdf}
+}
+
+
