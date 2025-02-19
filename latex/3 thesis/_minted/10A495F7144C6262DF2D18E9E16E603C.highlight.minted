@@ -1,0 +1,26 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{haystack} \PYG{k+kn}{import} \PYG{n}{component}\PYG{p}{,} \PYG{n}{Document}
+\PYG{k+kn}{from} \PYG{n+nn}{typing} \PYG{k+kn}{import} \PYG{n}{List}
+\PYG{k+kn}{import} \PYG{n+nn}{asyncio}
+
+\PYG{n+nd}{@component}
+\PYG{k}{class} \PYG{n+nc}{DocumentSummarizer}\PYG{p}{:}
+\PYG{+w}{    }\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{    A component generating summaries for each given document}
+\PYG{l+s+sd}{    \PYGZdq{}\PYGZdq{}\PYGZdq{}}
+    \PYG{n}{prompt} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}\PYG{l+s+s2}{You are a helpful assistant, that summarizes documents very concisely.}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Summarize the following document:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+si}{\PYGZob{}document\PYGZcb{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Summary:}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+    \PYG{k}{async} \PYG{k}{def} \PYG{n+nf}{summarize}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{doc}\PYG{p}{:} \PYG{n}{Document}\PYG{p}{)}\PYG{p}{:}
+        \PYG{c+c1}{\PYGZsh{} Summarizing Code}
+
+    \PYG{n+nd}{@component}\PYG{o}{.}\PYG{n}{output\PYGZus{}types}\PYG{p}{(}\PYG{n}{documents}\PYG{o}{=}\PYG{n}{List}\PYG{p}{[}\PYG{n}{Document}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{run}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{documents}\PYG{p}{:} \PYG{n}{List}\PYG{p}{[}\PYG{n}{Document}\PYG{p}{]}\PYG{p}{)}\PYG{p}{:}
+\PYG{+w}{        }\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}Run the component in parallel for multiple documents\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+        \PYG{k}{async} \PYG{k}{def} \PYG{n+nf}{async\PYGZus{}run}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{tasks} \PYG{o}{=} \PYG{p}{[}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{summarize}\PYG{p}{(}\PYG{n}{doc}\PYG{p}{)} \PYG{k}{for} \PYG{n}{doc} \PYG{o+ow}{in} \PYG{n}{documents}\PYG{p}{]}
+            \PYG{n}{results} \PYG{o}{=} \PYG{k}{await} \PYG{n}{asyncio}\PYG{o}{.}\PYG{n}{gather}\PYG{p}{(}\PYG{o}{*}\PYG{n}{tasks}\PYG{p}{)}
+            \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{documents}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{results}\PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{n}{asyncio}\PYG{o}{.}\PYG{n}{run}\PYG{p}{(}\PYG{n}{async\PYGZus{}run}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+
+
+\end{MintedVerbatim}

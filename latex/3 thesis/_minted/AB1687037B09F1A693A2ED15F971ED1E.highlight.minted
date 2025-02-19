@@ -1,0 +1,19 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nt}{components}\PYG{p}{:}
+\PYG{+w}{  }\PYG{n+nt}{llm}\PYG{p}{:}
+\PYG{+w}{    }\PYG{n+nt}{init\PYGZus{}parameters}\PYG{p}{:}
+\PYG{+w}{      }\PYG{n+nt}{api\PYGZus{}base\PYGZus{}url}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{null}
+\PYG{+w}{      }\PYG{n+nt}{api\PYGZus{}key}\PYG{p}{:}
+\PYG{+w}{        }\PYG{n+nt}{env\PYGZus{}vars}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{OPENAI\PYGZus{}API\PYGZus{}KEY}
+\PYG{+w}{      }\PYG{l+lScalar+lScalarPlain}{...}
+\PYG{+w}{  }\PYG{n+nt}{prompt\PYGZus{}builder}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{...}
+\PYG{+w}{  }\PYG{n+nt}{bm25\PYGZus{}retriever}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{...}
+\PYG{+w}{  }\PYG{n+nt}{embedding\PYGZus{}retriever}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{...}
+\PYG{+w}{  }\PYG{n+nt}{joiner}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{...}
+\PYG{+w}{  }\PYG{n+nt}{text\PYGZus{}embedder}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{...}
+\PYG{+w}{  }\PYG{n+nt}{docs\PYGZus{}embedder}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{...}
+\PYG{n+nt}{connections}\PYG{p}{:}
+\PYG{p+pIndicator}{\PYGZhy{}}\PYG{+w}{ }\PYG{n+nt}{receiver}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{llm.prompt}
+\PYG{+w}{  }\PYG{n+nt}{sender}\PYG{p}{:}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{prompt\PYGZus{}builder.prompt}
+\PYG{p+pIndicator}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+lScalar+lScalarPlain}{...}
+\end{MintedVerbatim}

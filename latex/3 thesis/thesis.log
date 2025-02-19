@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.11.8)  20 DEC 2024 10:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2025.1.14)  19 FEB 2025 11:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/janal/VisualCodeProjects/master-thesis-alj95-1/latex/3 thesis/thesis.tex"
-(c:/Users/janal/VisualCodeProjects/master-thesis-alj95-1/latex/3 thesis/thesis.tex
-LaTeX2e <2024-11-01>
-L3 programming layer <2024-11-02>
+**"c:/Users/Besitzer/Projekte/master-thesis-alj95/latex/3 thesis/thesis.tex"
+(c:/Users/Besitzer/Projekte/master-thesis-alj95/latex/3 thesis/thesis.tex
+LaTeX2e <2024-11-01> patch level 1
+L3 programming layer <2024-12-25>
 (./swsLeipzig.cls
 Document Class: swsLeipzig 2014/01/08 v1.3
 (c:/texlive/2024/texmf-dist/tex/latex/base/report.cls
@@ -30,21 +30,19 @@ File: size12.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
- (c:/texlive/2024/texmf-dist/tex/latex/base/latin1.def
-File: latin1.def 2024/02/08 v1.3d Input encoding file
-)) (c:/texlive/2024/texmf-dist/tex/latex/base/fontenc.sty
+) (c:/texlive/2024/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (c:/texlive/2024/texmf-dist/tex/generic/iftex/ifpdf.sty
 Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
  (c:/texlive/2024/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2022/02/03 v1.0f TeX engine tests
+Package: iftex 2024/12/12 v1.0g TeX engine tests
 )) (c:/texlive/2024/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 ) (c:/texlive/2024/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2024/10/20 v24.12 The multilingual framework for pdfLaTeX, LuaLaTeX and XeLaTeX
+Package: babel 2025/01/01 v25.1 The multilingual framework for pdfLaTeX, LuaLaTeX and XeLaTeX
 \babel@savecnt=\count271
 \U@D=\dimen142
-\l@unhyphenated=\language89
+\l@unhyphenated=\language90
  (c:/texlive/2024/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
 \bbl@dirlevel=\count272
@@ -53,9 +51,9 @@ Language: english 2017/06/06 v3.3r English support from the babel system
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
 Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
-(babel)             (\language23). Reported on input line 105.
+(babel)             (\language24). Reported on input line 105.
 Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
-(babel)             (\language23). Reported on input line 108.
+(babel)             (\language24). Reported on input line 108.
 )) (c:/texlive/2024/texmf-dist/tex/generic/babel/locale/en/babel-english.tex
 Package babel Info: Importing font and identification data for english
 (babel)             from babel-en.ini. Reported on input line 11.
@@ -157,16 +155,22 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutvoffset=\dimen151
 \Gm@dimlist=\toks44
 ) (c:/texlive/2024/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-Package: fancyhdr 2024/07/23 v4.3.1 Extensive control of page headers and footers
+Package: fancyhdr 2025/01/07 v5.1.1 Extensive control of page headers and footers
 \f@nch@headwidth=\skip51
-\f@nch@O@elh=\skip52
-\f@nch@O@erh=\skip53
-\f@nch@O@olh=\skip54
-\f@nch@O@orh=\skip55
-\f@nch@O@elf=\skip56
-\f@nch@O@erf=\skip57
-\f@nch@O@olf=\skip58
-\f@nch@O@orf=\skip59
+\f@nch@offset@elh=\skip52
+\f@nch@offset@erh=\skip53
+\f@nch@offset@olh=\skip54
+\f@nch@offset@orh=\skip55
+\f@nch@offset@elf=\skip56
+\f@nch@offset@erf=\skip57
+\f@nch@offset@olf=\skip58
+\f@nch@offset@orf=\skip59
+\f@nch@height=\skip60
+\f@nch@footalignment=\skip61
+\f@nch@widthL=\skip62
+\f@nch@widthC=\skip63
+\f@nch@widthR=\skip64
+\@temptokenb=\toks45
 ) (c:/texlive/2024/texmf-dist/tex/latex/tocbibind/tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
 Package tocbibind Info: The document has chapter divisions on input line 50.
@@ -192,29 +196,131 @@ Package caption Info: Standard document class detected.
 \c@continuedfloat=\count304
 )) (c:/texlive/2024/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip60
-\bibsep=\skip61
+\bibhang=\skip65
+\bibsep=\skip66
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count305
+) (c:/texlive/2024/texmf-dist/tex/latex/minted/minted.sty
+Package: minted 2024/11/17 v3.4.0 Yet another Pygments shim for LaTeX
+ (c:/texlive/2024/texmf-dist/tex/generic/catchfile/catchfile.sty
+Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
+ (c:/texlive/2024/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+) (c:/texlive/2024/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+) (c:/texlive/2024/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)) (c:/texlive/2024/texmf-dist/tex/latex/fvextra/fvextra.sty
+Package: fvextra 2024/11/17 v1.10.0 fvextra - extensions and patches for fancyvrb
+ (c:/texlive/2024/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
+\FV@CodeLineNo=\count306
+\FV@InFile=\read3
+\FV@TabBox=\box52
+\c@FancyVerbLine=\count307
+\FV@StepNumber=\count308
+\FV@OutFile=\write3
+) (c:/texlive/2024/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
+ (c:/texlive/2024/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
+)) (c:/texlive/2024/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2023/05/20 line numbers on paragraphs v5.3
+ (c:/texlive/2024/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+ (c:/texlive/2024/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+))
+\linenopenalty=\count309
+\output=\toks46
+\linenoprevgraf=\count310
+\linenumbersep=\dimen160
+\linenumberwidth=\dimen161
+\c@linenumber=\count311
+\c@pagewiselinenumber=\count312
+\c@LN@truepage=\count313
+\c@internallinenumber=\count314
+\c@internallinenumbers=\count315
+\quotelinenumbersep=\dimen162
+\bframerule=\dimen163
+\bframesep=\dimen164
+\bframebox=\box53
+LaTeX Info: Redefining \\ on input line 3180.
+)
+\c@FancyVerbWriteLine=\count316
+\c@FancyVerbBufferLine=\count317
+\c@FV@TrueTabGroupLevel=\count318
+\c@FV@TrueTabCounter=\count319
+\FV@TabBox@Group=\box54
+\FV@TmpLength=\skip67
+\c@FV@HighlightLinesStart=\count320
+\c@FV@HighlightLinesStop=\count321
+\FV@LoopCount=\count322
+\FV@NCharsBox=\box55
+\FV@BreakIndent=\dimen165
+\FV@BreakIndentNChars=\count323
+\FV@BreakSymbolSepLeft=\dimen166
+\FV@BreakSymbolSepLeftNChars=\count324
+\FV@BreakSymbolSepRight=\dimen167
+\FV@BreakSymbolSepRightNChars=\count325
+\FV@BreakSymbolIndentLeft=\dimen168
+\FV@BreakSymbolIndentLeftNChars=\count326
+\FV@BreakSymbolIndentRight=\dimen169
+\FV@BreakSymbolIndentRightNChars=\count327
+\c@FancyVerbLineBreakLast=\count328
+\FV@LineBox=\box56
+\FV@LineIndentBox=\box57
+\c@FV@BreakBufferDepth=\count329
+\FV@LineWidth=\dimen170
+) (c:/texlive/2024/texmf-dist/tex/latex/latex2pydata/latex2pydata.sty
+Package: latex2pydata 2024/11/17 v0.4.0 latex2pydata - write data to file in Python literal format
+ (c:/texlive/2024/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)) (c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks47
+\pgfkeys@temptoks=\toks48
+ (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks49
+))) (c:/texlive/2024/texmf-dist/tex/latex/pgfopts/pgfopts.sty
+Package: pgfopts 2014/07/10 v2.1a LaTeX package options with pgfkeys
+\pgfopts@list@add@a@toks=\toks50
+\pgfopts@list@add@b@toks=\toks51
+) (c:/texlive/2024/texmf-dist/tex/latex/tools/shellesc.sty
+Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
+Package shellesc Info: Restricted shell escape enabled on input line 77.
+) (c:/texlive/2024/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count330
+\float@exts=\toks52
+\float@box=\box58
+\@float@everytoks=\toks53
+\@floatcapt=\box59
+)
+\c@minted@FancyVerbLineTemp=\count331
+\@float@every@listing=\toks54
+\c@listing=\count332
 ) (c:/texlive/2024/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen160
-\lightrulewidth=\dimen161
-\cmidrulewidth=\dimen162
-\belowrulesep=\dimen163
-\belowbottomsep=\dimen164
-\aboverulesep=\dimen165
-\abovetopsep=\dimen166
-\cmidrulesep=\dimen167
-\cmidrulekern=\dimen168
-\defaultaddspace=\dimen169
-\@cmidla=\count306
-\@cmidlb=\count307
-\@aboverulesep=\dimen170
-\@belowrulesep=\dimen171
-\@thisruleclass=\count308
-\@lastruleclass=\count309
-\@thisrulewidth=\dimen172
+\heavyrulewidth=\dimen171
+\lightrulewidth=\dimen172
+\cmidrulewidth=\dimen173
+\belowrulesep=\dimen174
+\belowbottomsep=\dimen175
+\aboverulesep=\dimen176
+\abovetopsep=\dimen177
+\cmidrulesep=\dimen178
+\cmidrulekern=\dimen179
+\defaultaddspace=\dimen180
+\@cmidla=\count333
+\@cmidlb=\count334
+\@aboverulesep=\dimen181
+\@belowrulesep=\dimen182
+\@thisruleclass=\count335
+\@lastruleclass=\count336
+\@thisrulewidth=\dimen183
 ) (c:/texlive/2024/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
  (c:/texlive/2024/texmf-dist/tex/latex/graphics-cfg/color.cfg
@@ -237,30 +343,26 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 Package: soul 2023-06-14 v3.1 Permit use of UTF-8 characters in soul (HO)
  (c:/texlive/2024/texmf-dist/tex/generic/soul/soul-ori.sty
 Package: soul-ori 2023-06-14 v3.1 letterspacing/underlining (mf)
-\SOUL@word=\toks45
-\SOUL@lasttoken=\toks46
-\SOUL@syllable=\toks47
-\SOUL@cmds=\toks48
-\SOUL@buffer=\toks49
-\SOUL@token=\toks50
-\SOUL@syllgoal=\dimen173
-\SOUL@syllwidth=\dimen174
-\SOUL@charkern=\dimen175
-\SOUL@hyphkern=\dimen176
-\SOUL@dimen=\dimen177
-\SOUL@dimeni=\dimen178
-\SOUL@minus=\count310
-\SOUL@comma=\count311
-\SOUL@apo=\count312
-\SOUL@grave=\count313
-\SOUL@spaceskip=\skip62
-\SOUL@ttwidth=\dimen179
-\SOUL@uldp=\dimen180
-\SOUL@ulht=\dimen181
-) (c:/texlive/2024/texmf-dist/tex/generic/infwarerr/infwarerr.sty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-) (c:/texlive/2024/texmf-dist/tex/generic/etexcmds/etexcmds.sty
-Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+\SOUL@word=\toks55
+\SOUL@lasttoken=\toks56
+\SOUL@syllable=\toks57
+\SOUL@cmds=\toks58
+\SOUL@buffer=\toks59
+\SOUL@token=\toks60
+\SOUL@syllgoal=\dimen184
+\SOUL@syllwidth=\dimen185
+\SOUL@charkern=\dimen186
+\SOUL@hyphkern=\dimen187
+\SOUL@dimen=\dimen188
+\SOUL@dimeni=\dimen189
+\SOUL@minus=\count337
+\SOUL@comma=\count338
+\SOUL@apo=\count339
+\SOUL@grave=\count340
+\SOUL@spaceskip=\skip68
+\SOUL@ttwidth=\dimen190
+\SOUL@uldp=\dimen191
+\SOUL@ulht=\dimen192
 )) (c:/texlive/2024/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
  (c:/texlive/2024/texmf-dist/tex/latex/graphics/graphics.sty
@@ -272,24 +374,15 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
 )
-\Gin@req@height=\dimen182
-\Gin@req@width=\dimen183
+\Gin@req@height=\dimen193
+\Gin@req@width=\dimen194
 ) (c:/texlive/2024/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
- (c:/texlive/2024/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-) (c:/texlive/2024/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+ (c:/texlive/2024/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 ) (c:/texlive/2024/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
- (c:/texlive/2024/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (c:/texlive/2024/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)) (c:/texlive/2024/texmf-dist/tex/latex/hycolor/hycolor.sty
+) (c:/texlive/2024/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 ) (c:/texlive/2024/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
@@ -297,16 +390,14 @@ Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (c:/texlive/2024/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
- (c:/texlive/2024/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
-))
-\c@section@level=\count314
+)
+\c@section@level=\count341
 ) (c:/texlive/2024/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
-\@linkdim=\dimen184
-\Hy@linkcounter=\count315
-\Hy@pagecounter=\count316
+\@linkdim=\dimen195
+\Hy@linkcounter=\count342
+\Hy@pagecounter=\count343
  (c:/texlive/2024/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
@@ -314,7 +405,7 @@ Now handling font encoding PD1 ...
 ) (c:/texlive/2024/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count317
+\Hy@SavedSpaceFactor=\count344
  (c:/texlive/2024/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
@@ -344,19 +435,19 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 ))
-\c@Hy@tempcnt=\count318
+\c@Hy@tempcnt=\count345
  (c:/texlive/2024/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4763.
-\XeTeXLinkMargin=\dimen185
+\XeTeXLinkMargin=\dimen196
  (c:/texlive/2024/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 )
-\Fld@menulength=\count319
-\Field@Width=\dimen186
-\Fld@charsize=\dimen187
+\Fld@menulength=\count346
+\Field@Width=\dimen197
+\Fld@charsize=\dimen198
 Package hyperref Info: Hyper figures OFF on input line 6042.
 Package hyperref Info: Link nesting OFF on input line 6047.
 Package hyperref Info: Hyper index ON on input line 6050.
@@ -368,42 +459,42 @@ Package hyperref Info: PDF/A mode OFF on input line 6072.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count320
-\c@Item=\count321
-\c@Hfootnote=\count322
+\Hy@abspage=\count347
+\c@Item=\count348
+\c@Hfootnote=\count349
 )
 Package hyperref Info: Driver: hpdftex.
  (c:/texlive/2024/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
-\Fld@listcount=\count323
-\c@bookmark@seq@number=\count324
-\Hy@SectionHShift=\skip63
+\Fld@listcount=\count350
+\c@bookmark@seq@number=\count351
+\Hy@SectionHShift=\skip69
 ) (c:/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count325
-\l__pdf_internal_box=\box52
+\l__color_backend_stack_int=\count352
+\l__pdf_internal_box=\box60
 ) (./thesis.aux)
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-\thesisvariableerrors=\toks51
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+\thesisvariableerrors=\toks61
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -440,44 +531,46 @@ LaTeX Font Info:    ... okay on input line 62.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 (c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count326
-\scratchdimen=\dimen188
-\scratchbox=\box53
-\nofMPsegments=\count327
-\nofMParguments=\count328
-\everyMPshowfont=\toks52
-\MPscratchCnt=\count329
-\MPscratchDim=\dimen189
-\MPnumerator=\count330
-\makeMPintoPDFobject=\count331
-\everyMPtoPDFconversion=\toks53
+\scratchcounter=\count353
+\scratchdimen=\dimen199
+\scratchbox=\box61
+\nofMPsegments=\count354
+\nofMParguments=\count355
+\everyMPshowfont=\toks62
+\MPscratchCnt=\count356
+\MPscratchDim=\dimen256
+\MPnumerator=\count357
+\makeMPintoPDFobject=\count358
+\everyMPtoPDFconversion=\toks63
 ) (c:/texlive/2024/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (c:/texlive/2024/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package backref Info: ** backref set up for natbib ** on input line 62.
-Package hyperref Info: Link coloring OFF on input line 62.
-\@outlinefile=\write3
-\openout3 = `thesis.out'.
+Package backref Info: ** backref set up for natbib ** on input line 70.
+Package hyperref Info: Link coloring OFF on input line 70.
+ (./thesis.out) (./thesis.out)
+\@outlinefile=\write4
+\openout4 = `thesis.out'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 63--63
+Underfull \hbox (badness 10000) in paragraph at lines 71--71
 
  []
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 63.
+(Font)              <12> on input line 71.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 63.
+(Font)              <8> on input line 71.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 63.
-\c@supervisors=\count332
+(Font)              <6> on input line 71.
+\c@supervisors=\count359
 
 
 [1
@@ -486,110 +579,37 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 [1]
 
-[1]
-No file thesis.toc.
-\tf@toc=\write4
-\openout4 = `thesis.toc'.
-
-
+[1] (./thesis.toc
 
 [1
 
-]
+])
+\tf@toc=\write5
+\openout5 = `thesis.toc'.
+
+
+
+[2]
 Chapter 1.
 (./chapters/10_introduction.tex
 
-Package natbib Warning: Citation `vaswani2023attentionneed' on page 1 undefined on input line 1.
-
-
-Package natbib Warning: Citation `OpenAI_2022' on page 1 undefined on input line 3.
-
-
-Package natbib Warning: Citation `Anthropic_2023' on page 1 undefined on input line 3.
-
-
-Package natbib Warning: Citation `DeepL_SE' on page 1 undefined on input line 3.
-
-
-Package natbib Warning: Citation `Friedman_2022' on page 1 undefined on input line 3.
-
-
-Package natbib Warning: Citation `Kandpal.15.11.2022' on page 1 undefined on input line 5.
-
-
-Package natbib Warning: Citation `Zhang.03.09.2023' on page 1 undefined on input line 7.
-
-
-
 [1
 
 
 ]
-
-Package natbib Warning: Citation `Simon.10112024' on page 2 undefined on input line 13.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 25--26
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 27--30
-
- []
-
-
-Package natbib Warning: Citation `Salemi.2024' on page 2 undefined on input line 33.
-
-
-Package natbib Warning: Citation `Yu.2024' on page 2 undefined on input line 33.
-
-
 
 [2]
-
-Package natbib Warning: Citation `AutoRAG' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `Liu_LlamaIndex_2022' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `Chase_LangChain_2022' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `ralle' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `FlashRAG' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `zhang-etal-2024-raglab' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `Pietsch_Haystack_the_end-to-end_2019' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `Izsak_fastRAG_Efficient_Retrieval_2023' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `Simon.10112024' on page 3 undefined on input line 35.
-
-
-Package natbib Warning: Citation `Simon.10112024' on page 3 undefined on input line 37.
-
-
-Package natbib Warning: Citation `Pietsch_Haystack_the_end-to-end_2019' on page 3 undefined on input line 37.
-
-
-Package natbib Warning: Citation `Izsak_fastRAG_Efficient_Retrieval_2023' on page 3 undefined on input line 37.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 37--38
 
  []
 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 40--85
+Underfull \hbox (badness 10000) in paragraph at lines 40--93
 
  []
 
@@ -598,124 +618,347 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--85
 [3]
 Chapter 2.
 (./chapters/21_Language_Models.tex
-
-Package natbib Warning: Citation `Wolf.09.10.2019' on page 4 undefined on input line 9.
-
-
-Package natbib Warning: Citation `Yin.2024' on page 4 undefined on input line 12.
-
-
-Overfull \hbox (8.27992pt too wide) in paragraph at lines 12--13
- []\T1/cmr/bx/n/12 Transformer Ar-chi-tec-ture[] \T1/cmr/m/n/14.4 There are many well-known mod-els based
- []
-
-<images/transformers_architecture.png, id=35, 640.3925pt x 798.985pt>
+<images/transformers_architecture.png, id=256, 640.3925pt x 798.985pt>
 File: images/transformers_architecture.png Graphic file (type png)
 <use images/transformers_architecture.png>
 Package pdftex.def Info: images/transformers_architecture.png  used on input line 17.
 (pdftex.def)             Requested size: 239.00557pt x 298.19223pt.
-
-Package natbib Warning: Citation `vaswani2023attentionneed' on page 4 undefined on input line 18.
-
-
-Package natbib Warning: Citation `vaswani2023attentionneed' on page 4 undefined on input line 18.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: Reference `fig:transformer_architecture' on page 4 undefined on input line 22.
-
-
-Package natbib Warning: Citation `Hou.8212023' on page 4 undefined on input line 26.
-
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 24.
 
 
 [4
 
 ]
 
-Package natbib Warning: Citation `Hou.8212023' on page 5 undefined on input line 31.
-
-
-
 [5 <./images/transformers_architecture.png>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 40.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 40.
+<images/temperature.png, id=276, 782.925pt x 322.20375pt>
+File: images/temperature.png Graphic file (type png)
+<use images/temperature.png>
+Package pdftex.def Info: images/temperature.png  used on input line 64.
+(pdftex.def)             Requested size: 239.00557pt x 98.35803pt.
 
 
-[6]
-Overfull \hbox (7.71104pt too wide) in paragraph at lines 47--48
- []\T1/cmr/bx/n/12 Putting it all to-gether[] \T1/cmr/m/n/14.4 Af-ter the in-put se-quence is passed through
+[6 <./images/temperature.png>]
+<images/FewShot vs ZeroSHot.pdf, id=296, 730.03741pt x 406.30797pt>
+File: images/FewShot vs ZeroSHot.pdf Graphic file (type pdf)
+<use images/FewShot vs ZeroSHot.pdf>
+Package pdftex.def Info: images/FewShot vs ZeroSHot.pdf  used on input line 88.
+(pdftex.def)             Requested size: 398.33858pt x 221.69693pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<images/Chain-of-Thought.pdf, id=299, 730.03741pt x 504.27397pt>
+File: images/Chain-of-Thought.pdf Graphic file (type pdf)
+<use images/Chain-of-Thought.pdf>
+Package pdftex.def Info: images/Chain-of-Thought.pdf  used on input line 100.
+(pdftex.def)             Requested size: 398.33858pt x 275.15088pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+
+[7]) (./chapters/22_Text_Retrieval.tex
+
+[8 <./images/FewShot vs ZeroSHot.pdf>]
+Overfull \hbox (13.84587pt too wide) in paragraph at lines 9--10
+\T1/cmr/m/n/14.4 TF-IDF and BM25 are widely im-ple-mented in li-braries like LangChain
  []
 
 
 
-[7]
-<images/temperature.png, id=65, 782.925pt x 322.20375pt>
-File: images/temperature.png Graphic file (type png)
-<use images/temperature.png>
-Package pdftex.def Info: images/temperature.png  used on input line 61.
-(pdftex.def)             Requested size: 239.00557pt x 98.35803pt.
+[9 <./images/Chain-of-Thought.pdf>]
+
+[10]) (./chapters/24_Retrieval_Augmented_Generation.tex
+
+[11]
+Overfull \hbox (13.50568pt too wide) in paragraph at lines 7--8
+[]\T1/cmr/m/n/14.4 There is a high va-ri-ety in ar-chi-tec-tures and ap-proaches for retrieval-
+ []
+
+<images/LLM-vs-RAG.pdf, id=385, 1088.93826pt x 813.18808pt>
+File: images/LLM-vs-RAG.pdf Graphic file (type pdf)
+<use images/LLM-vs-RAG.pdf>
+Package pdftex.def Info: images/LLM-vs-RAG.pdf  used on input line 16.
+(pdftex.def)             Requested size: 398.33858pt x 297.47502pt.
 
 
-Package natbib Warning: Citation `ACKLEY.1985' on page 8 undefined on input line 62.
+[12]
+
+LaTeX Warning: Reference `retrieval' on page 13 undefined on input line 21.
+
+<images/VectorDB.pdf, id=393, 1015.55411pt x 871.94759pt>
+File: images/VectorDB.pdf Graphic file (type pdf)
+<use images/VectorDB.pdf>
+Package pdftex.def Info: images/VectorDB.pdf  used on input line 25.
+(pdftex.def)             Requested size: 398.33858pt x 342.01399pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Package natbib Warning: Citation `ACKLEY.1985' on page 8 undefined on input line 62.
+
+[13 <./images/LLM-vs-RAG.pdf>]
+
+[14 <./images/VectorDB.pdf>]
+Overfull \hbox (18.8044pt too wide) in paragraph at lines 40--41
+\T1/cmr/m/n/14.4 There is no strict def-i-ni-tion of ad-vanced ver-sions of retrieval-augmented
+ []
 
 
-LaTeX Warning: Reference `fig:temperature' on page 8 undefined on input line 68.
-
-
-Package natbib Warning: Citation `Fan.13.05.2018' on page 8 undefined on input line 73.
+Package natbib Warning: Year undefined for citation`LeipzigWikipedia.2025' 
+(natbib)                on page 15 on input line 45.
 
 
 
-[8 <./images/temperature.png>]
+[15])
 
-Package natbib Warning: Citation `Holtzman.22.04.2019' on page 9 undefined on input line 76.
+[16{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+Chapter 3.
+(./chapters/30_Related_Works.tex
 
+[17
+
+]
+
+[18]
+
+Package natbib Warning: Citation `Alinejad.2024' on page 19 undefined on input line 22.
+
+
+Package natbib Warning: Citation `Jin.19.09.2024' on page 19 undefined on input line 22.
+
+
+Package natbib Warning: Citation `Mallen.2023' on page 19 undefined on input line 22.
+
+
+Overfull \hbox (1.07114pt too wide) in paragraph at lines 22--23
+\T1/cmr/m/n/14.4 plex-ity of as-sess-ing re-trieval ef-fec-tive-ness by com-par-ing hu-man judg-
+ []
+
+
+
+[19])
+
+[20]
+
+[21]
+Chapter 4.
+(./chapters/40_Design_of_Valid_RAG_Evaluation.tex
+<images/showcase-pipeline.pdf, id=527, 1224.95644pt x 464.09384pt>
+File: images/showcase-pipeline.pdf Graphic file (type pdf)
+<use images/showcase-pipeline.pdf>
+Package pdftex.def Info: images/showcase-pipeline.pdf  used on input line 16.
+(pdftex.def)             Requested size: 398.33858pt x 150.91368pt.
+
+
+[22
+
+]
+
+
+Package fancyhdr Warning: \headheight is too small (14.0pt): 
+(fancyhdr)                Make it at least 25.22153pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.22153pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-11.22153pt}.
+
+[23 <./images/showcase-pipeline.pdf>]
+\pydata@fh@_2EF71E68B4AD97F630480BCEBC1842FB.data.minted=\write6
+\openout6 = `_2EF71E68B4AD97F630480BCEBC1842FB.data.minted'.
+
+runsystem(latexminted config  --timestamp 20250219111632 2EF71E68B4AD97F630480BCEBC1842FB)...executed safely (allowed).
+
+ (./_2EF71E68B4AD97F630480BCEBC1842FB.config.minted)
+runsystem(latexminted cleanconfig  --timestamp 20250219111632 2EF71E68B4AD97F630480BCEBC1842FB)...executed safely (allowed).
+
+ (./_minted/default.style.minted) (./_minted/AB1687037B09F1A693A2ED15F971ED1E.highlight.minted
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
 
-[9]
-Chapter 3.
-(./chapters/22_Text_Retrieval.tex
-
-Package natbib Warning: Citation `Zhao.29.02.2024' on page 10 undefined on input line 2.
+Package natbib Warning: Citation `Ru.15.08.2024.' on page 24 undefined on input line 58.
 
 
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 6.
+Underfull \hbox (badness 10000) in paragraph at lines 58--59
+
+ []
 
 
 
-[10
 
-])
+Package fancyhdr Warning: \headheight is too small (14.0pt): 
+(fancyhdr)                Make it at least 25.22153pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.22153pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-11.22153pt}.
 
-! LaTeX Error: File `chapters/23_Retrieval_Augmented_Generation_Systems.tex' not found.
+[24]
+Overfull \hbox (13.85782pt too wide) in paragraph at lines 73--73
+[]\T1/cmr/bx/n/17.28 Increasing Trans-parency in RAG Ex-per-i-ments 
+ []
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: tex)
+<images/RAGvsLLM-tuning.pdf, id=560, 730.03741pt x 406.30797pt>
+File: images/RAGvsLLM-tuning.pdf Graphic file (type pdf)
+<use images/RAGvsLLM-tuning.pdf>
+Package pdftex.def Info: images/RAGvsLLM-tuning.pdf  used on input line 84.
+(pdftex.def)             Requested size: 398.33858pt x 221.69693pt.
 
-Enter file name: 
-c:/Users/janal/VisualCodeProjects/master-thesis-alj95-1/latex/3 thesis/thesis.tex:94: Emergency stop.
-<read *> 
-         
-l.94 ...23_Retrieval_Augmented_Generation_Systems}
-                                                  ^^M
-*** (cannot \read from terminal in nonstop modes)
 
- 
+
+Package fancyhdr Warning: \headheight is too small (14.0pt): 
+(fancyhdr)                Make it at least 25.22153pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.22153pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-11.22153pt}.
+
+[25]
+
+
+Package fancyhdr Warning: \headheight is too small (14.0pt): 
+(fancyhdr)                Make it at least 25.22153pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.22153pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-11.22153pt}.
+
+[26 <./images/RAGvsLLM-tuning.pdf>]
+<images/Sketch.pdf, id=587, 853.52881pt x 453.59462pt>
+File: images/Sketch.pdf Graphic file (type pdf)
+<use images/Sketch.pdf>
+Package pdftex.def Info: images/Sketch.pdf  used on input line 110.
+(pdftex.def)             Requested size: 398.33858pt x 211.69449pt.
+
+
+
+Package fancyhdr Warning: \headheight is too small (14.0pt): 
+(fancyhdr)                Make it at least 25.22153pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.22153pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-11.22153pt}.
+
+[27 <./images/Sketch.pdf>])
+
+
+Package fancyhdr Warning: \headheight is too small (14.0pt): 
+(fancyhdr)                Make it at least 25.22153pt, for example:
+(fancyhdr)                \setlength{\headheight}{25.22153pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-11.22153pt}.
+
+[28]
+Chapter 5.
+(./chapters/50_SE_Experiment.tex)
+
+[29
+
+]
+Chapter 6.
+(./chapters/60_Conclusion_Framework.tex) (./chapters/70_Appendix.tex (./_minted/10A495F7144C6262DF2D18E9E16E603C.highlight.minted
+
+[30
+
+]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 9.
+LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 11.
+)) (./thesis.bbl (./thesis.brf)
+\tf@brf=\write7
+\openout7 = `thesis.brf'.
+
+
+
+[31]
+
+[32
+
+]
+Underfull \hbox (badness 4108) in paragraph at lines 29--29
+[]\T1/cmr/m/n/14.4 Harrison Chase.  LangChain.  []$\T1/cmtt/m/n/14.4 https : / / github . com /
+ []
+
+
+Underfull \hbox (badness 1102) in paragraph at lines 51--51
+\T1/cmr/m/n/14.4 Kat-sis, Sara Rosen-thal, Ben-jamin Sz-na-jder, and Ma-rina
+ []
+
+
+
+[33]
+Underfull \hbox (badness 1859) in paragraph at lines 80--80
+[]\T1/cmr/m/n/14.4 Lei Huang, Wei-jiang Yu, Weitao Ma, Wei-hong Zhong,
+ []
+
+
+Underfull \hbox (badness 2318) in paragraph at lines 99--99
+[]\T1/cmr/m/n/14.4 Jiajie Jin, Yu-tao Zhu, Xinyu Yang, Cheng-hao Zhang,
+ []
+
+
+Underfull \hbox (badness 1817) in paragraph at lines 99--99
+\T1/cmr/m/n/14.4 and Zhicheng Dou.  Flashrag: A mod-u-lar toolkit for
+ []
+
+
+Underfull \hbox (badness 1168) in paragraph at lines 99--99
+\T1/cmr/m/n/14.4 ef-fi-cient retrieval-augmented gen-er-a-tion re-search.  \T1/cmr/m/it/14.4 CoRR\T1/cmr/m/n/14.4 ,
+ []
+
+
+
+[34]
+
+[35]
+Underfull \hbox (badness 1242) in paragraph at lines 170--170
+\T1/cmr/m/n/14.4 For-mal, Shuai Wang, Vas-silina Nikoulina, and Stéphane
+ []
+
+
+Underfull \hbox (badness 1178) in paragraph at lines 174--174
+\T1/cmr/m/n/14.4 Shi, Shuaichen Chang, Cheng Ji-ayang, Cunx-i-ang Wang,
+ []
+
+
+
+[36]
+
+[37]
+
+[38])
+
+Package natbib Warning: There were undefined citations.
+
+
+
+[39] (./thesis.aux)
+ ***********
+LaTeX2e <2024-11-01> patch level 1
+L3 programming layer <2024-12-25>
+ ***********
+
+
+LaTeX Warning: There were undefined references.
+
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 1735FAE9DF84F6ED9904BEC616BD6F76;5282.
+Package rerunfilecheck Info: File `thesis.brf' has not changed.
+(rerunfilecheck)             Checksum: 37AB46BAEFF6845BF48E3268887F2B15;4878.
+ ) 
 Here is how much of TeX's memory you used:
- 14290 strings out of 473362
- 229160 string characters out of 5725051
- 662160 words of memory out of 5000000
- 37175 multiletter control sequences out of 15000+600000
- 571267 words of font info for 61 fonts, out of 8000000 for 9000
+ 19537 strings out of 473207
+ 370857 string characters out of 5720461
+ 915029 words of memory out of 5000000
+ 42348 multiletter control sequences out of 15000+600000
+ 577310 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 91i,13n,131p,1489b,540s stack positions out of 10000i,1000n,20000p,200000b,200000s
-c:/Users/janal/VisualCodeProjects/master-thesis-alj95-1/latex/3 thesis/thesis.tex:94:  ==> Fatal error occurred, no output PDF file produced!
+ 91i,13n,131p,1972b,1069s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfit1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sftt1440.pfb>
+Output written on thesis.pdf (44 pages, 973915 bytes).
+PDF statistics:
+ 873 PDF objects out of 1000 (max. 8388607)
+ 755 compressed objects within 8 object streams
+ 123 named destinations out of 1000 (max. 500000)
+ 326 words of extra memory for PDF output out of 10000 (max. 10000000)
+
