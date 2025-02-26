@@ -28,7 +28,7 @@ This procedure can be seen in figure \ref{fig:naive_rag}. This generation phase 
 \end{figure}
 
 
-Before the system can be used, it is necessary to ingest data. The ingestion process includes preprocessing and selection of data, that users are likely to need for their questions or use-cases. Therefore it is relevant to know the user base. It is not feasible nor efficient to ingest all availlable data. The preprocessing pipeline converts raw data into document chunks using methods detailed in Section \ref{sec:chunk}. As described in \ref{sec:dense_retrieval}, the chunks are then embedded into a d-dimensional real-valued vector space. There is a simplistic minimal example of a vector space in figure \ref{fig:vectorDB}. The documents gets mapped in different loactions within the space. This assumes semantic alignment between queries and relevant documents in the embedding space. In reality there will be more documents close to each other, documents and queries are longer or more complex and each query will return the "Top-K" chunks or documents, which are not always as relevant as in this example. Top-K can be seen as hyperparamter for the system. The vectors are then stored in vector databases, specialized databases for vector representations.
+Before the system can be used, it is necessary to ingest data. The ingestion process includes preprocessing and selection of data, that users are likely to need for their questions or use cases. Therefore it is relevant to know the user base. It is not feasible nor efficient to ingest all availlable data. The preprocessing pipeline converts raw data into document chunks using methods detailed in Section \ref{sec:chunk}. As described in \ref{sec:dense_retrieval}, the chunks are then embedded into a d-dimensional real-valued vector space. There is a simplistic minimal example of a vector space in figure \ref{fig:vectorDB}. The documents gets mapped in different loactions within the space. This assumes semantic alignment between queries and relevant documents in the embedding space. In reality there will be more documents close to each other, documents and queries are longer or more complex and each query will return the "Top-K" chunks or documents, which are not always as relevant as in this example. Top-K can be seen as hyperparamter for the system. The vectors are then stored in vector databases, specialized databases for vector representations.
 % as described in section \ref{vdbs}.
 
 
@@ -37,7 +37,7 @@ Gao \cite{Gao.18.12.2023} listed several drawbacks for naive RAGs. The basic ret
 \subsection{Advanced RAGs}
 \label{sec:advanced_rags}
 
-There is no strict definition of advanced versions of retrieval-augmented generation systems. The term describes a loose bundle of techniques to improve the quality of such systems. Following is a list, which items we will explain in greater details afterwards.
+There is no strict definition of advanced versions of retrieval-augmented generation systems. The term describes a loose bundle of techniques to improve the quality of such systems. Following is a list, which items we will explain in greater details afterwards. We will follow Gao et al. survey definition of advanced RAG that defines it as the \textit{rewrite-retrieve-rerank-read} structure (4R) with chunking enhancements. We will skip \textit{retrieve} and \textit{read} here, as we described it in section \ref{sec:naive_rags} in detail.
 
 \paragraph{Chunking}
 \label{sec:chunk}
@@ -50,7 +50,14 @@ Chunking's importance becomes clear through a practical example: Let us use a se
 
 If there are thousands of wikipedia pages or websites to process, then this can not be splitted manually. What is the document or a good chunk in this context. If the query asks if Johann Sebastian Bach lived in Leipzig, then embedding the whole sentence would not guarantee a high similarity vector score in the retrieval process. This differs from domain to domain. While chunking facts from sentences might be a valid strategy for wikipedia, processing internal contracts in a large company would need less granular chunking. 
 
-Therefore there are several chunking techniques to consider for tuning the RAG-system. Fixed-size chunking divides text into uniform segments (e.g., 400-character blocks), while sliding window variants add overlapping regions. The sliding window approach adds a overlap of few characters. Semantic chunking splits with prior defined characters such as "\textit{$\backslash n$, $\backslash\backslash n$ or <br>}". There are also special use-case techniques such as Markdown, JSON, HTML and programming code chunkers. Almost all presented chunking techniques are offered in typical libraries e. g. Llama-Index \cite{Liu_LlamaIndex_2022} or Langchain \cite{Chase_LangChain_2022}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/Chunking.pdf}
+    \caption{Differnt types of chunking showed on the example of a wikipedia page of Leipzig\cite{LeipzigWikipedia.2025}}
+    \label{fig:chunking}
+\end{figure}
+
+Therefore there are several chunking techniques to consider for tuning the RAG-system. Fixed-size chunking divides text into uniform segments (e.g., 400-character blocks), while sliding window variants add overlapping regions. The sliding window approach adds a overlap of few characters. Semantic chunking splits with prior defined characters such as "\textit{$\backslash n$, $\backslash\backslash n$ or <br>}". These techniques are visualized in figure \ref{fig:chunking}. There are also special use case techniques such as Markdown, JSON, HTML and programming code chunkers. Almost all presented chunking techniques are offered in typical libraries e. g. Llama-Index \cite{Liu_LlamaIndex_2022} or Langchain \cite{Chase_LangChain_2022}.
 
 % \paragraph{Metadata-Filtering}
 % Additional to advanced chunking, it is recommended to enrich the resulting documents with metadata, which can be used at inference time for filtering. 
@@ -63,28 +70,34 @@ Therefore there are several chunking techniques to consider for tuning the RAG-s
 \paragraph{Rewrite}
 \label{sec:rewrite}
 % Query Rewriting, Query Transformation, Query Expansion (see. papers)
+\textit{Rewrite} is a collection of pre-retrieval techniques to increase the likelihood of relevant retrieved documents and a concise generation. The query will be transformed, expanded or routed. Query routing in this context describes different RAG pipelines based on the query.\cite{Gao.18.12.2023}
 
 \paragraph{Rerank}
 \label{sec:rerank}
 % Reranking Techniques, Lost-in-The-Middle?, Diversity Ranking, ... 
+\textit{Reranking} mitigates risks which naive RAGs suffer. They key consideration for retrieval is, to decide how many documents should be retrieved. In real worlds scenarios there won't be perfect retrievals. Therefore the retrieval will always introduce noise in form of irrelevant documents or chunks into the generation process. Additional to this, if we retrieve not enough documents, with might risk losing relevant ones that do not appear on the top of the similarity score. Post-retrieval techniques such as rerank mitigate this risk by ranking those documents and order them.\cite{Gao.18.12.2023}
+
 
 \section{Modular RAG}
-\begin{itemize}
-    \item Gao's Components $\longrightarrow$ vor allem Router, da er in Design verwendet wird
-\end{itemize}
 
-\paragraph{Router Component}
-\label{sec:router}
+There is a variety of different RAG systems with lots of different components. The definition of advanced RAG systems is too strict and sequencial for including this variety. This gap closes modular RAGs. Modular RAGs can be seen as individual component blocks that can be added to a pipeline as long as the input and output of these blocks are compatible. Gao et al. introduced this definition and defined more components then the here presented \textit{rewrite, retrieve, rerank and read}.\cite{Gao.18.12.2023}
 
-\paragraph{IRA Methods}
-\label{sec:IRA}
-% Short description with graphic
+This modularity is a key requirements for the ability to build custom RAG systems for each use case.
+
+
+% \paragraph{IRA Methods}
+% \label{sec:IRA}
+
 
 \subsection{Drawbacks of RAGs}
 \label{sec:drawbacks}
+Retrieval-augmented Generation systems have several improvements compared to standalone LLMs as describe at the beginning of this chapter. Nevertheless it comes with drawbacks that must be considerd before replacing LLMs in production. 
 
-\begin{itemize}
-    \item 
-\end{itemize}
+\begin{enumerate}
+    \item RAGs have significantly longer computing times and must be partially computed in sequencial order. Therefore the time-to-first-token (TTFT) is always higher then the vanilla LLM. 
+    \item This increase of computing times and the fact that there are more LLM requests for e. g. rewriting or reranking result in higher costs.
+    \item RAGs introduce a overhead of work and expertise for developing, maintaining and experimenting with RAGs.
+    \item RAGs introduce a high variety of diverse failures in all components of the RAG system. Failures can happen while ingestion too.\\[9pt]
+\end{enumerate}
 
-\subsection{Do not forget to finish this here!}
+This points show that RAGs are no free lunch and it must be considered if RAG is at all needed for every specific use case. Therefore there is a need for fast RAG experimentation that can address all points necessary for this decision.
