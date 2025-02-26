@@ -22,7 +22,7 @@ Developing retrieval-augmented generation systems is a difficult task that needs
 
 There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in a YAML to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
 
-Furthermore Haystack comes with router components (cf. router component, section \ref{sec:router}) and the ability to create custom components, which enables iterative, recursive and adaptive RAG functionalities. Components in the Haystack universe can be seen as nodes of an RAG pipeline such as a generator or a retriever. 
+Furthermore Haystack comes with router components and the ability to create custom components, which enables iterative, recursive and adaptive RAG functionalities. Components in the Haystack universe can be seen as nodes of an RAG pipeline such as a generator or a retriever. 
 
 \newpage
 \begin{minted}[
@@ -61,7 +61,7 @@ Evaluating retrieval-augmented generation systems is a hard task that is still h
   \label{fig:failures}
 \end{figure}
 
-The problem that occurs with end-to-end evaluation is that it is far from obvious which parameters we have to tune or which data we have to provide to accomplish a performance improvement. In figure \ref{fig:failures} there are is example for every component in particular RAG system. In reality there are much more points of failures in such systems. We will explore those in section component evaluation.
+The problem that occurs with end-to-end evaluation is that it is far from obvious which parameters we have to tune or which data we have to provide to accomplish a performance improvement. In figure \ref{fig:failures} there is an example for every component in particular RAG system. In reality there are much more points of failures in such systems. We will explore those in section component evaluation.
 
 \subsection{End-to-End Evaluation}
 
@@ -86,12 +86,12 @@ We define end-to-end evaluation as metrics that use input and actual output to c
   \hline
  \end{tabular}
  \caption{Typical classification metrics used for experiments including RAGs or LLMs\cite{Hou.8212023,Zeng.28.03.2024}}
- \label{fig:classification_metrics}
+ \label{table:classification_metrics}
 \end{table}}
 
-In stark contrast to evaluating generative tasks, classification comes with clear metrics or methods to evaluate outputs. In figure \ref{fig:classification_metrics} there is a list of highly used classification metrics for RAG and LLM experimentation.\cite{Hou.8212023,Zeng.28.03.2024} 
+In stark contrast to evaluating generative tasks, classification comes with clear metrics or methods to evaluate outputs. In table \ref{table:classification_metrics} there is a list of highly used classification metrics for RAG and LLM experimentation.\cite{Hou.8212023,Zeng.28.03.2024} 
 
-End-to-end evaluation requires the researcher to establish a baseline for the experiments. Baslines make experiment results interpretable and ensure that there is something to compare with. Therefore we decided to implement two baselines in this framework, which are used per default if an experiment starts. In the first run, we use the selected generator model alone to get a baseline vs standalone LLMs. Next we run a naive RAG with the data from the predefined corpus, the basic retrieval and generator (retrieve-read, cf: section \ref{sec:naive_rags}). The standalone LLM baseline ensure that the complexity overhead of implementing a RAG system is justified. If the evaluated RAG system can not surpass the performance of the LLM baseline, then simpler system should be used. Similar to that is the naive RAG baseline used to compare more complex RAG variations with more overhead, computation time or costs to the simpler naive one to ensure that the mentioned downsides are justified.
+End-to-end evaluation requires the researcher to establish a baseline for the experiments. Baslines make experiment results interpretable and ensure that there is something to compare with. Therefore we decided to implement two baselines in this framework, which are used per default if an experiment starts. In the first run, we use the selected generator model alone to get a baseline vs standalone LLMs. Next we run a naive RAG with the data from the predefined corpus, the basic retrieval and generator (retrieve-read, cf: section \ref{sec:naive_rags}). The standalone LLM baseline ensure that the complexity overhead of implementing a RAG system is justified. If the evaluated RAG system can not surpass the performance of the LLM baseline, then simpler system should be used. Similar to that is the naive RAG baseline used to compare more complex RAG variations with more overhead, computation time or costs to the simpler naive one to ensure that the mentioned downsides are justified. We illustrated the prior defined state of our framework in figure \ref{fig:framework-baselines} to enhance the understanding of our considerations. The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section.
 
 \begin{figure}
   \centering
@@ -99,8 +99,6 @@ End-to-end evaluation requires the researcher to establish a baseline for the ex
   \caption{Framework: research define configuration files of RAG variations to evaluate them against the baselines standalone LLM and naive RAG with end-to-end evaluation.}
   \label{fig:framework-baselines}
 \end{figure}
-
-We illustrated the prior defined state of our framework in figure \ref{fig:framework-baselines} to enhance the understanding of our considerations.
 
 % \cite{Ru.15.08.2024.} Eventhough all components of a RAG-system affect its overall performance, there are ones that can not be evaluated directly.  \\
 
@@ -111,11 +109,16 @@ Component evaluation is necessary to detect performance issues of the whole syst
 
 \paragraph{Rewrite}
 
-Evaluating rewriter components is a derived task from the retrieval evaluation in the next section. The goal of rewriting is to transform the query so that the retriever finds all necessary documents or chunks for this task. One commonly used technique for that is \textit{Hypothetical Document Embeddings (HyDE)}\cite{Gao.2023}. Rewriter evaluation has the same metrics as the retriever, because it aims the same goals. The only difference in evaluating rewriters is, that instead of the retriever, the rewriter must be agnostic to replace them within the system. 
+Evaluating rewriter components is a derived task from the retrieval evaluation in the next section. The goal of rewriting is to transform the query so that the retriever finds all necessary documents or chunks for this task. One commonly used technique for that is \textit{Hypothetical Document Embeddings (HyDE)}\cite{Gao.2023}, next to query routing, query transformation and query expansion. Rewriter evaluation has the same metrics as the retriever, because it aims the same goals. The only difference in evaluating rewriters is, that instead of the retriever, the rewriter must be agnostic to replace them within the system. 
 
 \textcolor{blue}{Wenn mir klar geworden ist, ob das praktisch umsetzbar ist (code it), dann sollte ich dafür hier eine Grafik einfügen.}
 
+\textcolor{blue}{Eigentlich denke ich, dass auch Rewrite und Rerank isoliert evaluiert werden sollten. Notfalls mit LLM-as-a-Judge. Es ist eine methode es agnostisch zu machen, aber mMn wäre es präziser isoliert. (Hat wahrscheinlich Vor- und Nachteile. Isoliert $\longrightarrow$ präziser, Agnostisch mit Retrieval Metriken $\longrightarrow$ Synergy zwischen Rewriter und Retriever wird evaluiert.)}\textcolor{red}{Erstmal das offensichtliche machen - Retrieval und Generation Evaluation!}
+
 \paragraph{Retrieve}
+Retrieval Evaluation is possibly the most difficult part in the evaluation for several reasons. First, more retrieval do not imply better results and it is not clear nor obvious which set of documents perfectly serves the generator to give the best answer.\cite{Jin.5222024} Second, in a real world scenario indexed corpus, there are redundant and contradicting information.\cite{Yu.2024} Third, some questions or queries require to view the topic in a diverse manner, highlighting several considerations for different perspectives. Fourth, the quality of the query does affect the retrieval quality heavily, because queries can be too complex and ambigious or not even requiring retrieval, which may also lead to LLM hallucinations.\cite{Huang.2023}
+
+
 
 \paragraph{Rerank}
 
@@ -127,6 +130,16 @@ Evaluating rewriter components is a derived task from the retrieval evaluation i
 
 \paragraph{Generators}
 Generators are based on transformer architecture and classification tasks were not the initial intention for this kind of tasks. Thus it is important that outputs are in a wanted form such as "valid", or "invalid".
+
+\subsection{Component Block Evaluation}
+\textcolor{blue}{Finde das Paper, in dem gesagt wurde, dass verschiedene Retrievals mit verschiedenen Generators gut zusammenarbeiten, (auch vorstellbar Retriever (Sparse vs Dense) mit verschiedenen Rewritern)}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{images/ComponentBlockEvaluation.pdf}
+  \caption{Comparison of isolated component evaluation of each component and component block evaluation, where several components with the same goal are evaluated.}
+  \label{fig:componentblockeval}
+\end{figure}
 
 \section{Increasing Transparency in RAG Experiments}
 
@@ -147,7 +160,7 @@ Generators are based on transformer architecture and classification tasks were n
 
 Data is rare, especially for down-stream tasks in domains such as configuration validation or similar tasks. They often rely on few datasets that can not represent the whole domain. Therefore there are measures required to ensure that the developed systems can be generalized from the seen data to the unseen production data. Measuring generalization error in the large language model development is done by splitting the data into training, validation and test datasets. While the training and validation data is used for hyperparameter tuning to ensure the best performing model, the test dataset on the other hand is used to check if the hyperparameter tuning introduced an overfitting. This procedure must be adopted for RAG systems too (cf. figure \ref{fig:tuning}). Even though they do not rely on a training in the most cases, the continous reconfiguration of such systems, including prompt engineering or parameter tuning can lead to differences in seen and unseen data. The needs for a test dataset is independent from a potential training phase, but instead very dependent on a tuning phase for the systems, that is done till the results converge to the best outcoming scenario. Both LLM and RAG development share those reconfiguration phases. 
 
-\textcolor{blue}{Selbst wenn tuning RAGs nicht super anfällig für Overfitting sein sollten, gibt es ja fine-tuning für Retrieval, Generators und Co., welche Overfitting einführen können.}
+\textcolor{blue}{Selbst wenn tuning RAGs nicht super anfällig für Overfitting sein sollten, gibt es ja fine-tuning für Retrieval, Generators und Co., welche Overfitting einführen können. Diese werden dann mit dem Objective im RAG bestmöglich zu performen trainiert, daher muss auch da der Generalization Error überprüft werden.}
 
 \paragraph{RAG Evaluation needs a Holdout-Testset}
 \begin{itemize}
