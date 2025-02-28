@@ -105,34 +105,59 @@ End-to-end evaluation requires the researcher to establish a baseline for the ex
 
 \subsection{Component Evaluation}
 
-Component evaluation is necessary to detect performance issues of the whole systems introduced through individual components or pairs of components that are connected and do not work well together. In figure \ref{fig:failures}, we presented few of them. While this gives a good first impression of the variety of failures in a RAG system, this visualisation is far from complete. We argue that all components, no matter how small their impact is, can introduce significant failure rate for the overall system. Therefore it would be necessary to evaluate them all component-wise. We are not aware of papers that analyze component evaluation beside retrieval and read - the core components of a RAG system. Therefore we will introduce two new evaluations schemes to address all components in a advanced RAG system (4R, cf. section \ref{sec:advanced_rags}). Next to well studied topics retrieval evaluation and generation evaluation, we will implement rewrite evaluation and rerank evaluation. We will demonstrate the evaluation of all components while limiting ourself to the fixed advanced RAG definition (4R). We want to highlight here, that the modular RAG architecture with other components can be treated equally in this manner as long as there are metrics or evaluation techniques that can measure the performance of those components. The haystack library always returns inputs and outputs of each component to enable this kind of evaluation.
+Component evaluation is necessary to detect performance issues of the whole systems introduced through individual components or pairs of components that are connected and do not work well together.\cite{Salemi.2024} In figure \ref{fig:failures}, we presented few of them. While this gives a good first impression of the variety of failures in a RAG system, this visualisation is far from complete. We argue that all components, no matter how small their impact is, can introduce significant failure rate for the overall system. Therefore it would be necessary to evaluate them all component-wise. We are not aware of papers that analyze component evaluation beside retrieval and read - the core components of a RAG system. Therefore we will introduce two new evaluations schemes to address all components in a advanced RAG system (4R, cf. section \ref{sec:advanced_rags}). Next to well studied topics retrieval evaluation and generation evaluation, we will implement rewrite evaluation and rerank evaluation. We will demonstrate the evaluation of all components while limiting ourself to the fixed advanced RAG definition (4R). We want to highlight here, that the modular RAG architecture with other components can be treated equally in this manner as long as there are metrics or evaluation techniques that can measure the performance of those components. The haystack library always returns inputs and outputs of each component to enable this kind of evaluation.
 
 \paragraph{Rewrite}
 
 Evaluating rewriter components is a derived task from the retrieval evaluation in the next section. The goal of rewriting is to transform the query so that the retriever finds all necessary documents or chunks for this task. One commonly used technique for that is \textit{Hypothetical Document Embeddings (HyDE)}\cite{Gao.2023}, next to query routing, query transformation and query expansion. Rewriter evaluation has the same metrics as the retriever, because it aims the same goals. The only difference in evaluating rewriters is, that instead of the retriever, the rewriter must be agnostic to replace them within the system. 
 
-\textcolor{blue}{Wenn mir klar geworden ist, ob das praktisch umsetzbar ist (code it), dann sollte ich dafür hier eine Grafik einfügen.}
-
-\textcolor{blue}{Eigentlich denke ich, dass auch Rewrite und Rerank isoliert evaluiert werden sollten. Notfalls mit LLM-as-a-Judge. Es ist eine methode es agnostisch zu machen, aber mMn wäre es präziser isoliert. (Hat wahrscheinlich Vor- und Nachteile. Isoliert $\longrightarrow$ präziser, Agnostisch mit Retrieval Metriken $\longrightarrow$ Synergy zwischen Rewriter und Retriever wird evaluiert.)}\textcolor{red}{Erstmal das offensichtliche machen - Retrieval und Generation Evaluation!}
-
 \paragraph{Retrieve}
-Retrieval Evaluation is possibly the most difficult part in the evaluation for several reasons. First, more retrieval do not imply better results and it is not clear nor obvious which set of documents perfectly serves the generator to give the best answer.\cite{Jin.5222024} Second, in a real world scenario indexed corpus, there are redundant and contradicting information.\cite{Yu.2024} Third, some questions or queries require to view the topic in a diverse manner, highlighting several considerations for different perspectives. Fourth, the quality of the query does affect the retrieval quality heavily, because queries can be too complex and ambigious or not even requiring retrieval, which may also lead to LLM hallucinations.\cite{Huang.2023}
+Retrieval Evaluation is possibly the most difficult part in the evaluation for several reasons. First, more retrieval do not imply better results and it is not clear nor obvious which set of documents perfectly serves the generator to give the best answer.\cite{Jin.5222024} Second, in a real world scenario indexed corpus, there are redundant and contradicting information.\cite{Yu.2024} Third, some questions or queries require to view the topic in a diverse manner, highlighting several considerations for different perspectives. Fourth, the quality of the query does also affect the retrieval quality, because queries can be too complex and ambigious or not even requiring retrieval, which may also lead to LLM hallucinations.\cite{Huang.2023, Mallen.20.12.2022}
 
+Low retrieval performance can lead to missing documents in the reranking and generation stage. There are plenty of retrieval models and techniques that can imply fine-tuning. Therefore it is important to build an evaluation dataset, that offers a ground truth for received documents for a given query. With this dataset, the actual retrieved documents can be compared against the ground truth.\cite{Ferrante.2021} There are multiple potential metrics for retrieval evaluation and simple ones are presented in table \ref{table:simpleretrievalmetrics}. 
+
+{\renewcommand{\arraystretch}{1.5}%
+\begin{table}
+  \centering
+ \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Metric} & \textbf{Formula} \\[3pt]
+
+  \hline Recall & $\frac{TP}{TP + FN}$\\[2pt]
+  
+  \hline Precision & $\frac{TP}{TP + FP}$\\[5pt]
+  
+  \hline F1-Score & $2 \times \frac{Precision \times Recall}{Precision + Recall}$\\[2pt]
+  
+  \hline
+ \end{tabular}
+ \caption{A list of simple retrieval metrics.}
+ \label{table:simpleretrievalmetrics}
+\end{table}}
+
+However, simple metrics such as recall and precision are not suited to measure ranking-sensitive results of retrieval.\cite{SaadFalcon.16.11.2023} Therefore there are more complex metrics that include ranking information required.
+
+Mean average precision (MAP@K) averages the Average Precision (AP) across all queries. AP measures ranking quality by computing precision at each position where a relevant document appears, then averaging these values, normalized by the total number of relevant documents. MAP@K variant restricts evaluation to the top K retrieved documents, offering a precision-focused assessment within a predefined cutoff.\cite{EvidentlyAIInc..25.02.2025} 
+
+Normalized Discounted Cumulative Gain (NDCG@K) evaluates ranking quality by computing the Discounted Cumulative Gain (DCG) at each retrieved document, applying a logarithmic discount factor to lower-ranked results. DCG is then normalized by the Ideal DCG (IDCG), which represents the optimal ranking of relevant documents. Variations, such as NDCG@K, focus on the top K retrieved documents, providing a relevance-oriented assessment of ranking performance within a specified cutoff.\cite{Lin.13.10.2020}
+
+Context Relevance is a LLM-as-a-Judge metric with the goal to decide for each document, if it is important regarding a certain query. It is a double-edged sword, because it does not need a predefined dataset, but there are findings suggesting that LLM-as-a-judge favor similar LLMs that their based on. Therefore using synthetic data for evaluation is fast, but risks so called preference leakage.\cite{Li.03.02.2025} On the other hand expert humans are unstable context selectors too and LLM-as-a-Judge models have a high correlation with humans.\cite{Chiang.2023} Therefore the users of the framework must decide if they use LLM-as-a-Judge or humanly picked ground-truth documents.
 
 
 \paragraph{Rerank}
 
+Reranking aims to improve the context utilization for the generator. Its necessarity results from two facts. First, more retrieved documents do not imply better generation results.\cite{Jin.08.10.2024} The generator requires a curated and limited list of documents that serves its ability and query best. Second, reducing the Top-K parameter for retrievers might result in missing documents with required information. For that we use the same metrics as for the retriever. The additional step of reranking influences the overall performance and evaluating this component is important. 
 
-\begin{itemize}
-    \item 7 Failures
-    \item How to Evaluate those
-\end{itemize}
 
 \paragraph{Generators}
-Generators are based on transformer architecture and classification tasks were not the initial intention for this kind of tasks. Thus it is important that outputs are in a wanted form such as "valid", or "invalid".
+Generators are based on transformer architecture and classification tasks were not the initial intention for this kind of tasks. Thus it is important that outputs are in a wanted form such as "valid", or "invalid". Therefore we need a metric that evaluates the generators ability to follow those rules. We call this \textit{format-checker}. The problem that comes with this evaluation is that it is impossible to check context utilization, answer relevance and so on. Evaluating generator just with classification metrics and \textit{format-checker} would be indistinguishable with end-to-end evaluation. Therefore we will use a slightly different format for the classification task. Instead of generating only binary outputs such as \"0/1\", \"valid/invalid\" or \"True/False\", we will also output the reason for this decision afterwards. Then we can evaluate the generator component just as other components with commonly used metrics such answer relevance next to classification metrics for our downstream task. This procedure is required for failure analysis and therefore for improving the system in the reconfiguration phase. A binary output lacks the information we need to decide, which information the generator could not utilize. 
+
+\textcolor{blue}{Finde ein gutes Beispiel dafür in meinem SE Experiment. Ziel ist es zu zeigen, dass ein simples "Ja/Nein" nicht zeigt, warum der Generator die Frage falsch beantwortet hat, welches aus einer binären Antwort nicht hervorgeht.}
+
 
 \subsection{Component Block Evaluation}
-\textcolor{blue}{Finde das Paper, in dem gesagt wurde, dass verschiedene Retrievals mit verschiedenen Generators gut zusammenarbeiten, (auch vorstellbar Retriever (Sparse vs Dense) mit verschiedenen Rewritern)}
+
+After evaluating component-wise, we introduce a novel evaluation of component blocks with the same objective. One example for that would be reranking and generator. Both components have an great impact and interest in context utilization, the ability to build a coherent and correct answer based on actual facts from the retrieved context. Phenomena such as lost-in-the-middle have a significant affect on context utilization, but LLMs differ in this effect.\cite{Liu.06.07.2023} Therefore it might happen that the best reranker and generator regarding their component-wise performance lead to inferior context utilization results. The system needs to be model-agnostic for all components and researchers need pointwise testing for component blocks. In an advanced RAG, the rewriter-retriever block represents another component block that needs evaluation. Rewriting such as query transformation or HyDe are based on LLMs that try either to transform a query to a more clear form or try to maximize retrieval quality. Evaluating this symbiosis is indespensible. This includes prompt engineering for the rewriters.
 
 \begin{figure}
   \centering

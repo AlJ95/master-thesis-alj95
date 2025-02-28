@@ -80,9 +80,7 @@ Therefore there are several chunking techniques to consider for tuning the RAG-s
 
 \section{Modular RAG}
 
-There is a variety of different RAG systems with lots of different components. The definition of advanced RAG systems is too strict and sequencial for including this variety. This gap closes modular RAGs. Modular RAGs can be seen as individual component blocks that can be added to a pipeline as long as the input and output of these blocks are compatible. Gao et al. introduced this definition and defined more components then the here presented \textit{rewrite, retrieve, rerank and read}.\cite{Gao.18.12.2023}
-
-This modularity is a key requirements for the ability to build custom RAG systems for each use case.
+There is a variety of different RAG systems with lots of different components. The definition of advanced RAG systems is too strict and sequencial for including this variety. This gap closes modular RAGs. Modular RAGs can be seen as individual component blocks that can be added to a pipeline as long as the input and output of these blocks are compatible. Gao et al. introduced this definition and defined more components then the here presented \textit{rewrite, retrieve, rerank and read}.\cite{Gao.18.12.2023} One simple example of the need of modular RAGs is an routing component, that decides if retrieval is necessary at all. Redirecting to the generator can lead to less computational time and better results in some cases.\cite{Mallen.20.12.2022} This modularity is a key requirements for the ability to build custom RAG systems for each use case.
 
 
 % \paragraph{IRA Methods}
