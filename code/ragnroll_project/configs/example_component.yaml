@@ -1,0 +1,7 @@
+components:
+  example_component:
+    init_parameters:
+      param1: Parameter 1
+    type: components.example.ExampleComponent
+max_runs_per_component: 1
+metadata: {}

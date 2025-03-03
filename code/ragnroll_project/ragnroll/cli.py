@@ -74,17 +74,34 @@ def split_data(
 @app.command()
 def run_evaluations(
     configuration_file: str = typer.Argument(...),
-    data_path : str = typer.Argument(...),
+    eval_data_path : str = typer.Argument(...),
+    corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...),
 ):
     from .pipeline import config_to_pipeline
     from .eval import evaluate
-    from .data import load_data_from_directory
-    llm_pipeline = config_to_pipeline("configs/llm_config.yaml")
+    from .data import load_evaluation_data
+    from .ingestion import index_documents
+    llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
+    naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
+    rag_pipeline = config_to_pipeline(configuration_file)
+
+    index_documents(corpus_dir, rag_pipeline.to_dict())
     
-    data = load_data_from_directory(data_path)
-    metric = evaluate(data, llm_pipeline)
-    return metric
+    data = load_evaluation_data(eval_data_path)
+
+    print("--------------------------------")
+    print("Baseline LLM")   
+    result_baseline_llm = evaluate(data, llm_pipeline)
+    print("--------------------------------")
+    print("Baseline Naive RAG")
+    result_baseline_naive_rag = evaluate(data, naive_rag_pipeline)
+    print("--------------------------------")
+    print("RAG")
+    result_rag = evaluate(data, rag_pipeline)
+    print("--------------------------------")
+
+    return result_baseline_llm, result_baseline_naive_rag, result_rag
 
 
 @app.command()

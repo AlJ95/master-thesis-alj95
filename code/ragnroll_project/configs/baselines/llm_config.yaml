@@ -18,17 +18,8 @@ components:
       required_variables: null
       template: '
 
-        "Given these documents, answer the question.
-
-        Code:
-
-        {{ code }}
-
-
-        Question: given the code above, is that code vulnerable?
-
-        Answer format: "1" for yes, "0" for no.
-
+        "Given these documents, answer the question: 
+        {{ query }}
 
         Answer:"
 

@@ -1,8 +1,9 @@
 from haystack import Pipeline
 from pathlib import Path
 from dotenv import load_dotenv
+from .components import *
 
-def config_to_pipeline(configuration_file_path: str) -> None:
+def config_to_pipeline(configuration_file_path: str) -> Pipeline:
     """
     Load a pipeline from a configuration file and draw it to a PNG file.
 
@@ -37,3 +38,17 @@ def draw_pipeline(pipeline: Pipeline, output_file: str) -> None:
 
     pipeline.draw(output_file)
     print(f"Pipeline drawn to {output_file}")
+
+
+if __name__ == "__main__":
+    config_file = "../configs/example_component.yaml"
+    
+    import os
+    assert os.path.exists(config_file), "Path does not exist"
+
+    pipeline = config_to_pipeline(config_file)
+    draw_pipeline(pipeline, config_file[:-5] + ".png")
+
+    respone = pipeline.run(data=dict(example_component=dict(input="Hello World!")))
+
+    print(respone)

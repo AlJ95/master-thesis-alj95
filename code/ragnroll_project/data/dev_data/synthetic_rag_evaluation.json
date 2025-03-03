@@ -1,0 +1,84 @@
+{
+    "test_cases": [
+      {
+        "input": "What are the main types of machine learning algorithms?",
+        "expected_output": "Machine learning algorithms can be broadly categorized into three main types: supervised learning, unsupervised learning, and reinforcement learning. Each type has different approaches and use cases.",
+        "retrieval_context": [
+          "Machine learning algorithms can be broadly categorized into supervised, unsupervised, and reinforcement learning. Supervised learning uses labeled data to train models that can predict outcomes for new inputs. Common supervised learning algorithms include linear regression, logistic regression, support vector machines (SVMs), decision trees, random forests, and neural networks. These algorithms are used for classification and regression tasks."
+        ],
+        "class": "algorithm_types"
+      },
+      {
+        "input": "How does unsupervised learning work?",
+        "expected_output": "Unsupervised learning algorithms work with unlabeled data to find patterns or structures without predefined categories. Common techniques include clustering, dimensionality reduction, and association rule learning.",
+        "retrieval_context": [
+          "Unsupervised learning algorithms work with unlabeled data to find patterns or structures. Common unsupervised learning techniques include clustering (K-means, hierarchical clustering, DBSCAN), dimensionality reduction (PCA, t-SNE), and association rule learning. These methods are useful for discovering hidden patterns in data without predefined categories."
+        ],
+        "class": "unsupervised_learning"
+      },
+      {
+        "input": "What is reinforcement learning and how does it work?",
+        "expected_output": "Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative rewards. It involves key concepts like agent, environment, state, action, reward, and policy.",
+        "retrieval_context": [
+          "Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative rewards. Key concepts include the agent, environment, state, action, reward, and policy. Popular reinforcement learning algorithms include Q-learning, Deep Q Networks (DQN), and Proximal Policy Optimization (PPO)."
+        ],
+        "class": "reinforcement_learning"
+      },
+      {
+        "input": "What are the main tasks in Natural Language Processing?",
+        "expected_output": "Key NLP tasks include text classification, named entity recognition, sentiment analysis, machine translation, and question answering. Modern NLP systems often use transformer-based models like BERT, GPT, and T5.",
+        "retrieval_context": [
+          "Natural Language Processing (NLP) is a field of AI focused on enabling computers to understand, interpret, and generate human language. Key NLP tasks include text classification, named entity recognition, sentiment analysis, machine translation, and question answering. Modern NLP systems often use transformer-based models like BERT, GPT, and T5."
+        ],
+        "class": "nlp"
+      },
+      {
+        "input": "What neural network architectures are used in computer vision?",
+        "expected_output": "Convolutional Neural Networks (CNNs) are the foundation of many modern computer vision systems, with popular architectures including ResNet, Inception, and YOLO being widely used for tasks like image classification, object detection, and segmentation.",
+        "retrieval_context": [
+          "Computer vision is an interdisciplinary field that deals with how computers can gain high-level understanding from digital images or videos. Applications include image classification, object detection, image segmentation, and facial recognition. Convolutional Neural Networks (CNNs) are the foundation of many modern computer vision systems, with architectures like ResNet, Inception, and YOLO being widely used."
+        ],
+        "class": "computer_vision"
+      },
+      {
+        "input": "How do recommender systems work?",
+        "expected_output": "Recommender systems suggest items or content to users based on their preferences or behavior using approaches like collaborative filtering, content-based filtering, or hybrid systems that combine both methods.",
+        "retrieval_context": [
+          "Recommender systems suggest items or content to users based on their preferences or behavior. The two main approaches are collaborative filtering (using user-item interactions) and content-based filtering (using item features). Hybrid systems combine both approaches. Matrix factorization, neural collaborative filtering, and deep learning models are common techniques used in modern recommender systems."
+        ],
+        "class": "recommender_systems"
+      },
+      {
+        "input": "Why is data preprocessing important in machine learning?",
+        "expected_output": "Data preprocessing is crucial in machine learning as it involves cleaning, transforming, and organizing raw data to improve model performance and training efficiency. Common techniques include handling missing values, normalization, and feature selection.",
+        "retrieval_context": [
+          "Data preprocessing is a crucial step in machine learning that involves cleaning, transforming, and organizing raw data. Common preprocessing techniques include handling missing values, normalization, standardization, encoding categorical variables, and feature selection. Proper preprocessing can significantly improve model performance and training efficiency."
+        ],
+        "class": "data_preprocessing"
+      },
+      {
+        "input": "What metrics are used to evaluate classification models?",
+        "expected_output": "For classification tasks, common evaluation metrics include accuracy, precision, recall, F1-score, and area under the ROC curve (AUC-ROC). Cross-validation techniques like k-fold cross-validation help ensure robust evaluation.",
+        "retrieval_context": [
+          "Model evaluation metrics help assess the performance of machine learning models. For classification tasks, common metrics include accuracy, precision, recall, F1-score, and area under the ROC curve (AUC-ROC). For regression tasks, mean squared error (MSE), root mean squared error (RMSE), and mean absolute error (MAE) are frequently used. Cross-validation techniques like k-fold cross-validation help ensure robust evaluation."
+        ],
+        "class": "model_evaluation"
+      },
+      {
+        "input": "What is transfer learning and when is it useful?",
+        "expected_output": "Transfer learning is a technique where a model developed for one task is reused as the starting point for a model on a second task. It's particularly effective when the target task has limited training data, such as fine-tuning pretrained models like ImageNet or BERT.",
+        "retrieval_context": [
+          "Transfer learning is a machine learning technique where a model developed for one task is reused as the starting point for a model on a second task. This approach is particularly effective when the target task has limited training data. In deep learning, pretrained models like ImageNet models for computer vision or BERT for NLP are fine-tuned on specific downstream tasks."
+        ],
+        "class": "transfer_learning"
+      },
+      {
+        "input": "What is Explainable AI and why is it important?",
+        "expected_output": "Explainable AI (XAI) refers to methods that make AI systems' decisions more transparent and interpretable to humans. It's important in high-stakes domains like healthcare and finance where understanding model decisions is critical.",
+        "retrieval_context": [
+          "Explainable AI (XAI) refers to methods and techniques that make AI systems' decisions more transparent and interpretable to humans. Techniques include feature importance analysis, SHAP values, LIME, attention visualization, and rule extraction. XAI is increasingly important in high-stakes domains like healthcare, finance, and legal applications where understanding model decisions is critical."
+        ],
+        "class": "explainable_ai"
+      }
+    ]
+} 

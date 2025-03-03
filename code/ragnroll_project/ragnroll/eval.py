@@ -1,25 +1,23 @@
 from ragnroll.metrics import ExactMatchMetric
+from deepeval.metrics import AnswerRelevancyMetric
 from deepeval.test_case import LLMTestCase
 from deepeval.models import DeepEvalBaseLLM
 from deepeval.dataset import EvaluationDataset
 from haystack import Pipeline
 
-
-def generate_dataset(pipeline: Pipeline, data):
+def generate_dataset(pipeline: Pipeline, evaluation_data: dict):
     """
     Generates the evaluation dataset
     """
-    labels = data.data["validation"]["label"]
-    contents = data.data["validation"]["content"]
     evaluation_dataset = EvaluationDataset(
         test_cases=[
             LLMTestCase(
-                input=str(content),
-                expected_output=str(label),
-                actual_output=generate_answer(pipeline, content),
-                # retrieval_context=test_case["retrieval_context"],
+                input=str(test_case["input"]),
+                expected_output=str(test_case["expected_output"]),
+                actual_output=generate_answer(pipeline, test_case["input"]),
+                retrieval_context=test_case["retrieval_context"]
             )
-            for label, content in zip(labels, contents)
+            for test_case in evaluation_data["test_cases"]
         ],
     )
     return evaluation_dataset
@@ -27,7 +25,7 @@ def generate_dataset(pipeline: Pipeline, data):
 
 def generate_answer(pipeline: Pipeline, input_text: str) -> str:
     # Set up weaviate test client as environment variables    
-    response = pipeline.run(data=dict(code=input_text))
+    response = pipeline.run(data=dict(query=input_text))
     return response["llm"]["replies"][0]
 
 
@@ -37,6 +35,10 @@ def evaluate(data, pipeline):
     Evaluates the model on the test cases
     """
     evaluation_dataset = generate_dataset(pipeline, data)
-    metric = ExactMatchMetric()
-    evaluation_dataset.evaluate([metric])
-    return metric
+    em_metric = ExactMatchMetric()
+    ar_metric = AnswerRelevancyMetric()
+    evaluation_dataset.evaluate([em_metric, ar_metric])
+
+    print("EM Metric: ", em_metric.score)
+    print("AR Metric: ", ar_metric.score)
+    return em_metric, ar_metric

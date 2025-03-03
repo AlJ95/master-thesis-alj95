@@ -1,0 +1,63 @@
+{
+  "documents": [
+  {
+    "id": "doc1",
+    "content": "Machine learning algorithms can be broadly categorized into supervised, unsupervised, and reinforcement learning. Supervised learning uses labeled data to train models that can predict outcomes for new inputs. Common supervised learning algorithms include linear regression, logistic regression, support vector machines (SVMs), decision trees, random forests, and neural networks. These algorithms are used for classification and regression tasks."
+  },
+  {
+    "id": "doc2",
+    "content": "Unsupervised learning algorithms work with unlabeled data to find patterns or structures. Common unsupervised learning techniques include clustering (K-means, hierarchical clustering, DBSCAN), dimensionality reduction (PCA, t-SNE), and association rule learning. These methods are useful for discovering hidden patterns in data without predefined categories."
+  },
+  {
+    "id": "doc3",
+    "content": "Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative rewards. Key concepts include the agent, environment, state, action, reward, and policy. Popular reinforcement learning algorithms include Q-learning, Deep Q Networks (DQN), and Proximal Policy Optimization (PPO)."
+  },
+  {
+    "id": "doc4",
+    "content": "Natural Language Processing (NLP) is a field of AI focused on enabling computers to understand, interpret, and generate human language. Key NLP tasks include text classification, named entity recognition, sentiment analysis, machine translation, and question answering. Modern NLP systems often use transformer-based models like BERT, GPT, and T5."
+  },
+  {
+    "id": "doc5",
+    "content": "Computer vision is an interdisciplinary field that deals with how computers can gain high-level understanding from digital images or videos. Applications include image classification, object detection, image segmentation, and facial recognition. Convolutional Neural Networks (CNNs) are the foundation of many modern computer vision systems, with architectures like ResNet, Inception, and YOLO being widely used."
+  },
+  {
+    "id": "doc6",
+    "content": "Recommender systems suggest items or content to users based on their preferences or behavior. The two main approaches are collaborative filtering (using user-item interactions) and content-based filtering (using item features). Hybrid systems combine both approaches. Matrix factorization, neural collaborative filtering, and deep learning models are common techniques used in modern recommender systems."
+  },
+  {
+    "id": "doc7",
+    "content": "Data preprocessing is a crucial step in machine learning that involves cleaning, transforming, and organizing raw data. Common preprocessing techniques include handling missing values, normalization, standardization, encoding categorical variables, and feature selection. Proper preprocessing can significantly improve model performance and training efficiency."
+  },
+  {
+    "id": "doc8",
+    "content": "Model evaluation metrics help assess the performance of machine learning models. For classification tasks, common metrics include accuracy, precision, recall, F1-score, and area under the ROC curve (AUC-ROC). For regression tasks, mean squared error (MSE), root mean squared error (RMSE), and mean absolute error (MAE) are frequently used. Cross-validation techniques like k-fold cross-validation help ensure robust evaluation."
+  },
+  {
+    "id": "doc9",
+    "content": "Transfer learning is a machine learning technique where a model developed for one task is reused as the starting point for a model on a second task. This approach is particularly effective when the target task has limited training data. In deep learning, pretrained models like ImageNet models for computer vision or BERT for NLP are fine-tuned on specific downstream tasks."
+  },
+  {
+    "id": "doc10",
+    "content": "Explainable AI (XAI) refers to methods and techniques that make AI systems' decisions more transparent and interpretable to humans. Techniques include feature importance analysis, SHAP values, LIME, attention visualization, and rule extraction. XAI is increasingly important in high-stakes domains like healthcare, finance, and legal applications where understanding model decisions is critical."
+  },
+  {
+    "id": "doc11",
+    "content": "Ensemble learning combines multiple models to improve performance beyond what any single model could achieve. Common ensemble methods include bagging (e.g., Random Forests), boosting (e.g., AdaBoost, XGBoost, LightGBM), and stacking. These techniques help reduce overfitting, decrease variance, and often lead to more robust predictions."
+  },
+  {
+    "id": "doc12",
+    "content": "Deep learning is a subset of machine learning based on artificial neural networks with multiple layers. Key architectures include Convolutional Neural Networks (CNNs) for image data, Recurrent Neural Networks (RNNs) and Transformers for sequential data, and Generative Adversarial Networks (GANs) for generating new data. Deep learning has revolutionized fields like computer vision, NLP, and speech recognition."
+  },
+  {
+    "id": "doc13",
+    "content": "Hyperparameter tuning is the process of finding the optimal configuration of hyperparameters for a machine learning algorithm. Common methods include grid search, random search, Bayesian optimization, and genetic algorithms. Effective hyperparameter tuning can significantly improve model performance but requires balancing computational resources with exploration."
+  },
+  {
+    "id": "doc14",
+    "content": "Anomaly detection identifies rare items, events, or observations that differ significantly from the majority of the data. Techniques include statistical methods (z-score, IQR), distance-based methods (k-nearest neighbors, isolation forest), density-based methods (DBSCAN), and deep learning approaches (autoencoders). Applications include fraud detection, network security, and manufacturing quality control."
+  },
+  {
+    "id": "doc15",
+    "content": "Federated learning is a machine learning approach where a model is trained across multiple decentralized devices or servers holding local data samples, without exchanging them. This preserves privacy while allowing collaborative model training. Challenges include communication efficiency, model convergence, and security against adversarial attacks."
+  }
+] }
