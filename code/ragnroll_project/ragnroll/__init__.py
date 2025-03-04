@@ -1,4 +1,4 @@
-"""Top-level package for RP To-Do."""
+"""Top-level package for RAGnRoll."""
 # rptodo/__init__.py
 
 __app_name__ = "RAGnRoll"
@@ -21,3 +21,14 @@ ERRORS = {
     DB_WRITE_ERROR: "database write error",
     ID_ERROR: "to-do id error",
 }
+
+# Import main modules for easier access
+from ragnroll.metrics import (
+    BaseMetric, 
+    MetricRegistry, 
+    ExactMatchMetric,
+    RetrievalPrecisionMetric,
+    RetrievalRecallMetric
+)
+
+from ragnroll.evaluation import evaluate, print_scores, Evaluator

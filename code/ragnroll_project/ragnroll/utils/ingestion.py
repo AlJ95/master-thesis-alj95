@@ -1,4 +1,4 @@
-from haystack import Document
+from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.converters import JSONConverter
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
@@ -37,7 +37,10 @@ def convert_to_documents(json_data):
     return documents
 
 # 3. Create a document store and index the documents
-def index_documents(corpus_dir: str, configuration: dict):
+def index_documents(corpus_dir: str, pipeline: Pipeline):
+
+    configuration = pipeline.to_dict()
+
     # Initialize document store
     document_store = InMemoryDocumentStore()
 
@@ -74,7 +77,10 @@ def index_documents(corpus_dir: str, configuration: dict):
     document_store.write_documents(documents)
     
     print(f"Indexed {len(documents)} documents in the document store")
-    return document_store
+    
+    pipeline.get_component("retriever").document_store = document_store
+
+    return pipeline
 
 def get_component_from_config_by_class(configuration: dict, component_name: str):
     """
@@ -84,6 +90,14 @@ def get_component_from_config_by_class(configuration: dict, component_name: str)
         if values["type"] == component_name:
             return values
     return None
+
+def get_component_name_from_config(configuration: dict, component_name: str):
+    """
+    Get a component from the configuration by class name e. g. "haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever"
+    """
+    for name, values in configuration["components"].items():
+        if values["type"] == component_name:
+            return name
 
 # 4. Main function to tie everything together
 def index_json_data(json_file_path, configuration: dict):

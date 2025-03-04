@@ -1,6 +1,6 @@
-from ragnroll.metrics.end2end import MetricRegistry, BaseMetric, ExactMatchMetric
-from haystack import Pipeline
-from typing import List, Dict, Any, Tuple, Type, Optional
+from ragnroll.metrics import MetricRegistry, BaseMetric
+from haystack import Pipeline, Document
+from typing import List, Dict, Any, Tuple, Type, Optional, Union
 from collections import defaultdict
 import logging
 
@@ -23,6 +23,9 @@ class EvaluationDataset:
                 input_text = test_case["input"]
                 expected_output = test_case["expected_output"]
                 
+                # Get ground truth documents if available
+                expected_retrieval = test_case.get("expected_retrieval", None)
+                
                 # Generate the answer using the pipeline
                 response = self._generate_answer(pipeline, input_text)
                 actual_output = self._extract_answer_from_pipeline(response)
@@ -32,7 +35,8 @@ class EvaluationDataset:
                     "input": input_text,
                     "expected_output": expected_output,
                     "actual_output": actual_output,
-                    "component_outputs": response
+                    "component_outputs": response,
+                    "expected_retrieval": expected_retrieval
                 })
             except Exception as e:
                 logger.error(f"Error generating answer for test case: {e}")
@@ -118,15 +122,33 @@ class Evaluator:
             
             # Component-wise metrics
             component_outputs = test_case["component_outputs"]
+            expected_retrieval = test_case.get("expected_retrieval", None)
+            query = test_case["input"]
+            
+            # Convert expected_retrieval to Document objects if they're not already
+            if expected_retrieval and not all(isinstance(doc, Document) for doc in expected_retrieval):
+                expected_retrieval = [
+                    Document(content=doc["content"]) if isinstance(doc, dict) else Document(content=doc)
+                    for doc in expected_retrieval
+                ]
+            
             for component_type, component_metrics in self.component_metrics.items():
-                for metric_name, metric in component_metrics.items():
-                    if component_type in component_outputs:
+                if component_type in component_outputs:
+                    for metric_name, metric in component_metrics.items():
                         try:
-                            metric_result = metric.run(
-                                component_output=component_outputs[component_type],
-                                expected_output=test_case["expected_output"],
-                                input_text=test_case["input"]
-                            )
+                            # Build the parameters for the metric
+                            metric_params = {
+                                "component_output": component_outputs[component_type],
+                                "expected_output": test_case["expected_output"],
+                                "input_text": test_case["input"],
+                                "query": query
+                            }
+                            
+                            # Add ground truth documents if available
+                            if expected_retrieval:
+                                metric_params["expected_retrieval"] = expected_retrieval
+                            
+                            metric_result = metric.run(**metric_params)
                             scores["component-wise"][component_type][metric_name].append(metric_result["score"])
                         except Exception as e:
                             logger.error(f"Error evaluating {component_type} with {metric_name}: {e}")

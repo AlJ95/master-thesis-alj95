@@ -83,10 +83,12 @@ def run_evaluations(
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
     llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
-    naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
-    rag_pipeline = config_to_pipeline(configuration_file)
 
-    index_documents(corpus_dir, rag_pipeline.to_dict())
+    naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
+    naive_rag_pipeline = index_documents(corpus_dir, naive_rag_pipeline)
+
+    rag_pipeline = config_to_pipeline(configuration_file)
+    rag_pipeline = index_documents(corpus_dir, rag_pipeline)
     
     data = load_evaluation_data(eval_data_path)
 

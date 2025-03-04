@@ -1,7 +1,5 @@
 from pathlib import Path
-from datasets import load_dataset
 from warnings import warn
-from deepeval.test_case import LLMTestCase
 import json
 import pandas as pd
 
@@ -30,10 +28,10 @@ def load_evaluation_data(data_path: str):
            ):
         raise ValueError("expected_output column not found in the dataset. Please make sure that the expected_output column is named 'expected_output'.")
     
-    if all("retrieval_context" not in data["test_cases"][i].keys() 
+    if all("expected_retrieval" not in data["test_cases"][i].keys() 
            for i in range(len(data["test_cases"]))
            ):
-        warn("retrieval_context column not found in the dataset. Please make sure that the retrieval_context column is named 'retrieval_context'.")
+        warn("expected_retrieval column not found in the dataset. Please make sure that the expected_retrieval column is named 'expected_retrieval'.")
 
     return data
 
