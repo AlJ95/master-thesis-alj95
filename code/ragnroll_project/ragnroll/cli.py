@@ -78,10 +78,10 @@ def run_evaluations(
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...),
 ):
-    from .pipeline import config_to_pipeline
-    from .eval import evaluate
-    from .data import load_evaluation_data
-    from .ingestion import index_documents
+    from .utils.pipeline import config_to_pipeline
+    from .evaluation.eval import evaluate
+    from .evaluation.data import load_evaluation_data
+    from .utils.ingestion import index_documents
     llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
     naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
     rag_pipeline = config_to_pipeline(configuration_file)
@@ -114,7 +114,7 @@ def draw_pipeline(
         help="The name of the output file.",
     ),
 ):
-    from .pipeline import config_to_pipeline
+    from .utils.pipeline import config_to_pipeline
     pipeline = config_to_pipeline(configuration_file)
     pipeline.draw(path=output_file)
 

@@ -6,7 +6,7 @@ import json
 import logging
 import yaml
 
-from .utils import get_all_documents
+from ragnroll.utils.preprocesser import get_all_documents
 
 
 logger = logging.getLogger(__name__)
