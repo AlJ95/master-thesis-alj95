@@ -2,62 +2,42 @@
   "documents": [
   {
     "id": "doc1",
-    "content": "Machine learning algorithms can be broadly categorized into supervised, unsupervised, and reinforcement learning. Supervised learning uses labeled data to train models that can predict outcomes for new inputs. Common supervised learning algorithms include linear regression, logistic regression, support vector machines (SVMs), decision trees, random forests, and neural networks. These algorithms are used for classification and regression tasks."
+    "content": "Docker best practice: Use multi-stage builds to reduce image size. Multi-stage builds let you create cleaner separation between build-time dependencies and runtime dependencies, ensuring the final image only contains what's needed to run your application. You can use the 'AS' keyword to name your stages and reference them later. Example: 'FROM node:14 AS build' followed by 'FROM nginx:alpine' with 'COPY --from=build /app/build /usr/share/nginx/html'."
   },
   {
     "id": "doc2",
-    "content": "Unsupervised learning algorithms work with unlabeled data to find patterns or structures. Common unsupervised learning techniques include clustering (K-means, hierarchical clustering, DBSCAN), dimensionality reduction (PCA, t-SNE), and association rule learning. These methods are useful for discovering hidden patterns in data without predefined categories."
+    "content": "Docker best practice: Pin base image versions to specific tags for reproducible builds. Using 'FROM node:14.17.0' instead of 'FROM node:latest' ensures your builds are consistent and prevents unexpected changes when upstream images are updated. This makes builds reproducible and helps prevent future build failures or unexpected behavior in production."
   },
   {
     "id": "doc3",
-    "content": "Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative rewards. Key concepts include the agent, environment, state, action, reward, and policy. Popular reinforcement learning algorithms include Q-learning, Deep Q Networks (DQN), and Proximal Policy Optimization (PPO)."
+    "content": "Docker anti-pattern: Never use the 'root' user to run applications in containers. Running as root creates unnecessary security risks. Instead, create a dedicated user with minimal permissions. Example: 'RUN useradd -r -u 1001 -g appuser appuser' followed by 'USER appuser'. This follows the principle of least privilege and helps prevent privilege escalation attacks if the container is compromised."
   },
   {
     "id": "doc4",
-    "content": "Natural Language Processing (NLP) is a field of AI focused on enabling computers to understand, interpret, and generate human language. Key NLP tasks include text classification, named entity recognition, sentiment analysis, machine translation, and question answering. Modern NLP systems often use transformer-based models like BERT, GPT, and T5."
+    "content": "Docker anti-pattern: Avoid storing secrets or credentials in Dockerfiles. Never include API keys, passwords, or tokens directly in your Dockerfile with ENV or ARG instructions. These values are stored in the image history and can be exposed. Instead, use runtime environment variables, Docker secrets, or dedicated secret management tools like HashiCorp Vault or AWS Secrets Manager."
   },
   {
     "id": "doc5",
-    "content": "Computer vision is an interdisciplinary field that deals with how computers can gain high-level understanding from digital images or videos. Applications include image classification, object detection, image segmentation, and facial recognition. Convolutional Neural Networks (CNNs) are the foundation of many modern computer vision systems, with architectures like ResNet, Inception, and YOLO being widely used."
+    "content": "Docker best practice: Sort multi-line arguments alphabetically in RUN instructions. This helps prevent duplicate packages and makes lists easier to update. Example: 'RUN apt-get update && apt-get install -y \\\\\\n  curl \\\\\\n  git \\\\\\n  nginx \\\\\\n  vim \\\\\\n  && rm -rf /var/lib/apt/lists/*'. Adding a space before backslash improves readability."
   },
   {
     "id": "doc6",
-    "content": "Recommender systems suggest items or content to users based on their preferences or behavior. The two main approaches are collaborative filtering (using user-item interactions) and content-based filtering (using item features). Hybrid systems combine both approaches. Matrix factorization, neural collaborative filtering, and deep learning models are common techniques used in modern recommender systems."
+    "content": "GitHub Actions best practice: Always specify the version of actions you use with SHA commits rather than branch names or version tags. Using '@main' or '@v2' can lead to unexpected behavior if the action is updated. Example: 'uses: actions/checkout@a81bbbf8298c0fa03ea29cdc473d45769f953675' ensures that you always use the exact same version of the action, improving reproducibility and security."
   },
   {
     "id": "doc7",
-    "content": "Data preprocessing is a crucial step in machine learning that involves cleaning, transforming, and organizing raw data. Common preprocessing techniques include handling missing values, normalization, standardization, encoding categorical variables, and feature selection. Proper preprocessing can significantly improve model performance and training efficiency."
+    "content": "GitHub Actions best practice: Set appropriate permissions for your workflows using the 'permissions' keyword. By default, workflows have read/write permissions to all scopes, which violates the principle of least privilege. Example: 'permissions: contents: read' restricts the workflow to only read repository contents, reducing the potential damage if the workflow is compromised."
   },
   {
     "id": "doc8",
-    "content": "Model evaluation metrics help assess the performance of machine learning models. For classification tasks, common metrics include accuracy, precision, recall, F1-score, and area under the ROC curve (AUC-ROC). For regression tasks, mean squared error (MSE), root mean squared error (RMSE), and mean absolute error (MAE) are frequently used. Cross-validation techniques like k-fold cross-validation help ensure robust evaluation."
+    "content": "GitHub Actions anti-pattern: Never hardcode secrets in workflow files. Secrets committed to your repository can be exposed, especially in public repositories. Instead, use GitHub's built-in secrets feature: 'env: API_TOKEN: ${{ secrets.API_TOKEN }}'. This keeps sensitive information secure and allows for easier rotation of credentials."
   },
   {
     "id": "doc9",
-    "content": "Transfer learning is a machine learning technique where a model developed for one task is reused as the starting point for a model on a second task. This approach is particularly effective when the target task has limited training data. In deep learning, pretrained models like ImageNet models for computer vision or BERT for NLP are fine-tuned on specific downstream tasks."
+    "content": "GitHub Actions anti-pattern: Avoid using self-hosted runners for public repositories or repositories with untrusted code. Public repositories can submit pull requests that execute code on your self-hosted runners, potentially compromising your infrastructure. Use GitHub-hosted runners for public repositories or implement strict controls on which workflows can run on self-hosted runners."
   },
   {
     "id": "doc10",
-    "content": "Explainable AI (XAI) refers to methods and techniques that make AI systems' decisions more transparent and interpretable to humans. Techniques include feature importance analysis, SHAP values, LIME, attention visualization, and rule extraction. XAI is increasingly important in high-stakes domains like healthcare, finance, and legal applications where understanding model decisions is critical."
-  },
-  {
-    "id": "doc11",
-    "content": "Ensemble learning combines multiple models to improve performance beyond what any single model could achieve. Common ensemble methods include bagging (e.g., Random Forests), boosting (e.g., AdaBoost, XGBoost, LightGBM), and stacking. These techniques help reduce overfitting, decrease variance, and often lead to more robust predictions."
-  },
-  {
-    "id": "doc12",
-    "content": "Deep learning is a subset of machine learning based on artificial neural networks with multiple layers. Key architectures include Convolutional Neural Networks (CNNs) for image data, Recurrent Neural Networks (RNNs) and Transformers for sequential data, and Generative Adversarial Networks (GANs) for generating new data. Deep learning has revolutionized fields like computer vision, NLP, and speech recognition."
-  },
-  {
-    "id": "doc13",
-    "content": "Hyperparameter tuning is the process of finding the optimal configuration of hyperparameters for a machine learning algorithm. Common methods include grid search, random search, Bayesian optimization, and genetic algorithms. Effective hyperparameter tuning can significantly improve model performance but requires balancing computational resources with exploration."
-  },
-  {
-    "id": "doc14",
-    "content": "Anomaly detection identifies rare items, events, or observations that differ significantly from the majority of the data. Techniques include statistical methods (z-score, IQR), distance-based methods (k-nearest neighbors, isolation forest), density-based methods (DBSCAN), and deep learning approaches (autoencoders). Applications include fraud detection, network security, and manufacturing quality control."
-  },
-  {
-    "id": "doc15",
-    "content": "Federated learning is a machine learning approach where a model is trained across multiple decentralized devices or servers holding local data samples, without exchanging them. This preserves privacy while allowing collaborative model training. Challenges include communication efficiency, model convergence, and security against adversarial attacks."
+    "content": "GitHub Actions best practice: Validate YAML files in your repository using linters. Create a workflow that runs for every pull request: 'name: Validate-YAML, on: [pull_request], jobs: validate-yaml: runs-on: ubuntu-latest, steps: - uses: actions/checkout@v3, - name: Validate YAML, run: yamllint .'. This helps prevent syntax errors and enforces consistent formatting."
   }
 ] }

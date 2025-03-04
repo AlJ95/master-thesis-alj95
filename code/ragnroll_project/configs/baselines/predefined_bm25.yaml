@@ -28,6 +28,11 @@ components:
 
         {% endfor %}
 
+  
+        Your answer is used within a pipeline and must follow the following format:
+        "valid" or "invalid". Make sure to avoid white spaces or other characters.
+        
+
         Question: {{query}}
 
 

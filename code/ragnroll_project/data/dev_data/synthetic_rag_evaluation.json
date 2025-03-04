@@ -1,84 +1,94 @@
 {
     "test_cases": [
       {
-        "input": "What are the main types of machine learning algorithms?",
-        "expected_output": "Machine learning algorithms can be broadly categorized into three main types: supervised learning, unsupervised learning, and reinforcement learning. Each type has different approaches and use cases.",
+        "input": "Is this Dockerfile instruction valid? 'FROM ubuntu:latest AS build-stage'",
+        "expected_output": "valid",
+        "reason": "This is a correct way to name a build stage in a multi-stage Dockerfile using the AS keyword. The syntax is proper and follows Docker best practices for creating named build stages.",
         "retrieval_context": [
-          "Machine learning algorithms can be broadly categorized into supervised, unsupervised, and reinforcement learning. Supervised learning uses labeled data to train models that can predict outcomes for new inputs. Common supervised learning algorithms include linear regression, logistic regression, support vector machines (SVMs), decision trees, random forests, and neural networks. These algorithms are used for classification and regression tasks."
+          "Docker best practice: Use multi-stage builds to reduce image size. Multi-stage builds let you create cleaner separation between build-time dependencies and runtime dependencies, ensuring the final image only contains what's needed to run your application. You can use the 'AS' keyword to name your stages and reference them later. Example: 'FROM node:14 AS build' followed by 'FROM nginx:alpine' with 'COPY --from=build /app/build /usr/share/nginx/html'."
         ],
-        "class": "algorithm_types"
+        "class": "valid"
       },
       {
-        "input": "How does unsupervised learning work?",
-        "expected_output": "Unsupervised learning algorithms work with unlabeled data to find patterns or structures without predefined categories. Common techniques include clustering, dimensionality reduction, and association rule learning.",
+        "input": "Is this Dockerfile instruction valid? 'FROM node:14.17.0'",
+        "expected_output": "valid",
+        "reason": "This correctly specifies a pinned version of Node.js as the base image, which is recommended for reproducible builds. Using specific version tags rather than 'latest' ensures consistent builds.",
         "retrieval_context": [
-          "Unsupervised learning algorithms work with unlabeled data to find patterns or structures. Common unsupervised learning techniques include clustering (K-means, hierarchical clustering, DBSCAN), dimensionality reduction (PCA, t-SNE), and association rule learning. These methods are useful for discovering hidden patterns in data without predefined categories."
+          "Docker best practice: Pin base image versions to specific tags for reproducible builds. Using 'FROM node:14.17.0' instead of 'FROM node:latest' ensures your builds are consistent and prevents unexpected changes when upstream images are updated. This makes builds reproducible and helps prevent future build failures or unexpected behavior in production."
         ],
-        "class": "unsupervised_learning"
+        "class": "valid"
       },
       {
-        "input": "What is reinforcement learning and how does it work?",
-        "expected_output": "Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative rewards. It involves key concepts like agent, environment, state, action, reward, and policy.",
+        "input": "Is this Dockerfile instruction valid? 'ENV API_KEY=abc123xyz'",
+        "expected_output": "invalid",
+        "reason": "This instruction exposes the API key in the image history, creating a security risk. Secrets should never be stored directly in Dockerfiles. Use runtime environment variables or dedicated secret management tools instead.",
         "retrieval_context": [
-          "Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative rewards. Key concepts include the agent, environment, state, action, reward, and policy. Popular reinforcement learning algorithms include Q-learning, Deep Q Networks (DQN), and Proximal Policy Optimization (PPO)."
+          "Docker anti-pattern: Avoid storing secrets or credentials in Dockerfiles. Never include API keys, passwords, or tokens directly in your Dockerfile with ENV or ARG instructions. These values are stored in the image history and can be exposed. Instead, use runtime environment variables, Docker secrets, or dedicated secret management tools like HashiCorp Vault or AWS Secrets Manager."
         ],
-        "class": "reinforcement_learning"
+        "class": "invalid"
       },
       {
-        "input": "What are the main tasks in Natural Language Processing?",
-        "expected_output": "Key NLP tasks include text classification, named entity recognition, sentiment analysis, machine translation, and question answering. Modern NLP systems often use transformer-based models like BERT, GPT, and T5.",
+        "input": "Is this GitHub Actions workflow syntax valid? 'uses: actions/checkout@main'",
+        "expected_output": "invalid",
+        "reason": "Using '@main' references a branch name which can change over time, leading to unpredictable behavior. For security and reproducibility, you should use the full SHA commit hash of the action instead.",
         "retrieval_context": [
-          "Natural Language Processing (NLP) is a field of AI focused on enabling computers to understand, interpret, and generate human language. Key NLP tasks include text classification, named entity recognition, sentiment analysis, machine translation, and question answering. Modern NLP systems often use transformer-based models like BERT, GPT, and T5."
+          "GitHub Actions best practice: Always specify the version of actions you use with SHA commits rather than branch names or version tags. Using '@main' or '@v2' can lead to unexpected behavior if the action is updated. Example: 'uses: actions/checkout@a81bbbf8298c0fa03ea29cdc473d45769f953675' ensures that you always use the exact same version of the action, improving reproducibility and security."
         ],
-        "class": "nlp"
+        "class": "invalid"
       },
       {
-        "input": "What neural network architectures are used in computer vision?",
-        "expected_output": "Convolutional Neural Networks (CNNs) are the foundation of many modern computer vision systems, with popular architectures including ResNet, Inception, and YOLO being widely used for tasks like image classification, object detection, and segmentation.",
+        "input": "Is this GitHub Actions workflow syntax valid? 'env: DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}'",
+        "expected_output": "valid",
+        "reason": "This correctly uses GitHub's secrets feature to access sensitive information without hardcoding it in the workflow file. This follows security best practices for handling credentials.",
         "retrieval_context": [
-          "Computer vision is an interdisciplinary field that deals with how computers can gain high-level understanding from digital images or videos. Applications include image classification, object detection, image segmentation, and facial recognition. Convolutional Neural Networks (CNNs) are the foundation of many modern computer vision systems, with architectures like ResNet, Inception, and YOLO being widely used."
+          "GitHub Actions anti-pattern: Never hardcode secrets in workflow files. Secrets committed to your repository can be exposed, especially in public repositories. Instead, use GitHub's built-in secrets feature: 'env: API_TOKEN: ${{ secrets.API_TOKEN }}'. This keeps sensitive information secure and allows for easier rotation of credentials."
         ],
-        "class": "computer_vision"
+        "class": "valid"
       },
       {
-        "input": "How do recommender systems work?",
-        "expected_output": "Recommender systems suggest items or content to users based on their preferences or behavior using approaches like collaborative filtering, content-based filtering, or hybrid systems that combine both methods.",
+        "input": "Is this Dockerfile instruction valid? 'USER root'",
+        "expected_output": "invalid",
+        "reason": "Running containers as the root user creates unnecessary security risks. Create a dedicated user with minimal permissions instead, following the principle of least privilege.",
         "retrieval_context": [
-          "Recommender systems suggest items or content to users based on their preferences or behavior. The two main approaches are collaborative filtering (using user-item interactions) and content-based filtering (using item features). Hybrid systems combine both approaches. Matrix factorization, neural collaborative filtering, and deep learning models are common techniques used in modern recommender systems."
+          "Docker anti-pattern: Never use the 'root' user to run applications in containers. Running as root creates unnecessary security risks. Instead, create a dedicated user with minimal permissions. Example: 'RUN useradd -r -u 1001 -g appuser appuser' followed by 'USER appuser'. This follows the principle of least privilege and helps prevent privilege escalation attacks if the container is compromised."
         ],
-        "class": "recommender_systems"
+        "class": "invalid"
       },
       {
-        "input": "Why is data preprocessing important in machine learning?",
-        "expected_output": "Data preprocessing is crucial in machine learning as it involves cleaning, transforming, and organizing raw data to improve model performance and training efficiency. Common techniques include handling missing values, normalization, and feature selection.",
+        "input": "Is this GitHub Actions workflow syntax valid? 'permissions: contents: read'",
+        "expected_output": "valid",
+        "reason": "This correctly restricts the workflow permissions to only read repository contents, following the principle of least privilege. This reduces potential impact if the workflow is compromised.",
         "retrieval_context": [
-          "Data preprocessing is a crucial step in machine learning that involves cleaning, transforming, and organizing raw data. Common preprocessing techniques include handling missing values, normalization, standardization, encoding categorical variables, and feature selection. Proper preprocessing can significantly improve model performance and training efficiency."
+          "GitHub Actions best practice: Set appropriate permissions for your workflows using the 'permissions' keyword. By default, workflows have read/write permissions to all scopes, which violates the principle of least privilege. Example: 'permissions: contents: read' restricts the workflow to only read repository contents, reducing the potential damage if the workflow is compromised."
         ],
-        "class": "data_preprocessing"
+        "class": "valid"
       },
       {
-        "input": "What metrics are used to evaluate classification models?",
-        "expected_output": "For classification tasks, common evaluation metrics include accuracy, precision, recall, F1-score, and area under the ROC curve (AUC-ROC). Cross-validation techniques like k-fold cross-validation help ensure robust evaluation.",
+        "input": "Is this GitHub Actions configuration valid? 'runs-on: self-hosted' in a public repository",
+        "expected_output": "invalid",
+        "reason": "Using self-hosted runners in public repositories is a security risk, as public repositories can submit pull requests that could execute malicious code on your self-hosted runners. Use GitHub-hosted runners for public repositories.",
         "retrieval_context": [
-          "Model evaluation metrics help assess the performance of machine learning models. For classification tasks, common metrics include accuracy, precision, recall, F1-score, and area under the ROC curve (AUC-ROC). For regression tasks, mean squared error (MSE), root mean squared error (RMSE), and mean absolute error (MAE) are frequently used. Cross-validation techniques like k-fold cross-validation help ensure robust evaluation."
+          "GitHub Actions anti-pattern: Avoid using self-hosted runners for public repositories or repositories with untrusted code. Public repositories can submit pull requests that execute code on your self-hosted runners, potentially compromising your infrastructure. Use GitHub-hosted runners for public repositories or implement strict controls on which workflows can run on self-hosted runners."
         ],
-        "class": "model_evaluation"
+        "class": "invalid"
       },
       {
-        "input": "What is transfer learning and when is it useful?",
-        "expected_output": "Transfer learning is a technique where a model developed for one task is reused as the starting point for a model on a second task. It's particularly effective when the target task has limited training data, such as fine-tuning pretrained models like ImageNet or BERT.",
+        "input": "Is this Dockerfile RUN instruction valid? 'RUN apt-get update && apt-get install -y curl git nginx vim && rm -rf /var/lib/apt/lists/*'",
+        "expected_output": "valid",
+        "reason": "This instruction correctly chains commands with && and cleans up apt caches to reduce image size. For better readability and maintenance, consider formatting multi-line arguments alphabetically.",
         "retrieval_context": [
-          "Transfer learning is a machine learning technique where a model developed for one task is reused as the starting point for a model on a second task. This approach is particularly effective when the target task has limited training data. In deep learning, pretrained models like ImageNet models for computer vision or BERT for NLP are fine-tuned on specific downstream tasks."
+          "Docker best practice: Sort multi-line arguments alphabetically in RUN instructions. This helps prevent duplicate packages and makes lists easier to update. Example: 'RUN apt-get update && apt-get install -y \\\\\\n  curl \\\\\\n  git \\\\\\n  nginx \\\\\\n  vim \\\\\\n  && rm -rf /var/lib/apt/lists/*'. Adding a space before backslash improves readability."
         ],
-        "class": "transfer_learning"
+        "class": "valid"
       },
       {
-        "input": "What is Explainable AI and why is it important?",
-        "expected_output": "Explainable AI (XAI) refers to methods that make AI systems' decisions more transparent and interpretable to humans. It's important in high-stakes domains like healthcare and finance where understanding model decisions is critical.",
+        "input": "Is this GitHub Actions workflow step valid? 'name: Validate YAML, run: yamllint .'",
+        "expected_output": "valid",
+        "reason": "This step correctly runs a YAML linter to validate all YAML files in the repository. This helps prevent syntax errors and ensures consistent formatting across your codebase.",
         "retrieval_context": [
-          "Explainable AI (XAI) refers to methods and techniques that make AI systems' decisions more transparent and interpretable to humans. Techniques include feature importance analysis, SHAP values, LIME, attention visualization, and rule extraction. XAI is increasingly important in high-stakes domains like healthcare, finance, and legal applications where understanding model decisions is critical."
+          "GitHub Actions best practice: Validate YAML files in your repository using linters. Create a workflow that runs for every pull request: 'name: Validate-YAML, on: [pull_request], jobs: validate-yaml: runs-on: ubuntu-latest, steps: - uses: actions/checkout@v3, - name: Validate YAML, run: yamllint .'. This helps prevent syntax errors and enforces consistent formatting."
         ],
-        "class": "explainable_ai"
+        "class": "valid"
       }
     ]
 } 

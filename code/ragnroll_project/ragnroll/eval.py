@@ -36,9 +36,7 @@ def evaluate(data, pipeline):
     """
     evaluation_dataset = generate_dataset(pipeline, data)
     em_metric = ExactMatchMetric()
-    ar_metric = AnswerRelevancyMetric()
+    ar_metric = AnswerRelevancyMetric(verbose_mode=False)
     evaluation_dataset.evaluate([em_metric, ar_metric])
 
-    print("EM Metric: ", em_metric.score)
-    print("AR Metric: ", ar_metric.score)
     return em_metric, ar_metric
