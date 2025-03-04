@@ -29,3 +29,9 @@ Develop new method: Almost fully derived from retrieval -> Retrieval metrics but
 #### Rerank
 
 #### Read
+
+
+### Tracing
+
+https://langfuse.com/self-hosting/local
+https://docs.haystack.deepset.ai/docs/langfuseconnector
