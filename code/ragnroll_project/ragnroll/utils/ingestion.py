@@ -15,6 +15,10 @@ BM25Retriever = "haystack.components.retrievers.in_memory.bm25_retriever.InMemor
 EmbeddingRetriever = "haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever"
 SentenceWindowRetriever = "haystack.components.retrievers.sentence_window_retriever.SentenceWindowRetriever"
 
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 200
+CHUNK_SEPARATOR = ["\n\n", "\n", " ", ""]
+
 # 1. Load your JSON data
 def load_json_data(file_path):
     with open(file_path, 'r') as f:
@@ -44,23 +48,13 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
     # Initialize document store
     document_store = InMemoryDocumentStore()
 
-    if (
-        "ingestion" not in configuration or 
-        "chunk_size" not in configuration["ingestion"] or 
-        "chunk_overlap" not in configuration["ingestion"]
-        ):
-        chunk_size = 1000
-        chunk_overlap = 200
-    else:
-        chunk_size = configuration["ingestion"]["chunk_size"]
-        chunk_overlap = configuration["ingestion"]["chunk_overlap"]
-
     documents = get_all_documents(
         corpus_dir=corpus_dir,
         clean=True,
         split=True,
-        chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        chunk_separator=CHUNK_SEPARATOR
     )
 
     if embedding_retriever:=get_component_from_config_by_class(configuration, EmbeddingRetriever):

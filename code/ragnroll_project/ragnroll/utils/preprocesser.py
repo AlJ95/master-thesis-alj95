@@ -14,7 +14,7 @@ from haystack.components.converters import (
     TextFileToDocument,
     DOCXToDocument,
 )
-from haystack.components.preprocessors import DocumentCleaner, DocumentSplitter
+from haystack.components.preprocessors import DocumentCleaner, DocumentSplitter, RecursiveDocumentSplitter
 
 logger = logging.getLogger(__name__)
 
@@ -159,15 +159,14 @@ def convert_local_files(corpus_dir: Path) -> List[Document]:
     return documents
 
 def preprocess_documents(documents: List[Document], 
-                         clean: bool = True, 
                          split: bool = True,
                          chunk_size: int = 1000,
-                         chunk_overlap: int = 200) -> List[Document]:
+                         chunk_overlap: int = 200,
+                         chunk_separator: str = "") -> List[Document]:
     """Clean and split documents if requested.
     
     Args:
         documents: List of documents to preprocess
-        clean: Whether to clean the documents
         split: Whether to split the documents
         chunk_size: Size of document chunks if splitting
         chunk_overlap: Overlap between chunks if splitting
@@ -180,34 +179,36 @@ def preprocess_documents(documents: List[Document],
     
     processed_docs = documents
     
-    # Clean documents if requested
-    if clean:
-        cleaner = DocumentCleaner()
-        cleaner_results = cleaner.run(processed_docs)
-        processed_docs = cleaner_results["documents"]
-    
     # Split documents if requested
     if split:
-        splitter = DocumentSplitter(
-            split_by="word",
-            split_length=chunk_size,
-            split_overlap=chunk_overlap
-        )
+        if chunk_separator:
+            splitter = RecursiveDocumentSplitter(
+                split_by="word",
+                split_length=chunk_size,
+                split_overlap=chunk_overlap,
+                chunk_separator=chunk_separator
+            )
+        else:
+            splitter = DocumentSplitter(
+                split_by="word",
+                split_length=chunk_size,
+                split_overlap=chunk_overlap
+            )
+
         splitter_results = splitter.run(documents=processed_docs)
         processed_docs = splitter_results["documents"]
-    
+
     return processed_docs
 
 def get_all_documents(corpus_dir: Union[str, Path], 
-                      clean: bool = True,
                       split: bool = True,
                       chunk_size: int = 1000,
-                      chunk_overlap: int = 200) -> List[Document]:
+                      chunk_overlap: int = 200,
+                      chunk_separator: str = "") -> List[Document]:
     """Process all documents in a corpus directory and return a unified list.
     
     Args:
         corpus_dir: Path to the corpus directory
-        clean: Whether to clean the documents
         split: Whether to split the documents
         chunk_size: Size of document chunks if splitting
         chunk_overlap: Overlap between chunks if splitting
@@ -230,13 +231,58 @@ def get_all_documents(corpus_dir: Union[str, Path],
         all_documents.extend(url_documents)
     
     # 3. Preprocess all documents
+    # TEMP
+    split = True
+    chunk_size = 50
+    chunk_overlap = 10
+    chunk_separator = ""
+
     processed_documents = preprocess_documents(
         all_documents,
-        clean=clean,
         split=split,
         chunk_size=chunk_size,
-        chunk_overlap=chunk_overlap
+        chunk_overlap=chunk_overlap,
+        chunk_separator=chunk_separator
     )
     
     print(f"Total documents processed: {len(processed_documents)}")
-    return processed_documents 
+    return processed_documents
+
+def save_documents_to_csv(documents: List[Document], output_path: Path) -> None:
+    """Save a list of Document objects to a CSV file.
+    
+    Args:
+        documents: List of Document objects to save
+        output_path: Path to the output CSV file
+        
+    Returns:
+        None
+    """
+    if not documents:
+        logger.warning("No documents to save")
+        return
+    
+    try:
+        with open(output_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            
+            # Write header
+            writer.writerow(["id", "content", "source", "source_type", "metadata"])
+            
+            # Write documents
+            for doc in documents:
+                metadata = {k: v for k, v in doc.meta.items() if k not in ["source", "source_type"]} if doc.meta else {}
+                source = doc.meta.get("source", "") if doc.meta else ""
+                source_type = doc.meta.get("source_type", "") if doc.meta else ""
+                
+                writer.writerow([
+                    doc.id,
+                    doc.content,
+                    source,
+                    source_type,
+                    str(metadata)
+                ])
+                
+        logger.info(f"Successfully saved {len(documents)} documents to {output_path}")
+    except Exception as e:
+        logger.error(f"Error saving documents to CSV: {e}") 

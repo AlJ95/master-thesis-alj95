@@ -53,10 +53,36 @@ components:
       scale_score: false
       top_k: 10
     type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
+  reranker:
+    init_parameters:
+      calibration_factor: 1.0
+      device: null
+      document_prefix: ''
+      embedding_separator: '
+
+        '
+      meta_fields_to_embed: []
+      model: cross-encoder/ms-marco-MiniLM-L-6-v2
+      model_kwargs:
+        device_map: cpu
+      query_prefix: ''
+      scale_score: true
+      score_threshold: null
+      token:
+        env_vars:
+        - HF_API_TOKEN
+        - HF_TOKEN
+        strict: false
+        type: env_var
+      tokenizer_kwargs: {}
+      top_k: 10
+    type: haystack.components.rankers.transformers_similarity.TransformersSimilarityRanker
 connections:
 - receiver: llm.prompt
   sender: prompt_builder.prompt
 - receiver: prompt_builder.documents
+  sender: reranker.documents
+- receiver: reranker.documents
   sender: retriever.documents
 max_runs_per_component: 10
 metadata: {}

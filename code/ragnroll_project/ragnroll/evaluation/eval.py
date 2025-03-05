@@ -116,6 +116,15 @@ class Evaluator:
                 metrics[component_type] = {
                     name: metric_cls() for name, metric_cls in metric_classes.items()
                 }
+                
+        # Spezialfall: Wenn es einen Reranker gibt, verwende die Retriever-Metriken auch für ihn
+        if any(comp.startswith("reranker") for comp in pipeline_components):
+            retriever_metrics = MetricRegistry.get_component_metrics().get("retriever", {})
+            if retriever_metrics:
+                metrics["reranker"] = {
+                    name: metric_cls() for name, metric_cls in retriever_metrics.items()
+                }
+                logger.info("Reranker-Komponente erkannt. Verwende Retriever-Metriken für die Evaluierung.")
         
         return metrics
     
@@ -220,6 +229,45 @@ class Evaluator:
                     
                     component_data[component_type]["expected_retrievals"].append(expected_retrieval)
         
+        # Spezialfall: Wenn es einen Reranker gibt, müssen wir auch seine Daten extrahieren
+        # Der Reranker erhält Dokumente vom Retriever, daher müssen wir die Retriever-Outputdaten verwenden
+        if "reranker" in self.component_metrics and "retriever" in component_data:
+            # Kopiere die relevanten Daten vom Retriever zum Reranker, falls der Reranker selbst keine Ausgaben hat
+            if "reranker" not in component_data and "retriever" in component_outputs:
+                logger.info("Extrahiere Reranker-Daten aus den Retriever-Ausgaben.")
+                component_data["reranker"] = defaultdict(list)
+                component_data["reranker"]["expected_outputs"] = component_data["retriever"]["expected_outputs"].copy()
+                component_data["reranker"]["input_texts"] = component_data["retriever"]["input_texts"].copy()
+                component_data["reranker"]["queries"] = component_data["retriever"]["queries"].copy()
+                if "expected_retrievals" in component_data["retriever"]:
+                    component_data["reranker"]["expected_retrievals"] = component_data["retriever"]["expected_retrievals"].copy()
+                
+                # Extrahiere die Reranker-Ausgaben aus den Pipeline-Komponenten, wenn vorhanden
+                reranker_outputs = []
+                for tc in test_cases:
+                    # Suche nach Reranker-Komponente in den Ausgaben
+                    reranker_output = None
+                    for comp_name, comp_output in tc["component_outputs"].items():
+                        if comp_name.startswith("reranker"):
+                            reranker_output = comp_output
+                            break
+                    
+                    # Wenn kein expliziter Reranker-Output gefunden wurde, nimm den letzten Satz von Dokumenten vor dem LLM
+                    if reranker_output is None:
+                        # Bestimme die Reihenfolge der Komponenten in der Pipeline
+                        component_order = list(self.pipeline.to_dict()["components"].keys())
+                        llm_idx = next((i for i, comp in enumerate(component_order) if comp.startswith("llm")), len(component_order))
+                        
+                        # Finde die letzte Komponente vor dem LLM, die Dokumente ausgibt
+                        for comp_name in reversed(component_order[:llm_idx]):
+                            if comp_name in tc["component_outputs"] and "documents" in tc["component_outputs"][comp_name]:
+                                reranker_output = tc["component_outputs"][comp_name]
+                                break
+                    
+                    reranker_outputs.append(reranker_output)
+                
+                component_data["reranker"]["component_outputs"] = reranker_outputs
+        
         # Evaluate each component
         for component_type, component_metrics in self.component_metrics.items():
             if component_type not in component_data:
@@ -252,18 +300,22 @@ class Evaluator:
         return results
 
 
-def evaluate(data: Dict[str, Any], pipeline: Pipeline) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+def evaluate(data: Dict[str, Any], pipeline: Pipeline, 
+           positive_label: str = DEFAULT_POSITIVE_LABEL, 
+           negative_label: str = DEFAULT_NEGATIVE_LABEL) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """
     Evaluates the pipeline on the test cases.
     
     Args:
         data: Evaluation data
         pipeline: Haystack pipeline to evaluate
+        positive_label: The label to consider as positive class (default: "valid")
+        negative_label: The label to consider as negative class (default: "invalid")
         
     Returns:
         Tuple[Dict[str, Any], Dict[str, Any]]: Results for the metrics
     """
-    evaluator = Evaluator(pipeline)
+    evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
     scores = evaluator.evaluate(data)
     return scores, evaluator.component_metrics
 

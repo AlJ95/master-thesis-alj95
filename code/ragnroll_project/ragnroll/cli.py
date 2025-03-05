@@ -120,6 +120,48 @@ def draw_pipeline(
     pipeline = config_to_pipeline(configuration_file)
     pipeline.draw(path=output_file)
 
+@app.command()
+def preprocess_to_csv(
+    corpus_dir: str = typer.Argument(..., help="Path to the corpus directory"),
+    output_file: str = typer.Argument(..., help="Path to the output CSV file"),
+    split: bool = typer.Option(True, help="Whether to split the documents into chunks"),
+    chunk_size: int = typer.Option(1000, help="Size of document chunks if splitting"),
+    chunk_overlap: int = typer.Option(200, help="Overlap between chunks if splitting"),
+    chunk_separator: str = typer.Option("", help="Separator to use between text chunks")
+):
+    """
+    Process documents from a corpus directory and save them to a CSV file.
+    
+    This command will:
+    1. Convert all supported files in the corpus directory to Document objects
+    2. Fetch and convert URLs from urls.csv if it exists in the corpus directory
+    3. Clean and split the documents as specified
+    4. Save the resulting documents to a CSV file
+    """
+    from pathlib import Path
+    from .utils.preprocesser import get_all_documents, save_documents_to_csv
+    
+    try:
+        # Process all documents
+        typer.echo(f"Processing documents from {corpus_dir}...")
+        documents = get_all_documents(
+            corpus_dir=corpus_dir,
+            split=split,
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+            chunk_separator=chunk_separator
+        )
+        
+        # Save documents to CSV
+        output_path = Path(output_file)
+        typer.echo(f"Saving {len(documents)} documents to {output_file}...")
+        save_documents_to_csv(documents, output_path)
+        
+        typer.echo(f"Successfully saved {len(documents)} documents to {output_file}")
+    except Exception as e:
+        typer.echo(f"Error: {e}", err=True)
+        raise typer.Exit(code=1)
+
 def _version_callback(value: bool) -> None:
     if value:
         typer.echo(f"{__app_name__} v{__version__}")
