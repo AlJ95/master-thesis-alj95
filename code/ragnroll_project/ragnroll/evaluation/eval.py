@@ -107,18 +107,37 @@ class Evaluator:
     
     def _instantiate_component_metrics(self) -> Dict[str, Dict[str, BaseMetric]]:
         """Create instances of component metrics relevant to this pipeline."""
-        pipeline_components = set(self.pipeline.to_dict()["components"].keys())
+        pipeline_components = self.pipeline.to_dict()["components"]
         metrics = {}
+        
+        # Map component names to their types from the pipeline
+        component_types = {}
+        for comp_name, comp_details in pipeline_components.items():
+            comp_type = comp_details.get("type", "")
+            if ".generator." in comp_type:
+                component_types[comp_name] = "generator"
+            elif ".retriever." in comp_type:
+                component_types[comp_name] = "retriever"
+            elif ".reranker." in comp_type:
+                component_types[comp_name] = "reranker"
+            else:
+                # Fallback to component name-based detection for compatibility
+                if comp_name.startswith("retriever"):
+                    component_types[comp_name] = "retriever"
+                elif comp_name.startswith("reranker"):
+                    component_types[comp_name] = "reranker"
+                elif comp_name.startswith("generator") or comp_name.startswith("llm"):
+                    component_types[comp_name] = "generator"
         
         for component_type, metric_classes in MetricRegistry.get_component_metrics().items():
             # Only include metrics for components that exist in the pipeline
-            if any(comp.startswith(component_type) for comp in pipeline_components):
+            if component_type in component_types.values():
                 metrics[component_type] = {
                     name: metric_cls() for name, metric_cls in metric_classes.items()
                 }
                 
-        # Spezialfall: Wenn es einen Reranker gibt, verwende die Retriever-Metriken auch für ihn
-        if any(comp.startswith("reranker") for comp in pipeline_components):
+        # Special case: If there's a reranker, use retriever metrics for it too
+        if "reranker" in component_types.values():
             retriever_metrics = MetricRegistry.get_component_metrics().get("retriever", {})
             if retriever_metrics:
                 metrics["reranker"] = {
@@ -202,6 +221,26 @@ class Evaluator:
         """
         results = {}
         
+        # Get component name to type mapping
+        component_types = {}
+        pipeline_components = self.pipeline.to_dict()["components"]
+        for comp_name, comp_details in pipeline_components.items():
+            comp_type = comp_details.get("type", "")
+            if ".generator." in comp_type:
+                component_types[comp_name] = "generator"
+            elif ".retriever." in comp_type:
+                component_types[comp_name] = "retriever"
+            elif ".reranker." in comp_type:
+                component_types[comp_name] = "reranker"
+            else:
+                # Fallback to component name-based detection for compatibility
+                if comp_name.startswith("retriever"):
+                    component_types[comp_name] = "retriever"
+                elif comp_name.startswith("reranker"):
+                    component_types[comp_name] = "reranker"
+                elif comp_name.startswith("generator") or comp_name.startswith("llm"):
+                    component_types[comp_name] = "generator"
+        
         # Group test cases by component
         component_data = defaultdict(lambda: defaultdict(list))
         
@@ -209,32 +248,36 @@ class Evaluator:
         for test_case in test_cases:
             component_outputs = test_case["component_outputs"]
             
-            for component_type in component_outputs:
-                component_data[component_type]["component_outputs"].append(component_outputs[component_type])
-                component_data[component_type]["expected_outputs"].append(test_case["expected_output"])
-                component_data[component_type]["input_texts"].append(test_case["input"])
-                component_data[component_type]["queries"].append(test_case["input"])
-                
-                # Add expected retrieval documents if available
-                expected_retrieval = test_case.get("expected_retrieval", None)
-                if expected_retrieval:
-                    if not all(isinstance(doc, Document) for doc in expected_retrieval):
-                        expected_retrieval = [
-                            Document(content=doc["content"]) if isinstance(doc, dict) else Document(content=doc)
-                            for doc in expected_retrieval
-                        ]
+            for component_name in component_outputs:
+                # Map component name to its standardized type (retriever, reranker, generator)
+                if component_name in component_types:
+                    component_type = component_types[component_name]
+                    # Store data under the standardized component type
+                    component_data[component_type]["component_outputs"].append(component_outputs[component_name])
+                    component_data[component_type]["expected_outputs"].append(test_case["expected_output"])
+                    component_data[component_type]["input_texts"].append(test_case["input"])
+                    component_data[component_type]["queries"].append(test_case["input"])
                     
-                    if "expected_retrievals" not in component_data[component_type]:
-                        component_data[component_type]["expected_retrievals"] = []
-                    
-                    component_data[component_type]["expected_retrievals"].append(expected_retrieval)
+                    # Add expected retrieval documents if available
+                    expected_retrieval = test_case.get("expected_retrieval", None)
+                    if expected_retrieval:
+                        if not all(isinstance(doc, Document) for doc in expected_retrieval):
+                            expected_retrieval = [
+                                Document(content=doc["content"]) if isinstance(doc, dict) else Document(content=doc)
+                                for doc in expected_retrieval
+                            ]
+                        
+                        if "expected_retrievals" not in component_data[component_type]:
+                            component_data[component_type]["expected_retrievals"] = []
+                        
+                        component_data[component_type]["expected_retrievals"].append(expected_retrieval)
         
-        # Spezialfall: Wenn es einen Reranker gibt, müssen wir auch seine Daten extrahieren
-        # Der Reranker erhält Dokumente vom Retriever, daher müssen wir die Retriever-Outputdaten verwenden
+        # Special case: If there's a reranker, we also need to extract its data
+        # The reranker receives documents from the retriever, so we need to use the retriever output data
         if "reranker" in self.component_metrics and "retriever" in component_data:
-            # Kopiere die relevanten Daten vom Retriever zum Reranker, falls der Reranker selbst keine Ausgaben hat
-            if "reranker" not in component_data and "retriever" in component_outputs:
-                logger.info("Extrahiere Reranker-Daten aus den Retriever-Ausgaben.")
+            # Copy the relevant data from the retriever to the reranker if the reranker itself has no outputs
+            if "reranker" not in component_data:
+                logger.info("Extracting reranker data from retriever outputs.")
                 component_data["reranker"] = defaultdict(list)
                 component_data["reranker"]["expected_outputs"] = component_data["retriever"]["expected_outputs"].copy()
                 component_data["reranker"]["input_texts"] = component_data["retriever"]["input_texts"].copy()
@@ -242,29 +285,34 @@ class Evaluator:
                 if "expected_retrievals" in component_data["retriever"]:
                     component_data["reranker"]["expected_retrievals"] = component_data["retriever"]["expected_retrievals"].copy()
                 
-                # Extrahiere die Reranker-Ausgaben aus den Pipeline-Komponenten, wenn vorhanden
+                # Extract reranker outputs from pipeline components if available
                 reranker_outputs = []
                 for tc in test_cases:
-                    # Suche nach Reranker-Komponente in den Ausgaben
+                    # Look for reranker component in the outputs
                     reranker_output = None
                     for comp_name, comp_output in tc["component_outputs"].items():
-                        if comp_name.startswith("reranker"):
+                        if comp_name in component_types and component_types[comp_name] == "reranker":
                             reranker_output = comp_output
                             break
                     
-                    # Wenn kein expliziter Reranker-Output gefunden wurde, nimm den letzten Satz von Dokumenten vor dem LLM
+                    # If no explicit reranker output was found, take the last set of documents before the LLM
                     if reranker_output is None:
-                        # Bestimme die Reihenfolge der Komponenten in der Pipeline
+                        # Determine the order of components in the pipeline
                         component_order = list(self.pipeline.to_dict()["components"].keys())
-                        llm_idx = next((i for i, comp in enumerate(component_order) if comp.startswith("llm")), len(component_order))
+                        # Find LLM/generator component index
+                        llm_idx = next((i for i, comp in enumerate(component_order) 
+                                      if comp in component_types and component_types[comp] == "generator"), 
+                                     len(component_order))
                         
-                        # Finde die letzte Komponente vor dem LLM, die Dokumente ausgibt
-                        for comp_name in reversed(component_order[:llm_idx]):
-                            if comp_name in tc["component_outputs"] and "documents" in tc["component_outputs"][comp_name]:
-                                reranker_output = tc["component_outputs"][comp_name]
-                                break
+                        # Look backwards from the LLM to find the last retriever/reranker
+                        for i in range(llm_idx - 1, -1, -1):
+                            comp_name = component_order[i]
+                            if comp_name in tc["component_outputs"]:
+                                if comp_name in component_types and component_types[comp_name] != "generator":
+                                    reranker_output = tc["component_outputs"][comp_name]
+                                    break
                     
-                    reranker_outputs.append(reranker_output)
+                    reranker_outputs.append(reranker_output if reranker_output is not None else [])
                 
                 component_data["reranker"]["component_outputs"] = reranker_outputs
         

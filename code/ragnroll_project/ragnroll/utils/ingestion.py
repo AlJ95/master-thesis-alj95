@@ -50,7 +50,6 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
 
     documents = get_all_documents(
         corpus_dir=corpus_dir,
-        clean=True,
         split=True,
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP,

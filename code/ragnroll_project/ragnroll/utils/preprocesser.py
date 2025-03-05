@@ -62,32 +62,10 @@ def fetch_documents_from_urls(urls: List[str]) -> List[Document]:
     
     documents = []
     web_fetcher = LinkContentFetcher()
+    fetch_results = web_fetcher.run(urls)
+
     html_converter = HTMLToDocument()
-    
-    for url in urls:
-        try:
-            # Fetch content from URL
-            fetch_results = web_fetcher.run({"urls": [url]})
-            web_pages = fetch_results["web_pages"]
-            
-            if web_pages:
-                # Convert HTML to Document objects
-                converter_results = html_converter.run({"html_documents": web_pages})
-                url_documents = converter_results["documents"]
-                
-                # Add source URL to metadata
-                for doc in url_documents:
-                    if not doc.meta:
-                        doc.meta = {}
-                    doc.meta["source"] = url
-                    doc.meta["source_type"] = "url"
-                
-                documents.extend(url_documents)
-                logger.info(f"Successfully fetched and converted URL: {url}")
-            else:
-                logger.warning(f"Failed to fetch content from URL: {url}")
-        except Exception as e:
-            logger.error(f"Error processing URL {url}: {e}")
+    documents = html_converter.run(sources=fetch_results["streams"])["documents"]
     
     logger.info(f"Fetched {len(documents)} documents from {len(urls)} URLs")
     return documents
@@ -226,10 +204,17 @@ def get_all_documents(corpus_dir: Union[str, Path],
     # 2. Fetch and convert URLs if urls.csv exists
     urls_csv_path = corpus_path / "urls.csv"
     if urls_csv_path.exists():
-        urls = fetch_urls_from_csv(urls_csv_path)
-        url_documents = fetch_documents_from_urls(urls)
-        all_documents.extend(url_documents)
-    
+        if not (corpus_path / "url_documents.csv").exists():
+            urls = fetch_urls_from_csv(urls_csv_path)
+            url_documents = fetch_documents_from_urls(urls)
+            all_documents.extend(url_documents)
+
+        # save url documents to csv
+            save_documents_to_csv(url_documents, corpus_path / "url_documents.csv")
+        else:
+            url_documents = load_documents_from_csv(corpus_path / "url_documents.csv")
+            all_documents.extend(url_documents)
+
     # 3. Preprocess all documents
     # TEMP
     split = True
@@ -271,7 +256,7 @@ def save_documents_to_csv(documents: List[Document], output_path: Path) -> None:
             
             # Write documents
             for doc in documents:
-                metadata = {k: v for k, v in doc.meta.items() if k not in ["source", "source_type"]} if doc.meta else {}
+                metadata = "" #{k: v for k, v in doc.meta.items() if k not in ["source", "source_type"]} if doc.meta else {}
                 source = doc.meta.get("source", "") if doc.meta else ""
                 source_type = doc.meta.get("source_type", "") if doc.meta else ""
                 
@@ -286,3 +271,26 @@ def save_documents_to_csv(documents: List[Document], output_path: Path) -> None:
         logger.info(f"Successfully saved {len(documents)} documents to {output_path}")
     except Exception as e:
         logger.error(f"Error saving documents to CSV: {e}") 
+
+def load_documents_from_csv(csv_path: Path) -> List[Document]:
+    """Load a list of Document objects from a CSV file.
+    
+    Args:
+        csv_path: Path to the CSV file containing Document objects
+
+    Returns:
+        List of Document objects loaded from the CSV file
+    """
+    documents = []
+    try:
+        with open(csv_path, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if len(row) == 5:
+                    id, content, metadata = row
+                    document = Document(id=id, content=content, meta=metadata)
+                    documents.append(document)
+    except Exception as e:
+        logger.error(f"Error loading documents from CSV: {e}")
+    
+    return documents
