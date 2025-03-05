@@ -26,7 +26,6 @@ ERRORS = {
 from ragnroll.metrics import (
     BaseMetric, 
     MetricRegistry, 
-    ExactMatchMetric,
     RetrievalPrecisionMetric,
     RetrievalRecallMetric
 )

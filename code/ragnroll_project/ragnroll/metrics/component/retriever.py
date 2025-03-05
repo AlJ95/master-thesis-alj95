@@ -136,66 +136,90 @@ class RetrievalPrecisionMetric(BaseMetric):
         super().__init__(threshold=threshold)
         self.relevance_evaluator = relevance_evaluator or LLMRelevanceEvaluator()
     
-    def run(self, component_output: Dict[str, Any], ground_truth_docs: List[Document] = None, 
-            query: str = None, **kwargs) -> Dict[str, Any]:
+    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
+            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
         """
-        Calculate precision of retrieved documents.
+        Calculate precision of retrieved documents across multiple queries.
         
         Args:
-            component_output: Output from the retriever component
-            ground_truth_docs: List of ground truth documents
-            query: The original query
+            component_outputs: List of outputs from the retriever component
+            expected_outputs: List of expected outputs (used as fallback for ground truth)
+            queries: List of original queries
+            expected_retrievals: List of expected retrieval document lists
             
         Returns:
             Dict[str, Any]: Results with score and details
         """
         try:
-            # Get documents from the retriever output
-            retrieved_docs = component_output.get("documents", [])
-            
-            if not retrieved_docs:
-                print("\n\nNo documents retrieved")
-                print(component_output)
-                print("\n\n")
+            if not component_outputs:
                 return {
                     "score": 0.0,
                     "success": False,
-                    "details": {"error": "No documents retrieved"}
+                    "details": {"error": "No component outputs provided"}
                 }
+                
+            # Track results for each query
+            precision_scores = []
+            total_relevant_retrieved = 0
+            total_retrieved = 0
             
-            # If no ground truth is provided, try to use expected_output to create a synthetic ground truth
-            if not ground_truth_docs and "expected_output" in kwargs:
-                ground_truth_docs = [Document(content=kwargs["expected_output"])]
+            # Process each query
+            for i, output in enumerate(component_outputs):
+                # Get documents from the retriever output
+                retrieved_docs = output.get("documents", [])
                 
-            # If no query is provided, try to use input_text
-            if not query and "input_text" in kwargs:
-                query = kwargs["input_text"]
+                if not retrieved_docs:
+                    continue
                 
-            if not ground_truth_docs or not query:
-                return {
-                    "score": 0.0,
-                    "success": False,
-                    "details": {"error": "Missing ground truth documents or query"}
+                # Get ground truth documents and query
+                ground_truth_docs = None
+                if expected_retrievals and i < len(expected_retrievals):
+                    ground_truth_docs = expected_retrievals[i]
+                elif expected_outputs and i < len(expected_outputs):
+                    ground_truth_docs = [Document(content=expected_outputs[i])]
+                
+                query = queries[i] if queries and i < len(queries) else None
+                
+                if not ground_truth_docs or not query:
+                    continue
+                
+                # Classify documents as relevant or irrelevant
+                classification = self.relevance_evaluator.classify_documents(
+                    retrieved_docs, ground_truth_docs, query
+                )
+                
+                # Calculate precision for this query
+                relevant_count = len(classification["relevant"])
+                query_total = len(retrieved_docs)
+                
+                if query_total > 0:
+                    precision_scores.append(relevant_count / query_total)
+                    total_relevant_retrieved += relevant_count
+                    total_retrieved += query_total
+            
+            # Calculate overall precision
+            if precision_scores:
+                avg_precision = sum(precision_scores) / len(precision_scores)
+                global_precision = total_relevant_retrieved / total_retrieved if total_retrieved > 0 else 0.0
+                
+                # Use average precision as the score
+                self.score = avg_precision
+                self.success = self.score >= self.threshold
+                self.details = {
+                    "avg_precision": avg_precision,
+                    "global_precision": global_precision,
+                    "relevant_retrieved": total_relevant_retrieved,
+                    "total_retrieved": total_retrieved,
+                    "num_queries": len(precision_scores),
+                    "evaluator": self.relevance_evaluator.__class__.__name__
                 }
-            
-            # Classify documents as relevant or irrelevant
-            classification = self.relevance_evaluator.classify_documents(
-                retrieved_docs, ground_truth_docs, query
-            )
-            
-            # Calculate precision
-            relevant_count = len(classification["relevant"])
-            total_count = len(retrieved_docs)
-            
-            precision = relevant_count / total_count if total_count > 0 else 0.0
-            
-            self.score = precision
-            self.success = precision >= self.threshold
-            self.details = {
-                "relevant_retrieved": relevant_count,
-                "total_retrieved": total_count,
-                "evaluator": self.relevance_evaluator.__class__.__name__
-            }
+            else:
+                self.score = 0.0
+                self.success = False
+                self.details = {
+                    "error": "No valid retrieval results to evaluate",
+                    "evaluator": self.relevance_evaluator.__class__.__name__
+                }
             
             return {
                 "score": self.score,
@@ -232,64 +256,88 @@ class RetrievalRecallMetric(BaseMetric):
         super().__init__(threshold=threshold)
         self.relevance_evaluator = relevance_evaluator or LLMRelevanceEvaluator()
     
-    def run(self, component_output: Dict[str, Any], ground_truth_docs: List[Document] = None, 
-            query: str = None, **kwargs) -> Dict[str, Any]:
+    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
+            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
         """
-        Calculate recall of retrieved documents.
+        Calculate recall of retrieved documents across multiple queries.
         
         Args:
-            component_output: Output from the retriever component
-            ground_truth_docs: List of ground truth documents
-            query: The original query
+            component_outputs: List of outputs from the retriever component
+            expected_outputs: List of expected outputs (used as fallback for ground truth)
+            queries: List of original queries
+            expected_retrievals: List of expected retrieval document lists
             
         Returns:
             Dict[str, Any]: Results with score and details
         """
         try:
-            # Get documents from the retriever output
-            retrieved_docs = component_output.get("documents", [])
-            
-            if not retrieved_docs:
+            if not component_outputs:
                 return {
                     "score": 0.0,
                     "success": False,
-                    "details": {"error": "No documents retrieved"}
+                    "details": {"error": "No component outputs provided"}
                 }
+                
+            # Track results for each query
+            recall_scores = []
+            total_relevant_retrieved = 0
+            total_relevant = 0
             
-            # If no ground truth is provided, try to use expected_output to create a synthetic ground truth
-            if not ground_truth_docs and "expected_output" in kwargs:
-                ground_truth_docs = [Document(content=kwargs["expected_output"])]
+            # Process each query
+            for i, output in enumerate(component_outputs):
+                # Get documents from the retriever output
+                retrieved_docs = output.get("documents", [])
                 
-            # If no query is provided, try to use input_text
-            if not query and "input_text" in kwargs:
-                query = kwargs["input_text"]
+                # Get ground truth documents and query
+                ground_truth_docs = None
+                if expected_retrievals and i < len(expected_retrievals):
+                    ground_truth_docs = expected_retrievals[i]
+                elif expected_outputs and i < len(expected_outputs):
+                    ground_truth_docs = [Document(content=expected_outputs[i])]
                 
-            if not ground_truth_docs or not query:
-                return {
-                    "score": 0.0,
-                    "success": False,
-                    "details": {"error": "Missing ground truth documents or query"}
+                query = queries[i] if queries and i < len(queries) else None
+                
+                if not ground_truth_docs or not query or not retrieved_docs:
+                    continue
+                
+                # Classify documents as relevant or irrelevant
+                classification = self.relevance_evaluator.classify_documents(
+                    retrieved_docs, ground_truth_docs, query
+                )
+                
+                # Calculate recall for this query
+                # Assume all ground truth documents are relevant
+                relevant_count = len(classification["relevant"])
+                total_ground_truth = len(ground_truth_docs)
+                
+                if total_ground_truth > 0:
+                    recall_scores.append(relevant_count / total_ground_truth)
+                    total_relevant_retrieved += relevant_count
+                    total_relevant += total_ground_truth
+            
+            # Calculate overall recall
+            if recall_scores:
+                avg_recall = sum(recall_scores) / len(recall_scores)
+                global_recall = total_relevant_retrieved / total_relevant if total_relevant > 0 else 0.0
+                
+                # Use average recall as the score
+                self.score = avg_recall
+                self.success = self.score >= self.threshold
+                self.details = {
+                    "avg_recall": avg_recall,
+                    "global_recall": global_recall,
+                    "relevant_retrieved": total_relevant_retrieved,
+                    "total_relevant": total_relevant,
+                    "num_queries": len(recall_scores),
+                    "evaluator": self.relevance_evaluator.__class__.__name__
                 }
-            
-            # Classify documents as relevant or irrelevant
-            classification = self.relevance_evaluator.classify_documents(
-                retrieved_docs, ground_truth_docs, query
-            )
-            
-            # For recall, we need to know how many ground truth documents were covered
-            # This is an approximation since we don't have a 1:1 mapping
-            relevant_count = len(classification["relevant"])
-            total_relevant = len(ground_truth_docs)
-            
-            recall = relevant_count / total_relevant if total_relevant > 0 else 0.0
-            
-            self.score = recall
-            self.success = recall >= self.threshold
-            self.details = {
-                "relevant_retrieved": relevant_count,
-                "total_relevant": total_relevant,
-                "evaluator": self.relevance_evaluator.__class__.__name__
-            }
+            else:
+                self.score = 0.0
+                self.success = False
+                self.details = {
+                    "error": "No valid retrieval results to evaluate",
+                    "evaluator": self.relevance_evaluator.__class__.__name__
+                }
             
             return {
                 "score": self.score,
@@ -328,15 +376,16 @@ class RetrievalF1Metric(BaseMetric):
         self.precision_metric = RetrievalPrecisionMetric(relevance_evaluator=self.relevance_evaluator)
         self.recall_metric = RetrievalRecallMetric(relevance_evaluator=self.relevance_evaluator)
     
-    def run(self, component_output: Dict[str, Any], ground_truth_docs: List[Document] = None, 
-            query: str = None, **kwargs) -> Dict[str, Any]:
+    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
+            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
         """
-        Calculate F1 score of retrieved documents.
+        Calculate F1 score of retrieved documents across multiple queries.
         
         Args:
-            component_output: Output from the retriever component
-            ground_truth_docs: List of ground truth documents
-            query: The original query
+            component_outputs: List of outputs from the retriever component
+            expected_outputs: List of expected outputs (used as fallback for ground truth)
+            queries: List of original queries
+            expected_retrievals: List of expected retrieval document lists
             
         Returns:
             Dict[str, Any]: Results with score and details
@@ -344,16 +393,18 @@ class RetrievalF1Metric(BaseMetric):
         try:
             # Calculate precision and recall
             precision_result = self.precision_metric.run(
-                component_output=component_output,
-                ground_truth_docs=ground_truth_docs,
-                query=query,
+                component_outputs=component_outputs,
+                expected_outputs=expected_outputs,
+                queries=queries,
+                expected_retrievals=expected_retrievals,
                 **kwargs
             )
             
             recall_result = self.recall_metric.run(
-                component_output=component_output,
-                ground_truth_docs=ground_truth_docs,
-                query=query,
+                component_outputs=component_outputs,
+                expected_outputs=expected_outputs,
+                queries=queries,
+                expected_retrievals=expected_retrievals,
                 **kwargs
             )
             
@@ -408,69 +459,98 @@ class RetrievalMAPMetric(BaseMetric):
         super().__init__(threshold=threshold)
         self.relevance_evaluator = relevance_evaluator or LLMRelevanceEvaluator()
     
-    def run(self, component_output: Dict[str, Any], ground_truth_docs: List[Document] = None, 
-            query: str = None, **kwargs) -> Dict[str, Any]:
+    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
+            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
         """
-        Calculate MAP of retrieved documents.
+        Calculate MAP of retrieved documents across multiple queries.
         
         Args:
-            component_output: Output from the retriever component
-            ground_truth_docs: List of ground truth documents
-            query: The original query
+            component_outputs: List of outputs from the retriever component
+            expected_outputs: List of expected outputs (used as fallback for ground truth)
+            queries: List of original queries
+            expected_retrievals: List of expected retrieval document lists
             
         Returns:
             Dict[str, Any]: Results with score and details
         """
         try:
-            # Get documents from the retriever output
-            retrieved_docs = component_output.get("documents", [])
-            
-            if not retrieved_docs:
+            if not component_outputs:
                 return {
                     "score": 0.0,
                     "success": False,
-                    "details": {"error": "No documents retrieved"}
+                    "details": {"error": "No component outputs provided"}
                 }
-            
-            # If no ground truth is provided, try to use expected_output to create a synthetic ground truth
-            if not ground_truth_docs and "expected_output" in kwargs:
-                ground_truth_docs = [Document(content=kwargs["expected_output"])]
                 
-            # If no query is provided, try to use input_text
-            if not query and "input_text" in kwargs:
-                query = kwargs["input_text"]
+            # Track results for each query
+            average_precisions = []
+            total_relevant_retrieved = 0
+            total_retrieved = 0
+            
+            # Process each query
+            for i, output in enumerate(component_outputs):
+                # Get documents from the retriever output
+                retrieved_docs = output.get("documents", [])
                 
-            if not ground_truth_docs or not query:
-                return {
-                    "score": 0.0,
-                    "success": False,
-                    "details": {"error": "Missing ground truth documents or query"}
-                }
-            
-            # Calculate Average Precision
-            average_precision = 0.0
-            relevant_count = 0
-            
-            for rank, doc in enumerate(retrieved_docs):
-                if self.relevance_evaluator.is_relevant(doc, ground_truth_docs, query):
-                    relevant_count += 1
-                    # Precision at current rank
-                    precision_at_k = relevant_count / (rank + 1)
-                    average_precision += precision_at_k
-            
-            # Normalize by the number of relevant documents
-            if relevant_count > 0:
-                average_precision /= relevant_count
-            else:
+                if not retrieved_docs:
+                    continue
+                
+                # Get ground truth documents and query
+                ground_truth_docs = None
+                if expected_retrievals and i < len(expected_retrievals):
+                    ground_truth_docs = expected_retrievals[i]
+                elif expected_outputs and i < len(expected_outputs):
+                    ground_truth_docs = [Document(content=expected_outputs[i])]
+                
+                query = queries[i] if queries and i < len(queries) else None
+                
+                if not ground_truth_docs or not query:
+                    continue
+                
+                # Calculate Average Precision
                 average_precision = 0.0
+                relevant_count = 0
+                
+                for rank, doc in enumerate(retrieved_docs):
+                    if self.relevance_evaluator.is_relevant(doc, ground_truth_docs, query):
+                        relevant_count += 1
+                        # Precision at current rank
+                        precision_at_k = relevant_count / (rank + 1)
+                        average_precision += precision_at_k
+                
+                # Normalize by the number of relevant documents
+                if relevant_count > 0:
+                    average_precision /= relevant_count
+                else:
+                    average_precision = 0.0
+                
+                # Track results for this query
+                average_precisions.append(average_precision)
+                total_relevant_retrieved += relevant_count
+                total_retrieved += len(retrieved_docs)
             
-            self.score = average_precision
-            self.success = average_precision >= self.threshold
-            self.details = {
-                "relevant_retrieved": relevant_count,
-                "total_retrieved": len(retrieved_docs),
-                "evaluator": self.relevance_evaluator.__class__.__name__
-            }
+            # Calculate overall MAP
+            if average_precisions:
+                avg_map = sum(average_precisions) / len(average_precisions)
+                global_map = total_relevant_retrieved / total_retrieved if total_retrieved > 0 else 0.0
+                
+                # Use average MAP as the score
+                self.score = avg_map
+                self.success = self.score >= self.threshold
+                self.details = {
+                    "avg_map": avg_map,
+                    "global_map": global_map,
+                    "relevant_retrieved": total_relevant_retrieved,
+                    "total_retrieved": total_retrieved,
+                    "num_queries": len(average_precisions),
+                    "evaluator": self.relevance_evaluator.__class__.__name__
+                }
+            else:
+                self.score = 0.0
+                self.success = False
+                self.details = {
+                    "error": "No valid retrieval results to evaluate",
+                    "evaluator": self.relevance_evaluator.__class__.__name__
+                }
             
             return {
                 "score": self.score,

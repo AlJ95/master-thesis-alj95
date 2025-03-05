@@ -22,7 +22,7 @@ Baselines must be used per default, but only for each unique configuration chang
 ### Component Evaluation
 
 #### Rewrite
-Develop new method: Almost fully derived from retrieval -> Retrieval metrics but using rewriting as agnostic component
+flowaicom/Flow-Judge-v0.1
 
 #### Retrieve
 

@@ -6,10 +6,24 @@ and component-specific performance of RAG pipelines.
 """
 
 from ragnroll.metrics.base import BaseMetric, MetricRegistry
-from ragnroll.metrics.end2end import ExactMatchMetric
+from ragnroll.metrics.end2end import (
+    AccuracyMetric,
+    PrecisionMetric,
+    RecallMetric,
+    F1ScoreMetric,
+    MatthewsCorrCoefMetric,
+    FalsePositiveRateMetric,
+    FalseNegativeRateMetric,
+    ROCAUCMetric
+)
 
 # Import component metrics
-from ragnroll.metrics.component.retriever import RetrievalPrecisionMetric, RetrievalRecallMetric
+from ragnroll.metrics.component.retriever import (
+    RetrievalPrecisionMetric,
+    RetrievalRecallMetric,
+    RetrievalF1Metric,
+    RetrievalMAPMetric
+)
 
 # Create a convenience dictionary of all available metrics
 AVAILABLE_METRICS = {
@@ -20,8 +34,17 @@ AVAILABLE_METRICS = {
 __all__ = [
     "BaseMetric", 
     "MetricRegistry",
-    "ExactMatchMetric",
+    "AccuracyMetric",
+    "PrecisionMetric",
+    "RecallMetric",
+    "F1ScoreMetric",
+    "MatthewsCorrCoefMetric",
+    "FalsePositiveRateMetric",
+    "FalseNegativeRateMetric",
+    "ROCAUCMetric",
     "RetrievalPrecisionMetric",
     "RetrievalRecallMetric",
+    "RetrievalF1Metric",
+    "RetrievalMAPMetric",
     "AVAILABLE_METRICS"
 ]
