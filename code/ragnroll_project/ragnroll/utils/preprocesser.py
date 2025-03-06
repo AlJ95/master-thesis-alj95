@@ -67,7 +67,7 @@ def fetch_documents_from_urls(urls: List[str]) -> List[Document]:
 
     html_converter = HTMLToDocument()
     documents = html_converter.run(sources=fetch_results["streams"])["documents"]
-    
+
     logger.info(f"Fetched {len(documents)} documents from {len(urls)} URLs")
     return documents
 
@@ -216,6 +216,9 @@ def get_all_documents(corpus_dir: Union[str, Path],
             url_documents = load_documents_from_csv(corpus_path / "url_documents.csv")
             all_documents.extend(url_documents)
 
+    # remove empty documents
+    all_documents = [doc for doc in all_documents if doc.content]
+    print(f"Total documents after removing empty documents: {len(all_documents)}")
     # 3. Preprocess all documents
     # TEMP
     split = True
@@ -293,6 +296,6 @@ def load_documents_from_csv(csv_path: Path) -> List[Document]:
                     document = Document(id=id, content=content, meta=metadata)
                     documents.append(document)
     except Exception as e:
-        logger.error(f"ading documents from CSV: {e}")
+        logger.error(f"adding documents from CSV: {e}")
     
     return documents
