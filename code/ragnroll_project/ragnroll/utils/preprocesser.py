@@ -1,5 +1,6 @@
 import os
 import csv
+import json
 import logging
 from pathlib import Path
 from typing import List, Optional, Union
@@ -256,7 +257,7 @@ def save_documents_to_csv(documents: List[Document], output_path: Path) -> None:
             
             # Write documents
             for doc in documents:
-                metadata = "" #{k: v for k, v in doc.meta.items() if k not in ["source", "source_type"]} if doc.meta else {}
+                metadata = {k: v for k, v in doc.meta.items() if k not in ["source", "source_type"]} if doc.meta else {}
                 source = doc.meta.get("source", "") if doc.meta else ""
                 source_type = doc.meta.get("source_type", "") if doc.meta else ""
                 
@@ -287,10 +288,11 @@ def load_documents_from_csv(csv_path: Path) -> List[Document]:
             reader = csv.reader(f)
             for row in reader:
                 if len(row) == 5:
-                    id, content, metadata = row
+                    id, content, source, source_type, metadata = row
+                    metadata = json.loads(metadata)
                     document = Document(id=id, content=content, meta=metadata)
                     documents.append(document)
     except Exception as e:
-        logger.error(f"Error loading documents from CSV: {e}")
+        logger.error(f"ading documents from CSV: {e}")
     
     return documents
