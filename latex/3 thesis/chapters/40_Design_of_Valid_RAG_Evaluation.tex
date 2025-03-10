@@ -6,7 +6,7 @@
 % -> Modularität (nach Gao.)
 
 
-Developing retrieval-augmented generation systems is a difficult task that needs several reconfiguration phases.\cite{Simon.10112024} Component evaluation and in-depth failure analysis are key requirements for readjusting the right parts within the RAG-system, as they can include complex pipelines that may involve iterative or recursive processes. Failures can occur in many parts of the RAG-system. Barnett et al.\cite{Barnett.2024} created a list of 7 failures occuring in an advanced RAG system with Rewrite-Retrieve-Rerank-Read (4R) structure as Gao et al.\cite{Gao.18.12.2023} has defined it. Therefore for a framework it is indespensible to evaluate all components next to the end-to-end evaluation for the overall result. In this chapter, we will discuss how RAGs are evaluated accurately in three different aspects - end-to-end evaluation, component evaluation and component block evaluation. After that we will discuss how fast RAG development with transparent and reproducible results can be done. We will introduce Haystacks approach of fast modular RAG development. Lastly we will introduce the novelle blueprint by Simon et al.\cite{Simon.10112024} for handling external validity in RAG experiments. 
+Developing retrieval-augmented generation systems is a difficult task that needs several reconfiguration phases.\cite{Simon.10112024} Component evaluation and in-depth failure analysis are key requirements for readjusting the right parts within the RAG-system, as they can include complex pipelines that may involve iterative or recursive processes. Failures can occur in many parts of the RAG-system. Barnett et al.\cite{Barnett.2024} created a list of 7 failures occuring in an advanced RAG system with Rewrite-Retrieve-Rerank-Read (4R) structure as Gao et al.\cite{Gao.18.12.2023} has defined it. Therefore for a framework it is indespensible to evaluate all components next to the end-to-end evaluation for the overall result. In this chapter, we will discuss how RAGs are evaluated accurately in two different aspects - end-to-end evaluation and component evaluation. After that we will discuss how fast RAG development with transparent and reproducible results can be done. We will introduce Haystacks approach of fast modular RAG development. Lastly we will introduce the novelle blueprint by Simon et al.\cite{Simon.10112024} for handling external validity in RAG experiments. 
 
 \section{Evaluation Techniques}
 
@@ -52,64 +52,53 @@ In stark contrast to evaluating generative tasks, classification comes with clea
 
 End-to-end evaluation requires the researcher to establish a baseline for the experiments. Baslines make experiment results interpretable and ensure that there is something to compare with. Therefore we decided to implement two baselines in this framework, which are used per default if an experiment starts. In the first run, we use the selected generator model alone to get a baseline vs standalone LLMs. Next we run a naive RAG with the data from the predefined corpus, the basic retrieval and generator (retrieve-read, cf: section \ref{sec:naive_rags}). The standalone LLM baseline ensure that the complexity overhead of implementing a RAG system is justified. If the evaluated RAG system can not surpass the performance of the LLM baseline, then simpler system should be used. Similar to that is the naive RAG baseline used to compare more complex RAG variations with more overhead, computation time or costs to the simpler naive one to ensure that the mentioned downsides are justified. 
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/FrameworkBaselines.pdf}
+  \caption{Framework: research define configuration files of RAG variations to evaluate them against the baselines standalone LLM and naive RAG with end-to-end evaluation.}
+  \label{fig:framework-baselines}
+\end{figure}
 % \cite{Ru.15.08.2024.} Eventhough all components of a RAG-system affect its overall performance, there are ones that can not be evaluated directly.  \\
+
+We illustrated the prior defined state of our framework in figure \ref{fig:framework-baselines} to enhance the understanding of our considerations. It will be updated with each functionality. It visualizes the process of using our evaluation data to calculate metrics of our baselines next to the configurations we want to test in the experiment. It shows that the evaluation is done by end-to-end as well as component-wise for generation and retrieval. In the following section we will explain, how component evaluation works in our framework.
 
 
 \subsection{Component Evaluation}
 
-Component evaluation is necessary to detect performance issues of the whole systems introduced through individual components or pairs of components that are connected and do not work well together.\cite{Salemi.2024} In figure \ref{fig:failures}, we presented few of them. While this gives a good first impression of the variety of failures in a RAG system, this visualisation is far from complete. We argue that all components, no matter how small their impact is, can introduce significant failure rate for the overall system. Therefore it would be necessary to evaluate them all component-wise. We are not aware of papers that analyze component evaluation beside retrieval and read - the core components of a RAG system. Therefore we will introduce two new evaluations schemes to address all components in a advanced RAG system (4R, cf. section \ref{sec:advanced_rags}). Next to well studied topics retrieval evaluation and generation evaluation, we will implement rewrite evaluation and rerank evaluation. We will demonstrate the evaluation of all components while limiting ourself to the fixed advanced RAG definition (4R). We want to highlight here, that the modular RAG architecture with other components can be treated equally in this manner as long as there are metrics or evaluation techniques that can measure the performance of those components. The haystack library always returns inputs and outputs of each component to enable this kind of evaluation.
+Component evaluation is necessary to detect performance issues of the whole systems introduced through individual components or blocks of components that are connected and do not work well together.\cite{Salemi.2024} In figure \ref{fig:failures}, we presented few of them. While this gives a good first impression of the variety of failures in a RAG system, this visualisation is far from complete. We argue that all components, no matter how small their impact seem, can introduce significant failure rate for the overall system. Therefore it would be necessary to evaluate them all component-wise. 
 
-\paragraph{Rewrite}
+We are not aware of papers that analyze component evaluation beside retrieval and read - the core components of a RAG system. We also want to make clear, that evaluating components fully isolated by other components is not practical. If we take for example the generator component and want to evaluate it completely apart from retrieval, then we must provide a ground-truth dataset of retrieval chunks. This is doable for easy scenarios in retrieval that need one document chunk e. g. a sentence where a query is exactly answered, but in real-world scenarios there are much more complex cases such as ambigious queries, complex queries or queries that won't need retrieval at all.\cite{Huang.2023} If the researcher adjusts chunk size or technique, then he must also create a new set of ground-truths as the generated documents have changed and the previous selected ones do not exist anymore (cf. section \ref{sec:advanced_rags}). 
 
-Evaluating rewriter components is a derived task from the retrieval evaluation in the next section. The goal of rewriting is to transform the query so that the retriever finds all necessary documents or chunks for this task. Commonly used techniques are query routing, query transformation and query expansion. Rewriter evaluation has the same metrics as the retriever, because it aims the same goals. The only difference in evaluating rewriters is, that instead of the retriever, the rewriter must be agnostic to replace them within the system. 
+If we consider other components then retriever such as rewrite or rerank then there is no ground truth of data. The purpose of rewriting the query is increasing the following retrieval. Therefore the metric is dependend on the retrieval technique too can not be fixed ground truth examples in an evaluation dataset.
+
+The purpose of component evaluation is to find weak spots within the RAG. It is therefore more feasible to evaluate a RAG-system only with system inputs and its ground truth final answers and let a non-deterministic LLM-as-a-Judge evaluate for steps within the RAG-system. LLM-as-a-Judge is a evaluation techniques, where a significantly more performant model or solely on evaluating trained model does the evaluation. Instead of real-valued metrics, an LLM decides and asseses the solution of the task. 
+
+Relying only on system input and ground-truth datasets for evaluation saves a lot of time. Resulting failure analysis of the system and its components must nevertheless rely on tracing single pipeline runs down, which we will discuss in a latter section. In the following sections we will present our evaluation of the retrieval block and the generation block.
+
 
 \paragraph{Retrieve}
-Retrieval Evaluation is possibly the most difficult part in the evaluation for several reasons. First, more retrieval do not imply better results and it is not clear nor obvious which set of documents perfectly serves the generator to give the best answer.\cite{Jin.5222024} Second, in a real world scenario indexed corpus, there are redundant and contradicting information.\cite{Yu.2024} Third, some questions or queries require to view the topic in a diverse manner, highlighting several considerations for different perspectives. Fourth, the quality of the query does also affect the retrieval quality, because queries can be too complex and ambigious or not even requiring retrieval, which may also lead to LLM hallucinations.\cite{Huang.2023, Mallen.20.12.2022}
+Retrieval Evaluation is possibly the most difficult part in the evaluation for several reasons. First, more retrieval do not imply better results and it is not clear nor obvious which set of documents perfectly serves the generator to give the best answer.\cite{Jin.5222024} Second, in a real world scenario indexed corpus, there are redundant and contradicting information.\cite{Yu.2024} Third, some questions or queries require to view the topic in a diverse manner, highlighting several considerations for different perspectives and fourth, the quality of the query does also affect the retrieval quality, because queries can be too complex and ambigious or not even requiring retrieval, which may also lead to LLM hallucinations.\cite{Huang.2023, Mallen.20.12.2022}
 
-Low retrieval performance can lead to missing documents in the reranking and generation stage. There are plenty of retrieval models and techniques that can imply fine-tuning. Therefore it is important to build an evaluation dataset, that offers a ground truth for received documents for a given query. With this dataset, the actual retrieved documents can be compared against the ground truth.\cite{Ferrante.2021} There are multiple potential metrics for retrieval evaluation and simple ones are presented in table \ref{table:simpleretrievalmetrics}. 
+Retrieved documents might contain useful information or not and are therefore binary assessable, enabling metrics that handle \textit{True-Positives, True-Negatives, False-Positives} and \textit{False-Negatives}. However, simple metrics such as recall and precision are not suited to measure the small differences in retrieval.\cite{Yu.2024} Additionally there are limitations while working with ground-truths in retrieval evaluation. Ground truth context for a given query might be ambiguously. Selecting a ground-truth set of relevant information is a task that even expert humans are not able to solve perfectly and LLM-as-a-Judge models show high correlation with humans.\cite{Chiang.2023} Therefore we will focus in this framework solely on LLM-as-a-Judge evaluation for retrieval. 
 
-{\renewcommand{\arraystretch}{1.5}%
-\begin{table}
-  \centering
- \begin{tabular}{|l|l|}
-  \hline
-  \textbf{Metric} & \textbf{Formula} \\[3pt]
+One metric for retrieval is context relevance, which is a LLM-as-a-Judge metric with the goal to decide for each document, if it is important regarding a certain query. 
 
-  \hline Recall & $\frac{TP}{TP + FN}$\\[2pt]
-  
-  \hline Precision & $\frac{TP}{TP + FP}$\\[5pt]
-  
-  \hline F1-Score & $2 \times \frac{Precision \times Recall}{Precision + Recall}$\\[2pt]
-  
-  \hline
- \end{tabular}
- \caption{A list of simple retrieval metrics.}
- \label{table:simpleretrievalmetrics}
-\end{table}}
-
-However, simple metrics such as recall and precision are not suited to measure ranking-sensitive results of retrieval.\cite{SaadFalcon.16.11.2023} Therefore there are more complex metrics that include ranking information required.
-
-Mean average precision (MAP@K) averages the Average Precision (AP) across all queries. AP measures ranking quality by computing precision at each position where a relevant document appears, then averaging these values, normalized by the total number of relevant documents. MAP@K variant restricts evaluation to the top K retrieved documents, offering a precision-focused assessment within a predefined cutoff.\cite{EvidentlyAIInc..25.02.2025} 
-
-Normalized Discounted Cumulative Gain (NDCG@K) evaluates ranking quality by computing the Discounted Cumulative Gain (DCG) at each retrieved document, applying a logarithmic discount factor to lower-ranked results. DCG is then normalized by the Ideal DCG (IDCG), which represents the optimal ranking of relevant documents. Variations, such as NDCG@K, focus on the top K retrieved documents, providing a relevance-oriented assessment of ranking performance within a specified cutoff.\cite{Lin.13.10.2020}
-
-Context Relevance is a LLM-as-a-Judge metric with the goal to decide for each document, if it is important regarding a certain query. It is a double-edged sword, because it does not need a predefined dataset, but there are findings suggesting that LLM-as-a-judge favor similar LLMs that their based on. Therefore using synthetic data for evaluation is fast, but risks so called preference leakage.\cite{Li.03.02.2025} On the other hand expert humans are unstable context selectors too and LLM-as-a-Judge models have a high correlation with humans.\cite{Chiang.2023} Therefore the users of the framework must decide if they use LLM-as-a-Judge or humanly picked ground-truth documents.
-
-
-\paragraph{Rerank}
-
-Reranking aims to improve the context utilization for the generator. Its necessarity results from two facts. First, more retrieved documents do not imply better generation results.\cite{Jin.08.10.2024} The generator requires a curated and limited list of documents that serves its ability and query best. Second, reducing the Top-K parameter for retrievers might result in missing documents with required information. For that we use the same metrics as for the retriever. The additional step of reranking influences the overall performance and evaluating this component is important. 
+\textcolor{blue}{Finde noch weitere Metriken dafür. RAGAS, Context Precision, ....}
 
 
 \paragraph{Generators}
-Generators are based on transformer architecture and classification tasks were not the initial intention for this kind of tasks. Thus it is important that outputs are in a wanted form such as "valid", or "invalid". Therefore we need a metric that evaluates the generators ability to follow those rules. We call this \textit{format-checker}. The problem that comes with this evaluation is that it is impossible to check context utilization, answer relevance and so on. Evaluating generator just with classification metrics and \textit{format-checker} would be indistinguishable with end-to-end evaluation. Therefore we will use a slightly different format for the classification task. Instead of generating only binary outputs such as \"0/1\", \"valid/invalid\" or \"True/False\", we will also output the reason for this decision afterwards. Then we can evaluate the generator component just as other components with commonly used metrics such answer relevance next to classification metrics for our downstream task. This procedure is required for failure analysis and therefore for improving the system in the reconfiguration phase. A binary output lacks the information we need to decide, which information the generator could not utilize. 
+Generators are based on transformer architecture and classification tasks were not the initial intention for this kind of tasks. Thus it is important that outputs are in a wanted form such as \textit{valid}, or \textit{invalid}. Therefore we need a metric that evaluates the generators ability to follow those rules. We call this \textit{format-checker}. The problem that comes with this evaluation is that it is impossible to check context utilization, answer relevance and so on. Evaluating generator just with classification metrics and \textit{format-checker} would be indistinguishable with end-to-end evaluation. Therefore we will use a slightly different format for the classification task. Instead of generating only binary outputs such as \textit{0} / \textit{1}, \textit{valid} / \textit{invalid} or \textit{True} / \textit{False}, we will also output the reason for this decision afterwards. Then we can evaluate the generator component just as other components with commonly used metrics such answer relevance next to classification metrics for our downstream task. This procedure is required for failure analysis and therefore for improving the system in the reconfiguration phase. A binary output lacks the information we need to decide, which information the generator could not utilize. 
 
 \textcolor{blue}{Finde ein gutes Beispiel dafür in meinem SE Experiment. Ziel ist es zu zeigen, dass ein simples "Ja/Nein" nicht zeigt, warum der Generator die Frage falsch beantwortet hat, welches aus einer binären Antwort nicht hervorgeht.}
 
 
+
+
 \subsection{Component Block Evaluation}
 
-After evaluating component-wise, we introduce a novel evaluation of component blocks with the same objective. One example for that would be reranking and generator. Both components have an great impact and interest in context utilization, the ability to build a coherent and correct answer based on actual facts from the retrieved context. Phenomena such as lost-in-the-middle have a significant affect on context utilization, but LLMs differ in this effect.\cite{Liu.06.07.2023} Therefore it might happen that the best reranker and generator regarding their component-wise performance lead to inferior context utilization results. The system needs to be model-agnostic for all components and researchers need pointwise testing for component blocks. In an advanced RAG, the rewriter-retriever block represents another component block that needs evaluation. Rewriting such as query transformation or HyDe are based on LLMs that try either to transform a query to a more clear form or try to maximize retrieval quality. Evaluating this symbiosis is indespensible. This includes prompt engineering for the rewriters.
+After evaluating component-wise, we need to evaluate other components, that are not assessable isolated too. In an advanced RAG such a component would be the rewriter. Rewriters try to synergize query to retrieval and context. Defining a performant rewriter depends on whether the RAG uses a sparse or a dense retrieval as he must either use relevant keywords or simulate semantic similarity. The second component from an advanced RAG system would be reranking. Both, reranker and generator have an great impact and interest in context utilization, the ability to build a coherent and correct answer based on actual facts from the retrieved context. Phenomena such as lost-in-the-middle have a significant affect on context utilization, but LLMs differ in this effect.\cite{Liu.06.07.2023} Therefore it might happen that the best reranker and generator regarding their component-wise performance lead to inferior context utilization results. The system needs to be model-agnostic for all components and researchers need rigorous testing of potential component blocks. 
+
+\paragraph{How to evaluate such component blocks?}
 
 \begin{figure}
   \centering
@@ -117,6 +106,17 @@ After evaluating component-wise, we introduce a novel evaluation of component bl
   \caption{Comparison of isolated component evaluation of each component and component block evaluation, where several components with the same goal are evaluated.}
   \label{fig:componentblockeval}
 \end{figure}
+
+\textcolor{blue}{Abbildung neumachen.}
+
+We differentiate two major blocks - pre-retrieval and post-retrieval. Evaluating pre-retrieval component blocks such as rewriter is a derived task from the retrieval evaluation. The goal of pre-retrieval is to increase the retrieval quality so that the retriever finds all necessary documents or chunks for this task. Commonly used pre-retrieval techniques are query routing, query transformation and query expansion. Even in the ingestion stage, chunking, document selection and preprocessing steps are tuning parameters that influence retrieval results and its quality. 
+
+Post-retrieval components such as reranker aim to improve the context utilization for the generator. The generator requires a curated and limited list of documents that serves its ability and query best. Second, reducing the Top-K parameter for retrievers might result in missing documents with required information. For that we use the same metrics as for the retriever. The additional step of reranking influences the overall performance and evaluating this component is important. 
+
+Most components beside retriever and generator have no direct measurement,there they have to be evaluated by replacement and metrics of the component block. For example, the rewriter is evaluated by using similar components, different models or prompting techniques as rewriter-variations. Then the RAG runs through the evaluation by only changing those rewriter specific configurations. The resulting end-to-end or if applicable the resulting retrieval metrics decide which rewriter setting is better suited.
+
+This requires the researcher to try many different RAG variations for rigorous testing. In the next section we will introduce our appraoch for fast RAG development.
+
 
 \section{Fast RAG Development}
 
@@ -158,59 +158,11 @@ connections:
 
 \textcolor{red}{Wie werde ich das nutzen? -> Umbauen für Matrix Angabe?}
 
-We illustrated the prior defined state of our framework in figure \ref{fig:framework-baselines} to enhance the understanding of our considerations. The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=\textwidth]{images/FrameworkBaselines.pdf}
-  \caption{Framework: research define configuration files of RAG variations to evaluate them against the baselines standalone LLM and naive RAG with end-to-end evaluation.}
-  \label{fig:framework-baselines}
-\end{figure}
 
-\section{Chunking Parameter Tuning}
 
-In previous sections we discussed evaluation methods for RAG systems and its components. This enables meaningful tuning of all parts of the inference pipeline from pre-retrieval till the final generation. There are also tuning parameters in ingestion process too. While embedding model selection for corpus indexing is restricted to the embedding model used in retrieval, there is also procedure of preprocessing the corpus that can influence the overall results of the experiments as described in section \ref{sec:advanced_rags}. 
-Tuning the chunking parameter comes with a lot of work. For best-practice retrieval evaluation the researcher must provide a ground-truth set of documents that should be retrieved based on the provided query, but different chunking will result in different document splits. Therefore we introduce a CLI command that comes with this framework. The command has the following arguments:
-
-{\renewcommand{\arraystretch}{1.5}%
-\begin{table}
-  \centering
- \begin{tabular}{|l|l|}
-  \hline
-  \textbf{Argument} & \textbf{Description} \\[3pt]
-
-  \hline Config Path & Path to the pipeline configuration file\\[2pt]
-
-  \hline Corpus Path & path to the corpus directoy containing urls.csv for\\[2pt]
-  &  fetching and documents (".pdf", ".txt", ".docx", \\[2pt] & ".md", ".html", ".htm", ".json") \\[2pt]
-  
-  \hline Output Path & Path to the output file that contains documents \\[2pt] 
-  & from all sources.\\[2pt]
-  
-  \hline Evaluation Dataset Path & Path to the evaluation dataset with the queries.\\[2pt]
-  
-  \hline Option: Retrieval per Query & Boolean option to decide if the output contains \\[2pt]
-  & Top-K retrieval chunks based on query and \\[2pt]
-  & configuration file\\[2pt]
-
-  \hline Top-K & If option Retrieval per Query is true, then this\\[2pt]
-  & parameter is used to determin how many chunks \\[2pt] 
-  & should be retrieved.\\[2pt]
-
-  \hline
- \end{tabular}
- \caption{Arguments for the CLI command \textit{preprocess-to-csv}}
- \label{table:preprocess-cmd}
-\end{table}}
-
-\begin{minted}[
-  frame=single,
-  bgcolor=lightgray,
-  fontsize=\normalsize
-]{bash}
-$ python -m ragnroll preprocess-to-csv ./path/to/config.yaml \
-          ./path/to/corpus ./path/to/output.csv
-\end{minted}
+\section{Reconfiguration}
+The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section.
 
 
 \section{Increasing Transparency in RAG Experiments}
@@ -229,10 +181,15 @@ $ python -m ragnroll preprocess-to-csv ./path/to/config.yaml \
     \label{fig:tuning}
 \end{figure}
 
+% Misconception? RAGs don't need Test-Dataset, because we do not train? But Overfitting is not dependend on training perse, but on free parameter, which happes in RAGs too. Just because we do not have Millions up to Billions of Parameters, does not mean we don't have to consider overfitting. <calculate number of parameters> 
+
 
 Data is rare, especially for down-stream tasks in domains such as configuration validation or similar tasks. They often rely on few datasets that can not represent the whole domain. Therefore there are measures required to ensure that the developed systems can be generalized from the seen data to the unseen production data. Measuring generalization error in the large language model development is done by splitting the data into training, validation and test datasets. While the training and validation data is used for hyperparameter tuning to ensure the best performing model, the test dataset on the other hand is used to check if the hyperparameter tuning introduced an overfitting. This procedure must be adopted for RAG systems too (cf. figure \ref{fig:tuning}). Even though they do not rely on a training in the most cases, the continous reconfiguration of such systems, including prompt engineering or parameter tuning can lead to differences in seen and unseen data. The needs for a test dataset is independent from a potential training phase, but instead very dependent on a tuning phase for the systems, that is done till the results converge to the best outcoming scenario. Both LLM and RAG development share those reconfiguration phases. 
 
 \textcolor{blue}{Selbst wenn tuning RAGs nicht super anfällig für Overfitting sein sollten, gibt es ja fine-tuning für Retrieval, Generators und Co., welche Overfitting einführen können. Diese werden dann mit dem Objective im RAG bestmöglich zu performen trainiert, daher muss auch da der Generalization Error überprüft werden.}
+
+\paragraph{Preference Leakage}
+There are findings suggesting that LLM-as-a-judge favor similar LLMs that their based on. Therefore using synthetic data for evaluation is fast, but risks so called preference leakage.\cite{Li.03.02.2025} 
 
 \paragraph{RAG Evaluation needs a Holdout-Testset}
 \begin{itemize}
