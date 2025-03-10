@@ -79,11 +79,24 @@ Relying only on system input and ground-truth datasets for evaluation saves a lo
 \paragraph{Retrieve}
 Retrieval Evaluation is possibly the most difficult part in the evaluation for several reasons. First, more retrieval do not imply better results and it is not clear nor obvious which set of documents perfectly serves the generator to give the best answer.\cite{Jin.5222024} Second, in a real world scenario indexed corpus, there are redundant and contradicting information.\cite{Yu.2024} Third, some questions or queries require to view the topic in a diverse manner, highlighting several considerations for different perspectives and fourth, the quality of the query does also affect the retrieval quality, because queries can be too complex and ambigious or not even requiring retrieval, which may also lead to LLM hallucinations.\cite{Huang.2023, Mallen.20.12.2022}
 
-Retrieved documents might contain useful information or not and are therefore binary assessable, enabling metrics that handle \textit{True-Positives, True-Negatives, False-Positives} and \textit{False-Negatives}. However, simple metrics such as recall and precision are not suited to measure the small differences in retrieval.\cite{Yu.2024} Additionally there are limitations while working with ground-truths in retrieval evaluation. Ground truth context for a given query might be ambiguously. Selecting a ground-truth set of relevant information is a task that even expert humans are not able to solve perfectly and LLM-as-a-Judge models show high correlation with humans.\cite{Chiang.2023} Therefore we will focus in this framework solely on LLM-as-a-Judge evaluation for retrieval. 
+Retrieved documents might contain useful information or not and are therefore binary assessable, enabling metrics that handle \textit{True-Positives, True-Negatives, False-Positives} and \textit{False-Negatives}. However, simple metrics such as recall and precision are not suited to measure the small differences in retrieval.\cite{Yu.2024} There is a need for retrieval evaluation techniques that also capture document rank information like ND
 
-One metric for retrieval is context relevance, which is a LLM-as-a-Judge metric with the goal to decide for each document, if it is important regarding a certain query. 
+Additionally there are limitations while working with ground-truths in retrieval evaluation. Ground truth context for a given query might be ambiguously. Selecting a ground-truth set of relevant information is a task that even expert humans are not able to solve perfectly and LLM-as-a-Judge models show high correlation with humans.\cite{Chiang.2023} There is also the problem of changing chunking while reconfiguration. Everytime a chunking technique or parameter is changed, the resulting indexed documents are different too. Therefore it would be required to prepare a new evaluation dataset for ground truth retrievals. This is a great bottleneck for fast reconfiguration cycles, but chunking is a very important parameter to tune. Therefore we will focus in this framework solely on LLM-as-a-Judge evaluation for retrieval to enable chunking parameter tuning.
 
-\textcolor{blue}{Finde noch weitere Metriken dafür. RAGAS, Context Precision, ....}
+We utilize a metric called \textit{Context Relevance} (sometimes also referred to as \textit{Context Precision} or similar names in different frameworks), which is fundamentally a Mean Average Precision (MAP) metric employing an LLM-as-a-Judge. This metric assesses the relevance of each retrieved document in relation to a given query. A binary approach is often adopted, where the LLM-as-a-Judge determines for each document whether it is relevant or not. Specifically, frameworks like Haystack's `ContextRelevanceEvaluator`  implement this binary assessment. For each document, the evaluator determines if it contains any statements relevant to the query. If relevant statements are found, the document is considered relevant (score 1), otherwise not relevant (score 0). The final \textit{Context Relevance} score is then calculated as the mean of these binary relevance scores across all queries, effectively representing a form of Mean Average Precision. While some frameworks like RAGAS might calculate retrieval metrics based on the quality of the generated response, the approach used here and in Haystack focuses directly on evaluating the relevance of the retrieved documents themselves using a binary LLM-as-a-Judge assessment.
+
+We stated before that recall can not fully capture a complex task like retrieval. Therefore we implemented also \textit{Mean Average Precision at K documents MAP@K}, a custom \textit{Context Precision} metric to offer a complementary, rank-agnostic perspective by simply measuring the proportion of relevant documents retrieved. This additional metric ensures a more comprehensive evaluation of retrieval performance, capturing aspects beyond ranking quality.\cite{EvidentlyAIInc..25.02.2025} 
+
+$$MAP@K=\frac{1}{|Q|}\sum_{q=1}^{|Q|}AP@K$$
+$$AP@K=\frac{1}{N}\sum_{k=1}^{K}Precision(k) \cdot rel(k)$$
+\begin{itemize}
+  \item N is the total number of relevant items for a particular user.
+  \item Precision(k) is the precision calculated at each position. 
+  \item rel(k) equals 1 if the item at position k is relevant and 0 otherwise.
+  
+\end{itemize}
+
+\textcolor{blue}{Explain MAP in more detail and 1 visualization just like EvidentlyAIInc}
 
 
 \paragraph{Generators}
