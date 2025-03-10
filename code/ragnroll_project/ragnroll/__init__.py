@@ -27,7 +27,7 @@ from ragnroll.metrics import (
     BaseMetric, 
     MetricRegistry, 
     HaystackContextRelevanceMetric,
-    LLMContextPrecisionMetric
+    MAPAtKMetric
 )
 
 from ragnroll.evaluation import evaluate, print_scores, Evaluator

@@ -4,7 +4,7 @@ Component-specific metrics for evaluating RAG pipeline components.
 
 from ragnroll.metrics.component.retriever import (
     HaystackContextRelevanceMetric,
-    LLMContextPrecisionMetric
+    MAPAtKMetric
 )
 
 __all__ = [

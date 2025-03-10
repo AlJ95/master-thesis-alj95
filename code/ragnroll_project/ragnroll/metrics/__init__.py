@@ -20,7 +20,7 @@ from ragnroll.metrics.end2end import (
 # Import component metrics
 from ragnroll.metrics.component.retriever import (
     HaystackContextRelevanceMetric,
-    LLMContextPrecisionMetric
+    MAPAtKMetric
 )
 
 # Create a convenience dictionary of all available metrics
@@ -41,7 +41,6 @@ __all__ = [
     "FalseNegativeRateMetric",
     "ROCAUCMetric",
     "HaystackContextRelevanceMetric",
-    "RagasContextPrecisionMetric",
-    "LLMContextPrecisionMetric",
+    "MAPAtKMetric",
     "AVAILABLE_METRICS"
 ]
