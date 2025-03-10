@@ -231,7 +231,7 @@ class MAPAtKMetric(BaseMetric):
         
         # Run the Haystack evaluator to get document relevance
         haystack_result = self.evaluator.run(questions=queries, contexts=all_contexts)
-        
+
         # Process results for MAP@K calculation
         average_precisions = []
         detailed_results = []
@@ -252,10 +252,9 @@ class MAPAtKMetric(BaseMetric):
             
             # If we have detailed statement-level judgments
             if "relevant_statements" in result:
-                print(result["relevant_statements"])
                 for j, context in enumerate(contexts[:self.k]):
                     # A document is relevant if it has at least one relevant statement
-                    has_relevant_statements = len(result["relevant_statements"]) > 0
+                    has_relevant_statements = len(result["relevant_statements"]) > 0 and context in result["relevant_statements"]
                     relevance_judgments.append(1 if has_relevant_statements else 0)
             # If we only have document-level relevance
             elif "score" in result:
@@ -321,11 +320,11 @@ if __name__ == "__main__":
             meta={"id": "doc4", "is_relevant": True}  # Relevant fact about solar
         ),
         Document(
-            content="Cryptocurrency mining consumes significant electricity and raises environmental concerns.",
+            content="Football is a popular sport played by many people.",
             meta={"id": "doc5", "is_relevant": False}  # Not relevant to query
         ),
         Document(
-            content="Climate change is affecting weather patterns around the world.",
+            content="Basketball is a popular sport played by many people.",
             meta={"id": "doc6", "is_relevant": False}  # Not directly relevant to solar
         )
     ]
@@ -334,157 +333,12 @@ if __name__ == "__main__":
     k = 6
     map_calculator = MAPAtKMetric(k=k)
     
-    # Print all documents with relevance
-    print("Documents:")
-    for i, doc in enumerate(documents):
-        relevance = "Relevant" if doc.meta["is_relevant"] else "Not Relevant"
-        print(f"  {i+1}. [{doc.meta['id']}] - {relevance}: {doc.content}")
-    
-    # Create binary relevance judgments from document metadata
-    relevance_truth = [1 if doc.meta["is_relevant"] else 0 for doc in documents]
-    print(f"\nGround truth relevance: {relevance_truth}")
-    
-    # Test scenario 1: Optimal ordering (most relevant first)
-    print("\n\nTest Scenario 1: Optimal ordering (most relevant first)")
-    # Sort documents to put relevant ones first
-    optimal_order = sorted(documents, key=lambda x: not x.meta["is_relevant"])
-    
-    # Create relevance judgments array for optimal ordering
-    relevance_optimal = [1 if doc.meta["is_relevant"] else 0 for doc in optimal_order]
-    
-    print("Document order:")
-    for i, doc in enumerate(optimal_order):
-        relevance = "Relevant" if doc.meta["is_relevant"] else "Not Relevant"
-        print(f"  {i+1}. [{doc.meta['id']}] - {relevance}: {doc.content}")
-    
-    print(f"\nRelevance judgments: {relevance_optimal}")
-    
-    # Manual calculation of AP@K for optimal ordering
-    precisions = []
-    relevant_count = 0
-    
-    print("\nCalculating Precision at each relevant position:")
-    for i, is_relevant in enumerate(relevance_optimal):
-        pos = i + 1  # 1-indexed position
-        if is_relevant:
-            relevant_count += 1
-            precision = relevant_count / pos
-            precisions.append(precision)
-            print(f"Position {pos}: {optimal_order[i].meta['id']} - relevant={is_relevant}, " +
-                  f"relevant_count={relevant_count}, precision={precision:.4f}")
-        else:
-            print(f"Position {pos}: {optimal_order[i].meta['id']} - relevant={is_relevant} " +
-                  f"(skipped in AP calculation)")
-    
-    ap_manual = sum(precisions) / len(precisions) if precisions else 0
-    print(f"\nManually calculated AP@{k} = sum({[f'{p:.4f}' for p in precisions]}) / {len(precisions)} = {ap_manual:.4f}")
-    
-    # Verify with our implementation
-    ap_implementation = map_calculator._calculate_average_precision(relevance_optimal)
-    print(f"Implementation AP@{k} = {ap_implementation:.4f}")
-    
-    # Test scenario 2: Worst ordering (most relevant last)
-    print("\n\nTest Scenario 2: Worst ordering (most relevant last)")
-    # Sort documents to put relevant ones last
-    worst_order = sorted(documents, key=lambda x: x.meta["is_relevant"])
-    
-    # Create relevance judgments array for worst ordering
-    relevance_worst = [1 if doc.meta["is_relevant"] else 0 for doc in worst_order]
-    
-    print("Document order:")
-    for i, doc in enumerate(worst_order):
-        relevance = "Relevant" if doc.meta["is_relevant"] else "Not Relevant"
-        print(f"  {i+1}. [{doc.meta['id']}] - {relevance}: {doc.content}")
-    
-    print(f"\nRelevance judgments: {relevance_worst}")
-    
-    # Manual calculation of AP@K for worst ordering
-    precisions = []
-    relevant_count = 0
-    
-    print("\nCalculating Precision at each relevant position:")
-    for i, is_relevant in enumerate(relevance_worst):
-        pos = i + 1  # 1-indexed position
-        if is_relevant:
-            relevant_count += 1
-            precision = relevant_count / pos
-            precisions.append(precision)
-            print(f"Position {pos}: {worst_order[i].meta['id']} - relevant={is_relevant}, " +
-                  f"relevant_count={relevant_count}, precision={precision:.4f}")
-        else:
-            print(f"Position {pos}: {worst_order[i].meta['id']} - relevant={is_relevant} " +
-                  f"(skipped in AP calculation)")
-    
-    ap_manual = sum(precisions) / len(precisions) if precisions else 0
-    print(f"\nManually calculated AP@{k} = sum({[f'{p:.4f}' for p in precisions]}) / {len(precisions)} = {ap_manual:.4f}")
-    
-    # Verify with our implementation
-    ap_implementation = map_calculator._calculate_average_precision(relevance_worst)
-    print(f"Implementation AP@{k} = {ap_implementation:.4f}")
-    
-    # Test scenario 3: Mixed ordering (some relevant at top, some at bottom)
-    print("\n\nTest Scenario 3: Mixed ordering (realistic scenario)")
-    # Create a mixed order (some relevant at top, some at bottom)
-    mixed_order = [
-        documents[0],  # Relevant
-        documents[4],  # Not relevant
-        documents[5],  # Not relevant
-        documents[1],  # Relevant
-        documents[2],  # Not relevant
-        documents[3],  # Relevant
-    ]
-    
-    # Create relevance judgments array for mixed ordering
-    relevance_mixed = [1 if doc.meta["is_relevant"] else 0 for doc in mixed_order]
-    
-    print("Document order:")
-    for i, doc in enumerate(mixed_order):
-        relevance = "Relevant" if doc.meta["is_relevant"] else "Not Relevant"
-        print(f"  {i+1}. [{doc.meta['id']}] - {relevance}: {doc.content}")
-    
-    print(f"\nRelevance judgments: {relevance_mixed}")
-    
-    # Manual calculation of AP@K for mixed ordering
-    precisions = []
-    relevant_count = 0
-    
-    print("\nCalculating Precision at each relevant position:")
-    for i, is_relevant in enumerate(relevance_mixed):
-        pos = i + 1  # 1-indexed position
-        if is_relevant:
-            relevant_count += 1
-            precision = relevant_count / pos
-            precisions.append(precision)
-            print(f"Position {pos}: {mixed_order[i].meta['id']} - relevant={is_relevant}, " +
-                  f"relevant_count={relevant_count}, precision={precision:.4f}")
-        else:
-            print(f"Position {pos}: {mixed_order[i].meta['id']} - relevant={is_relevant} " +
-                  f"(skipped in AP calculation)")
-    
-    ap_manual = sum(precisions) / len(precisions) if precisions else 0
-    print(f"\nManually calculated AP@{k} = sum({[f'{p:.4f}' for p in precisions]}) / {len(precisions)} = {ap_manual:.4f}")
-    
-    # Verify with our implementation
-    ap_implementation = map_calculator._calculate_average_precision(relevance_mixed)
-    print(f"Implementation AP@{k} = {ap_implementation:.4f}")
-    
-    # Demonstrate MAP calculation (average of the three scenarios above)
-    print("\n\nMAP Calculation (Average of the three scenarios):")
-    ap_values = [
-        map_calculator._calculate_average_precision(relevance_optimal),
-        map_calculator._calculate_average_precision(relevance_worst),
-        map_calculator._calculate_average_precision(relevance_mixed)
-    ]
-    map_value = sum(ap_values) / len(ap_values)
-    
-    print(f"AP values: {[f'{ap:.4f}' for ap in ap_values]}")
-    print(f"MAP@{k} = sum(AP values) / 3 = {map_value:.4f}")
-    
-    print("\n=== End of MAP@K Verification Test ===")
-    
-    print("\nKey takeaways:")
-    print("1. AP@K is higher when relevant documents appear earlier in the result list")
-    print("2. The optimal ordering (all relevant documents first) achieves the highest AP")
-    print("3. MAP combines AP scores across multiple queries to measure overall retrieval quality")
-    print("4. This aligns with user experience: users prefer relevant results at the top of the list")
-    
+    from random import shuffle
+
+    for _ in range(3):
+        print("--------------------------------")
+        shuffle(documents)
+        for doc in documents:
+            print(doc.content)
+        result = map_calculator.run([{"documents": documents}], [query])
+        print(result)
