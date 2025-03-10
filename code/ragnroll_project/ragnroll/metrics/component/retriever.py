@@ -1,568 +1,330 @@
 from typing import Dict, Any, List, Union, Callable, Optional
 from abc import ABC, abstractmethod
 from functools import lru_cache
+from dotenv import load_dotenv
 import logging
+import re
 from haystack import Document
-from haystack.components.generators import OpenAIGenerator
+from haystack.components.generators import OpenAIGenerator, HuggingFaceAPIGenerator
+from haystack.components.evaluators import ContextRelevanceEvaluator
+from haystack.utils import Secret
 from ragnroll.metrics.base import BaseMetric, MetricRegistry
 
+load_dotenv()
+# Import RAGAS components
 logger = logging.getLogger(__name__)
 
-class DocumentRelevanceEvaluator(ABC):
-    """
-    Base class for evaluating document relevance.
-    
-    This class provides methods to determine if retrieved documents are relevant
-    to the ground truth documents or query.
-    """
+class BaseModelProvider(ABC):
+    """Abstract base class for model providers."""
     
     @abstractmethod
-    def is_relevant(self, retrieved_doc: Document, ground_truth_docs: List[Document], query: str) -> bool:
-        """
-        Determine if a retrieved document is relevant.
-        
-        Args:
-            retrieved_doc: The document to evaluate
-            ground_truth_docs: List of ground truth documents
-            query: The original query
-            
-        Returns:
-            bool: True if the document is relevant, False otherwise
-        """
+    def generate(self, prompt: str) -> str:
+        """Generate text based on the provided prompt."""
         pass
+
+class OpenAIModelProvider(BaseModelProvider):
+    """Uses OpenAI models for text generation."""
     
-    def classify_documents(
+    def __init__(self, model: str = "gpt-4o-mini-2024-07-18", api_key: Optional[str] = None):
+        self.generator = OpenAIGenerator(
+            model=model,
+            generation_kwargs={"temperature": 0.0}
+        )
+    
+    def generate(self, prompt: str) -> str:
+        return self.generator.run(prompt=prompt)["replies"][0]
+
+class HuggingFaceModelProvider(BaseModelProvider):
+    """Uses Hugging Face models for text generation."""
+    
+    def __init__(self, model: str = "mistralai/Mistral-7B-Instruct-v0.2", token: Optional[str] = None):
+        self.generator = HuggingFaceAPIGenerator(
+            api_type="serverless_inference_api",
+            api_params={"model": model},
+            token=Secret.from_token(token) if token else None,
+            generation_kwargs={"temperature": 0.0}
+        )
+    
+    def generate(self, prompt: str) -> str:
+        return self.generator.run(prompt=prompt)["replies"][0]
+
+class ModelProviderFactory:
+    """Factory for creating model providers."""
+    
+    @staticmethod
+    def get_provider(provider_type: str, model: str, **kwargs) -> BaseModelProvider:
+        """
+        Get a model provider.
+        
+        Args:
+            provider_type: Type of provider ('openai' or 'huggingface')
+            model: Model name or ID
+            **kwargs: Additional arguments to pass to the provider
+            
+        Returns:
+            A model provider instance
+        """
+        if provider_type.lower() == 'openai':
+            return OpenAIModelProvider(model=model, **kwargs)
+        elif provider_type.lower() in ['huggingface', 'hf']:
+            return HuggingFaceModelProvider(model=model, **kwargs)
+        else:
+            raise ValueError(f"Unsupported provider type: {provider_type}")
+
+@MetricRegistry.register_component_metric("retriever")
+class HaystackContextRelevanceMetric(BaseMetric):
+    """
+    Wrapper for Haystack's ContextRelevanceEvaluator.
+    
+    This metric uses Haystack's built-in evaluator to measure how relevant the 
+    retrieved documents are to the query.
+    """
+    
+    def __init__(
         self, 
-        retrieved_docs: List[Document], 
-        ground_truth_docs: List[Document], 
-        query: str
-    ) -> Dict[str, List[Document]]:
+        threshold: float = 0.5, 
+        api_key: Optional[str] = None,
+        model: Optional[str] = None,
+        api_params: Optional[Dict[str, Any]] = None,
+        examples: Optional[List[Dict[str, Any]]] = None,
+        raise_on_failure: bool = False,
+        progress_bar: bool = False
+    ):
         """
-        Classify retrieved documents as relevant or irrelevant.
+        Initialize the ContextRelevanceMetric.
         
         Args:
-            retrieved_docs: List of retrieved documents
-            ground_truth_docs: List of ground truth documents
-            query: The original query
+            threshold: Minimum score for the evaluation to be considered successful
+            api_key: OpenAI API key (will use env var OPENAI_API_KEY if None)
+            model: Model to use (defaults to gpt-4o-mini)
+            api_params: Additional parameters for the API call
+            examples: Few-shot examples to improve evaluation quality
+            raise_on_failure: Whether to raise an exception on API call failure
+            progress_bar: Whether to show a progress bar during evaluation
+        """
+        super().__init__(threshold=threshold)
+        
+        # Initialize the Haystack evaluator
+        self.evaluator = ContextRelevanceEvaluator(
+            api_key=api_key,
+            api_params=api_params or ({} if model is None else {"model": model}),
+            examples=examples,
+            raise_on_failure=raise_on_failure,
+            progress_bar=progress_bar
+        )
+    
+    def run(
+        self, 
+        component_outputs: List[Dict[str, Any]], 
+        queries: List[str] = None, 
+        **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Run the evaluation.
+        
+        Args:
+            component_outputs: Outputs from the retriever component
+            queries: List of queries corresponding to the outputs
+            **kwargs: Additional arguments
             
         Returns:
-            Dict with 'relevant' and 'irrelevant' lists of documents
+            Evaluation results
         """
-        result = {
-            "relevant": [],
-            "irrelevant": []
+        if not queries or len(queries) != len(component_outputs):
+            raise ValueError("Queries must be provided and match the number of component outputs")
+        
+        # Convert component outputs to contexts
+        contexts = []
+        
+        for output in component_outputs:
+            if "documents" not in output:
+                raise ValueError("Component output must contain 'documents' key")
+            
+            documents = output["documents"]
+            if not documents:
+                contexts.append([""])  # Empty context
+                continue
+            
+            # Extract text from documents
+            context_texts = [doc.content for doc in documents]
+            contexts.append(context_texts)
+        
+        # Run the Haystack evaluator
+        result = self.evaluator.run(questions=queries, contexts=contexts)
+        
+        # Convert result to our metric format
+        self.score = result.get("score", 0.0)
+        self.success = self.score >= self.threshold
+        
+        return {
+            "score": self.score,
+            "success": self.success,
+            "individual_scores": result.get("individual_scores", []),
+            "results": result.get("results", [])
         }
-        
-        for doc in retrieved_docs:
-            if self.is_relevant(doc, ground_truth_docs, query):
-                result["relevant"].append(doc)
-            else:
-                result["irrelevant"].append(doc)
-                
-        return result
 
-
-class LLMRelevanceEvaluator(DocumentRelevanceEvaluator):
-    """Uses an LLM to determine document relevance."""
+@MetricRegistry.register_component_metric("retriever")
+class LLMContextPrecisionMetric(BaseMetric):
+    """
+    Custom Context Precision Metric using LLM as a judge.
     
-    def __init__(self, model: str = "gpt-4o-mini-2024-07-18"):
+    This metric evaluates how relevant each retrieved context is to the query
+    and expected response using a language model to make the judgment.
+    """
+    
+    def __init__(
+        self, 
+        threshold: float = 0.5,
+        provider_type: str = "openai",
+        model: str = "gpt-4o-mini-2024-07-18",
+        api_key: Optional[str] = None,
+        token: Optional[str] = None,
+        **kwargs
+    ):
         """
-        Initialize with OpenAI API key and model.
+        Initialize the LLMContextPrecisionMetric.
         
         Args:
-            model: Model to use for relevance determination
+            threshold: Minimum score for the evaluation to be considered successful
+            provider_type: Type of model provider ('openai' or 'huggingface')
+            model: Model to use for evaluation 
+            api_key: API key for OpenAI (if using OpenAI provider)
+            token: API token for HuggingFace (if using HuggingFace provider)
+            **kwargs: Additional parameters
         """
-        self.generator = OpenAIGenerator(model=model)
+        super().__init__(threshold=threshold)
+            
+        self.model_provider = ModelProviderFactory.get_provider(
+            provider_type=provider_type,
+            model=model,
+        )
         
-    @lru_cache(maxsize=1000)
-    def _generate(self, prompt: str):
-        return self.generator.run(prompt=prompt)
-
-    def is_relevant(self, retrieved_doc: Document, ground_truth_docs: List[Document], query: str) -> bool:
+        logger.info(f"Initialized LLMContextPrecisionMetric with {provider_type} model: {model}")
+        
+    def _is_context_relevant(self, query: str, context: str, expected_output: str) -> bool:
         """
-        Use LLM to determine if retrieved document is relevant to the query and ground truth.
+        Use LLM to judge if a context is relevant to the query and expected output.
         
         Args:
-            retrieved_doc: The document to evaluate
-            ground_truth_docs: List of ground truth documents
-            query: The original query
+            query: The user query
+            context: The retrieved context
+            expected_output: The expected answer
             
         Returns:
-            bool: True if the document is relevant, False otherwise
+            Boolean indicating whether the context is relevant
         """
-        if not retrieved_doc.content:
-            return False
-            
-        # Combine ground truth contents
-        gt_contents = "\n".join([doc.content for doc in ground_truth_docs if doc.content])
-        
         prompt = f"""
-        Query: {query}
-        
-        Ground Truth Information:
-        {gt_contents}
-        
-        Retrieved Document:
-        {retrieved_doc.content}
-        
-        Is the retrieved document relevant to answering the query based on the ground truth information?
-        Answer only 'Yes' or 'No'.
-        """
+You are an expert judge evaluating retrieved context for Retrieval Augmented Generation (RAG) systems.
+
+I will give you a QUERY, a piece of CONTEXT that was retrieved for this query, and the EXPECTED ANSWER.
+
+Your task is to determine if the CONTEXT is RELEVANT to both the QUERY and the EXPECTED ANSWER.
+A relevant context contains information that directly helps to answer the query correctly or contains facts used in the expected answer.
+
+QUERY: {query}
+
+CONTEXT: {context}
+
+EXPECTED ANSWER: {expected_output}
+
+Is this context relevant for answering the query? 
+Think step by step and analyze whether the context provides information helpful to directly answer the query.
+After your analysis, answer with either "RELEVANT" or "NOT RELEVANT" only.
+"""
         
         try:
-            result = self._generate(prompt=prompt)
-            answer = result["replies"][0].lower()
-            return "yes" in answer
-        except Exception as e:
-            logger.error(f"Error using LLM for relevance evaluation: {e}")
-
-
-@MetricRegistry.register_component_metric("retriever")
-class RetrievalPrecisionMetric(BaseMetric):
-    """
-    Measures the precision of the retrieval component.
-    
-    Precision = Relevant Retrieved / Total Retrieved
-    """
-    
-    def __init__(self, threshold: float = 0.5, relevance_evaluator: Optional[DocumentRelevanceEvaluator] = None):
-        """
-        Initialize the precision metric.
-        
-        Args:
-            threshold: Threshold for success
-            relevance_evaluator: Custom evaluator for document relevance
-        """
-        super().__init__(threshold=threshold)
-        self.relevance_evaluator = relevance_evaluator or LLMRelevanceEvaluator()
-    
-    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
-            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
-        """
-        Calculate precision of retrieved documents across multiple queries.
-        
-        Args:
-            component_outputs: List of outputs from the retriever component
-            expected_outputs: List of expected outputs (used as fallback for ground truth)
-            queries: List of original queries
-            expected_retrievals: List of expected retrieval document lists
-            
-        Returns:
-            Dict[str, Any]: Results with score and details
-        """
-        try:
-            if not component_outputs:
-                return {
-                    "score": 0.0,
-                    "success": False,
-                    "details": {"error": "No component outputs provided"}
-                }
-                
-            # Track results for each query
-            precision_scores = []
-            total_relevant_retrieved = 0
-            total_retrieved = 0
-            
-            # Process each query
-            for i, output in enumerate(component_outputs):
-                # Get documents from the retriever output
-                retrieved_docs = output.get("documents", [])
-                
-                if not retrieved_docs:
-                    continue
-                
-                # Get ground truth documents and query
-                ground_truth_docs = None
-                if expected_retrievals and i < len(expected_retrievals):
-                    ground_truth_docs = expected_retrievals[i]
-                elif expected_outputs and i < len(expected_outputs):
-                    ground_truth_docs = [Document(content=expected_outputs[i])]
-                
-                query = queries[i] if queries and i < len(queries) else None
-                
-                if not ground_truth_docs or not query:
-                    continue
-                
-                # Classify documents as relevant or irrelevant
-                classification = self.relevance_evaluator.classify_documents(
-                    retrieved_docs, ground_truth_docs, query
-                )
-                
-                # Calculate precision for this query
-                relevant_count = len(classification["relevant"])
-                query_total = len(retrieved_docs)
-                
-                if query_total > 0:
-                    precision_scores.append(relevant_count / query_total)
-                    total_relevant_retrieved += relevant_count
-                    total_retrieved += query_total
-            
-            # Calculate overall precision
-            if precision_scores:
-                avg_precision = sum(precision_scores) / len(precision_scores)
-                global_precision = total_relevant_retrieved / total_retrieved if total_retrieved > 0 else 0.0
-                
-                # Use average precision as the score
-                self.score = avg_precision
-                self.success = self.score >= self.threshold
-                self.details = {
-                    "avg_precision": avg_precision,
-                    "global_precision": global_precision,
-                    "relevant_retrieved": total_relevant_retrieved,
-                    "total_retrieved": total_retrieved,
-                    "num_queries": len(precision_scores),
-                    "evaluator": self.relevance_evaluator.__class__.__name__
-                }
+            response = self.model_provider.generate(prompt).strip()
+            # Extract just the judgment from potentially longer responses
+            if "RELEVANT" in response and "NOT RELEVANT" not in response:
+                return True
+            elif "NOT RELEVANT" in response:
+                return False
             else:
-                self.score = 0.0
-                self.success = False
-                self.details = {
-                    "error": "No valid retrieval results to evaluate",
-                    "evaluator": self.relevance_evaluator.__class__.__name__
-                }
-            
-            return {
-                "score": self.score,
-                "success": self.success,
-                "details": self.details
-            }
+                # Extract judgment using regex as fallback
+                result = re.search(r"(RELEVANT|NOT RELEVANT)", response)
+                if result:
+                    return result.group(0) == "RELEVANT"
+                # Default to not relevant if we can't determine
+                logger.warning(f"Could not determine relevance from LLM response: {response}")
+                return False
         except Exception as e:
-            logger.error(f"Error calculating precision: {e}")
-            self.error = e
-            self.success = False
-            return {
-                "score": 0.0,
-                "success": False,
-                "details": {"error": str(e)}
-            }
-
-
-@MetricRegistry.register_component_metric("retriever")
-class RetrievalRecallMetric(BaseMetric):
-    """
-    Measures recall of the retrieval component.
+            logger.error(f"Error when judging context relevance: {e}")
+            return False
     
-    Recall = Relevant Retrieved / Total Relevant
-    """
-    
-    def __init__(self, threshold: float = 0.5, relevance_evaluator: Optional[DocumentRelevanceEvaluator] = None):
+    def run(
+        self, 
+        component_outputs: List[Dict[str, Any]], 
+        queries: List[str] = None, 
+        expected_outputs: List[str] = None,
+        **kwargs
+    ) -> Dict[str, Any]:
         """
-        Initialize the recall metric.
+        Run the evaluation.
         
         Args:
-            threshold: Threshold for success
-            relevance_evaluator: Custom evaluator for document relevance
-        """
-        super().__init__(threshold=threshold)
-        self.relevance_evaluator = relevance_evaluator or LLMRelevanceEvaluator()
-    
-    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
-            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
-        """
-        Calculate recall of retrieved documents across multiple queries.
-        
-        Args:
-            component_outputs: List of outputs from the retriever component
-            expected_outputs: List of expected outputs (used as fallback for ground truth)
-            queries: List of original queries
-            expected_retrievals: List of expected retrieval document lists
+            component_outputs: Outputs from the retriever component
+            queries: List of queries corresponding to the outputs
+            expected_outputs: List of expected outputs (ground truth answers)
+            **kwargs: Additional arguments
             
         Returns:
-            Dict[str, Any]: Results with score and details
+            Evaluation results
         """
-        try:
-            if not component_outputs:
-                return {
-                    "score": 0.0,
-                    "success": False,
-                    "details": {"error": "No component outputs provided"}
-                }
-                
-            # Track results for each query
-            recall_scores = []
-            total_relevant_retrieved = 0
-            total_relevant = 0
+        if not queries or len(queries) != len(component_outputs):
+            raise ValueError("Queries must be provided and match the number of component outputs")
             
-            # Process each query
-            for i, output in enumerate(component_outputs):
-                # Get documents from the retriever output
-                retrieved_docs = output.get("documents", [])
-                
-                # Get ground truth documents and query
-                ground_truth_docs = None
-                if expected_retrievals and i < len(expected_retrievals):
-                    ground_truth_docs = expected_retrievals[i]
-                elif expected_outputs and i < len(expected_outputs):
-                    ground_truth_docs = [Document(content=expected_outputs[i])]
-                
-                query = queries[i] if queries and i < len(queries) else None
-                
-                if not ground_truth_docs or not query or not retrieved_docs:
-                    continue
-                
-                # Classify documents as relevant or irrelevant
-                classification = self.relevance_evaluator.classify_documents(
-                    retrieved_docs, ground_truth_docs, query
-                )
-                
-                # Calculate recall for this query
-                # Assume all ground truth documents are relevant
-                relevant_count = len(classification["relevant"])
-                total_ground_truth = len(ground_truth_docs)
-                
-                if total_ground_truth > 0:
-                    recall_scores.append(relevant_count / total_ground_truth)
-                    total_relevant_retrieved += relevant_count
-                    total_relevant += total_ground_truth
-            
-            # Calculate overall recall
-            if recall_scores:
-                avg_recall = sum(recall_scores) / len(recall_scores)
-                global_recall = total_relevant_retrieved / total_relevant if total_relevant > 0 else 0.0
-                
-                # Use average recall as the score
-                self.score = avg_recall
-                self.success = self.score >= self.threshold
-                self.details = {
-                    "avg_recall": avg_recall,
-                    "global_recall": global_recall,
-                    "relevant_retrieved": total_relevant_retrieved,
-                    "total_relevant": total_relevant,
-                    "num_queries": len(recall_scores),
-                    "evaluator": self.relevance_evaluator.__class__.__name__
-                }
-            else:
-                self.score = 0.0
-                self.success = False
-                self.details = {
-                    "error": "No valid retrieval results to evaluate",
-                    "evaluator": self.relevance_evaluator.__class__.__name__
-                }
-            
-            return {
-                "score": self.score,
-                "success": self.success,
-                "details": self.details
-            }
-        except Exception as e:
-            logger.error(f"Error calculating recall: {e}")
-            self.error = e
-            self.success = False
-            return {
-                "score": 0.0,
-                "success": False,
-                "details": {"error": str(e)}
-            }
-
-
-@MetricRegistry.register_component_metric("retriever")
-class RetrievalF1Metric(BaseMetric):
-    """
-    Measures F1 score of the retrieval component.
-    
-    F1 = 2 * (Precision * Recall) / (Precision + Recall)
-    """
-    
-    def __init__(self, threshold: float = 0.5, relevance_evaluator: Optional[DocumentRelevanceEvaluator] = None):
-        """
-        Initialize the F1 metric.
+        if not expected_outputs or len(expected_outputs) != len(component_outputs):
+            raise ValueError("Expected outputs must be provided and match the number of component outputs")
         
-        Args:
-            threshold: Threshold for success
-            relevance_evaluator: Custom evaluator for document relevance
-        """
-        super().__init__(threshold=threshold)
-        self.relevance_evaluator = relevance_evaluator or LLMRelevanceEvaluator()
-        self.precision_metric = RetrievalPrecisionMetric(relevance_evaluator=self.relevance_evaluator)
-        self.recall_metric = RetrievalRecallMetric(relevance_evaluator=self.relevance_evaluator)
-    
-    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
-            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
-        """
-        Calculate F1 score of retrieved documents across multiple queries.
+        individual_scores = []
+        detailed_results = []
         
-        Args:
-            component_outputs: List of outputs from the retriever component
-            expected_outputs: List of expected outputs (used as fallback for ground truth)
-            queries: List of original queries
-            expected_retrievals: List of expected retrieval document lists
+        # Process each query and its corresponding output
+        for query, actual_output, expected_output in zip(queries, component_outputs, expected_outputs):
+            if "documents" not in actual_output:
+                raise ValueError("Component output must contain 'documents' key")
             
-        Returns:
-            Dict[str, Any]: Results with score and details
-        """
-        try:
-            # Calculate precision and recall
-            precision_result = self.precision_metric.run(
-                component_outputs=component_outputs,
-                expected_outputs=expected_outputs,
-                queries=queries,
-                expected_retrievals=expected_retrievals,
-                **kwargs
-            )
+            documents = actual_output["documents"]
+            if not documents:
+                individual_scores.append(0.0)
+                detailed_results.append({
+                    "query": query,
+                    "context_judgments": [],
+                    "precision_score": 0.0
+                })
+                continue
             
-            recall_result = self.recall_metric.run(
-                component_outputs=component_outputs,
-                expected_outputs=expected_outputs,
-                queries=queries,
-                expected_retrievals=expected_retrievals,
-                **kwargs
-            )
+            # Evaluate relevance of each context
+            context_judgments = []
+            for doc in documents:
+                is_relevant = self._is_context_relevant(query, doc.content, expected_output)
+                context_judgments.append({
+                    "content": doc.content[:100] + "..." if len(doc.content) > 100 else doc.content,
+                    "is_relevant": is_relevant
+                })
             
-            precision = precision_result["score"]
-            recall = recall_result["score"]
+            # Calculate precision score (relevant contexts / total contexts)
+            relevant_count = sum(1 for judgment in context_judgments if judgment["is_relevant"])
+            precision_score = relevant_count / len(context_judgments) if context_judgments else 0.0
             
-            # Calculate F1
-            f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
+            individual_scores.append(precision_score)
+            detailed_results.append({
+                "query": query,
+                "context_judgments": context_judgments,
+                "precision_score": precision_score
+            })
             
-            self.score = f1
-            self.success = f1 >= self.threshold
-            self.details = {
-                "precision": precision,
-                "recall": recall,
-                "precision_details": precision_result["details"],
-                "recall_details": recall_result["details"],
-                "evaluator": self.relevance_evaluator.__class__.__name__
-            }
-            
-            return {
-                "score": self.score,
-                "success": self.success,
-                "details": self.details
-            }
-        except Exception as e:
-            logger.error(f"Error calculating F1: {e}")
-            self.error = e
-            self.success = False
-            return {
-                "score": 0.0,
-                "success": False,
-                "details": {"error": str(e)}
-            }
-
-
-@MetricRegistry.register_component_metric("retriever")
-class RetrievalMAPMetric(BaseMetric):
-    """
-    Measures Mean Average Precision (MAP) of the retrieval component.
-    
-    MAP evaluates the ranking of relevant documents in the retrieval results.
-    """
-    
-    def __init__(self, threshold: float = 0.5, relevance_evaluator: Optional[DocumentRelevanceEvaluator] = None):
-        """
-        Initialize the MAP metric.
+            logger.info(f"Query: '{query[:50]}...', Precision: {precision_score:.2f} ({relevant_count}/{len(context_judgments)} relevant)")
         
-        Args:
-            threshold: Threshold for success
-            relevance_evaluator: Custom evaluator for document relevance
-        """
-        super().__init__(threshold=threshold)
-        self.relevance_evaluator = relevance_evaluator or LLMRelevanceEvaluator()
-    
-    def run(self, component_outputs: List[Dict[str, Any]], expected_outputs: List[str] = None,
-            queries: List[str] = None, expected_retrievals: List[List[Document]] = None, **kwargs) -> Dict[str, Any]:
-        """
-        Calculate MAP of retrieved documents across multiple queries.
+        # Calculate average score
+        avg_score = sum(individual_scores) / len(individual_scores) if individual_scores else 0.0
         
-        Args:
-            component_outputs: List of outputs from the retriever component
-            expected_outputs: List of expected outputs (used as fallback for ground truth)
-            queries: List of original queries
-            expected_retrievals: List of expected retrieval document lists
-            
-        Returns:
-            Dict[str, Any]: Results with score and details
-        """
-        try:
-            if not component_outputs:
-                return {
-                    "score": 0.0,
-                    "success": False,
-                    "details": {"error": "No component outputs provided"}
-                }
-                
-            # Track results for each query
-            average_precisions = []
-            total_relevant_retrieved = 0
-            total_retrieved = 0
-            
-            # Process each query
-            for i, output in enumerate(component_outputs):
-                # Get documents from the retriever output
-                retrieved_docs = output.get("documents", [])
-                
-                if not retrieved_docs:
-                    continue
-                
-                # Get ground truth documents and query
-                ground_truth_docs = None
-                if expected_retrievals and i < len(expected_retrievals):
-                    ground_truth_docs = expected_retrievals[i]
-                elif expected_outputs and i < len(expected_outputs):
-                    ground_truth_docs = [Document(content=expected_outputs[i])]
-                
-                query = queries[i] if queries and i < len(queries) else None
-                
-                if not ground_truth_docs or not query:
-                    continue
-                
-                # Calculate Average Precision
-                average_precision = 0.0
-                relevant_count = 0
-                
-                for rank, doc in enumerate(retrieved_docs):
-                    if self.relevance_evaluator.is_relevant(doc, ground_truth_docs, query):
-                        relevant_count += 1
-                        # Precision at current rank
-                        precision_at_k = relevant_count / (rank + 1)
-                        average_precision += precision_at_k
-                
-                # Normalize by the number of relevant documents
-                if relevant_count > 0:
-                    average_precision /= relevant_count
-                else:
-                    average_precision = 0.0
-                
-                # Track results for this query
-                average_precisions.append(average_precision)
-                total_relevant_retrieved += relevant_count
-                total_retrieved += len(retrieved_docs)
-            
-            # Calculate overall MAP
-            if average_precisions:
-                avg_map = sum(average_precisions) / len(average_precisions)
-                global_map = total_relevant_retrieved / total_retrieved if total_retrieved > 0 else 0.0
-                
-                # Use average MAP as the score
-                self.score = avg_map
-                self.success = self.score >= self.threshold
-                self.details = {
-                    "avg_map": avg_map,
-                    "global_map": global_map,
-                    "relevant_retrieved": total_relevant_retrieved,
-                    "total_retrieved": total_retrieved,
-                    "num_queries": len(average_precisions),
-                    "evaluator": self.relevance_evaluator.__class__.__name__
-                }
-            else:
-                self.score = 0.0
-                self.success = False
-                self.details = {
-                    "error": "No valid retrieval results to evaluate",
-                    "evaluator": self.relevance_evaluator.__class__.__name__
-                }
-            
-            return {
-                "score": self.score,
-                "success": self.success,
-                "details": self.details
-            }
-        except Exception as e:
-            logger.error(f"Error calculating MAP: {e}")
-            self.error = e
-            self.success = False
-            return {
-                "score": 0.0,
-                "success": False,
-                "details": {"error": str(e)}
-            }
+        self.score = avg_score
+        self.success = self.score >= self.threshold
+        
+        return {
+            "score": self.score,
+            "success": self.success,
+            "individual_scores": individual_scores,
+            "detailed_results": detailed_results
+        }

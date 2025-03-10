@@ -19,10 +19,8 @@ from ragnroll.metrics.end2end import (
 
 # Import component metrics
 from ragnroll.metrics.component.retriever import (
-    RetrievalPrecisionMetric,
-    RetrievalRecallMetric,
-    RetrievalF1Metric,
-    RetrievalMAPMetric
+    HaystackContextRelevanceMetric,
+    LLMContextPrecisionMetric
 )
 
 # Create a convenience dictionary of all available metrics
@@ -42,9 +40,8 @@ __all__ = [
     "FalsePositiveRateMetric",
     "FalseNegativeRateMetric",
     "ROCAUCMetric",
-    "RetrievalPrecisionMetric",
-    "RetrievalRecallMetric",
-    "RetrievalF1Metric",
-    "RetrievalMAPMetric",
+    "HaystackContextRelevanceMetric",
+    "RagasContextPrecisionMetric",
+    "LLMContextPrecisionMetric",
     "AVAILABLE_METRICS"
 ]

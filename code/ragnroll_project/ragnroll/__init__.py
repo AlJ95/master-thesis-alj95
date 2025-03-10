@@ -26,8 +26,8 @@ ERRORS = {
 from ragnroll.metrics import (
     BaseMetric, 
     MetricRegistry, 
-    RetrievalPrecisionMetric,
-    RetrievalRecallMetric
+    HaystackContextRelevanceMetric,
+    LLMContextPrecisionMetric
 )
 
 from ragnroll.evaluation import evaluate, print_scores, Evaluator
