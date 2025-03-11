@@ -79,32 +79,43 @@ Relying only on system input and ground-truth datasets for evaluation saves a lo
 \paragraph{Retrieve}
 Retrieval Evaluation is possibly the most difficult part in the evaluation for several reasons. First, more retrieval do not imply better results and it is not clear nor obvious which set of documents perfectly serves the generator to give the best answer.\cite{Jin.5222024} Second, in a real world scenario indexed corpus, there are redundant and contradicting information.\cite{Yu.2024} Third, some questions or queries require to view the topic in a diverse manner, highlighting several considerations for different perspectives and fourth, the quality of the query does also affect the retrieval quality, because queries can be too complex and ambigious or not even requiring retrieval, which may also lead to LLM hallucinations.\cite{Huang.2023, Mallen.20.12.2022}
 
-Retrieved documents might contain useful information or not and are therefore binary assessable, enabling metrics that handle \textit{True-Positives, True-Negatives, False-Positives} and \textit{False-Negatives}. However, simple metrics such as recall and precision are not suited to measure the small differences in retrieval.\cite{Yu.2024} There is a need for retrieval evaluation techniques that also capture document rank information like ND
+Retrieved documents might contain useful information or not and are therefore binary assessable, enabling metrics that handle \textit{True-Positives, True-Negatives, False-Positives} and \textit{False-Negatives}. However, simple metrics such as recall and precision are not suited to measure the small differences in retrieval.\cite{Yu.2024} There is a need for retrieval evaluation techniques that also capture document rank information.
 
 Additionally there are limitations while working with ground-truths in retrieval evaluation. Ground truth context for a given query might be ambiguously. Selecting a ground-truth set of relevant information is a task that even expert humans are not able to solve perfectly and LLM-as-a-Judge models show high correlation with humans.\cite{Chiang.2023} There is also the problem of changing chunking while reconfiguration. Everytime a chunking technique or parameter is changed, the resulting indexed documents are different too. Therefore it would be required to prepare a new evaluation dataset for ground truth retrievals. This is a great bottleneck for fast reconfiguration cycles, but chunking is a very important parameter to tune. Therefore we will focus in this framework solely on LLM-as-a-Judge evaluation for retrieval to enable chunking parameter tuning.
 
-We utilize a metric called \textit{Context Relevance} (sometimes also referred to as \textit{Context Precision} or similar names in different frameworks), which is fundamentally a Mean Average Precision (MAP) metric employing an LLM-as-a-Judge. This metric assesses the relevance of each retrieved document in relation to a given query. A binary approach is often adopted, where the LLM-as-a-Judge determines for each document whether it is relevant or not. Specifically, frameworks like Haystack's `ContextRelevanceEvaluator`  implement this binary assessment. For each document, the evaluator determines if it contains any statements relevant to the query. If relevant statements are found, the document is considered relevant (score 1), otherwise not relevant (score 0). The final \textit{Context Relevance} score is then calculated as the mean of these binary relevance scores across all queries, effectively representing a form of Mean Average Precision. While some frameworks like RAGAS might calculate retrieval metrics based on the quality of the generated response, the approach used here and in Haystack focuses directly on evaluating the relevance of the retrieved documents themselves using a binary LLM-as-a-Judge assessment.
+We utilize a metric called \textit{Context Relevance} (sometimes also referred to as \textit{Context Precision} or similar names in different frameworks), which is fundamentally a Mean Average Precision (MAP) metric employing an LLM-as-a-Judge. This metric assesses the relevance of each retrieved document in relation to a given query. A binary approach is often adopted, where the LLM-as-a-Judge determines for each document whether it is relevant or not. Specifically, frameworks like Haystack's `ContextRelevanceEvaluator`\cite{Pietsch_Haystack_the_end-to-end_2019} implement this binary assessment. For each document, the evaluator determines if it contains any statements relevant to the query. If relevant statements are found, the document is considered relevant (score 1), otherwise not relevant (score 0). The final \textit{Context Relevance} score is then calculated as the mean of these binary relevance scores across all queries, effectively representing a form of Mean Average Precision. While some frameworks like RAGAS might calculate retrieval metrics based on the quality of the generated response, the approach used here and in Haystack focuses directly on evaluating the relevance of the retrieved documents themselves using a binary LLM-as-a-Judge assessment.
 
 We stated before that recall can not fully capture a complex task like retrieval. Therefore we implemented also \textit{Mean Average Precision at K documents MAP@K}, a custom \textit{Context Precision} metric to offer a complementary, rank-agnostic perspective by simply measuring the proportion of relevant documents retrieved. This additional metric ensures a more comprehensive evaluation of retrieval performance, capturing aspects beyond ranking quality.\cite{EvidentlyAIInc..25.02.2025} 
 
 $$MAP@K=\frac{1}{|Q|}\sum_{q=1}^{|Q|}AP@K$$
 $$AP@K=\frac{1}{N}\sum_{k=1}^{K}Precision(k) \cdot rel(k)$$
 \begin{itemize}
-  \item N is the total number of relevant items for a particular user.
-  \item Precision(k) is the precision calculated at each position. 
-  \item rel(k) equals 1 if the item at position k is relevant and 0 otherwise.
-  
+  \item $|Q|$ is the total number of queries in the evaluation set.
+  \item $q$ represents a specific query from the set of queries.
+  \item $AP@K$ is the Average Precision at K for a specific query.
+  \item $N$ is the total number of relevant items for a particular query.
+  \item $K$ is the number of top documents being evaluated.
+  \item $k$ represents a specific position in the ranked list of retrieved documents.
+  \item $Precision(k)$ is the precision calculated at position $k$, defined as the number of relevant items among the top $k$ items divided by $k$.
+  \item $rel(k)$ equals 1 if the item at position $k$ is relevant and 0 otherwise.
 \end{itemize}
 
-\textcolor{blue}{Explain MAP in more detail and 1 visualization just like EvidentlyAIInc}
+This is a modified version of the \textit{MAP@K}.\cite{Lin.13.10.2020} It is usual to set K very high and let it retrieve a lot of documents to ensure the relevant ones are retrieved. This would be in conflict with the prior defined \textit{Context Precision} metric. Therefore we will only calculating \textit{MAP@K} for the real k value. \textit{Context Precision} measures the retrieval quality based on focussing to retrieve only relevant items and \textit{MAP@K} measures the ranking inside the retrieved documents. A low \textit{Context Precision} and a high \textit{MAP@K} indicate that the paramter \textit{Top-K} can be reduced, because the retrieval works well enough that irrelevant documents appear on the bottom of the retrieval. In contrast a low \textit{MAP@K} could suggest, that the retrieval configurations is not well-adjusted enough, because there are too many irrelevant documents on the top of the retrieved list.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{images/APatK.pdf}
+  \caption{This is an example for AP@K metric for one query. At each retrieved document relevance and precision of the first to K-th document will be averaged through all retrieved documents.}
+  \label{fig:APatK}
+\end{figure}
 
 
 \paragraph{Generators}
-Generators are based on transformer architecture and classification tasks were not the initial intention for this kind of tasks. Thus it is important that outputs are in a wanted form such as \textit{valid}, or \textit{invalid}. Therefore we need a metric that evaluates the generators ability to follow those rules. We call this \textit{format-checker}. The problem that comes with this evaluation is that it is impossible to check context utilization, answer relevance and so on. Evaluating generator just with classification metrics and \textit{format-checker} would be indistinguishable with end-to-end evaluation. Therefore we will use a slightly different format for the classification task. Instead of generating only binary outputs such as \textit{0} / \textit{1}, \textit{valid} / \textit{invalid} or \textit{True} / \textit{False}, we will also output the reason for this decision afterwards. Then we can evaluate the generator component just as other components with commonly used metrics such answer relevance next to classification metrics for our downstream task. This procedure is required for failure analysis and therefore for improving the system in the reconfiguration phase. A binary output lacks the information we need to decide, which information the generator could not utilize. 
+Generators are based on transformer architecture and classification tasks were not the initial intention for this kind of tasks. Thus it is important that outputs are in a wanted form such as \textit{valid}, or \textit{invalid}. Therefore we need a metric that evaluates the generators ability to follow those rules. We call this \textit{format-validator}. The problem that comes with this generator evaluation for classification tasks is that it is impossible to check context utilization, answer relevance based on a simple \textit{True/False} answer. 
 
-\textcolor{blue}{Finde ein gutes Beispiel dafür in meinem SE Experiment. Ziel ist es zu zeigen, dass ein simples "Ja/Nein" nicht zeigt, warum der Generator die Frage falsch beantwortet hat, welches aus einer binären Antwort nicht hervorgeht.}
+Even though the generator only predicts \textit{True/False}, the latent space that lead to this answer have different grades of context utilization and answer relevance. Therefore we will use a slightly different format for the classification task. Instead of generating only binary outputs such as \textit{0} / \textit{1}, \textit{valid} / \textit{invalid} or \textit{True} / \textit{False}, we will also output the reason for it before or afterwards. The only limitation is that the model must generate \textit{'The answer is "True"'}. We implement it with an regular expression.
 
-
+This has several positive side affects. First, we can measure the reasoning to assess context utilization or answer relevancy, which are important to debug the system. If the context of retrieval is not utilized enough, then we won't figure that out by analyzing binary classes. Second, we enable reasearchers to the current test-time compute paradigm shift for large language models or \textit{large reasoning models}. In practice, they use \textit{<think>...</think>} and use different search algorithms for the best reasoning path before these model answer the query. This leads to significantly better results.\cite{Xu.16.01.2025}
 
 
 \subsection{Component Block Evaluation}
@@ -120,7 +131,6 @@ After evaluating component-wise, we need to evaluate other components, that are 
   \label{fig:componentblockeval}
 \end{figure}
 
-\textcolor{blue}{Abbildung neumachen.}
 
 We differentiate two major blocks - pre-retrieval and post-retrieval. Evaluating pre-retrieval component blocks such as rewriter is a derived task from the retrieval evaluation. The goal of pre-retrieval is to increase the retrieval quality so that the retriever finds all necessary documents or chunks for this task. Commonly used pre-retrieval techniques are query routing, query transformation and query expansion. Even in the ingestion stage, chunking, document selection and preprocessing steps are tuning parameters that influence retrieval results and its quality. 
 
@@ -140,6 +150,7 @@ This requires the researcher to try many different RAG variations for rigorous t
     \label{fig:showcase}
 \end{figure}
 
+RAG systems have a lot of parameters that are not obvious to set. It is common as a researcher to have several reconfiguration phases till the RAG systems works sufficient. More reconfiguration phases lead logically to better results. Therefore Short feedback cycles and fast development make it possible to evaluate many configurations and short feedback cycles can lead to fast bottleneck improvements. This sections presents our considerations for offering fast RAG development.
 
 There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in a YAML to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
 
@@ -170,8 +181,6 @@ connections:
 \end{minted}
 
 \textcolor{red}{Wie werde ich das nutzen? -> Umbauen für Matrix Angabe?}
-
-
 
 
 \section{Reconfiguration}
