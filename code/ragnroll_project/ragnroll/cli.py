@@ -87,23 +87,23 @@ def run_evaluations(
     naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
     naive_rag_pipeline = index_documents(corpus_dir, naive_rag_pipeline)
 
-    rag_pipeline = config_to_pipeline(configuration_file)
-    rag_pipeline = index_documents(corpus_dir, rag_pipeline)
+    # rag_pipeline = config_to_pipeline(configuration_file)
+    # rag_pipeline = index_documents(corpus_dir, rag_pipeline)
     
     data = load_evaluation_data(eval_data_path)
 
     print("--------------------------------")
     print("Baseline LLM")   
-    result_baseline_llm = evaluate(data, llm_pipeline)
+    result_baseline_llm = None # evaluate(data, llm_pipeline)
     print("--------------------------------")
     print("Baseline Naive RAG")
     result_baseline_naive_rag = evaluate(data, naive_rag_pipeline)
     print("--------------------------------")
     print("RAG")
-    result_rag = evaluate(data, rag_pipeline)
+    # result_rag = evaluate(data, rag_pipeline)
     print("--------------------------------")
 
-    return result_baseline_llm, result_baseline_naive_rag, result_rag
+    return result_baseline_llm, result_baseline_naive_rag#, result_rag
 
 
 @app.command()

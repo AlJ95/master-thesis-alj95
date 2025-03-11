@@ -140,6 +140,7 @@ Most components beside retriever and generator have no direct measurement,there 
 
 This requires the researcher to try many different RAG variations for rigorous testing. In the next section we will introduce our appraoch for fast RAG development.
 
+\section{Tracing}
 
 \section{Fast RAG Development}
 
@@ -152,9 +153,18 @@ This requires the researcher to try many different RAG variations for rigorous t
 
 RAG systems have a lot of parameters that are not obvious to set. It is common as a researcher to have several reconfiguration phases till the RAG systems works sufficient. More reconfiguration phases lead logically to better results. Therefore Short feedback cycles and fast development make it possible to evaluate many configurations and short feedback cycles can lead to fast bottleneck improvements. This sections presents our considerations for offering fast RAG development.
 
-There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in a YAML to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
+There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in one YAML-file to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
 
-Furthermore Haystack comes with router components and the ability to create custom components, which enables iterative, recursive and adaptive RAG functionalities. Components in the Haystack universe can be seen as nodes of an RAG pipeline such as a generator or a retriever. 
+There are are also two more benefits for configuring via YAML files. First, we can copy existing RAG configurations easily and second, Haystack develops an UI for developing RAG system, that can be used to manage even very complex systems on a two-dimensional space. A demo screenshot can be seen on figure \ref{fig:deepsetstudio}. This simplifies RAG system development furthermore.
+
+
+\begin{figure}[b]
+  \centering
+  \includegraphics[width=\textwidth]{images/deepset-studio-zoomed-in.png}
+  \caption{Haystack's Deepset Studio application for drag and drop RAG development.\cite{deepsetstudio.10.03.2025}}
+  \label{fig:deepsetstudio}
+\end{figure}
+
 
 \newpage
 \begin{minted}[
@@ -180,12 +190,13 @@ connections:
 - ...
 \end{minted}
 
-\textcolor{red}{Wie werde ich das nutzen? -> Umbauen für Matrix Angabe?}
+\textcolor{blue}{Soll ich hier noch über Custom Components sprechen?}
 
 
 \section{Reconfiguration}
-The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section.
+The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section. 
 
+\section{Reporting}
 
 \section{Increasing Transparency in RAG Experiments}
 
@@ -194,24 +205,16 @@ The visualisation shows the process of reconfiguring the RAG system till its opt
     \item Save YAMLs, Versionize Data + Code
 \end{itemize}
 
-\section{External Validity of RAG Experiments}
+\section{Internal Validity}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/RAGvsLLM-tuning.pdf}
-    \caption{Comparison of reconfiguration between RAGs and LLMs - both relying on tuning parameters and test data.}
-    \label{fig:tuning}
-\end{figure}
-
-% Misconception? RAGs don't need Test-Dataset, because we do not train? But Overfitting is not dependend on training perse, but on free parameter, which happes in RAGs too. Just because we do not have Millions up to Billions of Parameters, does not mean we don't have to consider overfitting. <calculate number of parameters> 
+\textcolor{blue}{Recherche über Validity (Internal vs External)}
 
 
-Data is rare, especially for down-stream tasks in domains such as configuration validation or similar tasks. They often rely on few datasets that can not represent the whole domain. Therefore there are measures required to ensure that the developed systems can be generalized from the seen data to the unseen production data. Measuring generalization error in the large language model development is done by splitting the data into training, validation and test datasets. While the training and validation data is used for hyperparameter tuning to ensure the best performing model, the test dataset on the other hand is used to check if the hyperparameter tuning introduced an overfitting. This procedure must be adopted for RAG systems too (cf. figure \ref{fig:tuning}). Even though they do not rely on a training in the most cases, the continous reconfiguration of such systems, including prompt engineering or parameter tuning can lead to differences in seen and unseen data. The needs for a test dataset is independent from a potential training phase, but instead very dependent on a tuning phase for the systems, that is done till the results converge to the best outcoming scenario. Both LLM and RAG development share those reconfiguration phases. 
-
-\textcolor{blue}{Selbst wenn tuning RAGs nicht super anfällig für Overfitting sein sollten, gibt es ja fine-tuning für Retrieval, Generators und Co., welche Overfitting einführen können. Diese werden dann mit dem Objective im RAG bestmöglich zu performen trainiert, daher muss auch da der Generalization Error überprüft werden.}
+Evaluating semantics in LLM's or RAG systems rely on LLM-as-a-Judge models or lexical metrics such as BLEU or ROUGE, which measure the token overlap of actual answer and ground truth. Lexical answers can not capture answer pairs that are differently written but having the same semantic. LLM-as-a-Judge 
 
 \paragraph{Preference Leakage}
-There are findings suggesting that LLM-as-a-judge favor similar LLMs that their based on. Therefore using synthetic data for evaluation is fast, but risks so called preference leakage.\cite{Li.03.02.2025} 
+There are findings suggesting that LLM-as-a-judge favor similar LLMs that their based on. Therefore using synthetic data for evaluation is fast, but risks so called preference leakage.\cite{Li.03.02.2025} This field is very new and still under research. 
+
 
 \paragraph{RAG Evaluation needs a Holdout-Testset}
 \begin{itemize}
@@ -225,8 +228,26 @@ There are findings suggesting that LLM-as-a-judge favor similar LLMs that their 
     \item \textcolor{red}{Problem zum Nachdenken} Im Training braucht es ein Holdout-Testset damit man das LLM auswählen kann, welches den geringsten Testfehler hat, aber im RAG wird nicht trainiert. Müssen dann alle Konfigurationen dagegen getestet werden?
 \end{itemize}
 
+\section{External Validity}
 
-\section{CLI}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{images/RAGvsLLM-tuning.pdf}
+    \caption{Comparison of reconfiguration between RAGs and LLMs - both relying on tuning parameters and test data.}
+    \label{fig:tuning}
+\end{figure}
+
+% Misconception? RAGs don't need Test-Dataset, because we do not train? But Overfitting is not dependend on training perse, but on free parameter, which happes in RAGs too. Just because we do not have Millions up to Billions of Parameters, does not mean we don't have to consider overfitting. <calculate number of parameters> 
+
+
+We demand for a test data set to avoid overfitting while tuning RAG parameter. Data is rare, especially for down-stream tasks in domains such as configuration validation or similar tasks. They often rely on few datasets that can not represent the whole domain. Therefore there are measures required to ensure that the developed systems can be generalized from the seen data to the unseen production data. Measuring generalization error in the large language model development is done by splitting the data into training, validation and test datasets. 
+
+While the training and validation data is used for hyperparameter tuning to ensure the best performing model, the test dataset on the other hand is used to check if the hyperparameter tuning introduced an overfitting. This procedure must be adopted for RAG systems too (cf. figure \ref{fig:tuning}). Even though they do not rely on a training per se, the continous reconfiguration of such systems, including prompt engineering or parameter tuning can lead to overfitting. The needs for a test dataset is independent from a potential training phase, but instead very dependent on a tuning an high amount of free variables, that is done till the results converge to the best outcoming scenario.
+
+Both LLM and RAG development share those reconfiguration phases. Additionally there are situations when individual components such as retriever must be fine-tuned to handle domain-specific data. In such situations there should not only be test data for the retrieval training part, but also for the overall RAG system to ensure overfitting did not happen on the bigger system.
+
+
+\section{User Interface}
 
 \begin{figure}[!ht]
     \centering
