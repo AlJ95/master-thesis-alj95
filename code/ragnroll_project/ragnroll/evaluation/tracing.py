@@ -30,6 +30,7 @@ def fetch_current_traces(run_id):
     return latencies
 
 def _extract_latencies(traces, observations, save_to_csv=False):
+    print(traces[:3])
     latencies = {}
     for trace in traces:
         for observation in observations:
@@ -44,6 +45,26 @@ def _extract_latencies(traces, observations, save_to_csv=False):
                 }
     df = pd.DataFrame(latencies).T
 
+    df["latency"] = pd.to_numeric(df["latency"], errors="coerce")
+    df["trace_latency"] = pd.to_numeric(df["trace_latency"], errors="coerce")
+
+    aggregated_df = (
+        df
+        .drop(columns=["type"])
+        .groupby(["name", "trace_name"])
+        .mean(numeric_only=True)
+        .reset_index()
+        .set_index(["trace_name"])
+        .pivot(columns="name", values="latency")
+    )
+
+    print(df.groupby(["trace_name"]).mean(numeric_only=True))
+    aggregated_df.loc[:, "trace_latency"] = df.groupby(["trace_name"]).mean(numeric_only=True)["trace_latency"]
+
+    aggregated_df.columns = pd.MultiIndex.from_tuples([("LAT", col) for col in aggregated_df.columns])
+    
+
     if save_to_csv:
         df.to_csv("latencies.csv", index=False)
-    return df
+
+    return aggregated_df

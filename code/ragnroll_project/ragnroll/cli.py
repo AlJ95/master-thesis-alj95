@@ -4,6 +4,8 @@
 from typing import Optional, List
 import os
 
+import pandas as pd
+
 import typer
 
 from ragnroll import __app_name__, __version__
@@ -90,6 +92,7 @@ def run_evaluations(
     eval_data_path : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...),
+    # ToDo: Baselines Options
 ):
     from .utils.pipeline import config_to_pipeline
     from .evaluation.eval import evaluate
@@ -112,25 +115,32 @@ def run_evaluations(
     data = load_evaluation_data(eval_data_path)
 
     print("--------------------------------")
-    print("Baseline LLM")   
-    llm_pipeline.add_component("tracer", LangfuseConnector(f"LLM-Baseline-{run_id}"))
-    result_baseline_llm = evaluate(data, llm_pipeline)
+    run_name = f"LLM-Baseline-{run_id}"
+    print(run_name)
+    llm_pipeline.add_component("tracer", LangfuseConnector(run_name))
+    result_baseline_llm = evaluate(data, llm_pipeline, run_name=run_name)
     print("--------------------------------")
     print("Baseline Naive RAG")
-    # naive_rag_pipeline.add_component("tracer", LangfuseConnector(f"Naive-RAG-Baseline-{run_id}"))
-    # result_baseline_naive_rag = evaluate(data, naive_rag_pipeline)
-    print("--------------------------------")
+    # run_name = f"Naive-RAG-Baseline-{run_id}"
+    # print(run_name)
+    # naive_rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
+    # result_baseline_naive_rag = evaluate(data, naive_rag_pipeline, run_name=run_name)
+    # print("--------------------------------")
     print("RAG")
-    # rag_pipeline.add_component("tracer", LangfuseConnector(f"RAG-Pipeline-{run_id}"))
-    # result_rag = evaluate(data, rag_pipeline)
-    print("--------------------------------")
+    # run_name = f"RAG-Pipeline-{run_id}"
+    # print(run_name)
+    # rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
+    # result_rag = evaluate(data, rag_pipeline, run_name=run_name)
+    # print("--------------------------------")
 
     from .evaluation.tracing import fetch_current_traces
     traces = fetch_current_traces(run_id)
-    print(traces)
-    
-    # return result_baseline_llm, result_baseline_naive_rag, result_rag, traces
 
+    results = pd.concat([result_baseline_llm, traces], axis=1)
+    results.T.to_csv(output_directory)
+
+    
+    return
 
 @app.command()
 def draw_pipeline(
