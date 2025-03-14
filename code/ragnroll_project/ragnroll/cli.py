@@ -92,111 +92,140 @@ def run_evaluations(
     eval_data_path : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...),
+    track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"),
     # ToDo: Baselines Options
 ):
     from .utils.pipeline import config_to_pipeline
     from .evaluation.eval import evaluate
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
+    from .evaluation.system_metrics import SystemResourceTracker
+    from pathlib import Path
     import uuid
+    import os
 
     # Setup Run-ID
     run_id = str(uuid.uuid4())
     print(f"Run-ID: {run_id}")
 
-    llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
+    # Initialize the resource tracker if tracking is enabled
+    resource_tracker = None
+    if track_resources:
+        resource_tracker = SystemResourceTracker()
+        resource_tracker.start_tracking()
+        print(f"System resource tracking started")
 
-    naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
-    naive_rag_pipeline = index_documents(corpus_dir, naive_rag_pipeline)
+    try:
+        # Load and prepare pipelines
+        llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
 
-    rag_pipeline = config_to_pipeline(configuration_file)
-    rag_pipeline = index_documents(corpus_dir, rag_pipeline)
-    
-    data = load_evaluation_data(eval_data_path)
+        naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
+        naive_rag_pipeline = index_documents(corpus_dir, naive_rag_pipeline)
 
-    print("--------------------------------")
-    run_name = f"LLM-Baseline-{run_id}"
-    print(run_name)
-    llm_pipeline.add_component("tracer", LangfuseConnector(run_name))
-    result_baseline_llm = evaluate(data, llm_pipeline, run_name=run_name)
-    print("--------------------------------")
-    print("Baseline Naive RAG")
-    # run_name = f"Naive-RAG-Baseline-{run_id}"
-    # print(run_name)
-    # naive_rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
-    # result_baseline_naive_rag = evaluate(data, naive_rag_pipeline, run_name=run_name)
-    # print("--------------------------------")
-    print("RAG")
-    # run_name = f"RAG-Pipeline-{run_id}"
-    # print(run_name)
-    # rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
-    # result_rag = evaluate(data, rag_pipeline, run_name=run_name)
-    # print("--------------------------------")
+        rag_pipeline = config_to_pipeline(configuration_file)
+        rag_pipeline = index_documents(corpus_dir, rag_pipeline)
+        
+        data = load_evaluation_data(eval_data_path)
 
-    from .evaluation.tracing import fetch_current_traces
-    traces = fetch_current_traces(run_id)
+        print("--------------------------------")
+        run_name = f"LLM-Baseline-{run_id}"
+        print(run_name)
+        llm_pipeline.add_component("tracer", LangfuseConnector(run_name))
+        result_baseline_llm = evaluate(data, llm_pipeline, run_name=run_name)
 
-    results = pd.concat([result_baseline_llm, traces], axis=1)
-    results.T.to_csv(output_directory)
+        print("--------------------------------")
+        print("Baseline Naive RAG")
+        # run_name = f"Naive-RAG-Baseline-{run_id}"
+        # print(run_name)
+        # naive_rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
+        # result_baseline_naive_rag = evaluate(data, naive_rag_pipeline, run_name=run_name)
+        # print("--------------------------------")
+        print("RAG")
+        # run_name = f"RAG-Pipeline-{run_id}"
+        # print(run_name)
+        # rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
+        # result_rag = evaluate(data, rag_pipeline, run_name=run_name)
+        # print("--------------------------------")
+
+        from .evaluation.tracing import fetch_current_traces
+        traces = fetch_current_traces(run_id)
+
+        # Combine the evaluation results and traces
+        results = pd.concat([result_baseline_llm, traces], axis=1)
+
+        # If resource tracking is enabled, add resource metrics to results
+        if track_resources and resource_tracker:
+            # Get resource metrics
+            metrics_summary = resource_tracker.get_metrics_summary()
+            
+            # Flatten the nested dictionaries
+            flat_metrics = {}
+            
+            # Duration and samples
+            flat_metrics["duration_seconds"] = float(metrics_summary.get("duration_seconds", 0))
+            flat_metrics["samples_count"] = float(metrics_summary.get("samples_count", 0))
+            
+            # CPU metrics
+            if "cpu" in metrics_summary and isinstance(metrics_summary["cpu"], dict):
+                cpu = metrics_summary["cpu"]
+                # System CPU
+                if "system" in cpu and isinstance(cpu["system"], dict):
+                    system = cpu["system"]
+                    flat_metrics["cpu_system_mean"] = float(system.get("mean", 0))
+                    flat_metrics["cpu_system_max"] = float(system.get("max", 0))
+                    flat_metrics["cpu_system_min"] = float(system.get("min", 0))
+                # Process CPU
+                if "process" in cpu and isinstance(cpu["process"], dict):
+                    process = cpu["process"]
+                    flat_metrics["cpu_process_mean"] = float(process.get("mean", 0))
+                    flat_metrics["cpu_process_max"] = float(process.get("max", 0))
+                    flat_metrics["cpu_process_min"] = float(process.get("min", 0))
+            
+            # Memory metrics
+            if "memory" in metrics_summary and isinstance(metrics_summary["memory"], dict):
+                memory = metrics_summary["memory"]
+                # System percentage
+                if "system_percent" in memory and isinstance(memory["system_percent"], dict):
+                    sys_percent = memory["system_percent"]
+                    flat_metrics["memory_system_percent_mean"] = float(sys_percent.get("mean", 0))
+                    flat_metrics["memory_system_percent_max"] = float(sys_percent.get("max", 0))
+                    flat_metrics["memory_system_percent_min"] = float(sys_percent.get("min", 0))
+                # System used GB
+                if "system_used_gb" in memory and isinstance(memory["system_used_gb"], dict):
+                    sys_used = memory["system_used_gb"]
+                    flat_metrics["memory_system_used_gb_mean"] = float(sys_used.get("mean", 0))
+                    flat_metrics["memory_system_used_gb_max"] = float(sys_used.get("max", 0))
+                    flat_metrics["memory_system_used_gb_min"] = float(sys_used.get("min", 0))
+                # Process MB
+                if "process_mb" in memory and isinstance(memory["process_mb"], dict):
+                    proc_mb = memory["process_mb"]
+                    flat_metrics["memory_process_mb_mean"] = float(proc_mb.get("mean", 0))
+                    flat_metrics["memory_process_mb_max"] = float(proc_mb.get("max", 0))
+                    flat_metrics["memory_process_mb_min"] = float(proc_mb.get("min", 0))
+            
+            # Create flat resource metrics DataFrame
+            resource_df = pd.DataFrame([flat_metrics])
+            resource_df.loc[:, "run_id"] = run_name
+            resource_df.set_index("run_id", inplace=True)
+            
+            # Prefix resource metrics columns to avoid conflicts
+            resource_df.columns = pd.MultiIndex.from_tuples([("SYS", col) for col in resource_df.columns])
+            
+            # Add to results
+            results = pd.concat([results, resource_df], axis=1)
+
+        # Save the combined results
+        results.T.to_csv(output_directory)
+        print(f"Evaluation results saved to {output_directory}")
+
+    finally:
+        # Stop resource tracking if it was started
+        if track_resources and resource_tracker:
+            resource_tracker.stop_tracking()
+            resource_tracker.print_summary()
 
     
     return
-
-@app.command()
-def draw_pipeline(
-    configuration_file: str = typer.Argument(...),
-    output_file: str = typer.Option(
-        None,
-        "--output-file",
-        "-o",
-        help="The name of the output file.",
-    ),
-):
-    from .utils.pipeline import config_to_pipeline
-    pipeline = config_to_pipeline(configuration_file)
-    pipeline.draw(path=output_file)
-
-@app.command()
-def preprocess_to_csv(
-    corpus_dir: str = typer.Argument(..., help="Path to the corpus directory"),
-    output_file: str = typer.Argument(..., help="Path to the output CSV file"),
-    split: bool = typer.Option(True, help="Whether to split the documents into chunks"),
-    chunk_size: int = typer.Option(1000, help="Size of document chunks if splitting"),
-    chunk_overlap: int = typer.Option(200, help="Overlap between chunks if splitting"),
-    chunk_separator: str = typer.Option("", help="Separator to use between text chunks")
-):
-    """
-    Process documents from a corpus directory and save them to a CSV file.
-    
-    This command will:
-    1. Convert all supported files in the corpus directory to Document objects
-    2. Fetch and convert URLs from urls.csv if it exists in the corpus directory
-    3. Clean and split the documents as specified
-    4. Save the resulting documents to a CSV file
-    """
-    from pathlib import Path
-    from .utils.preprocesser import get_all_documents, save_documents_to_csv
-    
-    try:
-        # Process all documents
-        typer.echo(f"Processing documents from {corpus_dir}...")
-        documents = get_all_documents(
-            corpus_dir=corpus_dir,
-            split=split,
-            chunk_size=chunk_size,
-            chunk_overlap=chunk_overlap,
-            chunk_separator=chunk_separator
-        )
-        
-        # Save documents to CSV
-        output_path = Path(output_file)
-        typer.echo(f"Saving {len(documents)} documents to {output_file}...")
-        save_documents_to_csv(documents, output_path)
-        
-        typer.echo(f"Successfully saved {len(documents)} documents to {output_file}")
-    except Exception as e:
-        typer.echo(f"Error: {e}", err=True)
-        raise typer.Exit(code=1)
 
 def _version_callback(value: bool) -> None:
     if value:

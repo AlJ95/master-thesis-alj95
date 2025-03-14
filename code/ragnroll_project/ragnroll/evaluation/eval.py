@@ -5,6 +5,7 @@ from collections import defaultdict
 import logging
 import inspect
 import pandas as pd
+import os
 
 # Standard-Werte für Klassifikations-Labels
 # Diese können später in eine Konfigurationsdatei ausgelagert werden
@@ -181,7 +182,7 @@ class Evaluator:
 
         # Convert results to pandas DataFrames
         results_df = self._results_to_df(end_to_end_results, component_results, run_id)
-
+        
         return results_df
 
     def _results_to_df(self, end_to_end_results: Dict[str, float], component_results: Dict[str, Dict[str, float]], run_id: str) -> pd.DataFrame:
@@ -386,22 +387,80 @@ class Evaluator:
 
 def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
            positive_label: str = DEFAULT_POSITIVE_LABEL, 
-           negative_label: str = DEFAULT_NEGATIVE_LABEL) -> pd.DataFrame:
+           negative_label: str = DEFAULT_NEGATIVE_LABEL,
+           track_resources: bool = False,
+           resource_output_prefix: Optional[str] = None) -> pd.DataFrame:
     """
     Evaluates the pipeline on the test cases.
     
     Args:
         data: Evaluation data
         pipeline: Haystack pipeline to evaluate
+        run_name: Identifier for this evaluation run
         positive_label: The label to consider as positive class (default: "valid")
         negative_label: The label to consider as negative class (default: "invalid")
+        track_resources: Whether to track system resource usage during evaluation
+        resource_output_prefix: Prefix for resource metric files (if track_resources is True)
         
     Returns:
         pd.DataFrame: Results for the metrics
     """
-    evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
-    scores = evaluator.evaluate(data, run_name)
-    return scores
+    # Initialize resource tracking if requested
+    resource_tracker = None
+    if track_resources:
+        try:
+            from .system_metrics import SystemResourceTracker
+            resource_tracker = SystemResourceTracker()
+            resource_tracker.start_tracking()
+            logger.info(f"System resource tracking enabled for evaluation run: {run_name}")
+        except ImportError:
+            logger.warning("Could not import SystemResourceTracker. Resource tracking disabled.")
+            track_resources = False
+    
+    try:
+        # Run the evaluation
+        evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
+        scores = evaluator.evaluate(data, run_name)
+        
+        # Add resource metrics if tracking was enabled
+        if track_resources and resource_tracker:
+            # Get metrics summary
+            resource_summary = resource_tracker.get_metrics_summary()
+            
+            # Convert to DataFrame
+            resource_df = pd.DataFrame([resource_summary])
+            resource_df.loc[:, "run_id"] = run_name
+            resource_df.set_index("run_id", inplace=True)
+            
+            # Prefix resource metrics columns to avoid conflicts
+            resource_df.columns = pd.MultiIndex.from_tuples([("SYS", col) for col in resource_df.columns])
+            
+            # Add to results
+            scores = pd.concat([scores, resource_df], axis=1)
+            
+            # Save detailed metrics if output prefix was provided
+            if resource_output_prefix:
+                try:
+                    # Save CSV
+                    csv_path = f"{resource_output_prefix}_metrics.csv"
+                    resource_tracker.to_csv(csv_path)
+                    logger.info(f"Resource metrics saved to {csv_path}")
+                except Exception as e:
+                    logger.error(f"Error saving resource metrics: {e}")
+        
+        return scores
+    
+    finally:
+        # Stop resource tracking if it was started
+        if track_resources and resource_tracker:
+            resource_tracker.stop_tracking()
+            logger.info("Resource tracking stopped")
+            
+            # Print summary
+            try:
+                resource_tracker.print_summary()
+            except:
+                pass
 
 
 def print_scores(scores: Dict[str, Any]) -> None:
