@@ -99,7 +99,6 @@ def run_evaluations(
     from .evaluation.eval import evaluate
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
-    from .evaluation.system_metrics import SystemResourceTracker
     from pathlib import Path
     import uuid
     import os
@@ -107,13 +106,6 @@ def run_evaluations(
     # Setup Run-ID
     run_id = str(uuid.uuid4())
     print(f"Run-ID: {run_id}")
-
-    # Initialize the resource tracker if tracking is enabled
-    resource_tracker = None
-    if track_resources:
-        resource_tracker = SystemResourceTracker()
-        resource_tracker.start_tracking()
-        print(f"System resource tracking started")
 
     try:
         # Load and prepare pipelines
@@ -131,7 +123,7 @@ def run_evaluations(
         run_name = f"LLM-Baseline-{run_id}"
         print(run_name)
         llm_pipeline.add_component("tracer", LangfuseConnector(run_name))
-        result_baseline_llm = evaluate(data, llm_pipeline, run_name=run_name)
+        result_baseline_llm = evaluate(data, llm_pipeline, run_name=run_name, track_resources=track_resources)
 
         print("--------------------------------")
         print("Baseline Naive RAG")
@@ -153,77 +145,12 @@ def run_evaluations(
         # Combine the evaluation results and traces
         results = pd.concat([result_baseline_llm, traces], axis=1)
 
-        # If resource tracking is enabled, add resource metrics to results
-        if track_resources and resource_tracker:
-            # Get resource metrics
-            metrics_summary = resource_tracker.get_metrics_summary()
-            
-            # Flatten the nested dictionaries
-            flat_metrics = {}
-            
-            # Duration and samples
-            flat_metrics["duration_seconds"] = float(metrics_summary.get("duration_seconds", 0))
-            flat_metrics["samples_count"] = float(metrics_summary.get("samples_count", 0))
-            
-            # CPU metrics
-            if "cpu" in metrics_summary and isinstance(metrics_summary["cpu"], dict):
-                cpu = metrics_summary["cpu"]
-                # System CPU
-                if "system" in cpu and isinstance(cpu["system"], dict):
-                    system = cpu["system"]
-                    flat_metrics["cpu_system_mean"] = float(system.get("mean", 0))
-                    flat_metrics["cpu_system_max"] = float(system.get("max", 0))
-                    flat_metrics["cpu_system_min"] = float(system.get("min", 0))
-                # Process CPU
-                if "process" in cpu and isinstance(cpu["process"], dict):
-                    process = cpu["process"]
-                    flat_metrics["cpu_process_mean"] = float(process.get("mean", 0))
-                    flat_metrics["cpu_process_max"] = float(process.get("max", 0))
-                    flat_metrics["cpu_process_min"] = float(process.get("min", 0))
-            
-            # Memory metrics
-            if "memory" in metrics_summary and isinstance(metrics_summary["memory"], dict):
-                memory = metrics_summary["memory"]
-                # System percentage
-                if "system_percent" in memory and isinstance(memory["system_percent"], dict):
-                    sys_percent = memory["system_percent"]
-                    flat_metrics["memory_system_percent_mean"] = float(sys_percent.get("mean", 0))
-                    flat_metrics["memory_system_percent_max"] = float(sys_percent.get("max", 0))
-                    flat_metrics["memory_system_percent_min"] = float(sys_percent.get("min", 0))
-                # System used GB
-                if "system_used_gb" in memory and isinstance(memory["system_used_gb"], dict):
-                    sys_used = memory["system_used_gb"]
-                    flat_metrics["memory_system_used_gb_mean"] = float(sys_used.get("mean", 0))
-                    flat_metrics["memory_system_used_gb_max"] = float(sys_used.get("max", 0))
-                    flat_metrics["memory_system_used_gb_min"] = float(sys_used.get("min", 0))
-                # Process MB
-                if "process_mb" in memory and isinstance(memory["process_mb"], dict):
-                    proc_mb = memory["process_mb"]
-                    flat_metrics["memory_process_mb_mean"] = float(proc_mb.get("mean", 0))
-                    flat_metrics["memory_process_mb_max"] = float(proc_mb.get("max", 0))
-                    flat_metrics["memory_process_mb_min"] = float(proc_mb.get("min", 0))
-            
-            # Create flat resource metrics DataFrame
-            resource_df = pd.DataFrame([flat_metrics])
-            resource_df.loc[:, "run_id"] = run_name
-            resource_df.set_index("run_id", inplace=True)
-            
-            # Prefix resource metrics columns to avoid conflicts
-            resource_df.columns = pd.MultiIndex.from_tuples([("SYS", col) for col in resource_df.columns])
-            
-            # Add to results
-            results = pd.concat([results, resource_df], axis=1)
-
         # Save the combined results
         results.T.to_csv(output_directory)
         print(f"Evaluation results saved to {output_directory}")
 
     finally:
-        # Stop resource tracking if it was started
-        if track_resources and resource_tracker:
-            resource_tracker.stop_tracking()
-            resource_tracker.print_summary()
-
+        pass
     
     return
 

@@ -361,37 +361,4 @@ class PipelineResourceMonitor:
             return
             
         if csv_file:
-            self.tracker.to_csv(csv_file)
-
-
-# Example usage
-if __name__ == "__main__":
-    # This example shows how to use the PipelineResourceMonitor with a Haystack pipeline
-    from ragnroll.utils.pipeline import config_to_pipeline
-    import time
-    
-    # Load a pipeline from configuration
-    pipeline_config = "config/pipeline.yaml"
-    pipeline = config_to_pipeline(pipeline_config)
-    
-    # Create a resource monitor for the pipeline
-    monitor = PipelineResourceMonitor(pipeline)
-    
-    # Run the pipeline with monitoring
-    result = monitor.run(data={"query": "What is the capital of France?"})
-    
-    # Print resource usage summary
-    monitor.print_summary()
-    
-    # Save metrics to CSV file
-    monitor.save_metrics(csv_file="resource_metrics.csv")
-    
-    # Alternatively, you can use the decorator approach
-    @track_pipeline_resources
-    def run_pipeline(pipeline, query):
-        # Simulate some work
-        time.sleep(1)
-        return pipeline.run(data={"query": query})
-    
-    # Run with the decorator
-    result = run_pipeline(pipeline, "Who won the World Cup in 2018?") 
+            self.tracker.to_csv(csv_file) 

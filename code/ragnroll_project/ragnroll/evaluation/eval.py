@@ -409,7 +409,7 @@ def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
     resource_tracker = None
     if track_resources:
         try:
-            from .system_metrics import SystemResourceTracker
+            from ragnroll.metrics.system import SystemResourceTracker
             resource_tracker = SystemResourceTracker()
             resource_tracker.start_tracking()
             logger.info(f"System resource tracking enabled for evaluation run: {run_name}")
@@ -425,10 +425,55 @@ def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
         # Add resource metrics if tracking was enabled
         if track_resources and resource_tracker:
             # Get metrics summary
-            resource_summary = resource_tracker.get_metrics_summary()
+            metrics_summary = resource_tracker.get_metrics_summary()
             
-            # Convert to DataFrame
-            resource_df = pd.DataFrame([resource_summary])
+            # Flatten the nested dictionaries
+            flat_metrics = {}
+            
+            # Duration and samples
+            flat_metrics["duration_seconds"] = float(metrics_summary.get("duration_seconds", 0))
+            flat_metrics["samples_count"] = float(metrics_summary.get("samples_count", 0))
+            
+            # CPU metrics
+            if "cpu" in metrics_summary and isinstance(metrics_summary["cpu"], dict):
+                cpu = metrics_summary["cpu"]
+                # System CPU
+                if "system" in cpu and isinstance(cpu["system"], dict):
+                    system = cpu["system"]
+                    flat_metrics["cpu_system_mean"] = float(system.get("mean", 0))
+                    flat_metrics["cpu_system_max"] = float(system.get("max", 0))
+                    flat_metrics["cpu_system_min"] = float(system.get("min", 0))
+                # Process CPU
+                if "process" in cpu and isinstance(cpu["process"], dict):
+                    process = cpu["process"]
+                    flat_metrics["cpu_process_mean"] = float(process.get("mean", 0))
+                    flat_metrics["cpu_process_max"] = float(process.get("max", 0))
+                    flat_metrics["cpu_process_min"] = float(process.get("min", 0))
+            
+            # Memory metrics
+            if "memory" in metrics_summary and isinstance(metrics_summary["memory"], dict):
+                memory = metrics_summary["memory"]
+                # System percentage
+                if "system_percent" in memory and isinstance(memory["system_percent"], dict):
+                    sys_percent = memory["system_percent"]
+                    flat_metrics["memory_system_percent_mean"] = float(sys_percent.get("mean", 0))
+                    flat_metrics["memory_system_percent_max"] = float(sys_percent.get("max", 0))
+                    flat_metrics["memory_system_percent_min"] = float(sys_percent.get("min", 0))
+                # System used GB
+                if "system_used_gb" in memory and isinstance(memory["system_used_gb"], dict):
+                    sys_used = memory["system_used_gb"]
+                    flat_metrics["memory_system_used_gb_mean"] = float(sys_used.get("mean", 0))
+                    flat_metrics["memory_system_used_gb_max"] = float(sys_used.get("max", 0))
+                    flat_metrics["memory_system_used_gb_min"] = float(sys_used.get("min", 0))
+                # Process MB
+                if "process_mb" in memory and isinstance(memory["process_mb"], dict):
+                    proc_mb = memory["process_mb"]
+                    flat_metrics["memory_process_mb_mean"] = float(proc_mb.get("mean", 0))
+                    flat_metrics["memory_process_mb_max"] = float(proc_mb.get("max", 0))
+                    flat_metrics["memory_process_mb_min"] = float(proc_mb.get("min", 0))
+            
+            # Create flat resource metrics DataFrame
+            resource_df = pd.DataFrame([flat_metrics])
             resource_df.loc[:, "run_id"] = run_name
             resource_df.set_index("run_id", inplace=True)
             
