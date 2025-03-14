@@ -4,6 +4,7 @@ from typing import List, Dict, Any, Tuple, Type, Optional, Union
 from collections import defaultdict
 import logging
 import inspect
+import pandas as pd
 
 # Standard-Werte für Klassifikations-Labels
 # Diese können später in eine Konfigurationsdatei ausgelagert werden
@@ -147,7 +148,7 @@ class Evaluator:
         
         return metrics
     
-    def evaluate(self, evaluation_data: Dict[str, Any]) -> Dict[str, Any]:
+    def evaluate(self, evaluation_data: Dict[str, Any], run_id: str) -> pd.DataFrame:
         """
         Run the evaluation on the provided data.
         
@@ -175,10 +176,45 @@ class Evaluator:
             "end-to-end": end_to_end_results,
             "component-wise": component_results
         }
-        
+
         print_scores(results)
-        return results
-    
+
+        # Convert results to pandas DataFrames
+        results_df = self._results_to_df(end_to_end_results, component_results, run_id)
+
+        return results_df
+
+    def _results_to_df(self, end_to_end_results: Dict[str, float], component_results: Dict[str, Dict[str, float]], run_id: str) -> pd.DataFrame:
+        """
+        Convert results to pandas DataFrames
+        """
+        if "generator" in component_results:
+            generator_results = pd.DataFrame([component_results["generator"]])
+            generator_results.columns = pd.MultiIndex.from_tuples([("GEN", col) for col in generator_results.columns])
+        else:
+            generator_results = pd.DataFrame()
+
+        if "retriever" in component_results:
+            retriever_results = pd.DataFrame([component_results["retriever"]])
+            retriever_results.columns = pd.MultiIndex.from_tuples([("RET", col) for col in retriever_results.columns])
+        else:
+            retriever_results = pd.DataFrame()
+
+        end_to_end_results = pd.DataFrame([end_to_end_results])
+        end_to_end_results.columns = pd.MultiIndex.from_tuples([("E2E", col) for col in end_to_end_results.columns])
+
+        results_df = pd.concat([
+            end_to_end_results,
+            generator_results,
+            retriever_results
+        ], axis=1)
+
+        results_df.loc[:, "run_id"] = run_id
+        results_df.set_index("run_id", inplace=True)
+        
+        return results_df
+        
+
     def _evaluate_end_to_end(self, test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
         """
         Evaluate all end-to-end metrics on the complete set of test cases.
@@ -348,9 +384,9 @@ class Evaluator:
         return results
 
 
-def evaluate(data: Dict[str, Any], pipeline: Pipeline, 
+def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
            positive_label: str = DEFAULT_POSITIVE_LABEL, 
-           negative_label: str = DEFAULT_NEGATIVE_LABEL) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+           negative_label: str = DEFAULT_NEGATIVE_LABEL) -> pd.DataFrame:
     """
     Evaluates the pipeline on the test cases.
     
@@ -361,11 +397,11 @@ def evaluate(data: Dict[str, Any], pipeline: Pipeline,
         negative_label: The label to consider as negative class (default: "invalid")
         
     Returns:
-        Tuple[Dict[str, Any], Dict[str, Any]]: Results for the metrics
+        pd.DataFrame: Results for the metrics
     """
     evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
-    scores = evaluator.evaluate(data)
-    return scores, evaluator.component_metrics
+    scores = evaluator.evaluate(data, run_name)
+    return scores
 
 
 def print_scores(scores: Dict[str, Any]) -> None:

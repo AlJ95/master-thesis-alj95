@@ -2,12 +2,27 @@
 # rptodo/cli.py
 
 from typing import Optional, List
+import os
+
+import pandas as pd
 
 import typer
 
 from ragnroll import __app_name__, __version__
 
 app = typer.Typer()
+
+os.environ["LANGFUSE_HOST"] = "http://localhost:3000"
+os.environ["LANGFUSE_SECRET_KEY"] = "sk-lf-6a6b4f2e-53bb-4381-8351-c1549b0b44db"
+os.environ["LANGFUSE_PUBLIC_KEY"] = "pk-lf-e3818c59-351d-46ea-917f-d06cde587ac5"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
+
+from haystack import tracing
+from haystack_integrations.components.connectors.langfuse import LangfuseConnector
+from langfuse import Langfuse
+
+tracing.tracer.is_content_tracing_enabled = True
 
 @app.command()
 def split_data(
@@ -77,34 +92,55 @@ def run_evaluations(
     eval_data_path : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...),
+    # ToDo: Baselines Options
 ):
     from .utils.pipeline import config_to_pipeline
     from .evaluation.eval import evaluate
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
+    import uuid
+
+    # Setup Run-ID
+    run_id = str(uuid.uuid4())
+    print(f"Run-ID: {run_id}")
+
     llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
 
     naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
     naive_rag_pipeline = index_documents(corpus_dir, naive_rag_pipeline)
 
-    # rag_pipeline = config_to_pipeline(configuration_file)
-    # rag_pipeline = index_documents(corpus_dir, rag_pipeline)
+    rag_pipeline = config_to_pipeline(configuration_file)
+    rag_pipeline = index_documents(corpus_dir, rag_pipeline)
     
     data = load_evaluation_data(eval_data_path)
 
     print("--------------------------------")
-    print("Baseline LLM")   
-    result_baseline_llm = None # evaluate(data, llm_pipeline)
+    run_name = f"LLM-Baseline-{run_id}"
+    print(run_name)
+    llm_pipeline.add_component("tracer", LangfuseConnector(run_name))
+    result_baseline_llm = evaluate(data, llm_pipeline, run_name=run_name)
     print("--------------------------------")
     print("Baseline Naive RAG")
-    result_baseline_naive_rag = evaluate(data, naive_rag_pipeline)
-    print("--------------------------------")
+    # run_name = f"Naive-RAG-Baseline-{run_id}"
+    # print(run_name)
+    # naive_rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
+    # result_baseline_naive_rag = evaluate(data, naive_rag_pipeline, run_name=run_name)
+    # print("--------------------------------")
     print("RAG")
-    # result_rag = evaluate(data, rag_pipeline)
-    print("--------------------------------")
+    # run_name = f"RAG-Pipeline-{run_id}"
+    # print(run_name)
+    # rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
+    # result_rag = evaluate(data, rag_pipeline, run_name=run_name)
+    # print("--------------------------------")
 
-    return result_baseline_llm, result_baseline_naive_rag#, result_rag
+    from .evaluation.tracing import fetch_current_traces
+    traces = fetch_current_traces(run_id)
 
+    results = pd.concat([result_baseline_llm, traces], axis=1)
+    results.T.to_csv(output_directory)
+
+    
+    return
 
 @app.command()
 def draw_pipeline(

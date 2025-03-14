@@ -18,13 +18,18 @@ components:
       required_variables: null
       template: '
 
-        "Given these documents, answer the question: 
+        Given these documents, answer the question: 
         {{ query }}
 
         Your answer is used within a pipeline and must follow the following format:
-        "valid" or "invalid". Make sure to avoid white spaces or other characters.
+        "The answer is "valid"" or "The answer is "invalid"" with quotation marks. Also allowed are "yes" or "no", "true" or "false", "1" or "0".
+        After stating your answer, explain your answer in detail.
+
+        Example:
+        Question: London is the capital of France.
+        Answer: "false", because the capital of France is Paris, not London.
         
-        Answer:"
+        Answer:
 
         '
       variables: null
