@@ -152,9 +152,9 @@ This requires the researcher to try many different RAG variations for rigorous t
 
 RAG systems have a lot of parameters that are not obvious to set. It is common as a researcher to have several reconfiguration phases till the RAG systems works sufficient. More reconfiguration phases lead logically to better results. Therefore Short feedback cycles and fast development make it possible to evaluate many configurations and short feedback cycles can lead to fast bottleneck improvements. This sections presents our considerations for offering fast RAG development.
 
-There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in one YAML-file to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
+There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack comes with custom components that enable new component technologies and does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in one YAML-file to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
 
-There are are also two more benefits for configuring via YAML files. First, we can copy existing RAG configurations easily and second, Haystack develops an UI for developing RAG system, that can be used to manage even very complex systems on a two-dimensional space. A demo screenshot can be seen on figure \ref{fig:deepsetstudio}. This simplifies RAG system development furthermore.
+There are are also two more benefits for configuring via YAML files. First, we can copy existing RAG configurations easily and second, Haystack develops an UI for developing RAG system, that can be used to manage even very complex systems on a two-dimensional space. A demo screenshot can be seen on figure \ref{fig:deepsetstudio}. This simplifies RAG system development furthermore. 
 
 
 \begin{figure}[b]
@@ -189,11 +189,9 @@ connections:
 - ...
 \end{minted}
 
-\textcolor{blue}{Soll ich hier noch über Custom Components sprechen?}
+As mentioned before, reconfiguration phases are important for overall system improvements, but doing generalizable and valid experiments over all reconfiguration phases is difficult. The evaluation dataset might change or gets extended to handle even more complex queries. DVC\cite{dvc.17.03.2025} is an open source data version control which 
 
-
-\section{Reconfiguration}
-The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section. 
+% The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section. 
 
 \section{Reporting}
 
