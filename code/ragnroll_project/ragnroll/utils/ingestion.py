@@ -45,6 +45,10 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
 
     configuration = pipeline.to_dict()
 
+    if "retriever" not in configuration["components"]:
+        print("No retriever found in configuration. Skipping indexing.")
+        return pipeline
+
     # Initialize document store
     document_store = InMemoryDocumentStore()
 

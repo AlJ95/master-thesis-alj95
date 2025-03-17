@@ -99,59 +99,79 @@ def run_evaluations(
     from .evaluation.eval import evaluate
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
+    from .evaluation.tracing import fetch_current_traces, report_metrics_to_langfuse
     from pathlib import Path
     import uuid
     import os
+    from dvclive import Live
 
     # Setup Run-ID
     run_id = str(uuid.uuid4())
     print(f"Run-ID: {run_id}")
 
-    try:
-        # Load and prepare pipelines
-        llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
+    baseline_configs = ["configs/baselines/llm_config.yaml", "configs/baselines/predefined_bm25.yaml"]
 
-        naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
-        naive_rag_pipeline = index_documents(corpus_dir, naive_rag_pipeline)
-
-        rag_pipeline = config_to_pipeline(configuration_file)
-        rag_pipeline = index_documents(corpus_dir, rag_pipeline)
+    gathered_results = []
+    for config in baseline_configs + [configuration_file]:
+        print(f"Running evaluation for {config}")
         
-        data = load_evaluation_data(eval_data_path)
+        try:
+            # Load and prepare pipelines
+            pipeline = config_to_pipeline(config)
+            pipeline = index_documents(corpus_dir, pipeline)
 
-        print("--------------------------------")
-        run_name = f"LLM-Baseline-{run_id}"
-        print(run_name)
-        llm_pipeline.add_component("tracer", LangfuseConnector(run_name))
-        result_baseline_llm = evaluate(data, llm_pipeline, run_name=run_name, track_resources=track_resources)
+        
+            data = load_evaluation_data(eval_data_path)
 
-        print("--------------------------------")
-        print("Baseline Naive RAG")
-        # run_name = f"Naive-RAG-Baseline-{run_id}"
-        # print(run_name)
-        # naive_rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
-        # result_baseline_naive_rag = evaluate(data, naive_rag_pipeline, run_name=run_name)
-        # print("--------------------------------")
-        print("RAG")
-        # run_name = f"RAG-Pipeline-{run_id}"
-        # print(run_name)
-        # rag_pipeline.add_component("tracer", LangfuseConnector(run_name))
-        # result_rag = evaluate(data, rag_pipeline, run_name=run_name)
-        # print("--------------------------------")
+            print("--------------------------------")
+            run_name = f"{config.split('/')[-1]}-{run_id}"
+            print(run_name)
+            pipeline.add_component("tracer", LangfuseConnector(run_name))
+            result = evaluate(data, pipeline, run_name=run_name, track_resources=track_resources)
 
-        from .evaluation.tracing import fetch_current_traces
-        traces = fetch_current_traces(run_id)
+        
+            # Fetch traces from Langfuse
+            traces = fetch_current_traces(run_name)
 
-        # Combine the evaluation results and traces
-        results = pd.concat([result_baseline_llm, traces], axis=1)
+        except Exception as e:
+            print(f"Warning: Failed to report metrics to Langfuse: {e}")
+
+        # In parallel, report evaluation metrics as scores to Langfuse
+        try:
+            # Extract DataFrames for pandas reporting (original approach)
+            df = result["dataframe"] if isinstance(result, dict) else result
+            print(df)
+
+            # Report end-to-end metrics for each pipeline
+            if isinstance(result, dict) and "trace_ids" in result and "metrics" in result:
+                trace_ids = result["trace_ids"]
+                for trace_id in trace_ids:
+                    report_metrics_to_langfuse(
+                        trace_id, 
+                        result["metrics"], 
+                        metric_type="end2end", 
+                    )
+                    
+                    # Report component metrics if available
+                    if "component_metrics" in result:
+                        for component_type, metrics in result["component_metrics"].items():
+                            report_metrics_to_langfuse(
+                                trace_id,
+                                metrics,
+                                metric_type=component_type,
+                            )
+            
+            print("Metrics successfully reported to Langfuse as scores")
+        except Exception as e:
+            print(f"Warning: Failed to report metrics to Langfuse: {e}")
+            
+        results = pd.concat([df, traces], axis=1)
+        gathered_results.append(results)
 
         # Save the combined results
-        results.T.to_csv(output_directory)
-        print(f"Evaluation results saved to {output_directory}")
+    pd.concat(gathered_results).T.to_csv(output_directory)
+    print(f"Evaluation results saved to {output_directory}")
 
-    finally:
-        pass
-    
     return
 
 def _version_callback(value: bool) -> None:
