@@ -194,7 +194,24 @@ As mentioned before, reconfiguration phases are important for overall system imp
 % The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section. 
 
 \section{Reporting}
+% Hier eine stichpunktartige Zusammenfassung, die du als Kommentar in deiner LaTeX-Masterarbeit verwenden kannst:
+% DVC für Data Versioning:
 
+% DVC wird primär zur Versionierung von Daten, Modellen und Code verwendet – in Git integriert und ermöglicht so Reproduzierbarkeit in ML-Projekten.
+% Visualisierungsstandard in DVC:
+
+% Die native plot diff-Funktion von DVC generiert hauptsächlich Liniendiagramme, was ideal für zeitbasierte Entwicklungen (z. B. Trainingsverlauf) ist.
+% Herausforderung bei RAG-Metriken:
+
+% RAG-spezifische Metriken (z. B. Generator Faithfulness, Answer Relevance, Retrieval MAP@K) repräsentieren den Vergleich verschiedener Architekturen/Konfigurationen und besitzen keine natürliche Zeitachse.
+% Liniendiagramme sind daher nicht optimal, um diese Metriken anschaulich darzustellen.
+% Lösungsansätze:
+
+% Eigene Reporting-Skripte:
+% Export der Experiment-Ergebnisse (z. B. als JSON oder CSV) und anschließende Visualisierung mit externen Bibliotheken (Matplotlib, Plotly) in Diagrammtypen wie Balkendiagrammen, Boxplots oder Scatterplots.
+% Kombination mit spezialisierten Tools:
+% Ergänzung von DVC durch dedizierte Experiment-Tracking-Tools (MLflow, Weights & Biases, DVCLive) zur detaillierten Visualisierung, während DVC weiterhin die Datenversionierung übernimmt.
+% Diese Ansätze ermöglichen es, DVC als Rückgrat für die Datenversionierung zu nutzen und gleichzeitig flexible, an RAG-spezifische Bedürfnisse angepasste Visualisierungen zu erstellen.
 \section{Increasing Transparency in RAG Experiments}
 
 \begin{itemize}
