@@ -73,3 +73,6 @@ __pycache__/
 
 */thesis.log
 */thesis.fdb_latexmk
+
+# Output Files
+*.csv
