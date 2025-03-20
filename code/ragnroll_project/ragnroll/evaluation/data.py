@@ -3,12 +3,10 @@ from warnings import warn
 import json
 import pandas as pd
 
-def load_evaluation_data(data_path: str):
+def load_evaluation_data(data_path: Path):
     """
     Loads data from a directory containing datasets or directly from a single file
     """
-    data_path = Path(data_path)
-    
     # Check if the path is a file or directory
     if data_path.is_file():
         # Direct file handling

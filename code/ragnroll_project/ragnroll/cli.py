@@ -39,32 +39,60 @@ def split_data(
     typer.echo(f"Successfully split data into train/val/test sets in {path}")
     
 
+def test_generalization_error(
+    path: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
+):
+    """
+    Test generalization error of a model.
+    """
+    # TODO: Get all configurations from output.csv
+    # TODO: Run evaluation for each configuration on test set
+    # TODO: Mark test set as used
+    # TODO: If user wants to run on used test set, raise warning
 
 
 @app.command()
 def run_evaluations(
-    configuration_file: str = typer.Argument(...),
-    eval_data_path : str = typer.Argument(...),
+    configuration_file: str = typer.Argument(...), 
+    eval_data_file : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
-    output_directory: str = typer.Argument(...),
-    track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"),
-    # ToDo: Baselines Options
+    output_directory: str = typer.Argument(...), # TODO This must be removed to get consistent output name for test set run
+    track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"), # TODO Remove this option
+    baselines: bool = typer.Option(True, help="Run baselines"),
 ):
     from .utils.pipeline import config_to_pipeline
     from .evaluation.eval import evaluate
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
-    from .evaluation.tracing import fetch_current_traces, report_metrics_to_langfuse
+    from .evaluation.tracing import fetch_current_traces
+    from .utils.data import val_test_split
     from pathlib import Path
     import uuid
-    import os
-    from dvclive import Live
+    import warnings
+
+    eval_data_path = Path(eval_data_file)
+
+    # Split the evaluation data into val, test sets based on Simon et al. (2024) 
+    val_test_split(eval_data_path)
+
+    if not eval_data_path.exists():
+        warnings.warn(f"Evaluation data path {eval_data_path} does not exist")
+        typer.Abort()
+    if eval_data_path.is_dir():
+        warnings.warn(f"Evaluation data path {eval_data_path} is a directory")
+        typer.Abort()
+
+    val_data_path = eval_data_path.parent / "val" / eval_data_path.name
+    assert val_data_path.exists(), f"Validation data path {val_data_path} does not exist"
 
     # Setup Run-ID
     run_id = str(uuid.uuid4())
     print(f"Run-ID: {run_id}")
 
-    baseline_configs = ["configs/baselines/llm_config.yaml", "configs/baselines/predefined_bm25.yaml"]
+    if baselines:
+        baseline_configs = ["configs/baselines/llm_config.yaml", "configs/baselines/predefined_bm25.yaml"]
+    else:
+        baseline_configs = []
 
     gathered_results = []
     for config in baseline_configs + [configuration_file]:
@@ -76,7 +104,7 @@ def run_evaluations(
             pipeline = index_documents(corpus_dir, pipeline)
 
         
-            data = load_evaluation_data(eval_data_path)
+            data = load_evaluation_data(val_data_path)
 
             print("--------------------------------")
             run_name = f"{config.split('/')[-1]}-{run_id}"
@@ -88,44 +116,17 @@ def run_evaluations(
             # Fetch traces from Langfuse
             traces = fetch_current_traces(run_name)
 
+
+            df = result["dataframe"]
+                
+            results = pd.concat([df, traces], axis=1)
+            gathered_results.append(results)
+
+            pd.concat(gathered_results).T.to_csv(output_directory)
+            print(f"Evaluation results saved to {output_directory}")
+
         except Exception as e:
-            print(f"Warning: Failed to report metrics to Langfuse: {e}")
-
-        # In parallel, report evaluation metrics as scores to Langfuse
-        try:
-            # Extract DataFrames for pandas reporting (original approach)
-            df = result["dataframe"] if isinstance(result, dict) else result
-            print(df)
-
-            # Report end-to-end metrics for each pipeline
-            if isinstance(result, dict) and "trace_ids" in result and "metrics" in result:
-                trace_ids = result["trace_ids"]
-                for trace_id in trace_ids:
-                    report_metrics_to_langfuse(
-                        trace_id, 
-                        result["metrics"], 
-                        metric_type="end2end", 
-                    )
-                    
-                    # Report component metrics if available
-                    if "component_metrics" in result:
-                        for component_type, metrics in result["component_metrics"].items():
-                            report_metrics_to_langfuse(
-                                trace_id,
-                                metrics,
-                                metric_type=component_type,
-                            )
-            
-            print("Metrics successfully reported to Langfuse as scores")
-        except Exception as e:
-            print(f"Warning: Failed to report metrics to Langfuse: {e}")
-            
-        results = pd.concat([df, traces], axis=1)
-        gathered_results.append(results)
-
-        # Save the combined results
-    pd.concat(gathered_results).T.to_csv(output_directory)
-    print(f"Evaluation results saved to {output_directory}")
+            print(f"Error running evaluation for {config}: {e}")
 
     return
 
