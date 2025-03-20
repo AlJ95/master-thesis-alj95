@@ -49,5 +49,7 @@ def val_test_split(path: str = "data/processed", test_size: float = 20, random_s
             
             # Save splits
             base_name = file.stem
-            val_df.to_json(val_path / f"{base_name}_val.json", orient='records')
-            test_df.to_json(test_path / f"{base_name}_test.json", orient='records')
+            with open(val_path / f"{base_name}_val.json", 'w') as f:
+                json.dump({"test_cases": [test_case for test_case in val_df.test_cases.values]}, f)
+            with open(test_path / f"{base_name}_test.json", 'w') as f:
+                json.dump({"test_cases": [test_case for test_case in test_df.test_cases.values]}, f)

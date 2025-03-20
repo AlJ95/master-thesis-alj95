@@ -76,3 +76,5 @@ __pycache__/
 
 # Output Files
 *.csv
+*test.json
+*val.json
