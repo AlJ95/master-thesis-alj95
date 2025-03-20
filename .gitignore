@@ -78,3 +78,7 @@ __pycache__/
 *.csv
 *test.json
 *val.json
+
+# all subdirectories with /val/ or /test/
+**/val/**
+**/test/**
