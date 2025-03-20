@@ -194,7 +194,6 @@ As mentioned before, reconfiguration phases are important for overall system imp
 % The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section. 
 
 \section{Reporting}
-% Hier eine stichpunktartige Zusammenfassung, die du als Kommentar in deiner LaTeX-Masterarbeit verwenden kannst:
 % DVC für Data Versioning:
 
 % DVC wird primär zur Versionierung von Daten, Modellen und Code verwendet – in Git integriert und ermöglicht so Reproduzierbarkeit in ML-Projekten.
@@ -212,6 +211,12 @@ As mentioned before, reconfiguration phases are important for overall system imp
 % Kombination mit spezialisierten Tools:
 % Ergänzung von DVC durch dedizierte Experiment-Tracking-Tools (MLflow, Weights & Biases, DVCLive) zur detaillierten Visualisierung, während DVC weiterhin die Datenversionierung übernimmt.
 % Diese Ansätze ermöglichen es, DVC als Rückgrat für die Datenversionierung zu nutzen und gleichzeitig flexible, an RAG-spezifische Bedürfnisse angepasste Visualisierungen zu erstellen.
+
+% Warum nicht full-mode mlflow mit mlflow.genai (s. Docs)?
+% Überall steht dran Experimental: This function may change or be removed in a future release without warning.
+% Es gibt kein LLM-as-a-Judge für Retrieval. Es wird Ground-Truth Doc Ids benötigt, welches wie bereits besprochen ungünstig für schnelles RAG Entwickeln ist. 
+% GenAI ist nicht dafür ausgelegt den Blueprint Ansatz durchzuführen sondern versucht alles out-of-the-box anzubieten.
+
 \section{Increasing Transparency in RAG Experiments}
 
 \begin{itemize}
