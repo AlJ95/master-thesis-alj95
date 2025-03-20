@@ -34,54 +34,9 @@ def split_data(
     Split data into train, validation and test sets from JSON/CSV files.
     Creates three directories: train, val, test
     """
-    from sklearn.model_selection import train_test_split
-    import pandas as pd
-    import json
-    from pathlib import Path
-    
-    path = Path(path)
-    
-    # Validate input parameters
-    if not (0 < test_size < 100):
-        raise typer.BadParameter("test_size must be between 0 and 100")
-    
-    # Create output directories
-    val_path = path / "val" 
-    test_path = path / "test"
-    val_path.mkdir(exist_ok=True)
-    test_path.mkdir(exist_ok=True)
-    
-    # Process files
-    if path.is_dir():
-        # Get only JSON/CSV files
-        files = [f for f in path.iterdir() if f.is_file() and f.suffix.lower() in ['.json', '.csv']]
-        
-        if not files:
-            raise typer.BadParameter("No JSON or CSV files found in directory")
-            
-        # Process each file
-        for file in files:
-            # Load data
-            if file.suffix.lower() == '.json':
-                with open(file) as f:
-                    data = json.load(f)
-                df = pd.DataFrame(data)
-            else:  # CSV
-                df = pd.read_csv(file)
-                
-            # Split data
-            val_df, test_df = train_test_split(
-                df,
-                test_size=test_size/100,
-                random_state=random_state
-            )
-            
-            # Save splits
-            base_name = file.stem
-            val_df.to_json(val_path / f"{base_name}_val.json", orient='records')
-            test_df.to_json(test_path / f"{base_name}_test.json", orient='records')
-            
-        typer.echo(f"Successfully split data into train/val/test sets in {path}")
+    from .utils.data import val_test_split
+    val_test_split(path, test_size, random_state)
+    typer.echo(f"Successfully split data into train/val/test sets in {path}")
     
 
 
