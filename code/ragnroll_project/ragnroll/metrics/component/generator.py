@@ -211,6 +211,7 @@ class ContextUtilizationMetric(JudgeBasedMetric):
     
     def run(
         self,
+        # TODO: HIER IST EIN FEHLER: contexts muss aus component_outputs abgeleitet werden, aber welches Component soll dafür verwendet werden?
         component_outputs: List[Dict[str, Any]],
         queries: List[str] = None,
         contexts: List[List[str]] = None,
