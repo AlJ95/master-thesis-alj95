@@ -82,3 +82,6 @@ __pycache__/
 # all subdirectories with /val/ or /test/
 **/val/**
 **/test/**
+
+# mlflow
+**/mlruns/**
