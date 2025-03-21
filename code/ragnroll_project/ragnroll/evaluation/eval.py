@@ -1,4 +1,5 @@
 from ragnroll.metrics import MetricRegistry, BaseMetric
+from ragnroll.utils.config import get_components_from_config_by_class
 from haystack import Pipeline, Document
 from typing import List, Dict, Any, Tuple, Type, Optional, Union
 from collections import defaultdict
@@ -52,7 +53,13 @@ class EvaluationDataset:
     def _generate_answer(self, pipeline: Pipeline, input_text: str) -> Dict[str, Any]:
         """Generate an answer using the pipeline."""
         components = list(pipeline.to_dict()["components"].keys())
-        return pipeline.run(data=dict(query=input_text), include_outputs_from=components)
+        data = dict(query=input_text)
+
+        # Add text to data if embedding retriever is present
+        if get_components_from_config_by_class(pipeline.to_dict(), ".embedding_retriever."):
+            data["text"] = input_text
+
+        return pipeline.run(data=data, include_outputs_from=components)
     
     def _extract_answer_from_pipeline(self, response: Dict[str, Any]) -> str:
         """Extract the answer from the pipeline response."""
@@ -538,16 +545,13 @@ def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
     
     # Add trace IDs and metrics details to the returned result
     # This information will be used by the CLI to report to Langfuse
+    
     result = {
         "dataframe": scores,
         "trace_ids": trace_ids,
         "metrics": end_to_end_metrics_details,
         "component_metrics": component_metrics_details
     }
-    
-    # For backward compatibility, ensure the DataFrame is directly accessible
-    for key, value in result.items():
-        scores.attrs[key] = value
     
     return result
 

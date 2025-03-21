@@ -58,7 +58,8 @@ def run_evaluations(
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...), # TODO This must be removed to get consistent output name for test set run
     track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"), # TODO Remove this option
-    baselines: bool = typer.Option(True, help="Run baselines"),
+    baselines: bool = typer.Option(True, help="Run baselines"), 
+    experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
 ):
     from .utils.pipeline import config_to_pipeline
     from .evaluation.eval import evaluate
@@ -66,10 +67,13 @@ def run_evaluations(
     from .utils.ingestion import index_documents
     from .evaluation.tracing import fetch_current_traces
     from .utils.data import val_test_split
+    from .utils.config import extract_run_params
     from pathlib import Path
     import uuid
     import warnings
+    import mlflow
 
+    mlflow.set_tracking_uri(uri="http://localhost:8080")
     eval_data_path = Path(eval_data_file)
 
     # Split the evaluation data into val, test sets based on Simon et al. (2024) 
@@ -86,8 +90,7 @@ def run_evaluations(
     assert val_data_path.exists(), f"Validation data path {val_data_path} does not exist"
 
     # Setup Run-ID
-    run_id = str(uuid.uuid4())
-    print(f"Run-ID: {run_id}")
+    mlflow.set_experiment(experiment_name=experiment_name)
 
     if baselines:
         baseline_configs = ["configs/baselines/llm_config.yaml", "configs/baselines/predefined_bm25.yaml"]
@@ -95,38 +98,39 @@ def run_evaluations(
         baseline_configs = []
 
     gathered_results = []
+    
     for config in baseline_configs + [configuration_file]:
         print(f"Running evaluation for {config}")
+
+        run_name = ".".join(config.split("/")[-2:])
+        with mlflow.start_run(run_name=run_name):
         
-        try:
-            # Load and prepare pipelines
-            pipeline = config_to_pipeline(config)
-            pipeline = index_documents(corpus_dir, pipeline)
+                # Load and prepare pipelines
+                pipeline = config_to_pipeline(config)
 
-        
-            data = load_evaluation_data(val_data_path)
+                params = extract_run_params(config)
+                mlflow.log_params(params)
 
-            print("--------------------------------")
-            run_name = f"{config.split('/')[-1]}-{run_id}"
-            print(run_name)
-            pipeline.add_component("tracer", LangfuseConnector(run_name))
-            result = evaluate(data, pipeline, run_name=run_name, track_resources=track_resources)
+                pipeline = index_documents(corpus_dir, pipeline)
+                pipeline.add_component("tracer", LangfuseConnector(run_name))
+                data = load_evaluation_data(val_data_path)
 
-        
-            # Fetch traces from Langfuse
-            traces = fetch_current_traces(run_name)
+                result = evaluate(data, pipeline, run_name=run_name, track_resources=track_resources)
+                df = result["dataframe"]
 
-
-            df = result["dataframe"]
+                traces = fetch_current_traces(run_name)
                 
-            results = pd.concat([df, traces], axis=1)
-            gathered_results.append(results)
+                for col in df.columns:
+                    mlflow.log_metrics({".".join(col): df[col].values[0]})
 
-            pd.concat(gathered_results).T.to_csv(output_directory)
-            print(f"Evaluation results saved to {output_directory}")
+                mlflow.log_table(data=df, artifact_file="evaluation_results.json")
 
-        except Exception as e:
-            print(f"Error running evaluation for {config}: {e}")
+                results = pd.concat([df, traces], axis=1)
+                gathered_results.append(results)
+
+                pd.concat(gathered_results).T.to_csv(output_directory)
+                print(f"Evaluation results saved to {output_directory}")
+
 
     return
 
