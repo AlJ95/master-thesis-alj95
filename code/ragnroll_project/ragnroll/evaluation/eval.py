@@ -31,10 +31,6 @@ class EvaluationDataset:
             try:
                 input_text = test_case["input"]
                 expected_output = test_case["expected_output"]
-                
-                # Get ground truth documents if available
-                expected_retrieval = test_case.get("expected_retrieval", None)
-                
                 # Generate the answer using the pipeline
                 response = self._generate_answer(pipeline, input_text)
                 actual_output = self._extract_answer_from_pipeline(response)
@@ -45,7 +41,6 @@ class EvaluationDataset:
                     "expected_output": expected_output,
                     "actual_output": actual_output,
                     "component_outputs": response,
-                    "expected_retrieval": expected_retrieval
                 })
             except Exception as e:
                 logger.error(f"Error generating answer for test case: {e}")
@@ -143,41 +138,40 @@ class Evaluator:
                 
         return metrics
     
-    def evaluate(self, evaluation_data: Dict[str, Any], run_id: str) -> pd.DataFrame:
-        """
-        Run the evaluation on the provided data.
+    # def evaluate(self, evaluation_data: Dict[str, Any], run_id: str) -> pd.DataFrame:
+    #     """
+    #     Run the evaluation on the provided data.
         
-        Args:
-            evaluation_data: Test cases to evaluate
+    #     Args:
+    #         evaluation_data: Test cases to evaluate
             
-        Returns:
-            Dict[str, Any]: Evaluation results
-        """
-        # Generate dataset with predictions
-        dataset = EvaluationDataset(evaluation_data)
+    #     Returns:
+    #         Dict[str, Any]: Evaluation results
+    #     """
+    #     # Generate dataset with predictions
+    #     dataset = EvaluationDataset(evaluation_data)
+    #     # Generiere Vorhersagen
+    #     dataset.generate_predictions(self.pipeline)
+    #     processed_data = dataset.get_processed_data()
         
-        # Generiere Vorhersagen
-        dataset.generate_predictions(self.pipeline)
-        processed_data = dataset.get_processed_data()
+    #     # Run end-to-end evaluations
+    #     end_to_end_results = self._evaluate_end_to_end(processed_data["test_cases"])
         
-        # Run end-to-end evaluations
-        end_to_end_results = self._evaluate_end_to_end(processed_data["test_cases"])
+    #     # Run component-wise evaluations
+    #     component_results = self._evaluate_components(processed_data["test_cases"])
         
-        # Run component-wise evaluations
-        component_results = self._evaluate_components(processed_data["test_cases"])
-        
-        # Combine results
-        results = {
-            "end-to-end": end_to_end_results,
-            "component-wise": component_results
-        }
+    #     # Combine results
+    #     results = {
+    #         "end-to-end": end_to_end_results,
+    #         "component-wise": component_results
+    #     }
 
-        print_scores(results)
+    #     print_scores(results)
 
-        # Convert results to pandas DataFrames
-        results_df = self._results_to_df(end_to_end_results, component_results, run_id)
+    #     # Convert results to pandas DataFrames
+    #     results_df = self._results_to_df(end_to_end_results, component_results, run_id)
         
-        return results_df
+    #     return results_df
 
     def _results_to_df(self, end_to_end_results: Dict[str, float], component_results: Dict[str, Dict[str, float]], run_id: str) -> pd.DataFrame:
         """
@@ -261,14 +255,7 @@ class Evaluator:
                 component_types[comp_name] = "generator"
             elif ".retriever." in comp_type:
                 component_types[comp_name] = "retriever"
-            else:
-                # Fallback to component name-based detection for compatibility
-                if comp_name.startswith("retriever"):
-                    component_types[comp_name] = "retriever"
-                elif comp_name.startswith("generator") or comp_name.startswith("llm"):
-                    component_types[comp_name] = "generator"
-        
-        # Group test cases by component
+                # Group test cases by component
         component_data = defaultdict(lambda: defaultdict(list))
         
         # Gather all data needed for each component
@@ -285,20 +272,6 @@ class Evaluator:
                     component_data[component_type]["input_texts"].append(test_case["input"])
                     component_data[component_type]["queries"].append(test_case["input"])
                     
-                    # Add expected retrieval documents if available
-                    expected_retrieval = test_case.get("expected_retrieval", None)
-                    if expected_retrieval:
-                        if not all(isinstance(doc, Document) for doc in expected_retrieval):
-                            expected_retrieval = [
-                                Document(content=doc["content"]) if isinstance(doc, dict) else Document(content=doc)
-                                for doc in expected_retrieval
-                            ]
-                        
-                        if "expected_retrievals" not in component_data[component_type]:
-                            component_data[component_type]["expected_retrievals"] = []
-                        
-                        component_data[component_type]["expected_retrievals"].append(expected_retrieval)
-        
         
         # Evaluate each component
         for component_type, component_metrics in self.component_metrics.items():
@@ -317,10 +290,6 @@ class Evaluator:
                         "input_texts": component_inputs["input_texts"],
                         "queries": component_inputs["queries"]
                     }
-                    
-                    # Add expected retrievals if available
-                    if "expected_retrievals" in component_inputs:
-                        metric_params["expected_retrievals"] = component_inputs["expected_retrievals"]
                     
                     # Run metric
                     metric_result = metric.run(**metric_params)
@@ -538,6 +507,8 @@ def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
                 except Exception as e:
                     logger.error(f"Error saving raw metrics to file: {e}")
     
+    except Exception as e:
+        logger.error(f"Error evaluating pipeline: {e}")
     finally:
         # Stop resource tracking if it was started
         if track_resources and resource_tracker:
