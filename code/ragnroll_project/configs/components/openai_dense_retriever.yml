@@ -1,0 +1,30 @@
+components:
+  embedder:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-ada-002
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+  embedding_retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          embedding_similarity_function: dot_product
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      return_embedding: false
+      scale_score: false
+      top_k: 10
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+connections:
+- receiver: embedding_retriever.query_embedding
+  sender: embedder.embedding
+# max_runs_per_component: 100
+# metadata: {}
