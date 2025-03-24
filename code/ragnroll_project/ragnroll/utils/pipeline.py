@@ -1,6 +1,7 @@
 from haystack import Pipeline
 from pathlib import Path
 from dotenv import load_dotenv
+from typing import Dict, Any
 from .components import *
 
 def config_to_pipeline(configuration_file_path: str) -> Pipeline:
@@ -22,6 +23,41 @@ def config_to_pipeline(configuration_file_path: str) -> Pipeline:
     load_dotenv()
     pipeline = Pipeline.load(open(configuration_file_path, "r"))
     return pipeline
+
+
+def extract_component_structure(pipeline: Pipeline) -> Dict[str, Any]:
+    """
+    Extract the structure of a pipeline.
+    """
+    pipeline_dict = pipeline.to_dict()
+    components = pipeline_dict["components"]
+    connections = pipeline_dict["connections"]
+
+    structure = {}
+    for name, component in components.items():
+
+        input_connections = [
+            con 
+            for con in connections 
+            if name == con["receiver"].split(".")[0]
+            ]
+        
+        output_connections = [
+            con for 
+            con in connections 
+            if name == con["sender"].split(".")[0]
+        ]
+
+        structure[name] = {
+            "type": component["type"],
+            "input_connections": input_connections,
+            "input_vars": [con["receiver"].split(".")[1] for con in input_connections],
+            "output_connections": output_connections,
+            "output_vars": [con["sender"].split(".")[1] for con in output_connections],
+        }
+
+        return structure
+
 
 
 def draw_pipeline(pipeline: Pipeline, output_file: str) -> None:
