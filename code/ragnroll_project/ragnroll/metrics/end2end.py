@@ -1,7 +1,5 @@
 from typing import Dict, Any, List, Tuple, Optional
 from ragnroll.metrics.base import BaseMetric, MetricRegistry
-import math
-import numpy as np
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, roc_curve, auc
 
 class ClassificationBaseMetric(BaseMetric):
@@ -60,7 +58,7 @@ class ClassificationBaseMetric(BaseMetric):
         """
         y_true = []
         y_pred = []
-        
+
         for expected, actual in zip(expected_outputs, actual_outputs):
             expected_class = self._convert_to_binary_class(expected)
             actual_class = self._convert_to_binary_class(actual)
