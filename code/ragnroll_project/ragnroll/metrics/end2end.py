@@ -2,6 +2,8 @@ from typing import Dict, Any, List, Tuple, Optional
 from ragnroll.metrics.base import BaseMetric, MetricRegistry
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, roc_curve, auc
 
+SENT_WARNING_ONCE = False
+
 class ClassificationBaseMetric(BaseMetric):
     """Base class for binary classification metrics that work with batches of predictions."""
     
@@ -450,6 +452,10 @@ class ROCAUCMetric(ClassificationBaseMetric):
                 y_probs = probabilities
             else:
                 y_probs = [float(pred) for pred in y_pred]
+                # Add a warning to the results when using binary predictions
+                if not SENT_WARNING_ONCE:
+                    print("Warning: ROC AUC calculated with binary predictions instead of probabilities. Results may be less informative.")
+                    SENT_WARNING_ONCE = True
             
             # Calculate AUC if we have enough data points and at least two classes
             if len(y_true) >= 2 and len(set(y_true)) > 1:

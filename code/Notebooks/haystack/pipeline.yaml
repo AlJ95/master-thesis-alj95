@@ -1,4 +1,9 @@
 components:
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(.*)".
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
   embedder:
     init_parameters:
       api_base_url: null
@@ -55,7 +60,7 @@ components:
           bm25_parameters: {}
           bm25_tokenization_regex: (?u)\b\w\w+\b
           embedding_similarity_function: dot_product
-          index: 2c25283d-7019-40b0-b650-c5c8e9249682
+          index: e66e4d5d-53b0-4fff-962c-97ca0ff3388c
         type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
       filter_policy: replace
       filters: null
@@ -72,5 +77,7 @@ connections:
   sender: ranker.documents
 - receiver: generator.prompt
   sender: prompt_builder.prompt
+- receiver: answer_builder.replies
+  sender: generator.replies
 max_runs_per_component: 100
 metadata: {}
