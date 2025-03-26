@@ -2,20 +2,18 @@ import sys, os
 try:
     from ragnroll.metrics import MetricRegistry, BaseMetric
     from ragnroll.utils.config import get_components_from_config_by_class
+    from ragnroll.utils.pipeline import get_last_component_with_documents
 except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from ragnroll.metrics import MetricRegistry, BaseMetric
     from ragnroll.utils.config import get_components_from_config_by_class
-from haystack import Pipeline, Document
-from typing import List, Dict, Any, Tuple, Type, Optional, Union
-from collections import defaultdict
+    from ragnroll.utils.pipeline import get_last_component_with_documents
+from haystack import Pipeline
+from typing import List, Dict, Any, Optional
 import logging
-import inspect
 import pandas as pd
 import os
 
-# Standard-Werte für Klassifikations-Labels
-# Diese können später in eine Konfigurationsdatei ausgelagert werden
 DEFAULT_POSITIVE_LABEL = "valid"
 DEFAULT_NEGATIVE_LABEL = "invalid"
 
@@ -63,9 +61,7 @@ class EvaluationDataset:
     def _extract_answer_from_pipeline(self, response: Dict[str, Any]) -> str:
         """Extract the answer from the pipeline response."""
         if "answer_builder" in response:
-            return response["answer_builder"]["answer"]
-        elif "llm" in response:
-            return response["llm"]["replies"][0]
+            return response["answer_builder"]["answers"][0].data
         else:
             raise ValueError(f"Could not extract answer from pipeline response: {response}. Make sure the pipeline has an answer_builder component.")
     
@@ -149,7 +145,39 @@ class Evaluator:
                 
         return metrics
     
-    def evaluate(self, evaluation_data: Dict[str, Any], run_id: str) -> pd.DataFrame:
+    def _track_resources(self, track_resources: bool, run_name: str):
+        resource_tracker = None
+        if track_resources:
+            try:
+                from ragnroll.metrics.system import SystemResourceTracker
+                resource_tracker = SystemResourceTracker()
+                resource_tracker.start_tracking()
+                logger.info(f"System resource tracking enabled for evaluation run: {run_name}")
+            except ImportError:
+                logger.warning("Could not import SystemResourceTracker. Resource tracking disabled.")
+                track_resources = False
+
+        return resource_tracker
+    
+    def _get_component_types_mapping(self) -> Dict[str, str]:
+        """
+        Get a mapping of component names to their types.
+        {'component_name': 'component_type'}
+
+        Example:
+        {'llm': 'generator', 'retriever': 'retriever'}
+        """
+        component_types = {}
+        pipeline_components = self.pipeline.to_dict()["components"]
+        for component_name, component_details in pipeline_components.items():
+            component_type = component_details.get("type", "")
+            if ".generators." in component_type:
+                component_types[component_name] = "generator"
+            elif ".retrievers." in component_type:
+                component_types[component_name] = "retriever"
+        return component_types
+    
+    def evaluate(self, evaluation_data: Dict[str, Any], run_name: str, track_resources: bool = False) -> pd.DataFrame:
         """
         Run the evaluation on the provided data.
         
@@ -159,63 +187,80 @@ class Evaluator:
         Returns:
             Dict[str, Any]: Evaluation results
         """
-        # TODO Das sollte die FUnktion sein, die ausgeführt wird.
-        # Generate dataset with predictions
-        dataset = EvaluationDataset(evaluation_data)
-        # Generiere Vorhersagen
-        dataset.generate_predictions(self.pipeline)
-        processed_data = dataset.get_processed_data()
-        trace_ids = dataset.get_trace_ids()
-        # Run end-to-end evaluations
-        end_to_end_results = self._evaluate_end_to_end(processed_data)
-        
-        # Run component-wise evaluations
-        component_results = self._evaluate_components(processed_data)
-        
-        # Combine results
-        results = {
-            "end-to-end": end_to_end_results,
-            "component-wise": component_results
-        }
 
-        print_scores(results)
+        if track_resources:
+            resource_tracker = self._track_resources(track_resources, run_name)
 
-        # Convert results to pandas DataFrames
-        results_df = self._results_to_df(end_to_end_results, component_results, run_id)
-        
-        return results_df
+        try:
 
-    def _results_to_df(self, end_to_end_results: Dict[str, float], component_results: Dict[str, Dict[str, float]], run_id: str) -> pd.DataFrame:
+            # TODO Das sollte die FUnktion sein, die ausgeführt wird.
+            # Generate dataset with predictions
+            dataset = EvaluationDataset(evaluation_data)
+            # Generiere Vorhersagen
+            dataset.generate_predictions(self.pipeline)
+            processed_data = dataset.get_processed_data()
+            trace_ids = dataset.get_trace_ids()
+            # Run end-to-end evaluations
+            end_to_end_results = self._evaluate_end_to_end(processed_data)
+            
+            # Run component-wise evaluations
+            component_results = self._evaluate_components(processed_data)
+            
+            # Combine results
+            results = {
+                "end-to-end": end_to_end_results,
+                "component-wise": component_results
+            }
+
+            print_scores(results)
+
+            # Convert results to pandas DataFrames
+            results_df = self._results_to_df(end_to_end_results, component_results, run_name)
+            
+            return results_df
+        finally:
+            if track_resources and resource_tracker:
+                resource_tracker.stop_tracking()
+
+    def _results_to_df(self, end_to_end_results: Dict[str, float], component_results: Dict[str, Dict[str, float]], run_name: str) -> pd.DataFrame:
         """
         Convert results to pandas DataFrames
         """
+        gathered_retriever_results = pd.DataFrame()
+        gathered_generator_results = pd.DataFrame()
+
         if "generator" in component_results:
-            generator_results = pd.DataFrame([component_results["generator"]])
-            generator_results.columns = pd.MultiIndex.from_tuples([("GEN", col) for col in generator_results.columns])
+            for generator_name, generator_results in component_results["generator"].items():
+                generator_results = pd.DataFrame([generator_results])
+                generator_results.columns = pd.MultiIndex.from_tuples([("GEN", generator_name, col) for col in generator_results.columns])
+                gathered_generator_results = pd.concat([gathered_generator_results, generator_results], axis=1)
         else:
-            generator_results = pd.DataFrame()
+            gathered_generator_results = pd.DataFrame()
 
         if "retriever" in component_results:
-            retriever_results = pd.DataFrame([component_results["retriever"]])
-            retriever_results.columns = pd.MultiIndex.from_tuples([("RET", col) for col in retriever_results.columns])
+            for retriever_name, retriever_results in component_results["retriever"].items():
+                retriever_results = pd.DataFrame([retriever_results])
+                retriever_results.columns = pd.MultiIndex.from_tuples([("RET", retriever_name, col) for col in retriever_results.columns])
+                gathered_retriever_results = pd.concat([gathered_retriever_results, retriever_results], axis=1)
         else:
-            retriever_results = pd.DataFrame()
+            gathered_retriever_results = pd.DataFrame()
 
         end_to_end_results = pd.DataFrame([end_to_end_results])
-        end_to_end_results.columns = pd.MultiIndex.from_tuples([("E2E", col) for col in end_to_end_results.columns])
+        end_to_end_results.columns = pd.MultiIndex.from_tuples([("E2E", "", col) for col in end_to_end_results.columns])
 
         results_df = pd.concat([
             end_to_end_results,
-            generator_results,
-            retriever_results
+            gathered_generator_results,
+            gathered_retriever_results
         ], axis=1)
 
-        results_df.loc[:, "run_id"] = run_id
-        results_df.set_index("run_id", inplace=True)
+        results_df.loc[:, "run_name"] = run_name
+        results_df.set_index("run_name", inplace=True)
+
+        print(results_df.T)
         
         return results_df
         
-
     def _evaluate_end_to_end(self, test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
         """
         Evaluate all end-to-end metrics on the complete set of test cases.
@@ -246,6 +291,70 @@ class Evaluator:
         
         return results
     
+    def _evaluate_retriever(self, retriever_name: List[str], test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
+        """
+        Evaluate all retriever metrics on the complete set of test cases.
+        """
+        results = {}
+        
+        # Extract queries and retriever outputs from test cases
+        queries = [tc["input"] for tc in test_cases]
+        retriever_outputs = [
+            tc["component_outputs"].get(retriever_name, {})
+            for tc in test_cases
+        ]
+        
+        # Apply each retriever metric
+        for metric_name, metric in self.component_metrics.get("retriever", {}).items():
+            try:
+                metric_result = metric.run(
+                    component_outputs=retriever_outputs,
+                    queries=queries
+                )
+                results[metric_name] = metric_result["score"]
+            except Exception as e:
+                logger.error(f"Error evaluating retriever {retriever_name} with {metric_name}: {e}")
+                results[metric_name] = 0.0
+                
+        return results
+        
+    def _evaluate_generator(self, generator_name: str, test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
+        """
+        Evaluate all generator metrics on the complete set of test cases.
+        """
+        results = {}
+        
+        # Extract queries and generator outputs from test cases
+        queries = [tc["input"] for tc in test_cases]
+        generator_outputs = [
+            tc["component_outputs"].get(generator_name, {})
+            for tc in test_cases
+        ]
+        component_with_documents = get_last_component_with_documents(self.pipeline, generator_name)
+        if component_with_documents is None:
+            logger.warning(f"No component with documents found for {generator_name}")
+            contexts = None
+        else:
+            contexts = [
+                tc["component_outputs"][component_with_documents]["documents"]
+                for tc in test_cases
+            ]
+        
+        # Apply each generator metric
+        for metric_name, metric in self.component_metrics.get("generator", {}).items():
+            try:
+                metric_result = metric.run(
+                    component_outputs=generator_outputs,
+                    queries=queries,
+                    contexts=contexts
+                )
+                results[metric_name] = metric_result["score"]
+            except Exception as e:
+                logger.error(f"Error evaluating generator {generator_name} with {metric_name}: {e}")
+                results[metric_name] = 0.0
+                
+        return results
+        
     def _evaluate_components(self, test_cases: List[Dict[str, Any]]) -> Dict[str, Dict[str, float]]:
         """
         Evaluate all component metrics on the complete set of test cases.
@@ -259,57 +368,26 @@ class Evaluator:
         results = {}
         
         # Get component name to type mapping
-        component_types = {}
-        pipeline_components = self.pipeline.to_dict()["components"]
-        for comp_name, comp_details in pipeline_components.items():
-            comp_type = comp_details.get("type", "")
-            if ".generators." in comp_type:
-                component_types[comp_name] = "generator"
-            elif ".retrievers." in comp_type:
-                component_types[comp_name] = "retriever"
-                # Group test cases by component
-        component_data = defaultdict(lambda: defaultdict(list))
-        
-        # Gather all data needed for each component
-        for test_case in test_cases:
-            component_outputs = test_case["component_outputs"]
-            
-            for component_name in component_outputs:
-                # Map component name to its standardized type (retriever, generator)
-                if component_name in component_types:
-                    component_type = component_types[component_name]
-                    # Store data under the standardized component type
-                    component_data[component_type]["component_outputs"].append(component_outputs[component_name])
-                    component_data[component_type]["expected_outputs"].append(test_case["expected_output"])
-                    component_data[component_type]["input_texts"].append(test_case["input"])
-                    component_data[component_type]["queries"].append(test_case["input"])
-                    
-        
-        # Evaluate each component
-        for component_type, component_metrics in self.component_metrics.items():
-            if component_type not in component_data:
-                continue
-                
-            results[component_type] = {}
-            component_inputs = component_data[component_type]
-            
-            for metric_name, metric in component_metrics.items():
-                try:
-                    # Build the parameters for the batch metric
-                    metric_params = {
-                        "component_outputs": component_inputs["component_outputs"],
-                        "expected_outputs": component_inputs["expected_outputs"],
-                        "input_texts": component_inputs["input_texts"],
-                        "queries": component_inputs["queries"]
-                    }
-                    
-                    # Run metric
-                    metric_result = metric.run(**metric_params)
-                    results[component_type][metric_name] = metric_result["score"]
-                except Exception as e:
-                    logger.error(f"Error evaluating {component_type} with {metric_name}: {e}")
-                    results[component_type][metric_name] = 0.0
-        
+        component_types = self._get_component_types_mapping()
+        retriever_names = [name for name, t in component_types.items() if t == "retriever"]
+        generator_names = [name for name, t in component_types.items() if t == "generator"]
+
+        retriever_results = {}
+        # Evaluate retrievers
+        for retriever_name in retriever_names:
+            retriever_results[retriever_name] = self._evaluate_retriever(retriever_name, test_cases)
+
+        # Evaluate generators
+        generator_results = {}  
+        for generator_name in generator_names:
+            generator_results[generator_name] = self._evaluate_generator(generator_name, test_cases)
+
+        # Combine results
+        results = {
+            "retriever": retriever_results,
+            "generator": generator_results
+        }
+
         return results
 
 
@@ -333,18 +411,6 @@ def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
     Returns:
         pd.DataFrame: Results for the metrics and additional metadata
     """
-    # Initialize resource tracking if requested
-    resource_tracker = None
-    if track_resources:
-        try:
-            from ragnroll.metrics.system import SystemResourceTracker
-            resource_tracker = SystemResourceTracker()
-            resource_tracker.start_tracking()
-            logger.info(f"System resource tracking enabled for evaluation run: {run_name}")
-        except ImportError:
-            logger.warning("Could not import SystemResourceTracker. Resource tracking disabled.")
-            track_resources = False
-    
     # Store full metric results for Langfuse reporting
     end_to_end_metrics_details = {}
     component_metrics_details = {}
@@ -522,20 +588,22 @@ def print_scores(scores: Dict[str, Any]) -> None:
     """
     Prints the scores for the metrics
     """
-    print("===== Evaluation Results =====")
-    print("=== End-to-End Metrics ===")
+    print("\n===== Evaluation Results =====")
+    print("\n=== End-to-End Metrics ===")
     for metric, score in scores["end-to-end"].items():
         print(f"{metric}: {score:.4f}")
-    print("=== Component-Wise Metrics ===")
-    for component, metrics in scores["component-wise"].items():
-        print(f"{component}:")
-        for metric, score in metrics.items():
-            print(f"  {metric}: {score:.4f}")
+    print("\n=== Component-Wise Metrics ===")
+    for component_type, component_type_metrics in scores["component-wise"].items():
+        print(f"Component Type: {component_type}")
+        for component, metrics in component_type_metrics.items():
+            print(f"  Component: {component}")
+            for metric, score in metrics.items():
+                print(f"    {metric}: {score:.4f}")
 
 
 if __name__ == "__main__":
     from pathlib import Path
-    config_path = Path(__file__).parent.parent.parent / "configs" / "predefined_4r.yaml"
+    config_path = Path(__file__).parent.parent.parent / "configs" / "se4ai_mietbot.yaml"
     assert config_path.exists(), f"Config file {config_path} does not exist"
 
     # Load the test cases
@@ -552,5 +620,6 @@ if __name__ == "__main__":
     assert data_path.exists(), f"Data file {data_path} does not exist"
     data = load_evaluation_data(data_path)
 
-    result = evaluate(data, pipeline, run_name)
+    evaluator = Evaluator(pipeline)
+    result = evaluator.evaluate(data, run_name, track_resources=True)
     print(result)

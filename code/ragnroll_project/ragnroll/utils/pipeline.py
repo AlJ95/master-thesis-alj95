@@ -1,8 +1,10 @@
 from haystack import Pipeline
+from haystack.core.component import InputSocket, OutputSocket
 from pathlib import Path
 from dotenv import load_dotenv
-from typing import Dict, Any
+from typing import Dict, Any, List, Tuple
 from .components import *
+import haystack.dataclasses
 
 def config_to_pipeline(configuration_file_path: str) -> Pipeline:
     """
@@ -57,6 +59,54 @@ def extract_component_structure(pipeline: Pipeline) -> Dict[str, Any]:
         }
 
         return structure
+
+
+def get_predecessor_connection_mappings(pipeline: Pipeline, component_name: str) -> List[Tuple[str, InputSocket, OutputSocket]]:
+    """
+    Get the predecessor connection mappings of a given component.
+    """
+    receivers_per_component = [
+        pipeline._find_receivers_from(component_name)
+        for component_name in pipeline.to_dict()["components"].keys()
+        ]
+    
+    predecessors = []
+
+    for receivers in receivers_per_component:
+        if not receivers:
+            continue
+        for receiver_mapping in receivers:
+            # Check if the component name is in the OutputSocket of the receiver_mapping which is the second element of the tuple
+            if component_name in receiver_mapping[1].receivers:
+                for sender in receiver_mapping[2].senders:
+                    predecessors.append((sender, receiver_mapping[1], receiver_mapping[2]))
+
+    return predecessors
+
+
+def get_last_component_with_documents(pipeline: Pipeline, component_name: str) -> str:
+    """
+    Get the name of the last component that has a documents input socket.
+    In Haystack, usually a builder-type component comes before a generator-type component.
+    Prompt builder can take multiple components as input, so we need to check all predecessors if they have a documents input socket.
+    """
+    component_type = pipeline.to_dict()["components"][component_name]["type"]
+
+    if ".generators." not in component_type:
+        raise ValueError("Component is not a generator.")
+    
+    prompt_builder = get_predecessor_connection_mappings(pipeline, component_name)[0]
+    predecessors = get_predecessor_connection_mappings(pipeline, prompt_builder[0])
+    predecessor_with_documents = [
+        predecessor
+        for predecessor in predecessors
+        if predecessor[1].type == List[haystack.dataclasses.document.Document]
+        ]
+    
+    if len(predecessor_with_documents) == 0:
+        return None
+
+    return predecessor_with_documents[0][0]
 
 
 

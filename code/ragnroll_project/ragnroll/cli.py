@@ -20,7 +20,6 @@ os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
 
 from haystack import tracing
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
-from langfuse import Langfuse
 
 tracing.tracer.is_content_tracing_enabled = True
 
@@ -57,12 +56,12 @@ def run_evaluations(
     eval_data_file : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...), # TODO This must be removed to get consistent output name for test set run
-    track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"), # TODO Remove this option
+    track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"),
     baselines: bool = typer.Option(True, help="Run baselines"), 
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
 ):
     from .utils.pipeline import config_to_pipeline
-    from .evaluation.eval import evaluate
+    from .evaluation.eval import Evaluator
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
     from .evaluation.tracing import fetch_current_traces
@@ -115,17 +114,17 @@ def run_evaluations(
                 pipeline.add_component("tracer", LangfuseConnector(run_name))
                 data = load_evaluation_data(val_data_path)
 
-                result = evaluate(data, pipeline, run_name=run_name, track_resources=track_resources)
-                df = result["dataframe"]
+                evaluator = Evaluator(pipeline)
+                result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
 
                 traces = fetch_current_traces(run_name)
                 
-                for col in df.columns:
-                    mlflow.log_metrics({".".join(col): df[col].values[0]})
+                for col in result.columns:
+                    mlflow.log_metrics({".".join(col): result[col].values[0]})
 
-                mlflow.log_table(data=df, artifact_file="evaluation_results.json")
+                mlflow.log_table(data=result, artifact_file="evaluation_results.json")
 
-                results = pd.concat([df, traces], axis=1)
+                results = pd.concat([result, traces], axis=1)
                 gathered_results.append(results)
 
                 pd.concat(gathered_results).T.to_csv(output_directory)
