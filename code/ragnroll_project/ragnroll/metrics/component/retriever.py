@@ -14,7 +14,7 @@ except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from base import BaseMetric, MetricRegistry
 
-load_dotenv()
+load_dotenv("../../../.env")
 # Import RAGAS components
 logger = logging.getLogger(__name__)
 

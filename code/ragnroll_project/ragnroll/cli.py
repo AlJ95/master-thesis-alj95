@@ -5,8 +5,9 @@ from typing import Optional, List
 import os
 
 import pandas as pd
-
+from pathlib import Path
 import typer
+from dotenv import load_dotenv
 
 from ragnroll import __app_name__, __version__
 
@@ -22,6 +23,11 @@ from haystack import tracing
 from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 
 tracing.tracer.is_content_tracing_enabled = True
+
+CONFIG_PATH = Path(__file__).parent.parent / "configs"
+BASELINES_PATH = CONFIG_PATH / "baselines"
+PIPELINES_PATH = Path(__file__).parent.parent / "pipelines"
+FROM_PIPELINE_PATH = CONFIG_PATH / "from_pipeline"
 
 @app.command()
 def split_data(
@@ -52,7 +58,7 @@ def test_generalization_error(
 
 @app.command()
 def run_evaluations(
-    configuration_file: str = typer.Argument(...), 
+    config_source: str = typer.Argument(...), 
     eval_data_file : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...), # TODO This must be removed to get consistent output name for test set run
@@ -60,7 +66,7 @@ def run_evaluations(
     baselines: bool = typer.Option(True, help="Run baselines"), 
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
 ):
-    from .utils.pipeline import config_to_pipeline
+    from .utils.pipeline import config_to_pipeline, validate_pipeline
     from .evaluation.eval import Evaluator
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
@@ -68,11 +74,20 @@ def run_evaluations(
     from .utils.data import val_test_split
     from .utils.config import extract_run_params
     from pathlib import Path
-    import uuid
     import warnings
     import mlflow
 
-    mlflow.set_tracking_uri(uri="http://localhost:8080")
+    if os.getenv("MLFLOW_TRACKING_URI"):
+        uri = os.getenv("MLFLOW_TRACKING_URI")
+    else:
+        uri = "http://localhost:8080"
+
+    # check if uri is accessible
+    try:
+        mlflow.set_tracking_uri(uri=uri)
+    except Exception as e:
+        raise ValueError(f"Failed to set tracking URI: {e}")
+
     eval_data_path = Path(eval_data_file)
 
     # Split the evaluation data into val, test sets based on Simon et al. (2024) 
@@ -91,45 +106,74 @@ def run_evaluations(
     # Setup Run-ID
     mlflow.set_experiment(experiment_name=experiment_name)
 
+    config_source = Path(config_source)
+
     if baselines:
-        baseline_configs = ["configs/baselines/llm_config.yaml", "configs/baselines/predefined_bm25.yaml"]
+        baseline_paths = [
+            BASELINES_PATH / "llm_config.yaml", 
+            BASELINES_PATH / "predefined_bm25.yaml"
+        ]
     else:
-        baseline_configs = []
+        baseline_paths = []
 
     gathered_results = []
     
-    for config in baseline_configs + [configuration_file]:
-        print(f"Running evaluation for {config}")
+    for config_path in baseline_paths + [config_source]:
+        print(f"Running evaluation for {config_path}")
 
-        run_name = ".".join(config.split("/")[-2:])
+        run_name = f"{config_path.parent.name}.{config_path.name}"
         with mlflow.start_run(run_name=run_name):
-        
-                # Load and prepare pipelines
-                pipeline = config_to_pipeline(config)
+            
+            # TODO: Outsource into utils.pipeline
+            # Load and prepare pipelines
+            if config_path.suffix == ".yaml":
+                pipeline = config_to_pipeline(config_path)
+                params = extract_run_params(config_path)
+            elif config_path.suffix == ".py":
+                pipeline = None
+                try:
+                    import importlib
+                    import sys
 
-                params = extract_run_params(config)
-                mlflow.log_params(params)
-
-                pipeline = index_documents(corpus_dir, pipeline)
-                pipeline.add_component("tracer", LangfuseConnector(run_name))
-                data = load_evaluation_data(val_data_path)
-
-                evaluator = Evaluator(pipeline)
-                result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
-
-                traces = fetch_current_traces(run_name)
+                    # Absoluten Pfad zum Projekt-Root-Verzeichnis hinzufügen (wo pipelines/ liegt)
+                    project_root = Path(__file__).parent.parent  # Das sollte zum ragnroll_project Verzeichnis zeigen
+                    sys.path.insert(0, str(project_root))
+                    
+                    # Importieren des Moduls aus pipelines/ direkt
+                    module_name = f"pipelines.{config_path.stem}"
+                    module = importlib.import_module(module_name)
+                    pipeline = module.pipeline
+                except ImportError as e:
+                    raise ImportError(f"Import error: {e}")
                 
-                for col in result.columns:
-                    mlflow.log_metrics({".".join(col): result[col].values[0]})
+                yaml_path = FROM_PIPELINE_PATH / f"{config_path.stem}.yaml"
+                pipeline.dump(open(yaml_path, "w"))
+                params = extract_run_params(yaml_path)
+            else:
+                raise ValueError(f"Invalid config file type: {config_path}")
+                
+            mlflow.log_params(params)
+            validate_pipeline(pipeline)
 
-                mlflow.log_table(data=result, artifact_file="evaluation_results.json")
+            pipeline = index_documents(corpus_dir, pipeline)
+            pipeline.add_component("tracer", LangfuseConnector(run_name))
+            data = load_evaluation_data(val_data_path)
 
-                results = pd.concat([result, traces], axis=1)
-                gathered_results.append(results)
+            evaluator = Evaluator(pipeline)
+            result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
 
-                pd.concat(gathered_results).T.to_csv(output_directory)
-                print(f"Evaluation results saved to {output_directory}")
+            traces = fetch_current_traces(run_name)
+            
+            for col in result.columns:
+                mlflow.log_metrics({".".join(col): result[col].values[0]})
 
+            mlflow.log_table(data=result, artifact_file="evaluation_results.json")
+
+            results = pd.concat([result, traces], axis=1)
+            gathered_results.append(results)
+
+            pd.concat(gathered_results).T.to_csv(output_directory)
+            print(f"Evaluation results saved to {output_directory}")
 
     return
 
