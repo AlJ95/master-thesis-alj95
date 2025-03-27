@@ -92,3 +92,6 @@ __pycache__/
 **/from_matrix/*.yml
 **/from_pipeline/*.yaml
 **/from_pipeline/*.yml
+
+# vscode
+.vscode/
