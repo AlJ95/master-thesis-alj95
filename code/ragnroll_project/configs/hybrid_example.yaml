@@ -61,6 +61,11 @@ components:
       truncate_dim: null
       trust_remote_code: false
     type: haystack.components.embedders.sentence_transformers_text_embedder.SentenceTransformersTextEmbedder
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(.*)".
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
 connections:
 - receiver: joiner.documents
   sender: bm25_retriever.documents
@@ -68,5 +73,7 @@ connections:
   sender: text_embedder.embedding
 - receiver: joiner.documents
   sender: embedding_retriever.documents
+- receiver: answer_builder.replies
+  sender: llm.replies
 max_runs_per_component: 100
 metadata: {}

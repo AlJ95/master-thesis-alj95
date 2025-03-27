@@ -1,10 +1,9 @@
 from typing import Dict, Any, List, Union, Callable, Optional
-from dotenv import load_dotenv
 import logging
 import numpy as np
 from haystack import Document
-from haystack.utils import Secret
 from haystack.components.evaluators import ContextRelevanceEvaluator
+
 
 try:
     from ragnroll.metrics.base import BaseMetric, MetricRegistry
@@ -13,7 +12,6 @@ except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from base import BaseMetric, MetricRegistry
 
-load_dotenv()
 # Import RAGAS components
 logger = logging.getLogger(__name__)
 
@@ -108,8 +106,7 @@ class HaystackContextRelevanceMetric(BaseMetric):
             "individual_scores": result.get("individual_scores", []),
             "results": result.get("results", [])
         }
-
-
+    
 @MetricRegistry.register_component_metric("retriever")
 class MAPAtKMetric(BaseMetric):
     """
@@ -238,30 +235,17 @@ class MAPAtKMetric(BaseMetric):
         
         for i, (query, contexts, result) in enumerate(zip(queries, all_contexts, haystack_result.get("results", []))):
             # Skip if result is None or no relevant statements
-            if result is None:
-                average_precisions.append(0.0)
-                detailed_results.append({
-                    "query": query,
-                    "relevance_judgments": [],
-                    "ap_score": 0.0
-                })
-                continue
+            if result is None or "relevant_statements" not in result:
+                logger.error("Failed to get relevance judgments from LLM")
+                raise ValueError("Could not evaluate document relevance - LLM evaluation failed")
             
             # Extract relevance judgments for each document
             relevance_judgments = []
             
-            # If we have detailed statement-level judgments
-            if "relevant_statements" in result:
-                for j, context in enumerate(contexts[:self.k]):
-                    # A document is relevant if it has at least one relevant statement
-                    has_relevant_statements = len(result["relevant_statements"]) > 0 and context in result["relevant_statements"]
-                    relevance_judgments.append(1 if has_relevant_statements else 0)
-            # If we only have document-level relevance
-            elif "score" in result:
-                relevance_judgments = [int(result["score"])] * min(len(contexts), self.k)
-            else:
-                # Default to no relevant documents if can't determine
-                relevance_judgments = [0] * min(len(contexts), self.k)
+            for j, context in enumerate(contexts[:self.k]):
+                # A document is relevant if it has at least one relevant statement
+                has_relevant_statements = self._document_has_relevant_statements(context, result["relevant_statements"])
+                relevance_judgments.append(1 if has_relevant_statements else 0)
             
             # Calculate Average Precision for this query
             ap_score = self._calculate_average_precision(relevance_judgments)
@@ -274,7 +258,6 @@ class MAPAtKMetric(BaseMetric):
                 "ap_score": ap_score
             })
             
-
             logger.info(f"Query: '{query[:50]}...', AP@{self.k}: {ap_score:.2f}")
         
         # Calculate Mean Average Precision (MAP)
@@ -288,6 +271,39 @@ class MAPAtKMetric(BaseMetric):
             "detailed_results": detailed_results,
             "metric": f"MAP@{self.k}"
         }
+
+    def _split_string_into_tuples(self, string: str) -> List[str]:
+        """
+        Split a string into tuples of 2 elements.
+        """
+        return [string[i:i+2] for i in range(0, len(string), 2)]
+
+    def _calc_jaccard_similarity(self, string1: str, string2: str) -> float:
+        """
+        Calculate the Jaccard similarity between two strings.
+        """
+        set1 = set(self._split_string_into_tuples(string1))
+        set2 = set(self._split_string_into_tuples(string2))
+        return len(set1 & set2) / len(set1 | set2)
+    
+    def _statements_are_equal(self, context: str, document: str) -> bool:
+        """
+        Check if the context equals the document.
+        """
+        return self._calc_jaccard_similarity(context, document) >= 0.98
+
+    def _document_has_relevant_statements(self, context: str, relevant_statements: List[str]) -> bool:
+        """
+        Check if the document is in the relevant statements.
+        """
+        return any(
+            self._statements_are_equal(context_sentence, statement_sentence) 
+            for statement in relevant_statements
+            for statement_sentence in statement.split(".")
+            for context_sentence in context.split(".")
+            if len(statement_sentence) > 20 and len(context_sentence) > 20
+        )
+
 
 if __name__ == "__main__":
     import os

@@ -19,7 +19,11 @@ class MetricRegistry:
     
     @classmethod
     def register_component_metric(cls, component_type: str) -> Callable:
-        """Register a component-specific metric."""
+        """Register a component-specific metric.
+        
+        Args:
+            component_type: The type of component to get metrics for (e.g. "retriever", "generator")
+        """
         def decorator(metric_class: Type["BaseMetric"]) -> Type["BaseMetric"]:
             if component_type not in cls._component_metrics:
                 cls._component_metrics[component_type] = {}
@@ -34,7 +38,14 @@ class MetricRegistry:
     
     @classmethod
     def get_component_metrics(cls, component_type: Optional[str] = None) -> Dict[str, Dict[str, Type["BaseMetric"]]]:
-        """Get all registered component metrics or metrics for a specific component."""
+        """Get all registered component metrics or metrics for a specific component.
+        
+        Args:
+            component_type: The type of component to get metrics for (e.g. "retriever", "generator")
+            
+        Returns:
+            Dict[str, Dict[str, Type["BaseMetric"]]]: A dictionary of metrics for the given component type
+        """
         if component_type:
             return {component_type: cls._component_metrics.get(component_type, {})}
         return cls._component_metrics
