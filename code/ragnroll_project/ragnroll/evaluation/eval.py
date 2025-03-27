@@ -1,11 +1,13 @@
 import sys, os
 try:
     from ragnroll.metrics import MetricRegistry, BaseMetric
+    from ragnroll.metrics.end2end import ClassificationBaseMetric
     from ragnroll.utils.config import get_components_from_config_by_class
     from ragnroll.utils.pipeline import get_last_component_with_documents
 except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from ragnroll.metrics import MetricRegistry, BaseMetric
+    from ragnroll.metrics.end2end import ClassificationBaseMetric
     from ragnroll.utils.config import get_components_from_config_by_class
     from ragnroll.utils.pipeline import get_last_component_with_documents
 from haystack import Pipeline
@@ -105,6 +107,7 @@ class Evaluator:
         self.negative_label = negative_label
         self.end_to_end_metrics = self._instantiate_end_to_end_metrics()
         self.component_metrics = self._instantiate_component_metrics()
+        self.individual_scores = {}
 
         logger.info(f"Evaluator initialisiert mit Labels: positiv='{self.positive_label}', negativ='{self.negative_label}'")
     
@@ -201,7 +204,7 @@ class Evaluator:
             processed_data = dataset.get_processed_data()
             trace_ids = dataset.get_trace_ids()
             # Run end-to-end evaluations
-            end_to_end_results = self._evaluate_end_to_end(processed_data)
+            end_to_end_results = self._evaluate_end_to_end(processed_data, trace_ids)
             
             # Run component-wise evaluations
             component_results = self._evaluate_components(processed_data)
@@ -261,7 +264,7 @@ class Evaluator:
         
         return results_df
         
-    def _evaluate_end_to_end(self, test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
+    def _evaluate_end_to_end(self, test_cases: List[Dict[str, Any]], trace_ids: List[str]) -> Dict[str, float]:
         """
         Evaluate all end-to-end metrics on the complete set of test cases.
         
@@ -277,12 +280,25 @@ class Evaluator:
         expected_outputs = [tc["expected_output"] for tc in test_cases]
         actual_outputs = [tc["actual_output"] for tc in test_cases]
         
+        # Get exact match scores for each trace ID and post them to Langfuse
+        ClassificationBaseMetric.return_exact_match_scores(
+            expected_outputs=expected_outputs,
+            actual_outputs=actual_outputs,
+            trace_ids=trace_ids,
+            callback=self._individual_score_callback,
+            positive_label=self.positive_label,
+            negative_label=self.negative_label
+        )
+        self._post_langfuse_scores()
+
         # Apply each metric to the entire set of outputs
         for metric_name, metric in self.end_to_end_metrics.items():
             try:
                 metric_result = metric.run(
                     expected_outputs=expected_outputs,
-                    actual_outputs=actual_outputs
+                    actual_outputs=actual_outputs,
+                    trace_ids=trace_ids,
+                    callback=self._individual_score_callback
                 )
                 results[metric_name] = metric_result["score"]
             except Exception as e:
@@ -389,199 +405,25 @@ class Evaluator:
         }
 
         return results
-
-
-def evaluate(data: Dict[str, Any], pipeline: Pipeline, run_name: str,
-           positive_label: str = DEFAULT_POSITIVE_LABEL, 
-           negative_label: str = DEFAULT_NEGATIVE_LABEL,
-           track_resources: bool = False,
-           resource_output_prefix: Optional[str] = None) -> pd.DataFrame:
-    """
-    Evaluates the pipeline on the test cases.
     
-    Args:
-        data: Evaluation data
-        pipeline: Haystack pipeline to evaluate
-        run_name: Identifier for this evaluation run
-        positive_label: The label to consider as positive class (default: "valid")
-        negative_label: The label to consider as negative class (default: "invalid")
-        track_resources: Whether to track system resource usage during evaluation
-        resource_output_prefix: Prefix for resource metric files (if track_resources is True)
-        
-    Returns:
-        pd.DataFrame: Results for the metrics and additional metadata
-    """
-    # Store full metric results for Langfuse reporting
-    end_to_end_metrics_details = {}
-    component_metrics_details = {}
-    trace_ids = []
+    def _individual_score_callback(self, trace_id: str, metric_name: str, score: float) -> None:
+        """
+        Callback function to store individual scores for each trace URL.
+        """
+        self.individual_scores[trace_id] = {metric_name: score}
 
-    # Create EvaluationDataset to process the data
-    dataset = EvaluationDataset(data)
-    
-    # Generate predictions
-    dataset.generate_predictions(pipeline)
-    processed_data = dataset.get_processed_data()
-    trace_ids = dataset.get_trace_ids()
-    
-    # Run the evaluation with the original evaluator
-    evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
-            
-    # Extract expected and actual outputs
-    logger.error(f"Processed data: {processed_data}")
-
-    expected_outputs = [tc["expected_output"] for tc in processed_data]
-    actual_outputs = [tc["actual_output"] for tc in processed_data]
-    
-    # Run each end-to-end metric
-    end_to_end_results = {}
-    for metric_name, metric in evaluator.end_to_end_metrics.items():
-        try:
-            metric_result = metric.run(
-                expected_outputs=expected_outputs,
-                actual_outputs=actual_outputs
+    def _post_langfuse_scores(self) -> None:
+        """
+        Post the individual scores to Langfuse.
+        """
+        for i, (trace_id, scores) in enumerate(self.individual_scores.items()):
+            self.pipeline.get_component("tracer").tracer._tracer.score(
+                id=f"{trace_id}-{i}",
+                trace_id=trace_id,
+                name=list(scores.keys())[0],
+                value=list(scores.values())[0],
+                data_type="BOOLEAN"
             )
-            end_to_end_results[metric_name] = metric_result["score"]
-            # Store full metric details for Langfuse
-            end_to_end_metrics_details[metric_name] = metric_result
-        except Exception as e:
-            logger.error(f"Error evaluating with {metric_name}: {e}")
-            end_to_end_results[metric_name] = 0.0
-            end_to_end_metrics_details[metric_name] = {
-                "score": 0.0,
-                "success": False,
-                "details": {"error": str(e)}
-            }
-    
-    # Run component-wise evaluations
-    component_results = evaluator._evaluate_components(processed_data)
-    
-    # Capture detailed component metric results for Langfuse
-    for component_type, metrics in evaluator.component_metrics.items():
-        component_metrics_details[component_type] = {}
-        
-        if component_type not in component_results:
-            continue
-            
-        for metric_name, metric in metrics.items():
-            if metric_name in component_results[component_type]:
-                # Get the metric result - we need to re-run to get the details
-                try:
-                    # Get component-specific test data
-                    if component_type == "retriever":
-                        # For retrievers, we need queries and component outputs
-                        queries = [tc["input"] for tc in processed_data]
-                        component_outputs = [
-                            tc["component_outputs"].get("retriever", {}) 
-                            for tc in processed_data
-                        ]
-                        metric_result = metric.run(component_outputs=component_outputs, queries=queries)
-                    elif component_type == "generator":
-                        # For generators, we need expected outputs and component outputs
-                        component_outputs = [
-                            tc["component_outputs"].get("llm", tc["component_outputs"].get("generator", {})) 
-                            for tc in processed_data
-                        ]
-                        metric_result = metric.run(
-                            component_outputs=component_outputs,
-                            expected_outputs=expected_outputs
-                        )
-                    else:
-                        # Default case - just use the score from the results
-                        metric_result = {
-                            "score": component_results[component_type][metric_name],
-                            "success": component_results[component_type][metric_name] >= metric.threshold
-                        }
-                        
-                    component_metrics_details[component_type][metric_name] = metric_result
-                except Exception as e:
-                    logger.error(f"Error capturing details for {component_type}.{metric_name}: {e}")
-                    component_metrics_details[component_type][metric_name] = {
-                        "score": component_results[component_type][metric_name],
-                        "success": component_results[component_type][metric_name] >= metric.threshold,
-                        "details": {"error": str(e)}
-                    }
-    
-    # Convert results to DataFrame
-    scores = evaluator._results_to_df(end_to_end_results, component_results, run_name)
-    
-    # Print scores to console
-    print_scores({
-        "end-to-end": end_to_end_results,
-        "component-wise": component_results
-    })
-    
-    # Add resource metrics if tracking was enabled
-    if track_resources and resource_tracker:
-        # Get metrics summary
-        metrics_summary = resource_tracker.get_metrics_summary()
-        
-        # Flatten the nested dictionaries
-        flat_metrics = {}
-        
-        # Duration and samples
-        flat_metrics["duration_seconds"] = float(metrics_summary.get("duration_seconds", 0))
-        flat_metrics["samples_count"] = float(metrics_summary.get("samples_count", 0))
-        
-        # CPU metrics
-        if "cpu" in metrics_summary and isinstance(metrics_summary["cpu"], dict):
-            cpu = metrics_summary["cpu"]
-            # System CPU
-            if "system" in cpu and isinstance(cpu["system"], dict):
-                system = cpu["system"]
-                flat_metrics["cpu_system_mean"] = float(system.get("mean", 0))
-                flat_metrics["cpu_system_max"] = float(system.get("max", 0))
-                flat_metrics["cpu_system_min"] = float(system.get("min", 0))
-            # Process CPU
-            if "process" in cpu and isinstance(cpu["process"], dict):
-                process = cpu["process"]
-                flat_metrics["cpu_process_mean"] = float(process.get("mean", 0))
-                flat_metrics["cpu_process_max"] = float(process.get("max", 0))
-                flat_metrics["cpu_process_min"] = float(process.get("min", 0))
-        
-        # Memory metrics
-        if "memory" in metrics_summary and isinstance(metrics_summary["memory"], dict):
-            memory = metrics_summary["memory"]
-            if "process" in memory and isinstance(memory["process"], dict):
-                process = memory["process"]
-                flat_metrics["memory_process_mean_mb"] = float(process.get("mean", 0))
-                flat_metrics["memory_process_max_mb"] = float(process.get("max", 0))
-                flat_metrics["memory_process_min_mb"] = float(process.get("min", 0))
-            
-            if "system" in memory and isinstance(memory["system"], dict):
-                system = memory["system"]
-                if "used" in system and isinstance(system["used"], dict):
-                    used = system["used"]
-                    flat_metrics["memory_system_used_mean_mb"] = float(used.get("mean", 0))
-                    flat_metrics["memory_system_used_max_mb"] = float(used.get("max", 0))
-                    flat_metrics["memory_system_used_min_mb"] = float(used.get("min", 0))
-        
-        # Add system metrics to the scores DataFrame
-        for metric_name, value in flat_metrics.items():
-            scores.loc[run_name, ("SYS", metric_name)] = value
-        
-        # Save raw metrics to file if output prefix is provided
-        if resource_output_prefix:
-            try:
-                import json
-                output_file = f"{resource_output_prefix}_{run_name}.json"
-                with open(output_file, 'w') as f:
-                    json.dump(metrics_summary, f, indent=2)
-                logger.info(f"Raw system metrics saved to {output_file}")
-            except Exception as e:
-                logger.error(f"Error saving raw metrics to file: {e}")
-    
-    # Add trace IDs and metrics details to the returned result
-    # This information will be used by the CLI to report to Langfuse
-    
-    result = {
-        "dataframe": scores,
-        "trace_ids": trace_ids,
-        "metrics": end_to_end_metrics_details,
-        "component_metrics": component_metrics_details
-    }
-    
-    return result
 
 
 def print_scores(scores: Dict[str, Any]) -> None:

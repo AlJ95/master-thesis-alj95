@@ -173,3 +173,17 @@ def main(
     )
 ) -> None:
     return
+
+if __name__ == "__main__":
+    # invoke run_evaluations
+
+    # invoke run_evaluations
+    run_evaluations(
+        config_sources="configs/from_pipeline/sample.yaml",
+        eval_data_file="data/processed/dev_data/synthetic_rag_evaluation.json",
+        corpus_dir="data/processed/dev_data/corpus",
+        output_directory="output.csv",
+        track_resources=True,
+        baselines=True,
+        experiment_name="RAG Experimentation"
+    )
