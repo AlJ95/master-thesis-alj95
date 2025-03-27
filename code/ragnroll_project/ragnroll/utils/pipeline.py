@@ -1,10 +1,10 @@
 from haystack import Pipeline
 from haystack.core.component import InputSocket, OutputSocket
 from pathlib import Path
-from dotenv import load_dotenv
 from typing import Dict, Any, List, Tuple
 import yaml
 from itertools import product
+import copy  # Add this import for deep copying
 try:
     from .components import *
 except ImportError:
@@ -13,14 +13,25 @@ except ImportError:
     from components import *
 import haystack.dataclasses
 
+CONFIG_PATH = Path(__file__).parent.parent.parent / "configs"
+FROM_MATRIX_PATH = CONFIG_PATH / "from_matrix"
+FROM_PIPELINE_PATH = CONFIG_PATH / "from_pipeline"
 
-def extract_matrix_configuration(configuration_file_path: Path) -> List[Dict[str, Any]]:
+def generate_pipeline_configurations(configuration_file_path: Path) -> List[Path]:
     """
-    Extract the matrix configuration from a configuration file.
+    Extract the matrix configuration from a configuration file and generate
+    all possible combinations of parameters, saving each as a separate YAML file.
+    
+    Args:
+        configuration_file_path: Path to the YAML configuration file with matrix parameters
+        
+    Returns:
+        List of paths to the generated configuration files
     """
     with open(configuration_file_path, "r") as file:
         configuration = yaml.safe_load(file)
 
+    # Find all matrix parameters (lists in the YAML)
     matrix_parameters = {}
     def find_lists_in_yaml(data, path=""):
         """Recursively search through YAML data for any list values."""
@@ -40,13 +51,13 @@ def extract_matrix_configuration(configuration_file_path: Path) -> List[Dict[str
     find_lists_in_yaml(configuration)
 
     if not matrix_parameters:
-        return [configuration]
+        return [configuration_file_path]
 
     print("\nMatrix parameters:")
     for key, value in matrix_parameters.items():
         print(f"{key}: {value}")
     
-    # create all possible combinations of the matrix parameters
+    # Create all possible combinations of the matrix parameters
     combinations = list(product(*matrix_parameters.values()))
     print(f"\nAll possible combinations ({len(combinations)}):")
     for combination in combinations:
@@ -56,18 +67,43 @@ def extract_matrix_configuration(configuration_file_path: Path) -> List[Dict[str
             print(f"  {key}: {value}")
         print()
 
-    # replace the matrix parameters in the configuration with the combinations
-    configurations = []
-    for combination in combinations:
-        for key, value in matrix_parameters.items():
-            keys = key.split(".")
-            current_dict = configuration["components"]
-            for k in keys[:-1]:
-                current_dict = current_dict[k]
-            current_dict[keys[-1]] = value
-        configurations.append(configuration)
+    # Helper function to set a value in a nested dictionary using a dot-separated path
+    def set_nested_value(data, path, value):
+        """Set a value in a nested dictionary using a dot-separated path."""
+        keys = path.split(".")
+        current = data
+        
+        # Navigate to the parent of the final key
+        for key in keys[:-1]:
+            if key not in current:
+                current[key] = {}
+            current = current[key]
+            
+        # Set the value at the final key
+        current[keys[-1]] = value
+        return data
 
-    return configuration
+    # Replace the matrix parameters in the configuration with the combinations
+    config_paths = []
+    FROM_MATRIX_PATH.mkdir(exist_ok=True, parents=True)
+    
+    for i, combination in enumerate(combinations):
+        # Use deep copy to ensure we don't modify the original configuration
+        new_configuration = copy.deepcopy(configuration)
+        
+        # Apply the specific combination values to the configuration
+        param_dict = dict(zip(matrix_parameters.keys(), combination))
+        for key, value in param_dict.items():
+            new_configuration = set_nested_value(new_configuration, key, value)
+        
+        # Save the configuration to a file
+        config_path = FROM_MATRIX_PATH / f"{configuration_file_path.stem}_{i}.yaml"
+        with open(config_path, "w") as file:
+            yaml.dump(new_configuration, file)
+        
+        config_paths.append(config_path)
+
+    return config_paths
 
 def config_to_pipeline(configuration_file_path: Path) -> Pipeline:
     """
@@ -77,21 +113,13 @@ def config_to_pipeline(configuration_file_path: Path) -> Pipeline:
         config_path (str): The path to the configuration file.
         config_name (str): The name of the configuration file.
     """
-
-    configurations = extract_matrix_configuration(configuration_file_path)
-
     if not configuration_file_path.exists():
         raise FileNotFoundError(f"Configuration file not found: {configuration_file_path.resolve()}")
     
     if configuration_file_path.suffix not in [".yaml", ".yml"]:
         raise ValueError("Configuration file must be a YAML file.")
     
-    load_dotenv(Path(__file__).parent.parent.parent / ".env")
-    pipelines = []
-    for configuration in configurations:
-        pipeline = Pipeline.load(open(configuration, "r"))
-        pipelines.append(pipeline)
-    return pipelines
+    return Pipeline.load(open(configuration_file_path, "r"))
 
 
 def extract_component_structure(pipeline: Pipeline) -> Dict[str, Any]:
@@ -200,7 +228,44 @@ def validate_pipeline(pipeline: Pipeline) -> None:
     if not "answer_builder" in pipeline.to_dict()["components"]:
         raise ValueError("Pipeline must have an answer builder.")
 
+
+def gather_config_paths(config_path: Path) -> List[Path]:
+    """
+    Load a pipeline from either a YAML config file or a Python file.
     
+    Args:
+        config_path: Path to the configuration file (YAML or Python)        
+    Returns:
+        tuple: (pipeline, params) containing the loaded pipeline and extracted parameters
+    """
+    # Load and prepare pipelines
+    if config_path.suffix == ".yaml":
+        configurations = generate_pipeline_configurations(config_path)
+        return configurations
+    elif config_path.suffix == ".py":
+        pipeline = None
+        try:
+            import importlib
+            import sys
+
+            # Add absolute path to project root directory (where pipelines/ is located)
+            project_root = Path(__file__).parent.parent.parent  # This should point to ragnroll_project directory
+            sys.path.insert(0, str(project_root))
+            
+            # Import the module directly from pipelines/
+            module_name = f"pipelines.{config_path.stem}"
+            module = importlib.import_module(module_name)
+            pipeline = module.pipeline
+        except ImportError as e:
+            raise ImportError(f"Import error: {e}")
+        
+        yaml_path = FROM_PIPELINE_PATH / f"{config_path.stem}.yaml"
+        pipeline.dump(open(yaml_path, "w"))
+        return [yaml_path]
+    else:
+        raise ValueError(f"Invalid config file type: {config_path}")
+           
+
 
 if __name__ == "__main__":
     if False:
@@ -218,5 +283,5 @@ if __name__ == "__main__":
     
     if True:
         config_file = Path(__file__).parent.parent.parent / "configs" / "matrix_example.yaml"
-        extract_matrix_configuration(config_file)
+        generate_pipeline_configurations(config_file)
 

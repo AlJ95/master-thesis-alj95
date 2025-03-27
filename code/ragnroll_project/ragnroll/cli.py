@@ -13,9 +13,14 @@ from ragnroll import __app_name__, __version__
 
 app = typer.Typer()
 
-os.environ["LANGFUSE_HOST"] = "http://localhost:3000"
-os.environ["LANGFUSE_SECRET_KEY"] = "sk-lf-6a6b4f2e-53bb-4381-8351-c1549b0b44db"
-os.environ["LANGFUSE_PUBLIC_KEY"] = "pk-lf-e3818c59-351d-46ea-917f-d06cde587ac5"
+CONFIG_PATH = Path(__file__).parent.parent / "configs"
+BASELINES_PATH = CONFIG_PATH / "baselines"
+ENV_PATH = Path(__file__).parent.parent / ".env"
+
+load_dotenv(ENV_PATH)
+
+os.environ["LANGFUSE_SECRET_KEY"] = os.environ["LANGFUSE_INIT_PROJECT_SECRET_KEY"]
+os.environ["LANGFUSE_PUBLIC_KEY"] = os.environ["LANGFUSE_INIT_PROJECT_PUBLIC_KEY"]
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
 
@@ -24,10 +29,6 @@ from haystack_integrations.components.connectors.langfuse import LangfuseConnect
 
 tracing.tracer.is_content_tracing_enabled = True
 
-CONFIG_PATH = Path(__file__).parent.parent / "configs"
-BASELINES_PATH = CONFIG_PATH / "baselines"
-PIPELINES_PATH = Path(__file__).parent.parent / "pipelines"
-FROM_PIPELINE_PATH = CONFIG_PATH / "from_pipeline"
 
 @app.command()
 def split_data(
@@ -58,7 +59,7 @@ def test_generalization_error(
 
 @app.command()
 def run_evaluations(
-    config_source: str = typer.Argument(...), 
+    config_sources: str = typer.Argument(...), 
     eval_data_file : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
     output_directory: str = typer.Argument(...), # TODO This must be removed to get consistent output name for test set run
@@ -66,7 +67,7 @@ def run_evaluations(
     baselines: bool = typer.Option(True, help="Run baselines"), 
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
 ):
-    from .utils.pipeline import config_to_pipeline, validate_pipeline
+    from .utils.pipeline import gather_config_paths, config_to_pipeline, validate_pipeline
     from .evaluation.eval import Evaluator
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
@@ -106,8 +107,6 @@ def run_evaluations(
     # Setup Run-ID
     mlflow.set_experiment(experiment_name=experiment_name)
 
-    config_source = Path(config_source)
-
     if baselines:
         baseline_paths = [
             BASELINES_PATH / "llm_config.yaml", 
@@ -116,44 +115,24 @@ def run_evaluations(
     else:
         baseline_paths = []
 
+    # Gather all config paths from the source file (YAML, MATRIX-YAML, PYTHON)
+    config_sources = gather_config_paths(Path(config_sources))
+
     gathered_results = []
     
-    for config_path in baseline_paths + [config_source]:
+    for config_path in baseline_paths + config_sources:
         print(f"Running evaluation for {config_path}")
 
         run_name = f"{config_path.parent.name}.{config_path.name}"
         with mlflow.start_run(run_name=run_name):
             
-            # TODO: Outsource into utils.pipeline
             # Load and prepare pipelines
-            if config_path.suffix == ".yaml":
-                pipeline = config_to_pipeline(config_path)
-                params = extract_run_params(config_path)
-            elif config_path.suffix == ".py":
-                pipeline = None
-                try:
-                    import importlib
-                    import sys
-
-                    # Absoluten Pfad zum Projekt-Root-Verzeichnis hinzufügen (wo pipelines/ liegt)
-                    project_root = Path(__file__).parent.parent  # Das sollte zum ragnroll_project Verzeichnis zeigen
-                    sys.path.insert(0, str(project_root))
-                    
-                    # Importieren des Moduls aus pipelines/ direkt
-                    module_name = f"pipelines.{config_path.stem}"
-                    module = importlib.import_module(module_name)
-                    pipeline = module.pipeline
-                except ImportError as e:
-                    raise ImportError(f"Import error: {e}")
-                
-                yaml_path = FROM_PIPELINE_PATH / f"{config_path.stem}.yaml"
-                pipeline.dump(open(yaml_path, "w"))
-                params = extract_run_params(yaml_path)
-            else:
-                raise ValueError(f"Invalid config file type: {config_path}")
-                
-            mlflow.log_params(params)
+            pipeline = config_to_pipeline(config_path)
             validate_pipeline(pipeline)
+
+            params = extract_run_params(config_path)
+            
+            mlflow.log_params(params)
 
             pipeline = index_documents(corpus_dir, pipeline)
             pipeline.add_component("tracer", LangfuseConnector(run_name))

@@ -54,7 +54,7 @@ components:
       filter_policy: replace
       filters: null
       scale_score: false
-      top_k: [5, 7, 10]
+      top_k: [5, 10]
     type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
   reranker:
     init_parameters:
@@ -78,7 +78,7 @@ components:
         strict: false
         type: env_var
       tokenizer_kwargs: {}
-      top_k: [5, 7, 10]
+      top_k: [5, 10]
     type: haystack.components.rankers.transformers_similarity.TransformersSimilarityRanker
   answer_builder:
     init_parameters:
