@@ -251,7 +251,7 @@ class ContextUtilizationMetric(JudgeBasedMetric):
         
         for query, answer, context_list in zip(queries, predicted_answers, contexts):
             # Combine contexts into a single string with separators
-            context_text = "\n\n".join(context_list)
+            context_text = "\n\n".join([context.content for context in context_list])
             
             # Create evaluation prompt
             prompt = f"""Evaluate how well the following answer utilizes the provided context.
