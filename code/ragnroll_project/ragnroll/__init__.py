@@ -30,4 +30,4 @@ from ragnroll.metrics import (
     MAPAtKMetric
 )
 
-from ragnroll.evaluation import evaluate, print_scores, Evaluator
+from ragnroll.evaluation import print_scores, Evaluator
