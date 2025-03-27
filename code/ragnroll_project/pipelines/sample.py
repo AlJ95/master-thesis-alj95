@@ -1,9 +1,4 @@
 from haystack import Pipeline
-import os
-from dotenv import load_dotenv
-
-load_dotenv(os.path.join(os.path.dirname(__file__), "../.env"))
-
 from haystack.components.generators.openai import OpenAIGenerator
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.retrievers.in_memory.embedding_retriever import InMemoryEmbeddingRetriever
