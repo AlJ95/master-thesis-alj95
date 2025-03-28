@@ -296,9 +296,7 @@ class Evaluator:
             try:
                 metric_result = metric.run(
                     expected_outputs=expected_outputs,
-                    actual_outputs=actual_outputs,
-                    trace_ids=trace_ids,
-                    callback=self._individual_score_callback
+                    actual_outputs=actual_outputs
                 )
                 results[metric_name] = metric_result["score"]
             except Exception as e:
