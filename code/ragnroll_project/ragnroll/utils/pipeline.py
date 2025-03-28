@@ -105,7 +105,7 @@ def generate_pipeline_configurations(configuration_file_path: Path) -> List[Path
 
     return config_paths
 
-def config_to_pipeline(configuration_file_path: Path) -> Pipeline:
+def config_to_pipeline(configuration_file_path: Path = None, configuration_dict: Dict[str, Any] = None) -> Pipeline:
     """
     Load a pipeline from a configuration file and draw it to a PNG file.
 
@@ -113,13 +113,19 @@ def config_to_pipeline(configuration_file_path: Path) -> Pipeline:
         config_path (str): The path to the configuration file.
         config_name (str): The name of the configuration file.
     """
-    if not configuration_file_path.exists():
-        raise FileNotFoundError(f"Configuration file not found: {configuration_file_path.resolve()}")
+    if (not configuration_file_path and not configuration_dict) or (configuration_file_path and configuration_dict):
+        raise ValueError("Either configuration_file_path or configuration_dict must be provided.")
+
+    if configuration_file_path:
+        if not configuration_file_path.exists():
+            raise FileNotFoundError(f"Configuration file not found: {configuration_file_path.resolve()}")
     
-    if configuration_file_path.suffix not in [".yaml", ".yml"]:
-        raise ValueError("Configuration file must be a YAML file.")
+        if configuration_file_path.suffix not in [".yaml", ".yml"]:
+            raise ValueError("Configuration file must be a YAML file.")
     
-    return Pipeline.load(open(configuration_file_path, "r"))
+        return Pipeline.load(open(configuration_file_path, "r"))
+    
+    return Pipeline.from_dict(configuration_dict)
 
 
 def extract_component_structure(pipeline: Pipeline) -> Dict[str, Any]:

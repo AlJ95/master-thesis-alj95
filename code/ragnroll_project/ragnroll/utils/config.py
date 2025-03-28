@@ -29,6 +29,9 @@ def extract_run_params(yaml_file: str) -> dict:
     else:
         params["Retriever"] = "NoRetriever"
 
+    params["config_path"] = yaml_file
+    params["config"] = yaml_config
+
     return params
 
 def _extract_nested_items(yaml_config: dict, key_prefix: str = "") -> dict:
