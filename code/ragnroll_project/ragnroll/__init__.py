@@ -1,5 +1,4 @@
 """Top-level package for RAGnRoll."""
-# rptodo/__init__.py
 
 __app_name__ = "RAGnRoll"
 __version__ = "0.1.0"
@@ -30,4 +29,4 @@ from ragnroll.metrics import (
     MAPAtKMetric
 )
 
-from ragnroll.evaluation import evaluate, print_scores, Evaluator
+from ragnroll.evaluation import print_scores, Evaluator

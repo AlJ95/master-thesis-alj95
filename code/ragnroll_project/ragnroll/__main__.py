@@ -1,5 +1,4 @@
-"""RP To-Do entry point script."""
-# rptodo/__main__.py
+"""RAGnRoll entry point script."""
 
 from ragnroll import cli, __app_name__
 

@@ -1,19 +1,27 @@
+import os
+from typing import Dict
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.converters import JSONConverter
-from haystack.components.embedders import SentenceTransformersDocumentEmbedder
+from haystack.components.embedders import (
+    SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder,
+    OpenAIDocumentEmbedder, OpenAITextEmbedder,
+    HuggingFaceAPIDocumentEmbedder, HuggingFaceAPITextEmbedder,
+    AzureOpenAIDocumentEmbedder, AzureOpenAITextEmbedder
+    )
 import json
 import logging
 import yaml
 
 from ragnroll.utils.preprocesser import get_all_documents
+from ragnroll.utils.config import get_components_from_config_by_class
 
 
 logger = logging.getLogger(__name__)
 
-BM25Retriever = "haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever"
-EmbeddingRetriever = "haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever"
-SentenceWindowRetriever = "haystack.components.retrievers.sentence_window_retriever.SentenceWindowRetriever"
+BM25Retriever = "InMemoryBM25Retriever"
+EmbeddingRetriever = "InMemoryEmbeddingRetriever"
+SentenceWindowRetriever = "SentenceWindowRetriever"
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
@@ -45,6 +53,14 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
 
     configuration = pipeline.to_dict()
 
+    embedding_retriever=get_components_from_config_by_class(configuration, EmbeddingRetriever)
+    bm25_retriever=get_components_from_config_by_class(configuration, BM25Retriever)
+    sentence_window_retriever=get_components_from_config_by_class(configuration, SentenceWindowRetriever)
+    
+    if not embedding_retriever and not bm25_retriever and not sentence_window_retriever:
+        print("No retriever found in configuration. Skipping indexing.")
+        return pipeline
+
     # Initialize document store
     document_store = InMemoryDocumentStore()
 
@@ -56,41 +72,47 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
         chunk_separator=CHUNK_SEPARATOR
     )
 
-    if embedding_retriever:=get_component_from_config_by_class(configuration, EmbeddingRetriever):
+    if embedding_retriever:
+        
+        # Get text embedder parameters dictionary from configuration
+        text_embedder = next(iter(get_components_from_config_by_class(configuration, ".embedders.").values()))
 
-        if "init_parameters" not in embedding_retriever or "model" not in embedding_retriever["init_parameters"]:
-            raise ValueError("model not found in init_parameters of embedding_retriever")
-
-        doc_embedder = SentenceTransformersDocumentEmbedder(model=embedding_retriever["init_parameters"]["model"])
-
-        doc_embedder.warm_up()
-        documents = doc_embedder.run(documents)["documents"]
+        if text_embedder:
+            doc_embedder = _get_document_embedder_from_text_embedder(text_embedder)
+            documents = doc_embedder.run(documents)["documents"]
+        else:
+            raise ValueError("No text embedder found in configuration.")
 
     # Write documents to the document store
     document_store.write_documents(documents)
     
     print(f"Indexed {len(documents)} documents in the document store")
     
-    pipeline.get_component("retriever").document_store = document_store
+    for component_name, _ in configuration["components"].items():
+        if any(retriever in configuration["components"][component_name]["type"] 
+               for retriever in [EmbeddingRetriever, BM25Retriever, SentenceWindowRetriever]
+               ):
+            pipeline.get_component(component_name).document_store = document_store
 
     return pipeline
 
-def get_component_from_config_by_class(configuration: dict, component_name: str):
+def _get_document_embedder_from_text_embedder(text_embedder: Dict):
     """
-    Get a component from the configuration by class name e. g. "haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever"
+    Get a document embedder from a text embedder.
     """
-    for _, values in configuration["components"].items():
-        if values["type"] == component_name:
-            return values
-    return None
-
-def get_component_name_from_config(configuration: dict, component_name: str):
-    """
-    Get a component from the configuration by class name e. g. "haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever"
-    """
-    for name, values in configuration["components"].items():
-        if values["type"] == component_name:
-            return name
+    del text_embedder["init_parameters"]["api_key"]
+    if "OpenAITextEmbedder" in text_embedder["type"]:
+        return OpenAIDocumentEmbedder(**text_embedder["init_parameters"])
+    elif "HuggingFaceAPITextEmbedder" in text_embedder["type"]:
+        return HuggingFaceAPIDocumentEmbedder(**text_embedder["init_parameters"])
+    elif "AzureOpenAITextEmbedder" in text_embedder["type"]:
+        return AzureOpenAIDocumentEmbedder(**text_embedder["init_parameters"])
+    elif "SentenceTransformersTextEmbedder" in text_embedder["type"]:
+        doc_embedder = SentenceTransformersDocumentEmbedder(**text_embedder["init_parameters"])
+        doc_embedder.warm_up()
+        return doc_embedder
+    else:
+        raise ValueError(f"Unsupported text embedder: {text_embedder['type']}")
 
 # 4. Main function to tie everything together
 def index_json_data(json_file_path, configuration: dict):
