@@ -1,0 +1,43 @@
+{
+  "documents": [
+  {
+    "id": "doc1",
+    "content": "Docker best practice: Use multi-stage builds to reduce image size. Multi-stage builds let you create cleaner separation between build-time dependencies and runtime dependencies, ensuring the final image only contains what's needed to run your application. You can use the 'AS' keyword to name your stages and reference them later. Example: 'FROM node:14 AS build' followed by 'FROM nginx:alpine' with 'COPY --from=build /app/build /usr/share/nginx/html'."
+  },
+  {
+    "id": "doc2",
+    "content": "Docker best practice: Pin base image versions to specific tags for reproducible builds. Using 'FROM node:14.17.0' instead of 'FROM node:latest' ensures your builds are consistent and prevents unexpected changes when upstream images are updated. This makes builds reproducible and helps prevent future build failures or unexpected behavior in production."
+  },
+  {
+    "id": "doc3",
+    "content": "Docker anti-pattern: Never use the 'root' user to run applications in containers. Running as root creates unnecessary security risks. Instead, create a dedicated user with minimal permissions. Example: 'RUN useradd -r -u 1001 -g appuser appuser' followed by 'USER appuser'. This follows the principle of least privilege and helps prevent privilege escalation attacks if the container is compromised."
+  },
+  {
+    "id": "doc4",
+    "content": "Docker anti-pattern: Avoid storing secrets or credentials in Dockerfiles. Never include API keys, passwords, or tokens directly in your Dockerfile with ENV or ARG instructions. These values are stored in the image history and can be exposed. Instead, use runtime environment variables, Docker secrets, or dedicated secret management tools like HashiCorp Vault or AWS Secrets Manager."
+  },
+  {
+    "id": "doc5",
+    "content": "Docker best practice: Sort multi-line arguments alphabetically in RUN instructions. This helps prevent duplicate packages and makes lists easier to update. Example: 'RUN apt-get update && apt-get install -y \\\\\\n  curl \\\\\\n  git \\\\\\n  nginx \\\\\\n  vim \\\\\\n  && rm -rf /var/lib/apt/lists/*'. Adding a space before backslash improves readability."
+  },
+  {
+    "id": "doc6",
+    "content": "GitHub Actions best practice: Always specify the version of actions you use with SHA commits rather than branch names or version tags. Using '@main' or '@v2' can lead to unexpected behavior if the action is updated. Example: 'uses: actions/checkout@a81bbbf8298c0fa03ea29cdc473d45769f953675' ensures that you always use the exact same version of the action, improving reproducibility and security."
+  },
+  {
+    "id": "doc7",
+    "content": "GitHub Actions best practice: Set appropriate permissions for your workflows using the 'permissions' keyword. By default, workflows have read/write permissions to all scopes, which violates the principle of least privilege. Example: 'permissions: contents: read' restricts the workflow to only read repository contents, reducing the potential damage if the workflow is compromised."
+  },
+  {
+    "id": "doc8",
+    "content": "GitHub Actions anti-pattern: Never hardcode secrets in workflow files. Secrets committed to your repository can be exposed, especially in public repositories. Instead, use GitHub's built-in secrets feature: 'env: API_TOKEN: ${{ secrets.API_TOKEN }}'. This keeps sensitive information secure and allows for easier rotation of credentials."
+  },
+  {
+    "id": "doc9",
+    "content": "GitHub Actions anti-pattern: Avoid using self-hosted runners for public repositories or repositories with untrusted code. Public repositories can submit pull requests that execute code on your self-hosted runners, potentially compromising your infrastructure. Use GitHub-hosted runners for public repositories or implement strict controls on which workflows can run on self-hosted runners."
+  },
+  {
+    "id": "doc10",
+    "content": "GitHub Actions best practice: Validate YAML files in your repository using linters. Create a workflow that runs for every pull request: 'name: Validate-YAML, on: [pull_request], jobs: validate-yaml: runs-on: ubuntu-latest, steps: - uses: actions/checkout@v3, - name: Validate YAML, run: yamllint .'. This helps prevent syntax errors and enforces consistent formatting."
+  }
+] }

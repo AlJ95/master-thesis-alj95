@@ -23,6 +23,13 @@ from ragnroll.metrics.component.retriever import (
     MAPAtKMetric
 )
 
+# Import generator metrics
+from ragnroll.metrics.component.generator import (
+    FormatValidatorMetric,
+    ContextUtilizationMetric,
+    AnswerRelevancyMetric
+)
+
 # Create a convenience dictionary of all available metrics
 AVAILABLE_METRICS = {
     "end-to-end": MetricRegistry.get_end_to_end_metrics(),
@@ -32,6 +39,7 @@ AVAILABLE_METRICS = {
 __all__ = [
     "BaseMetric", 
     "MetricRegistry",
+    # End-to-end metrics
     "AccuracyMetric",
     "PrecisionMetric",
     "RecallMetric",
@@ -40,7 +48,13 @@ __all__ = [
     "FalsePositiveRateMetric",
     "FalseNegativeRateMetric",
     "ROCAUCMetric",
+    # Retriever metrics
     "HaystackContextRelevanceMetric",
     "MAPAtKMetric",
+    # Generator metrics
+    "FormatValidatorMetric",
+    "ContextUtilizationMetric",
+    "AnswerRelevancyMetric",
+    # Convenience dictionary
     "AVAILABLE_METRICS"
 ]
