@@ -73,3 +73,25 @@ __pycache__/
 
 */thesis.log
 */thesis.fdb_latexmk
+
+# Output Files
+*.csv
+*test.json
+*val.json
+
+# all subdirectories with /val/ or /test/
+**/val/**
+**/test/**
+
+# mlflow
+**/mlruns/**
+**/mlartifacts/**
+
+# generated configs
+**/from_matrix/*.yaml
+**/from_matrix/*.yml
+**/from_pipeline/*.yaml
+**/from_pipeline/*.yml
+
+# vscode
+.vscode/

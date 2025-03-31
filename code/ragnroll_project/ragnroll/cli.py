@@ -2,12 +2,33 @@
 # rptodo/cli.py
 
 from typing import Optional, List
-
+import os
+import json
+import pandas as pd
+from pathlib import Path
 import typer
+from dotenv import load_dotenv
 
 from ragnroll import __app_name__, __version__
 
 app = typer.Typer()
+
+CONFIG_PATH = Path(__file__).parent.parent / "configs"
+BASELINES_PATH = CONFIG_PATH / "baselines"
+ENV_PATH = Path(__file__).parent.parent / ".env"
+
+load_dotenv(ENV_PATH)
+
+os.environ["LANGFUSE_SECRET_KEY"] = os.environ["LANGFUSE_INIT_PROJECT_SECRET_KEY"]
+os.environ["LANGFUSE_PUBLIC_KEY"] = os.environ["LANGFUSE_INIT_PROJECT_PUBLIC_KEY"]
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
+
+from haystack import tracing
+from haystack_integrations.components.connectors.langfuse import LangfuseConnector
+
+tracing.tracer.is_content_tracing_enabled = True
+
 
 @app.command()
 def split_data(
@@ -19,148 +40,196 @@ def split_data(
     Split data into train, validation and test sets from JSON/CSV files.
     Creates three directories: train, val, test
     """
-    from sklearn.model_selection import train_test_split
-    import pandas as pd
-    import json
-    from pathlib import Path
-    
-    path = Path(path)
-    
-    # Validate input parameters
-    if not (0 < test_size < 100):
-        raise typer.BadParameter("test_size must be between 0 and 100")
-    
-    # Create output directories
-    val_path = path / "val" 
-    test_path = path / "test"
-    val_path.mkdir(exist_ok=True)
-    test_path.mkdir(exist_ok=True)
-    
-    # Process files
-    if path.is_dir():
-        # Get only JSON/CSV files
-        files = [f for f in path.iterdir() if f.is_file() and f.suffix.lower() in ['.json', '.csv']]
-        
-        if not files:
-            raise typer.BadParameter("No JSON or CSV files found in directory")
-            
-        # Process each file
-        for file in files:
-            # Load data
-            if file.suffix.lower() == '.json':
-                with open(file) as f:
-                    data = json.load(f)
-                df = pd.DataFrame(data)
-            else:  # CSV
-                df = pd.read_csv(file)
-                
-            # Split data
-            val_df, test_df = train_test_split(
-                df,
-                test_size=test_size/100,
-                random_state=random_state
-            )
-            
-            # Save splits
-            base_name = file.stem
-            val_df.to_json(val_path / f"{base_name}_val.json", orient='records')
-            test_df.to_json(test_path / f"{base_name}_test.json", orient='records')
-            
-        typer.echo(f"Successfully split data into train/val/test sets in {path}")
+    from .utils.data import val_test_split
+    val_test_split(path, test_size, random_state)
+    typer.echo(f"Successfully split data into train/val/test sets in {path}")
     
 
+@app.command()
+def test_generalization_error(
+    eval_data_file: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
+    corpus_dir: str = typer.Argument(..., help="Path to directory containing corpus"),
+    output_directory: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
+    experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
+    strict: bool = typer.Option(True, help="Do not use the same config twice."),
+):
+    """
+    Test generalization error of a model.
+    """
+    import mlflow
+    from .utils.pipeline import config_to_pipeline, validate_pipeline
+    from .utils.ingestion import index_documents
+    from .evaluation.eval import Evaluator
+    from .evaluation.data import load_evaluation_data
+    from .evaluation.tracing import fetch_current_traces
+
+    eval_data_path = Path(eval_data_file)
+    test_data_path = eval_data_path.parent / "test" / eval_data_path.name
+
+
+    mlflow.set_tracking_uri("http://localhost:8080")
+    experiment = mlflow.get_experiment_by_name(experiment_name)
+    if experiment:
+        mlflow.set_experiment(experiment_id=experiment.experiment_id)
+    else:
+        raise ValueError(f"Experiment {experiment_name} not found")
+
+    runs = mlflow.search_runs(experiment_ids=[experiment.experiment_id])
+
+    if runs.empty:
+        raise ValueError(f"No runs found for experiment {experiment_name}. Create a new evaluation dataset or use --no-strict (not recommended)")
+
+    if "params.used_test_sets" in runs.columns and strict:
+        # Check if the testset path is already in the params
+        already_used_configs = runs[
+            runs['params.used_test_sets'].str.contains(str(test_data_path))
+            ]['params.config'].unique()
+        
+        runs = runs[~runs['params.config'].isin(already_used_configs)]
+
+    gathered_results = []
+    for _, run in runs.iterrows():
+
+        with mlflow.start_run(run_id=run.run_id):
+            run_name = run["tags.mlflow.runName"]
+
+            pipeline = config_to_pipeline(configuration_dict=eval(run["params.config"]))
+            validate_pipeline(pipeline)
+
+            pipeline = index_documents(corpus_dir, pipeline)
+            pipeline.add_component("tracer", LangfuseConnector(run_name))
+            data = load_evaluation_data(test_data_path)
+
+            evaluator = Evaluator(pipeline)
+            result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=False)
+
+            traces = fetch_current_traces(run_name)
+            
+            for col in result.columns:
+                metric_name = ".".join(("TEST",) + col)
+                mlflow.log_metrics({metric_name: result[col].values[0]})
+            
+            if "params.used_test_sets" in run:
+                used_test_sets = run["params.used_test_sets"]
+            else:
+                used_test_sets = []
+
+            used_test_sets.append(str(test_data_path))
+            mlflow.log_param("used_test_sets", used_test_sets)
+
+            results = pd.concat([result, traces], axis=1)
+            gathered_results.append(results)
+
+            if Path(output_directory).exists():
+                pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
+            else:
+                pd.concat(gathered_results).T.to_csv(output_directory)
+                
+            print(f"Evaluation results saved to {output_directory}")
 
 
 @app.command()
 def run_evaluations(
-    configuration_file: str = typer.Argument(...),
-    eval_data_path : str = typer.Argument(...),
+    config_sources: str = typer.Argument(...), 
+    eval_data_file : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
-    output_directory: str = typer.Argument(...),
+    output_directory: str = typer.Argument(...), # TODO This must be removed to get consistent output name for test set run
+    track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"),
+    baselines: bool = typer.Option(True, help="Run baselines"), 
+    experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
 ):
-    from .utils.pipeline import config_to_pipeline
-    from .evaluation.eval import evaluate
+    from .utils.pipeline import gather_config_paths, config_to_pipeline, validate_pipeline
+    from .evaluation.eval import Evaluator
     from .evaluation.data import load_evaluation_data
     from .utils.ingestion import index_documents
-    llm_pipeline = config_to_pipeline("configs/baselines/llm_config.yaml")
-
-    naive_rag_pipeline = config_to_pipeline("configs/baselines/predefined_bm25.yaml")
-    naive_rag_pipeline = index_documents(corpus_dir, naive_rag_pipeline)
-
-    # rag_pipeline = config_to_pipeline(configuration_file)
-    # rag_pipeline = index_documents(corpus_dir, rag_pipeline)
-    
-    data = load_evaluation_data(eval_data_path)
-
-    print("--------------------------------")
-    print("Baseline LLM")   
-    result_baseline_llm = None # evaluate(data, llm_pipeline)
-    print("--------------------------------")
-    print("Baseline Naive RAG")
-    result_baseline_naive_rag = evaluate(data, naive_rag_pipeline)
-    print("--------------------------------")
-    print("RAG")
-    # result_rag = evaluate(data, rag_pipeline)
-    print("--------------------------------")
-
-    return result_baseline_llm, result_baseline_naive_rag#, result_rag
-
-
-@app.command()
-def draw_pipeline(
-    configuration_file: str = typer.Argument(...),
-    output_file: str = typer.Option(
-        None,
-        "--output-file",
-        "-o",
-        help="The name of the output file.",
-    ),
-):
-    from .utils.pipeline import config_to_pipeline
-    pipeline = config_to_pipeline(configuration_file)
-    pipeline.draw(path=output_file)
-
-@app.command()
-def preprocess_to_csv(
-    corpus_dir: str = typer.Argument(..., help="Path to the corpus directory"),
-    output_file: str = typer.Argument(..., help="Path to the output CSV file"),
-    split: bool = typer.Option(True, help="Whether to split the documents into chunks"),
-    chunk_size: int = typer.Option(1000, help="Size of document chunks if splitting"),
-    chunk_overlap: int = typer.Option(200, help="Overlap between chunks if splitting"),
-    chunk_separator: str = typer.Option("", help="Separator to use between text chunks")
-):
-    """
-    Process documents from a corpus directory and save them to a CSV file.
-    
-    This command will:
-    1. Convert all supported files in the corpus directory to Document objects
-    2. Fetch and convert URLs from urls.csv if it exists in the corpus directory
-    3. Clean and split the documents as specified
-    4. Save the resulting documents to a CSV file
-    """
+    from .evaluation.tracing import fetch_current_traces
+    from .utils.data import val_test_split
+    from .utils.config import extract_run_params
     from pathlib import Path
-    from .utils.preprocesser import get_all_documents, save_documents_to_csv
-    
+    import warnings
+    import mlflow
+
+    if os.getenv("MLFLOW_TRACKING_URI"):
+        uri = os.getenv("MLFLOW_TRACKING_URI")
+    else:
+        uri = "http://localhost:8080"
+
+    # check if uri is accessible
     try:
-        # Process all documents
-        typer.echo(f"Processing documents from {corpus_dir}...")
-        documents = get_all_documents(
-            corpus_dir=corpus_dir,
-            split=split,
-            chunk_size=chunk_size,
-            chunk_overlap=chunk_overlap,
-            chunk_separator=chunk_separator
-        )
-        
-        # Save documents to CSV
-        output_path = Path(output_file)
-        typer.echo(f"Saving {len(documents)} documents to {output_file}...")
-        save_documents_to_csv(documents, output_path)
-        
-        typer.echo(f"Successfully saved {len(documents)} documents to {output_file}")
+        mlflow.set_tracking_uri(uri=uri)
     except Exception as e:
-        typer.echo(f"Error: {e}", err=True)
-        raise typer.Exit(code=1)
+        raise ValueError(f"Failed to set tracking URI: {e}")
+
+    eval_data_path = Path(eval_data_file)
+
+    # Split the evaluation data into val, test sets based on Simon et al. (2024) 
+    val_test_split(eval_data_path)
+
+    if not eval_data_path.exists():
+        warnings.warn(f"Evaluation data path {eval_data_path} does not exist")
+        typer.Abort()
+    if eval_data_path.is_dir():
+        warnings.warn(f"Evaluation data path {eval_data_path} is a directory")
+        typer.Abort()
+
+    val_data_path = eval_data_path.parent / "val" / eval_data_path.name
+    assert val_data_path.exists(), f"Validation data path {val_data_path} does not exist"
+
+    # Setup Run-ID
+    mlflow.set_experiment(experiment_name=experiment_name)
+
+    if baselines:
+        baseline_paths = [
+            BASELINES_PATH / "llm_config.yaml", 
+            BASELINES_PATH / "predefined_bm25.yaml"
+        ]
+    else:
+        baseline_paths = []
+
+    # Gather all config paths from the source file (YAML, MATRIX-YAML, PYTHON)
+    config_sources = gather_config_paths(Path(config_sources))
+
+    gathered_results = []
+    
+    for config_path in baseline_paths + config_sources:
+        print(f"Running evaluation for {config_path}")
+
+        run_name = f"{config_path.parent.name}.{config_path.name}"
+        with mlflow.start_run(run_name=run_name):
+            
+            # Load and prepare pipelines
+            pipeline = config_to_pipeline(configuration_file_path=config_path)
+            validate_pipeline(pipeline)
+
+            params = extract_run_params(config_path)
+            
+            mlflow.log_params(params)
+
+            pipeline = index_documents(corpus_dir, pipeline)
+            pipeline.add_component("tracer", LangfuseConnector(run_name))
+            data = load_evaluation_data(val_data_path)
+
+            evaluator = Evaluator(pipeline)
+            result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
+
+            traces = fetch_current_traces(run_name)
+            
+            for col in result.columns:
+                metric_name = ".".join(("VAL",) + col)
+                mlflow.log_metrics({metric_name: result[col].values[0]})
+
+            results = pd.concat([result, traces], axis=1)
+            gathered_results.append(results)
+
+            if Path(output_directory).exists():
+                pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
+            else:
+                pd.concat(gathered_results).T.to_csv(output_directory)
+
+            print(f"Evaluation results saved to {output_directory}")
+
+
+    return
 
 def _version_callback(value: bool) -> None:
     if value:
@@ -179,3 +248,17 @@ def main(
     )
 ) -> None:
     return
+
+if __name__ == "__main__":
+    # invoke run_evaluations
+
+    # invoke run_evaluations
+    run_evaluations(
+        config_sources="configs/from_pipeline/sample.yaml",
+        eval_data_file="data/processed/dev_data/synthetic_rag_evaluation.json",
+        corpus_dir="data/processed/dev_data/corpus",
+        output_directory="output.csv",
+        track_resources=True,
+        baselines=True,
+        experiment_name="RAG Experimentation"
+    )
