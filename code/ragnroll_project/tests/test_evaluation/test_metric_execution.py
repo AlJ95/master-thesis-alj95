@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock, call
-from ragnroll.evaluation.eval import Evaluator, evaluate
+from ragnroll.evaluation.eval import Evaluator
 from haystack import Pipeline
 
 @pytest.fixture
@@ -138,7 +138,8 @@ def test_evaluate_function_calls_all_metrics(mock_dataset_class, mock_pipeline):
         mock_comp.return_value = {}
         
         # evaluate Funktion aufrufen
-        evaluate(test_data, mock_pipeline, "test_run")
+        evaluator = Evaluator(mock_pipeline)
+        evaluator.evaluate(test_data)
         
         # Prüfen ob die Metrik-run-Methode aufgerufen wurde
         # Hinweis: Wenn es Probleme gibt, kann man auch assertLess für die Anzahl der Aufrufe nehmen

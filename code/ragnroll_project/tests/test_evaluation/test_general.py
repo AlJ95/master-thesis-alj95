@@ -1,5 +1,5 @@
 import pytest
-from ragnroll.evaluation.eval import Evaluator, EvaluationDataset, evaluate
+from ragnroll.evaluation.eval import Evaluator, EvaluationDataset
 from unittest.mock import patch, MagicMock
 
 def test_evaluator_initialization(mock_pipeline):
@@ -39,7 +39,8 @@ def test_evaluate_function(mock_print, mock_evaluator_class, mock_dataset_class,
     mock_evaluator._results_to_df.return_value = MagicMock()
     
     # Execute
-    result = evaluate(sample_evaluation_data, mock_pipeline, "test_run")
+    evaluator = Evaluator(mock_pipeline)
+    result = evaluator.evaluate(sample_evaluation_data)
     
     # Verify
     mock_dataset_class.assert_called_once_with(sample_evaluation_data)

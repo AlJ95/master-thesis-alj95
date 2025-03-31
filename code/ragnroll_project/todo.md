@@ -12,11 +12,11 @@ def output_verifier(output, classes)
 - [x] End-to-End Evaluation
 - [x] Component Evaluation
 - [x] System Metrics Evaluation
-- [ ] Data Split
+- [x] Data Split
 - [x] Tracing
 - [ ] Do I address all mentioned drawbacks of RAGs in section drawbacks?
-- [ ] Refactoring / Clean up
-- [ ] Documentation
-- [ ] README
-- [ ] Tests
-- [ ] Preparation Script (Langfuse, Docker Compose for VM - Needed for System Metrics Evaluation)
+- [x] Refactoring / Clean up
+- [x] Documentation
+- [x] README
+- [x] Tests
+- [x] Preparation Script (Langfuse, Docker Compose for VM - Needed for System Metrics Evaluation)
