@@ -1,8 +1,8 @@
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Tuple, Optional, Callable
 from ragnroll.metrics.base import BaseMetric, MetricRegistry
-import math
-import numpy as np
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, roc_curve, auc
+
+SENT_WARNING_ONCE = False
 
 class ClassificationBaseMetric(BaseMetric):
     """Base class for binary classification metrics that work with batches of predictions."""
@@ -23,16 +23,19 @@ class ClassificationBaseMetric(BaseMetric):
         self.negative_label = negative_label
         self.case_sensitive = case_sensitive
     
-    def _normalize_label(self, label: str) -> str:
+    @classmethod
+    def _normalize_label(cls, label: str, case_sensitive: bool) -> str:
         """Normalize the label based on case sensitivity."""
-        return label if self.case_sensitive else label.lower()
+        return label if case_sensitive else label.lower()
     
-    def _convert_to_binary_class(self, label: str) -> int:
+    @classmethod
+    def _convert_to_binary_class(cls, label: str, positive_label: str, 
+                               negative_label: str, case_sensitive: bool) -> int:
         """Convert string label to binary (0/1) format."""
-        normalized = self._normalize_label(label)
-        if normalized == self._normalize_label(self.positive_label):
+        normalized = cls._normalize_label(label, case_sensitive)
+        if normalized == cls._normalize_label(positive_label, case_sensitive):
             return 1
-        elif normalized == self._normalize_label(self.negative_label):
+        elif normalized == cls._normalize_label(negative_label, case_sensitive):
             return 0
         else:
             try:
@@ -45,7 +48,41 @@ class ClassificationBaseMetric(BaseMetric):
             except ValueError:
                 # Return 1 if the label contains the positive label
                 # Otherwise return 0
-                return 1 if self._normalize_label(self.positive_label) in normalized else 0
+                return 1 if cls._normalize_label(positive_label, case_sensitive) in normalized else 0
+    
+    @classmethod
+    def _process_single_prediction(cls, expected: str, actual: str, 
+                                 positive_label: str, negative_label: str, 
+                                 case_sensitive: bool) -> tuple[int, int]:
+        """Process a single prediction and return binary class labels."""
+        expected_class = cls._convert_to_binary_class(expected, positive_label, 
+                                                   negative_label, case_sensitive)
+        actual_class = cls._convert_to_binary_class(actual, positive_label, 
+                                                  negative_label, case_sensitive)
+        return expected_class, actual_class
+    
+    @classmethod
+    def return_exact_match_scores(cls, expected_outputs: List[str], actual_outputs: List[str], 
+                                trace_ids: List[str], callback: Callable,
+                                positive_label: str = "1", negative_label: str = "0", 
+                                case_sensitive: bool = False) -> None:
+        """
+        Return exact match scores for each trace ID.
+        
+        Args:
+            expected_outputs: List of ground truth labels
+            actual_outputs: List of predicted labels  
+            trace_ids: List of trace IDs
+            callback: Callback function to store individual scores
+            positive_label: String representing the positive class
+            negative_label: String representing the negative class
+            case_sensitive: Whether to treat labels as case-sensitive
+        """
+        for expected, actual, trace_id in zip(expected_outputs, actual_outputs, trace_ids):
+            y_true, y_pred = cls._process_single_prediction(
+                expected, actual, positive_label, negative_label, case_sensitive
+            )
+            callback(trace_id, "ExactMatch", y_true == y_pred)
     
     def _process_predictions(self, expected_outputs: List[str], actual_outputs: List[str]) -> Tuple[List[int], List[int]]:
         """
@@ -54,16 +91,19 @@ class ClassificationBaseMetric(BaseMetric):
         Args:
             expected_outputs: List of ground truth labels
             actual_outputs: List of predicted labels
-            
+            trace_ids: List of trace IDs
+            callback: Callback function to store individual scores for each trace URL.
         Returns:
             Tuple containing lists of true and predicted binary classes
         """
         y_true = []
         y_pred = []
-        
+
         for expected, actual in zip(expected_outputs, actual_outputs):
-            expected_class = self._convert_to_binary_class(expected)
-            actual_class = self._convert_to_binary_class(actual)
+            expected_class = self._convert_to_binary_class(expected, self.positive_label, 
+                                                         self.negative_label, self.case_sensitive)
+            actual_class = self._convert_to_binary_class(actual, self.positive_label, 
+                                                        self.negative_label, self.case_sensitive)
             y_true.append(expected_class)
             y_pred.append(actual_class)
         
@@ -106,7 +146,8 @@ class AccuracyMetric(ClassificationBaseMetric):
         Args:
             expected_outputs: List of ground truth labels
             actual_outputs: List of predicted labels
-            
+            trace_ids: List of trace IDs
+
         Returns:
             Dict with accuracy score and success flag
         """
@@ -452,6 +493,10 @@ class ROCAUCMetric(ClassificationBaseMetric):
                 y_probs = probabilities
             else:
                 y_probs = [float(pred) for pred in y_pred]
+                # Add a warning to the results when using binary predictions
+                if not SENT_WARNING_ONCE:
+                    print("Warning: ROC AUC calculated with binary predictions instead of probabilities. Results may be less informative.")
+                    SENT_WARNING_ONCE = True
             
             # Calculate AUC if we have enough data points and at least two classes
             if len(y_true) >= 2 and len(set(y_true)) > 1:
