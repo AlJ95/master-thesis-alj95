@@ -3,7 +3,7 @@
 
 from typing import Optional, List
 import os
-
+import json
 import pandas as pd
 from pathlib import Path
 import typer
@@ -45,16 +45,87 @@ def split_data(
     typer.echo(f"Successfully split data into train/val/test sets in {path}")
     
 
+@app.command()
 def test_generalization_error(
-    path: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
+    eval_data_file: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
+    corpus_dir: str = typer.Argument(..., help="Path to directory containing corpus"),
+    output_directory: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
+    experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
+    strict: bool = typer.Option(True, help="Do not use the same config twice."),
 ):
     """
     Test generalization error of a model.
     """
-    # TODO: Get all configurations from output.csv
-    # TODO: Run evaluation for each configuration on test set
-    # TODO: Mark test set as used
-    # TODO: If user wants to run on used test set, raise warning
+    import mlflow
+    from .utils.pipeline import config_to_pipeline, validate_pipeline
+    from .utils.ingestion import index_documents
+    from .evaluation.eval import Evaluator
+    from .evaluation.data import load_evaluation_data
+    from .evaluation.tracing import fetch_current_traces
+
+    eval_data_path = Path(eval_data_file)
+    test_data_path = eval_data_path.parent / "test" / eval_data_path.name
+
+
+    mlflow.set_tracking_uri("http://localhost:8080")
+    experiment = mlflow.get_experiment_by_name(experiment_name)
+    if experiment:
+        mlflow.set_experiment(experiment_id=experiment.experiment_id)
+    else:
+        raise ValueError(f"Experiment {experiment_name} not found")
+
+    runs = mlflow.search_runs(experiment_ids=[experiment.experiment_id])
+
+    if runs.empty:
+        raise ValueError(f"No runs found for experiment {experiment_name}. Create a new evaluation dataset or use --no-strict (not recommended)")
+
+    if "params.used_test_sets" in runs.columns and strict:
+        # Check if the testset path is already in the params
+        already_used_configs = runs[
+            runs['params.used_test_sets'].str.contains(str(test_data_path))
+            ]['params.config'].unique()
+        
+        runs = runs[~runs['params.config'].isin(already_used_configs)]
+
+    gathered_results = []
+    for _, run in runs.iterrows():
+
+        with mlflow.start_run(run_id=run.run_id):
+            run_name = run["tags.mlflow.runName"]
+
+            pipeline = config_to_pipeline(configuration_dict=eval(run["params.config"]))
+            validate_pipeline(pipeline)
+
+            pipeline = index_documents(corpus_dir, pipeline)
+            pipeline.add_component("tracer", LangfuseConnector(run_name))
+            data = load_evaluation_data(test_data_path)
+
+            evaluator = Evaluator(pipeline)
+            result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=False)
+
+            traces = fetch_current_traces(run_name)
+            
+            for col in result.columns:
+                metric_name = ".".join(("TEST",) + col)
+                mlflow.log_metrics({metric_name: result[col].values[0]})
+            
+            if "params.used_test_sets" in run:
+                used_test_sets = run["params.used_test_sets"]
+            else:
+                used_test_sets = []
+
+            used_test_sets.append(str(test_data_path))
+            mlflow.log_param("used_test_sets", used_test_sets)
+
+            results = pd.concat([result, traces], axis=1)
+            gathered_results.append(results)
+
+            if Path(output_directory).exists():
+                pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
+            else:
+                pd.concat(gathered_results).T.to_csv(output_directory)
+                
+            print(f"Evaluation results saved to {output_directory}")
 
 
 @app.command()
@@ -127,7 +198,7 @@ def run_evaluations(
         with mlflow.start_run(run_name=run_name):
             
             # Load and prepare pipelines
-            pipeline = config_to_pipeline(config_path)
+            pipeline = config_to_pipeline(configuration_file_path=config_path)
             validate_pipeline(pipeline)
 
             params = extract_run_params(config_path)
@@ -144,15 +215,19 @@ def run_evaluations(
             traces = fetch_current_traces(run_name)
             
             for col in result.columns:
-                mlflow.log_metrics({".".join(col): result[col].values[0]})
-
-            mlflow.log_table(data=result, artifact_file="evaluation_results.json")
+                metric_name = ".".join(("VAL",) + col)
+                mlflow.log_metrics({metric_name: result[col].values[0]})
 
             results = pd.concat([result, traces], axis=1)
             gathered_results.append(results)
 
-            pd.concat(gathered_results).T.to_csv(output_directory)
+            if Path(output_directory).exists():
+                pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
+            else:
+                pd.concat(gathered_results).T.to_csv(output_directory)
+
             print(f"Evaluation results saved to {output_directory}")
+
 
     return
 
