@@ -60,7 +60,7 @@ components:
           bm25_parameters: {}
           bm25_tokenization_regex: (?u)\b\w\w+\b
           embedding_similarity_function: dot_product
-          index: a2bf3299-b399-4592-9c4c-c7a060a332bf
+          index: e44a81b3-0a5b-438c-90eb-d85e87950e48
         type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
       filter_policy: replace
       filters: null

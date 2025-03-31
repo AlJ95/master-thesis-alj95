@@ -1,5 +1,4 @@
 """Top-level package for RAGnRoll."""
-# rptodo/__init__.py
 
 __app_name__ = "RAGnRoll"
 __version__ = "0.1.0"
