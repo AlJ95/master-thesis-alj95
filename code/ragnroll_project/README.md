@@ -68,13 +68,11 @@ You can create Haystack RAG pipelines in three different ways:
    - See `configs/matrix_examples.yaml` for an example
 
 - Ensure you have the following components defined in your configuration:
-  - **Answer Builder**: `answer_builder`
+  - **Answer Builder**: Atleast one `answer_builder` for the finals answer in the pipeline
   - **Generators**: Must have the type `*.generators.*`
   - **Retrievers**: Must have the type `*.retrievers.*`
   
 If you use custom generators or retrievers, you must inherit from the `Generator` or `Retriever` classes respectively.
-
-
 
 
 ## Running Evaluations
