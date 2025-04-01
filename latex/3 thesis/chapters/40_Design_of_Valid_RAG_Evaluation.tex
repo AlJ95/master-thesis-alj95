@@ -1,26 +1,30 @@
 
-Developing retrieval-augmented generation systems is a difficult task that needs several reconfiguration phases.\cite{Simon.10112024} Component evaluation and in-depth failure analysis are key requirements for readjusting the right parts within the RAG-system, as they can include complex pipelines that may involve iterative or recursive processes. Failures can occur in many parts of the RAG-system. Barnett et al.\cite{Barnett.2024} created a list of 7 failures occuring in an advanced RAG system with Rewrite-Retrieve-Rerank-Read (4R) structure as Gao et al.\cite{Gao.18.12.2023} has defined it. Therefore for a framework it is indespensible to evaluate all components next to the end-to-end evaluation for the overall result. In this chapter, we will discuss how RAGs are evaluated accurately in two different aspects - end-to-end evaluation and component evaluation. After that we will discuss how fast RAG development with transparent and reproducible results can be done. We will introduce Haystacks approach of fast modular RAG development. 
+Developing retrieval-augmented generation systems is a difficult task that needs several reconfiguration phases.\cite{Simon.10112024} Component evaluation and in-depth failure analysis are key requirements for readjusting the right parts within the RAG-system, as they can include complex pipelines that may involve iterative or recursive processes. Failures can occur in many parts of the RAG-system. Barnett et al.\cite{Barnett.2024} in an advanced RAG system as Gao et al.\cite{Gao.18.12.2023} has defined it. Every additional component can increase or decrease the overall performance. Therefore for a framework it is indespensible to evaluate all components next to the end-to-end evaluation for the overall result. In this chapter, we will introduce a validate-test split for evaluation data and will justify its importance. We will discuss how RAGs are evaluated accurately in two different aspects - end-to-end evaluation and component evaluation. After that we will discuss how fast RAG development with transparent and reproducible results can be done. We will introduce Haystacks approach of fast modular RAG development via configuration files and expand its functionality for testing multiple configurations via one single file. We will present failure analysis via tracing and finally we will estimate the generalization error.
 
-At first we will introduce the novelle blueprint by Simon et al.\cite{Simon.10112024} for handling external validity in RAG experiments. 
-% TODO: 
+\section{Validation-Test Split}
+Typical machine learning projects need the researcher to collect a lot of data, prepare it and split it into a train-validate-test split for optimizing a model with training and validation dataset and afterwards testing the generalization error done with the test dataset. The necessity of this process does not derive from training itself, but from tuning an optimizer with many free parameters to a given dataset. Whenever we try to fit data to an optimizer we need to ensure, that we did not overfit the model to a dataset. We argue that this problem is also present for RAG-systems.
+
+No matter if training a classifier or an RAG system, both come with a large amount of free parameters. A RAG system can have hundreds to thousands of it if we include possible models for generator, embedding, corpus content or system-architectures as (indirect) free parameters. Therefore we need to ensure, that we did not overfit with our system to a given evaluation dataset. 
+
+In this framework we will always split a given evaluation dataset into two parts - validation and test dataset. Then we will continue to evaluate with the validation dataset and hold out the test data completely till we reconfigured to a certain satisfaction. If the reconfiguration phase is done, we will use the testset once to check if the validation error differs from the test error. The next section explains how RAGs should be evaluated to maximize its overall performance.
+
 
 \section{Evaluation Techniques}
 
-Evaluating retrieval-augmented generation systems is a hard task that is still highly researched. It comes with all machine learning based evaluation problems such as data shifts, generalization errors or data contamination, but has also a variety of failure points introduced by the design of such a complex system. In this section I will introduce a majority of failure points for RAGs and present, how this framework helps to identify them. The final goal of tuning a RAG system is always to maximize its performance in end-to-end evaluation. RAG users want that the response of the systems fully answers its question or completes its task correct. Therefore end-to-end evaluation is important for comparing baselines and thus to decide if a RAG system can be a improvement to standalone large language models. 
+Evaluating retrieval-augmented generation systems is a hard task that is still highly researched. It comes with all machine learning based evaluation problems such as data shifts, generalization errors or data contamination, but has also a variety of failure points introduced by the design of such a complex system. In this section we will introduce a majority of failure points for RAGs and present how this framework helps to identify them. The final goal of tuning a RAG system is always to maximize its performance in end-to-end evaluation. RAG users want that the response of the systems fully answers its question or completes its task correct. 
 
-
-The problem that occurs with end-to-end evaluation is that it is far from obvious which parameters we have to tune or which data we have to provide to accomplish a performance improvement. In figure \ref{fig:failures} there is an example for every component in particular RAG system. In reality there are much more points of failures in such systems. We will explore those in section component evaluation.
+The problem that occurs with end-to-end evaluation is that it is far from obvious which parameters we have to tune or which data we have to provide to accomplish a performance improvement. In figure \ref{fig:failures} there is an example for every component in particular RAG system. In reality there are much more points of failures in such systems. RAG systems work like real-world pipelines. We need to figure out which components are bottlenecks and swap them out with more performant ones. This can only be done with rigorous failure analysis. Therefore every experiment needs to have tracing the content for figuring out why an query was answered wrong. We are doing this with Langfuse's\cite{Langfuse} self-hosted version. We visualize all metrics and RAG parameters in MLflow\cite{MLflow}. MLflow does also contain an tracing module and an GenAI module. We decided against those features, because the tracing module is not compatible with Haystack yet and the GenAI feature requires actual ground-trugh documents which we find impractical due chunking optimization, nearly all features are marked as experimental and might be removed soon as well as our implementation of validation-test split is not compatible with this feature.
 
 \begin{figure}
   \centering
   \includegraphics[width=\textwidth]{images/FailurePointExamples.pdf}
-  \caption{A RAG pipeline with one failure example of all used components.}
+  \caption{A RAG pipeline with one failure example for each used component.}
   \label{fig:failures}
 \end{figure}
 
 \subsection{End-to-End Evaluation}
 
-We define end-to-end evaluation as metrics that use input and actual output to compare against a ground-truth output to decide if the evaluated item was correct or not. Evaluation that address retrieval are therefore not part of it. In this thesis we will focus on classification tasks only. Therefore the metrics we use for end-to-end evaluations are also limited by classification ones. 
+We define end-to-end evaluation as metrics that uses input and actual output to compare the result against a ground-truth output to decide if the evaluated item was correct or not. Evaluation that address retrieval or the generators ability to utilize context are therefore not part of end-to-end evaluation. In this thesis we will focus on classification tasks only. Therefore the metrics we use for end-to-end evaluations are also limited by classification ones. 
 
 {\renewcommand{\arraystretch}{1.5}%
 \begin{table}
@@ -35,8 +39,8 @@ We define end-to-end evaluation as metrics that use input and actual output to c
   \hline Matthews Correlation & $\frac{TP \times TN - FP \times FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}$\\Coefficient & \\[2pt]
   \hline False-Positive Rate & $\frac{FP}{FP + TN}$\\[2pt]
   \hline False-Negative Rate & $\frac{FN}{FN + TP}$\\[2pt]
-  \hline Receiver Operating & Curve plotting TPR against FPR at various \\&threshold settings\\[2pt]
-  \hline Area under ROC Curve &  AUC of the ROC curve\\[2pt]
+  \hline Receiver Operating & \textcolor{red}{Curve plotting TPR against FPR at various} \\&threshold settings\\[2pt]
+  \hline Area under ROC Curve &  \textcolor{red}{AUC of the ROC curve}\\[2pt]
   \hline
  \end{tabular}
  \caption{Typical classification metrics used for experiments including RAGs or LLMs\cite{Hou.8212023,Zeng.28.03.2024}}
@@ -45,7 +49,7 @@ We define end-to-end evaluation as metrics that use input and actual output to c
 
 In stark contrast to evaluating generative tasks, classification comes with clear metrics or methods to evaluate outputs. In table \ref{table:classification_metrics} there is a list of highly used classification metrics for RAG and LLM experimentation.\cite{Hou.8212023,Zeng.28.03.2024} 
 
-End-to-end evaluation requires the researcher to establish a baseline for the experiments. Baslines make experiment results interpretable and ensure that there is something to compare with. Therefore we decided to implement two baselines in this framework, which are used per default if an experiment starts. In the first run, we use the selected generator model alone to get a baseline vs standalone LLMs. Next we run a naive RAG with the data from the predefined corpus, the basic retrieval and generator (retrieve-read, cf: section \ref{sec:naive_rags}). The standalone LLM baseline ensure that the complexity overhead of implementing a RAG system is justified. If the evaluated RAG system can not surpass the performance of the LLM baseline, then simpler system should be used. Similar to that is the naive RAG baseline used to compare more complex RAG variations with more overhead, computation time or costs to the simpler naive one to ensure that the mentioned downsides are justified. 
+End-to-end evaluation requires the researcher to establish a \textit{baseline} for the experiments. Baslines make experiment results interpretable and ensure that there is something to compare with. Therefore we decided to implement two baselines in this framework, which are used per default if an experiment starts. The first baseline consists only of a standalone LLM. The second baseline is a naive RAG with BM25 retrieval and with the data from the predefined corpus (retrieve-read, cf: section \ref{sec:naive_rags}). The standalone LLM baseline ensure that the complexity overhead of implementing a RAG system is justified. If the evaluated RAG system can not surpass the performance of the LLM baseline, then simpler system should be used. Advanced RAGs often need more components, which result in longer computing times and costs. Outperforming the naive RAG ensures that simple but fast retrieval alone is not sufficient. 
 
 \begin{figure}[h]
   \centering
@@ -131,13 +135,7 @@ We differentiate two major blocks - pre-retrieval and post-retrieval. Evaluating
 
 Post-retrieval components such as reranker aim to improve the context utilization for the generator. The generator requires a curated and limited list of documents that serves its ability and query best. Second, reducing the Top-K parameter for retrievers might result in missing documents with required information. For that we use the same metrics as for the retriever. The additional step of reranking influences the overall performance and evaluating this component is important. 
 
-Most components beside retriever and generator have no direct measurement,there they have to be evaluated by replacement and metrics of the component block. For example, the rewriter is evaluated by using similar components, different models or prompting techniques as rewriter-variations. Then the RAG runs through the evaluation by only changing those rewriter specific configurations. The resulting end-to-end or if applicable the resulting retrieval metrics decide which rewriter setting is better suited.
-
-This requires the researcher to try many different RAG variations for rigorous testing. In the next section we will introduce our appraoch for fast RAG development.
-
-\section{Tracing}
-% Use Langfuse for it
-% MLFlow is not compatible with Haystack yet.
+Most components beside retriever and generator have no direct measurement,there they have to be evaluated by replacement and metrics of the component block. For example, the rewriter is evaluated by using similar components, different models or prompting techniques as rewriter-variations. Then the RAG runs through the evaluation by only changing those rewriter specific configurations. The resulting end-to-end or if applicable the resulting retrieval metrics decide which rewriter setting is better suited. This approach requires the researcher to try many different RAG variations for rigorous testing. In the next section we will introduce our appraoch for fast RAG development.
 
 \section{Fast RAG Development}
 
@@ -152,18 +150,8 @@ RAG systems have a lot of parameters that are not obvious to set. It is common a
 
 There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack comes with custom components that enable new component technologies and does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in one YAML-file to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
 
-There are are also two more benefits for configuring via YAML files. First, we can copy existing RAG configurations easily and second, Haystack develops an UI for developing RAG system, that can be used to manage even very complex systems on a two-dimensional space. A demo screenshot can be seen on figure \ref{fig:deepsetstudio}. This simplifies RAG system development furthermore. 
+There are are more benefits for configuring via YAML files. First, we can copy existing RAG configurations easily. Second pipeline definitions can still be done in python, saving the afterwards into the YAML format. Lastly, Haystack develops an UI\cite{haystack-ui} for developing RAG system, that can be used to create such complex systems on a two-dimensional space.
 
-
-\begin{figure}[b]
-  \centering
-  \includegraphics[width=\textwidth]{images/deepset-studio-zoomed-in.png}
-  \caption{Haystack's Deepset Studio application for drag and drop RAG development.\cite{deepsetstudio.10.03.2025}}
-  \label{fig:deepsetstudio}
-\end{figure}
-
-
-\newpage
 \begin{minted}[
     frame=single,
     bgcolor=lightgray
@@ -188,65 +176,57 @@ connections:
 - ...
 \end{minted}
 
-As mentioned before, reconfiguration phases are important for overall system improvements, but doing generalizable and valid experiments over all reconfiguration phases is difficult. The evaluation dataset might change or gets extended to handle even more complex queries. DVC\cite{dvc.17.03.2025} is an open source data version control which 
+While copying configuration files and adjusting parameters of it is more efficient then handling verbose python modules, we expanded haystacks core functionality for saving and loading YAML configurations with matrix notation.
+We allow different parameters within a list and generate all possible combinations of that configuration. In the example below we can see 4 different combinations: ("gpt-4o-mini", 5), ("o3-mini", 5), ("gpt-4o-mini", 10) and ("o3-mini", 10). This ensures that the researcher can try and validate many different models or parameters and compare their impact on the overall performance.
+
+\begin{minted}[
+  frame=single,
+  bgcolor=lightgray
+]{yaml}
+components:
+  llm:
+    init_parameters:
+      model: ["gpt-4o-mini", "o3-mini"]
+      ...
+  retriever:
+    init_parameters:
+      top-k: [5, 10]
+  ...
+\end{minted}
 
 % The visualisation shows the process of reconfiguring the RAG system till its optimized towards a specific validation set. The reconfiguration phase can adjust parameters, using different models, pipelines or even fine-tuning parts such as retriever or generator. We will introduce detailed validity concerns of this common approach in a latter section. 
 
-\section{Reporting}
-% DVC für Data Versioning:
-
-% DVC wird primär zur Versionierung von Daten, Modellen und Code verwendet – in Git integriert und ermöglicht so Reproduzierbarkeit in ML-Projekten.
-% Visualisierungsstandard in DVC:
-
-% Die native plot diff-Funktion von DVC generiert hauptsächlich Liniendiagramme, was ideal für zeitbasierte Entwicklungen (z. B. Trainingsverlauf) ist.
-% Herausforderung bei RAG-Metriken:
-
-% RAG-spezifische Metriken (z. B. Generator Faithfulness, Answer Relevance, Retrieval MAP@K) repräsentieren den Vergleich verschiedener Architekturen/Konfigurationen und besitzen keine natürliche Zeitachse.
-% Liniendiagramme sind daher nicht optimal, um diese Metriken anschaulich darzustellen.
-% Lösungsansätze:
-
-% Eigene Reporting-Skripte:
-% Export der Experiment-Ergebnisse (z. B. als JSON oder CSV) und anschließende Visualisierung mit externen Bibliotheken (Matplotlib, Plotly) in Diagrammtypen wie Balkendiagrammen, Boxplots oder Scatterplots.
-% Kombination mit spezialisierten Tools:
-% Ergänzung von DVC durch dedizierte Experiment-Tracking-Tools (MLflow, Weights & Biases, DVCLive) zur detaillierten Visualisierung, während DVC weiterhin die Datenversionierung übernimmt.
-% Diese Ansätze ermöglichen es, DVC als Rückgrat für die Datenversionierung zu nutzen und gleichzeitig flexible, an RAG-spezifische Bedürfnisse angepasste Visualisierungen zu erstellen.
-
-% Warum nicht full-mode mlflow mit mlflow.genai (s. Docs)?
-% Überall steht dran Experimental: This function may change or be removed in a future release without warning.
-% Es gibt kein LLM-as-a-Judge für Retrieval. Es wird Ground-Truth Doc Ids benötigt, welches wie bereits besprochen ungünstig für schnelles RAG Entwickeln ist. 
-% GenAI ist nicht dafür ausgelegt den Blueprint Ansatz durchzuführen sondern versucht alles out-of-the-box anzubieten.
-
-\section{Increasing Transparency in RAG Experiments}
-
-\begin{itemize}
-    \item DVC for RAG Experiments
-    \item Save YAMLs, Versionize Data + Code
-\end{itemize}
-
-\section{Internal Validity}
-
-\textcolor{blue}{Recherche über Validity (Internal vs External)}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/FrameworkFull.pdf}
+  \caption{Framework: At first the evaluation data get splitted into validation and hold-out test dataset. Then the validation data is used to evaluate a configured RAG system and compare it against baselines. After failure analyisis several reconfiguration phases can happen. At last the test dataset is used to test all configurations for a potential generalization error.}
+  \label{fig:framework-full}
+\end{figure}
 
 
-Evaluating semantics in LLM's or RAG systems rely on LLM-as-a-Judge models or lexical metrics such as BLEU or ROUGE, which measure the token overlap of actual answer and ground truth. Lexical answers can not capture answer pairs that are differently written but having the same semantic. LLM-as-a-Judge 
+\section{Transparency}
 
-\paragraph{Preference Leakage}
-There are findings suggesting that LLM-as-a-judge favor similar LLMs that their based on. Therefore using synthetic data for evaluation is fast, but risks so called preference leakage.\cite{Li.03.02.2025} This field is very new and still under research. 
+We are following Simon et al.\cite{Simon.10112024} recommendations for ensuring transparency in RAG experiments. First we ensure that the used data is either publicly availlable or published by the experimenter. This does not fall under the functionality of this framework, because this is usually done via version control such as Github\cite{github-inc-2025} or Gitlab\cite{gitlab-inc-2025}. Another popular decision is DVC\cite{dvc.17.03.2025}, which is primarly focussed on machine learning experiments and therefore less suited for RAG development. Their approach of adding stages is a lot of overhead that might be too time-consuming for fast RAG development. Beside that derived features such as visualisation are adjusted to training which is epoch-oriented. 
 
+Code as well as RAG-system architecture is saved with each commit. This ensures that every configuration phase can be restored as well as transparently reported. 
 
-\paragraph{RAG Evaluation needs a Holdout-Testset}
-\begin{itemize}
-    \item RAG Experiments belongs to ML Experiments 
-    \item Requires Seeding
-    \item ML Experiments might cause Overfitting
-    \item Generalization (External Validity) is testable with a hard data split (train vs validation vs test)
-    \item training data split is not needed, but validation and test is required
-    \item validation is for hyperparameter tuning important, which configs have the best results
-    \item no testset -> no generalization estimatation
-    \item \textcolor{red}{Problem zum Nachdenken} Im Training braucht es ein Holdout-Testset damit man das LLM auswählen kann, welches den geringsten Testfehler hat, aber im RAG wird nicht trainiert. Müssen dann alle Konfigurationen dagegen getestet werden?
-\end{itemize}
+We added in all configuration files meta data parameters. We highly recommend this practice for every configuration phase. There can be written down comments, hypothesis or simple thoughts that can later on be used to compare different results within MLflow. Additional this can be used to make it more transparent why this reconfiguration phases were executed. This has several benefits.
+At first, it makes researchers intentions more clear e. g. did the researcher wanted to improve retrieval or context utilization? 
+Second, it also shows unsuccessful configurations or hypothesis, which can be used by other research teams later on.
 
-\section{External Validity}
+Typical machine learning experiments require seeding, which can be complicated as it is not clear which services support it. We included it in the openai generators in our example configurations and want to raise attention for including seeding in all applicable situations.
+
+The here stated transparency considerations and actions make sure that RAG experiments are reproducible as much as we can. It assumes a static dataset. If the dataset is frequently changing the users needs to use a workaround with DVC, which we have decided not to include.
+Beside that all experiments are reproducible as long as all components of the system that include randomness can pass a seed parameter.
+
+\section{Validity}
+
+\paragraph{Internal Validity}
+Evaluating semantics in LLM's or RAG systems rely on LLM-as-a-Judge models or lexical metrics such as BLEU or ROUGE, which measure the token overlap of actual answer and ground truth. Lexical answers can not capture answer pairs that are differently written but having the same semantic. LLM-as-a-Judge are on par with human-level judging, but are prone to preference leakage. There are findings suggesting that LLM-as-a-judge favor similar LLMs that their based on. Therefore using synthetic data for evaluation is fast, but risks preference leakage.\cite{Li.03.02.2025} This field is very new and still under research. 
+
+\paragraph{External Validity}
+
+Using the hold-out test dataset
 
 \begin{figure}
     \centering
@@ -263,6 +243,10 @@ We demand for a test data set to avoid overfitting while tuning RAG parameter. D
 While the training and validation data is used for hyperparameter tuning to ensure the best performing model, the test dataset on the other hand is used to check if the hyperparameter tuning introduced an overfitting. This procedure must be adopted for RAG systems too (cf. figure \ref{fig:tuning}). Even though they do not rely on a training per se, the continous reconfiguration of such systems, including prompt engineering or parameter tuning can lead to overfitting. The needs for a test dataset is independent from a potential training phase, but instead very dependent on a tuning an high amount of free variables, that is done till the results converge to the best outcoming scenario.
 
 Both LLM and RAG development share those reconfiguration phases. Additionally there are situations when individual components such as retriever must be fine-tuned to handle domain-specific data. In such situations there should not only be test data for the retrieval training part, but also for the overall RAG system to ensure overfitting did not happen on the bigger system.
+
+
+\textcolor{blue}{Recherche über Validity (Internal vs External)}
+
 
 
 \section{User Interface}
