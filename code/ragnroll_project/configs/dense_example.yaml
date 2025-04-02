@@ -108,4 +108,9 @@ connections:
 - receiver: answer_builder.replies
   sender: llm.replies
 max_runs_per_component: 10
-metadata: {}
+metadata: 
+  chunking:
+    split: true
+    chunk_size: 500
+    chunk_overlap: 150
+    chunk_separator: "\n\n"

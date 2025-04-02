@@ -48,6 +48,29 @@ def convert_to_documents(json_data):
         
     return documents
 
+def _extract_chunking_params(pipeline: Pipeline):
+    """
+    Extract chunking parameters from the configuration.
+    """
+    chunking_params = {}
+
+    if "chunking" in pipeline["metadata"]:
+        _params = pipeline["metadata"]["chunking"]
+        chunking_params["split"] = _params["split"] if "split" in _params else True
+        chunking_params["chunk_size"] = _params["chunk_size"] if "chunk_size" in _params else CHUNK_SIZE
+        chunking_params["chunk_overlap"] = _params["chunk_overlap"] if "chunk_overlap" in _params else CHUNK_OVERLAP
+        chunking_params["chunk_separator"] = _params["chunk_separator"] if "chunk_separator" in _params else CHUNK_SEPARATOR
+    else:
+        chunking_params = {
+            "split": True,
+            "chunk_size": CHUNK_SIZE,
+            "chunk_overlap": CHUNK_OVERLAP,
+            "chunk_separator": CHUNK_SEPARATOR
+        }
+
+    return chunking_params
+
+
 # 3. Create a document store and index the documents
 def index_documents(corpus_dir: str, pipeline: Pipeline):
 
@@ -64,12 +87,14 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
     # Initialize document store
     document_store = InMemoryDocumentStore()
 
+    chunking_params = _extract_chunking_params(configuration)
+
     documents = get_all_documents(
         corpus_dir=corpus_dir,
-        split=True,
-        chunk_size=CHUNK_SIZE,
-        chunk_overlap=CHUNK_OVERLAP,
-        chunk_separator=CHUNK_SEPARATOR
+        split=chunking_params["split"],
+        chunk_size=chunking_params["chunk_size"],
+        chunk_overlap=chunking_params["chunk_overlap"],
+        chunk_separator=chunking_params["chunk_separator"]
     )
 
     if embedding_retriever:
