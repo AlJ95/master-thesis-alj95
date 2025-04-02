@@ -79,6 +79,21 @@ You can create Haystack RAG pipelines in three different ways:
   
 If you use custom generators or retrievers, you must inherit from the `Generator` or `Retriever` classes respectively.
 
+### Configuring Document Chunking
+
+You can configure document chunking parameters in the `metadata` section of your YAML configuration:
+
+```yaml
+metadata:
+  chunking:
+    split: true                # Enable/disable chunking
+    chunk_size: 500            # Number of units per chunk
+    chunk_overlap: 150         # Overlap between chunks
+    chunk_separator: "\n\n"    # Separator to use for splitting
+```
+
+These parameters control how documents are split during ingestion, which can significantly impact retrieval quality.
+
 
 ## Running Evaluations
 
