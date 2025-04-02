@@ -15,11 +15,17 @@ class LLMAsAJudge:
     # Default OpenAI API URL
     DEFAULT_API_URL = "https://api.openai.com/v1"
     
+    # Allowed models
+    ALLOWED_MODELS = [
+        "google/gemini-2.0-flash-001",
+        "gpt-4o-mini",
+        "meta-llama/llama-3.3-70b-instruct"
+    ]
+    
     def __init__(
         self,
         api_key: Optional[str] = None,
         api_url: Optional[str] = None,
-        model: str = "gpt-4o-mini",
         temperature: float = 0.0,
         max_tokens: int = 1024,
         **kwargs
@@ -30,7 +36,6 @@ class LLMAsAJudge:
         Args:
             api_key: API key for the provider (uses env var OPENAI_API_KEY if None)
             api_url: Base URL for the API (uses OpenAI's URL if None)
-            model: Model name to use
             temperature: Temperature for sampling (0.0 = deterministic)
             max_tokens: Maximum tokens to generate
             **kwargs: Additional arguments for the API call
@@ -43,14 +48,19 @@ class LLMAsAJudge:
         # Set API URL (default to OpenAI)
         self.api_url = api_url or self.DEFAULT_API_URL
         
+        # Get model from environment variable or default to "gpt-4o-mini"
+        self.model = os.environ.get("LLM_AS_A_JUDGE_MODEL", "gpt-4o-mini")
+        if self.model not in self.ALLOWED_MODELS:
+            logger.warning(f"Model '{self.model}' is not allowed. Defaulting to 'gpt-4o-mini'. This may lead to preference leakage. Possible models are: {', '.join(self.ALLOWED_MODELS)}.")
+            self.model = "gpt-4o-mini"
+        
         # Initialize OpenAI client
         self.client = openai.OpenAI(
             api_key=self.api_key,
             base_url=self.api_url
         )
         
-        # Set model and generation parameters
-        self.model = model
+        # Set generation parameters
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.additional_params = kwargs
