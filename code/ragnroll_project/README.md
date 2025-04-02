@@ -27,6 +27,11 @@ The baselines `llm-standalone` and `naive-rag` serve as essential benchmarks for
 2. Configure environment variables:
    - Copy `.env.local` to `.env`
    - Update the values in `.env` with your own settings
+   - Required environment variables:
+     - `OPENAI_API_KEY`: Your OpenAI API key
+     - `LLM_AS_A_JUDGE_MODEL`: The model to use for LLM-as-a-Judge evaluation (default: "gpt-4o-mini")
+     - `OPENAI_BASE_URL`: Base URL for OpenAI API (e.g., "https://openrouter.ai/api/v1" for OpenRouter)
+     - Langfuse configuration variables (see .env.local for details)
 
 3. Update security settings in `docker-compose.yml`:
    - Find all instances marked with `#CHANGEME` and replace them with secure values
