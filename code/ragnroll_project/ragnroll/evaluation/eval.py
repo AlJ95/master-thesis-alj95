@@ -1,6 +1,7 @@
 import sys, os
 try:
     from ragnroll.metrics import MetricRegistry, BaseMetric
+    from ragnroll.metrics.system import SystemResourceTracker
     from ragnroll.metrics.end2end import ClassificationBaseMetric
     from ragnroll.utils.config import get_components_from_config_by_class
     from ragnroll.utils.pipeline import get_last_component_with_documents
@@ -8,6 +9,7 @@ except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from ragnroll.metrics import MetricRegistry, BaseMetric
     from ragnroll.metrics.end2end import ClassificationBaseMetric
+    from ragnroll.metrics.system import SystemResourceTracker
     from ragnroll.utils.config import get_components_from_config_by_class
     from ragnroll.utils.pipeline import get_last_component_with_documents
 from haystack import Pipeline
@@ -161,7 +163,57 @@ class Evaluator:
                 track_resources = False
 
         return resource_tracker
-    
+
+    def gather_resource_metrics(self, resource_tracker: SystemResourceTracker) -> Dict[str, Any]:
+        """
+        Gather resource metrics from the resource tracker.
+        """
+        metrics_summary = resource_tracker.get_metrics_summary()
+                
+        # Flatten the nested dictionaries
+        flat_metrics = {}
+        
+        # Duration and samples
+        flat_metrics["duration_seconds"] = float(metrics_summary.get("duration_seconds", 0))
+        flat_metrics["samples_count"] = float(metrics_summary.get("samples_count", 0))
+        
+        # CPU metrics
+        if "cpu" in metrics_summary and isinstance(metrics_summary["cpu"], dict):
+            cpu = metrics_summary["cpu"]
+            # System CPU
+            if "system" in cpu and isinstance(cpu["system"], dict):
+                system = cpu["system"]
+                flat_metrics["cpu_system_mean"] = float(system.get("mean", 0))
+                flat_metrics["cpu_system_max"] = float(system.get("max", 0))
+                flat_metrics["cpu_system_min"] = float(system.get("min", 0))
+            # Process CPU
+            if "process" in cpu and isinstance(cpu["process"], dict):
+                process = cpu["process"]
+                flat_metrics["cpu_process_mean"] = float(process.get("mean", 0))
+                flat_metrics["cpu_process_max"] = float(process.get("max", 0))
+                flat_metrics["cpu_process_min"] = float(process.get("min", 0))
+        
+        # Memory metrics
+        if "memory" in metrics_summary and isinstance(metrics_summary["memory"], dict):
+            memory = metrics_summary["memory"]
+            if "process" in memory and isinstance(memory["process"], dict):
+                process = memory["process"]
+                flat_metrics["memory_process_mean_mb"] = float(process.get("mean", 0))
+                flat_metrics["memory_process_max_mb"] = float(process.get("max", 0))
+                flat_metrics["memory_process_min_mb"] = float(process.get("min", 0))
+            
+            if "system" in memory and isinstance(memory["system"], dict):
+                system = memory["system"]
+                if "used" in system and isinstance(system["used"], dict):
+                    used = system["used"]
+                    flat_metrics["memory_system_used_mean_mb"] = float(used.get("mean", 0))
+                    flat_metrics["memory_system_used_max_mb"] = float(used.get("max", 0))
+                    flat_metrics["memory_system_used_min_mb"] = float(used.get("min", 0))
+        
+        # Add system metrics to the scores DataFrame
+        system_metrics = pd.DataFrame(flat_metrics, index=[0])
+        return system_metrics
+
     def _get_component_types_mapping(self) -> Dict[str, str]:
         """
         Get a mapping of component names to their types.
@@ -220,6 +272,18 @@ class Evaluator:
             # Convert results to pandas DataFrames
             results_df = self._results_to_df(end_to_end_results, component_results, run_name)
             
+
+            # Add resource metrics if tracking was enabled
+            if track_resources and resource_tracker:
+                # Get metrics summary
+                resource_metrics = self.gather_resource_metrics(resource_tracker)
+                resource_metrics.loc[:, "run_name"] = run_name
+                resource_metrics.set_index("run_name", inplace=True)
+                
+                # apply MultiIndex to resource_metrics
+                resource_metrics.columns = pd.MultiIndex.from_tuples([("SYS","", col) for col in resource_metrics.columns])
+                results_df = pd.concat([results_df, resource_metrics], axis=1)
+
             return results_df
         finally:
             if track_resources and resource_tracker:
@@ -443,7 +507,17 @@ def print_scores(scores: Dict[str, Any]) -> None:
 
 if __name__ == "__main__":
     from pathlib import Path
-    config_path = Path(__file__).parent.parent.parent / "configs" / "se4ai_mietbot.yaml"
+    from dotenv import load_dotenv
+    import sys
+
+    env_path = Path(__file__).parent.parent.parent / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+    else:
+        logger.warning(f"No .env file found at {env_path}")
+        exit(1)
+
+    config_path = Path(__file__).parent.parent.parent / "configs" / "predefined_4r.yaml"
     assert config_path.exists(), f"Config file {config_path} does not exist"
 
     # Load the test cases
