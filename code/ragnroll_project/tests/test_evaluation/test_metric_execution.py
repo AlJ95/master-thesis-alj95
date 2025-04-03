@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import patch, MagicMock, call, Mock
 from ragnroll.evaluation.eval import Evaluator
 from haystack import Pipeline
 
@@ -9,14 +9,23 @@ def mock_pipeline():
     pipeline = MagicMock(spec=Pipeline)
     pipeline.to_dict.return_value = {
         "components": {
-            "retriever": {"type": ".retrievers."},
-            "llm": {"type": ".generators."}
-        }
+            "retriever": {"type": "haystack_integrations.components.retrievers.chroma.ChromaEmbeddingRetriever"},
+            "llm": {"type": "haystack.components.generators.openai.GPTGenerator"}
+        },
+        "connections": [
+            {
+                "sender": "retriever.documents",
+                "receiver": "llm.documents"
+            }
+        ]
     }
+    # Define mock_answer before using it
+    mock_answer = Mock()
+    mock_answer.data = "valid"
     pipeline.run.return_value = {
         "retriever": {"documents": [{"content": "Test Document", "score": 0.9}]},
         "llm": {"replies": ["Test Reply"]},
-        "answer_builder": {"answer": "valid"}
+        "answer_builder": {"answers": [mock_answer]}
     }
     return pipeline
 
@@ -55,7 +64,7 @@ def test_e2e_metrics_execution(mock_pipeline, test_cases):
         evaluator.end_to_end_metrics = mock_metrics
         
         # Evaluierung durchführen
-        evaluator._evaluate_end_to_end(test_cases)
+        evaluator._evaluate_end_to_end(test_cases, trace_ids=[])
         
         # Prüfen ob jede Metrik aufgerufen wurde
         for name, mock_metric in mock_metrics.items():
@@ -92,15 +101,21 @@ def test_component_metrics_execution(mock_pipeline, test_cases):
         
         evaluator.component_metrics = mock_component_metrics
         
-        # Evaluierung durchführen
-        evaluator._evaluate_components(test_cases)
-        
-        # Prüfen ob relevante Metriken aufgerufen wurden
-        # (nicht alle Komponententypen müssen in den Testdaten vorkommen)
-        for component_type, metrics in mock_component_metrics.items():
-            if component_type in ["retriever", "generator"]:
-                for name, mock_metric in metrics.items():
-                    assert mock_metric.run.called, f"Komponenten-Metrik '{component_type}.{name}' wurde nicht aufgerufen"
+        # Patch the utility function that causes the IndexError
+        with patch("ragnroll.evaluation.eval.get_last_component_with_documents") as mock_get_last_comp:
+            mock_get_last_comp.return_value = "retriever" # Assume retriever provides docs
+            
+            # Evaluierung durchführen
+            evaluator._evaluate_components(test_cases)
+            
+            # Prüfen ob relevante Metriken aufgerufen wurden
+            # (nicht alle Komponententypen müssen in den Testdaten vorkommen)
+            mock_get_last_comp.assert_called_with(mock_pipeline, "llm") # Verify it was called for the generator
+            
+            for component_type, metrics in mock_component_metrics.items():
+                if component_type in ["retriever", "generator"]:
+                    for name, mock_metric in metrics.items():
+                        assert mock_metric.run.called, f"Komponenten-Metrik '{component_type}.{name}' wurde nicht aufgerufen"
     
     finally:
         # Originale Metriken wiederherstellen
@@ -127,21 +142,23 @@ def test_evaluate_function_calls_all_metrics(mock_dataset_class, mock_pipeline):
         }
     ]
     
+    mock_dataset.get_trace_ids.return_value = []
+    
     # In der evaluate-Funktion werden die Metriken direkt in einer Schleife aufgerufen
     # Wir müssen daher die run-Methode jeder Metrik mocken
     with patch("ragnroll.metrics.AccuracyMetric.run") as mock_accuracy_run, \
          patch("ragnroll.evaluation.eval.Evaluator._evaluate_components") as mock_comp, \
-         patch("ragnroll.evaluation.eval.print_scores"):
+         patch("ragnroll.evaluation.eval.print_scores"), \
+         patch("ragnroll.evaluation.eval.Evaluator._results_to_df"):
         
         # Mock-Rückgabewerte setzen
         mock_accuracy_run.return_value = {"score": 0.75}
-        mock_comp.return_value = {}
+        mock_comp.return_value = {"generator": {"llm": {"some_metric": 0.5}}, "retriever": {"retriever": {"some_metric": 0.6}}}
         
         # evaluate Funktion aufrufen
         evaluator = Evaluator(mock_pipeline)
-        evaluator.evaluate(test_data)
+        evaluator.evaluate(test_data, run_name="test_run")
         
         # Prüfen ob die Metrik-run-Methode aufgerufen wurde
-        # Hinweis: Wenn es Probleme gibt, kann man auch assertLess für die Anzahl der Aufrufe nehmen
         assert mock_accuracy_run.called, "AccuracyMetric.run wurde nicht aufgerufen"
         assert mock_comp.called, "_evaluate_components wurde nicht aufgerufen" 

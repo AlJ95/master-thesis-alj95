@@ -28,7 +28,7 @@ def test_e2e_metrics_executed(mock_pipeline, processed_test_cases):
     evaluator.end_to_end_metrics = mock_metrics
     
     # Execute
-    results = evaluator._evaluate_end_to_end(processed_test_cases)
+    results = evaluator._evaluate_end_to_end(processed_test_cases, trace_ids=[])
     
     # Verify
     for metric_name, mock_metric in mock_metrics.items():
@@ -47,7 +47,7 @@ def test_e2e_metrics_receive_correct_data(mock_pipeline, processed_test_cases):
     evaluator.end_to_end_metrics = {"MockMetric": mock_metric}
     
     # Execute
-    evaluator._evaluate_end_to_end(processed_test_cases)
+    evaluator._evaluate_end_to_end(processed_test_cases, trace_ids=[])
     
     # Verify that the metric received the correct data
     expected_outputs = [tc["expected_output"] for tc in processed_test_cases]
@@ -77,7 +77,7 @@ def test_e2e_metrics_error_handling(mock_pipeline, processed_test_cases):
     }
     
     # Execute
-    results = evaluator._evaluate_end_to_end(processed_test_cases)
+    results = evaluator._evaluate_end_to_end(processed_test_cases, trace_ids=[])
     
     # Verify
     assert "WorkingMetric" in results
