@@ -191,4 +191,4 @@ Do not include any explanations or other text in your response."""
         except (ValueError, IndexError) as e:
             logger.warning(f"Failed to parse rating from '{content}': {e}")
             # Default to middle value
-            return 0.5 
+            return 0.0

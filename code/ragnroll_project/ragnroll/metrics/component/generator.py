@@ -266,7 +266,7 @@ Answer: {answer}
 Evaluate the answer's context utilization on a scale from 0 to 1, where:
 0 = No context utilization, answer is completely disconnected from the provided context
 0.5 = Moderate context utilization, answer uses some information from the context but misses key points
-1 = Excellent context utilization, answer effectively uses relevant information from the context
+1 = Excellent context utilization, answer effectively uses all and only relevant information from the context
 
 Return just a single number between 0 and 1."""
             
