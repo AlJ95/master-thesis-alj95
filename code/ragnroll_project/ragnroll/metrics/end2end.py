@@ -1,8 +1,10 @@
 from typing import Dict, Any, List, Tuple, Optional, Callable
 from ragnroll.metrics.base import BaseMetric, MetricRegistry
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, roc_curve, auc
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, roc_curve, roc_auc_score
+import logging
 
 SENT_WARNING_ONCE = False
+logger = logging.getLogger(__name__)
 
 class ClassificationBaseMetric(BaseMetric):
     """Base class for binary classification metrics that work with batches of predictions."""
@@ -490,21 +492,36 @@ class ROCAUCMetric(ClassificationBaseMetric):
             
             # Use probabilities if provided, otherwise use binary predictions
             if probabilities is not None:
-                y_probs = probabilities
+                y_scores = probabilities
             else:
-                y_probs = [float(pred) for pred in y_pred]
-                # Add a warning to the results when using binary predictions
+                # Use binary predictions as scores when probabilities are unavailable
+                y_scores = [float(pred) for pred in y_pred]
+                # Add a warning only once
+                global SENT_WARNING_ONCE
                 if not SENT_WARNING_ONCE:
                     print("Warning: ROC AUC calculated with binary predictions instead of probabilities. Results may be less informative.")
                     SENT_WARNING_ONCE = True
             
             # Calculate AUC if we have enough data points and at least two classes
             if len(y_true) >= 2 and len(set(y_true)) > 1:
-                # Calculate ROC curve
-                fpr, tpr, _ = roc_curve(y_true, y_probs)
-                self.score = auc(fpr, tpr)
+                try:
+                    # Use roc_auc_score directly, as it handles binary predictions correctly
+                    self.score = roc_auc_score(y_true, y_scores)
+                    # Calculate fpr, tpr for details if needed, but score comes from roc_auc_score
+                    fpr, tpr, _ = roc_curve(y_true, y_scores)
+                except ValueError as ve:
+                    # Handle cases where roc_auc_score might fail (e.g., only one class in y_true despite check)
+                    logger.error(f"Could not calculate ROC AUC: {ve}")
+                    # DEBUG PRINT:
+                    print(f"DEBUG ROC AUC: y_true={y_true}, y_scores={y_scores}") 
+                    self.score = 0.0
+                    fpr, tpr = [], [] # Set empty lists for details
+                
                 self.success = self.score >= self.threshold
                 
+                # DEBUG PRINT:
+                print(f"DEBUG ROC AUC: y_true={y_true}, y_scores={y_scores}, score={self.score}")
+
                 return {
                     "score": self.score,
                     "success": self.success,

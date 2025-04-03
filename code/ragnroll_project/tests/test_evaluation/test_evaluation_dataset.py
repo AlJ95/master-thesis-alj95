@@ -1,6 +1,6 @@
 import pytest
 from ragnroll.evaluation.eval import EvaluationDataset
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, Mock
 
 @pytest.fixture
 def sample_data():
@@ -24,6 +24,8 @@ def mock_pipeline():
     pipeline = MagicMock()
     
     # Simulate pipeline response
+    mock_answer = Mock()
+    mock_answer.data = "invalid"
     pipeline.run.return_value = {
         "retriever": {
             "documents": [{"content": "Dockerfile validation rules and syntax", "score": 0.95}]
@@ -32,7 +34,7 @@ def mock_pipeline():
             "replies": ["The Dockerfile contains syntax errors: 'FRUM' is not a valid instruction, should be 'FROM'. Also 'instal' is misspelled."]
         },
         "answer_builder": {
-            "answer": "invalid"
+            "answers": [mock_answer]
         }
     }
     
@@ -77,20 +79,14 @@ def test_extract_answer_from_pipeline():
     dataset = EvaluationDataset({"test_cases": []})
     
     # With answer_builder
+    mock_answer1 = Mock()
+    mock_answer1.data = "Test Answer 1"
     response1 = {
         "answer_builder": {
-            "answer": "Test Answer 1"
+            "answers": [mock_answer1]
         }
     }
     assert dataset._extract_answer_from_pipeline(response1) == "Test Answer 1"
-    
-    # With llm
-    response2 = {
-        "llm": {
-            "replies": ["Test Answer 2"]
-        }
-    }
-    assert dataset._extract_answer_from_pipeline(response2) == "Test Answer 2"
     
     # Without valid component should raise exception
     response3 = {

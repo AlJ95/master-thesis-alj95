@@ -29,6 +29,8 @@ from haystack_integrations.components.connectors.langfuse import LangfuseConnect
 
 tracing.tracer.is_content_tracing_enabled = True
 
+# Import necessary functions
+from .utils.pipeline import config_to_pipeline, draw_pipeline
 
 @app.command()
 def split_data(
@@ -230,6 +232,30 @@ def run_evaluations(
 
 
     return
+
+@app.command()
+def draw_pipeline(
+    config_file: str = typer.Argument(..., help="Path to the pipeline configuration file (YAML or Python)."),
+    output_file: str = typer.Option("pipeline.png", "-o", help="Path to save the output PNG image.")
+):
+    """
+    Loads a pipeline from a config file and draws it to a PNG image.
+    """
+    try:
+        config_path = Path(config_file)
+        if not config_path.exists():
+            typer.echo(f"Error: Config file not found at {config_path}", err=True)
+            raise typer.Exit(code=1)
+            
+        pipeline = config_to_pipeline(configuration_file_path=config_path)
+        draw_pipeline(pipeline, output_file)
+        typer.echo(f"Pipeline drawn successfully to {output_file}")
+    except ValueError as e:
+        typer.echo(f"Error: {e}", err=True)
+        raise typer.Exit(code=1)
+    except Exception as e:
+        typer.echo(f"An unexpected error occurred: {e}", err=True)
+        raise typer.Exit(code=1)
 
 def _version_callback(value: bool) -> None:
     if value:
