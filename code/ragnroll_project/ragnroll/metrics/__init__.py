@@ -14,7 +14,6 @@ from ragnroll.metrics.end2end import (
     MatthewsCorrCoefMetric,
     FalsePositiveRateMetric,
     FalseNegativeRateMetric,
-    ROCAUCMetric
 )
 
 # Import component metrics
@@ -47,7 +46,6 @@ __all__ = [
     "MatthewsCorrCoefMetric",
     "FalsePositiveRateMetric",
     "FalseNegativeRateMetric",
-    "ROCAUCMetric",
     # Retriever metrics
     "HaystackContextRelevanceMetric",
     "MAPAtKMetric",

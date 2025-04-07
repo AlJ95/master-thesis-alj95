@@ -1,6 +1,6 @@
 from typing import Dict, Any, List, Tuple, Optional, Callable
 from ragnroll.metrics.base import BaseMetric, MetricRegistry
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef, roc_curve, roc_auc_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, matthews_corrcoef
 import logging
 
 SENT_WARNING_ONCE = False
@@ -460,90 +460,6 @@ class FalseNegativeRateMetric(ClassificationBaseMetric):
                     "num_examples": len(expected_outputs)
                 }
             }
-        except Exception as e:
-            self.error = e
-            self.success = False
-            return {
-                "score": 0.0,
-                "success": False,
-                "details": {"error": str(e)}
-            }
-
-
-@MetricRegistry.register_end_to_end
-class ROCAUCMetric(ClassificationBaseMetric):
-    """Area Under ROC Curve metric for binary classification tasks."""
-    
-    def run(self, expected_outputs: List[str], actual_outputs: List[str], 
-            probabilities: Optional[List[float]] = None) -> Dict[str, Any]:
-        """
-        Calculate ROC AUC on predictions.
-        
-        Args:
-            expected_outputs: List of ground truth labels
-            actual_outputs: List of predicted labels
-            probabilities: Optional list of probabilities for the positive class
-            
-        Returns:
-            Dict with AUC score and success flag
-        """
-        try:
-            y_true, y_pred = self._process_predictions(expected_outputs, actual_outputs)
-            
-            # Use probabilities if provided, otherwise use binary predictions
-            if probabilities is not None:
-                y_scores = probabilities
-            else:
-                # Use binary predictions as scores when probabilities are unavailable
-                y_scores = [float(pred) for pred in y_pred]
-                # Add a warning only once
-                global SENT_WARNING_ONCE
-                if not SENT_WARNING_ONCE:
-                    print("Warning: ROC AUC calculated with binary predictions instead of probabilities. Results may be less informative.")
-                    SENT_WARNING_ONCE = True
-            
-            # Calculate AUC if we have enough data points and at least two classes
-            if len(y_true) >= 2 and len(set(y_true)) > 1:
-                try:
-                    # Use roc_auc_score directly, as it handles binary predictions correctly
-                    self.score = roc_auc_score(y_true, y_scores)
-                    # Calculate fpr, tpr for details if needed, but score comes from roc_auc_score
-                    fpr, tpr, _ = roc_curve(y_true, y_scores)
-                except ValueError as ve:
-                    # Handle cases where roc_auc_score might fail (e.g., only one class in y_true despite check)
-                    logger.error(f"Could not calculate ROC AUC: {ve}")
-                    # DEBUG PRINT:
-                    print(f"DEBUG ROC AUC: y_true={y_true}, y_scores={y_scores}") 
-                    self.score = 0.0
-                    fpr, tpr = [], [] # Set empty lists for details
-                
-                self.success = self.score >= self.threshold
-                
-                # DEBUG PRINT:
-                print(f"DEBUG ROC AUC: y_true={y_true}, y_scores={y_scores}, score={self.score}")
-
-                return {
-                    "score": self.score,
-                    "success": self.success,
-                    "details": {
-                        "fpr": fpr.tolist(),
-                        "tpr": tpr.tolist(),
-                        "num_examples": len(expected_outputs)
-                    }
-                }
-            else:
-                # Not enough data or classes for ROC AUC
-                self.score = 0.0
-                self.success = False
-                return {
-                    "score": self.score,
-                    "success": False,
-                    "details": {
-                        "error": "Not enough data points or classes for ROC AUC calculation",
-                        "num_examples": len(expected_outputs),
-                        "unique_classes": len(set(y_true))
-                    }
-                }
         except Exception as e:
             self.error = e
             self.success = False

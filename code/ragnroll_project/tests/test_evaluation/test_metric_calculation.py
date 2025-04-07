@@ -8,7 +8,6 @@ from ragnroll.metrics import (
     MatthewsCorrCoefMetric,
     FalsePositiveRateMetric,
     FalseNegativeRateMetric,
-    ROCAUCMetric
 )
 from ragnroll.metrics.component.retriever import MAPAtKMetric
 from ragnroll.metrics.component.generator import FormatValidatorMetric
@@ -128,22 +127,6 @@ def test_fnr_calculation(simple_classification_data):
     # TP=2, TN=1, FP=1, FN=1
     # FNR = FN / (FN + TP) = 1 / (1 + 2) = 1/3 ≈ 0.333
     assert abs(result["score"] - 1/3) < 0.001, f"FNR sollte ca. 0.333 sein, ist aber {result['score']}"
-
-def test_roc_auc_calculation(simple_classification_data):
-    """Test ob ROCAUCMetric mit binären Vorhersagen korrekt funktioniert."""
-    # Hinweis: AUC mit nur binären Vorhersagen ist weniger aussagekräftig,
-    # aber wir testen hier die grundlegende Funktionsweise.
-    expected, actual = simple_classification_data
-    metric = ROCAUCMetric(positive_label="valid", negative_label="invalid")
-    
-    # Führe run ohne 'probabilities' aus
-    result = metric.run(expected_outputs=expected, actual_outputs=actual)
-    
-    # Mit den gegebenen Werten y_true = [1, 1, 1, 0, 0], y_pred = [1, 1, 0, 0, 1]
-    assert abs(result["score"] - 0.58333) < 0.001, f"ROC AUC sollte 0.58333 sein, ist aber {result['score']}"
-    assert "details" in result
-    assert "fpr" in result["details"]
-    assert "tpr" in result["details"]
 
 def test_map_at_k_average_precision_calculation():
     """Testet die _calculate_average_precision Methode von MAPAtKMetric."""
