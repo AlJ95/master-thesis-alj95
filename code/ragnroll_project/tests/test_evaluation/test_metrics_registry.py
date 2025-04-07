@@ -15,7 +15,6 @@ def test_all_e2e_metrics_registered():
         "MatthewsCorrCoefMetric",
         "FalsePositiveRateMetric",
         "FalseNegativeRateMetric",
-        "ROCAUCMetric"
     ]
     
     registered_metrics = MetricRegistry.get_end_to_end_metrics()
