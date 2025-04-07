@@ -2,6 +2,11 @@ import pytest
 from unittest.mock import MagicMock, patch
 from haystack import Pipeline
 import pandas as pd
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load the .env file
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 @pytest.fixture
 def mock_pipeline():
