@@ -10,6 +10,8 @@
 code/RAGBench/src/data/
 code/ragnroll_project/data/se_vulnerability
 resources/*
+code/ragnroll_project/chroma-data/
+code/ragnroll_project/qdrant_data/
 
 
 # DS_Store
