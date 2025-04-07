@@ -1,4 +1,5 @@
 import os
+import time
 from typing import Dict
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
@@ -22,6 +23,7 @@ logger = logging.getLogger(__name__)
 BM25Retriever = "InMemoryBM25Retriever"
 EmbeddingRetriever = "InMemoryEmbeddingRetriever"
 SentenceWindowRetriever = "SentenceWindowRetriever"
+DocumentStoreClasses = "haystack.document_stores."
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
@@ -73,6 +75,9 @@ def _extract_chunking_params(pipeline: Pipeline):
 
 # 3. Create a document store and index the documents
 def index_documents(corpus_dir: str, pipeline: Pipeline):
+    """Index documents in the document store."""
+
+    start_time = time.time()
 
     configuration = pipeline.to_dict()
 
@@ -84,9 +89,6 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
         print("No retriever found in configuration. Skipping indexing.")
         return pipeline
 
-    # Initialize document store
-    document_store = InMemoryDocumentStore()
-
     chunking_params = _extract_chunking_params(configuration)
 
     documents = get_all_documents(
@@ -96,6 +98,19 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
         chunk_overlap=chunking_params["chunk_overlap"],
         chunk_separator=chunking_params["chunk_separator"]
     )
+
+    document_store_types = [
+        retriever["init_parameters"]["document_store"]["type"]
+        for retriever in [bm25_retriever, embedding_retriever, sentence_window_retriever]
+        if retriever
+    ]
+
+    if len(set(document_store_types)) > 1:
+        raise ValueError("All retrievers must use the same document store.")
+
+    document_store_type = document_store_types[0]
+
+    document_store = get_document_store_from_type(document_store_type)
 
     if embedding_retriever:
         
@@ -119,7 +134,9 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
                ):
             pipeline.get_component(component_name).document_store = document_store
 
-    return pipeline
+    end_time = time.time()
+
+    return pipeline, end_time - start_time
 
 def _get_document_embedder_from_text_embedder(text_embedder: Dict):
     """
@@ -153,6 +170,27 @@ def index_json_data(json_file_path, configuration: dict):
     
     return document_store
 
+def get_document_store_from_type(document_store_type: str):
+    """
+    Get a document store from a type string.
+    """
+    if document_store_type == "'haystack.document_stores.in_memory.document_store.InMemoryDocumentStore'":
+        return InMemoryDocumentStore()
+    elif document_store_type == "haystack_integrations.document_stores.chroma.ChromaDocumentStore":
+        from haystack_integrations.document_stores.chroma import ChromaDocumentStore
+        return ChromaDocumentStore()
+    elif document_store_type == "haystack_integrations.document_stores.pinecone.PineconeDocumentStore":
+        from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
+        return PineconeDocumentStore()
+    elif document_store_type == "haystack_integrations.document_stores.qdrant.QdrantDocumentStore":
+        from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
+        return QdrantDocumentStore()
+    elif document_store_type == "haystack_integrations.document_stores.weaviate.WeaviateDocumentStore":
+        from haystack_integrations.document_stores.weaviate import WeaviateDocumentStore
+        from weaviate.embedded import EmbeddedOptions
+        return WeaviateDocumentStore(embedded_options=EmbeddedOptions())
+    else:
+        raise NotImplementedError(f"Unsupported document store type: {document_store_type}")
 
 # Usage example
 if __name__ == "__main__":

@@ -207,7 +207,9 @@ def run_evaluations(
             
             mlflow.log_params(params)
 
-            pipeline = index_documents(corpus_dir, pipeline)
+            pipeline, indexing_duration = index_documents(corpus_dir, pipeline)
+            mlflow.log_metrics({"indexing_duration": indexing_duration})
+            
             pipeline.add_component("tracer", LangfuseConnector(run_name))
             data = load_evaluation_data(val_data_path)
 
