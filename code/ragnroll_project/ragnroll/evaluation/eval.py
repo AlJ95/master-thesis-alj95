@@ -3,14 +3,14 @@ try:
     from ragnroll.metrics import MetricRegistry, BaseMetric
     from ragnroll.metrics.system import SystemResourceTracker
     from ragnroll.metrics.end2end import ClassificationBaseMetric
-    from ragnroll.utils.config import get_components_from_config_by_class
+    from ragnroll.utils.config import get_components_from_config_by_classes
     from ragnroll.utils.pipeline import get_last_component_with_documents
 except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from ragnroll.metrics import MetricRegistry, BaseMetric
     from ragnroll.metrics.end2end import ClassificationBaseMetric
     from ragnroll.metrics.system import SystemResourceTracker
-    from ragnroll.utils.config import get_components_from_config_by_class
+    from ragnroll.utils.config import get_components_from_config_by_classes
     from ragnroll.utils.pipeline import get_last_component_with_documents
 from haystack import Pipeline
 from typing import List, Dict, Any, Optional
@@ -57,7 +57,7 @@ class EvaluationDataset:
         data = dict(query=input_text)
 
         # Add text to data if embedding retriever is present
-        if get_components_from_config_by_class(pipeline.to_dict(), ".embedding_retriever."):
+        if get_components_from_config_by_classes(pipeline.to_dict(), ".embedding_retriever."):
             data["text"] = input_text
 
         return pipeline.run(data=data, include_outputs_from=components)

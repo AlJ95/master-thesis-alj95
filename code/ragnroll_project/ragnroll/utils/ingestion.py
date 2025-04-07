@@ -1,28 +1,29 @@
 import os
 import time
+import warnings
 from typing import Dict
 from haystack import Document, Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.components.converters import JSONConverter
 from haystack.components.embedders import (
-    SentenceTransformersDocumentEmbedder, SentenceTransformersTextEmbedder,
-    OpenAIDocumentEmbedder, OpenAITextEmbedder,
-    HuggingFaceAPIDocumentEmbedder, HuggingFaceAPITextEmbedder,
-    AzureOpenAIDocumentEmbedder, AzureOpenAITextEmbedder
+    SentenceTransformersDocumentEmbedder,
+    OpenAIDocumentEmbedder,
+    HuggingFaceAPIDocumentEmbedder,
+    AzureOpenAIDocumentEmbedder
     )
 import json
 import logging
 import yaml
 
 from ragnroll.utils.preprocesser import get_all_documents
-from ragnroll.utils.config import get_components_from_config_by_class
+from ragnroll.utils.config import get_components_from_config_by_classes
 
 
 logger = logging.getLogger(__name__)
 
-BM25Retriever = "InMemoryBM25Retriever"
-EmbeddingRetriever = "InMemoryEmbeddingRetriever"
-SentenceWindowRetriever = "SentenceWindowRetriever"
+BM25Retriever = ["InMemoryBM25Retriever", "QdrantSparseEmbeddingRetriever"]
+EmbeddingRetriever = ["InMemoryEmbeddingRetriever", "ChromaTextRetriever", "ChromaEmbeddingRetriever",  "QdrantEmbeddingRetriever"]
+SentenceWindowRetriever = ["SentenceWindowRetriever"]
+HybridRetriever = ["QdrantHybridRetriever"]
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
@@ -80,16 +81,12 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
 
     configuration = pipeline.to_dict()
 
-    embedding_retriever=get_components_from_config_by_class(configuration, EmbeddingRetriever)
-    bm25_retriever=get_components_from_config_by_class(configuration, BM25Retriever)
-    sentence_window_retriever=get_components_from_config_by_class(configuration, SentenceWindowRetriever)
-    
-    if not embedding_retriever and not bm25_retriever and not sentence_window_retriever:
-        print("No retriever found in configuration. Skipping indexing.")
-        return pipeline
+    embedding_retriever=get_components_from_config_by_classes(configuration, EmbeddingRetriever)
+    bm25_retriever=get_components_from_config_by_classes(configuration, BM25Retriever)
+    sentence_window_retriever=get_components_from_config_by_classes(configuration, SentenceWindowRetriever)
+    hybrid_retriever=get_components_from_config_by_classes(configuration, HybridRetriever)
 
     chunking_params = _extract_chunking_params(configuration)
-
     documents = get_all_documents(
         corpus_dir=corpus_dir,
         split=chunking_params["split"],
@@ -98,23 +95,19 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
         chunk_separator=chunking_params["chunk_separator"]
     )
 
-    document_store_types = [
-        retriever["init_parameters"]["document_store"]["type"]
-        for retriever in [bm25_retriever, embedding_retriever, sentence_window_retriever]
-        if retriever
-    ]
+    document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
 
-    if len(set(document_store_types)) > 1:
-        raise ValueError("All retrievers must use the same document store.")
+    document_store = get_document_store_from_type(document_store_config)
 
-    document_store_type = document_store_types[0]
-
-    document_store = get_document_store_from_type(document_store_type, configuration["components"]["embedding_retriever"]["init_parameters"]["document_store"])
-
-    if embedding_retriever:
+    if embedding_retriever or hybrid_retriever:
         
         # Get text embedder parameters dictionary from configuration
-        text_embedder = next(iter(get_components_from_config_by_class(configuration, ".embedders.").values()))
+        text_embedder = get_components_from_config_by_classes(configuration, [".embedders."])
+
+        if len(text_embedder) > 1:
+            warnings.warn("Multiple text embedders found in configuration. Using the first one to extract the embedding model.")
+        else:
+            text_embedder = text_embedder[0]
 
         if text_embedder:
             doc_embedder = _get_document_embedder_from_text_embedder(text_embedder)
@@ -123,16 +116,17 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
             raise ValueError("No text embedder found in configuration.")
 
     # Write documents to the document store
-    document_store.write_documents(documents)
+    try:
+        document_store.write_documents(documents)
+    except Exception as e:
+        document_store._collection_name = document_store._collection_name + "_" + str(time.time())
+        document_store.write_documents(documents)
     
     print(f"Indexed {len(documents)} documents in the document store")
     
     for component_name, _ in configuration["components"].items():
-        if any(retriever in configuration["components"][component_name]["type"] 
-               for retriever in [EmbeddingRetriever, BM25Retriever, SentenceWindowRetriever]
-               ):
+        if "document_store" in configuration["components"][component_name]["init_parameters"]:
             pipeline.get_component(component_name).document_store = document_store
-
     end_time = time.time()
 
     return pipeline, end_time - start_time
@@ -155,6 +149,27 @@ def _get_document_embedder_from_text_embedder(text_embedder: Dict):
     else:
         raise ValueError(f"Unsupported text embedder: {text_embedder['type']}")
 
+def _extract_document_stores(retrievers: list):
+    """
+    Get a document store from a type string.
+    """
+    
+    document_stores = [
+        retriever["init_parameters"]["document_store"]
+        for retriever in retrievers
+        if retriever
+    ]
+
+    document_store_types = [
+        document_store["type"]
+        for document_store in document_stores
+    ]
+
+    if len(set(document_store_types)) > 1:
+        raise ValueError("All retrievers must use the same document store.")
+
+    return document_stores[0]
+
 # 4. Main function to tie everything together
 def index_json_data(json_file_path, configuration: dict):
 
@@ -169,21 +184,19 @@ def index_json_data(json_file_path, configuration: dict):
     
     return document_store
 
-def get_document_store_from_type(document_store_type: str, config: dict):
+def get_document_store_from_type(document_store_config: dict):
     """
     Get a document store from a type string.
     """
-    if document_store_type == "'haystack.document_stores.in_memory.document_store.InMemoryDocumentStore'":
-        return InMemoryDocumentStore.from_dict(config)
-    elif document_store_type == "haystack_integrations.document_stores.chroma.ChromaDocumentStore":
+    document_store_type = document_store_config["type"]
+    if document_store_type == "haystack.document_stores.in_memory.document_store.InMemoryDocumentStore":
+        return InMemoryDocumentStore.from_dict(document_store_config)
+    elif document_store_type == "haystack_integrations.document_stores.chroma.document_store.ChromaDocumentStore":
         from haystack_integrations.document_stores.chroma import ChromaDocumentStore
-        return ChromaDocumentStore.from_dict(config)
-    elif document_store_type == "haystack_integrations.document_stores.pinecone.PineconeDocumentStore":
-        from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
-        return PineconeDocumentStore.from_dict(config)
-    elif document_store_type == "haystack_integrations.document_stores.qdrant.QdrantDocumentStore":
+        return ChromaDocumentStore.from_dict(document_store_config)
+    elif document_store_type == "haystack_integrations.document_stores.qdrant.document_store.QdrantDocumentStore":
         from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
-        return QdrantDocumentStore.from_dict(config)
+        return QdrantDocumentStore.from_dict(document_store_config)
     else:
         raise NotImplementedError(f"Unsupported document store type: {document_store_type}")
 

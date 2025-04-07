@@ -47,14 +47,17 @@ def _has_dense_retriever(yaml_config: dict) -> bool:
 def _has_sparse_retriever(yaml_config: dict) -> bool:
     return any("bm25_retriever" in v["type"] for v in yaml_config["components"].values())
 
-def get_components_from_config_by_class(configuration: dict, component_class: str):
+def get_components_from_config_by_classes(configuration: dict, component_classes: str):
     """
     Get a component from the configuration by class name e. g. "haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever"
     """
-    components = {}
-    for name, values in configuration["components"].items():
-        if component_class in values["type"]:
-            components[name] = values
+    components = []
+
+    for component_class in component_classes:
+        for values in configuration["components"].values():
+            if component_class in values["type"]:
+                components.append(values)
+
     return components
 
         
