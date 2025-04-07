@@ -57,6 +57,7 @@ def get_components_from_config_by_class(configuration: dict, component_class: st
             components[name] = values
     return components
 
+        
 
 if __name__ == "__main__":
     print(extract_run_params("configs/baselines/llm_config.yaml"))
