@@ -23,7 +23,6 @@ logger = logging.getLogger(__name__)
 BM25Retriever = "InMemoryBM25Retriever"
 EmbeddingRetriever = "InMemoryEmbeddingRetriever"
 SentenceWindowRetriever = "SentenceWindowRetriever"
-DocumentStoreClasses = "haystack.document_stores."
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
@@ -110,7 +109,7 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
 
     document_store_type = document_store_types[0]
 
-    document_store = get_document_store_from_type(document_store_type)
+    document_store = get_document_store_from_type(document_store_type, configuration["components"]["embedding_retriever"]["init_parameters"]["document_store"])
 
     if embedding_retriever:
         
@@ -170,25 +169,21 @@ def index_json_data(json_file_path, configuration: dict):
     
     return document_store
 
-def get_document_store_from_type(document_store_type: str):
+def get_document_store_from_type(document_store_type: str, config: dict):
     """
     Get a document store from a type string.
     """
     if document_store_type == "'haystack.document_stores.in_memory.document_store.InMemoryDocumentStore'":
-        return InMemoryDocumentStore()
+        return InMemoryDocumentStore.from_dict(config)
     elif document_store_type == "haystack_integrations.document_stores.chroma.ChromaDocumentStore":
         from haystack_integrations.document_stores.chroma import ChromaDocumentStore
-        return ChromaDocumentStore()
+        return ChromaDocumentStore.from_dict(config)
     elif document_store_type == "haystack_integrations.document_stores.pinecone.PineconeDocumentStore":
         from haystack_integrations.document_stores.pinecone import PineconeDocumentStore
-        return PineconeDocumentStore()
+        return PineconeDocumentStore.from_dict(config)
     elif document_store_type == "haystack_integrations.document_stores.qdrant.QdrantDocumentStore":
         from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
-        return QdrantDocumentStore()
-    elif document_store_type == "haystack_integrations.document_stores.weaviate.WeaviateDocumentStore":
-        from haystack_integrations.document_stores.weaviate import WeaviateDocumentStore
-        from weaviate.embedded import EmbeddedOptions
-        return WeaviateDocumentStore(embedded_options=EmbeddedOptions())
+        return QdrantDocumentStore.from_dict(config)
     else:
         raise NotImplementedError(f"Unsupported document store type: {document_store_type}")
 
