@@ -1,0 +1,8 @@
+components:
+  ...
+connections:
+- ...
+metadata: 
+  comment: "This is a comment"
+  hypothesis: "This is a hypothesis"
+  seed: 42
