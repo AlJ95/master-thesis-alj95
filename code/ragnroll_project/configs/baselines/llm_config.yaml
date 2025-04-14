@@ -19,10 +19,11 @@ components:
       template: '
 
         Given these documents, answer the question: 
+
         {{ query }}
 
         Your answer is used within a pipeline and must follow the following format:
-        "The answer is "valid"" or "The answer is "invalid"" with quotation marks. Also allowed are "yes" or "no", "true" or "false", "1" or "0".
+        "The answer is "valid"" or "The answer is "invalid"" with quotation marks.
         After stating your answer, explain your answer in detail.
 
         Example:
@@ -30,13 +31,12 @@ components:
         Answer: "false", because the capital of France is Paris, not London.
         
         Answer:
-
         '
       variables: null
     type: haystack.components.builders.prompt_builder.PromptBuilder
   answer_builder:
     init_parameters:
-      pattern: The answer is "(.*)".
+      pattern: The answer is "(valid|invalid)".
       reference_pattern: null
     type: haystack.components.builders.answer_builder.AnswerBuilder
 connections:
