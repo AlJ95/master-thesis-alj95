@@ -81,10 +81,13 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
 
     configuration = pipeline.to_dict()
 
-    embedding_retriever=get_components_from_config_by_classes(configuration, EmbeddingRetriever)
-    bm25_retriever=get_components_from_config_by_classes(configuration, BM25Retriever)
-    sentence_window_retriever=get_components_from_config_by_classes(configuration, SentenceWindowRetriever)
-    hybrid_retriever=get_components_from_config_by_classes(configuration, HybridRetriever)
+    embedding_retriever=get_components_from_config_by_class(configuration, EmbeddingRetriever)
+    bm25_retriever=get_components_from_config_by_class(configuration, BM25Retriever)
+    sentence_window_retriever=get_components_from_config_by_class(configuration, SentenceWindowRetriever)
+    
+    if not embedding_retriever and not bm25_retriever and not sentence_window_retriever:
+        print("No retriever found in configuration. Skipping indexing.")
+        return pipeline, 0
 
     chunking_params = _extract_chunking_params(configuration)
     documents = get_all_documents(

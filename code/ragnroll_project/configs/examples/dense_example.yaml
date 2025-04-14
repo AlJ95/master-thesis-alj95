@@ -34,29 +34,63 @@ components:
 
         {{ doc.content }}
 
-        {% endfor %}        
+        {% endfor %}
 
-        Question: {{query}}
-
+        Question: {{query}}        
 
         Answer:
 
         '
       variables: null
     type: haystack.components.builders.prompt_builder.PromptBuilder
-  retriever:
+  embedder:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-ada-002
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+  embedding_retriever:
     init_parameters:
       document_store:
         init_parameters:
-          bm25_algorithm: BM25L
-          bm25_parameters: {}
-          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
         type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
-      filter_policy: replace
-      filters: null
+      return_embedding: false
       scale_score: false
       top_k: 10
-    type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  reranker:
+    init_parameters:
+      calibration_factor: 1.0
+      device: null
+      document_prefix: ''
+      embedding_separator: '
+
+        '
+      meta_fields_to_embed: []
+      model: cross-encoder/ms-marco-MiniLM-L-6-v2
+      model_kwargs:
+        device_map: cpu
+      query_prefix: ''
+      scale_score: true
+      score_threshold: null
+      token:
+        env_vars:
+        - HF_API_TOKEN
+        - HF_TOKEN
+        strict: false
+        type: env_var
+      tokenizer_kwargs: {}
+      top_k: 10
+    type: haystack.components.rankers.transformers_similarity.TransformersSimilarityRanker
   answer_builder:
     init_parameters:
       pattern: The answer is "(valid|invalid)".
@@ -66,8 +100,17 @@ connections:
 - receiver: llm.prompt
   sender: prompt_builder.prompt
 - receiver: prompt_builder.documents
-  sender: retriever.documents
+  sender: reranker.documents
+- receiver: reranker.documents
+  sender: embedding_retriever.documents
+- receiver: embedding_retriever.query_embedding
+  sender: embedder.embedding
 - receiver: answer_builder.replies
   sender: llm.replies
 max_runs_per_component: 10
-metadata: {}
+metadata: 
+  chunking:
+    split: true
+    chunk_size: 500
+    chunk_overlap: 150
+    chunk_separator: "\n\n"

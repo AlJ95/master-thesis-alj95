@@ -7,8 +7,9 @@ components:
         - OPENAI_API_KEY
         strict: true
         type: env_var
-      generation_kwargs: {}
-      model: gpt-4o-mini
+      generation_kwargs: 
+        seed: 42
+      model: [gpt-4o-mini, o3-mini]
       organization: null
       streaming_callback: null
       system_prompt: null
@@ -54,7 +55,7 @@ components:
       filter_policy: replace
       filters: null
       scale_score: false
-      top_k: 10
+      top_k: [5, 10]
     type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
   reranker:
     init_parameters:
@@ -78,11 +79,11 @@ components:
         strict: false
         type: env_var
       tokenizer_kwargs: {}
-      top_k: 10
+      top_k: [5, 10]
     type: haystack.components.rankers.transformers_similarity.TransformersSimilarityRanker
   answer_builder:
     init_parameters:
-      pattern: The answer is "(.*)".
+      pattern: The answer is "(valid|invalid)".
       reference_pattern: null
     type: haystack.components.builders.answer_builder.AnswerBuilder
 connections:
@@ -95,4 +96,7 @@ connections:
 - receiver: answer_builder.replies
   sender: llm.replies
 max_runs_per_component: 10
-metadata: {}
+metadata: 
+  comment: "This is a comment"
+  hypothesis: "This is a hypothesis"
+  seed: 42
