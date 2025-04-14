@@ -105,3 +105,4 @@ metadata:
     chunk_separator: "\n\n"
   hypothesis: "Sparse RAGs have a higher retrieval quality than dense RAGs."
   reasoning: false
+  reconfiguration_phase: 0
