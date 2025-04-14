@@ -51,7 +51,7 @@ components:
     type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
   answer_builder:
     init_parameters:
-      pattern: The answer is "(.*)".
+      pattern: The answer is "(valid|invalid)".
       reference_pattern: null
     type: haystack.components.builders.answer_builder.AnswerBuilder
 connections:

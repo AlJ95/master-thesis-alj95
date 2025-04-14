@@ -77,7 +77,7 @@ components:
     type: haystack.components.generators.openai.OpenAIGenerator
   answer_builder:
     init_parameters:
-      pattern: The answer is "(.*)".
+      pattern: The answer is "(valid|invalid)".
       reference_pattern: null
     type: haystack.components.builders.answer_builder.AnswerBuilder
 connections:

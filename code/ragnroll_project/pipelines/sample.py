@@ -38,7 +38,7 @@ pipeline.add_component("prompt_builder", PromptBuilder(template="""
 
         """))
 pipeline.add_component("generator", OpenAIGenerator())
-pipeline.add_component("answer_builder", AnswerBuilder(pattern="The answer is \"(.*)\"."))
+pipeline.add_component("answer_builder", AnswerBuilder(pattern="The answer is \"(valid|invalid)\""))
 
 pipeline.connect("embedder", "retriever.query_embedding")
 pipeline.connect("retriever", "ranker")
