@@ -63,21 +63,21 @@ components:
     type: haystack.components.embedders.sentence_transformers_text_embedder.SentenceTransformersTextEmbedder
   llm:
     init_parameters:
-      api_base_url: null
+      api_base_url: https://openrouter.ai/api/v1
       api_key:
         env_vars:
-        - OPENAI_API_KEY
+        - OPENROUTER_API_KEY
         strict: true
         type: env_var
       generation_kwargs: {}
-      model: gpt-4o-mini
+      model: [deepseek/deepseek-chat-v3-0324, openai/gpt-4o-mini-2024-07-18]
       organization: null
       streaming_callback: null
       system_prompt: null
     type: haystack.components.generators.openai.OpenAIGenerator
   answer_builder:
     init_parameters:
-      pattern: The answer is "(.*)".
+      pattern: The answer is "(valid|invalid)".
       reference_pattern: null
     type: haystack.components.builders.answer_builder.AnswerBuilder
 connections:
@@ -90,4 +90,11 @@ connections:
 - receiver: answer_builder.replies
   sender: llm.replies
 max_runs_per_component: 100
-metadata: {}
+metadata: 
+  chunking:
+    split: true
+    chunk_size: 500
+    chunk_overlap: 150
+    chunk_separator: "\n\n"
+  hypothesis: "Hybrid RAGs have a higher retrieval quality than sparse or dense RAGs."
+  reasoning: false
