@@ -86,7 +86,7 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
     
     if not embedding_retriever and not bm25_retriever and not sentence_window_retriever:
         print("No retriever found in configuration. Skipping indexing.")
-        return pipeline
+        return pipeline, 0
 
     chunking_params = _extract_chunking_params(configuration)
 
