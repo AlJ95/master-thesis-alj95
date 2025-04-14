@@ -48,3 +48,4 @@ max_runs_per_component: 1
 metadata: 
   hypothesis: "Most recent LLM models do not need retrieval for configuration validation."
   reasoning: true
+  reconfiguration_phase: 0
