@@ -1,0 +1,50 @@
+components:
+  llm:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: ["openai/o1-mini-2024-09-12", "google/gemini-2.5-pro-exp-03-25"]
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  prompt_builder:
+    init_parameters:
+      required_variables: null
+      template: '
+
+        Given these documents, answer the question: 
+        {{ query }}
+
+        Your answer is used within a pipeline and must follow the following format:
+        "The answer is "valid"" or "The answer is "invalid"" with quotation marks. Also allowed are "yes" or "no", "true" or "false", "1" or "0".
+        After stating your answer, explain your answer in detail.
+
+        Example:
+        Question: London is the capital of France.
+        Answer: "false", because the capital of France is Paris, not London.
+        
+        Answer:
+
+        '
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(.*)".
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
+connections:
+- receiver: llm.prompt
+  sender: prompt_builder.prompt
+- receiver: answer_builder.replies
+  sender: llm.replies
+max_runs_per_component: 1
+metadata: 
+  hypothesis: "Most recent LLM models do not need retrieval for configuration validation."
+  reasoning: true
