@@ -1,0 +1,100 @@
+components:
+  bm25_retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: &id001 {}
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: d3e9c471-1c4e-4e3e-9c5a-03aee7147ac1
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      scale_score: false
+      top_k: 10
+    type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
+  embedding_retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: *id001
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: d3e9c471-1c4e-4e3e-9c5a-03aee7147ac1
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      return_embedding: false
+      scale_score: false
+      top_k: 10
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  joiner:
+    init_parameters:
+      join_mode: concatenate
+      sort_by_score: true
+      top_k: null
+      weights: null
+    type: haystack.components.joiners.document_joiner.DocumentJoiner
+  text_embedder:
+    init_parameters:
+      batch_size: 32
+      config_kwargs: null
+      device:
+        device: cpu
+        type: single
+      model: sentence-transformers/all-MiniLM-L6-v2
+      model_kwargs: null
+      normalize_embeddings: false
+      precision: float32
+      prefix: ''
+      progress_bar: true
+      suffix: ''
+      token:
+        env_vars:
+        - HF_API_TOKEN
+        - HF_TOKEN
+        strict: false
+        type: env_var
+      tokenizer_kwargs: null
+      truncate_dim: null
+      trust_remote_code: false
+    type: haystack.components.embedders.sentence_transformers_text_embedder.SentenceTransformersTextEmbedder
+  llm:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: [deepseek/deepseek-chat-v3-0324, openai/gpt-4o-mini-2024-07-18]
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(.*)".
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
+connections:
+- receiver: joiner.documents
+  sender: bm25_retriever.documents
+- receiver: embedding_retriever.query_embedding
+  sender: text_embedder.embedding
+- receiver: joiner.documents
+  sender: embedding_retriever.documents
+- receiver: answer_builder.replies
+  sender: llm.replies
+max_runs_per_component: 100
+metadata: 
+  chunking:
+    split: true
+    chunk_size: 500
+    chunk_overlap: 150
+    chunk_separator: "\n\n"
+  hypothesis: "Hybrid RAGs have a higher retrieval quality than sparse or dense RAGs."
+  reasoning: false
