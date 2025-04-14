@@ -139,6 +139,8 @@ def run_evaluations(
     track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"),
     baselines: bool = typer.Option(True, help="Run baselines"), 
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
+    test_size: int = typer.Option(20, help="Test size"),
+    random_state: int = typer.Option(42, help="Random state"),
 ):
     from .utils.pipeline import gather_config_paths, config_to_pipeline, validate_pipeline
     from .evaluation.eval import Evaluator
@@ -165,7 +167,7 @@ def run_evaluations(
     eval_data_path = Path(eval_data_file)
 
     # Split the evaluation data into val, test sets based on Simon et al. (2024) 
-    val_test_split(eval_data_path)
+    val_test_split(eval_data_path, test_size=20, random_state=42)
 
     if not eval_data_path.exists():
         warnings.warn(f"Evaluation data path {eval_data_path} does not exist")
