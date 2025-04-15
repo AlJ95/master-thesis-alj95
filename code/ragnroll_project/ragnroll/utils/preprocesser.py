@@ -14,6 +14,7 @@ from haystack.components.converters import (
     PDFMinerToDocument,
     TextFileToDocument,
     DOCXToDocument,
+    CSVToDocument
 )
 from haystack.components.preprocessors import DocumentCleaner, DocumentSplitter, RecursiveDocumentSplitter
 
@@ -21,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 def get_supported_file_extensions() -> List[str]:
     """Return a list of supported file extensions for conversion."""
-    return [".pdf", ".txt", ".docx", ".md", ".html", ".htm", ".json"]
+    return [".pdf", ".txt", ".docx", ".md", ".html", ".htm", ".json", ".csv"]
 
 def fetch_urls_from_csv(csv_path: Path) -> List[str]:
     """Extract URLs from a CSV file.
@@ -87,6 +88,8 @@ def get_file_converter(file_path: Path):
         return HTMLToDocument()
     elif file_ext == ".json":
         return JSONConverter(jq_schema=".documents[]", content_key="content")
+    elif file_ext == ".csv":
+        return CSVToDocument()
     else:
         return None
 
