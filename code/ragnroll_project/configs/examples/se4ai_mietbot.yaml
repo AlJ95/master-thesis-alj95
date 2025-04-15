@@ -90,7 +90,7 @@ components:
         strict: true
         type: env_var
       dimensions: null
-      model: text-embedding-ada-002
+      model: text-embedding-3-small
       organization: null
       prefix: ''
       suffix: ''
