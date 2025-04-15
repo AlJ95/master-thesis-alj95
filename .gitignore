@@ -1,5 +1,6 @@
 # Environment
 .venv/
+.venv2/
 .venv-autorag/
 .venv-RAGBench
 .venv-haystack
