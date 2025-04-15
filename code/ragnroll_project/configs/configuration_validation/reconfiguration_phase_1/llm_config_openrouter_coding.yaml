@@ -8,7 +8,7 @@ components:
         strict: true
         type: env_var
       generation_kwargs: {}
-      model: openai/gpt-4o-mini-search-preview
+      model: [qwen/qwen-2.5-coder-32b-instruct, mistralai/codestral-2501]
       organization: null
       streaming_callback: null
       system_prompt: null
@@ -46,7 +46,7 @@ connections:
   sender: llm.replies
 max_runs_per_component: 1
 metadata: 
-  hypothesis: "Most recent LLM models with web search do not need a customized RAG for configuration validation."
+  hypothesis: "The top models gemini-2.0 and deepseek gpt-4o handle this task well, how about Coding Models?"
+  tag: coding
   reasoning: false
-  Comment: "This model uses web search."
-  reconfiguration_phase: 0
+  reconfiguration_phase: 1

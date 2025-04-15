@@ -91,9 +91,7 @@ connections:
 - receiver: prompt_builder.documents
   sender: reranker.documents
 - receiver: reranker.documents
-  sender: embedding_retriever.documents
-- receiver: embedding_retriever.query_embedding
-  sender: embedder.embedding
+  sender: retriever.documents
 - receiver: answer_builder.replies
   sender: llm.replies
 max_runs_per_component: 10
