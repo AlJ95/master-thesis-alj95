@@ -77,7 +77,8 @@ __pycache__/
 */thesis.fdb_latexmk
 
 # Output Files
-*.csv
+**/output.csv
+**/latencies.csv
 *test.json
 *val.json
 
