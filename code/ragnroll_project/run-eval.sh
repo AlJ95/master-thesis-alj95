@@ -6,4 +6,4 @@ export output_path=./dense.csv
 export test_size=30
 export experiment_name=configuration_validation
 
-screen -dmS $experiment_name /srv/master-thesis-alj95/code/ragnroll_project/.venv/bin/python -m ragnroll run-evaluations $config_path $evaluation_data_path $corpus_path $output_path --no-baselines --test-size=$test_size
+screen -L -Logfile "${experiment_name}.log" -dmS $experiment_name /srv/master-thesis-alj95/code/ragnroll_project/.venv/bin/python -m ragnroll run-evaluations $config_path $evaluation_data_path $corpus_path $output_path --no-baselines --test-size=$test_size --experiment-name=$experiment_name
