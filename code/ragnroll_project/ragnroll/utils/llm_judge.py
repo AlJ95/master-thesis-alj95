@@ -13,7 +13,20 @@ class LLMAsAJudge:
     """
     
     # Default OpenAI API URL
-    DEFAULT_API_URL = "https://api.openai.com/v1"
+    DEFAULT_API_PARAMS = {
+        "google/gemini-2.0-flash-001": {
+            "api_key": os.environ.get("OPENROUTER_API_KEY"),
+            "api_url": "https://api.openrouter.ai/v1"
+        },
+        "gpt-4o-mini": {
+            "api_key": os.environ.get("OPENAI_API_KEY"),
+            "api_url": "https://api.openai.com/v1"
+        },
+        "meta-llama/llama-3.3-70b-instruct": {
+            "api_key": os.environ.get("OPENROUTER_API_KEY"),
+            "api_url": "https://api.openrouter.ai/v1"
+        }
+    }
     
     # Allowed models
     ALLOWED_MODELS = [
@@ -24,8 +37,6 @@ class LLMAsAJudge:
     
     def __init__(
         self,
-        api_key: Optional[str] = None,
-        api_url: Optional[str] = None,
         temperature: float = 0.0,
         max_tokens: int = 1024,
         **kwargs
@@ -40,19 +51,16 @@ class LLMAsAJudge:
             max_tokens: Maximum tokens to generate
             **kwargs: Additional arguments for the API call
         """
-        # Set API key from input or environment variables
-        self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
-        if not self.api_key:
-            raise ValueError("API key not provided and OPENAI_API_KEY not found in environment variables")
-        
-        # Set API URL (default to OpenAI)
-        self.api_url = api_url or self.DEFAULT_API_URL
-        
         # Get model from environment variable or default to "gpt-4o-mini"
         self.model = os.environ.get("LLM_AS_A_JUDGE_MODEL", "gpt-4o-mini")
         if self.model not in self.ALLOWED_MODELS:
             logger.warning(f"Model '{self.model}' is not allowed. Defaulting to 'gpt-4o-mini'. This may lead to preference leakage. Possible models are: {', '.join(self.ALLOWED_MODELS)}.")
             self.model = "gpt-4o-mini"
+    
+        # Set API key from input or environment variables
+        self.api_key = self.DEFAULT_API_PARAMS[self.model]["api_key"]
+        self.api_url = self.DEFAULT_API_PARAMS[self.model]["api_url"]
+        
         
         # Initialize OpenAI client
         self.client = openai.OpenAI(
