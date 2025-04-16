@@ -23,6 +23,8 @@ read OPENROUTER_API_KEY
 cp .env.example .env
 sed -i "s/OPENAI_API_KEY=.*/OPENAI_API_KEY=$OPENAI_API_KEY/" .env
 sed -i "s/OPENROUTER_API_KEY=.*/OPENROUTER_API_KEY=$OPENROUTER_API_KEY/" .env
+sed -i 's|LANGFUSE_HOST=".*"|LANGFUSE_HOST="http://91.99.14.73:3000"|' .env
+sed -i 's|MLFLOW_TRACKING_URI=".*"|MLFLOW_TRACKING_URI="http://91.99.14.73:8080"|' .env
 
 docker compose --env-file=.env up -d
 
