@@ -56,9 +56,9 @@ class EvaluationDataset:
         components = list(pipeline.to_dict()["components"].keys())
         data = dict(query=input_text)
 
-        # Add text to data if embedding retriever is present
-        if get_components_from_config_by_classes(pipeline.to_dict(), ".embedding_retriever."):
-            data["text"] = input_text
+        # # Add text to data if embedding retriever is present
+        # if get_components_from_config_by_classes(pipeline.to_dict(), ".embedding_retriever."):
+        #     data["text"] = input_text
 
         return pipeline.run(data=data, include_outputs_from=components)
     
