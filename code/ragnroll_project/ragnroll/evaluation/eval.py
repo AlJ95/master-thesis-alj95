@@ -111,7 +111,7 @@ class Evaluator:
         self.component_metrics = self._instantiate_component_metrics()
         self.individual_scores = {}
 
-        logger.info(f"Evaluator initialisiert mit Labels: positiv='{self.positive_label}', negativ='{self.negative_label}'")
+        print(f"Evaluator initialisiert mit Labels: positiv='{self.positive_label}', negativ='{self.negative_label}'")
     
     def _instantiate_end_to_end_metrics(self) -> Dict[str, BaseMetric]:
         """Create instances of all registered end-to-end metrics."""
