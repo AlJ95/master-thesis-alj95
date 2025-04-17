@@ -4,6 +4,7 @@ Functions for working with traces and metrics in Langfuse.
 import os
 from typing import Dict, Any, List, Optional, Union
 import pandas as pd
+import warnings
 
 from langfuse import Langfuse
 
@@ -37,9 +38,6 @@ def fetch_current_traces(run_name: str) -> pd.DataFrame:
     print(f"There are {len(current_traces)} traces and {len(current_observations)} observations")
 
     latencies = _extract_latencies(current_traces, current_observations, save_to_csv=True)
-
-    if len(current_traces) == 0:
-        raise ValueError(f"No traces found for run_id: {run_name}")
     
     return latencies
 
@@ -57,6 +55,10 @@ def _extract_latencies(traces, observations, save_to_csv=False):
                     "trace_latency": trace.latency,
                 }
     df = pd.DataFrame(latencies).T
+
+    if df.empty:
+        warnings.warn("No latencies found for the given traces and observations")
+        return pd.DataFrame()
 
     df["latency"] = pd.to_numeric(df["latency"], errors="coerce")
     df["trace_latency"] = pd.to_numeric(df["trace_latency"], errors="coerce")
