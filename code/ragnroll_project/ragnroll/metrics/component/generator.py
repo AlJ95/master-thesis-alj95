@@ -145,8 +145,6 @@ class JudgeBasedMetric(BaseMetric):
     def __init__(
         self,
         threshold: float = 0.5,
-        api_key: Optional[str] = None,
-        api_url: Optional[str] = None,
         model: str = "gpt-4o-mini",
         temperature: float = 0.0,
         max_tokens: int = 1024,
@@ -157,8 +155,6 @@ class JudgeBasedMetric(BaseMetric):
         
         Args:
             threshold: Minimum score for the evaluation to be considered successful
-            api_key: API key for the LLM provider
-            api_url: Base URL for the API (if None, uses OpenAI's default URL)
             model: Model name to use
             temperature: Temperature for sampling
             max_tokens: Maximum tokens to generate
@@ -167,10 +163,7 @@ class JudgeBasedMetric(BaseMetric):
         super().__init__(threshold=threshold)
         
         # Create LLM judge with simplified parameters
-        # If api_url is None, it will use OpenAI's default URL
         self.judge = LLMAsAJudge(
-            api_key=api_key,
-            api_url=api_url,
             model=model,
             temperature=temperature,
             max_tokens=max_tokens,
