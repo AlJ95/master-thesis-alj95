@@ -12,7 +12,7 @@ prompt = """{{query}}"""
 # args.misconfig_shot_num = 3
 # args.input_file_content = <file_content>
 
-from haystack import Pipeline, component
+from haystack import Pipeline, component, GeneratedAnswer
 from haystack.components.generators.openai import OpenAIGenerator
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.validators import JsonSchemaValidator
@@ -31,9 +31,9 @@ import json
 @component
 class AnswerExtractor():
     @component.output_types(answer=List[bool])
-    def run(self, messages: List[str]):
+    def run(self, replies: List[str]):
         try:
-            cleaned = messages[-1].replace("```json\n", "").replace("\n```", "")
+            cleaned = replies[-1].replace("```json\n", "").replace("\n```", "")
             answer = json.loads(cleaned)
             if answer["hasError"]:
                 return {"answer": [False]}
@@ -45,17 +45,17 @@ class AnswerExtractor():
     
 @component
 class AnswerBuilder():
-    @component.output_types(answer=str)
-    def run(self, answers: List[bool]):
+    @component.output_types(answers=List[GeneratedAnswer])
+    def run(self, answers: List[bool], query: str):
         """
         There are 3 answers if the configuration is valid or not.
         If the number of "true" answers is greater than 1 (more than 50% of the answers are true), the configuration is valid.
         """
         results_as_bool = [1 if answer else 0 for answer in answers]
         if sum(results_as_bool) > 1:
-            return {"answer": "valid"}
+            return {"answers": [GeneratedAnswer(data="valid", query=query, documents=[], meta={})]}
         else:
-            return {"answer": "invalid"}
+            return {"answers": [GeneratedAnswer(data="invalid", query=query, documents=[], meta={})]}
         
 
 pipeline.add_component("prompt_builder1", PromptBuilder(template=prompt, required_variables=["query"]))
@@ -63,21 +63,21 @@ pipeline.add_component("llm1", OpenAIGenerator(api_key=Secret.from_env_var("OPEN
 pipeline.add_component("answer_extractor1", AnswerExtractor())
 
 pipeline.connect("prompt_builder1", "llm1")
-pipeline.connect("llm1.replies", "answer_extractor1.messages")
+pipeline.connect("llm1.replies", "answer_extractor1.replies")
 
 pipeline.add_component("prompt_builder2", PromptBuilder(template=prompt, required_variables=["query"]))
 pipeline.add_component("llm2", OpenAIGenerator(api_key=Secret.from_env_var("OPENAI_API_KEY"), model="gpt-3.5-turbo-0125"))
 pipeline.add_component("answer_extractor2", AnswerExtractor())
 
 pipeline.connect("prompt_builder2", "llm2")
-pipeline.connect("llm2.replies", "answer_extractor2.messages")
+pipeline.connect("llm2.replies", "answer_extractor2.replies")
 
 pipeline.add_component("prompt_builder3", PromptBuilder(template=prompt, required_variables=["query"]))
 pipeline.add_component("llm3", OpenAIGenerator(api_key=Secret.from_env_var("OPENAI_API_KEY"), model="gpt-3.5-turbo-0125"))
 pipeline.add_component("answer_extractor3", AnswerExtractor())
 
 pipeline.connect("prompt_builder3", "llm3")
-pipeline.connect("llm3.replies", "answer_extractor3.messages")
+pipeline.connect("llm3.replies", "answer_extractor3.replies")
 
 pipeline.add_component("list_joiner", ListJoiner(List[bool]))
 
