@@ -12,6 +12,9 @@ pipeline = Pipeline()
 from dotenv import load_dotenv
 load_dotenv()
 
+import os
+os.environ["OPENAI_API_KEY"] = os.environ["SE_OPENAI_KEY"]
+
 # Rewriter
 pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuraiton. Rewrite this as sort of documentation page for each of this configuration.
 Example (docker):
@@ -57,7 +60,7 @@ Only return the documentation, no other text.
 Query: {{query}}
 """,
         required_variables=["query"]))
-pipeline.add_component("rewriter", OpenAIGenerator())
+pipeline.add_component("rewriter", OpenAIGenerator(api_base_url="http://172.26.92.115"))
 pipeline.add_component("output_adapter", OutputAdapter(template="{{ replies[0] }}", output_type=str))
 pipeline.add_component("embedder", OpenAITextEmbedder(model="text-embedding-3-small"))
 pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=InMemoryDocumentStore()))
@@ -89,7 +92,7 @@ pipeline.add_component("prompt_builder", PromptBuilder(template="""
 
         Answer: """,
         required_variables=["query"]))
-pipeline.add_component("generator", OpenAIGenerator())
+pipeline.add_component("llm", OpenAIGenerator(api_base_url="http://172.26.92.115"))
 pipeline.add_component("answer_builder", AnswerBuilder(pattern="The answer is \"(valid|invalid)\""))
 
 pipeline.connect("rewriter_prompt", "rewriter")
@@ -98,8 +101,8 @@ pipeline.connect("output_adapter", "embedder.text")
 pipeline.connect("embedder", "retriever.query_embedding")
 pipeline.connect("retriever", "ranker")
 pipeline.connect("ranker", "prompt_builder")
-pipeline.connect("prompt_builder", "generator")
-pipeline.connect("generator.replies", "answer_builder.replies")
+pipeline.connect("prompt_builder", "llm")
+pipeline.connect("llm.replies", "answer_builder.replies")
 
 # pipeline.dump(open("pipeline.yaml", "w"))
 
@@ -115,9 +118,9 @@ CMD ["python", "-m", "http.server", "8000"]
 ´´´
 """
 
-# result = pipeline.run(data=dict(query=query), include_outputs_from=["rewriter", "output_adapter", "embedder", "retriever", "ranker", "prompt_builder", "generator", "answer_builder"])
+result = pipeline.run(data=dict(query=query), include_outputs_from=["rewriter", "output_adapter", "embedder", "retriever", "ranker", "prompt_builder", "llm", "answer_builder"])
 
-# for key, value in result.items():
-#     print(key)
-#     print(value)
-#     print("-"*100)
+for key, value in result.items():
+    print(key)
+    print(value)
+    print("-"*100)
