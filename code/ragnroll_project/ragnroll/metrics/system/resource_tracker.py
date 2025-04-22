@@ -5,7 +5,7 @@ import pandas as pd
 from typing import Dict, Any, List, Optional, Union
 import logging
 from datetime import datetime
-from threading import Thread, Event
+from threading import Thread, Event, Lock
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +46,7 @@ class SystemResourceTracker:
         # Thread control
         self._stop_event = Event()
         self._tracking_thread = None
+        self._metrics_lock = Lock()  # Add a lock for thread-safe access to metrics
         
         logger.info(f"SystemResourceTracker initialized with sampling interval: {sampling_interval}s")
     
@@ -98,18 +99,19 @@ class SystemResourceTracker:
                     process_memory = self.current_process.memory_info()
                     process_memory_mb = process_memory.rss / (1024 * 1024)  # Convert bytes to MB
                 
-                # Store the measurements
-                self.timestamps.append(now)
-                self.cpu_samples.append({
-                    'system': system_cpu_percent,
-                    'process': process_cpu_percent
-                })
-                self.memory_samples.append({
-                    'system_percent': system_memory.percent,
-                    'system_used_gb': system_memory.used / (1024**3),  # Convert bytes to GB
-                    'system_available_gb': system_memory.available / (1024**3),  # Convert bytes to GB
-                    'process_mb': process_memory_mb
-                })
+                # Store the measurements with thread safety
+                with self._metrics_lock:
+                    self.timestamps.append(now)
+                    self.cpu_samples.append({
+                        'system': system_cpu_percent,
+                        'process': process_cpu_percent
+                    })
+                    self.memory_samples.append({
+                        'system_percent': system_memory.percent,
+                        'system_used_gb': system_memory.used / (1024**3),  # Convert bytes to GB
+                        'system_available_gb': system_memory.available / (1024**3),  # Convert bytes to GB
+                        'process_mb': process_memory_mb
+                    })
                 
             except Exception as e:
                 logger.error(f"Error collecting resource metrics: {e}")
@@ -124,12 +126,30 @@ class SystemResourceTracker:
         Returns:
             Dict with summary statistics of CPU and memory usage
         """
-        if not self.cpu_samples or not self.memory_samples:
-            return {"error": "No metrics collected"}
-        
-        # Convert to pandas DataFrame for easier analysis
-        cpu_df = pd.DataFrame(self.cpu_samples)
-        memory_df = pd.DataFrame(self.memory_samples)
+        # Use thread-safe access to the metrics lists
+        with self._metrics_lock:
+            if not self.cpu_samples or not self.memory_samples:
+                return {"error": "No metrics collected"}
+            
+            # Make copies of the lists to avoid race conditions
+            cpu_samples = self.cpu_samples.copy()
+            memory_samples = self.memory_samples.copy()
+            timestamps = self.timestamps.copy()
+            
+            if len(timestamps) == 0:
+                return {"error": "No metrics collected"}
+                
+            # Ensure all lists have the same length to prevent DataFrame errors
+            min_length = min(len(cpu_samples), len(memory_samples), len(timestamps))
+            if min_length == 0:
+                return {"error": "No metrics collected"}
+                
+            cpu_samples = cpu_samples[:min_length]
+            memory_samples = memory_samples[:min_length]
+            
+            # Convert to pandas DataFrame for easier analysis
+            cpu_df = pd.DataFrame(cpu_samples)
+            memory_df = pd.DataFrame(memory_samples)
         
         # Calculate summary statistics
         summary = {
@@ -152,8 +172,8 @@ class SystemResourceTracker:
                     "min": memory_df['system_used_gb'].min()
                 }
             },
-            "duration_seconds": (self.timestamps[-1] - self.timestamps[0]).total_seconds(),
-            "samples_count": len(self.timestamps)
+            "duration_seconds": (timestamps[-1] - timestamps[0]).total_seconds() if len(timestamps) > 1 else 0,
+            "samples_count": len(timestamps)
         }
         
         # Add process-specific metrics if available
@@ -180,15 +200,26 @@ class SystemResourceTracker:
         Returns:
             DataFrame containing all collected metrics with timestamps
         """
-        if not self.cpu_samples or not self.memory_samples:
-            return pd.DataFrame()
+        with self._metrics_lock:
+            if not self.cpu_samples or not self.memory_samples:
+                return pd.DataFrame()
+            
+            # Make copies and ensure all lists have same length
+            timestamps = self.timestamps.copy()
+            cpu_samples = self.cpu_samples.copy()
+            memory_samples = self.memory_samples.copy()
+            
+            min_length = min(len(timestamps), len(cpu_samples), len(memory_samples))
+            timestamps = timestamps[:min_length]
+            cpu_samples = cpu_samples[:min_length]
+            memory_samples = memory_samples[:min_length]
         
         # Combine all metrics into a single list of dictionaries
         data = []
-        for i, timestamp in enumerate(self.timestamps):
-            entry = {"timestamp": timestamp}
-            entry.update({f"cpu_{k}": v for k, v in self.cpu_samples[i].items()})
-            entry.update({f"memory_{k}": v for k, v in self.memory_samples[i].items()})
+        for i in range(len(timestamps)):
+            entry = {"timestamp": timestamps[i]}
+            entry.update({f"cpu_{k}": v for k, v in cpu_samples[i].items()})
+            entry.update({f"memory_{k}": v for k, v in memory_samples[i].items()})
             data.append(entry)
         
         return pd.DataFrame(data)
