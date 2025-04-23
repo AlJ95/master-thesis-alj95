@@ -1,4 +1,4 @@
-from haystack import Pipeline, component, Document
+from haystack import Pipeline, component, Document, default_from_dict, default_to_dict, DeserializationError
 from haystack.components.generators.openai import OpenAIGenerator
 from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.retrievers.in_memory.embedding_retriever import InMemoryEmbeddingRetriever
@@ -12,6 +12,7 @@ from haystack.components.converters import OutputAdapter
 from haystack.utils import Secret
 import re
 import warnings
+import asyncio
 from typing import List, Dict, Any
 pipeline = Pipeline()
 
@@ -27,56 +28,101 @@ api_base_url = "https://openrouter.ai/api/v1"
 api_key = Secret.from_env_var("OPENROUTER_API_KEY")
 
 @component
-class IterativeBrancher:
+class IterativeEmbedding:
     """
     For every rewritten query, branch into two different subqueries.
     """
-    @component.output_types(query=str, subquery=str, stop=bool)
+    @component.output_types(queries=List[str])
     def run(self, query: str):
         """
         Branch the query into two different subqueries.
         Each content between <start_documentation> and <end_documentation> is a different branch.
         """
         # extract all branches; ignore \n
-        branches = [match[0] for match in re.findall(r"(?<=<start_documentation>)(.*?)(?=<end_documentation>($|\n))", query, re.DOTALL)]
-        print(f"Found {len(branches)} branches. Query starts with: {query[:10]}")
-        # create a new query for each branch
-        if len(branches) == 0:
-            return {"query": query, "subquery": query, "stop": True}
-        else:
-            # select and remove the first branch from the query
-            subquery = branches[0]
-            query = re.sub(r"<start_documentation>(.*?)<end_documentation>", "", query)
+        documentations = [match[0] for match in re.findall(r"(?<=<start_documentation>)(.*?)(?=<end_documentation>($|\n))", query, re.DOTALL)]
+        print(f"Found {len(documentations)} branches.")
+        return {"queries": documentations}
+   
 
-            return {"query": query, "subquery": subquery, "stop": False}
+@component
+class AsyncMultiEmbedder:
+    """
+    Embed the query into multiple embeddings.
+    """
+    def __init__(self, model: str = "text-embedding-3-small"):
+        self.model = model
+        self.embedder = OpenAITextEmbedder(model=self.model)
 
-routes = [
-        {
-            "condition": "{{stop}}",
-            "output": " ", # This is just a dummy output to make the router work
-            "output_name": "stop",
-            "output_type": str,
-        },
-        {
-            "condition": "{{not stop}}",
-            "output": "{{subquery}}",
-            "output_name": "continue",
-            "output_type": str,
-        },
-        {
-            "condition": "{{not stop}}",
-            "output": "{{query}}",
-            "output_name": "iterate",
-            "output_type": str,
-        },
+    def _embed_query(self, query: str):
+        """
+        Embed the query into a single embedding.
+        """
+        return self.embedder.run(query)
 
-    ]
+    @component.output_types(embeddings=List[str])
+    def run(self, queries: List[str]):
+        """
+        Embed the query into multiple embeddings.
+        """
+        return asyncio.gather(*[self._embed_query(query) for query in queries])
+
+@component
+class AsyncMultiRetriever:
+    """
+    Retrieve the query from multiple retrievers.
+    """
+    def __init__(self, retriever: InMemoryEmbeddingRetriever):
+        self.retriever = retriever
+
+    def _retrieve_query(self, query: str):
+        """
+        Retrieve the query from the retriever.
+        """
+        return self.retriever.run(query)
+
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Serializes the component to a dictionary.
+
+        :returns:
+            Dictionary with serialized data.
+        """
+        retriever = self.retriever.to_dict()
+        return default_to_dict(
+            self,
+            retriever=retriever
+        )
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "AsyncMultiRetriever":
+        """
+        Deserializes the component from a dictionary.
+
+        :param data:
+            The dictionary to deserialize from.
+        :returns:
+            The deserialized component.
+        """
+        init_params = data.get("init_parameters", {})
+        if "retriever" not in init_params:
+            raise DeserializationError("Missing 'retriever' in serialization data")
+        data["init_parameters"]["retriever"] = InMemoryEmbeddingRetriever.from_dict(
+            data["init_parameters"]["retriever"]
+        )
+        return default_from_dict(cls, data)
+    
+
+    @component.output_types(documents=List[Document])
+    def run(self, queries: List[str]):
+        """
+        Retrieve the query from the retriever.
+        """
+        return asyncio.gather(*[self._retrieve_query(query) for query in queries])
 
 
 # Rewriter
 pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuraiton. Rewrite this as sort of documentation page for each of this configuration.
 Example (docker):
-#######################################################
 Query:
 ```
 FROM python:3.10
@@ -126,12 +172,9 @@ Documentation:
         required_variables=["query"]))
 pipeline.add_component("rewriter", OpenAIGenerator(api_base_url=api_base_url, api_key=api_key))
 pipeline.add_component("output_adapter", OutputAdapter(template="""{{replies[0]}}""", output_type=str))
-pipeline.add_component("branch_joiner", BranchJoiner(str))
-pipeline.add_component("iterative_brancher", IterativeBrancher())
-pipeline.add_component("router", ConditionalRouter(routes))
-pipeline.add_component("embedder", OpenAITextEmbedder(model="text-embedding-3-small"))
-pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=InMemoryDocumentStore()))
-pipeline.add_component("document_joiner", DocumentJoiner())
+pipeline.add_component("iterative_embedding", IterativeEmbedding())
+pipeline.add_component("async_multi_embedder", AsyncMultiEmbedder(model="text-embedding-3-small"))
+pipeline.add_component("async_multi_retriever", AsyncMultiRetriever(retriever=InMemoryEmbeddingRetriever(document_store=InMemoryDocumentStore(), top_k=3)))
 pipeline.add_component("ranker", LostInTheMiddleRanker())
 pipeline.add_component("prompt_builder", PromptBuilder(template="""
 
@@ -166,17 +209,10 @@ pipeline.add_component("answer_builder", AnswerBuilder(pattern="The answer is \"
 
 pipeline.connect("rewriter_prompt", "rewriter")
 pipeline.connect("rewriter", "output_adapter")
-pipeline.connect("output_adapter", "branch_joiner")
-pipeline.connect("branch_joiner", "iterative_brancher")
-pipeline.connect("iterative_brancher.query", "router.query")
-pipeline.connect("iterative_brancher.subquery", "router.subquery")
-pipeline.connect("iterative_brancher.stop", "router.stop")
-pipeline.connect("router.continue", "embedder.text")
-pipeline.connect("router.iterate", "branch_joiner")
-pipeline.connect("router.stop", "prompt_builder.dummy")
-pipeline.connect("embedder", "retriever.query_embedding")
-pipeline.connect("retriever", "document_joiner")
-pipeline.connect("document_joiner", "ranker")
+pipeline.connect("output_adapter", "iterative_embedding")
+pipeline.connect("iterative_embedding", "async_multi_embedder")
+pipeline.connect("async_multi_embedder", "async_multi_retriever")
+pipeline.connect("async_multi_retriever", "ranker")
 pipeline.connect("ranker", "prompt_builder")
 pipeline.connect("prompt_builder", "llm")
 pipeline.connect("llm.replies", "answer_builder.replies")
@@ -195,12 +231,12 @@ CMD ["python", "-m", ["http.server", "8000"]]
 ´´´
 """
 
-# result = pipeline.run(data=dict(query=query), include_outputs_from=pipeline.to_dict()["components"].keys())
+result = pipeline.run(data=dict(query=query), include_outputs_from=pipeline.to_dict()["components"].keys())
 
-# for key, value in result.items():
-#     print(key)
-#     print(value)
-#     print("-"*100)
+for key, value in result.items():
+    print(key)
+    print(value)
+    print("-"*100)
 
 
 
