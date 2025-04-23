@@ -21,7 +21,7 @@ from ragnroll.utils.config import get_components_from_config_by_classes
 logger = logging.getLogger(__name__)
 
 BM25Retriever = ["InMemoryBM25Retriever", "QdrantSparseEmbeddingRetriever"]
-EmbeddingRetriever = ["InMemoryEmbeddingRetriever", "ChromaTextRetriever", "ChromaEmbeddingRetriever",  "QdrantEmbeddingRetriever"]
+EmbeddingRetriever = ["InMemoryEmbeddingRetriever", "ChromaTextRetriever", "ChromaEmbeddingRetriever",  "QdrantEmbeddingRetriever", "<YOUR_CUSTOM_RETRIEVER>"]
 SentenceWindowRetriever = ["SentenceWindowRetriever"]
 HybridRetriever = ["QdrantHybridRetriever"]
 
@@ -86,7 +86,6 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
     sentence_window_retriever=get_components_from_config_by_classes(configuration, SentenceWindowRetriever)
     hybrid_retriever=get_components_from_config_by_classes(configuration, HybridRetriever)
 
-    
     if not embedding_retriever and not bm25_retriever and not sentence_window_retriever and not hybrid_retriever:
         print("No retriever found in configuration. Skipping indexing.")
         return pipeline, 0
@@ -115,6 +114,11 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
             text_embedder = text_embedder[0]
 
         if text_embedder:
+
+            if isinstance(text_embedder, list):
+                text_embedder = text_embedder[0]
+                warnings.warn("Multiple text embedders found in configuration. Using the first one to extract the embedding model.")
+
             doc_embedder = _get_document_embedder_from_text_embedder(text_embedder)
             documents = doc_embedder.run(documents)["documents"]
         else:
