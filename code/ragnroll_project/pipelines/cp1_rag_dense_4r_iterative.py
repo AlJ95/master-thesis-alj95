@@ -14,7 +14,19 @@ import re
 import warnings
 import asyncio
 from typing import List, Dict, Any
-pipeline = Pipeline()
+
+pipeline = Pipeline(
+    metadata={
+        "hypothesis": "Iterative embedding and retrieval for each configuration item can improve the performance of the pipeline.",
+        "chunking": {
+            "split": True,
+            "chunk_size": 500,
+            "chunk_overlap": 150,
+            "chunk_separator": "\n\n"
+        },
+        "reasoning": False,
+        "reconfiguration_phase": 1
+})
 
 from dotenv import load_dotenv
 load_dotenv()
