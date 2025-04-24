@@ -23,6 +23,7 @@ pipeline = Pipeline()
 
 from dotenv import load_dotenv
 from typing import List
+from pathlib import Path
 load_dotenv()
 
 import os
@@ -87,6 +88,9 @@ pipeline.connect("answer_extractor3.answer", "list_joiner")
 
 pipeline.add_component("answer_builder", AnswerBuilder())
 pipeline.connect("list_joiner.values", "answer_builder.answers")
+
+output_path = Path(__file__).parent / "ciri.pdf"
+pipeline.draw(output_path, server_url="http://localhost:3001", params=dict(format="pdf", bgColor="!white", fit=True, paper="a4"))
 
 # import json
 # with open("data/processed/config_val_ciri/evaluation_data_ciri.json", "r") as f:
