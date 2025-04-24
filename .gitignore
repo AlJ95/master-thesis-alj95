@@ -96,3 +96,6 @@ __pycache__/
 
 # ciri
 ciri/*
+
+# raw html
+**/raw/html/**
