@@ -1,0 +1,102 @@
+components:
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(valid|invalid)".
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
+  llm:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs:
+        seed: 42
+      model: gpt-4o-mini
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  prompt_builder:
+    init_parameters:
+      required_variables: null
+      template: '
+
+        Given these documents, answer the question.
+
+        Your answer is used within a pipeline and must follow the following format:
+        "The answer is "valid"" or "The answer is "invalid"" with quotation marks.
+        Also allowed are "yes" or "no", "true" or "false", "1" or "0". After stating
+        your answer, explain your answer in detail.
+
+        Example: Question: London is the capital of France. Answer: "false", because
+        the capital of France is Paris, not London.
+
+        Documents:
+
+        {% for doc in documents %}\
+
+        {{ doc.content }}
+
+        {% endfor %}
+
+        Question: {{query}}
+
+        Answer:
+
+        '
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  reranker:
+    init_parameters:
+      calibration_factor: 1.0
+      device: null
+      document_prefix: ''
+      embedding_separator: '
+
+        '
+      meta_fields_to_embed: []
+      model: cross-encoder/ms-marco-MiniLM-L-6-v2
+      model_kwargs:
+        device_map: cpu
+      query_prefix: ''
+      scale_score: true
+      score_threshold: null
+      token:
+        env_vars:
+        - HF_API_TOKEN
+        - HF_TOKEN
+        strict: false
+        type: env_var
+      tokenizer_kwargs: {}
+      top_k: 5
+    type: haystack.components.rankers.transformers_similarity.TransformersSimilarityRanker
+  retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: {}
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      scale_score: false
+      top_k: 10
+    type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
+connections:
+- receiver: llm.prompt
+  sender: prompt_builder.prompt
+- receiver: prompt_builder.documents
+  sender: reranker.documents
+- receiver: reranker.documents
+  sender: retriever.documents
+- receiver: answer_builder.replies
+  sender: llm.replies
+max_runs_per_component: 10
+metadata:
+  comment: This is a comment
+  hypothesis: This is a hypothesis
+  seed: 42

@@ -36,52 +36,72 @@ A key difference in our evaluation approach compared to the original Ciri experi
 
 
 \subsection{Experimental Setup} \label{sec:exp_setup}
-The experiments were conducted using the computational resources specified below. The primary environment for running the evaluation framework, including data processing, baseline evaluations, and RAG pipeline executions involving API-based LLMs or CPU-based components, was a dedicated server hosted by Hetzner.
+The experiments were conducted using the computational resources specified below. The primary environment for running the evaluation framework, including data processing, baseline evaluations, and RAG pipeline executions involving API-based LLMs or CPU-based components, was a dedicated server hosted by Hetzner. We haven chosen closed as well as open source models and used OpenRouter.ai\cite{openrouter-inc-2023} for all API requests. We chose not to self-host a model by ourself, because this would skew system metrics such as latency.
 
+We chose the CCX23 dedicated CPU server\cite{hetzner-online-gmbh-2025} for all our tests
 \begin{itemize}
-    \item \textbf{Hetzner Server:} [TODO: Insert Hetzner Server Specifications - e.g., Model, CPU, RAM, Disk]
+    \item VCPU: 4
+    \item RAM: 16 GB
+    \item SSD: 160 GB
 \end{itemize}
 
-For computationally intensive tasks requiring local GPU acceleration, specifically for hosting and running certain large language models, we utilized cloud-based GPU instances provisioned through runpod.io. The vLLM library \cite{Kwon.12.09.2023} was employed for efficient LLM inference on these instances.
+\subsection{Reconfiguration Phases} \label{sec:exp_results} 
 
-\begin{itemize}
-    \item \textbf{Runpod.io Instance:} NVIDIA H100 GPU [TODO: Add vRAM amount, e.g., 80GB]
-    \item \textbf{vLLM Parameters:} [TODO: Insert key vLLM parameters if non-default, e.g., tensor parallelism, max tokens]
-\end{itemize}
+\paragraph{Dataset} 
+We used the CTest dataset, prepared by the team behind Ciri\cite{Lian.2024}\cite{xlab-uiuc-2025}. The data consists of real world missconfiguration scenarios, augmented with synthetic data. We had 907 test cases in total. In the following table is the distribution per system.
 
-The core software components underpinning the experimental setup are provided by the RAGBench framework itself:
-\begin{itemize}
-    \item \textbf{Haystack:} Used for defining, configuring (via YAML), and executing the RAG pipelines \cite{Pietsch_Haystack_the_end-to-end_2019}.
-    \item \textbf{MLflow:} Employed for logging experiment parameters, configurations (including YAML metadata), and evaluation metrics (end-to-end and component-level) for visualization and comparison \cite{MLflow}.
-    \item \textbf{Langfuse:} Utilized for capturing detailed execution traces of the RAG pipelines, enabling in-depth failure analysis \cite{Langfuse}.
-    \item \textbf{Vector Database:} We use two different vector databases: ChromaDB and In-Memory for estimating the effect on a external database as used in practice.
-\end{itemize}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Technology} & \textbf{Number of Files} & \textbf{Version} \\
+        \hline
+        alluxio & 111 & 2.5.0 \\
+        django & 36 & 4.0.0 \\
+        etcd & 64 & 3.5.0 \\
+        hbase & 107 & 2.2.7 \\
+        hcommon & 138 & 3.3.0 \\
+        hdfs & 149 & 3.3.0 \\
+        postgresql & 62 & 13.0 \\
+        redis & 88 & 7.0.0 \\
+        yarn & 80 & 3.3.0 \\
+        zookeeper & 72 & 3.7.0 \\
+        \hline
+    \end{tabular}
+    \caption{Number of configuration files and versions per system.}
+    \label{tab:technology_values}
+\end{table}
 
+The ingestion of data into our vector database required scraping official documentation for each specific version. However, we could not find documentation or a manual for this specific Redis version. Below are the documentation sources we scraped.
 
-\subsection{Reconfiguration Phases} \label{sec:exp_results} % Renamed section slightly to better reflect content
-% Present and discuss the results obtained using ONLY the validation dataset. 
-
-
-\paragraph{Dataset} % Added subsection for Dataset description
-% Describe the dataset used for evaluation.
-% Source, size, characteristics.
-% Mention the validation-test split ratio (e.g., 80/20) and justification (Sec 4.1). - Already mentioned split ratio earlier.
-[TODO: Describe the extended CTest dataset - source, size, format, types of configurations covered, how it was extended (synthetic data?)]
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Technology (Version)} & \textbf{Documentation Page} \\
+        \hline
+        alluxio (2.5.0) & \texttt{https://example.com/alluxio} \\
+        django (4.0.0) & \texttt{https://example.com/django} \\
+        etcd (3.5.0) & \texttt{https://example.com/etcd} \\
+        hbase (2.2.7) & \texttt{https://example.com/hbase} \\
+        hcommon (3.3.0) & \texttt{https://example.com/hcommon} \\
+        hdfs (3.3.0) & \texttt{https://example.com/hdfs} \\
+        postgresql (13.0) & \texttt{https://example.com/postgresql} \\
+        redis (7.0.0) & \texttt{https://example.com/redis} \\
+        yarn (3.3.0) & \texttt{https://example.com/yarn} \\
+        zookeeper (3.7.0) & \texttt{https://example.com/zookeeper} \\
+        \hline
+    \end{tabular}
+    \caption{Technology and Documentation Links}
+    \label{tab:technology_documentation}
+\end{table}
 
 \paragraph{Initial Configuration and Baselines} \label{sec:exp_initial_config}
-This section details the performance of the baseline systems and the initial RAG configuration evaluated on the validation set. 
+We used several baselines as comparison. At first we ran our experiment with the baselines defined in section \ref{chap:design} - as standalone LLM and a predefined minimal RAG system with BM25 sparse retrieval. For both baselines we used OpenAI's GPT-4o-mini\cite{OpenAI_2022}. The standalone system has only a generator and an answer builder for extracting "valid" or "invalid" from the generated output. The second baseline adds an retriever right before the generator and lists the top-10 documents before without any pre- or postprocessing. This basic architectures ensure that we figure out if complex adjustments improve the validator quality at all.
 
-\subparagraph{Baselines}
-Two baselines were established as per the framework's methodology:
-\begin{itemize}
-    \item \textbf{Standalone LLM:} We want to use three different models for baselines: OpenAI's gpt-4o-mini\cite{OpenAI_2022}, Google's gemma-24b \cite{Gemma3.25.03.2025} and Alibaba's QwQ-32B\cite{qwq32b,qwen2.5}
-    \item \textbf{Naive RAG:} A simple retrieve-read pipeline using BM25 retrieval over the documentation corpus and the same LLM as the standalone baseline (using \textit{gpt-4o-mini} and a Top-K of 10)
-\end{itemize}
+We also rebuilt the Ciri system within our Haystack RAG architecture and used it as baseline. As we only used our framework for running evaluations there are some minor differences in methodology due to implementation limitations. We did not look at the results per system, which means that we do not have knowledge if our system works better for django or alluxio systems. However we could run for each system a separat experiment, but we chose against for better comparability of the final result and cost reduction of the experiment. We also did only evaluate file-level validation. Ciri used few-shot examples with a number of valid and invalid configurations. We did not vary the number of valid or invalid shots, but we have chosen the best performing configuration with one valid and three invalid shots. Lastly Ciri used several language models for its experiments. However we only could use \textit{gpt-3.5-turbo-0125}\cite{OpenAI_2022}. Other models were either unavaillable, because the used version is outdated and continuously trained or too expensive for the experiment to run with our budget. However we achieved a F1-Score of \textit{0.68} which close to the Ciri reported F1-Score of \textit{0.72}. All pipeline figures can be found in the appendix.
 
-\textcolor{red}{Hier kommt auch das CIRI Experiment mit GPT-3.5. Das einzige nutzbare Model für mich, da die anderen zu teuer wären.}
-
-\subparagraph{Initial RAG Configuration} % Describe the specific RAG configuration tested first.
-The first RAG system evaluated employed a straightforward configuration:
+\subparagraph{Initial RAG Configuration} 
 
 
 \paragraph{Reconfiguration I} \label{sec:exp_reconfig_1}

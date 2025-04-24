@@ -1,0 +1,384 @@
+components:
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(valid|invalid)"
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
+  document_joiner:
+    init_parameters:
+      join_mode: concatenate
+      sort_by_score: true
+      top_k: null
+      weights: null
+    type: haystack.components.joiners.document_joiner.DocumentJoiner
+  iterative_embedding:
+    init_parameters: {}
+    type: pipelines.cp1_rag_dense_4r_iterative_max5.IterativeEmbedding
+  llm:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-4o-mini
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  output_adapter:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{replies[0]}}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  output_adapter_0:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{queries[0]}}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  output_adapter_1:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{queries[1]}}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  output_adapter_2:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{queries[2]}}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  output_adapter_3:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{queries[3]}}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  output_adapter_4:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{queries[4]}}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  prompt_builder:
+    init_parameters:
+      required_variables: query
+      template: '
+
+        Given these documents, answer the question.{{dummy}}
+
+        Is the following configuration valid?
+
+        Your answer is used within a pipeline and must follow the following format:
+        "The answer is "valid"" or "The answer is "invalid"" with quotation marks.
+        Also allowed are "yes" or "no", "true" or "false", "1" or "0". After stating
+        your answer, explain your answer in detail.
+
+        Example: Configuration: FROM python:3.10 AS base AS test Answer: "false",
+        because multiple AS aliases are not allowed in a single FROM instruction
+
+        Here are helpful documents from the documentation:
+
+        {% for doc in documents %}\
+
+        {{ doc.content }}
+
+        {% endfor %}
+
+
+        Configuration: {{query}}
+
+
+        Answer: '
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  ranker:
+    init_parameters:
+      top_k: null
+      word_count_threshold: null
+    type: haystack.components.rankers.lost_in_the_middle.LostInTheMiddleRanker
+  retriever_0:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: &id001 {}
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: 3c87ca98-4448-46f7-b265-8962b5528679
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      return_embedding: false
+      scale_score: false
+      top_k: 2
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  retriever_1:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: *id001
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: 3c87ca98-4448-46f7-b265-8962b5528679
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      return_embedding: false
+      scale_score: false
+      top_k: 2
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  retriever_2:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: *id001
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: 3c87ca98-4448-46f7-b265-8962b5528679
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      return_embedding: false
+      scale_score: false
+      top_k: 2
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  retriever_3:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: *id001
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: 3c87ca98-4448-46f7-b265-8962b5528679
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      return_embedding: false
+      scale_score: false
+      top_k: 2
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  retriever_4:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: *id001
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: 3c87ca98-4448-46f7-b265-8962b5528679
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      return_embedding: false
+      scale_score: false
+      top_k: 2
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  rewriter:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-4o-mini
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  rewriter_prompt:
+    init_parameters:
+      required_variables: query
+      template: 'The following query consists of a configuraiton. Rewrite this as
+        sort of documentation page for each of this configuration. Create at maximum
+        5 documentations. Focus on the configuration items that can lead easily to
+        errors / misconfigurations. Example (docker): Query: ``` FROM python:3.10
+
+        CMD ["python", "-m", "http.server", "8000"] ```
+
+        Documentation: <start_documentation> FROM
+
+        FROM [--platform=<platform>] <image> [AS <name>] Or
+
+
+        FROM [--platform=<platform>] <image>[:<tag>] [AS <name>] Or
+
+
+        FROM [--platform=<platform>] <image>[@<digest>] [AS <name>] The FROM instruction
+        initializes a new build stage and sets the base image for subsequent instructions.
+        As such, a valid Dockerfile must start with a FROM instruction. The image
+        can be any valid image. <end_documentation> <start_documentation> CMD The
+        CMD instruction sets the command to be executed when running a container from
+        an image.
+
+        You can specify CMD instructions using shell or exec forms:
+
+        CMD ["executable","param1","param2"] (exec form) CMD ["param1","param2"] (exec
+        form, as default parameters to ENTRYPOINT) CMD command param1 param2 (shell
+        form) There can only be one CMD instruction in a Dockerfile. If you list more
+        than one CMD, only the last one takes effect.
+
+        The purpose of a CMD is to provide defaults for an executing container. These
+        defaults can include an executable, or they can omit the executable, in which
+        case you must specify an ENTRYPOINT instruction as well. <end_documentation>
+        #######################################################
+
+
+        Only return the documentation, no other text. Query: ``` {{query}} ```
+
+        Documentation: '
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  text_embedder_0:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-3-small
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+  text_embedder_1:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-3-small
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+  text_embedder_2:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-3-small
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+  text_embedder_3:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-3-small
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+  text_embedder_4:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-3-small
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+connection_type_validation: true
+connections:
+- receiver: rewriter.prompt
+  sender: rewriter_prompt.prompt
+- receiver: output_adapter.replies
+  sender: rewriter.replies
+- receiver: iterative_embedding.query
+  sender: output_adapter.output
+- receiver: output_adapter_0.queries
+  sender: iterative_embedding.queries
+- receiver: output_adapter_1.queries
+  sender: iterative_embedding.queries
+- receiver: output_adapter_2.queries
+  sender: iterative_embedding.queries
+- receiver: output_adapter_3.queries
+  sender: iterative_embedding.queries
+- receiver: output_adapter_4.queries
+  sender: iterative_embedding.queries
+- receiver: ranker.documents
+  sender: document_joiner.documents
+- receiver: text_embedder_0.text
+  sender: output_adapter_0.output
+- receiver: retriever_0.query_embedding
+  sender: text_embedder_0.embedding
+- receiver: document_joiner.documents
+  sender: retriever_0.documents
+- receiver: text_embedder_1.text
+  sender: output_adapter_1.output
+- receiver: retriever_1.query_embedding
+  sender: text_embedder_1.embedding
+- receiver: document_joiner.documents
+  sender: retriever_1.documents
+- receiver: text_embedder_2.text
+  sender: output_adapter_2.output
+- receiver: retriever_2.query_embedding
+  sender: text_embedder_2.embedding
+- receiver: document_joiner.documents
+  sender: retriever_2.documents
+- receiver: text_embedder_3.text
+  sender: output_adapter_3.output
+- receiver: retriever_3.query_embedding
+  sender: text_embedder_3.embedding
+- receiver: document_joiner.documents
+  sender: retriever_3.documents
+- receiver: text_embedder_4.text
+  sender: output_adapter_4.output
+- receiver: retriever_4.query_embedding
+  sender: text_embedder_4.embedding
+- receiver: document_joiner.documents
+  sender: retriever_4.documents
+- receiver: prompt_builder.documents
+  sender: ranker.documents
+- receiver: llm.prompt
+  sender: prompt_builder.prompt
+- receiver: answer_builder.replies
+  sender: llm.replies
+max_runs_per_component: 100
+metadata:
+  chunking:
+    chunk_overlap: 150
+    chunk_separator: ' '
+    chunk_size: 1000
+    split: true
+  hypothesis: Iterative embedding and retrieval for each configuration item can improve
+    the performance of the pipeline.
+  hypothesis_2: null
+  reasoning: false
+  reconfiguration_phase: 1
