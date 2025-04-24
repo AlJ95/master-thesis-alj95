@@ -1,0 +1,162 @@
+components:
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(valid|invalid)"
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
+  async_multi_embedder:
+    init_parameters:
+      model: text-embedding-3-small
+    type: pipelines.components.embedders.async_multi_embedder.AsyncMultiEmbedder
+  async_multi_retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: &id001 {}
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: bfd4b769-38fc-493d-b913-d01f33848648
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      retriever:
+        init_parameters:
+          document_store:
+            init_parameters:
+              bm25_algorithm: BM25L
+              bm25_parameters: *id001
+              bm25_tokenization_regex: (?u)\b\w\w+\b
+              embedding_similarity_function: dot_product
+              index: bfd4b769-38fc-493d-b913-d01f33848648
+            type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+          filter_policy: replace
+          filters: null
+          return_embedding: false
+          scale_score: false
+          top_k: 3
+        type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+    type: pipelines.components.retrievers.async_multi_retrievers.AsyncMultiRetriever
+  iterative_embedding:
+    init_parameters: {}
+    type: pipelines.cp1_rag_dense_4r_iterative.IterativeEmbedding
+  llm:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-4o-mini
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  output_adapter:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{replies[0]}}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  prompt_builder:
+    init_parameters:
+      required_variables:
+      - query
+      template: "\n\n        Given these documents, answer the question.{{dummy}}\n\
+        \                                                       \n        Is the following\
+        \ configuration valid?\n\n        Your answer is used within a pipeline and\
+        \ must follow the following format:\n        \"The answer is \"valid\"\" or\
+        \ \"The answer is \"invalid\"\" with quotation marks. Also allowed are \"\
+        yes\" or \"no\", \"true\" or \"false\", \"1\" or \"0\".\n        After stating\
+        \ your answer, explain your answer in detail.\n\n        Example:\n      \
+        \  Configuration: FROM python:3.10 AS base AS test\n        Answer: \"false\"\
+        , because multiple AS aliases are not allowed in a single FROM instruction\n\
+        \n        Here are helpful documents from the documentation:\n\n        {%\
+        \ for doc in documents %}\n        {{ doc.content }}\n\n        {% endfor\
+        \ %}        \n\n                                                       \n\
+        \        Configuration: {{query}}\n\n\n        Answer: "
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  ranker:
+    init_parameters:
+      top_k: null
+      word_count_threshold: null
+    type: haystack.components.rankers.lost_in_the_middle.LostInTheMiddleRanker
+  rewriter:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-4o-mini
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  rewriter_prompt:
+    init_parameters:
+      required_variables:
+      - query
+      template: "The following query consists of a configuraiton. Rewrite this as\
+        \ sort of documentation page for each of this configuration.\nExample (docker):\n\
+        Query:\n```\nFROM python:3.10\n\nCMD [\"python\", \"-m\", \"http.server\"\
+        , \"8000\"]\n```\n\nDocumentation:\n<start_documentation>\nFROM\n\nFROM [--platform=<platform>]\
+        \ <image> [AS <name>]\nOr\n\n\nFROM [--platform=<platform>] <image>[:<tag>]\
+        \ [AS <name>]\nOr\n\n\nFROM [--platform=<platform>] <image>[@<digest>] [AS\
+        \ <name>]\nThe FROM instruction initializes a new build stage and sets the\
+        \ base image for subsequent instructions. As such, a valid Dockerfile must\
+        \ start with a FROM instruction. The image can be any valid image.\n<end_documentation>\n\
+        <start_documentation>\nCMD\nThe CMD instruction sets the command to be executed\
+        \ when running a container from an image.\n\nYou can specify CMD instructions\
+        \ using shell or exec forms:\n\nCMD [\"executable\",\"param1\",\"param2\"\
+        ] (exec form)\nCMD [\"param1\",\"param2\"] (exec form, as default parameters\
+        \ to ENTRYPOINT)\nCMD command param1 param2 (shell form)\nThere can only be\
+        \ one CMD instruction in a Dockerfile. If you list more than one CMD, only\
+        \ the last one takes effect.\n\nThe purpose of a CMD is to provide defaults\
+        \ for an executing container. These defaults can include an executable, or\
+        \ they can omit the executable, in which case you must specify an ENTRYPOINT\
+        \ instruction as well.\n<end_documentation>                              \
+        \                   \n#######################################################\n\
+        \                                                 \n\nOnly return the documentation,\
+        \ no other text.\nQuery:\n```\n{{query}}\n```\n                          \
+        \                              \nDocumentation:\n"
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+connection_type_validation: true
+connections:
+- receiver: rewriter.prompt
+  sender: rewriter_prompt.prompt
+- receiver: output_adapter.replies
+  sender: rewriter.replies
+- receiver: iterative_embedding.query
+  sender: output_adapter.output
+- receiver: async_multi_embedder.queries
+  sender: iterative_embedding.queries
+- receiver: async_multi_retriever.query_embedding
+  sender: async_multi_embedder.query_embedding
+- receiver: ranker.documents
+  sender: async_multi_retriever.documents
+- receiver: prompt_builder.documents
+  sender: ranker.documents
+- receiver: llm.prompt
+  sender: prompt_builder.prompt
+- receiver: answer_builder.replies
+  sender: llm.replies
+max_runs_per_component: 100
+metadata:
+  chunking:
+    chunk_overlap: 150
+    chunk_separator: '
+
+
+      '
+    chunk_size: 500
+    split: true
+  hypothesis: Iterative embedding and retrieval for each configuration item can improve
+    the performance of the pipeline.
+  reasoning: false
+  reconfiguration_phase: 1
