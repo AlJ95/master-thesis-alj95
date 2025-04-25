@@ -95,7 +95,7 @@ components:
     init_parameters:
       required_variables:
       - query
-      template: "The following query consists of a configuraiton. Rewrite this as\
+      template: "The following query consists of a configuration. Rewrite this as\
         \ sort of documentation page for each of this configuration.\nExample (docker):\n\
         #######################################################\nQuery:\n```\nFROM\
         \ python:3.10\n\nCMD [\"python\", \"-m\", \"http.server\", \"8000\"]\n```\n\

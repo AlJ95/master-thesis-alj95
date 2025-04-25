@@ -60,7 +60,7 @@ class IterativeEmbedding:
 
 
 # Rewriter
-pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuraiton. Rewrite this as sort of documentation page for each of this configuration. Create at maximum 5 documentations. Focus on the configuration items that can lead easily to errors / misconfigurations.
+pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuration. Rewrite this as sort of documentation page for each of this configuration. Create at maximum 5 documentations. Focus on the configuration items that can lead easily to errors / misconfigurations.
 Example (docker):
 Query:
 ```
