@@ -16,7 +16,7 @@ class LLMAsAJudge:
     DEFAULT_API_PARAMS = {
         "google/gemini-2.0-flash-001": {
             "api_key": os.environ.get("OPENROUTER_API_KEY"),
-            "api_url": "https://api.openrouter.ai/v1"
+            "api_url": "https://openrouter.ai/api/v1"
         },
         "gpt-4o-mini": {
             "api_key": os.environ.get("OPENAI_API_KEY"),
@@ -24,7 +24,7 @@ class LLMAsAJudge:
         },
         "meta-llama/llama-3.3-70b-instruct": {
             "api_key": os.environ.get("OPENROUTER_API_KEY"),
-            "api_url": "https://api.openrouter.ai/v1"
+            "api_url": "https://openrouter.ai/api/v1"
         }
     }
     
