@@ -1,0 +1,446 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.cli (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.cli</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/Command.html" title="interface in alluxio.cli">Command</a></td>
+<td class="colLast">
+<div class="block">An interface for all the commands that can be run from a shell.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationTask.html" title="interface in alluxio.cli">ValidationTask</a></td>
+<td class="colLast">
+<div class="block">Interface for a validation task run by validateEnv command.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationTool.html" title="interface in alluxio.cli">ValidationTool</a></td>
+<td class="colLast">
+<div class="block">The validation tool interface.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationToolFactory.html" title="interface in alluxio.cli">ValidationToolFactory</a></td>
+<td class="colLast">
+<div class="block">The validation tool factory interface.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/AbstractShell.html" title="class in alluxio.cli">AbstractShell</a></td>
+<td class="colLast">
+<div class="block">Abstract class for handling command line inputs.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/AbstractValidationTask.html" title="class in alluxio.cli">AbstractValidationTask</a></td>
+<td class="colLast">
+<div class="block">Abstract class for validation environment.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/BasicCheckpoint.html" title="class in alluxio.cli">BasicCheckpoint</a></td>
+<td class="colLast">
+<div class="block">An example to show to how use Alluxio's API.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/BasicNonByteBufferOperations.html" title="class in alluxio.cli">BasicNonByteBufferOperations</a></td>
+<td class="colLast">
+<div class="block">Basic example of using the <a href="../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a> for writing to and reading from files.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/BasicOperations.html" title="class in alluxio.cli">BasicOperations</a></td>
+<td class="colLast">
+<div class="block">Example to show the basic operations of Alluxio.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/ClusterConfConsistencyValidationTask.html" title="class in alluxio.cli">ClusterConfConsistencyValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating Alluxio configuration consistency in the cluster.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/CommandUtils.html" title="class in alluxio.cli">CommandUtils</a></td>
+<td class="colLast">
+<div class="block">Class for convenience methods used by instances of <a href="../../alluxio/cli/Command.html" title="interface in alluxio.cli"><code>Command</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/DocGenerator.html" title="class in alluxio.cli">DocGenerator</a></td>
+<td class="colLast">
+<div class="block">Utility for generating docs.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/Format.html" title="class in alluxio.cli">Format</a></td>
+<td class="colLast">
+<div class="block">Formats the Alluxio file system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/GetConf.html" title="class in alluxio.cli">GetConf</a></td>
+<td class="colLast">
+<div class="block">Utility for printing Alluxio configuration.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/HdfsValidationTool.html" title="class in alluxio.cli">HdfsValidationTool</a></td>
+<td class="colLast">
+<div class="block">A tool to validate an HDFS mount, before the path is mounted to Alluxio.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/HdfsValidationToolFactory.html" title="class in alluxio.cli">HdfsValidationToolFactory</a></td>
+<td class="colLast">
+<div class="block">Factory to create an HDFS validation tool implementation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/HmsTests.html" title="class in alluxio.cli">HmsTests</a></td>
+<td class="colLast">
+<div class="block">Class for running tests against an existing hive metastore.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/HmsValidationTool.html" title="class in alluxio.cli">HmsValidationTool</a></td>
+<td class="colLast">
+<div class="block">Run tests against an existing hive metastore.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/HmsValidationToolFactory.html" title="class in alluxio.cli">HmsValidationToolFactory</a></td>
+<td class="colLast">
+<div class="block">Factory to create hive metastore validation tool implementation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/JournalCrashTest.html" title="class in alluxio.cli">JournalCrashTest</a></td>
+<td class="colLast">
+<div class="block">Class to perform Journal crash test.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/LogLevel.html" title="class in alluxio.cli">LogLevel</a></td>
+<td class="colLast">
+<div class="block">Sets or gets the log level for the specified server.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/MiniBenchmark.html" title="class in alluxio.cli">MiniBenchmark</a></td>
+<td class="colLast">
+<div class="block">Mini benchmark that writes/reads one file with a given size and operation type.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/NativeLibValidationTask.html" title="class in alluxio.cli">NativeLibValidationTask</a></td>
+<td class="colLast">
+<div class="block">Validates the Java native libs defined in the system property.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/PortAvailabilityValidationTask.html" title="class in alluxio.cli">PortAvailabilityValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating whether a specific port is available.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/RamDiskMountPrivilegeValidationTask.html" title="class in alluxio.cli">RamDiskMountPrivilegeValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating whether worker has enough privilege to mount RAM disk.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/RunOperation.html" title="class in alluxio.cli">RunOperation</a></td>
+<td class="colLast">
+<div class="block">Class for running an operation multiple times.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/RunTestUtils.html" title="class in alluxio.cli">RunTestUtils</a></td>
+<td class="colLast">
+<div class="block">Utilities to run the examples.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/S3ASpecificOperations.html" title="class in alluxio.cli">S3ASpecificOperations</a></td>
+<td class="colLast">
+<div class="block">Examples for S3A specific under filesystem operations.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/SshValidationTask.html" title="class in alluxio.cli">SshValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating SSH reachability.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/StorageSpaceValidationTask.html" title="class in alluxio.cli">StorageSpaceValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating whether worker tiered storage has enough space.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/TestRunner.html" title="class in alluxio.cli">TestRunner</a></td>
+<td class="colLast">
+<div class="block">Driver to run Alluxio tests.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/UfsDirectoryValidationTask.html" title="class in alluxio.cli">UfsDirectoryValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating whether UFS directory is accessible.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/UfsSuperUserValidationTask.html" title="class in alluxio.cli">UfsSuperUserValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating whether Alluxio can access UFS as super user.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/UfsVersionValidationTask.html" title="class in alluxio.cli">UfsVersionValidationTask</a></td>
+<td class="colLast">
+<div class="block">This validates the UFS configuration for a users configured UFS path.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/UnderFileSystemCommonOperations.html" title="class in alluxio.cli">UnderFileSystemCommonOperations</a></td>
+<td class="colLast">
+<div class="block">Examples for under filesystem common operations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/UnderFileSystemContractTest.html" title="class in alluxio.cli">UnderFileSystemContractTest</a></td>
+<td class="colLast">
+<div class="block">Integration tests for Alluxio under filesystems.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/UserLimitValidationTask.html" title="class in alluxio.cli">UserLimitValidationTask</a></td>
+<td class="colLast">
+<div class="block">Task for validating system limit for current user.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidateConf.html" title="class in alluxio.cli">ValidateConf</a></td>
+<td class="colLast">
+<div class="block">Validate the Alluxio configuration.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidateEnv.html" title="class in alluxio.cli">ValidateEnv</a></td>
+<td class="colLast">
+<div class="block">Utility for checking Alluxio environment.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidateHdfsMount.html" title="class in alluxio.cli">ValidateHdfsMount</a></td>
+<td class="colLast">
+<div class="block">A tool to validate an HDFS mount, before the path is mounted to Alluxio.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationConfig.html" title="class in alluxio.cli">ValidationConfig</a></td>
+<td class="colLast">
+<div class="block">Configuration settings for the validation tools.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationResults.html" title="class in alluxio.cli">ValidationResults</a></td>
+<td class="colLast">
+<div class="block">A container class for the validation results.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationTaskResult.html" title="class in alluxio.cli">ValidationTaskResult</a></td>
+<td class="colLast">
+<div class="block">Represents the result of a given task.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationToolRegistry.html" title="class in alluxio.cli">ValidationToolRegistry</a></td>
+<td class="colLast">
+<div class="block">The registry of validation tool implementations.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationUtils.html" title="class in alluxio.cli">ValidationUtils</a></td>
+<td class="colLast">
+<div class="block">Utilities to run the validation tests.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/Version.html" title="class in alluxio.cli">Version</a></td>
+<td class="colLast">
+<div class="block">The version of the current build.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ApplicableUfsType.Type.html" title="enum in alluxio.cli">ApplicableUfsType.Type</a></td>
+<td class="colLast">
+<div class="block">UFS types.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/Format.Mode.html" title="enum in alluxio.cli">Format.Mode</a></td>
+<td class="colLast">
+<div class="block">The format mode.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ValidationUtils.State.html" title="enum in alluxio.cli">ValidationUtils.State</a></td>
+<td class="colLast">
+<div class="block">Task State.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Annotation Types Summary table, listing annotation types, and an explanation">
+<caption><span>Annotation Types Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Annotation Type</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/cli/ApplicableUfsType.html" title="annotation in alluxio.cli">ApplicableUfsType</a></td>
+<td class="colLast">
+<div class="block">An enum standing for a UFS type.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/cli/RelatedS3Operations.html" title="annotation in alluxio.cli">RelatedS3Operations</a></td>
+<td class="colLast">
+<div class="block">An annotation for methods with related S3 operations.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>BLPOP | Docs</title>
+    <meta name="description" content="Removes and returns the first element in a list. Blocks until an element is available otherwise. Deletes the list if the last element was popped.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/blpop/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="BLPOP">
+  <meta property="og:description" content="Removes and returns the first element in a list. Blocks until an element is available otherwise. Deletes the list if the last element was popped.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="BLPOP">
+  <meta itemprop="description" content="Removes and returns the first element in a list. Blocks until an element is available otherwise. Deletes the list if the last element was popped.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="1307">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BLPOP">
+  <meta name="twitter:description" content="Removes and returns the first element in a list. Blocks until an element is available otherwise. Deletes the list if the last element was popped.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">BLPOP
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">BLPOP key [key ...] timeout</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 2.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N) where N is the number of provided keys.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@list</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@blocking</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p><code>BLPOP</code> is a blocking list pop primitive.
+It is the blocking version of <a href="/docs/latest/commands/lpop/"><code>LPOP</code></a> because it blocks the connection when there
+are no elements to pop from any of the given lists.
+An element is popped from the head of the first list that is non-empty, with the
+given keys being checked in the order that they are given.</p>
+<h2 id="non-blocking-behavior">Non-blocking behavior</h2>
+<p>When <code>BLPOP</code> is called, if at least one of the specified keys contains a
+non-empty list, an element is popped from the head of the list and returned to
+the caller together with the <code>key</code> it was popped from.</p>
+<p>Keys are checked in the order that they are given.
+Let's say that the key <code>list1</code> doesn't exist and <code>list2</code> and <code>list3</code> hold
+non-empty lists.
+Consider the following command:</p>
+<pre tabindex="0"><code>BLPOP list1 list2 list3 0
+</code></pre><p><code>BLPOP</code> guarantees to return an element from the list stored at <code>list2</code> (since
+it is the first non empty list when checking <code>list1</code>, <code>list2</code> and <code>list3</code> in
+that order).</p>
+<h2 id="blocking-behavior">Blocking behavior</h2>
+<p>If none of the specified keys exist, <code>BLPOP</code> blocks the connection until another
+client performs an <a href="/docs/latest/commands/lpush/"><code>LPUSH</code></a> or <a href="/docs/latest/commands/rpush/"><code>RPUSH</code></a> operation against one of the keys.</p>
+<p>Once new data is present on one of the lists, the client returns with the name
+of the key unblocking it and the popped value.</p>
+<p>When <code>BLPOP</code> causes a client to block and a non-zero timeout is specified,
+the client will unblock returning a <code>nil</code> multi-bulk value when the specified
+timeout has expired without a push operation against at least one of the
+specified keys.</p>
+<p><strong>The timeout argument is interpreted as a double value specifying the maximum number of seconds to block</strong>. A timeout of zero can be used to block indefinitely.</p>
+<h2 id="what-key-is-served-first-what-client-what-element-priority-ordering-details">What key is served first? What client? What element? Priority ordering details.</h2>
+<ul>
+<li>If the client tries to blocks for multiple keys, but at least one key contains elements, the returned key / element pair is the first key from left to right that has one or more elements. In this case the client is not blocked. So for instance <code>BLPOP key1 key2 key3 key4 0</code>, assuming that both <code>key2</code> and <code>key4</code> are non-empty, will always return an element from <code>key2</code>.</li>
+<li>If multiple clients are blocked for the same key, the first client to be served is the one that was waiting for more time (the first that blocked for the key). Once a client is unblocked it does not retain any priority, when it blocks again with the next call to <code>BLPOP</code> it will be served accordingly to the number of clients already blocked for the same key, that will all be served before it (from the first to the last that blocked).</li>
+<li>When a client is blocking for multiple keys at the same time, and elements are available at the same time in multiple keys (because of a transaction or a Lua script added elements to multiple lists), the client will be unblocked using the first key that received a push operation (assuming it has enough elements to serve our client, as there may be other clients as well waiting for this key). Basically after the execution of every command Redis will run a list of all the keys that received data AND that have at least a client blocked. The list is ordered by new element arrival time, from the first key that received data to the last. For every key processed, Redis will serve all the clients waiting for that key in a FIFO fashion, as long as there are elements in this key. When the key is empty or there are no longer clients waiting for this key, the next key that received new data in the previous command / transaction / script is processed, and so forth.</li>
+</ul>
+<h2 id="behavior-of-blpop-when-multiple-elements-are-pushed-inside-a-list">Behavior of <code>BLPOP</code> when multiple elements are pushed inside a list.</h2>
+<p>There are times when a list can receive multiple elements in the context of the same conceptual command:</p>
+<ul>
+<li>Variadic push operations such as <code>LPUSH mylist a b c</code>.</li>
+<li>After an <a href="/docs/latest/commands/exec/"><code>EXEC</code></a> of a <a href="/docs/latest/commands/multi/"><code>MULTI</code></a> block with multiple push operations against the same list.</li>
+<li>Executing a Lua Script with Redis 2.6 or newer.</li>
+</ul>
+<p>When multiple elements are pushed inside a list where there are clients blocking, the behavior is different for Redis 2.4 and Redis 2.6 or newer.</p>
+<p>For Redis 2.6 what happens is that the command performing multiple pushes is executed, and <em>only after</em> the execution of the command the blocked clients are served. Consider this sequence of commands.</p>
+<pre><code>Client A:   BLPOP foo 0
+Client B:   LPUSH foo a b c
+</code></pre>
+<p>If the above condition happens using a Redis 2.6 server or greater, Client <strong>A</strong> will be served with the <code>c</code> element, because after the <a href="/docs/latest/commands/lpush/"><code>LPUSH</code></a> command the list contains <code>c,b,a</code>, so taking an element from the left means to return <code>c</code>.</p>
+<p>Instead Redis 2.4 works in a different way: clients are served <em>in the context</em> of the push operation, so as long as <code>LPUSH foo a b c</code> starts pushing the first element to the list, it will be delivered to the Client <strong>A</strong>, that will receive <code>a</code> (the first element pushed).</p>
+<p>The behavior of Redis 2.4 creates a lot of problems when replicating or persisting data into the AOF file, so the much more generic and semantically simpler behavior was introduced into Redis 2.6 to prevent problems.</p>
+<p>Note that for the same reason a Lua script or a <code>MULTI/EXEC</code> block may push elements into a list and afterward <strong>delete the list</strong>. In this case the blocked clients will not be served at all and will continue to be blocked as long as no data is present on the list after the execution of a single command, transaction, or script.</p>
+<h2 id="blpop-inside-a-multi--exec-transaction"><code>BLPOP</code> inside a <code>MULTI</code> / <code>EXEC</code> transaction</h2>
+<p><code>BLPOP</code> can be used with pipelining (sending multiple commands and
+reading the replies in batch), however this setup makes sense almost solely
+when it is the last command of the pipeline.</p>
+<p>Using <code>BLPOP</code> inside a <a href="/docs/latest/commands/multi/"><code>MULTI</code></a> / <a href="/docs/latest/commands/exec/"><code>EXEC</code></a> block does not make a lot of sense
+as it would require blocking the entire server in order to execute the block
+atomically, which in turn does not allow other clients to perform a push
+operation. For this reason the behavior of <code>BLPOP</code> inside <a href="/docs/latest/commands/multi/"><code>MULTI</code></a> / <a href="/docs/latest/commands/exec/"><code>EXEC</code></a> when the list is empty is to return a <code>nil</code> multi-bulk reply, which is the same
+thing that happens when the timeout is reached.</p>
+<p>If you like science fiction, think of time flowing at infinite speed inside a
+<a href="/docs/latest/commands/multi/"><code>MULTI</code></a> / <a href="/docs/latest/commands/exec/"><code>EXEC</code></a> block...</p>
+<h2 id="examples">Examples</h2>
+<pre tabindex="0"><code>redis&gt; DEL list1 list2
+(integer) 0
+redis&gt; RPUSH list1 a b c
+(integer) 3
+redis&gt; BLPOP list1 list2 0
+1) &#34;list1&#34;
+2) &#34;a&#34;
+</code></pre><h2 id="reliable-queues">Reliable queues</h2>
+<p>When <code>BLPOP</code> returns an element to the client, it also removes the element from the list. This means that the element only exists in the context of the client: if the client crashes while processing the returned element, it is lost forever.</p>
+<p>This can be a problem with some application where we want a more reliable messaging system. When this is the case, please check the <a href="/docs/latest/commands/brpoplpush/"><code>BRPOPLPUSH</code></a> command, that is a variant of <code>BLPOP</code> that adds the returned element to a target list before returning it to the client.</p>
+<h2 id="pattern-event-notification">Pattern: Event notification</h2>
+<p>Using blocking list operations it is possible to mount different blocking
+primitives.
+For instance for some application you may need to block waiting for elements
+into a Redis Set, so that as far as a new element is added to the Set, it is
+possible to retrieve it without resort to polling.
+This would require a blocking version of <a href="/docs/latest/commands/spop/"><code>SPOP</code></a> that is not available, but using
+blocking list operations we can easily accomplish this task.</p>
+<p>The consumer will do:</p>
+<pre tabindex="0"><code>LOOP forever
+    WHILE SPOP(key) returns elements
+        ... process elements ...
+    END
+    BRPOP helper_key
+END
+</code></pre><p>While in the producer side we'll use simply:</p>
+<pre tabindex="0"><code>MULTI
+SADD key element
+LPUSH helper_key x
+EXEC
+</code></pre>
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: no element could be popped and the timeout expired</li>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: the key from which the element was popped and the value of the popped element.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: no element could be popped and the timeout expired</li>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: the key from which the element was popped and the value of the popped element.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 6.0.0: <code>timeout</code> is interpreted as a double instead of an integer.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/blpop/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

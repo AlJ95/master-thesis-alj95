@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  3.3.2 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  3.3.2 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-15288">HDFS-15288</a> | <i>Major</i> | <b>Add Available Space Rack Fault Tolerant BPP</b></li>
+</ul>
+<p>Added a new BlockPlacementPolicy: &#x201c;AvailableSpaceRackFaultTolerantBlockPlacementPolicy&#x201d; which uses the same optimization logic as the AvailableSpaceBlockPlacementPolicy along with spreading the replicas across maximum number of racks, similar to BlockPlacementPolicyRackFaultTolerant. The BPP can be configured by setting the blockplacement policy class as org.apache.hadoop.hdfs.server.blockmanagement.AvailableSpaceRackFaultTolerantBlockPlacementPolicy</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-17424">HADOOP-17424</a> | <i>Major</i> | <b>Replace HTrace with No-Op tracer</b></li>
+</ul>
+<p>Dependency on HTrace and TraceAdmin protocol/utility were removed. Tracing functionality is no-op until alternative tracer implementation is added.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-15814">HDFS-15814</a> | <i>Major</i> | <b>Make some parameters configurable for DataNodeDiskMetrics</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-10820">YARN-10820</a> | <i>Major</i> | <b>Make GetClusterNodesRequestPBImpl thread safe</b></li>
+</ul>
+<p>Added syncronization so that the &#x201c;yarn node list&#x201d; command does not fail intermittently</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-13887">HADOOP-13887</a> | <i>Minor</i> | <b>Encrypt S3A data client-side with AWS SDK (S3-CSE)</b></li>
+</ul>
+<p>Adds support for client side encryption in AWS S3, with keys managed by AWS-KMS.</p>
+<p>Read the documentation in encryption.md very, very carefully before use and consider it unstable.</p>
+<p>S3-CSE is enabled in the existing configuration option &#x201c;fs.s3a.server-side-encryption-algorithm&#x201d;:</p>
+<p>fs.s3a.server-side-encryption-algorithm=CSE-KMS fs.s3a.server-side-encryption.key=&lt;KMS_KEY_ID&gt;</p>
+<p>You cannot enable CSE and SSE in the same client, although you can still enable a default SSE option in the S3 console.</p>
+<p>* Not compatible with S3Guard.<br />
+* Filesystem list/get status operations subtract 16 bytes from the length of all files &gt;= 16 bytes long to compensate for the padding which CSE adds. * The SDK always warns about the specific algorithm chosen being deprecated. It is critical to use this algorithm for ranged GET requests to work (i.e. random IO). Ignore. * Unencrypted files CANNOT BE READ. The entire bucket SHOULD be encrypted with S3-CSE. * Uploading files may be a bit slower as blocks are now written sequentially. * The Multipart Upload API is disabled when S3-CSE is active.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-8234">YARN-8234</a> | <i>Critical</i> | <b>Improve RM system metrics publisher&#x2019;s performance by pushing events to timeline server in batch</b></li>
+</ul>
+<p>When Timeline Service V1 or V1.5 is used, if &#x201c;yarn.resourcemanager.system-metrics-publisher.timeline-server-v1.enable-batch&#x201d; is set to true, ResourceManager sends timeline events in batch. The default value is false. If this functionality is enabled, the maximum number that events published in batch is configured by &#x201c;yarn.resourcemanager.system-metrics-publisher.timeline-server-v1.batch-size&#x201d;. The default value is 1000. The interval of publishing events can be configured by &#x201c;yarn.resourcemanager.system-metrics-publisher.timeline-server-v1.interval-seconds&#x201d;. By default, it is set to 60 seconds.</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

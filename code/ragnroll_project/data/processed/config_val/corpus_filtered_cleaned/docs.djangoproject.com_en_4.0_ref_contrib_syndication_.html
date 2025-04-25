@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="The syndication feed framework | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/ref/contrib/syndication/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>The syndication feed framework | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-module-django.contrib.syndication">
+<span id="s-the-syndication-feed-framework"></span><span id="module-django.contrib.syndication"></span><span id="the-syndication-feed-framework"></span><h1>The syndication feed framework<a class="headerlink" href="#module-django.contrib.syndication" title="Permalink to this headline">¶</a></h1>
+<p>Django comes with a high-level syndication-feed-generating framework for
+creating <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Glossary/RSS">RSS</a> and <span class="target" id="index-0"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4287.html"><strong>Atom</strong></a> feeds.</p>
+<p>To create any syndication feed, all you have to do is write a short
+Python class. You can create as many feeds as you want.</p>
+<p>Django also comes with a lower-level feed-generating API. Use this if
+you want to generate feeds outside of a web context, or in some other
+lower-level way.</p>
+<div class="section" id="s-the-high-level-framework">
+<span id="the-high-level-framework"></span><h2>The high-level framework<a class="headerlink" href="#the-high-level-framework" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-overview">
+<span id="overview"></span><h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>The high-level feed-generating framework is supplied by the
+<a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class. To create a
+feed, write a <a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class
+and point to an instance of it in your <a class="reference internal" href="../../../topics/http/urls/"><span class="doc">URLconf</span></a>.</p>
+</div>
+<div class="section" id="s-feed-classes">
+<span id="feed-classes"></span><h3><code class="docutils literal notranslate"><span class="pre">Feed</span></code> classes<a class="headerlink" href="#feed-classes" title="Permalink to this headline">¶</a></h3>
+<p>A <a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class is a Python
+class that represents a syndication feed. A feed can be simple (e.g.,
+a “site news” feed, or a basic feed displaying the latest entries of a
+blog) or more complex (e.g., a feed displaying all the blog entries in
+a particular category, where the category is variable).</p>
+<p>Feed classes subclass <a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.syndication.views.Feed</span></code></a>.
+They can live anywhere in your codebase.</p>
+<p>Instances of <a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> classes
+are views which can be used in your <a class="reference internal" href="../../../topics/http/urls/"><span class="doc">URLconf</span></a>.</p>
+</div>
+<div class="section" id="s-a-simple-example">
+<span id="a-simple-example"></span><h3>A simple example<a class="headerlink" href="#a-simple-example" title="Permalink to this headline">¶</a></h3>
+<p>This simple example, taken from a hypothetical police beat news site describes
+a feed of the latest five news items:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.syndication.views</span> <span class="kn">import</span> <span class="n">Feed</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">policebeat.models</span> <span class="kn">import</span> <span class="n">NewsItem</span>
+
+<span class="k">class</span> <span class="nc">LatestEntriesFeed</span><span class="p">(</span><span class="n">Feed</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Police beat site news&quot;</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="s2">&quot;/sitenews/&quot;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Updates on changes and additions to police beat central.&quot;</span>
+
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">NewsItem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-pub_date&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">item_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">title</span>
+
+    <span class="k">def</span> <span class="nf">item_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">description</span>
+
+    <span class="c1"># item_link is only needed if NewsItem has no get_absolute_url method.</span>
+    <span class="k">def</span> <span class="nf">item_link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;news-item&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">pk</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>To connect a URL to this feed, put an instance of the Feed object in
+your <a class="reference internal" href="../../../topics/http/urls/"><span class="doc">URLconf</span></a>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">myproject.feeds</span> <span class="kn">import</span> <span class="n">LatestEntriesFeed</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># ...</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;latest/feed/&#39;</span><span class="p">,</span> <span class="n">LatestEntriesFeed</span><span class="p">()),</span>
+    <span class="c1"># ...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Note:</p>
+<ul class="simple">
+<li>The Feed class subclasses <a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.syndication.views.Feed</span></code></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">link</span></code> and <code class="docutils literal notranslate"><span class="pre">description</span></code> correspond to the
+standard RSS <code class="docutils literal notranslate"><span class="pre">&lt;title&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;description&gt;</span></code> elements,
+respectively.</li>
+<li><code class="docutils literal notranslate"><span class="pre">items()</span></code> is, a method that returns a list of objects that should be
+included in the feed as <code class="docutils literal notranslate"><span class="pre">&lt;item&gt;</span></code> elements. Although this example returns
+<code class="docutils literal notranslate"><span class="pre">NewsItem</span></code> objects using Django’s <a class="reference internal" href="../../models/querysets/"><span class="doc">object-relational mapper</span></a>, <code class="docutils literal notranslate"><span class="pre">items()</span></code> doesn’t have to return model instances.
+Although you get a few bits of functionality “for free” by using Django
+models, <code class="docutils literal notranslate"><span class="pre">items()</span></code> can return any type of object you want.</li>
+<li>If you’re creating an Atom feed, rather than an RSS feed, set the
+<code class="docutils literal notranslate"><span class="pre">subtitle</span></code> attribute instead of the <code class="docutils literal notranslate"><span class="pre">description</span></code> attribute.
+See <a class="reference internal" href="#publishing-atom-and-rss-feeds-in-tandem">Publishing Atom and RSS feeds in tandem</a>, later, for an example.</li>
+</ul>
+<p>One thing is left to do. In an RSS feed, each <code class="docutils literal notranslate"><span class="pre">&lt;item&gt;</span></code> has a <code class="docutils literal notranslate"><span class="pre">&lt;title&gt;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;description&gt;</span></code>. We need to tell the framework what data to put
+into those elements.</p>
+<ul>
+<li><p class="first">For the contents of <code class="docutils literal notranslate"><span class="pre">&lt;title&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;description&gt;</span></code>, Django tries
+calling the methods <code class="docutils literal notranslate"><span class="pre">item_title()</span></code> and <code class="docutils literal notranslate"><span class="pre">item_description()</span></code> on
+the <a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class. They are passed
+a single parameter, <code class="docutils literal notranslate"><span class="pre">item</span></code>, which is the object itself. These are
+optional; by default, the string representation of the object is used for
+both.</p>
+<p>If you want to do any special formatting for either the title or
+description, <a class="reference internal" href="../../templates/language/"><span class="doc">Django templates</span></a> can be used
+instead. Their paths can be specified with the <code class="docutils literal notranslate"><span class="pre">title_template</span></code> and
+<code class="docutils literal notranslate"><span class="pre">description_template</span></code> attributes on the
+<a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class. The templates are
+rendered for each item and are passed two template context variables:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">obj</span> <span class="pre">}}</span></code> – The current object (one of whichever objects you
+returned in <code class="docutils literal notranslate"><span class="pre">items()</span></code>).</li>
+<li><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">site</span> <span class="pre">}}</span></code> – A <a class="reference internal" href="../sites/#django.contrib.sites.models.Site" title="django.contrib.sites.models.Site"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.sites.models.Site</span></code></a> object
+representing the current site. This is useful for <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">site.domain</span>
+<span class="pre">}}</span></code> or <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">site.name</span> <span class="pre">}}</span></code>. If you do <em>not</em> have the Django sites
+framework installed, this will be set to a
+<a class="reference internal" href="../sites/#django.contrib.sites.requests.RequestSite" title="django.contrib.sites.requests.RequestSite"><code class="xref py py-class docutils literal notranslate"><span class="pre">RequestSite</span></code></a> object. See the
+<a class="reference internal" href="../sites/#id3"><span class="std std-ref">RequestSite section of the sites framework documentation</span></a> for more.</li>
+</ul>
+<p>See <a class="reference internal" href="#a-complex-example">a complex example</a> below that uses a description template.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.syndication.Feed.get_context_data">
+<code class="sig-prename descclassname"><span class="pre">Feed.</span></code><code class="sig-name descname"><span class="pre">get_context_data</span></code>(<em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.contrib.syndication.Feed.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>There is also a way to pass additional information to title and description
+templates, if you need to supply more than the two variables mentioned
+before. You can provide your implementation of <code class="docutils literal notranslate"><span class="pre">get_context_data</span></code> method
+in your <code class="docutils literal notranslate"><span class="pre">Feed</span></code> subclass. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mysite.models</span> <span class="kn">import</span> <span class="n">Article</span>
+<span class="kn">from</span> <span class="nn">django.contrib.syndication.views</span> <span class="kn">import</span> <span class="n">Feed</span>
+
+<span class="k">class</span> <span class="nc">ArticlesFeed</span><span class="p">(</span><span class="n">Feed</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;My articles&quot;</span>
+    <span class="n">description_template</span> <span class="o">=</span> <span class="s2">&quot;feeds/articles.html&quot;</span>
+
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Article</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-pub_date&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+        <span class="k">return</span> <span class="n">context</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>And the template:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span>Something about <span class="cp">{{</span> <span class="nv">foo</span> <span class="cp">}}</span>: <span class="cp">{{</span> <span class="nv">obj.description</span> <span class="cp">}}</span>
+</pre></div>
+</div>
+<p>This method will be called once per each item in the list returned by
+<code class="docutils literal notranslate"><span class="pre">items()</span></code> with the following keyword arguments:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">item</span></code>: the current item. For backward compatibility reasons, the name
+of this context variable is <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">obj</span> <span class="pre">}}</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">obj</span></code>: the object returned by <code class="docutils literal notranslate"><span class="pre">get_object()</span></code>. By default this is not
+exposed to the templates to avoid confusion with <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">obj</span> <span class="pre">}}</span></code> (see above),
+but you can use it in your implementation of <code class="docutils literal notranslate"><span class="pre">get_context_data()</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">site</span></code>: current site as described above.</li>
+<li><code class="docutils literal notranslate"><span class="pre">request</span></code>: current request.</li>
+</ul>
+<p>The behavior of <code class="docutils literal notranslate"><span class="pre">get_context_data()</span></code> mimics that of
+<a class="reference internal" href="../../../topics/class-based-views/generic-display/#adding-extra-context"><span class="std std-ref">generic views</span></a> - you’re supposed to call
+<code class="docutils literal notranslate"><span class="pre">super()</span></code> to retrieve context data from parent class, add your data
+and return the modified dictionary.</p>
+</li>
+<li><p class="first">To specify the contents of <code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code>, you have two options. For each item
+in <code class="docutils literal notranslate"><span class="pre">items()</span></code>, Django first tries calling the
+<code class="docutils literal notranslate"><span class="pre">item_link()</span></code> method on the
+<a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class. In a similar way to
+the title and description, it is passed it a single parameter,
+<code class="docutils literal notranslate"><span class="pre">item</span></code>. If that method doesn’t exist, Django tries executing a
+<code class="docutils literal notranslate"><span class="pre">get_absolute_url()</span></code> method on that object. Both
+<code class="docutils literal notranslate"><span class="pre">get_absolute_url()</span></code> and <code class="docutils literal notranslate"><span class="pre">item_link()</span></code> should return the
+item’s URL as a normal Python string. As with <code class="docutils literal notranslate"><span class="pre">get_absolute_url()</span></code>, the
+result of <code class="docutils literal notranslate"><span class="pre">item_link()</span></code> will be included directly in the URL, so you
+are responsible for doing all necessary URL quoting and conversion to
+ASCII inside the method itself.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="s-a-complex-example">
+<span id="a-complex-example"></span><h3>A complex example<a class="headerlink" href="#a-complex-example" title="Permalink to this headline">¶</a></h3>
+<p>The framework also supports more complex feeds, via arguments.</p>
+<p>For example, a website could offer an RSS feed of recent crimes for every
+police beat in a city. It’d be silly to create a separate
+<a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class for each police beat; that
+would violate the <a class="reference internal" href="../../../misc/design-philosophies/#dry"><span class="std std-ref">DRY principle</span></a> and would couple data to
+programming logic. Instead, the syndication framework lets you access the
+arguments passed from your <a class="reference internal" href="../../../topics/http/urls/"><span class="doc">URLconf</span></a> so feeds can output
+items based on information in the feed’s URL.</p>
+<p>The police beat feeds could be accessible via URLs like this:</p>
+<ul class="simple">
+<li><code class="file docutils literal notranslate"><span class="pre">/beats/613/rss/</span></code> – Returns recent crimes for beat 613.</li>
+<li><code class="file docutils literal notranslate"><span class="pre">/beats/1424/rss/</span></code> – Returns recent crimes for beat 1424.</li>
+</ul>
+<p>These can be matched with a <a class="reference internal" href="../../../topics/http/urls/"><span class="doc">URLconf</span></a> line such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span><span class="p">(</span><span class="s1">&#39;beats/&lt;int:beat_id&gt;/rss/&#39;</span><span class="p">,</span> <span class="n">BeatFeed</span><span class="p">()),</span>
+</pre></div>
+</div>
+<p>Like a view, the arguments in the URL are passed to the <code class="docutils literal notranslate"><span class="pre">get_object()</span></code>
+method along with the request object.</p>
+<p>Here’s the code for these beat-specific feeds:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.syndication.views</span> <span class="kn">import</span> <span class="n">Feed</span>
+
+<span class="k">class</span> <span class="nc">BeatFeed</span><span class="p">(</span><span class="n">Feed</span><span class="p">):</span>
+    <span class="n">description_template</span> <span class="o">=</span> <span class="s1">&#39;feeds/beat_description.html&#39;</span>
+
+    <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">beat_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Beat</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">beat_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Police beat central: Crimes for beat </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">obj</span><span class="o">.</span><span class="n">beat</span>
+
+    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_absolute_url</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Crimes recently reported in police beat </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">obj</span><span class="o">.</span><span class="n">beat</span>
+
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Crime</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">beat</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-crime_date&#39;</span><span class="p">)[:</span><span class="mi">30</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>To generate the feed’s <code class="docutils literal notranslate"><span class="pre">&lt;title&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;description&gt;</span></code>, Django
+uses the <code class="docutils literal notranslate"><span class="pre">title()</span></code>, <code class="docutils literal notranslate"><span class="pre">link()</span></code> and <code class="docutils literal notranslate"><span class="pre">description()</span></code> methods. In
+the previous example, they were string class attributes, but this example
+illustrates that they can be either strings <em>or</em> methods. For each of
+<code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">link</span></code> and <code class="docutils literal notranslate"><span class="pre">description</span></code>, Django follows this
+algorithm:</p>
+<ul class="simple">
+<li>First, it tries to call a method, passing the <code class="docutils literal notranslate"><span class="pre">obj</span></code> argument, where
+<code class="docutils literal notranslate"><span class="pre">obj</span></code> is the object returned by <code class="docutils literal notranslate"><span class="pre">get_object()</span></code>.</li>
+<li>Failing that, it tries to call a method with no arguments.</li>
+<li>Failing that, it uses the class attribute.</li>
+</ul>
+<p>Also note that <code class="docutils literal notranslate"><span class="pre">items()</span></code> also follows the same algorithm – first, it
+tries <code class="docutils literal notranslate"><span class="pre">items(obj)</span></code>, then <code class="docutils literal notranslate"><span class="pre">items()</span></code>, then finally an <code class="docutils literal notranslate"><span class="pre">items</span></code>
+class attribute (which should be a list).</p>
+<p>We are using a template for the item descriptions. It can be as minimal as
+this:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="cp">{{</span> <span class="nv">obj.description</span> <span class="cp">}}</span>
+</pre></div>
+</div>
+<p>However, you are free to add formatting as desired.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ExampleFeed</span></code> class below gives full documentation on methods and
+attributes of <a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> classes.</p>
+</div>
+<div class="section" id="s-specifying-the-type-of-feed">
+<span id="specifying-the-type-of-feed"></span><h3>Specifying the type of feed<a class="headerlink" href="#specifying-the-type-of-feed" title="Permalink to this headline">¶</a></h3>
+<p>By default, feeds produced in this framework use RSS 2.0.</p>
+<p>To change that, add a <code class="docutils literal notranslate"><span class="pre">feed_type</span></code> attribute to your
+<a class="reference internal" href="#django.contrib.syndication.views.Feed" title="django.contrib.syndication.views.Feed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Feed</span></code></a> class, like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.utils.feedgenerator</span> <span class="kn">import</span> <span class="n">Atom1Feed</span>
+
+<span class="k">class</span> <span class="nc">MyFeed</span><span class="p">(</span><span class="n">Feed</span><span class="p">):</span>
+    <span class="n">feed_type</span> <span class="o">=</span> <span class="n">Atom1Feed</span>
+</pre></div>
+</div>
+<p>Note that you set <code class="docutils literal notranslate"><span class="pre">feed_type</span></code> to a class object, not an instance.</p>
+<p>Currently available feed types are:</p>
+<ul class="simple">
+
+</ul>
+<p>and several subclasses:</p>
+<ul class="simple">
+
+
+
+</ul>
+<p>Each of these three classes knows how to render a certain type of feed as XML.
+They share this interface:</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="../../utils/#django.utils.feedgenerator.SyndicationFeed.__init__" title="django.utils.feedgenerator.SyndicationFeed.__init__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SyndicationFeed.__init__()</span></code></a></dt><dd><p>Initialize the feed with the given dictionary of metadata, which applies to
+the entire feed. Required keyword arguments are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">title</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">link</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">description</span></code></li>
+</ul>
+<p>There’s also a bunch of other optional keywords:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">language</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">author_email</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">author_name</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">author_link</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">subtitle</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">categories</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">feed_url</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">feed_copyright</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">feed_guid</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">ttl</span></code></li>
+</ul>
+<p>Any extra keyword arguments you pass to <code class="docutils literal notranslate"><span class="pre">__init__</span></code> will be stored in
+<code class="docutils literal notranslate"><span class="pre">self.feed</span></code> for use with <a class="reference internal" href="#custom-feed-generators">custom feed generators</a>.</p>
+<p>All parameters should be strings, except <code class="docutils literal notranslate"><span class="pre">categories</span></code>, which should be a
+sequence of strings. Beware that some control characters
+are <a class="reference external" href="https://www.w3.org/International/questions/qa-controls">not allowed</a>
+in XML documents. If your content has some of them, you might encounter a
+<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> when producing the feed.</p>
+</dd>
+<dt><a class="reference internal" href="../../utils/#django.utils.feedgenerator.SyndicationFeed.add_item" title="django.utils.feedgenerator.SyndicationFeed.add_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SyndicationFeed.add_item()</span></code></a></dt><dd><p>Add an item to the feed with the given parameters.</p>
+<p>Required keyword arguments are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">title</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">link</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">description</span></code></li>
+</ul>
+<p>Optional keyword arguments are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">author_email</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">author_name</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">author_link</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">pubdate</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">comments</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">unique_id</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">enclosures</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">categories</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">item_copyright</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">ttl</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">updateddate</span></code></li>
+</ul>
+<p>Extra keyword arguments will be stored for <a class="reference internal" href="#custom-feed-generators">custom feed generators</a>.</p>
+<p>All parameters, if given, should be strings, except:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">pubdate</span></code> should be a Python  <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a> object.</li>
+<li><code class="docutils literal notranslate"><span class="pre">updateddate</span></code> should be a Python  <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a> object.</li>
+<li><code class="docutils literal notranslate"><span class="pre">enclosures</span></code> should be a list of
+<a class="reference internal" href="../../utils/#django.utils.feedgenerator.Enclosure" title="django.utils.feedgenerator.Enclosure"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.utils.feedgenerator.Enclosure</span></code></a> instances.</li>
+<li><code class="docutils literal notranslate"><span class="pre">categories</span></code> should be a sequence of strings.</li>
+</ul>
+</dd>
+<dt><a class="reference internal" href="../../utils/#django.utils.feedgenerator.SyndicationFeed.write" title="django.utils.feedgenerator.SyndicationFeed.write"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SyndicationFeed.write()</span></code></a></dt><dd>Outputs the feed in the given encoding to outfile, which is a file-like object.</dd>
+<dt><a class="reference internal" href="../../utils/#django.utils.feedgenerator.SyndicationFeed.writeString" title="django.utils.feedgenerator.SyndicationFeed.writeString"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SyndicationFeed.writeString()</span></code></a></dt><dd>Returns the feed as a string in the given encoding.</dd>
+</dl>
+<p>For example, to create an Atom 1.0 feed and print it to standard output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">feedgenerator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">feedgenerator</span><span class="o">.</span><span class="n">Atom1Feed</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;My Blog&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">link</span><span class="o">=</span><span class="s2">&quot;https://www.example.com/&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;In which I write about what I ate today.&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">author_name</span><span class="o">=</span><span class="s2">&quot;Myself&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">feed_url</span><span class="o">=</span><span class="s2">&quot;https://example.com/atom.xml&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Hot dog today&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">link</span><span class="o">=</span><span class="s2">&quot;https://www.example.com/entries/1/&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">pubdate</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&lt;p&gt;Today I had a Vienna Beef hot dog. It was pink, plump and perfect.&lt;/p&gt;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">writeString</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+<span class="go">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="go">&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xml:lang=&quot;en&quot;&gt;</span>
+<span class="gp">...</span>
+<span class="go">&lt;/feed&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-custom-feed-generators">
+<span id="custom-feed-generators"></span><h3>Custom feed generators<a class="headerlink" href="#custom-feed-generators" title="Permalink to this headline">¶</a></h3>
+<p>If you need to produce a custom feed format, you’ve got a couple of options.</p>
+<p>If the feed format is totally custom, you’ll want to subclass
+<code class="docutils literal notranslate"><span class="pre">SyndicationFeed</span></code> and completely replace the <code class="docutils literal notranslate"><span class="pre">write()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">writeString()</span></code> methods.</p>
+<p>However, if the feed format is a spin-off of RSS or Atom (i.e. <a class="reference external" href="https://georss.org">GeoRSS</a>, Apple’s
+<a class="reference external" href="https://help.apple.com/itc/podcasts_connect/#/itcb54353390">iTunes podcast format</a>, etc.), you’ve got a better choice. These types of
+feeds typically add extra elements and/or attributes to the underlying format,
+and there are a set of methods that <code class="docutils literal notranslate"><span class="pre">SyndicationFeed</span></code> calls to get these extra
+attributes. Thus, you can subclass the appropriate feed generator class
+(<code class="docutils literal notranslate"><span class="pre">Atom1Feed</span></code> or <code class="docutils literal notranslate"><span class="pre">Rss201rev2Feed</span></code>) and extend these callbacks. They are:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">SyndicationFeed.root_attributes(self)</span></code></dt><dd>Return a <code class="docutils literal notranslate"><span class="pre">dict</span></code> of attributes to add to the root feed element
+(<code class="docutils literal notranslate"><span class="pre">feed</span></code>/<code class="docutils literal notranslate"><span class="pre">channel</span></code>).</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">SyndicationFeed.add_root_elements(self,</span> <span class="pre">handler)</span></code></dt><dd>Callback to add elements inside the root feed element
+(<code class="docutils literal notranslate"><span class="pre">feed</span></code>/<code class="docutils literal notranslate"><span class="pre">channel</span></code>). <code class="docutils literal notranslate"><span class="pre">handler</span></code> is an
+<a class="reference external" href="https://docs.python.org/3/library/xml.sax.utils.html#xml.sax.saxutils.XMLGenerator" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">XMLGenerator</span></code></a> from Python’s built-in SAX library;
+you’ll call methods on it to add to the XML document in process.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">SyndicationFeed.item_attributes(self,</span> <span class="pre">item)</span></code></dt><dd>Return a <code class="docutils literal notranslate"><span class="pre">dict</span></code> of attributes to add to each item (<code class="docutils literal notranslate"><span class="pre">item</span></code>/<code class="docutils literal notranslate"><span class="pre">entry</span></code>)
+element. The argument, <code class="docutils literal notranslate"><span class="pre">item</span></code>, is a dictionary of all the data passed to
+<code class="docutils literal notranslate"><span class="pre">SyndicationFeed.add_item()</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">SyndicationFeed.add_item_elements(self,</span> <span class="pre">handler,</span> <span class="pre">item)</span></code></dt><dd>Callback to add elements to each item (<code class="docutils literal notranslate"><span class="pre">item</span></code>/<code class="docutils literal notranslate"><span class="pre">entry</span></code>) element.
+<code class="docutils literal notranslate"><span class="pre">handler</span></code> and <code class="docutils literal notranslate"><span class="pre">item</span></code> are as above.</dd>
+</dl>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If you override any of these methods, be sure to call the superclass methods
+since they add the required elements for each feed format.</p>
+</div>
+<p>For example, you might start implementing an iTunes RSS feed generator like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">iTunesFeed</span><span class="p">(</span><span class="n">Rss201rev2Feed</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">root_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">root_attributes</span><span class="p">()</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;xmlns:itunes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;http://www.itunes.com/dtds/podcast-1.0.dtd&#39;</span>
+        <span class="k">return</span> <span class="n">attrs</span>
+
+    <span class="k">def</span> <span class="nf">add_root_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_root_elements</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+        <span class="n">handler</span><span class="o">.</span><span class="n">addQuickElement</span><span class="p">(</span><span class="s1">&#39;itunes:explicit&#39;</span><span class="p">,</span> <span class="s1">&#39;clean&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There’s a lot more work to be done for a complete custom feed class, but the
+above example should demonstrate the basic idea.</p>
+</div>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

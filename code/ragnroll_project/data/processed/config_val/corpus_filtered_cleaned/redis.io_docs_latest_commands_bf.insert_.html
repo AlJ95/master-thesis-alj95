@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>BF.INSERT | Docs</title>
+    <meta name="description" content="Adds one or more items to a Bloom Filter. A filter will be created if it does not exist">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/bf.insert/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="BF.INSERT">
+  <meta property="og:description" content="Adds one or more items to a Bloom Filter. A filter will be created if it does not exist">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="BF.INSERT">
+  <meta itemprop="description" content="Adds one or more items to a Bloom Filter. A filter will be created if it does not exist">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="505">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BF.INSERT">
+  <meta name="twitter:description" content="Adds one or more items to a Bloom Filter. A filter will be created if it does not exist">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">BF.INSERT
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">BF.INSERT key [CAPACITY capacity] [ERROR error]
+  [EXPANSION expansion] [NOCREATE] [NONSCALING] ITEMS item [item
+  ...]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / Bloom 1.0.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(k * n), where k is the number of hash functions and n is the number of items</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@bloom</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Creates a new Bloom filter if the <code>key</code> does not exist using the specified error rate, capacity, and expansion, then adds all specified items to the Bloom Filter.</p>
+<p>This command is similar to <a href="/docs/latest/commands/bf.madd/"><code>BF.MADD</code></a>, except that the error rate, capacity, and expansion can be specified. It is a sugarcoated combination of <a href="/docs/latest/commands/bf.reserve/"><code>BF.RESERVE</code></a> and <a href="/docs/latest/commands/bf.madd/"><code>BF.MADD</code></a>.</p>
+<h2 id="required-arguments">Required arguments</h2>
+<details open><summary><code>key</code></summary>
+<p>is key name for a Bloom filter to add items to.</p>
+<p>If <code>key</code> does not exist, a new Bloom filter is created.</p>
+</details>
+<details open><summary><code>ITEMS item...</code></summary>
+<p>One or more items to add.</p>
+</details>
+<h2 id="optional-arguments">Optional arguments</h2>
+<details open><summary><code>NOCREATE</code></summary>
+<p>Indicates that the filter should not be created if it does not already exist.
+If the filter does not yet exist, an error is returned rather than creating it automatically.
+This may be used where a strict separation between filter creation and filter addition is desired.
+It is an error to specify <code>NOCREATE</code> together with either <code>CAPACITY</code> or <code>ERROR</code>.</p>
+</details>
+<details open><summary><code>CAPACITY capacity</code></summary>
+<p>Specifies the desired <code>capacity</code> for the filter to be created.
+This parameter is ignored if the filter already exists.
+If the filter is automatically created and this parameter is absent, then the module-level <code>capacity</code> is used.
+See <a href="/docs/latest/commands/bf.reserve/"><code>BF.RESERVE</code></a> for more information about the impact of this value.</p>
+</details>
+<details open><summary><code>ERROR error</code></summary>
+<p>Specifies the <code>error</code> ratio of the newly created filter if it does not yet exist.
+If the filter is automatically created and <code>error</code> is not specified then the module-level error rate is used.
+See <a href="/docs/latest/commands/bf.reserve/"><code>BF.RESERVE</code></a> for more information about the format of this value.</p>
+</details>
+<details open><summary><code>NONSCALING</code></summary>
+<p>Prevents the filter from creating additional sub-filters if initial capacity is reached.
+Non-scaling filters require slightly less memory than their scaling counterparts. The filter returns an error when <code>capacity</code> is reached.</p>
+</details>
+<details open><summary><code>EXPANSION expansion</code></summary>
+<p>When <code>capacity</code> is reached, an additional sub-filter is created.
+The size of the new sub-filter is the size of the last sub-filter multiplied by <code>expansion</code>, specified as a positive integer.</p>
+<p>If the number of elements to be stored in the filter is unknown, use an <code>expansion</code> of <code>2</code> or more to reduce the number of sub-filters.
+Otherwise, use an <code>expansion</code> of <code>1</code> to reduce memory consumption. The default value is <code>2</code>.</p>
+</details>
+<h2 id="return-value">Return value</h2>
+<p>Returns one of these replies:</p>
+<ul>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#arrays">Array reply</a> where each element is one of these options:
+<ul>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#integers">Integer reply</a>, where <code>1</code> denotes that the item has been added successfully, and <code>0</code> means that such item had already added to the filter (which could be wrong)</li>
+<li>[] when the item cannot be added because the filter is full</li>
+</ul>
+</li>
+<li>[], for example, when the number of arguments or key type is wrong, and also when <code>NOCREATE</code> is specified and <code>key</code> does not exist.</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p>Add three items to a filter, then create the filter with default parameters if it does not already exist.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">BF.INSERT filter ITEMS foo bar baz</span></span></code></pre></div>
+<p>Add one item to a filter, then create the filter with a capacity of 10000 if it does not already exist.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">BF.INSERT filter CAPACITY <span class="m">10000</span> ITEMS hello</span></span></code></pre></div>
+<p>Add two items to a filter, then return error if the filter does not already exist.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">BF.INSERT filter NOCREATE ITEMS foo bar</span></span></code></pre></div>
+
+
+        
+        
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/bf.insert/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

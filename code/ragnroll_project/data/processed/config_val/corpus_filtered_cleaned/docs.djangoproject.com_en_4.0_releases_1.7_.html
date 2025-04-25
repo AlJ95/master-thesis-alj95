@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 1.7 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/1.7/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 1.7 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-1-7-release-notes">
+<span id="django-1-7-release-notes"></span><h1>Django 1.7 release notes<a class="headerlink" href="#django-1-7-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>September 2, 2014</em></p>
+<p>Welcome to Django 1.7!</p>
+<p>These release notes cover the <a class="reference internal" href="#whats-new-1-7"><span class="std std-ref">new features</span></a>, as well as
+some <a class="reference internal" href="#backwards-incompatible-1-7"><span class="std std-ref">backwards incompatible changes</span></a> you’ll
+want to be aware of when upgrading from Django 1.6 or older versions. We’ve
+<a class="reference internal" href="#deprecated-features-1-7"><span class="std std-ref">begun the deprecation process for some features</span></a>, and some features have reached the end of their
+deprecation process and <a class="reference internal" href="#removed-features-1-7"><span class="std std-ref">have been removed</span></a>.</p>
+<div class="section" id="s-python-compatibility">
+<span id="python-compatibility"></span><h2>Python compatibility<a class="headerlink" href="#python-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Django 1.7 requires Python 2.7, 3.2, 3.3, or 3.4. We <strong>highly recommend</strong> and
+only officially support the latest release of each series.</p>
+<p>The Django 1.6 series is the last to support Python 2.6. Django 1.7 is the
+first release to support Python 3.4.</p>
+<p>This change should affect only a small number of Django users, as most
+operating-system vendors today are shipping Python 2.7 or newer as their default
+version. If you’re still using Python 2.6, however, you’ll need to stick to
+Django 1.6 until you can upgrade your Python version. Per <a class="reference internal" href="../../internals/release-process/"><span class="doc">our support
+policy</span></a>, Django 1.6 will continue to receive
+security support until the release of Django 1.8.</p>
+</div>
+<div class="section" id="s-what-s-new-in-django-1-7">
+<span id="s-whats-new-1-7"></span><span id="what-s-new-in-django-1-7"></span><span id="whats-new-1-7"></span><h2>What’s new in Django 1.7<a class="headerlink" href="#what-s-new-in-django-1-7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-schema-migrations">
+<span id="schema-migrations"></span><h3>Schema migrations<a class="headerlink" href="#schema-migrations" title="Permalink to this headline">¶</a></h3>
+<p>Django now has built-in support for schema migrations. It allows models
+to be updated, changed, and deleted by creating migration files that represent
+the model changes and which can be run on any development, staging or production
+database.</p>
+<p>Migrations are covered in <a class="reference internal" href="../../topics/migrations/"><span class="doc">their own documentation</span></a>,
+but a few of the key features are:</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">syncdb</span></code> has been deprecated and replaced by <code class="docutils literal notranslate"><span class="pre">migrate</span></code>. Don’t worry -
+calls to <code class="docutils literal notranslate"><span class="pre">syncdb</span></code> will still work as before.</p>
+</li>
+<li><p class="first">A new <code class="docutils literal notranslate"><span class="pre">makemigrations</span></code> command provides an easy way to autodetect changes
+to your models and make migrations for them.</p>
+<p><code class="docutils literal notranslate"><span class="pre">django.db.models.signals.pre_syncdb</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.db.models.signals.post_syncdb</span></code> have been deprecated,
+to be replaced by <a class="reference internal" href="../../ref/signals/#django.db.models.signals.pre_migrate" title="django.db.models.signals.pre_migrate"><code class="xref py py-data docutils literal notranslate"><span class="pre">pre_migrate</span></code></a> and
+<a class="reference internal" href="../../ref/signals/#django.db.models.signals.post_migrate" title="django.db.models.signals.post_migrate"><code class="xref py py-data docutils literal notranslate"><span class="pre">post_migrate</span></code></a> respectively. These
+new signals have slightly different arguments. Check the
+documentation for details.</p>
+</li>
+<li><p class="first">The <code class="docutils literal notranslate"><span class="pre">allow_syncdb</span></code> method on database routers is now called <code class="docutils literal notranslate"><span class="pre">allow_migrate</span></code>,
+but still performs the same function. Routers with <code class="docutils literal notranslate"><span class="pre">allow_syncdb</span></code> methods
+will still work, but that method name is deprecated and you should change
+it as soon as possible (nothing more than renaming is required).</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">initial_data</span></code> fixtures are no longer loaded for apps with migrations; if
+you want to load initial data for an app, we suggest you create a migration for
+your application and define a <a class="reference internal" href="../../ref/migration-operations/#django.db.migrations.operations.RunPython" title="django.db.migrations.operations.RunPython"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunPython</span></code></a>
+or <a class="reference internal" href="../../ref/migration-operations/#django.db.migrations.operations.RunSQL" title="django.db.migrations.operations.RunSQL"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunSQL</span></code></a> operation in the <code class="docutils literal notranslate"><span class="pre">operations</span></code> section of the migration.</p>
+</li>
+<li><p class="first">Test rollback behavior is different for apps with migrations; in particular,
+Django will no longer emulate rollbacks on non-transactional databases or
+inside <code class="docutils literal notranslate"><span class="pre">TransactionTestCase</span></code> <a class="reference internal" href="../../topics/testing/overview/#test-case-serialized-rollback"><span class="std std-ref">unless specifically requested</span></a>.</p>
+</li>
+<li><p class="first">It is not advised to have apps without migrations depend on (have a
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.ForeignKey" title="django.db.models.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> or
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.ManyToManyField" title="django.db.models.ManyToManyField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManyToManyField</span></code></a> to) apps with migrations.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="s-app-loading-refactor">
+<span id="s-app-loading-refactor-17-release-note"></span><span id="app-loading-refactor"></span><span id="app-loading-refactor-17-release-note"></span><h3>App-loading refactor<a class="headerlink" href="#app-loading-refactor" title="Permalink to this headline">¶</a></h3>
+<p>Historically, Django applications were tightly linked to models. A singleton
+known as the “app cache” dealt with both installed applications and models.
+The models module was used as an identifier for applications in many APIs.</p>
+<p>As the concept of <a class="reference internal" href="../../ref/applications/"><span class="doc">Django applications</span></a> matured, this
+code showed some shortcomings. It has been refactored into an “app registry”
+where models modules no longer have a central role and where it’s possible to
+attach configuration data to applications.</p>
+<p>Improvements thus far include:</p>
+<ul class="simple">
+<li>Applications can run code at startup, before Django does anything else, with
+the <a class="reference internal" href="../../ref/applications/#django.apps.AppConfig.ready" title="django.apps.AppConfig.ready"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ready()</span></code></a> method of their configuration.</li>
+<li>Application labels are assigned correctly to models even when they’re
+defined outside of <code class="docutils literal notranslate"><span class="pre">models.py</span></code>. You don’t have to set
+<a class="reference internal" href="../../ref/models/options/#django.db.models.Options.app_label" title="django.db.models.Options.app_label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">app_label</span></code></a> explicitly any more.</li>
+<li>It is possible to omit <code class="docutils literal notranslate"><span class="pre">models.py</span></code> entirely if an application doesn’t
+have any models.</li>
+<li>Applications can be relabeled with the <a class="reference internal" href="../../ref/applications/#django.apps.AppConfig.label" title="django.apps.AppConfig.label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">label</span></code></a>
+attribute of application configurations, to work around label conflicts.</li>
+<li>The name of applications can be customized in the admin with the
+<a class="reference internal" href="../../ref/applications/#django.apps.AppConfig.verbose_name" title="django.apps.AppConfig.verbose_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">verbose_name</span></code></a> of application configurations.</li>
+<li>The admin automatically calls <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.autodiscover" title="django.contrib.admin.autodiscover"><code class="xref py py-func docutils literal notranslate"><span class="pre">autodiscover()</span></code></a>
+when Django starts. You can consequently remove this line from your
+URLconf.</li>
+<li>Django imports all application configurations and models as soon as it
+starts, through a deterministic and straightforward process. This should
+make it easier to diagnose import issues such as import loops.</li>
+</ul>
+</div>
+<div class="section" id="s-new-method-on-field-subclasses">
+<span id="new-method-on-field-subclasses"></span><h3>New method on Field subclasses<a class="headerlink" href="#new-method-on-field-subclasses" title="Permalink to this headline">¶</a></h3>
+<p>To help power both schema migrations and to enable easier addition of
+composite keys in future releases of Django, the
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> API now has a new required method:
+<code class="docutils literal notranslate"><span class="pre">deconstruct()</span></code>.</p>
+<p>This method takes no arguments, and returns a tuple of four items:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code>: The field’s attribute name on its parent model, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if it
+is not part of a model</li>
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code>: A dotted, Python path to the class of this field, including the class name.</li>
+<li><code class="docutils literal notranslate"><span class="pre">args</span></code>: Positional arguments, as a list</li>
+<li><code class="docutils literal notranslate"><span class="pre">kwargs</span></code>: Keyword arguments, as a dict</li>
+</ul>
+<p>These four values allow any field to be serialized into a file, as well as
+allowing the field to be copied safely, both essential parts of these new features.</p>
+<p>This change should not affect you unless you write custom Field subclasses;
+if you do, you may need to reimplement the <code class="docutils literal notranslate"><span class="pre">deconstruct()</span></code> method if your
+subclass changes the method signature of <code class="docutils literal notranslate"><span class="pre">__init__</span></code> in any way. If your
+field just inherits from a built-in Django field and doesn’t override <code class="docutils literal notranslate"><span class="pre">__init__</span></code>,
+no changes are necessary.</p>
+<p>If you do need to override <code class="docutils literal notranslate"><span class="pre">deconstruct()</span></code>, a good place to start is the
+built-in Django fields (<code class="docutils literal notranslate"><span class="pre">django/db/models/fields/__init__.py</span></code>) as several
+fields, including <code class="docutils literal notranslate"><span class="pre">DecimalField</span></code> and <code class="docutils literal notranslate"><span class="pre">DateField</span></code>, override it and show how
+to call the method on the superclass and simply add or remove extra arguments.</p>
+<p>This also means that all arguments to fields must themselves be serializable;
+to see what we consider serializable, and to find out how to make your own
+classes serializable, read the
+<a class="reference internal" href="../../topics/migrations/#migration-serializing"><span class="std std-ref">migration serialization documentation</span></a>.</p>
+</div>
+<div class="section" id="s-calling-custom-queryset-methods-from-the-manager">
+<span id="calling-custom-queryset-methods-from-the-manager"></span><h3>Calling custom <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> methods from the <code class="docutils literal notranslate"><span class="pre">Manager</span></code><a class="headerlink" href="#calling-custom-queryset-methods-from-the-manager" title="Permalink to this headline">¶</a></h3>
+<p>Historically, the recommended way to make reusable model queries was to create
+methods on a custom <code class="docutils literal notranslate"><span class="pre">Manager</span></code> class. The problem with this approach was that
+after the first method call, you’d get back a <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> instance and
+couldn’t call additional custom manager methods.</p>
+<p>Though not documented, it was common to work around this issue by creating a
+custom <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> so that custom methods could be chained; but the solution
+had a number of drawbacks:</p>
+<ul class="simple">
+<li>The custom <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> and its custom methods were lost after the first
+call to <code class="docutils literal notranslate"><span class="pre">values()</span></code> or <code class="docutils literal notranslate"><span class="pre">values_list()</span></code>.</li>
+<li>Writing a custom <code class="docutils literal notranslate"><span class="pre">Manager</span></code> was still necessary to return the custom
+<code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> class and all methods that were desired on the <code class="docutils literal notranslate"><span class="pre">Manager</span></code>
+had to be proxied to the <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code>. The whole process went against
+the DRY principle.</li>
+</ul>
+<p>The <a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.as_manager" title="django.db.models.query.QuerySet.as_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QuerySet.as_manager()</span></code></a>
+class method can now directly <a class="reference internal" href="../../topics/db/managers/#create-manager-with-queryset-methods"><span class="std std-ref">create Manager with QuerySet methods</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FoodQuerySet</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">QuerySet</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pizzas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;pizza&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">vegetarian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">vegetarian</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Food</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">vegetarian</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">FoodQuerySet</span><span class="o">.</span><span class="n">as_manager</span><span class="p">()</span>
+
+<span class="n">Food</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">pizzas</span><span class="p">()</span><span class="o">.</span><span class="n">vegetarian</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-using-a-custom-manager-when-traversing-reverse-relations">
+<span id="using-a-custom-manager-when-traversing-reverse-relations"></span><h3>Using a custom manager when traversing reverse relations<a class="headerlink" href="#using-a-custom-manager-when-traversing-reverse-relations" title="Permalink to this headline">¶</a></h3>
+<p>It is now possible to <a class="reference internal" href="../../topics/db/queries/#using-custom-reverse-manager"><span class="std std-ref">specify a custom manager</span></a> when traversing a reverse relationship:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Blog</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">Entry</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">blog</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Blog</span><span class="p">)</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>  <span class="c1"># Default Manager</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="n">EntryManager</span><span class="p">()</span>    <span class="c1"># Custom Manager</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">entry_set</span><span class="p">(</span><span class="n">manager</span><span class="o">=</span><span class="s1">&#39;entries&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-new-system-check-framework">
+<span id="new-system-check-framework"></span><h3>New system check framework<a class="headerlink" href="#new-system-check-framework" title="Permalink to this headline">¶</a></h3>
+<p>We’ve added a new <a class="reference internal" href="../../ref/checks/"><span class="doc">System check framework</span></a> for
+detecting common problems (like invalid models) and providing hints for
+resolving those problems. The framework is extensible so you can add your
+own checks for your own apps and libraries.</p>
+<p>To perform system checks, you use the <a class="reference internal" href="../../ref/django-admin/#django-admin-check"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">check</span></code></a> management command.
+This command replaces the older <code class="docutils literal notranslate"><span class="pre">validate</span></code> management command.</p>
+</div>
+<div class="section" id="s-new-prefetch-object-for-advanced-prefetch-related-operations">
+<span id="new-prefetch-object-for-advanced-prefetch-related-operations"></span><h3>New <code class="docutils literal notranslate"><span class="pre">Prefetch</span></code> object for advanced <code class="docutils literal notranslate"><span class="pre">prefetch_related</span></code> operations.<a class="headerlink" href="#new-prefetch-object-for-advanced-prefetch-related-operations" title="Permalink to this headline">¶</a></h3>
+<p>The new <a class="reference internal" href="../../ref/models/querysets/#django.db.models.Prefetch" title="django.db.models.Prefetch"><code class="xref py py-class docutils literal notranslate"><span class="pre">Prefetch</span></code></a> object allows customizing
+prefetch operations.</p>
+<p>You can specify the <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> used to traverse a given relation
+or customize the storage location of prefetch results.</p>
+<p>This enables things like filtering prefetched relations, calling
+<a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.select_related" title="django.db.models.query.QuerySet.select_related"><code class="xref py py-meth docutils literal notranslate"><span class="pre">select_related()</span></code></a> from a prefetched
+relation, or prefetching the same relation multiple times with different
+querysets. See <a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.prefetch_related" title="django.db.models.query.QuerySet.prefetch_related"><code class="xref py py-meth docutils literal notranslate"><span class="pre">prefetch_related()</span></code></a>
+for more details.</p>
+</div>
+<div class="section" id="s-admin-shortcuts-support-time-zones">
+<span id="admin-shortcuts-support-time-zones"></span><h3>Admin shortcuts support time zones<a class="headerlink" href="#admin-shortcuts-support-time-zones" title="Permalink to this headline">¶</a></h3>
+<p>The “today” and “now” shortcuts next to date and time input widgets in the
+admin are now operating in the <a class="reference internal" href="../../topics/i18n/timezones/#default-current-time-zone"><span class="std std-ref">current time zone</span></a>. Previously, they used the browser time zone,
+which could result in saving the wrong value when it didn’t match the current
+time zone on the server.</p>
+<p>In addition, the widgets now display a help message when the browser and
+server time zone are different, to clarify how the value inserted in the field
+will be interpreted.</p>
+</div>
+<div class="section" id="s-using-database-cursors-as-context-managers">
+<span id="using-database-cursors-as-context-managers"></span><h3>Using database cursors as context managers<a class="headerlink" href="#using-database-cursors-as-context-managers" title="Permalink to this headline">¶</a></h3>
+<p>Prior to Python 2.7, database cursors could be used as a context manager. The
+specific backend’s cursor defined the behavior of the context manager. The
+behavior of magic method lookups was changed with Python 2.7 and cursors were
+no longer usable as context managers.</p>
+<p>Django 1.7 allows a cursor to be used as a context manager. That is,
+the following can be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">c</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>instead of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-custom-lookups">
+<span id="custom-lookups"></span><h3>Custom lookups<a class="headerlink" href="#custom-lookups" title="Permalink to this headline">¶</a></h3>
+<p>It is now possible to write custom lookups and transforms for the ORM.
+Custom lookups work just like Django’s built-in lookups (e.g. <code class="docutils literal notranslate"><span class="pre">lte</span></code>,
+<code class="docutils literal notranslate"><span class="pre">icontains</span></code>) while transforms are a new concept.</p>
+<p>The <a class="reference internal" href="../../ref/models/lookups/#django.db.models.Lookup" title="django.db.models.Lookup"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.Lookup</span></code></a> class provides a way to add lookup
+operators for model fields. As an example it is possible to add <code class="docutils literal notranslate"><span class="pre">day_lte</span></code>
+operator for <code class="docutils literal notranslate"><span class="pre">DateFields</span></code>.</p>
+<p>The <a class="reference internal" href="../../ref/models/lookups/#django.db.models.Transform" title="django.db.models.Transform"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.Transform</span></code></a> class allows transformations of
+database values prior to the final lookup. For example it is possible to
+write a <code class="docutils literal notranslate"><span class="pre">year</span></code> transform that extracts year from the field’s value.
+Transforms allow for chaining. After the <code class="docutils literal notranslate"><span class="pre">year</span></code> transform has been added
+to <code class="docutils literal notranslate"><span class="pre">DateField</span></code> it is possible to filter on the transformed value, for
+example <code class="docutils literal notranslate"><span class="pre">qs.filter(author__birthdate__year__lte=1981)</span></code>.</p>
+<p>For more information about both custom lookups and transforms refer to
+the <a class="reference internal" href="../../howto/custom-lookups/"><span class="doc">custom lookups</span></a> documentation.</p>
+</div>
+<div class="section" id="s-improvements-to-form-error-handling">
+<span id="improvements-to-form-error-handling"></span><h3>Improvements to <code class="docutils literal notranslate"><span class="pre">Form</span></code> error handling<a class="headerlink" href="#improvements-to-form-error-handling" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="s-form-add-error">
+<span id="form-add-error"></span><h4><code class="docutils literal notranslate"><span class="pre">Form.add_error()</span></code><a class="headerlink" href="#form-add-error" title="Permalink to this headline">¶</a></h4>
+<p>Previously there were two main patterns for handling errors in forms:</p>
+<ul class="simple">
+<li>Raising a <a class="reference internal" href="../../ref/exceptions/#django.core.exceptions.ValidationError" title="django.core.exceptions.ValidationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> from within certain
+functions (e.g. <code class="docutils literal notranslate"><span class="pre">Field.clean()</span></code>, <code class="docutils literal notranslate"><span class="pre">Form.clean_&lt;fieldname&gt;()</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">Form.clean()</span></code> for non-field errors.)</li>
+<li>Fiddling with <code class="docutils literal notranslate"><span class="pre">Form._errors</span></code> when targeting a specific field in
+<code class="docutils literal notranslate"><span class="pre">Form.clean()</span></code> or adding errors from outside of a “clean” method
+(e.g. directly from a view).</li>
+</ul>
+<p>Using the former pattern was straightforward since the form can guess from the
+context (i.e. which method raised the exception) where the errors belong and
+automatically process them. This remains the canonical way of adding errors
+when possible. However the latter was fiddly and error-prone, since the burden
+of handling edge cases fell on the user.</p>
+<p>The new <a class="reference internal" href="../../ref/forms/api/#django.forms.Form.add_error" title="django.forms.Form.add_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_error()</span></code></a> method allows adding errors
+to specific form fields from anywhere without having to worry about the details
+such as creating instances of <code class="docutils literal notranslate"><span class="pre">django.forms.utils.ErrorList</span></code> or dealing with
+<code class="docutils literal notranslate"><span class="pre">Form.cleaned_data</span></code>. This new API replaces manipulating <code class="docutils literal notranslate"><span class="pre">Form._errors</span></code>
+which now becomes a private API.</p>
+<p>See <a class="reference internal" href="../../ref/forms/validation/#validating-fields-with-clean"><span class="std std-ref">Cleaning and validating fields that depend on each other</span></a> for an example using
+<code class="docutils literal notranslate"><span class="pre">Form.add_error()</span></code>.</p>
+</div>
+<div class="section" id="s-error-metadata">
+<span id="error-metadata"></span><h4>Error metadata<a class="headerlink" href="#error-metadata" title="Permalink to this headline">¶</a></h4>
+<p>The <a class="reference internal" href="../../ref/exceptions/#django.core.exceptions.ValidationError" title="django.core.exceptions.ValidationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a> constructor accepts metadata
+such as error <code class="docutils literal notranslate"><span class="pre">code</span></code> or <code class="docutils literal notranslate"><span class="pre">params</span></code> which are then available for interpolating
+into the error message (see <a class="reference internal" href="../../ref/forms/validation/#raising-validation-error"><span class="std std-ref">Raising ValidationError</span></a> for more details);
+however, before Django 1.7 those metadata were discarded as soon as the errors
+were added to <a class="reference internal" href="../../ref/forms/api/#django.forms.Form.errors" title="django.forms.Form.errors"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Form.errors</span></code></a>.</p>
+<p><a class="reference internal" href="../../ref/forms/api/#django.forms.Form.errors" title="django.forms.Form.errors"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Form.errors</span></code></a> and
+<code class="docutils literal notranslate"><span class="pre">django.forms.utils.ErrorList</span></code> now store the <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> instances
+so these metadata can be retrieved at any time through the new
+<a class="reference internal" href="../../ref/forms/api/#django.forms.Form.errors.as_data" title="django.forms.Form.errors.as_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Form.errors.as_data</span></code></a> method.</p>
+<p>The retrieved <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> instances can then be identified thanks to
+their error <code class="docutils literal notranslate"><span class="pre">code</span></code> which enables things like rewriting the error’s message
+or writing custom logic in a view when a given error is present. It can also
+be used to serialize the errors in a custom format such as XML.</p>
+<p>The new <a class="reference internal" href="../../ref/forms/api/#django.forms.Form.errors.as_json" title="django.forms.Form.errors.as_json"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Form.errors.as_json()</span></code></a>
+method is a convenience method which returns error messages along with error
+codes serialized as JSON. <code class="docutils literal notranslate"><span class="pre">as_json()</span></code> uses <code class="docutils literal notranslate"><span class="pre">as_data()</span></code> and gives an idea
+of how the new system could be extended.</p>
+</div>
+<div class="section" id="s-error-containers-and-backward-compatibility">
+<span id="error-containers-and-backward-compatibility"></span><h4>Error containers and backward compatibility<a class="headerlink" href="#error-containers-and-backward-compatibility" title="Permalink to this headline">¶</a></h4>
+<p>Heavy changes to the various error containers were necessary in order
+to support the features above, specifically
+<a class="reference internal" href="../../ref/forms/api/#django.forms.Form.errors" title="django.forms.Form.errors"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Form.errors</span></code></a>,
+<code class="docutils literal notranslate"><span class="pre">django.forms.utils.ErrorList</span></code>, and the internal storages of
+<a class="reference internal" href="../../ref/exceptions/#django.core.exceptions.ValidationError" title="django.core.exceptions.ValidationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValidationError</span></code></a>. These containers which used
+to store error strings now store <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> instances and public APIs
+have been adapted to make this as transparent as possible, but if you’ve been
+using private APIs, some of the changes are backwards incompatible; see
+<a class="reference internal" href="#validation-error-constructor-and-internal-storage"><span class="std std-ref">ValidationError constructor and internal storage</span></a> for more details.</p>
+</div>
+</div>
+<div class="section" id="s-minor-features">
+<span id="minor-features"></span><h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="s-django-contrib-admin">
+<span id="django-contrib-admin"></span><h4><a class="reference internal" href="../../ref/contrib/admin/#module-django.contrib.admin" title="django.contrib.admin: Django's admin site."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.admin</span></code></a><a class="headerlink" href="#django-contrib-admin" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>You can now implement <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.AdminSite.site_header" title="django.contrib.admin.AdminSite.site_header"><code class="xref py py-attr docutils literal notranslate"><span class="pre">site_header</span></code></a>,
+<a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.AdminSite.site_title" title="django.contrib.admin.AdminSite.site_title"><code class="xref py py-attr docutils literal notranslate"><span class="pre">site_title</span></code></a>, and
+<a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.AdminSite.index_title" title="django.contrib.admin.AdminSite.index_title"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index_title</span></code></a> attributes on a custom
+<a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.AdminSite" title="django.contrib.admin.AdminSite"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdminSite</span></code></a> in order to easily change the admin
+site’s page title and header text. No more needing to override templates!</li>
+<li>Buttons in <a class="reference internal" href="../../ref/contrib/admin/#module-django.contrib.admin" title="django.contrib.admin: Django's admin site."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.admin</span></code></a> now use the <code class="docutils literal notranslate"><span class="pre">border-radius</span></code> CSS
+property for rounded corners rather than GIF background images.</li>
+<li>Some admin templates now have <code class="docutils literal notranslate"><span class="pre">app-&lt;app_name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">model-&lt;model_name&gt;</span></code>
+classes in their <code class="docutils literal notranslate"><span class="pre">&lt;body&gt;</span></code> tag to allow customizing the CSS per app or per
+model.</li>
+<li>The admin changelist cells now have a <code class="docutils literal notranslate"><span class="pre">field-&lt;field_name&gt;</span></code> class in the
+HTML to enable style customizations.</li>
+<li>The admin’s search fields can now be customized per-request thanks to the new
+<a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.get_search_fields" title="django.contrib.admin.ModelAdmin.get_search_fields"><code class="xref py py-meth docutils literal notranslate"><span class="pre">django.contrib.admin.ModelAdmin.get_search_fields()</span></code></a> method.</li>
+<li>The <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.get_fields" title="django.contrib.admin.ModelAdmin.get_fields"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModelAdmin.get_fields()</span></code></a> method may be overridden to
+customize the value of <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.fields" title="django.contrib.admin.ModelAdmin.fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ModelAdmin.fields</span></code></a>.</li>
+<li>In addition to the existing <code class="docutils literal notranslate"><span class="pre">admin.site.register</span></code> syntax, you can use the
+new <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.register" title="django.contrib.admin.register"><code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code></a> decorator to register a
+<a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin" title="django.contrib.admin.ModelAdmin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></a>.</li>
+<li>You may specify <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display_links" title="django.contrib.admin.ModelAdmin.list_display_links"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModelAdmin.list_display_links</span></code></a> <code class="docutils literal notranslate"><span class="pre">=</span> <span class="pre">None</span></code> to disable
+links on the change list page grid.</li>
+<li>You may now specify <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.view_on_site" title="django.contrib.admin.ModelAdmin.view_on_site"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ModelAdmin.view_on_site</span></code></a> to control whether or not to
+display the “View on site” link.</li>
+<li>You can specify a descending ordering for a <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display" title="django.contrib.admin.ModelAdmin.list_display"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ModelAdmin.list_display</span></code></a> value by prefixing the
+<code class="docutils literal notranslate"><span class="pre">admin_order_field</span></code> value with a hyphen.</li>
+<li>The <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.get_changeform_initial_data" title="django.contrib.admin.ModelAdmin.get_changeform_initial_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModelAdmin.get_changeform_initial_data()</span></code></a> method may be
+overridden to define custom behavior for setting initial change form data.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-auth">
+<span id="django-contrib-auth"></span><h4><a class="reference internal" href="../../topics/auth/#module-django.contrib.auth" title="django.contrib.auth: Django's authentication framework."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.auth</span></code></a><a class="headerlink" href="#django-contrib-auth" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Any <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> passed to
+<a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.models.User.email_user" title="django.contrib.auth.models.User.email_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">email_user()</span></code></a> are passed to the
+underlying <a class="reference internal" href="../../topics/email/#django.core.mail.send_mail" title="django.core.mail.send_mail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send_mail()</span></code></a> call.</li>
+<li>The <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.decorators.permission_required" title="django.contrib.auth.decorators.permission_required"><code class="xref py py-func docutils literal notranslate"><span class="pre">permission_required()</span></code></a> decorator can
+take a list of permissions as well as a single permission.</li>
+<li>You can override the new <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.forms.AuthenticationForm.confirm_login_allowed" title="django.contrib.auth.forms.AuthenticationForm.confirm_login_allowed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AuthenticationForm.confirm_login_allowed()</span></code></a> method
+to more easily customize the login policy.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.password_reset()</span></code> takes an optional
+<code class="docutils literal notranslate"><span class="pre">html_email_template_name</span></code> parameter used to send a multipart HTML email
+for password resets.</li>
+<li>The <a class="reference internal" href="../../topics/auth/customizing/#django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash" title="django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AbstractBaseUser.get_session_auth_hash()</span></code></a>
+method was added and if your <a class="reference internal" href="../../ref/settings/#std-setting-AUTH_USER_MODEL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">AUTH_USER_MODEL</span></code></a> inherits from
+<a class="reference internal" href="../../topics/auth/customizing/#django.contrib.auth.models.AbstractBaseUser" title="django.contrib.auth.models.AbstractBaseUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBaseUser</span></code></a>, changing a user’s
+password now invalidates old sessions if the
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.middleware.SessionAuthenticationMiddleware</span></code> is
+enabled. See <a class="reference internal" href="../../topics/auth/default/#session-invalidation-on-password-change"><span class="std std-ref">Session invalidation on password change</span></a> for more details.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-formtools">
+<span id="django-contrib-formtools"></span><h4><code class="docutils literal notranslate"><span class="pre">django.contrib.formtools</span></code><a class="headerlink" href="#django-contrib-formtools" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Calls to <code class="docutils literal notranslate"><span class="pre">WizardView.done()</span></code> now include a <code class="docutils literal notranslate"><span class="pre">form_dict</span></code> to allow easier
+access to forms by their step name.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-gis">
+<span id="django-contrib-gis"></span><h4><a class="reference internal" href="../../ref/contrib/gis/#module-django.contrib.gis" title="django.contrib.gis: Geographic Information System (GIS) extensions for Django"><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.gis</span></code></a><a class="headerlink" href="#django-contrib-gis" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The default OpenLayers library version included in widgets has been updated
+from 2.11 to 2.13.</li>
+<li>Prepared geometries now also support the <code class="docutils literal notranslate"><span class="pre">crosses</span></code>, <code class="docutils literal notranslate"><span class="pre">disjoint</span></code>,
+<code class="docutils literal notranslate"><span class="pre">overlaps</span></code>, <code class="docutils literal notranslate"><span class="pre">touches</span></code> and <code class="docutils literal notranslate"><span class="pre">within</span></code> predicates, if GEOS 3.3 or later is
+installed.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-messages">
+<span id="django-contrib-messages"></span><h4><a class="reference internal" href="../../ref/contrib/messages/#module-django.contrib.messages" title="django.contrib.messages: Provides cookie- and session-based temporary message storage."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.messages</span></code></a><a class="headerlink" href="#django-contrib-messages" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The backends for <a class="reference internal" href="../../ref/contrib/messages/#module-django.contrib.messages" title="django.contrib.messages: Provides cookie- and session-based temporary message storage."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.messages</span></code></a> that use cookies, will now
+follow the <a class="reference internal" href="../../ref/settings/#std-setting-SESSION_COOKIE_SECURE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SESSION_COOKIE_SECURE</span></code></a> and
+<a class="reference internal" href="../../ref/settings/#std-setting-SESSION_COOKIE_HTTPONLY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SESSION_COOKIE_HTTPONLY</span></code></a> settings.</li>
+<li>The <a class="reference internal" href="../../ref/contrib/messages/#message-displaying"><span class="std std-ref">messages context processor</span></a> now adds a
+dictionary of default levels under the name <code class="docutils literal notranslate"><span class="pre">DEFAULT_MESSAGE_LEVELS</span></code>.</li>
+
+
+
+<li><code class="docutils literal notranslate"><span class="pre">django.shortcuts.render_to_response()</span></code></li>
+</ul>
+</li>
+<li>The <a class="reference internal" href="../../ref/templates/builtins/#std-templatefilter-time"><code class="xref std std-tfilter docutils literal notranslate"><span class="pre">time</span></code></a> filter now accepts timezone-related <a class="reference internal" href="../../ref/templates/builtins/#date-and-time-formatting-specifiers"><span class="std std-ref">format
+specifiers</span></a> <code class="docutils literal notranslate"><span class="pre">'e'</span></code>, <code class="docutils literal notranslate"><span class="pre">'O'</span></code> , <code class="docutils literal notranslate"><span class="pre">'T'</span></code>
+and <code class="docutils literal notranslate"><span class="pre">'Z'</span></code> and is able to digest <a class="reference internal" href="../../topics/i18n/timezones/#naive-vs-aware-datetimes"><span class="std std-ref">time-zone-aware</span></a> <code class="docutils literal notranslate"><span class="pre">datetime</span></code> instances performing the expected
+rendering.</li>
+<li>The <a class="reference internal" href="../../topics/cache/#std-templatetag-cache"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">cache</span></code></a> tag will now try to use the cache called
+“template_fragments” if it exists and fall back to using the default cache
+otherwise. It also now accepts an optional <code class="docutils literal notranslate"><span class="pre">using</span></code> keyword argument to
+control which cache it uses.</li>
+<li>The new <a class="reference internal" href="../../ref/templates/builtins/#std-templatefilter-truncatechars_html"><code class="xref std std-tfilter docutils literal notranslate"><span class="pre">truncatechars_html</span></code></a> filter truncates a string to be no
+longer than the specified number of characters, taking HTML into account.</li>
+</ul>
+</div>
+<div class="section" id="s-requests-and-responses">
+<span id="requests-and-responses"></span><h4>Requests and Responses<a class="headerlink" href="#requests-and-responses" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The new <a class="reference internal" href="../../ref/request-response/#django.http.HttpRequest.scheme" title="django.http.HttpRequest.scheme"><code class="xref py py-attr docutils literal notranslate"><span class="pre">HttpRequest.scheme</span></code></a> attribute
+specifies the scheme of the request (<code class="docutils literal notranslate"><span class="pre">http</span></code> or <code class="docutils literal notranslate"><span class="pre">https</span></code> normally).</li>
+<li>The shortcut <a class="reference internal" href="../../topics/http/shortcuts/#django.shortcuts.redirect" title="django.shortcuts.redirect"><code class="xref py py-func docutils literal notranslate"><span class="pre">redirect()</span></code></a> now supports
+relative URLs.</li>
+<li>The new <a class="reference internal" href="../../ref/request-response/#django.http.JsonResponse" title="django.http.JsonResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonResponse</span></code></a> subclass of
+<a class="reference internal" href="../../ref/request-response/#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a> helps easily create JSON-encoded responses.</li>
+</ul>
+</div>
+<div class="section" id="s-tests">
+<span id="tests"></span><h4>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

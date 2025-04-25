@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 39.4. A Complete Event Trigger Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/event-trigger-example.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="39.4. A Complete Event Trigger Example" />
+  <meta property="og:description" content="39.4.&amp;nbsp;A Complete Event Trigger Example Here is a very simple example of an event trigger function written in C. (Examples …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/event-trigger-example.html" title="PostgreSQL 17 - 39.4. A Complete Event Trigger Example" >Current</a>
+                          (<a href="/docs/17/event-trigger-example.html" title="PostgreSQL 17 - 39.4. A Complete Event Trigger Example" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/event-trigger-example.html" title="PostgreSQL 16 - 39.4. A Complete Event Trigger Example" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/event-trigger-example.html" title="PostgreSQL 15 - 39.4. A Complete Event Trigger Example" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/event-trigger-example.html" title="PostgreSQL 14 - 39.4. A Complete Event Trigger Example" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/event-trigger-example.html" title="PostgreSQL 13 - 39.4. A Complete Event Trigger Example" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/event-trigger-example.html" title="PostgreSQL devel - 39.4. A Complete Event Trigger Example"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/event-trigger-example.html" title="PostgreSQL 12 - 39.4. A Complete Event Trigger Example"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/event-trigger-example.html" title="PostgreSQL 11 - 39.4. A Complete Event Trigger Example"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/event-trigger-example.html" title="PostgreSQL 10 - 39.4. A Complete Event Trigger Example"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/event-trigger-example.html" title="PostgreSQL 9.6 - 39.4. A Complete Event Trigger Example"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/event-trigger-example.html" title="PostgreSQL 9.5 - 39.4. A Complete Event Trigger Example"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/event-trigger-example.html" title="PostgreSQL 9.4 - 39.4. A Complete Event Trigger Example"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/event-trigger-example.html" title="PostgreSQL 9.3 - 39.4. A Complete Event Trigger Example"  rel="nofollow">9.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">39.4.&nbsp;A Complete Event Trigger Example</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="event-trigger-interface.html" title="39.3.&nbsp;Writing Event Trigger Functions in C">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="event-triggers.html" title="Chapter&nbsp;39.&nbsp;Event Triggers">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;39.&nbsp;Event Triggers</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="event-trigger-table-rewrite-example.html" title="39.5.&nbsp;A Table Rewrite Event Trigger Example">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="EVENT-TRIGGER-EXAMPLE">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">39.4.&nbsp;A Complete Event Trigger Example</h2>
+      </div>
+    </div>
+  </div>
+  <p>Here is a very simple example of an event trigger function written in C. (Examples of triggers written in procedural languages can be found in the documentation of the procedural languages.)</p>
+  <p>The function <code class="function">noddl</code> raises an exception each time it is called. The event trigger definition associated the function with the <code class="literal">ddl_command_start</code> event. The effect is that all DDL commands (with the exceptions mentioned in <a class="xref" href="event-trigger-definition.html" title="39.1.&nbsp;Overview of Event Trigger Behavior">Section&nbsp;39.1</a>) are prevented from running.</p>
+  <p>This is the source code of the trigger function:</p>
+  <pre class="programlisting">
+#include "postgres.h"
+#include "commands/event_trigger.h"
+
+
+PG_MODULE_MAGIC;
+
+PG_FUNCTION_INFO_V1(noddl);
+
+Datum
+noddl(PG_FUNCTION_ARGS)
+{
+    EventTriggerData *trigdata;
+
+    if (!CALLED_AS_EVENT_TRIGGER(fcinfo))  /* internal error */
+        elog(ERROR, "not fired by event trigger manager");
+
+    trigdata = (EventTriggerData *) fcinfo-&gt;context;
+
+    ereport(ERROR,
+            (errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
+             errmsg("command \"%s\" denied",
+                    GetCommandTagName(trigdata-&gt;tag))));
+
+    PG_RETURN_NULL();
+}
+</pre>
+  <p>After you have compiled the source code (see <a class="xref" href="xfunc-c.html#DFUNC" title="37.10.5.&nbsp;Compiling and Linking Dynamically-Loaded Functions">Section&nbsp;37.10.5</a>), declare the function and the triggers:</p>
+  <pre class="programlisting">
+CREATE FUNCTION noddl() RETURNS event_trigger
+    AS 'noddl' LANGUAGE C;
+
+CREATE EVENT TRIGGER noddl ON ddl_command_start
+    EXECUTE FUNCTION noddl();
+</pre>
+  <p>Now you can test the operation of the trigger:</p>
+  <pre class="screen">
+=# \dy
+                     List of event triggers
+ Name  |       Event       | Owner | Enabled | Function | Tags
+-------+-------------------+-------+---------+----------+------
+ noddl | ddl_command_start | dim   | enabled | noddl    |
+(1 row)
+
+=# CREATE TABLE foo(id serial);
+ERROR:  command "CREATE TABLE" denied
+</pre>
+  <p>In this situation, in order to be able to run some DDL commands when you need to do so, you have to either drop the event trigger or disable it. It can be convenient to disable the trigger for only the duration of a transaction:</p>
+  <pre class="programlisting">
+BEGIN;
+ALTER EVENT TRIGGER noddl DISABLE;
+CREATE TABLE foo (id serial);
+ALTER EVENT TRIGGER noddl ENABLE;
+COMMIT;
+</pre>
+  <p>(Recall that DDL commands on event triggers themselves are not affected by event triggers.)</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="event-trigger-interface.html" title="39.3.&nbsp;Writing Event Trigger Functions in C">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="event-triggers.html" title="Chapter&nbsp;39.&nbsp;Event Triggers">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="event-trigger-table-rewrite-example.html" title="39.5.&nbsp;A Table Rewrite Event Trigger Example">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">39.3.&nbsp;Writing Event Trigger Functions in C&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;39.5.&nbsp;A Table Rewrite Event Trigger Example</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/event-trigger-example.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Apache Hadoop Changelog</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Apache Hadoop Changelog
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop Changelog</h1>
+<div class="section">
+<h2><a name="Release_2.7.5_-_2017-12-14"></a>Release 2.7.5 - 2017-12-14</h2>
+<div class="section">
+<h3><a name="IMPORTANT_ISSUES:"></a>IMPORTANT ISSUES:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-6959">YARN-6959</a> </td>
+<td align="left"> RM may allocate wrong AM Container for new attempt </td>
+<td align="left">  Major </td>
+<td align="left"> capacity scheduler, fairscheduler, scheduler </td>
+<td align="left"> Yuqi Wang </td>
+<td align="left"> Yuqi Wang </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="IMPROVEMENTS:"></a>IMPROVEMENTS:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-8829">HDFS-8829</a> </td>
+<td align="left"> Make SO_RCVBUF and SO_SNDBUF size configurable for DataTransferProtocol sockets and allow configuring auto-tuning </td>
+<td align="left">  Major </td>
+<td align="left"> datanode </td>
+<td align="left"> He Tianyi </td>
+<td align="left"> He Tianyi </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-13442">HADOOP-13442</a> </td>
+<td align="left"> Optimize UGI group lookups </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Daryn Sharp </td>
+<td align="left"> Daryn Sharp </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6937">MAPREDUCE-6937</a> </td>
+<td align="left"> Backport MAPREDUCE-6870 to branch-2 while preserving compatibility </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Zhe Zhang </td>
+<td align="left"> Peter Bacsko </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14827">HADOOP-14827</a> </td>
+<td align="left"> Allow StopWatch to accept a Timer parameter for tests </td>
+<td align="left">  Minor </td>
+<td align="left"> common, test </td>
+<td align="left"> Erik Krogen </td>
+<td align="left"> Erik Krogen </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12131">HDFS-12131</a> </td>
+<td align="left"> Add some of the FSNamesystem JMX values as metrics </td>
+<td align="left">  Minor </td>
+<td align="left"> hdfs, namenode </td>
+<td align="left"> Erik Krogen </td>
+<td align="left"> Erik Krogen </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-8865">HDFS-8865</a> </td>
+<td align="left"> Improve quota initialization performance </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Kihwal Lee </td>
+<td align="left"> Kihwal Lee </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12420">HDFS-12420</a> </td>
+<td align="left"> Add an option to disallow &#x2018;namenode format -force&#x2019; </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Ajay Kumar </td>
+<td align="left"> Ajay Kumar </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6975">MAPREDUCE-6975</a> </td>
+<td align="left"> Logging task counters </td>
+<td align="left">  Major </td>
+<td align="left"> task </td>
+<td align="left"> Prabhu Joseph </td>
+<td align="left"> Prabhu Joseph </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12823">HDFS-12823</a> </td>
+<td align="left"> Backport HDFS-9259 &#x201c;Make SO_SNDBUF size configurable at DFSClient&#x201d; to branch-2.7 </td>
+<td align="left">  Major </td>
+<td align="left"> hdfs, hdfs-client </td>
+<td align="left"> Erik Krogen </td>
+<td align="left"> Erik Krogen </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="BUG_FIXES:"></a>BUG FIXES:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6165">MAPREDUCE-6165</a> </td>
+<td align="left"> [JDK8] TestCombineFileInputFormat failed on JDK8 </td>
+<td align="left">  Minor </td>
+<td align="left"> . </td>
+<td align="left"> Wei Yan </td>
+<td align="left"> Akira Ajisaka </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-8797">HDFS-8797</a> </td>
+<td align="left"> WebHdfsFileSystem creates too many connections for pread </td>
+<td align="left">  Major </td>
+<td align="left"> webhdfs </td>
+<td align="left"> Jing Zhao </td>
+<td align="left"> Jing Zhao </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-9003">HDFS-9003</a> </td>
+<td align="left"> ForkJoin thread pool leaks </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Kihwal Lee </td>
+<td align="left"> Kihwal Lee </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-9107">HDFS-9107</a> </td>
+<td align="left"> Prevent NN&#x2019;s unrecoverable death spiral after full GC </td>
+<td align="left">  Critical </td>
+<td align="left"> namenode </td>
+<td align="left"> Daryn Sharp </td>
+<td align="left"> Daryn Sharp </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6750">MAPREDUCE-6750</a> </td>
+<td align="left"> TestHSAdminServer.testRefreshSuperUserGroups is failing </td>
+<td align="left">  Minor </td>
+<td align="left"> test </td>
+<td align="left"> Kihwal Lee </td>
+<td align="left"> Kihwal Lee </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-10738">HDFS-10738</a> </td>
+<td align="left"> Fix TestRefreshUserMappings.testRefreshSuperUserGroupsConfiguration test failure </td>
+<td align="left">  Major </td>
+<td align="left"> test </td>
+<td align="left"> Rakesh R </td>
+<td align="left"> Rakesh R </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14702">HADOOP-14702</a> </td>
+<td align="left"> Fix formatting issue and regression caused by conversion from APT to Markdown </td>
+<td align="left">  Minor </td>
+<td align="left"> documentation </td>
+<td align="left"> Doris Gu </td>
+<td align="left"> Doris Gu </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12157">HDFS-12157</a> </td>
+<td align="left"> Do fsyncDirectory(..) outside of FSDataset lock </td>
+<td align="left">  Critical </td>
+<td align="left"> datanode </td>
+<td align="left"> Vinayakumar B </td>
+<td align="left"> Vinayakumar B </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6931">MAPREDUCE-6931</a> </td>
+<td align="left"> Remove TestDFSIO &#x201c;Total Throughput&#x201d; calculation </td>
+<td align="left">  Critical </td>
+<td align="left"> benchmarks, test </td>
+<td align="left"> Dennis Huo </td>
+<td align="left"> Dennis Huo </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14867">HADOOP-14867</a> </td>
+<td align="left"> Update HDFS Federation setup document, for incorrect property name for secondary name node http address </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Bharat Viswanadham </td>
+<td align="left"> Bharat Viswanadham </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-6957">MAPREDUCE-6957</a> </td>
+<td align="left"> shuffle hangs after a node manager connection timeout </td>
+<td align="left">  Major </td>
+<td align="left"> mrv2 </td>
+<td align="left"> Jooseong Kim </td>
+<td align="left"> Jooseong Kim </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12323">HDFS-12323</a> </td>
+<td align="left"> NameNode terminates after full GC thinking QJM unresponsive if full GC is much longer than timeout </td>
+<td align="left">  Major </td>
+<td align="left"> namenode, qjm </td>
+<td align="left"> Erik Krogen </td>
+<td align="left"> Erik Krogen </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-5195">YARN-5195</a> </td>
+<td align="left"> RM intermittently crashed with NPE while handling APP_ATTEMPT_REMOVED event when async-scheduling enabled in CapacityScheduler </td>
+<td align="left">  Major </td>
+<td align="left"> resourcemanager </td>
+<td align="left"> Karam Singh </td>
+<td align="left"> sandflee </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14902">HADOOP-14902</a> </td>
+<td align="left"> LoadGenerator#genFile write close timing is incorrectly calculated </td>
+<td align="left">  Major </td>
+<td align="left"> fs </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Hanisha Koneru </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-7084">YARN-7084</a> </td>
+<td align="left"> TestSchedulingMonitor#testRMStarts fails sporadically </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12578">HDFS-12578</a> </td>
+<td align="left"> TestDeadDatanode#testNonDFSUsedONDeadNodeReReg failing in branch-2.7 </td>
+<td align="left">  Blocker </td>
+<td align="left"> test </td>
+<td align="left"> Xiao Chen </td>
+<td align="left"> Ajay Kumar </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14919">HADOOP-14919</a> </td>
+<td align="left"> BZip2 drops records when reading data in splits </td>
+<td align="left">  Critical </td>
+<td align="left"> . </td>
+<td align="left"> Aki Tanaka </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12832">HDFS-12832</a> </td>
+<td align="left"> INode.getFullPathName may throw ArrayIndexOutOfBoundsException lead to NameNode exit </td>
+<td align="left">  Critical </td>
+<td align="left"> namenode </td>
+<td align="left"> DENG FEI </td>
+<td align="left"> Konstantin Shvachko </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12638">HDFS-12638</a> </td>
+<td align="left"> Delete copy-on-truncate block along with the original block, when deleting a file being truncated </td>
+<td align="left">  Blocker </td>
+<td align="left"> hdfs </td>
+<td align="left"> Jiandan Yang </td>
+<td align="left"> Konstantin Shvachko </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="TESTS:"></a>TESTS:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-9153">HDFS-9153</a> </td>
+<td align="left"> Pretty-format the output for DFSIO </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Kai Zheng </td>
+<td align="left"> Kai Zheng </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-12596">HDFS-12596</a> </td>
+<td align="left"> Add TestFsck#testFsckCorruptWhenOneReplicaIsCorrupt back to branch-2.7 </td>
+<td align="left">  Major </td>
+<td align="left"> test </td>
+<td align="left"> Xiao Chen </td>
+<td align="left"> Xiao Chen </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="SUB-TASKS:"></a>SUB-TASKS:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-10711">HDFS-10711</a> </td>
+<td align="left"> Optimize FSPermissionChecker group membership check </td>
+<td align="left">  Major </td>
+<td align="left"> hdfs </td>
+<td align="left"> Daryn Sharp </td>
+<td align="left"> Daryn Sharp </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14881">HADOOP-14881</a> </td>
+<td align="left"> LoadGenerator should use Time.monotonicNow() to measure durations </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Chetna Chaudhari </td>
+<td align="left"> Bharat Viswanadham </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-5402">YARN-5402</a> </td>
+<td align="left"> Fix NoSuchMethodError in ClusterMetricsInfo </td>
+<td align="left">  Major </td>
+<td align="left"> webapp </td>
+<td align="left"> Weiwei Yang </td>
+<td align="left"> Weiwei Yang </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="OTHER:"></a>OTHER:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-10984">HDFS-10984</a> </td>
+<td align="left"> Expose nntop output as metrics </td>
+<td align="left">  Major </td>
+<td align="left"> namenode </td>
+<td align="left"> Siddharth Wagle </td>
+<td align="left"> Siddharth Wagle </td></tr>
+</tbody>
+</table></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

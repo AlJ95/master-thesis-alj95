@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Web Application Proxy</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Web Application Proxy
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Web Application Proxy</h1>
+<ul>
+
+</ul></li>
+
+</ul></li></ul>
+
+<div class="section">
+<h2><a name="Overview"></a>Overview</h2>
+<div class="section">
+<h3><a name="Introduction"></a>Introduction</h3>
+<p>The Web Application Proxy is part of YARN. By default it will run as part of the Resource Manager(RM), but can be configured to run in stand alone mode. The reason for the proxy is to reduce the possibility of web based attacks through YARN.</p>
+<p>In YARN the Application Master(AM) has the responsibility to provide a web UI and to send that link to the RM. This opens up a number of potential issues. The RM runs as a trusted user, and people visiting that web address will treat it, and links it provides to them as trusted, when in reality the AM is running as a non-trusted user, and the links it gives to the RM could point to anything malicious or otherwise. The Web Application Proxy mitigates this risk by warning users that do not own the given application that they are connecting to an untrusted site.</p>
+<p>In addition to this the proxy also tries to reduce the impact that a malicious AM could have on a user. It primarily does this by stripping out cookies from the user, and replacing them with a single cookie providing the user name of the logged in user. This is because most web based authentication systems will identify a user based off of a cookie. By providing this cookie to an untrusted application it opens up the potential for an exploit. If the cookie is designed properly that potential should be fairly minimal, but this is just to reduce that potential attack vector.</p></div>
+<div class="section">
+<h3><a name="Current_Status"></a>Current Status</h3>
+<p>The current proxy implementation does nothing to prevent the AM from providing links to malicious external sites, nor does it do anything to prevent malicious javascript code from running as well. In fact javascript can be used to get the cookies, so stripping the cookies from the request has minimal benefit at this time. In the future we hope to address the attack vectors described above and make attaching to an AM&#x2019;s web UI safer.</p></div></div>
+<div class="section">
+<h2><a name="Deployment"></a>Deployment</h2>
+<div class="section">
+<h3><a name="Configurations"></a>Configurations</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Configuration Property </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>yarn.web-proxy.address</tt> </td>
+<td align="left"> The address for the web proxy as HOST:PORT, if this is not given then the proxy will run as part of the RM. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.web-proxy.keytab</tt> </td>
+<td align="left"> Keytab for WebAppProxy, if the proxy is not running as part of the RM. </td></tr>
+<tr class="b">
+<td align="left"> <tt>yarn.web-proxy.principal</tt> </td>
+<td align="left"> The kerberos principal for the proxy, if the proxy is not running as part of the RM. </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="Running_Web_Application_Proxy"></a>Running Web Application Proxy</h3>
+<p>Standalone Web application proxy server can be launched with the following command.</p>
+
+<div>
+<div>
+<pre class="source">  $ yarn proxyserver
+</pre></div></div>
+
+<p>Or users can start the stand alone Web Application Proxy server as a daemon, with the following command</p>
+
+<div>
+<div>
+<pre class="source">  $ $HADOOP_YARN_HOME/sbin/yarn-daemon.sh start proxyserver
+</pre></div></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

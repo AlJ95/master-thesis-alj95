@@ -1,0 +1,356 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>org.apache.hadoop.mapreduce (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;org.apache.hadoop.mapreduce</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/Counter.html" title="interface in org.apache.hadoop.mapreduce">Counter</a></td>
+<td class="colLast">
+<div class="block">A named counter that tracks the progress of a map/reduce job.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/CounterGroup.html" title="interface in org.apache.hadoop.mapreduce">CounterGroup</a></td>
+<td class="colLast">
+<div class="block">A group of <a href="../../../../org/apache/hadoop/mapreduce/Counter.html" title="interface in org.apache.hadoop.mapreduce"><code>Counter</code></a>s that logically belong together.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/JobContext.html" title="interface in org.apache.hadoop.mapreduce">JobContext</a></td>
+<td class="colLast">
+<div class="block">A read-only view of the job that is provided to the tasks while they
+ are running.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/MapContext.html" title="interface in org.apache.hadoop.mapreduce">MapContext</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</td>
+<td class="colLast">
+<div class="block">The context that is given to the <a href="../../../../org/apache/hadoop/mapreduce/Mapper.html" title="class in org.apache.hadoop.mapreduce"><code>Mapper</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/ReduceContext.html" title="interface in org.apache.hadoop.mapreduce">ReduceContext</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</td>
+<td class="colLast">
+<div class="block">The context passed to the <a href="../../../../org/apache/hadoop/mapreduce/Reducer.html" title="class in org.apache.hadoop.mapreduce"><code>Reducer</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskAttemptContext.html" title="interface in org.apache.hadoop.mapreduce">TaskAttemptContext</a></td>
+<td class="colLast">
+<div class="block">The context for task attempts.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskInputOutputContext.html" title="interface in org.apache.hadoop.mapreduce">TaskInputOutputContext</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</td>
+<td class="colLast">
+<div class="block">A context object that allows input and output from the task.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/Cluster.html" title="class in org.apache.hadoop.mapreduce">Cluster</a></td>
+<td class="colLast">
+<div class="block">Provides a way to access information about the map/reduce cluster.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/ClusterMetrics.html" title="class in org.apache.hadoop.mapreduce">ClusterMetrics</a></td>
+<td class="colLast">
+<div class="block">Status information on the current state of the Map-Reduce cluster.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/Counters.html" title="class in org.apache.hadoop.mapreduce">Counters</a></td>
+<td class="colLast">
+<div class="block"><code>Counters</code> holds per job/task counters, defined either by the
+ Map-Reduce framework or applications.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/ID.html" title="class in org.apache.hadoop.mapreduce">ID</a></td>
+<td class="colLast">
+<div class="block">A general identifier, which internally stores the id
+ as an integer.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/InputFormat.html" title="class in org.apache.hadoop.mapreduce">InputFormat</a>&lt;K,V&gt;</td>
+<td class="colLast">
+<div class="block"><code>InputFormat</code> describes the input-specification for a 
+ Map-Reduce job.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/InputSplit.html" title="class in org.apache.hadoop.mapreduce">InputSplit</a></td>
+<td class="colLast">
+<div class="block"><code>InputSplit</code> represents the data to be processed by an 
+ individual <a href="../../../../org/apache/hadoop/mapreduce/Mapper.html" title="class in org.apache.hadoop.mapreduce"><code>Mapper</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/Job.html" title="class in org.apache.hadoop.mapreduce">Job</a></td>
+<td class="colLast">
+<div class="block">The job submitter's view of the Job.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/JobID.html" title="class in org.apache.hadoop.mapreduce">JobID</a></td>
+<td class="colLast">
+<div class="block">JobID represents the immutable and unique identifier for 
+ the job.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/JobStatus.html" title="class in org.apache.hadoop.mapreduce">JobStatus</a></td>
+<td class="colLast">
+<div class="block">Describes the current status of a job.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/Mapper.html" title="class in org.apache.hadoop.mapreduce">Mapper</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</td>
+<td class="colLast">
+<div class="block">Maps input key/value pairs to a set of intermediate key/value pairs.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/MarkableIterator.html" title="class in org.apache.hadoop.mapreduce">MarkableIterator</a>&lt;VALUE&gt;</td>
+<td class="colLast">
+<div class="block"><code>MarkableIterator</code> is a wrapper iterator class that 
+ implements the <code>MarkableIteratorInterface</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/OutputCommitter.html" title="class in org.apache.hadoop.mapreduce">OutputCommitter</a></td>
+<td class="colLast">
+<div class="block"><code>OutputCommitter</code> describes the commit of task output for a 
+ Map-Reduce job.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/OutputFormat.html" title="class in org.apache.hadoop.mapreduce">OutputFormat</a>&lt;K,V&gt;</td>
+<td class="colLast">
+<div class="block"><code>OutputFormat</code> describes the output-specification for a 
+ Map-Reduce job.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/Partitioner.html" title="class in org.apache.hadoop.mapreduce">Partitioner</a>&lt;KEY,VALUE&gt;</td>
+<td class="colLast">
+<div class="block">Partitions the key space.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/QueueAclsInfo.html" title="class in org.apache.hadoop.mapreduce">QueueAclsInfo</a></td>
+<td class="colLast">
+<div class="block">Class to encapsulate Queue ACLs for a particular
+  user.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/QueueInfo.html" title="class in org.apache.hadoop.mapreduce">QueueInfo</a></td>
+<td class="colLast">
+<div class="block">Class that contains the information regarding the Job Queues which are 
+ maintained by the Hadoop Map/Reduce framework.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/RecordReader.html" title="class in org.apache.hadoop.mapreduce">RecordReader</a>&lt;KEYIN,VALUEIN&gt;</td>
+<td class="colLast">
+<div class="block">The record reader breaks the data into key/value pairs for input to the
+ <a href="../../../../org/apache/hadoop/mapreduce/Mapper.html" title="class in org.apache.hadoop.mapreduce"><code>Mapper</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/RecordWriter.html" title="class in org.apache.hadoop.mapreduce">RecordWriter</a>&lt;K,V&gt;</td>
+<td class="colLast">
+<div class="block"><code>RecordWriter</code> writes the output &lt;key, value&gt; pairs 
+ to an output file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/Reducer.html" title="class in org.apache.hadoop.mapreduce">Reducer</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</td>
+<td class="colLast">
+<div class="block">Reduces a set of intermediate values which share a key to a smaller set of
+ values.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskAttemptID.html" title="class in org.apache.hadoop.mapreduce">TaskAttemptID</a></td>
+<td class="colLast">
+<div class="block">TaskAttemptID represents the immutable and unique identifier for 
+ a task attempt.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskCompletionEvent.html" title="class in org.apache.hadoop.mapreduce">TaskCompletionEvent</a></td>
+<td class="colLast">
+<div class="block">This is used to track task completion events on 
+ job tracker.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskID.html" title="class in org.apache.hadoop.mapreduce">TaskID</a></td>
+<td class="colLast">
+<div class="block">TaskID represents the immutable and unique identifier for 
+ a Map or Reduce Task.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskTrackerInfo.html" title="class in org.apache.hadoop.mapreduce">TaskTrackerInfo</a></td>
+<td class="colLast">
+<div class="block">Information about TaskTracker.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/JobCounter.html" title="enum in org.apache.hadoop.mapreduce">JobCounter</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/JobPriority.html" title="enum in org.apache.hadoop.mapreduce">JobPriority</a></td>
+<td class="colLast">
+<div class="block">Used to describe the priority of the running job.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/QueueState.html" title="enum in org.apache.hadoop.mapreduce">QueueState</a></td>
+<td class="colLast">
+<div class="block">Enum representing queue state</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskCompletionEvent.Status.html" title="enum in org.apache.hadoop.mapreduce">TaskCompletionEvent.Status</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskCounter.html" title="enum in org.apache.hadoop.mapreduce">TaskCounter</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/apache/hadoop/mapreduce/TaskType.html" title="enum in org.apache.hadoop.mapreduce">TaskType</a></td>
+<td class="colLast">
+<div class="block">Enum for map, reduce, job-setup, job-cleanup, task-cleanup task types.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

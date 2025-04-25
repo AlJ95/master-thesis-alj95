@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; System Services</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        System Services
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>System Services</h1>
+<div class="section">
+<h2><a name="Overview"></a>Overview</h2>
+<p>System services are admin configured services which are auto deployed during bootstrap of ResourceManager. This would work only when API-Server is started as part of ResourceManager. Refer <a href="QuickStart.html#Manage_services_on_YARN_via_REST_API">Manage services on YARN</a>. This document describes how to configure and deploy system services.</p></div>
+<div class="section">
+<h2><a name="Configuration"></a>Configuration</h2>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Name </th>
+<th> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td>yarn.service.system-service.dir</td>
+<td> FS directory path to load and deploy admin configured services. These service spec files should be kept with proper hierarchy.</td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h2><a name="Hierarchy_of_FS_path"></a>Hierarchy of FS path</h2>
+<p>After configuring <i>yarn.service.system-service.dir</i> path, the spec files should be kept with below hierarchy.</p>
+
+<div>
+<div>
+<pre class="source">$SYSTEM_SERVICE_DIR_PATH/&lt;Launch-Mode&gt;/&lt;Users&gt;/&lt;Yarnfiles&gt;.
+</pre></div></div>
+
+<div class="section">
+<h3><a name="Launch-Mode"></a>Launch-Mode</h3>
+<p>Launch-Mode indicates that how the service should be deployed. Services can be auto deployed either synchronously or asynchronously.</p>
+<div class="section">
+<h4><a name="sync"></a>sync</h4>
+<p>These services are started synchronously along with RM. This might delay a bit RM transition to active period. This is useful when deploying critical services to get started sooner.</p></div>
+<div class="section">
+<h4><a name="async"></a>async</h4>
+<p>These services are started asynchronously without impacting RM transition period.</p></div></div>
+<div class="section">
+<h3><a name="Users"></a>Users</h3>
+<p>Users are the owner of the system service who has full access to modify it. Each users can own multiple services. Note that service names are unique per user.</p></div>
+<div class="section">
+<h3><a name="Yarnfiles"></a>Yarnfiles</h3>
+<p>YarnFiles are the spec files to launch services. These files must have .yarnfile extension otherwise those files are ignored.</p></div>
+<div class="section">
+<h3><a name="Example_of_hierarchy_to_configure_system_services."></a>Example of hierarchy to configure system services.</h3>
+
+<div>
+<div>
+<pre class="source">SYSTEM_SERVICE_DIR_PATH
+|---- sync
+|     |--- user1
+|     |    |---- service1.yarnfile
+|     |    |---- service2.yarnfile
+|     |--- user2
+|     |    |---- service3.yarnfile
+|     |    ....
+|     |
+|---- async
+|     |--- user3
+|     |    |---- service1.yarnfile
+|     |    |---- service2.yarnfile
+|     |--- user4
+|     |    |---- service3.yarnfile
+|     |    ....
+|     |
+</pre></div></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

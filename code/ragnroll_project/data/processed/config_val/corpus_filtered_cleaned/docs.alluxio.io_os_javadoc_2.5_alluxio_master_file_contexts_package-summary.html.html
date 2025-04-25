@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master.file.contexts (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master.file.contexts</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CallTracker.html" title="interface in alluxio.master.file.contexts">CallTracker</a></td>
+<td class="colLast">
+<div class="block">An interface for RPC level call tracking.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CheckAccessContext.html" title="class in alluxio.master.file.contexts">CheckAccessContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/CheckAccessPOptions.html" title="class in alluxio.grpc"><code>CheckAccessPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CheckConsistencyContext.html" title="class in alluxio.master.file.contexts">CheckConsistencyContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/CheckConsistencyPOptions.html" title="class in alluxio.grpc"><code>CheckConsistencyPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CompleteFileContext.html" title="class in alluxio.master.file.contexts">CompleteFileContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/CompleteFilePOptions.html" title="class in alluxio.grpc"><code>CompleteFilePOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CreateDirectoryContext.html" title="class in alluxio.master.file.contexts">CreateDirectoryContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/CreateDirectoryPOptions.html" title="class in alluxio.grpc"><code>CreateDirectoryPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CreateFileContext.html" title="class in alluxio.master.file.contexts">CreateFileContext</a></td>
+<td class="colLast">
+<div class="block">Implementation of <a href="../../../../alluxio/master/file/contexts/OperationContext.html" title="class in alluxio.master.file.contexts"><code>OperationContext</code></a> used to merge and wrap <a href="../../../../alluxio/grpc/CreateFilePOptions.html" title="class in alluxio.grpc"><code>CreateFilePOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CreatePathContext.html" title="class in alluxio.master.file.contexts">CreatePathContext</a>&lt;T extends com.google.protobuf.GeneratedMessageV3.Builder&lt;?&gt;,K extends <a href="../../../../alluxio/master/file/contexts/CreatePathContext.html" title="class in alluxio.master.file.contexts">CreatePathContext</a>&lt;?,?&gt;&gt;</td>
+<td class="colLast">
+<div class="block">Wrapper for <a href="../../../../alluxio/grpc/CreateFilePOptions.html" title="class in alluxio.grpc"><code>CreateFilePOptions</code></a> or <a href="../../../../alluxio/grpc/CreateDirectoryPOptions.html" title="class in alluxio.grpc"><code>CreateDirectoryPOptions</code></a> with additional context
+ data.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/DeleteContext.html" title="class in alluxio.master.file.contexts">DeleteContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/DeletePOptions.html" title="class in alluxio.grpc"><code>DeletePOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/FreeContext.html" title="class in alluxio.master.file.contexts">FreeContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/FreePOptions.html" title="class in alluxio.grpc"><code>FreePOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/GetStatusContext.html" title="class in alluxio.master.file.contexts">GetStatusContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/GetStatusPOptions.html" title="class in alluxio.grpc"><code>GetStatusPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/GrpcCallTracker.html" title="class in alluxio.master.file.contexts">GrpcCallTracker</a></td>
+<td class="colLast">
+<div class="block"><a href="../../../../alluxio/master/file/contexts/CallTracker.html" title="interface in alluxio.master.file.contexts"><code>CallTracker</code></a> implementation for gRPC calls.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/InternalOperationContext.html" title="class in alluxio.master.file.contexts">InternalOperationContext</a></td>
+<td class="colLast">
+<div class="block">Used for wiring call-tracking to non-rpc requests.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/ListStatusContext.html" title="class in alluxio.master.file.contexts">ListStatusContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/ListStatusPOptions.html" title="class in alluxio.grpc"><code>ListStatusPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/LoadMetadataContext.html" title="class in alluxio.master.file.contexts">LoadMetadataContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/LoadMetadataPOptions.html" title="class in alluxio.grpc"><code>LoadMetadataPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/MountContext.html" title="class in alluxio.master.file.contexts">MountContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/MountPOptions.html" title="class in alluxio.grpc"><code>MountPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/OperationContext.html" title="class in alluxio.master.file.contexts">OperationContext</a>&lt;T extends com.google.protobuf.GeneratedMessageV3.Builder,C extends <a href="../../../../alluxio/master/file/contexts/OperationContext.html" title="class in alluxio.master.file.contexts">OperationContext</a>&gt;</td>
+<td class="colLast">
+<div class="block">Used as a base class for wrapping context around proto messages.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/RenameContext.html" title="class in alluxio.master.file.contexts">RenameContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/RenamePOptions.html" title="class in alluxio.grpc"><code>RenamePOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/ScheduleAsyncPersistenceContext.html" title="class in alluxio.master.file.contexts">ScheduleAsyncPersistenceContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/ScheduleAsyncPersistencePOptions.html" title="class in alluxio.grpc"><code>ScheduleAsyncPersistencePOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/SetAclContext.html" title="class in alluxio.master.file.contexts">SetAclContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/SetAclPOptions.html" title="class in alluxio.grpc"><code>SetAclPOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/SetAttributeContext.html" title="class in alluxio.master.file.contexts">SetAttributeContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/SetAttributePOptions.html" title="class in alluxio.grpc"><code>SetAttributePOptions</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/WorkerHeartbeatContext.html" title="class in alluxio.master.file.contexts">WorkerHeartbeatContext</a></td>
+<td class="colLast">
+<div class="block">Used to merge and wrap <a href="../../../../alluxio/grpc/FileSystemHeartbeatPOptions.html" title="class in alluxio.grpc"><code>FileSystemHeartbeatPOptions</code></a>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/contexts/CallTracker.Type.html" title="enum in alluxio.master.file.contexts">CallTracker.Type</a></td>
+<td class="colLast">
+<div class="block">Defines call-tracker types.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

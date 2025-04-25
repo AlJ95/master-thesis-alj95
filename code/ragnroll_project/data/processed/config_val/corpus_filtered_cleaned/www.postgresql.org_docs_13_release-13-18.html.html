@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: E.3. Release 13.18</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/release-13-18.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="E.3. Release 13.18" />
+  <meta property="og:description" content="E.3.&amp;nbsp;Release 13.18 E.3.1. Migration to Version 13.18 E.3.2. Changes Release date:&amp;nbsp;2024-11-21 This release contains a few fixes from 13.17. For …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/13/release-13-18.html" title="PostgreSQL 13 - E.3. Release 13.18" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">E.3.&nbsp;Release 13.18</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="release-13-19.html" title="E.2.&nbsp;Release 13.19">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="release.html" title="Appendix&nbsp;E.&nbsp;Release Notes">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;E.&nbsp;Release Notes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="release-13-17.html" title="E.4.&nbsp;Release 13.17">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="RELEASE-13-18">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">E.3.&nbsp;Release 13.18</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="release-13-18.html#id-1.11.6.8.4">E.3.1. Migration to Version 13.18</a></span></dt>
+      <dt><span class="sect2"><a href="release-13-18.html#id-1.11.6.8.5">E.3.2. Changes</a></span></dt>
+    </dl>
+  </div>
+  <p><strong>Release date:&nbsp;</strong>2024-11-21</p>
+  <p>This release contains a few fixes from 13.17. For information about new features in major release 13, see <a class="xref" href="release-13.html" title="E.21.&nbsp;Release 13">Section&nbsp;E.21</a>.</p>
+  <div class="sect2" id="id-1.11.6.8.4">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">E.3.1.&nbsp;Migration to Version 13.18</h3>
+        </div>
+      </div>
+    </div>
+    <p>A dump/restore is not required for those running 13.X.</p>
+    <p>However, if you are upgrading from a version earlier than 13.17, see <a class="xref" href="release-13-17.html" title="E.4.&nbsp;Release 13.17">Section&nbsp;E.4</a>.</p>
+  </div>
+  <div class="sect2" id="id-1.11.6.8.5">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">E.3.2.&nbsp;Changes</h3>
+        </div>
+      </div>
+    </div>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>Restore functionality of <code class="command">ALTER {ROLE|DATABASE} SET role</code> (Tom Lane, Noah Misch) <a class="ulink" href="https://postgr.es/c/07c6e0f61" target="_top">§</a></p>
+          <p>The fix for CVE-2024-10978 accidentally caused settings for <code class="varname">role</code> to not be applied if they come from non-interactive sources, including previous <code class="command">ALTER {ROLE|DATABASE}</code> commands and the <code class="varname">PGOPTIONS</code> environment variable.</p>
+        </li>
+        <li class="listitem">
+          <p>Fix cases where a logical replication slot's <code class="structfield">restart_lsn</code> could go backwards (Masahiko Sawada) <a class="ulink" href="https://postgr.es/c/15dc1abb1" target="_top">§</a></p>
+          <p>Previously, restarting logical replication could sometimes cause the slot's restart point to be recomputed as an older value than had previously been advertised in <code class="structname">pg_replication_slots</code>. This is bad, since for example WAL files might have been removed on the basis of the later <code class="structfield">restart_lsn</code> value, in which case replication would fail to restart.</p>
+        </li>
+        <li class="listitem">
+          <p>Count index scans in <code class="filename">contrib/bloom</code> indexes in the statistics views, such as the <code class="structname">pg_stat_user_indexes</code>.<code class="structfield">idx_scan</code> counter (Masahiro Ikeda) <a class="ulink" href="https://postgr.es/c/e493ea866" target="_top">§</a></p>
+        </li>
+        <li class="listitem">
+          <p>Fix crash when checking to see if an index's opclass options have changed (Alexander Korotkov) <a class="ulink" href="https://postgr.es/c/5411e8213" target="_top">§</a></p>
+          <p>Some forms of <code class="command">ALTER TABLE</code> would fail if the table has an index with non-default operator class options.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="release-13-19.html" title="E.2.&nbsp;Release 13.19">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="release.html" title="Appendix&nbsp;E.&nbsp;Release Notes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="release-13-17.html" title="E.4.&nbsp;Release 13.17">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">E.2.&nbsp;Release 13.19&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;E.4.&nbsp;Release 13.17</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/release-13-18.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

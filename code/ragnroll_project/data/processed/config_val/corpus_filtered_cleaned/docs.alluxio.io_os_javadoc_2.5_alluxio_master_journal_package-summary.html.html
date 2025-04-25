@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master.journal (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master.journal</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/DelegatingJournaled.html" title="interface in alluxio.master.journal">DelegatingJournaled</a></td>
+<td class="colLast">
+<div class="block">Convenient interface for classes which delegate their journaling methods to another journaled
+ object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/Journal.html" title="interface in alluxio.master.journal">Journal</a></td>
+<td class="colLast">
+<div class="block">A journal for persisting journal entries.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalContext.html" title="interface in alluxio.master.journal">JournalContext</a></td>
+<td class="colLast">
+<div class="block">Context for storing journaling information.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/Journaled.html" title="interface in alluxio.master.journal">Journaled</a></td>
+<td class="colLast">
+<div class="block">Interface for classes with journaled state.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalEntryIterable.html" title="interface in alluxio.master.journal">JournalEntryIterable</a></td>
+<td class="colLast">
+<div class="block">Interface to get an iterator of <a href="../../../alluxio/proto/journal/Journal.JournalEntry.html" title="class in alluxio.proto.journal"><code>Journal.JournalEntry</code></a>s.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalEntryReplayable.html" title="interface in alluxio.master.journal">JournalEntryReplayable</a></td>
+<td class="colLast">
+<div class="block">Interface for classes which can replay journal entries.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalEntryRepresentable.html" title="interface in alluxio.master.journal">JournalEntryRepresentable</a></td>
+<td class="colLast">
+<div class="block">This interface enables representing a class as a <a href="../../../alluxio/proto/journal/Journal.JournalEntry.html" title="class in alluxio.proto.journal"><code>Journal.JournalEntry</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalFileParser.html" title="interface in alluxio.master.journal">JournalFileParser</a></td>
+<td class="colLast">
+<div class="block">An interface to parse a journal file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalMaster.html" title="interface in alluxio.master.journal">JournalMaster</a></td>
+<td class="colLast">
+<div class="block">Interface for journal master implementations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalReader.html" title="interface in alluxio.master.journal">JournalReader</a></td>
+<td class="colLast">
+<div class="block">This class manages reading from the journal.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalSystem.html" title="interface in alluxio.master.journal">JournalSystem</a></td>
+<td class="colLast">
+<div class="block">A journal system for storing and applying journal entries.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalWriter.html" title="interface in alluxio.master.journal">JournalWriter</a></td>
+<td class="colLast">
+<div class="block">Interface for a class that can write and flush journal entries.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/NoopJournaled.html" title="interface in alluxio.master.journal">NoopJournaled</a></td>
+<td class="colLast">
+<div class="block">Interface providing default implementations which do nothing.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/AbstractCatchupThread.html" title="class in alluxio.master.journal">AbstractCatchupThread</a></td>
+<td class="colLast">
+<div class="block">Abstract helper for tracking and terminating a thread for journal catch-up task.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/AbstractJournalSystem.html" title="class in alluxio.master.journal">AbstractJournalSystem</a></td>
+<td class="colLast">
+<div class="block">Base implementation for journal systems.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/AsyncJournalWriter.html" title="class in alluxio.master.journal">AsyncJournalWriter</a></td>
+<td class="colLast">
+<div class="block">This enables async journal writing, as well as some batched journal flushing.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/CatchupFuture.html" title="class in alluxio.master.journal">CatchupFuture</a></td>
+<td class="colLast">
+<div class="block">Used to track and cancel journal advancing.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/DefaultJournalMaster.html" title="class in alluxio.master.journal">DefaultJournalMaster</a></td>
+<td class="colLast">
+<div class="block">Default implementation for <a href="../../../alluxio/master/journal/JournalMaster.html" title="interface in alluxio.master.journal"><code>JournalMaster</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournaledGroup.html" title="class in alluxio.master.journal">JournaledGroup</a></td>
+<td class="colLast">
+<div class="block">Convenience class which groups together multiple Journaled components as a single Journaled
+ component.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalEntryAssociation.html" title="class in alluxio.master.journal">JournalEntryAssociation</a></td>
+<td class="colLast">
+<div class="block">Association from journal entry to the master it applies to.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalEntryStreamReader.html" title="class in alluxio.master.journal">JournalEntryStreamReader</a></td>
+<td class="colLast">
+<div class="block">Class for reading journal entries from an input stream.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalFileParser.Factory.html" title="class in alluxio.master.journal">JournalFileParser.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory to create <a href="../../../alluxio/master/journal/JournalFileParser.html" title="interface in alluxio.master.journal"><code>JournalFileParser</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalMasterClientServiceHandler.html" title="class in alluxio.master.journal">JournalMasterClientServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a gRPC handler for journal master RPCs invoked by an Alluxio client.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalSystem.Builder.html" title="class in alluxio.master.journal">JournalSystem.Builder</a></td>
+<td class="colLast">
+<div class="block">Builder for constructing a journal system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalUpgrader.html" title="class in alluxio.master.journal">JournalUpgrader</a></td>
+<td class="colLast">
+<div class="block">Tool to upgrade journal from v0 to v1.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalUtils.html" title="class in alluxio.master.journal">JournalUtils</a></td>
+<td class="colLast">
+<div class="block">Utility methods for working with the Alluxio journal.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/MasterJournalContext.html" title="class in alluxio.master.journal">MasterJournalContext</a></td>
+<td class="colLast">
+<div class="block">Context for storing master journal information.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/MergeJournalContext.html" title="class in alluxio.master.journal">MergeJournalContext</a></td>
+<td class="colLast">
+<div class="block">Context for merging journal entries together for a wrapped journal context.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/NoopJournalContext.html" title="class in alluxio.master.journal">NoopJournalContext</a></td>
+<td class="colLast">
+<div class="block">Noop version of JournalContext.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/PatchedInputChunked.html" title="class in alluxio.master.journal">PatchedInputChunked</a></td>
+<td class="colLast">
+<div class="block">A replacement for Kryo's <code>InputChunked</code> which properly handles eof.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/StateChangeJournalContext.html" title="class in alluxio.master.journal">StateChangeJournalContext</a></td>
+<td class="colLast">
+<div class="block">Context for correctly managing the state change lock for a wrapped journal context.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalReader.State.html" title="enum in alluxio.master.journal">JournalReader.State</a></td>
+<td class="colLast">
+<div class="block">States that the reader can be after calling <a href="../../../alluxio/master/journal/JournalReader.html#advance--"><code>JournalReader.advance()</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalSystem.Mode.html" title="enum in alluxio.master.journal">JournalSystem.Mode</a></td>
+<td class="colLast">
+<div class="block">The mode of the journal system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journal/JournalType.html" title="enum in alluxio.master.journal">JournalType</a></td>
+<td class="colLast">
+<div class="block">Enumerates the different types of journals that Alluxio may be configured with.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Hadoop: YARN Resource Configuration</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Hadoop: YARN Resource Configuration
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Hadoop: YARN Resource Configuration</h1>
+<div class="section">
+<h2><a name="Overview"></a>Overview</h2>
+<p>YARN supports an extensible resource model. By default YARN tracks CPU and memory for all nodes, applications, and queues, but the resource definition can be extended to include arbitrary &#x201c;countable&#x201d; resources. A countable resource is a resource that is consumed while a container is running, but is released afterwards. CPU and memory are both countable resources. Other examples include GPU resources and software licenses.</p>
+<p>In addition, YARN also supports the use of &#x201c;resource profiles&#x201d;, which allow a user to specify multiple resource requests through a single profile, similar to Amazon Web Services Elastic Compute Cluster instance types. For example, &#x201c;large&#x201d; might mean 8 virtual cores and 16GB RAM.</p></div>
+<div class="section">
+<h2><a name="Configuration"></a>Configuration</h2>
+<p>The following configuration properties are supported. See below for details.</p>
+<p><tt>yarn-site.xml</tt></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Configuration Property </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>yarn.resourcemanager.resource-profiles.enabled</tt> </td>
+<td align="left"> Indicates whether resource profiles support is enabled. Defaults to <tt>false</tt>. </td></tr>
+</tbody>
+</table>
+<p><tt>resource-types.xml</tt></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Configuration Property </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>yarn.resource-types</tt> </td>
+<td align="left"> Comma-separated list of additional resources. May not include <tt>memory</tt>, <tt>memory-mb</tt>, or <tt>vcores</tt> </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.resource-types.&lt;resource&gt;.units</tt> </td>
+<td align="left"> Default unit for the specified resource type </td></tr>
+<tr class="b">
+<td align="left"> <tt>yarn.resource-types.&lt;resource&gt;.minimum-allocation</tt> </td>
+<td align="left"> The minimum request for the specified resource type </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.resource-types.&lt;resource&gt;.maximum-allocation</tt> </td>
+<td align="left"> The maximum request for the specified resource type </td></tr>
+</tbody>
+</table>
+<p><tt>node-resources.xml</tt></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Configuration Property </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>yarn.nodemanager.resource-type.&lt;resource&gt;</tt> </td>
+<td align="left"> The count of the specified resource available from the node manager </td></tr>
+</tbody>
+</table>
+<p>Please note that the <tt>resource-types.xml</tt> and <tt>node-resources.xml</tt> files also need to be placed in the same configuration directory as <tt>yarn-site.xml</tt> if they are used. Alternatively, the properties may be placed into the <tt>yarn-site.xml</tt> file instead.</p></div>
+<div class="section">
+<h2><a name="YARN_Resource_Model"></a>YARN Resource Model</h2>
+<div class="section">
+<h3><a name="Resource_Manager"></a>Resource Manager</h3>
+<p>The resource manager is the final arbiter of what resources in the cluster are tracked. The resource manager loads its resource definition from XML configuration files. For example, to define a new resource in addition to CPU and memory, the following property should be configured:</p>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+  &lt;property&gt;
+    &lt;name&gt;yarn.resource-types&lt;/name&gt;
+    &lt;value&gt;resource1,resource2&lt;/value&gt;
+    &lt;description&gt;
+    The resources to be used for scheduling. Use resource-types.xml
+    to specify details about the individual resource types.
+    &lt;/description&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</pre></div></div>
+
+<p>A valid resource name must begin with a letter and contain only letters, numbers, and any of: &#x2018;.&#x2019;, &#x2018;_&#x2019;, or &#x2018;-&#x2019;. A valid resource name may also be optionally preceded by a name space followed by a slash. A valid name space consists of period-separated groups of letters, numbers, and dashes. For example, the following are valid resource names:</p>
+<ul>
+
+<li>myresource</li>
+<li>my_resource</li>
+<li>My-Resource01</li>
+<li>com.acme/myresource</li>
+</ul>
+<p>The following are examples of invalid resource names:</p>
+<ul>
+
+<li>10myresource</li>
+<li>my resource</li>
+<li>com/acme/myresource</li>
+<li>$NS/myresource</li>
+<li>-none-/myresource</li>
+</ul>
+<p>For each new resource type defined an optional unit property can be added to set the default unit for the resource type. Valid values are:</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left">Unit Name </th>
+<th align="left"> Meaning </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> p </td>
+<td align="left"> pico </td></tr>
+<tr class="a">
+<td align="left"> n </td>
+<td align="left"> nano </td></tr>
+<tr class="b">
+<td align="left"> u </td>
+<td align="left"> micro </td></tr>
+<tr class="a">
+<td align="left"> m </td>
+<td align="left"> milli </td></tr>
+<tr class="b">
+<td align="left"> </td>
+<td align="left"> default, i.e. no unit </td></tr>
+<tr class="a">
+<td align="left"> k </td>
+<td align="left"> kilo </td></tr>
+<tr class="b">
+<td align="left"> M </td>
+<td align="left"> mega </td></tr>
+<tr class="a">
+<td align="left"> G </td>
+<td align="left"> giga </td></tr>
+<tr class="b">
+<td align="left"> T </td>
+<td align="left"> tera </td></tr>
+<tr class="a">
+<td align="left"> P </td>
+<td align="left"> peta </td></tr>
+<tr class="b">
+<td align="left"> Ki </td>
+<td align="left"> binary kilo, i.e. 1024 </td></tr>
+<tr class="a">
+<td align="left"> Mi </td>
+<td align="left"> binary mega, i.e. 1024^2 </td></tr>
+<tr class="b">
+<td align="left"> Gi </td>
+<td align="left"> binary giga, i.e. 1024^3 </td></tr>
+<tr class="a">
+<td align="left"> Ti </td>
+<td align="left"> binary tera, i.e. 1024^4 </td></tr>
+<tr class="b">
+<td align="left"> Pi </td>
+<td align="left"> binary peta, i.e. 1024^5 </td></tr>
+</tbody>
+</table>
+<p>The property must be named <tt>yarn.resource-types.&lt;resource&gt;.units</tt>. Each defined resource may also have optional minimum and maximum properties. The properties must be named <tt>yarn.resource-types.&lt;resource&gt;.minimum-allocation</tt> and <tt>yarn.resource-types.&lt;resource&gt;.maximum-allocation</tt>.</p>
+<p>The <tt>yarn.resource-types</tt> property and any unit, mimimum, or maximum properties may be defined in either the usual <tt>yarn-site.xml</tt> file or in a file named <tt>resource-types.xml</tt>. For example, the following could appear in either file:</p>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+  &lt;property&gt;
+    &lt;name&gt;yarn.resource-types&lt;/name&gt;
+    &lt;value&gt;resource1, resource2&lt;/value&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;yarn.resource-types.resource1.units&lt;/name&gt;
+    &lt;value&gt;G&lt;/value&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;yarn.resource-types.resource2.minimum-allocation&lt;/name&gt;
+    &lt;value&gt;1&lt;/value&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;yarn.resource-types.resource2.maximum-allocation&lt;/name&gt;
+    &lt;value&gt;1024&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Node_Manager"></a>Node Manager</h3>
+<p>Each node manager independently defines the resources that are available from that node. The resource definition is done through setting a property for each available resource. The property must be named <tt>yarn.nodemanager.resource-type.&lt;resource&gt;</tt> and may be placed in the usual <tt>yarn-site.xml</tt> file or in a file named <tt>node&#xad;resources.xml</tt>. The value of the property should be the amount of that resource offered by the node. For example:</p>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+ &lt;property&gt;
+   &lt;name&gt;yarn.nodemanager.resource-type.resource1&lt;/name&gt;
+   &lt;value&gt;5G&lt;/value&gt;
+ &lt;/property&gt;
+
+ &lt;property&gt;
+   &lt;name&gt;yarn.nodemanager.resource-type.resource2&lt;/name&gt;
+   &lt;value&gt;2m&lt;/value&gt;
+ &lt;/property&gt;
+
+&lt;/configuration&gt;
+</pre></div></div>
+
+<p>Note that the units used for these resources need not match the definition held by the resource manager. If the units do not match, the resource manager will automatically do a conversion.</p></div>
+<div class="section">
+<h3><a name="Using_Resources_With_MapReduce"></a>Using Resources With MapReduce</h3>
+<p>MapReduce requests three different kinds of containers from YARN: the application master container, map containers, and reduce containers. For each container type, there is a corresponding set of properties that can be used to set the resources requested.</p>
+<p>The properties for setting resource requests in MapReduce are:</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Property </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>yarn.app.mapreduce.am.resource.mb</tt> </td>
+<td align="left"> Sets the memory requested for the application master container to the value in MB. No longer preferred. Use <tt>yarn.app.mapreduce.am.resource.memory-mb</tt> instead. Defaults to 1536. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.app.mapreduce.am.resource.memory</tt> </td>
+<td align="left"> Sets the memory requested for the application master container to the value in MB. No longer preferred. Use <tt>yarn.app.mapreduce.am.resource.memory-mb</tt> instead. Defaults to 1536. </td></tr>
+<tr class="b">
+<td align="left"> <tt>yarn.app.mapreduce.am.resource.memory-mb</tt> </td>
+<td align="left"> Sets the memory requested for the application master container to the value in MB. Defaults to 1536. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.app.mapreduce.am.resource.cpu-vcores</tt> </td>
+<td align="left"> Sets the CPU requested for the application master container to the value. No longer preferred. Use <tt>yarn.app.mapreduce.am.resource.vcores</tt> instead. Defaults to 1. </td></tr>
+<tr class="b">
+<td align="left"> <tt>yarn.app.mapreduce.am.resource.vcores</tt> </td>
+<td align="left"> Sets the CPU requested for the application master container to the value. Defaults to 1. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.app.mapreduce.am.resource.&lt;resource&gt;</tt> </td>
+<td align="left"> Sets the quantity requested of <tt>&lt;resource&gt;</tt> for the application master container to the value. If no unit is specified, the default unit for the resource is assumed. See the section on units above. </td></tr>
+<tr class="b">
+<td align="left"> <tt>mapreduce.map.memory.mb</tt> </td>
+<td align="left"> Sets the memory requested for the all map task containers to the value in MB. No longer preferred. Use <tt>mapreduce.map.resource.memory-mb</tt> instead. Defaults to 1024. </td></tr>
+<tr class="a">
+<td align="left"> <tt>mapreduce.map.resource.memory</tt> </td>
+<td align="left"> Sets the memory requested for the all map task containers to the value in MB. No longer preferred. Use <tt>mapreduce.map.resource.memory-mb</tt> instead. Defaults to 1024. </td></tr>
+<tr class="b">
+<td align="left"> <tt>mapreduce.map.resource.memory-mb</tt> </td>
+<td align="left"> Sets the memory requested for the all map task containers to the value in MB. Defaults to 1024. </td></tr>
+<tr class="a">
+<td align="left"> <tt>mapreduce.map.cpu.vcores</tt> </td>
+<td align="left"> Sets the CPU requested for the all map task containers to the value. No longer preferred. Use <tt>mapreduce.map.resource.vcores</tt> instead. Defaults to 1. </td></tr>
+<tr class="b">
+<td align="left"> <tt>mapreduce.map.resource.vcores</tt> </td>
+<td align="left"> Sets the CPU requested for the all map task containers to the value. Defaults to 1. </td></tr>
+<tr class="a">
+<td align="left"> <tt>mapreduce.map.resource.&lt;resource&gt;</tt> </td>
+<td align="left"> Sets the quantity requested of <tt>&lt;resource&gt;</tt> for the all map task containers to the value. If no unit is specified, the default unit for the resource is assumed. See the section on units above. </td></tr>
+<tr class="b">
+<td align="left"> <tt>mapreduce.reduce.memory.mb</tt> </td>
+<td align="left"> Sets the memory requested for the all reduce task containers to the value in MB. No longer preferred. Use <tt>mapreduce.reduce.resource.memory-mb</tt> instead. Defaults to 1024. </td></tr>
+<tr class="a">
+<td align="left"> <tt>mapreduce.reduce.resource.memory</tt> </td>
+<td align="left"> Sets the memory requested for the all reduce task containers to the value in MB. No longer preferred. Use <tt>mapreduce.reduce.resource.memory-mb</tt> instead. Defaults to 1024. </td></tr>
+<tr class="b">
+<td align="left"> <tt>mapreduce.reduce.resource.memory-mb</tt> </td>
+<td align="left"> Sets the memory requested for the all reduce task containers to the value in MB. Defaults to 1024. </td></tr>
+<tr class="a">
+<td align="left"> <tt>mapreduce.reduce.cpu.vcores</tt> </td>
+<td align="left"> Sets the CPU requested for the all reduce task containers to the value. No longer preferred. Use <tt>mapreduce.reduce.resource.vcores</tt> instead. Defaults to 1. </td></tr>
+<tr class="b">
+<td align="left"> <tt>mapreduce.reduce.resource.vcores</tt> </td>
+<td align="left"> Sets the CPU requested for the all reduce task containers to the value. Defaults to 1. </td></tr>
+<tr class="a">
+<td align="left"> <tt>mapreduce.reduce.resource.&lt;resource&gt;</tt> </td>
+<td align="left"> Sets the quantity requested of <tt>&lt;resource&gt;</tt> for the all reduce task containers to the value. If no unit is specified, the default unit for the resource is assumed. See the section on units above. </td></tr>
+</tbody>
+</table>
+<p>Note that these resource requests may be modified by YARN to meet the configured minimum and maximum resource values or to be a multiple of the configured increment. See the <tt>yarn.scheduler.maximum-allocation-mb</tt>, <tt>yarn.scheduler.minimum-allocation-mb</tt>, <tt>yarn.scheduler.increment-allocation-mb</tt>, <tt>yarn.scheduler.maximum-allocation-vcores</tt>, <tt>yarn.scheduler.minimum-allocation-vcores</tt>, and <tt>yarn.scheduler.increment-allocation-vcores</tt> properties in the YARN scheduler configuration.</p></div></div>
+<div class="section">
+<h2><a name="Resource_Profiles"></a>Resource Profiles</h2>
+<p>Resource profiles provides an easy way for users to request a set of resources with a single profile and a means for administrators to regulate how resources are consumed.</p>
+<p>To configure resource types, the administrator must set <tt>yarn.resourcemanager.resource-profiles.enabled</tt> to <tt>true</tt> in the resource manager&#x2019;s <tt>yarn-site.xml</tt> file. This file defines the supported profiles. For example:</p>
+
+<div>
+<div>
+<pre class="source">{
+    &quot;small&quot;: {
+        &quot;memory-mb&quot; : 1024,
+        &quot;vcores&quot; : 1
+    },
+    &quot;default&quot; : {
+        &quot;memory-mb&quot; : 2048,
+        &quot;vcores&quot; : 2
+    },
+    &quot;large&quot; : {
+        &quot;memory-mb&quot;: 4096,
+        &quot;vcores&quot; : 4
+    },
+    &quot;compute&quot; : {
+        &quot;memory-mb&quot; : 2048,
+        &quot;vcores&quot; : 2,
+        &quot;gpu&quot; : 1
+    }
+}
+</pre></div></div>
+
+<p>In this example, users have access to four profiles with different resource settings. Note that in the <tt>compute</tt> profile, the administrator has configured an additional resource as described above.</p>
+<div class="section">
+<h3><a name="Requesting_Profiles"></a>Requesting Profiles</h3>
+<p>The distributed shell is currently the only client that supports resource profiles. Using the distributed shell, the user can specify a resource profile name which will automatically be translated into an appropriate set of resource requests.</p>
+<p>For example:</p>
+<p><tt>hadoop job $DISTSHELL -jar $DISTSHELL -shell_command run.sh -container_resource_profile small</tt></p></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

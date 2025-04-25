@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; HDFS Provided Storage</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        HDFS Provided Storage
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>HDFS Provided Storage</h1>
+<p>Provided storage allows data <i>stored outside HDFS</i> to be mapped to and addressed from HDFS. It builds on <a href="./ArchivalStorage.html">heterogeneous storage</a> by introducing a new storage type, <tt>PROVIDED</tt>, to the set of media in a datanode. Clients accessing data in <tt>PROVIDED</tt> storages can cache replicas in local media, enforce HDFS invariants (e.g., security, quotas), and address more data than the cluster could persist in the storage attached to DataNodes. This architecture is particularly useful in scenarios where HDFS clusters are ephemeral (e.g., cloud scenarios), and/or require to read data that lives in other storage systems (e.g., blob stores).</p>
+<p>Provided storage is an experimental feature in HDFS.</p>
+<ul>
+
+
+</ul></li></ul></li>
+</ul></li>
+</ul></li></ul></li></ul>
+
+<div class="section">
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>As of this writing, support for mounting external storage as <tt>PROVIDED</tt> blocks is limited to creating a <i>read-only image</i> of a remote namespace that implements the <tt>org.apache.hadoop.fs.FileSystem</tt> interface, and starting a NameNode to serve the image. Specifically, reads from a snapshot of a remote namespace are supported. Adding a remote namespace to an existing/running namenode, refreshing the remote snapshot, unmounting, and writes are not available in this release. One can use <a href="./ViewFs.html">ViewFs</a> and <a href="../hadoop-hdfs-rbf/HDFSRouterFederation.html">RBF</a> to integrate namespaces with <tt>PROVIDED</tt> storage into an existing deployment.</p></div>
+<div class="section">
+<h2><a name="Creating_HDFS_Clusters_with_PROVIDED_Storage"></a>Creating HDFS Clusters with <tt>PROVIDED</tt> Storage</h2>
+<p>One can create snapshots of the remote namespace using the <tt>fs2img</tt> tool. Given a path to a remote <tt>FileSystem</tt>, the tool creates an <i>image</i> mirroring the namespace and an <i>alias map</i> that maps blockIDs in the generated image to a <tt>FileRegion</tt> in the remote filesystem. A <tt>FileRegion</tt> contains sufficient information to address a fixed sequence of bytes in the remote <tt>FileSystem</tt> (e.g., file, offset, length) and a nonce to verify that the region is unchanged since the image was generated.</p>
+<p>After the NameNode image and alias map are created, the NameNode and DataNodes must be configured to consistently reference this address space. When a DataNode registers with an attached, <tt>PROVIDED</tt> storage, the NameNode considers all the external blocks to be addressable through that DataNode, and may begin to direct clients to it. Symmetrically, the DataNode must be able to map every block in the <tt>PROVIDED</tt> storage to remote data.</p>
+<p>Deployment details vary depending on the configured alias map implementation.</p>
+<div class="section">
+<h3><a name="PROVIDED_Configuration"></a><tt>PROVIDED</tt> Configuration</h3>
+<p>Each NameNode supports one alias map. When <tt>PROVIDED</tt> storage is enabled, the storage ID configured on the NameNode and DataNodes must match. All other details are internal to the alias map implementation.</p>
+<p>The configuration to enable <tt>PROVIDED</tt> storage is as follows. The configuration options available for the alias map implementations are available below.</p>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.namenode.provided.enabled&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+    &lt;description&gt;Enabled provided storage on the Namenode&lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+     &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+     &lt;value&gt;[DISK]/local/path/to/blocks/, [PROVIDED]remoteFS://remoteFS-authority/path/to/data/&lt;/value&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+      &lt;name&gt;dfs.provided.storage.id&lt;/name&gt;
+      &lt;value&gt;DS-PROVIDED&lt;/value&gt;
+      &lt;description&gt;The storage ID used for provided storages in the cluster.&lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.class&lt;/name&gt;
+    &lt;value&gt;org.apache.hadoop.hdfs.server.common.blockaliasmap.impl.TextFileRegionAliasMap&lt;/value&gt;
+  &lt;/property&gt;
+
+&lt;/configuration&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="fs2img_tool"></a>fs2img tool</h3>
+<p>The <tt>fs2img</tt> tool &#x201c;walks&#x201d; over a remote namespace by recursively enumerating children of a remote URI to produce an FSImage. Some attributes can be controlled by plugins, such as owner/group mappings from the remote filesystem to HDFS and the mapping of files to HDFS blocks.</p>
+<p>The various options available in running the tool are:</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Option                  </th>
+<th align="left"> Property                    </th>
+<th align="left"> Default           </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>-o</tt>, <tt>--outdir</tt>        </td>
+<td align="left"> dfs.namenode.name.dir       </td>
+<td align="left"> <a class="externalLink" href="file://${hadoop.tmp.dir}/dfs/name">file://${hadoop.tmp.dir}/dfs/name</a> </td>
+<td align="left"> Output directory </td></tr>
+<tr class="a">
+<td align="left"> <tt>-b</tt>, <tt>--blockclass</tt>    </td>
+<td align="left"> dfs.provided.aliasmap.class </td>
+<td align="left"> NullBlocksMap     </td>
+<td align="left"> Block output class </td></tr>
+<tr class="b">
+<td align="left"> <tt>-u</tt>, <tt>--ugiclass</tt>      </td>
+<td align="left"> hdfs.image.writer.ugi.class </td>
+<td align="left"> SingleUGIResolver </td>
+<td align="left"> UGI resolver class </td></tr>
+<tr class="a">
+<td align="left"> <tt>-i</tt>, <tt>--blockidclass</tt>  </td>
+<td align="left"> hdfs.image.writer.blockresolver.class </td>
+<td align="left"> FixedBlockResolver </td>
+<td align="left"> Block resolver class </td></tr>
+<tr class="b">
+<td align="left"> <tt>-c</tt>, <tt>--cachedirs</tt>     </td>
+<td align="left"> hdfs.image.writer.cache.entries </td>
+<td align="left"> 100           </td>
+<td align="left"> Max active dirents </td></tr>
+<tr class="a">
+<td align="left"> <tt>-cid</tt>, <tt>--clusterID</tt>   </td>
+<td align="left">                             </td>
+<td align="left">                   </td>
+<td align="left"> Cluster ID </td></tr>
+<tr class="b">
+<td align="left"> <tt>-bpid</tt>, <tt>--blockPoolID</tt></td>
+<td align="left">                             </td>
+<td align="left">                   </td>
+<td align="left"> Block pool ID </td></tr>
+</tbody>
+</table>
+<div class="section">
+<h4><a name="Examples"></a>Examples</h4>
+<p>Assign all files to be owned by &#x201c;rmarathe&#x201d;, write to gzip compressed text:</p>
+
+<div>
+<div>
+<pre class="source">hadoop org.apache.hadoop.hdfs.server.namenode.FileSystemImage \
+  -Dhdfs.image.writer.ugi.single.user=rmarathe \
+  -Ddfs.provided.aliasmap.text.codec=gzip \
+  -Ddfs.provided.aliasmap.text.write.dir=file:///tmp/
+  -b org.apache.hadoop.hdfs.server.common.blockaliasmap.impl.TextFileRegionAliasMap \
+  -u org.apache.hadoop.hdfs.server.namenode.SingleUGIResolver \
+  -o file:///tmp/name \
+  hdfs://afreast/projects/ydau/onan
+</pre></div></div>
+
+<p>Assign ownership based on a custom <tt>UGIResolver</tt>, in LevelDB:</p>
+
+<div>
+<div>
+<pre class="source">hadoop org.apache.hadoop.hdfs.server.namenode.FileSystemImage \
+  -Ddfs.provided.aliasmap.leveldb.path=/path/to/leveldb/map/dingos.db \
+  -b org.apache.hadoop.hdfs.server.common.blockaliasmap.impl.LevelDBFileRegionAliasMap \
+  -o file:///tmp/name \
+  -u CustomResolver \
+  hdfs://enfield/projects/ywqmd/incandenza
+</pre></div></div>
+</div></div></div>
+<div class="section">
+<h2><a name="Alias_Map_Implementations"></a>Alias Map Implementations</h2>
+<p>The alias map implementation to use is configured using the <tt>dfs.provided.aliasmap.class</tt> parameter. Currently, the following two types of alias maps are supported.</p>
+<div class="section">
+<h3><a name="InMemoryAliasMap"></a>InMemoryAliasMap</h3>
+<p>This is a LevelDB-based alias map that runs as a separate server in Namenode. The alias map itself can be created using the <tt>fs2img</tt> tool using the option <tt>-Ddfs.provided.aliasmap.leveldb.path=file:///path/to/leveldb/map/dingos.db -b org.apache.hadoop.hdfs.server.common.blockaliasmap.impl.LevelDBFileRegionAliasMap</tt> as in the example above.</p>
+<p>Datanodes contact this alias map using the <tt>org.apache.hadoop.hdfs.server.aliasmap.InMemoryAliasMapProtocol</tt> protocol.</p>
+<div class="section">
+<h4><a name="Configuration"></a>Configuration</h4>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.inmemory.batch-size&lt;/name&gt;
+    &lt;value&gt;500&lt;/value&gt;
+    &lt;description&gt;
+      The batch size when iterating over the database backing the aliasmap
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.inmemory.dnrpc-address&lt;/name&gt;
+    &lt;value&gt;namenode:rpc-port&lt;/value&gt;
+    &lt;description&gt;
+      The address where the aliasmap server will be running
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.inmemory.leveldb.dir&lt;/name&gt;
+    &lt;value&gt;/path/to/leveldb/map/dingos.db&lt;/value&gt;
+    &lt;description&gt;
+      The directory where the leveldb files will be kept
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.inmemory.enabled&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+    &lt;description&gt;Enable the inmemory alias map on the NameNode. Defaults to false.&lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.class&lt;/name&gt;
+    &lt;value&gt;org.apache.hadoop.hdfs.server.common.blockaliasmap.impl.InMemoryLevelDBAliasMapClient&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</pre></div></div>
+</div></div>
+<div class="section">
+<h3><a name="TextFileRegionAliasMap"></a>TextFileRegionAliasMap</h3>
+<p>This alias map implementation stores the mapping from <tt>blockID</tt>s to <tt>FileRegion</tt>s in a delimited text file. This format is useful for test environments, particularly single-node.</p>
+<div class="section">
+<h4><a name="Configuration"></a>Configuration</h4>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.text.delimiter&lt;/name&gt;
+    &lt;value&gt;,&lt;/value&gt;
+    &lt;description&gt;
+        The delimiter used when the alias map is specified as
+        a text file.
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.text.read.file&lt;/name&gt;
+    &lt;value&gt;file:///path/to/aliasmap/blocks_blocPoolID.csv&lt;/value&gt;
+    &lt;description&gt;
+        The path specifying the alias map as a text file,
+        specified as a URI.
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.text.codec&lt;/name&gt;
+    &lt;value&gt;&lt;/value&gt;
+    &lt;description&gt;
+        The codec used to de-compress the alias map. Default value is empty.
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.provided.aliasmap.text.write.dir&lt;/name&gt;
+    &lt;value&gt;file:///path/to/aliasmap/&lt;/value&gt;
+    &lt;description&gt;
+        The path to which the alias map should be written as a text
+        file, specified as a URI.
+    &lt;/description&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</pre></div></div></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

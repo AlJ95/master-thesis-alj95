@@ -1,0 +1,1123 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>AUTH | Docs</title>
+    <meta name="description" content="Authenticates the connection.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/auth/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="AUTH">
+  <meta property="og:description" content="Authenticates the connection.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="AUTH">
+  <meta itemprop="description" content="Authenticates the connection.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="617">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AUTH">
+  <meta name="twitter:description" content="Authenticates the connection.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">AUTH
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">AUTH [username] password</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 1.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N) where N is the number of passwords defined for the user</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@fast</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@connection</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>The AUTH command authenticates the current connection in two cases:</p>
+<ol>
+<li>If the Redis server is password protected via the <code>requirepass</code> option.</li>
+<li>A Redis 6.0 instance, or greater, is using the <a href="/docs/latest/operate/oss_and_stack/management/security/acl/">Redis ACL system</a>.</li>
+</ol>
+<p>Redis versions prior of Redis 6 were only able to understand the one argument
+version of the command:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="codetabs cli group flex justify-start items-center flex-wrap box-border rounded-lg mt-0 mb-0 mx-auto bg-slate-900" id="cmds_cnxmgmt-stepauth1">
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth1" id="redis-cli_cmds_cnxmgmt-stepauth1" data-lang="redis-cli" class="radiotab w-0 h-0"
+               checked
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="redis-cli_cmds_cnxmgmt-stepauth1">
+            
+                &gt;_ Redis CLI
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_redis-cli_cmds_cnxmgmt-stepauth1" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth1">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line hl"><span class="cl">AUTH &#34;temp-pass&#34;</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_redis-cli_cmds_cnxmgmt-stepauth1')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+                <div class="flex-1 text-xs text-white overflow-ellipsis">Are you tired of using redis-cli? Try Redis Insight - the developer GUI for Redis.</div>
+                <div class="text-right">
+                    <a href="https://redis.com/redis-enterprise/redis-insight/" tabindex="1" class="rounded rounded-mx px-2 py-1 flex items-center text-white text-xs
+                    hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                    focus:ring-2 focus:white focus:border-slate-500" title="Get Redis Insight">
+                        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        </svg>
+                        <span>Get Redis Insight</span>
+                    </a>
+                </div>
+            
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth1" id="Python_cmds_cnxmgmt-stepauth1" data-lang="Python" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Python_cmds_cnxmgmt-stepauth1">
+            
+                Python
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Python_cmds_cnxmgmt-stepauth1" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth1">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redis</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res1</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s2">&#34;temp_pass&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res2</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s2">&#34;temp_pass&#34;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;default&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&#34;test-user&#34;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&#34;strong_password&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line"><span class="cl">
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Python_cmds_cnxmgmt-stepauth1')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Python_cmds_cnxmgmt-stepauth1" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/redis-py/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Python Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/redis-py/tree/master/doctests/cmds_cnxmgmt.py' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth1" id="Nodejs_cmds_cnxmgmt-stepauth1" data-lang="Node-js" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Nodejs_cmds_cnxmgmt-stepauth1">
+            
+                Node.js
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Nodejs_cmds_cnxmgmt-stepauth1" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth1">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createClient</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">createClient</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">().</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">res1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">({</span> <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;temp_pass&#39;</span> <span class="p">});</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res1</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">res2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;temp_pass&#39;</span> <span class="p">});</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res2</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;test-user&#39;</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;strong_password&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res3</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Nodejs_cmds_cnxmgmt-stepauth1')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Nodejs_cmds_cnxmgmt-stepauth1" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/nodejs/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Node.js Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/node-redis/tree/emb-examples/doctests/cmds-cnxmgmt.js' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth1" id="Java-Sync_cmds_cnxmgmt-stepauth1" data-lang="Java-Sync" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Java-Sync_cmds_cnxmgmt-stepauth1">
+            
+                Java-Sync
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Java-Sync_cmds_cnxmgmt-stepauth1" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth1">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.Jedis</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.assertEquals</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CmdsCnxmgmtExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Jedis</span><span class="w"> </span><span class="n">jedis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Jedis</span><span class="p">(</span><span class="s">&#34;redis://localhost:6379&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// Note: you must use the `Jedis` class rather than `UnifiedJedis`</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// to access the `auth` commands.</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">authResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">auth</span><span class="p">(</span><span class="s">&#34;default&#34;</span><span class="p">,</span><span class="w">  </span><span class="s">&#34;temp_pass&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">authResult1</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; OK</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Note: you must use the `Jedis` class rather than `UnifiedJedis`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// to access the `auth` commands.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">authResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">auth</span><span class="p">(</span><span class="s">&#34;test-user&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;strong_password&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">authResult2</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; OK</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Java-Sync_cmds_cnxmgmt-stepauth1')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Java-Sync_cmds_cnxmgmt-stepauth1" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/jedis/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Java-Sync Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/jedis/tree/master/src/test/java/io/redis/examples/CmdsCnxmgmtExample.java' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+
+</div>
+
+
+
+
+<p>This form just authenticates against the password set with <code>requirepass</code>.
+In this configuration Redis will deny any command executed by the just
+connected clients, unless the connection gets authenticated via <code>AUTH</code>.</p>
+<p>If the password provided via AUTH matches the password in the configuration file, the server replies with the <code>OK</code> status code and starts accepting commands.
+Otherwise, an error is returned and the clients needs to try a new password.</p>
+<p>When Redis ACLs are used, the command should be given in an extended way:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="codetabs cli group flex justify-start items-center flex-wrap box-border rounded-lg mt-0 mb-0 mx-auto bg-slate-900" id="cmds_cnxmgmt-stepauth2">
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth2" id="redis-cli_cmds_cnxmgmt-stepauth2" data-lang="redis-cli" class="radiotab w-0 h-0"
+               checked
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="redis-cli_cmds_cnxmgmt-stepauth2">
+            
+                &gt;_ Redis CLI
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_redis-cli_cmds_cnxmgmt-stepauth2" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth2">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line hl"><span class="cl">AUTH &#34;test-user&#34; &#34;strong_password&#34;</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_redis-cli_cmds_cnxmgmt-stepauth2')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+                <div class="flex-1 text-xs text-white overflow-ellipsis">Are you tired of using redis-cli? Try Redis Insight - the developer GUI for Redis.</div>
+                <div class="text-right">
+                    <a href="https://redis.com/redis-enterprise/redis-insight/" tabindex="1" class="rounded rounded-mx px-2 py-1 flex items-center text-white text-xs
+                    hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                    focus:ring-2 focus:white focus:border-slate-500" title="Get Redis Insight">
+                        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        </svg>
+                        <span>Get Redis Insight</span>
+                    </a>
+                </div>
+            
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth2" id="Python_cmds_cnxmgmt-stepauth2" data-lang="Python" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Python_cmds_cnxmgmt-stepauth2">
+            
+                Python
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Python_cmds_cnxmgmt-stepauth2" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth2">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redis</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res1</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s2">&#34;temp_pass&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res2</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s2">&#34;temp_pass&#34;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s2">&#34;default&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&#34;test-user&#34;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s2">&#34;strong_password&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Python_cmds_cnxmgmt-stepauth2')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Python_cmds_cnxmgmt-stepauth2" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/redis-py/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Python Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/redis-py/tree/master/doctests/cmds_cnxmgmt.py' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth2" id="Nodejs_cmds_cnxmgmt-stepauth2" data-lang="Node-js" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Nodejs_cmds_cnxmgmt-stepauth2">
+            
+                Node.js
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Nodejs_cmds_cnxmgmt-stepauth2" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth2">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createClient</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">createClient</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">().</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">({</span> <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;temp_pass&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res1</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;temp_pass&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res2</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">res3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">auth</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">&#39;test-user&#39;</span><span class="p">,</span> <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;strong_password&#39;</span> <span class="p">});</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res3</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Nodejs_cmds_cnxmgmt-stepauth2')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Nodejs_cmds_cnxmgmt-stepauth2" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/nodejs/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Node.js Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/node-redis/tree/emb-examples/doctests/cmds-cnxmgmt.js' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_cnxmgmt-stepauth2" id="Java-Sync_cmds_cnxmgmt-stepauth2" data-lang="Java-Sync" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Java-Sync_cmds_cnxmgmt-stepauth2">
+            
+                Java-Sync
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Java-Sync_cmds_cnxmgmt-stepauth2" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_cnxmgmt-stepauth2">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.Jedis</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.assertEquals</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CmdsCnxmgmtExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Jedis</span><span class="w"> </span><span class="n">jedis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Jedis</span><span class="p">(</span><span class="s">&#34;redis://localhost:6379&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Note: you must use the `Jedis` class rather than `UnifiedJedis`</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// to access the `auth` commands.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">authResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">auth</span><span class="p">(</span><span class="s">&#34;default&#34;</span><span class="p">,</span><span class="w">  </span><span class="s">&#34;temp_pass&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">authResult1</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; OK</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// Note: you must use the `Jedis` class rather than `UnifiedJedis`</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// to access the `auth` commands.</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">authResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">auth</span><span class="p">(</span><span class="s">&#34;test-user&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;strong_password&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">authResult2</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; OK</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Java-Sync_cmds_cnxmgmt-stepauth2')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Java-Sync_cmds_cnxmgmt-stepauth2" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/jedis/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Java-Sync Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/jedis/tree/master/src/test/java/io/redis/examples/CmdsCnxmgmtExample.java' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+
+</div>
+
+
+
+
+<p>In order to authenticate the current connection with one of the connections
+defined in the ACL list (see <a href="/docs/latest/commands/acl-setuser/"><code>ACL SETUSER</code></a>) and the official <a href="/docs/latest/operate/oss_and_stack/management/security/acl/">ACL guide</a> for more information.</p>
+<p>When ACLs are used, the single argument form of the command, where only the password is specified, assumes that the implicit username is &quot;default&quot;.</p>
+<h2 id="security-notice">Security notice</h2>
+<p>Because of the high performance nature of Redis, it is possible to try
+a lot of passwords in parallel in very short time, so make sure to generate a
+strong and very long password so that this attack is infeasible.
+A good way to generate strong passwords is via the <a href="/docs/latest/commands/acl-genpass/"><code>ACL GENPASS</code></a> command.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+              
+              <a href="../../develop/reference/protocol-spec#simple-strings">Simple string reply</a>: <code>OK</code>, or an error if the password, or username/password pair, is invalid.
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 6.0.0: Added ACL style (username and password).</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/auth/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

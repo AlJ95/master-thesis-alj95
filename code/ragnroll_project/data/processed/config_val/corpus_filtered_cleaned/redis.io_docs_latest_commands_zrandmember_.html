@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>ZRANDMEMBER | Docs</title>
+    <meta name="description" content="Returns one or more random members from a sorted set.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/zrandmember/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="ZRANDMEMBER">
+  <meta property="og:description" content="Returns one or more random members from a sorted set.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="ZRANDMEMBER">
+  <meta itemprop="description" content="Returns one or more random members from a sorted set.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="245">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ZRANDMEMBER">
+  <meta name="twitter:description" content="Returns one or more random members from a sorted set.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">ZRANDMEMBER
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">ZRANDMEMBER key [count [WITHSCORES]]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 6.2.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N) where N is the number of members returned</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@sortedset</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>When called with just the <code>key</code> argument, return a random element from the sorted set value stored at <code>key</code>.</p>
+<p>If the provided <code>count</code> argument is positive, return an array of <strong>distinct elements</strong>.
+The array's length is either <code>count</code> or the sorted set's cardinality (<a href="/docs/latest/commands/zcard/"><code>ZCARD</code></a>), whichever is lower.</p>
+<p>If called with a negative <code>count</code>, the behavior changes and the command is allowed to return the <strong>same element multiple times</strong>.
+In this case, the number of returned elements is the absolute value of the specified <code>count</code>.</p>
+<p>The optional <code>WITHSCORES</code> modifier changes the reply so it includes the respective scores of the randomly selected elements from the sorted set.</p>
+<h2 id="examples">Examples</h2>
+<div class="bg-slate-900 border-b border-slate-700 rounded-t-xl px-4 py-3 w-full flex">
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+</div>  
+<form class="redis-cli overflow-y-auto max-h-80">
+ZADD dadi 1 uno 2 due 3 tre 4 quattro 5 cinque 6 sei
+ZRANDMEMBER dadi
+ZRANDMEMBER dadi
+ZRANDMEMBER dadi -5 WITHSCORES
+</form>
+<h2 id="specification-of-the-behavior-when-count-is-passed">Specification of the behavior when count is passed</h2>
+<p>When the <code>count</code> argument is a positive value this command behaves as follows:</p>
+<ul>
+<li>No repeated elements are returned.</li>
+<li>If <code>count</code> is bigger than the cardinality of the sorted set, the command will only return the whole sorted set without additional elements.</li>
+<li>The order of elements in the reply is not truly random, so it is up to the client to shuffle them if needed.</li>
+</ul>
+<p>When the <code>count</code> is a negative value, the behavior changes as follows:</p>
+<ul>
+<li>Repeating elements are possible.</li>
+<li>Exactly <code>count</code> elements, or an empty array if the sorted set is empty (non-existing key), are always returned.</li>
+<li>The order of elements in the reply is truly random.</li>
+</ul>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+              
+              <a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: without the additional <em>count</em> argument, the command returns a randomly selected member, or <a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a> when <em>key</em> doesn't exist.
+<a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: when the additional <em>count</em> argument is passed, the command returns an array of members, or an empty array when <em>key</em> doesn't exist. If the <em>WITHSCORES</em> modifier is used, the reply is a list of members and their scores from the sorted set.
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+              
+              <a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: without the additional <em>count</em> argument, the command returns a randomly selected member, or <a href="../../develop/reference/protocol-spec#nulls">Null reply</a> when <em>key</em> doesn't exist.
+<a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: when the additional <em>count</em> argument is passed, the command returns an array of members, or an empty array when <em>key</em> doesn't exist. If the <em>WITHSCORES</em> modifier is used, the reply is a list of members and their scores from the sorted set.
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/zrandmember/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

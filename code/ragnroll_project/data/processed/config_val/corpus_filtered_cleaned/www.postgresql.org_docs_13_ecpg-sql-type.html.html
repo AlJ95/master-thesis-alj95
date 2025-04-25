@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: TYPE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/ecpg-sql-type.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="TYPE" />
+  <meta property="og:description" content="TYPE TYPE — define a new data type Synopsis TYPE type_name IS ctype Description The TYPE command defines a new …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/ecpg-sql-type.html" title="PostgreSQL 17 - TYPE" >Current</a>
+                          (<a href="/docs/17/ecpg-sql-type.html" title="PostgreSQL 17 - TYPE" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/ecpg-sql-type.html" title="PostgreSQL 16 - TYPE" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/ecpg-sql-type.html" title="PostgreSQL 15 - TYPE" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/ecpg-sql-type.html" title="PostgreSQL 14 - TYPE" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/ecpg-sql-type.html" title="PostgreSQL 13 - TYPE" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/ecpg-sql-type.html" title="PostgreSQL devel - TYPE"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/ecpg-sql-type.html" title="PostgreSQL 12 - TYPE"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/ecpg-sql-type.html" title="PostgreSQL 11 - TYPE"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/ecpg-sql-type.html" title="PostgreSQL 10 - TYPE"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/ecpg-sql-type.html" title="PostgreSQL 9.6 - TYPE"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/ecpg-sql-type.html" title="PostgreSQL 9.5 - TYPE"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/ecpg-sql-type.html" title="PostgreSQL 9.4 - TYPE"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/ecpg-sql-type.html" title="PostgreSQL 9.3 - TYPE"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/ecpg-sql-type.html" title="PostgreSQL 9.2 - TYPE"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/ecpg-sql-type.html" title="PostgreSQL 9.1 - TYPE"  rel="nofollow">9.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">TYPE</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="ecpg-sql-set-descriptor.html" title="SET DESCRIPTOR">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="ecpg-sql-commands.html" title="35.14.&nbsp;Embedded SQL Commands">Up</a></td>
+      <th width="60%" align="center">35.14.&nbsp;Embedded SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="ecpg-sql-var.html" title="VAR">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="ECPG-SQL-TYPE">
+  <div class="titlepage"></div>
+  <div class="refnamediv">
+    <h2>TYPE</h2>
+    <p>TYPE — define a new data type</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+TYPE <em class="replaceable"><code>type_name</code></em> IS <em class="replaceable"><code>ctype</code></em>
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.7.5.20.16.3">
+    <h2>Description</h2>
+    <p>The <code class="command">TYPE</code> command defines a new C type. It is equivalent to putting a <code class="literal">typedef</code> into a declare section.</p>
+    <p>This command is only recognized when <code class="command">ecpg</code> is run with the <code class="option">-c</code> option.</p>
+  </div>
+  <div class="refsect1" id="id-1.7.5.20.16.4">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>type_name</code></em></span></dt>
+        <dd>
+          <p>The name for the new type. It must be a valid C type name.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>ctype</code></em></span></dt>
+        <dd>
+          <p>A C type specification.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.7.5.20.16.5">
+    <h2>Examples</h2>
+    <pre class="programlisting">
+EXEC SQL TYPE customer IS
+    struct
+    {
+        varchar name[50];
+        int     phone;
+    };
+
+EXEC SQL TYPE cust_ind IS
+    struct ind
+    {
+        short   name_ind;
+        short   phone_ind;
+    };
+
+EXEC SQL TYPE c IS char reference;
+EXEC SQL TYPE ind IS union { int integer; short smallint; };
+EXEC SQL TYPE intarray IS int[AMOUNT];
+EXEC SQL TYPE str IS varchar[BUFFERSIZ];
+EXEC SQL TYPE string IS char[11];
+</pre>
+    <p>Here is an example program that uses <code class="command">EXEC SQL TYPE</code>:</p>
+    <pre class="programlisting">
+EXEC SQL WHENEVER SQLERROR SQLPRINT;
+
+EXEC SQL TYPE tt IS
+    struct
+    {
+        varchar v[256];
+        int     i;
+    };
+
+EXEC SQL TYPE tt_ind IS
+    struct ind {
+        short   v_ind;
+        short   i_ind;
+    };
+
+int
+main(void)
+{
+EXEC SQL BEGIN DECLARE SECTION;
+    tt t;
+    tt_ind t_ind;
+EXEC SQL END DECLARE SECTION;
+
+    EXEC SQL CONNECT TO testdb AS con1;
+    EXEC SQL SELECT pg_catalog.set_config('search_path', '', false); EXEC SQL COMMIT;
+
+    EXEC SQL SELECT current_database(), 256 INTO :t:t_ind LIMIT 1;
+
+    printf("t.v = %s\n", t.v.arr);
+    printf("t.i = %d\n", t.i);
+
+    printf("t_ind.v_ind = %d\n", t_ind.v_ind);
+    printf("t_ind.i_ind = %d\n", t_ind.i_ind);
+
+    EXEC SQL DISCONNECT con1;
+
+    return 0;
+}
+</pre>
+    <p>The output from this program looks like this:</p>
+    <pre class="screen">
+t.v = testdb
+t.i = 256
+t_ind.v_ind = 0
+t_ind.i_ind = 0
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.7.5.20.16.6">
+    <h2>Compatibility</h2>
+    <p>The <code class="command">TYPE</code> command is a PostgreSQL extension.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="ecpg-sql-set-descriptor.html" title="SET DESCRIPTOR">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="ecpg-sql-commands.html" title="35.14.&nbsp;Embedded SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="ecpg-sql-var.html" title="VAR">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">SET DESCRIPTOR&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;VAR</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/ecpg-sql-type.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

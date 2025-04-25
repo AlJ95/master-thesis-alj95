@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: IMPORT FOREIGN SCHEMA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-importforeignschema.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="IMPORT FOREIGN SCHEMA" />
+  <meta property="og:description" content="IMPORT FOREIGN SCHEMA IMPORT FOREIGN SCHEMA — import table definitions from a foreign server Synopsis IMPORT FOREIGN SCHEMA remote_schema [ …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-importforeignschema.html" title="PostgreSQL 17 - IMPORT FOREIGN SCHEMA" >Current</a>
+                          (<a href="/docs/17/sql-importforeignschema.html" title="PostgreSQL 17 - IMPORT FOREIGN SCHEMA" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-importforeignschema.html" title="PostgreSQL 16 - IMPORT FOREIGN SCHEMA" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-importforeignschema.html" title="PostgreSQL 15 - IMPORT FOREIGN SCHEMA" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-importforeignschema.html" title="PostgreSQL 14 - IMPORT FOREIGN SCHEMA" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-importforeignschema.html" title="PostgreSQL 13 - IMPORT FOREIGN SCHEMA" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-importforeignschema.html" title="PostgreSQL devel - IMPORT FOREIGN SCHEMA"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-importforeignschema.html" title="PostgreSQL 12 - IMPORT FOREIGN SCHEMA"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-importforeignschema.html" title="PostgreSQL 11 - IMPORT FOREIGN SCHEMA"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-importforeignschema.html" title="PostgreSQL 10 - IMPORT FOREIGN SCHEMA"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-importforeignschema.html" title="PostgreSQL 9.6 - IMPORT FOREIGN SCHEMA"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-importforeignschema.html" title="PostgreSQL 9.5 - IMPORT FOREIGN SCHEMA"  rel="nofollow">9.5</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">IMPORT FOREIGN SCHEMA</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-grant.html" title="GRANT">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-insert.html" title="INSERT">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-IMPORTFOREIGNSCHEMA">
+  <div class="titlepage"></div><a id="id-1.9.3.151.1" class="indexterm" name="id-1.9.3.151.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">IMPORT FOREIGN SCHEMA</span></h2>
+    <p>IMPORT FOREIGN SCHEMA — import table definitions from a foreign server</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+IMPORT FOREIGN SCHEMA <em class="replaceable"><code>remote_schema</code></em>
+    [ { LIMIT TO | EXCEPT } ( <em class="replaceable"><code>table_name</code></em> [, ...] ) ]
+    FROM SERVER <em class="replaceable"><code>server_name</code></em>
+    INTO <em class="replaceable"><code>local_schema</code></em>
+    [ OPTIONS ( <em class="replaceable"><code>option</code></em> '<em class="replaceable"><code>value</code></em>' [, ... ] ) ]
+</pre>
+  </div>
+  <div class="refsect1" id="SQL-IMPORTFOREIGNSCHEMA-DESCRIPTION">
+    <h2>Description</h2>
+    <p><code class="command">IMPORT FOREIGN SCHEMA</code> creates foreign tables that represent tables existing on a foreign server. The new foreign tables will be owned by the user issuing the command and are created with the correct column definitions and options to match the remote tables.</p>
+    <p>By default, all tables and views existing in a particular schema on the foreign server are imported. Optionally, the list of tables can be limited to a specified subset, or specific tables can be excluded. The new foreign tables are all created in the target schema, which must already exist.</p>
+    <p>To use <code class="command">IMPORT FOREIGN SCHEMA</code>, the user must have <code class="literal">USAGE</code> privilege on the foreign server, as well as <code class="literal">CREATE</code> privilege on the target schema.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.151.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>remote_schema</code></em></span></dt>
+        <dd>
+          <p>The remote schema to import from. The specific meaning of a remote schema depends on the foreign data wrapper in use.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">LIMIT TO ( <em class="replaceable"><code>table_name</code></em> [, ...] )</code></span></dt>
+        <dd>
+          <p>Import only foreign tables matching one of the given table names. Other tables existing in the foreign schema will be ignored.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">EXCEPT ( <em class="replaceable"><code>table_name</code></em> [, ...] )</code></span></dt>
+        <dd>
+          <p>Exclude specified foreign tables from the import. All tables existing in the foreign schema will be imported except the ones listed here.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>server_name</code></em></span></dt>
+        <dd>
+          <p>The foreign server to import from.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>local_schema</code></em></span></dt>
+        <dd>
+          <p>The schema in which the imported foreign tables will be created.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">OPTIONS ( <em class="replaceable"><code>option</code></em> '<em class="replaceable"><code>value</code></em>' [, ...] )</code></span></dt>
+        <dd>
+          <p>Options to be used during the import. The allowed option names and values are specific to each foreign data wrapper.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="SQL-IMPORTFOREIGNSCHEMA-EXAMPLES">
+    <h2>Examples</h2>
+    <p>Import table definitions from a remote schema <code class="structname">foreign_films</code> on server <code class="structname">film_server</code>, creating the foreign tables in local schema <code class="structname">films</code>:</p>
+    <pre class="programlisting">
+IMPORT FOREIGN SCHEMA foreign_films
+    FROM SERVER film_server INTO films;
+</pre>
+    <p>As above, but import only the two tables <code class="structname">actors</code> and <code class="literal">directors</code> (if they exist):</p>
+    <pre class="programlisting">
+IMPORT FOREIGN SCHEMA foreign_films LIMIT TO (actors, directors)
+    FROM SERVER film_server INTO films;
+</pre>
+  </div>
+  <div class="refsect1" id="SQL-IMPORTFOREIGNSCHEMA-COMPATIBILITY">
+    <h2>Compatibility</h2>
+    <p>The <code class="command">IMPORT FOREIGN SCHEMA</code> command conforms to the <acronym class="acronym">SQL</acronym> standard, except that the <code class="literal">OPTIONS</code> clause is a <span class="productname">PostgreSQL</span> extension.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.151.9">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-createforeigntable.html" title="CREATE FOREIGN TABLE"><span class="refentrytitle">CREATE FOREIGN TABLE</span></a>, <a class="xref" href="sql-createserver.html" title="CREATE SERVER"><span class="refentrytitle">CREATE SERVER</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-grant.html" title="GRANT">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-insert.html" title="INSERT">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">GRANT&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;INSERT</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-importforeignschema.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

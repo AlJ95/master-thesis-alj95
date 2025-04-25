@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 36.53. triggers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/infoschema-triggers.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="36.53. triggers" />
+  <meta property="og:description" content="36.53.&amp;nbsp;triggers The view triggers contains all triggers defined in the current database on tables and views that the current user …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/infoschema-triggers.html" title="PostgreSQL 17 - 36.53. triggers" >Current</a>
+                          (<a href="/docs/17/infoschema-triggers.html" title="PostgreSQL 17 - 36.53. triggers" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/infoschema-triggers.html" title="PostgreSQL 16 - 36.53. triggers" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/infoschema-triggers.html" title="PostgreSQL 15 - 36.53. triggers" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/infoschema-triggers.html" title="PostgreSQL 14 - 36.53. triggers" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/infoschema-triggers.html" title="PostgreSQL 13 - 36.53. triggers" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/infoschema-triggers.html" title="PostgreSQL devel - 36.53. triggers"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/infoschema-triggers.html" title="PostgreSQL 12 - 36.53. triggers"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/infoschema-triggers.html" title="PostgreSQL 11 - 36.53. triggers"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/infoschema-triggers.html" title="PostgreSQL 10 - 36.53. triggers"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/infoschema-triggers.html" title="PostgreSQL 9.6 - 36.53. triggers"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/infoschema-triggers.html" title="PostgreSQL 9.5 - 36.53. triggers"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/infoschema-triggers.html" title="PostgreSQL 9.4 - 36.53. triggers"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/infoschema-triggers.html" title="PostgreSQL 9.3 - 36.53. triggers"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/infoschema-triggers.html" title="PostgreSQL 9.2 - 36.53. triggers"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/infoschema-triggers.html" title="PostgreSQL 9.1 - 36.53. triggers"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/infoschema-triggers.html" title="PostgreSQL 9.0 - 36.53. triggers"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/infoschema-triggers.html" title="PostgreSQL 8.4 - 36.53. triggers"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/infoschema-triggers.html" title="PostgreSQL 8.3 - 36.53. triggers"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/infoschema-triggers.html" title="PostgreSQL 8.2 - 36.53. triggers"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/infoschema-triggers.html" title="PostgreSQL 8.1 - 36.53. triggers"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/infoschema-triggers.html" title="PostgreSQL 8.0 - 36.53. triggers"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/infoschema-triggers.html" title="PostgreSQL 7.4 - 36.53. triggers"  rel="nofollow">7.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">36.53.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="literal">triggers</code></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="infoschema-triggered-update-columns.html" title="36.52.&nbsp;triggered_update_columns">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="information-schema.html" title="Chapter&nbsp;36.&nbsp;The Information Schema">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;36.&nbsp;The Information Schema</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="infoschema-udt-privileges.html" title="36.54.&nbsp;udt_privileges">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="INFOSCHEMA-TRIGGERS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">36.53.&nbsp;<code class="literal">triggers</code></h2>
+      </div>
+    </div>
+  </div>
+  <p>The view <code class="literal">triggers</code> contains all triggers defined in the current database on tables and views that the current user owns or has some privilege other than <code class="literal">SELECT</code> on.</p>
+  <div class="table" id="id-1.7.6.57.3">
+    <p class="title"><strong>Table&nbsp;36.51.&nbsp;<code class="structname">triggers</code> Columns</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="triggers Columns" border="1">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="catalog_table_entry">
+              <p class="column_definition">Column Type</p>
+              <p>Description</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">trigger_catalog</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the database that contains the trigger (always the current database)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">trigger_schema</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the schema that contains the trigger</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">trigger_name</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the trigger</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">event_manipulation</code> <code class="type">character_data</code></p>
+              <p>Event that fires the trigger (<code class="literal">INSERT</code>, <code class="literal">UPDATE</code>, or <code class="literal">DELETE</code>)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">event_object_catalog</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the database that contains the table that the trigger is defined on (always the current database)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">event_object_schema</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the schema that contains the table that the trigger is defined on</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">event_object_table</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the table that the trigger is defined on</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_order</code> <code class="type">cardinal_number</code></p>
+              <p>Firing order among triggers on the same table having the same <code class="literal">event_manipulation</code>, <code class="literal">action_timing</code>, and <code class="literal">action_orientation</code>. In <span class="productname">PostgreSQL</span>, triggers are fired in name order, so this column reflects that.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_condition</code> <code class="type">character_data</code></p>
+              <p><code class="literal">WHEN</code> condition of the trigger, null if none (also null if the table is not owned by a currently enabled role)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_statement</code> <code class="type">character_data</code></p>
+              <p>Statement that is executed by the trigger (currently always <code class="literal">EXECUTE FUNCTION <em class="replaceable"><code>function</code></em>(...)</code>)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_orientation</code> <code class="type">character_data</code></p>
+              <p>Identifies whether the trigger fires once for each processed row or once for each statement (<code class="literal">ROW</code> or <code class="literal">STATEMENT</code>)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_timing</code> <code class="type">character_data</code></p>
+              <p>Time at which the trigger fires (<code class="literal">BEFORE</code>, <code class="literal">AFTER</code>, or <code class="literal">INSTEAD OF</code>)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_reference_old_table</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the <span class="quote">“<span class="quote">old</span>”</span> transition table, or null if none</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_reference_new_table</code> <code class="type">sql_identifier</code></p>
+              <p>Name of the <span class="quote">“<span class="quote">new</span>”</span> transition table, or null if none</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_reference_old_row</code> <code class="type">sql_identifier</code></p>
+              <p>Applies to a feature not available in <span class="productname">PostgreSQL</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">action_reference_new_row</code> <code class="type">sql_identifier</code></p>
+              <p>Applies to a feature not available in <span class="productname">PostgreSQL</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">created</code> <code class="type">time_stamp</code></p>
+              <p>Applies to a feature not available in <span class="productname">PostgreSQL</span></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+  <p>Triggers in <span class="productname">PostgreSQL</span> have two incompatibilities with the SQL standard that affect the representation in the information schema. First, trigger names are local to each table in <span class="productname">PostgreSQL</span>, rather than being independent schema objects. Therefore there can be duplicate trigger names defined in one schema, so long as they belong to different tables. (<code class="literal">trigger_catalog</code> and <code class="literal">trigger_schema</code> are really the values pertaining to the table that the trigger is defined on.) Second, triggers can be defined to fire on multiple events in <span class="productname">PostgreSQL</span> (e.g., <code class="literal">ON INSERT OR UPDATE</code>), whereas the SQL standard only allows one. If a trigger is defined to fire on multiple events, it is represented as multiple rows in the information schema, one for each type of event. As a consequence of these two issues, the primary key of the view <code class="literal">triggers</code> is really <code class="literal">(trigger_catalog, trigger_schema, event_object_table, trigger_name, event_manipulation)</code> instead of <code class="literal">(trigger_catalog, trigger_schema, trigger_name)</code>, which is what the SQL standard specifies. Nonetheless, if you define your triggers in a manner that conforms with the SQL standard (trigger names unique in the schema and only one event type per trigger), this will not affect you.</p>
+  <div class="note">
+    <h3 class="title">Note</h3>
+    <p>Prior to <span class="productname">PostgreSQL</span> 9.1, this view's columns <code class="structfield">action_timing</code>, <code class="structfield">action_reference_old_table</code>, <code class="structfield">action_reference_new_table</code>, <code class="structfield">action_reference_old_row</code>, and <code class="structfield">action_reference_new_row</code> were named <code class="structfield">condition_timing</code>, <code class="structfield">condition_reference_old_table</code>, <code class="structfield">condition_reference_new_table</code>, <code class="structfield">condition_reference_old_row</code>, and <code class="structfield">condition_reference_new_row</code> respectively. That was how they were named in the SQL:1999 standard. The new naming conforms to SQL:2003 and later.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="infoschema-triggered-update-columns.html" title="36.52.&nbsp;triggered_update_columns">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="information-schema.html" title="Chapter&nbsp;36.&nbsp;The Information Schema">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="infoschema-udt-privileges.html" title="36.54.&nbsp;udt_privileges">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">36.52.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="literal">triggered_update_columns</code>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;36.54.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="literal">udt_privileges</code></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/infoschema-triggers.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Service Level Authorization Guide</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Service Level Authorization Guide
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Service Level Authorization Guide</h1>
+<ul>
+
+
+
+
+
+
+
+
+
+</ul></li></ul>
+
+<div class="section">
+<h2><a name="Purpose"></a>Purpose</h2>
+<p>This document describes how to configure and manage Service Level Authorization for Hadoop.</p></div>
+<div class="section">
+<h2><a name="Prerequisites"></a>Prerequisites</h2>
+<p>Make sure Hadoop is installed, configured and setup correctly. For more information see:</p>
+<ul>
+
+<li><a href="./SingleCluster.html">Single Node Setup</a> for first-time users.</li>
+<li><a href="./ClusterSetup.html">Cluster Setup</a> for large, distributed clusters.</li>
+</ul></div>
+<div class="section">
+<h2><a name="Overview"></a>Overview</h2>
+<p>Service Level Authorization is the initial authorization mechanism to ensure clients connecting to a particular Hadoop service have the necessary, pre-configured, permissions and are authorized to access the given service. For example, a MapReduce cluster can use this mechanism to allow a configured list of users/groups to submit jobs.</p>
+<p>The <tt>$HADOOP_CONF_DIR/hadoop-policy.xml</tt> configuration file is used to define the access control lists for various Hadoop services.</p>
+<p>Service Level Authorization is performed much before to other access control checks such as file-permission checks, access control on job queues etc.</p></div>
+<div class="section">
+<h2><a name="Configuration"></a>Configuration</h2>
+<p>This section describes how to configure service-level authorization via the configuration file <tt>$HADOOP_CONF_DIR/hadoop-policy.xml</tt>.</p>
+<div class="section">
+<h3><a name="Enable_Service_Level_Authorization"></a>Enable Service Level Authorization</h3>
+<p>By default, service-level authorization is disabled for Hadoop. To enable it set the configuration property hadoop.security.authorization to true in <tt>$HADOOP_CONF_DIR/core-site.xml</tt>.</p></div>
+<div class="section">
+<h3><a name="Hadoop_Services_and_Configuration_Properties"></a>Hadoop Services and Configuration Properties</h3>
+<p>This section lists the various Hadoop services and their configuration knobs:</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Property </th>
+<th align="left"> Service </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> security.client.protocol.acl </td>
+<td align="left"> ACL for ClientProtocol, which is used by user code via the DistributedFileSystem. </td></tr>
+<tr class="a">
+<td align="left"> security.client.datanode.protocol.acl </td>
+<td align="left"> ACL for ClientDatanodeProtocol, the client-to-datanode protocol for block recovery. </td></tr>
+<tr class="b">
+<td align="left"> security.datanode.protocol.acl </td>
+<td align="left"> ACL for DatanodeProtocol, which is used by datanodes to communicate with the namenode. </td></tr>
+<tr class="a">
+<td align="left"> security.inter.datanode.protocol.acl </td>
+<td align="left"> ACL for InterDatanodeProtocol, the inter-datanode protocol for updating generation timestamp. </td></tr>
+<tr class="b">
+<td align="left"> security.namenode.protocol.acl </td>
+<td align="left"> ACL for NamenodeProtocol, the protocol used by the secondary namenode to communicate with the namenode. </td></tr>
+<tr class="a">
+<td align="left"> security.job.client.protocol.acl </td>
+<td align="left"> ACL for JobSubmissionProtocol, used by job clients to communciate with the resourcemanager for job submission, querying job status etc. </td></tr>
+<tr class="b">
+<td align="left"> security.job.task.protocol.acl </td>
+<td align="left"> ACL for TaskUmbilicalProtocol, used by the map and reduce tasks to communicate with the parent nodemanager. </td></tr>
+<tr class="a">
+<td align="left"> security.refresh.policy.protocol.acl </td>
+<td align="left"> ACL for RefreshAuthorizationPolicyProtocol, used by the dfsadmin and rmadmin commands to refresh the security policy in-effect. </td></tr>
+<tr class="b">
+<td align="left"> security.ha.service.protocol.acl </td>
+<td align="left"> ACL for HAService protocol used by HAAdmin to manage the active and stand-by states of namenode. </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="Access_Control_Lists"></a>Access Control Lists</h3>
+<p><tt>$HADOOP_CONF_DIR/hadoop-policy.xml</tt> defines an access control list for each Hadoop service. Every access control list has a simple format:</p>
+<p>The list of users and groups are both comma separated list of names. The two lists are separated by a space.</p>
+<p>Example: <tt>user1,user2 group1,group2</tt>.</p>
+<p>Add a blank at the beginning of the line if only a list of groups is to be provided, equivalently a comma-separated list of users followed by a space or nothing implies only a set of given users.</p>
+<p>A special value of <tt>*</tt> implies that all users are allowed to access the service.</p>
+<p>If access control list is not defined for a service, the value of <tt>security.service.authorization.default.acl</tt> is applied. If <tt>security.service.authorization.default.acl</tt> is not defined, <tt>*</tt> is applied.</p></div>
+<div class="section">
+<h3><a name="Blocked_Access_Control_Lists"></a>Blocked Access Control Lists</h3>
+<p>In some cases, it is required to specify blocked access control list for a service. This specifies the list of users and groups who are not authorized to access the service. The format of the blocked access control list is same as that of access control list. The blocked access control list can be specified via <tt>$HADOOP_CONF_DIR/hadoop-policy.xml</tt>. The property name is derived by suffixing with &#x201c;.blocked&#x201d;.</p>
+<p>Example: The property name of blocked access control list for <tt>security.client.protocol.acl</tt> will be <tt>security.client.protocol.acl.blocked</tt></p>
+<p>For a service, it is possible to specify both an access control list and a blocked control list. A user is authorized to access the service if the user is in the access control and not in the blocked access control list.</p>
+<p>If blocked access control list is not defined for a service, the value of <tt>security.service.authorization.default.acl.blocked</tt> is applied. If <tt>security.service.authorization.default.acl.blocked</tt> is not defined, empty blocked access control list is applied.</p></div>
+<div class="section">
+<h3><a name="Access_Control_using_Lists_of_IP_Addresses.2C_Host_Names_and_IP_Ranges"></a>Access Control using Lists of IP Addresses, Host Names and IP Ranges</h3>
+<p>Access to a service can be controlled based on the ip address of the client accessing the service. It is possible to restrict access to a service from a set of machines by specifying a list of ip addresses, host names and ip ranges. The property name for each service is derived from the corresponding acl&#x2019;s property name. If the property name of acl is security.client.protocol.acl, property name for the hosts list will be security.client.protocol.hosts.</p>
+<p>If hosts list is not defined for a service, the value of <tt>security.service.authorization.default.hosts</tt> is applied. If <tt>security.service.authorization.default.hosts</tt> is not defined, <tt>*</tt> is applied.</p>
+<p>It is possible to specify a blocked list of hosts. Only those machines which are in the hosts list, but not in the blocked hosts list will be granted access to the service. The property name is derived by suffixing with &#x201c;.blocked&#x201d;.</p>
+<p>Example: The property name of blocked hosts list for <tt>security.client.protocol.hosts</tt> will be <tt>security.client.protocol.hosts.blocked</tt></p>
+<p>If blocked hosts list is not defined for a service, the value of <tt>security.service.authorization.default.hosts.blocked</tt> is applied. If <tt>security.service.authorization.default.hosts.blocked</tt> is not defined, empty blocked hosts list is applied.</p></div>
+<div class="section">
+<h3><a name="Refreshing_Service_Level_Authorization_Configuration"></a>Refreshing Service Level Authorization Configuration</h3>
+<p>The service-level authorization configuration for the NameNode and ResourceManager can be changed without restarting either of the Hadoop master daemons. The cluster administrator can change <tt>$HADOOP_CONF_DIR/hadoop-policy.xml</tt> on the master nodes and instruct the NameNode and ResourceManager to reload their respective configurations via the <tt>-refreshServiceAcl</tt> switch to <tt>dfsadmin</tt> and <tt>rmadmin</tt> commands respectively.</p>
+<p>Refresh the service-level authorization configuration for the NameNode:</p>
+
+<div>
+<div>
+<pre class="source">   $ bin/hdfs dfsadmin -refreshServiceAcl
+</pre></div></div>
+
+<p>Refresh the service-level authorization configuration for the ResourceManager:</p>
+
+<div>
+<div>
+<pre class="source">   $ bin/yarn rmadmin -refreshServiceAcl
+</pre></div></div>
+
+<p>Of course, one can use the <tt>security.refresh.policy.protocol.acl</tt> property in <tt>$HADOOP_CONF_DIR/hadoop-policy.xml</tt> to restrict access to the ability to refresh the service-level authorization configuration to certain users/groups.</p></div>
+<div class="section">
+<h3><a name="Examples"></a>Examples</h3>
+<p>Allow only users <tt>alice</tt>, <tt>bob</tt> and users in the <tt>mapreduce</tt> group to submit jobs to the MapReduce cluster:</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+     &lt;name&gt;security.job.client.protocol.acl&lt;/name&gt;
+     &lt;value&gt;alice,bob mapreduce&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>Allow only DataNodes running as the users who belong to the group datanodes to communicate with the NameNode:</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+     &lt;name&gt;security.datanode.protocol.acl&lt;/name&gt;
+     &lt;value&gt;datanodes&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>Allow any user to talk to the HDFS cluster as a DFSClient:</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+     &lt;name&gt;security.client.protocol.acl&lt;/name&gt;
+     &lt;value&gt;*&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django version 0.95 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/0.95/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django version 0.95 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-version-0-95-release-notes">
+<span id="django-version-0-95-release-notes"></span><h1>Django version 0.95 release notes<a class="headerlink" href="#django-version-0-95-release-notes" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to the Django 0.95 release.</p>
+<p>This represents a significant advance in Django development since the 0.91
+release in January 2006. The details of every change in this release would be
+too extensive to list in full, but a summary is presented below.</p>
+<div class="section" id="s-suitability-and-api-stability">
+<span id="suitability-and-api-stability"></span><h2>Suitability and API stability<a class="headerlink" href="#suitability-and-api-stability" title="Permalink to this headline">¶</a></h2>
+<p>This release is intended to provide a stable reference point for developers
+wanting to work on production-level applications that use Django.</p>
+<p>However, it’s not the 1.0 release, and we’ll be introducing further changes
+before 1.0. For a clear look at which areas of the framework will change (and
+which ones will <em>not</em> change) before 1.0, see the <code class="docutils literal notranslate"><span class="pre">api-stability.txt</span></code> file,
+which lives in the docs/ directory of the distribution.</p>
+<p>You may have a need to use some of the features that are marked as
+“subject to API change” in that document, but that’s OK with us as long as it’s
+OK with you, and as long as you understand APIs may change in the future.</p>
+<p>Fortunately, most of Django’s core APIs won’t be changing before version 1.0.
+There likely won’t be as big of a change between 0.95 and 1.0 versions as there
+was between 0.91 and 0.95.</p>
+</div>
+<div class="section" id="s-changes-and-new-features">
+<span id="changes-and-new-features"></span><h2>Changes and new features<a class="headerlink" href="#changes-and-new-features" title="Permalink to this headline">¶</a></h2>
+<p>The major changes in this release (for developers currently using the 0.91
+release) are a result of merging the ‘magic-removal’ branch of development.
+This branch removed a number of constraints in the way Django code had to be
+written that were a consequence of decisions made in the early days of Django,
+prior to its open-source release. It’s now possible to write more natural,
+Pythonic code that works as expected, and there’s less “black magic” happening
+behind the scenes.</p>
+<p>Aside from that, another main theme of this release is a dramatic increase in
+usability. We’ve made countless improvements in error messages, documentation,
+etc., to improve developers’ quality of life.</p>
+<p>The new features and changes introduced in 0.95 include:</p>
+<ul class="simple">
+<li>Django now uses a more consistent and natural filtering interface for
+retrieving objects from the database.</li>
+<li>User-defined models, functions and constants now appear in the module
+namespace they were defined in. (Previously everything was magically
+transferred to the <code class="docutils literal notranslate"><span class="pre">django.models.*</span></code> namespace.)</li>
+<li>Some optional applications, such as the FlatPage, Sites and Redirects
+apps, have been decoupled and moved into <code class="docutils literal notranslate"><span class="pre">django.contrib</span></code>. If you don’t
+want to use these applications, you no longer have to install their
+database tables.</li>
+<li>Django now has support for managing database transactions.</li>
+<li>We’ve added the ability to write custom authentication and authorization
+backends for authenticating users against alternate systems, such as
+LDAP.</li>
+<li>We’ve made it easier to add custom table-level functions to models,
+through a new “Manager” API.</li>
+<li>It’s now possible to use Django without a database. This simply means
+that the framework no longer requires you to have a working database set
+up just to serve dynamic pages. In other words, you can just use
+URLconfs/views on their own. Previously, the framework required that a
+database be configured, regardless of whether you actually used it.</li>
+<li>It’s now more explicit and natural to override <code class="docutils literal notranslate"><span class="pre">save()</span></code> and <code class="docutils literal notranslate"><span class="pre">delete()</span></code>
+methods on models, rather than needing to hook into the <code class="docutils literal notranslate"><span class="pre">pre_save()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">post_save()</span></code> method hooks.</li>
+<li>Individual pieces of the framework now can be configured without
+requiring the setting of an environment variable. This permits use of,
+for example, the Django templating system inside other applications.</li>
+<li>More and more parts of the framework have been internationalized, as
+we’ve expanded internationalization (i18n) support. The Django
+codebase, including code and templates, has now been translated, at least
+in part, into 31 languages. From Arabic to Chinese to Hungarian to Welsh,
+it is now possible to use Django’s admin site in your native language.</li>
+</ul>
+<p>The number of changes required to port from 0.91-compatible code to the 0.95
+code base are significant in some cases. However, they are, for the most part,
+reasonably routine and only need to be done once. A list of the necessary
+changes is described in the <a class="reference external" href="https://code.djangoproject.com/wiki/RemovingTheMagic">Removing The Magic</a> wiki page. There is also an
+easy <a class="reference external" href="https://code.djangoproject.com/wiki/MagicRemovalCheatSheet">checklist</a> for reference when undertaking the porting operation.</p>
+</div>
+<div class="section" id="s-problem-reports-and-getting-help">
+<span id="problem-reports-and-getting-help"></span><h2>Problem reports and getting help<a class="headerlink" href="#problem-reports-and-getting-help" title="Permalink to this headline">¶</a></h2>
+<p>Need help resolving a problem with Django? The documentation in the
+distribution is also available <a class="reference internal" href="../../"><span class="doc">online</span></a> at the <a class="reference external" href="https://www.djangoproject.com/">Django website</a>.
+The <a class="reference internal" href="../../faq/"><span class="doc">FAQ</span></a> document is especially recommended, as it contains
+a number of issues that come up time and again.</p>
+<p>For more personalized help, the <a class="reference external" href="https://groups.google.com/g/django-users">django-users</a> mailing list is a very active
+list, with more than 2,000 subscribers who can help you solve any sort of
+Django problem. We recommend you search the archives first, though, because
+many common questions appear with some regularity, and any particular problem
+may already have been answered.</p>
+<p>Finally, for those who prefer the more immediate feedback offered by IRC,
+there’s a <code class="docutils literal notranslate"><span class="pre">#django</span></code> channel on <code class="docutils literal notranslate"><span class="pre">irc.libera.chat</span></code> that is regularly
+populated by Django users and developers from around the world. Friendly people
+are usually available at any hour of the day – to help, or just to chat.</p>
+<p>Thanks for using Django!</p>
+<p>The Django Team
+July 2006</p>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master.journal.raft (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master.journal.raft</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/BufferedJournalApplier.html" title="class in alluxio.master.journal.raft">BufferedJournalApplier</a></td>
+<td class="colLast">
+<div class="block">Used to control applying to masters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/JournalEntryCommand.html" title="class in alluxio.master.journal.raft">JournalEntryCommand</a></td>
+<td class="colLast">
+<div class="block">Command for writing an arbitrary journal entry.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/JournalStateMachine.html" title="class in alluxio.master.journal.raft">JournalStateMachine</a></td>
+<td class="colLast">
+<div class="block">A state machine for managing all of Alluxio's journaled state.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/LocalFirstRaftClient.html" title="class in alluxio.master.journal.raft">LocalFirstRaftClient</a></td>
+<td class="colLast">
+<div class="block">A client to send messages to a raft server with a strategy to attempt sending them locally first.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/OnceSupplier.html" title="class in alluxio.master.journal.raft">OnceSupplier</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">Supplier that supplies a value only once, then throws an exception if it is called again.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftJournal.html" title="class in alluxio.master.journal.raft">RaftJournal</a></td>
+<td class="colLast">
+<div class="block">Class associated with each master that lets the master create journal contexts for writing
+ entries to the journal.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftJournalConfiguration.html" title="class in alluxio.master.journal.raft">RaftJournalConfiguration</a></td>
+<td class="colLast">
+<div class="block">Configuration for the Raft journal system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftJournalServiceClient.html" title="class in alluxio.master.journal.raft">RaftJournalServiceClient</a></td>
+<td class="colLast">
+<div class="block">A client for raft journal service.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftJournalServiceHandler.html" title="class in alluxio.master.journal.raft">RaftJournalServiceHandler</a></td>
+<td class="colLast">
+<div class="block">RPC handler for raft journal service.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftJournalSystem.html" title="class in alluxio.master.journal.raft">RaftJournalSystem</a></td>
+<td class="colLast">
+<div class="block">System for multiplexing many logical journals into a single raft-based journal.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftJournalUtils.html" title="class in alluxio.master.journal.raft">RaftJournalUtils</a></td>
+<td class="colLast">
+<div class="block">Helper class for raft journal operations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftJournalWriter.html" title="class in alluxio.master.journal.raft">RaftJournalWriter</a></td>
+<td class="colLast">
+<div class="block">Class for writing entries to the Raft journal.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/RaftPrimarySelector.html" title="class in alluxio.master.journal.raft">RaftPrimarySelector</a></td>
+<td class="colLast">
+<div class="block">A primary selector backed by a Raft consensus cluster.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/SnapshotDownloader.html" title="class in alluxio.master.journal.raft">SnapshotDownloader</a>&lt;S,R&gt;</td>
+<td class="colLast">
+<div class="block">A stream observer for downloading a snapshot.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/SnapshotReplicationManager.html" title="class in alluxio.master.journal.raft">SnapshotReplicationManager</a></td>
+<td class="colLast">
+<div class="block">Class for managing snapshot replication among masters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/raft/SnapshotUploader.html" title="class in alluxio.master.journal.raft">SnapshotUploader</a>&lt;S,R&gt;</td>
+<td class="colLast">
+<div class="block">A stream observer for uploading a snapshot.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

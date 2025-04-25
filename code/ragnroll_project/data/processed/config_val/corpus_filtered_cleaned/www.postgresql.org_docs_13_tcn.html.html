@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.39. tcn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/tcn.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.39. tcn" />
+  <meta property="og:description" content="F.39.&amp;nbsp;tcn The tcn module provides a trigger function that notifies listeners of changes to any table on which it is …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/tcn.html" title="PostgreSQL 17 - F.39. tcn" >Current</a>
+                          (<a href="/docs/17/tcn.html" title="PostgreSQL 17 - F.39. tcn" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/tcn.html" title="PostgreSQL 16 - F.39. tcn" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/tcn.html" title="PostgreSQL 15 - F.39. tcn" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/tcn.html" title="PostgreSQL 14 - F.39. tcn" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/tcn.html" title="PostgreSQL 13 - F.39. tcn" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/tcn.html" title="PostgreSQL devel - F.39. tcn"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/tcn.html" title="PostgreSQL 12 - F.39. tcn"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/tcn.html" title="PostgreSQL 11 - F.39. tcn"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/tcn.html" title="PostgreSQL 10 - F.39. tcn"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/tcn.html" title="PostgreSQL 9.6 - F.39. tcn"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/tcn.html" title="PostgreSQL 9.5 - F.39. tcn"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/tcn.html" title="PostgreSQL 9.4 - F.39. tcn"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/tcn.html" title="PostgreSQL 9.3 - F.39. tcn"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/tcn.html" title="PostgreSQL 9.2 - F.39. tcn"  rel="nofollow">9.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.39.&nbsp;tcn</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="tablefunc.html" title="F.38.&nbsp;tablefunc">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="test-decoding.html" title="F.40.&nbsp;test_decoding">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="TCN">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.39.&nbsp;tcn</h2>
+      </div>
+    </div>
+  </div><a id="id-1.11.7.48.2" class="indexterm" name="id-1.11.7.48.2"></a><a id="id-1.11.7.48.3" class="indexterm" name="id-1.11.7.48.3"></a>
+  <p>The <code class="filename">tcn</code> module provides a trigger function that notifies listeners of changes to any table on which it is attached. It must be used as an <code class="literal">AFTER</code> trigger <code class="literal">FOR EACH ROW</code>.</p>
+  <p>This module is considered <span class="quote">“<span class="quote">trusted</span>”</span>, that is, it can be installed by non-superusers who have <code class="literal">CREATE</code> privilege on the current database.</p>
+  <p>Only one parameter may be supplied to the function in a <code class="literal">CREATE TRIGGER</code> statement, and that is optional. If supplied it will be used for the channel name for the notifications. If omitted <code class="literal">tcn</code> will be used for the channel name.</p>
+  <p>The payload of the notifications consists of the table name, a letter to indicate which type of operation was performed, and column name/value pairs for primary key columns. Each part is separated from the next by a comma. For ease of parsing using regular expressions, table and column names are always wrapped in double quotes, and data values are always wrapped in single quotes. Embedded quotes are doubled.</p>
+  <p>A brief example of using the extension follows.</p>
+  <pre class="programlisting">
+test=# create table tcndata
+test-#   (
+test(#     a int not null,
+test(#     b date not null,
+test(#     c text,
+test(#     primary key (a, b)
+test(#   );
+CREATE TABLE
+test=# create trigger tcndata_tcn_trigger
+test-#   after insert or update or delete on tcndata
+test-#   for each row execute function triggered_change_notification();
+CREATE TRIGGER
+test=# listen tcn;
+LISTEN
+test=# insert into tcndata values (1, date '2012-12-22', 'one'),
+test-#                            (1, date '2012-12-23', 'another'),
+test-#                            (2, date '2012-12-23', 'two');
+INSERT 0 3
+Asynchronous notification "tcn" with payload ""tcndata",I,"a"='1',"b"='2012-12-22'" received from server process with PID 22770.
+Asynchronous notification "tcn" with payload ""tcndata",I,"a"='1',"b"='2012-12-23'" received from server process with PID 22770.
+Asynchronous notification "tcn" with payload ""tcndata",I,"a"='2',"b"='2012-12-23'" received from server process with PID 22770.
+test=# update tcndata set c = 'uno' where a = 1;
+UPDATE 2
+Asynchronous notification "tcn" with payload ""tcndata",U,"a"='1',"b"='2012-12-22'" received from server process with PID 22770.
+Asynchronous notification "tcn" with payload ""tcndata",U,"a"='1',"b"='2012-12-23'" received from server process with PID 22770.
+test=# delete from tcndata where a = 1 and b = date '2012-12-22';
+DELETE 1
+Asynchronous notification "tcn" with payload ""tcndata",D,"a"='1',"b"='2012-12-22'" received from server process with PID 22770.
+</pre>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="tablefunc.html" title="F.38.&nbsp;tablefunc">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="test-decoding.html" title="F.40.&nbsp;test_decoding">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.38.&nbsp;tablefunc&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.40.&nbsp;test_decoding</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/tcn.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>WAITAOF | Docs</title>
+    <meta name="description" content="Blocks until all of the preceding write commands sent by the connection are written to the append-only file of the master and/or replicas.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/waitaof/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="WAITAOF">
+  <meta property="og:description" content="Blocks until all of the preceding write commands sent by the connection are written to the append-only file of the master and/or replicas.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="WAITAOF">
+  <meta itemprop="description" content="Blocks until all of the preceding write commands sent by the connection are written to the append-only file of the master and/or replicas.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="631">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="WAITAOF">
+  <meta name="twitter:description" content="Blocks until all of the preceding write commands sent by the connection are written to the append-only file of the master and/or replicas.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">WAITAOF
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">WAITAOF numlocal numreplicas timeout</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 7.2.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@blocking</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@connection</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>This command blocks the current client until all previous write commands by that client are acknowledged as having been fsynced to the AOF of the local Redis and/or at least the specified number of replicas.</p>
+<p><code>numlocal</code> represents the number of local fsyncs required to be confirmed before proceeding.
+When <code>numlocal</code> is set to 1, the command blocks until the data written to the Redis instance is confirmed to be persisted to the local AOF file.
+The value 0 disables this check.</p>
+<p>If the timeout, specified in milliseconds, is reached, the command returns even if the specified number of acknowledgments has not been met.</p>
+<p>The command <strong>will always return</strong> the number of masters and replicas that have fsynced all write commands sent by the current client before the <code>WAITAOF</code> command, both in the case where the specified thresholds were met, and when the timeout is reached.</p>
+<p>A few remarks:</p>
+<ol>
+<li>When <code>WAITAOF</code> returns, all the previous write commands sent in the context of the current connection are guaranteed to be fsynced to the AOF of at least the number of masters and replicas returned by <code>WAITAOF</code>.</li>
+<li>If the command is sent as part of a <a href="/docs/latest/commands/multi/"><code>MULTI</code></a> transaction (or any other context that does not allow blocking, such as inside scripts), the command does not block but instead returns immediately the number of masters and replicas that fsynced all previous write commands.</li>
+<li>A timeout of 0 means to block forever.</li>
+<li>Since <code>WAITAOF</code> returns the number of fsyncs completed both in case of success and timeout, the client should check that the returned values are equal or greater than the persistence level required.</li>
+<li><code>WAITAOF</code> cannot be used on replica instances, and the <code>numlocal</code> argument cannot be non-zero if the local Redis does not have AOF enabled.</li>
+</ol>
+<h2 id="limitations">Limitations</h2>
+<p>It is possible to write a module or Lua script that propagate writes to the AOF but not the replication stream.
+(For modules, this is done using the <code>fmt</code> argument to <code>RedisModule_Call</code> or <code>RedisModule_Replicate</code>; For Lua scripts, this is achieved using <code>redis.set_repl</code>.)</p>
+<p>These features are incompatible with the <code>WAITAOF</code> command as it is currently implemented, and using them in combination may result in incorrect behavior.</p>
+<h2 id="consistency-and-waitaof">Consistency and WAITAOF</h2>
+<p>Note that, similarly to <a href="/docs/latest/commands/wait/"><code>WAIT</code></a>, <code>WAITAOF</code> does not make Redis a strongly-consistent store.
+Unless waiting for all members of a cluster to fsync writes to disk, data can still be lost during a failover or a Redis restart.
+However, <code>WAITAOF</code> does improve real-world data safety.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Since Redis 7.2, Redis tracks and increments the replication offset even when no replicas are configured (as long as AOF exists).</p>
+<p>In addition, Redis replicas asynchronously ping their master with two replication offsets: the offset they have processed in the replication stream, and the offset they have fsynced to their AOF.</p>
+<p>Redis remembers, for each client, the replication offset of the produced replication stream when the last write command was executed in the context of that client.
+When <code>WAITAOF</code> is called, Redis checks if the local Redis and/or the specified number of replicas have confirmed fsyncing this offset or a greater one to their AOF.</p>
+<h2 id="examples">Examples</h2>
+<pre tabindex="0"><code>&gt; SET foo bar
+OK
+&gt; WAITAOF 1 0 0
+1) (integer) 1
+2) (integer) 0
+&gt; WAITAOF 0 1 1000
+1) (integer) 1
+2) (integer) 0
+</code></pre><p>In the above example, the first call to <code>WAITAOF</code> does not use a timeout and asks for the write to be fsynced to the local Redis only; it returns with [1, 0] when this is completed.</p>
+<p>In the second attempt we instead specify a timeout, and ask for the write to be confirmed as fsynced by a single replica.
+Since there are no connected replicas, the <code>WAITAOF</code> command unblocks after one second and again returns [1, 0], indicating the write has been fsynced on the local Redis but no replicas.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: The command returns an array of two integers:</p>
+<ol>
+<li>The first is the number of local Redises (0 or 1) that have fsynced to AOF  all writes performed in the context of the current connection</li>
+<li>The second is the number of replicas that have acknowledged doing the same.</li>
+</ol>
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/waitaof/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

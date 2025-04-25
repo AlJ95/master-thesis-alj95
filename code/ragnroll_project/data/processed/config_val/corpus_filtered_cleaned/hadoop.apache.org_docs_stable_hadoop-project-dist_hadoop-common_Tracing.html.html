@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Enabling Dapper-like Tracing in Hadoop</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Enabling Dapper-like Tracing in Hadoop</h1>
+<ul>
+
+
+
+
+
+
+</ul></li></ul>
+<section>
+<h2><a name="Dapper-like_Tracing_in_Hadoop"></a>Dapper-like Tracing in Hadoop</h2><section>
+<h3><a name="HTrace"></a>HTrace</h3>
+<p><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-5274">HDFS-5274</a> added support for tracing requests through HDFS, using the open source tracing library, <a class="externalLink" href="http://htrace.incubator.apache.org/">Apache HTrace</a>. Setting up tracing is quite simple, however it requires some very minor changes to your client code.</p></section><section>
+<h3><a name="SpanReceivers"></a>SpanReceivers</h3>
+<p>The tracing system works by collecting information in structs called &#x2018;Spans&#x2019;. It is up to you to choose how you want to receive this information by using implementation of <a class="externalLink" href="http://htrace.incubator.apache.org/developer_guide.html#SpanReceivers">SpanReceiver</a> interface bundled with HTrace or implementing it by yourself.</p>
+<p><a class="externalLink" href="http://htrace.incubator.apache.org/">HTrace</a> provides options such as</p>
+<ul>
+
+<li>FlumeSpanReceiver</li>
+<li>HBaseSpanReceiver</li>
+<li>HTracedRESTReceiver</li>
+<li>ZipkinSpanReceiver</li>
+</ul>
+<p>See core-default.xml for a description of HTrace configuration keys.  In some cases, you will also need to add the jar containing the SpanReceiver that you are using to the classpath of Hadoop on each node. (In the example above, LocalFileSpanReceiver is included in the htrace-core4 jar which is bundled with Hadoop.)</p>
+
+<div class="source">
+<div class="source">
+<pre>    $ cp htrace-htraced/target/htrace-htraced-4.1.0-incubating.jar $HADOOP_HOME/share/hadoop/common/lib/
+</pre></div></div>
+</section><section>
+<h3><a name="Dynamic_update_of_tracing_configuration"></a>Dynamic update of tracing configuration</h3>
+<p>You can use <code>hadoop trace</code> command to see and update the tracing configuration of each servers. You must specify IPC server address of namenode or datanode by <code>-host</code> option. You need to run the command against all servers if you want to update the configuration of all servers.</p>
+<p><code>hadoop trace -list</code> shows list of loaded span receivers associated with the id.</p>
+
+<div class="source">
+<div class="source">
+<pre>  $ hadoop trace -list -host 192.168.56.2:9000
+  ID  CLASS
+  1   org.apache.htrace.core.LocalFileSpanReceiver
+
+  $ hadoop trace -list -host 192.168.56.2:9867
+  ID  CLASS
+  1   org.apache.htrace.core.LocalFileSpanReceiver
+</pre></div></div>
+
+<p><code>hadoop trace -remove</code> removes span receiver from server. <code>-remove</code> options takes id of span receiver as argument.</p>
+
+<div class="source">
+<div class="source">
+<pre>  $ hadoop trace -remove 1 -host 192.168.56.2:9000
+  Removed trace span receiver 1
+</pre></div></div>
+
+<p><code>hadoop trace -add</code> adds span receiver to server. You need to specify the class name of span receiver as argument of <code>-class</code> option. You can specify the configuration associated with span receiver by <code>-Ckey=value</code> options.</p>
+
+<div class="source">
+<div class="source">
+<pre>  $ hadoop trace -add -class org.apache.htrace.core.LocalFileSpanReceiver -Chadoop.htrace.local.file.span.receiver.path=/tmp/htrace.out -host 192.168.56.2:9000
+  Added trace span receiver 2 with configuration hadoop.htrace.local.file.span.receiver.path = /tmp/htrace.out
+
+  $ hadoop trace -list -host 192.168.56.2:9000
+  ID  CLASS
+  2   org.apache.htrace.core.LocalFileSpanReceiver
+</pre></div></div>
+
+<p>If the cluster is Kerberized, the service principal name must be specified using <code>-principal</code> option. For example, to show list of span receivers of a namenode:</p>
+
+<div class="source">
+<div class="source">
+<pre>$ hadoop trace -list -host NN1:8020 -principal namenode/NN1@EXAMPLE.COM
+</pre></div></div>
+
+<p>Or, for a datanode:</p>
+
+<div class="source">
+<div class="source">
+<pre>$ hadoop trace -list -host DN2:9867 -principal datanode/DN1@EXAMPLE.COM
+</pre></div></div>
+</section><section>
+<h3><a name="Starting_tracing_spans_by_HTrace_API"></a>Starting tracing spans by HTrace API</h3>
+<p>In order to trace, you will need to wrap the traced logic with <b>tracing span</b> as shown below. When there is running tracing spans, the tracing information is propagated to servers along with RPC requests.</p>
+
+<div class="source">
+<div class="source">
+<pre>    import org.apache.hadoop.hdfs.HdfsConfiguration;
+    import org.apache.htrace.core.Tracer;
+    import org.apache.htrace.core.TraceScope;
+
+    ...
+
+
+    ...
+
+        TraceScope ts = tracer.newScope(&quot;Gets&quot;);
+        try {
+          ... // traced logic
+        } finally {
+          ts.close();
+        }
+</pre></div></div>
+</section><section>
+<h3><a name="Sample_code_for_tracing_by_HTrace_API"></a>Sample code for tracing by HTrace API</h3>
+<p>The <code>TracingFsShell.java</code> shown below is the wrapper of FsShell which start tracing span before invoking HDFS shell command.</p>
+
+<div class="source">
+<div class="source">
+<pre>    import org.apache.hadoop.fs.FileSystem;
+    import org.apache.hadoop.fs.Path;
+    import org.apache.hadoop.conf.Configuration;
+    import org.apache.hadoop.conf.Configured;
+    import org.apache.hadoop.tracing.TraceUtils;
+    import org.apache.hadoop.util.Tool;
+    import org.apache.hadoop.util.ToolRunner;
+    import org.apache.htrace.core.Tracer;
+    import org.apache.htrace.core.TraceScope;
+    
+    public class Sample extends Configured implements Tool {
+      @Override
+      public int run(String argv[]) throws Exception {
+        FileSystem fs = FileSystem.get(getConf());
+        Tracer tracer = new Tracer.Builder(&quot;Sample&quot;).
+            conf(TraceUtils.wrapHadoopConf(&quot;sample.htrace.&quot;, getConf())).
+            build();
+        int res = 0;
+        try (TraceScope scope = tracer.newScope(&quot;sample&quot;)) {
+          Thread.sleep(1000);
+          fs.listStatus(new Path(&quot;/&quot;));
+        }
+        tracer.close();
+        return res;
+      }
+      
+      public static void main(String argv[]) throws Exception {
+        ToolRunner.run(new Sample(), argv);
+      }
+    }
+</pre></div></div>
+
+<p>You can compile and execute this code as shown below.</p>
+
+<div class="source">
+<div class="source">
+<pre>$ javac -cp `hadoop classpath` Sample.java
+$ java -cp .:`hadoop classpath` Sample \
+    -Dsample.htrace.span.receiver.classes=LocalFileSpanReceiver \
+    -Dsample.htrace.sampler.classes=AlwaysSampler
+</pre></div></div>
+</section><section>
+<h3><a name="Starting_tracing_spans_by_FileSystem_Shell"></a>Starting tracing spans by FileSystem Shell</h3>
+<p>The FileSystem Shell can enable tracing by configuration properties.</p>
+<p>Configure the span receivers and samplers in <code>core-site.xml</code> or command line by properties <code>fs.client.htrace.sampler.classes</code> and <code>fs.client.htrace.spanreceiver.classes</code>.</p>
+
+<div class="source">
+<div class="source">
+<pre>$ hdfs dfs -Dfs.shell.htrace.span.receiver.classes=LocalFileSpanReceiver \
+           -Dfs.shell.htrace.sampler.classes=AlwaysSampler \
+           -ls /
+</pre></div></div>
+</section><section>
+<h3><a name="Starting_tracing_spans_by_configuration_for_HDFS_client"></a>Starting tracing spans by configuration for HDFS client</h3>
+<p>The DFSClient can enable tracing internally. This allows you to use HTrace with your client without modifying the client source code.</p>
+<p>Configure the span receivers and samplers in <code>hdfs-site.xml</code> by properties <code>fs.client.htrace.sampler.classes</code> and <code>fs.client.htrace.spanreceiver.classes</code>.  The value of <code>fs.client.htrace.sampler.classes</code> can be NeverSampler, AlwaysSampler or ProbabilitySampler.</p>
+<ul>
+
+<li>NeverSampler: HTrace is OFF for all requests to namenodes and datanodes;</li>
+<li>AlwaysSampler: HTrace is ON for all requests to namenodes and datanodes;</li>
+<li>ProbabilitySampler: HTrace is ON for some percentage% of  requests to namenodes and datanodes</li>
+</ul>
+
+<div class="source">
+<div class="source">
+<pre>      &lt;property&gt;
+        &lt;name&gt;hadoop.htrace.span.receiver.classes&lt;/name&gt;
+        &lt;value&gt;LocalFileSpanReceiver&lt;/value&gt;
+      &lt;/property&gt;
+      &lt;property&gt;
+        &lt;name&gt;fs.client.htrace.sampler.classes&lt;/name&gt;
+        &lt;value&gt;ProbabilitySampler&lt;/value&gt;
+      &lt;/property&gt;
+      &lt;property&gt;
+        &lt;name&gt;fs.client.htrace.sampler.fraction&lt;/name&gt;
+        &lt;value&gt;0.01&lt;/value&gt;
+      &lt;/property&gt;
+</pre></div></div></section></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="PostgreSQL specific database constraints | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/ref/contrib/postgres/constraints/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>PostgreSQL specific database constraints | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-module-django.contrib.postgres.constraints">
+<span id="s-postgresql-specific-database-constraints"></span><span id="module-django.contrib.postgres.constraints"></span><span id="postgresql-specific-database-constraints"></span><h1>PostgreSQL specific database constraints<a class="headerlink" href="#module-django.contrib.postgres.constraints" title="Permalink to this headline">¶</a></h1>
+<p>PostgreSQL supports additional data integrity constraints available from the
+<code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.constraints</span></code> module. They are added in the model
+<a class="reference internal" href="../../../models/options/#django.db.models.Options.constraints" title="django.db.models.Options.constraints"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Meta.constraints</span></code></a> option.</p>
+<div class="section" id="s-exclusionconstraint">
+<span id="exclusionconstraint"></span><h2><code class="docutils literal notranslate"><span class="pre">ExclusionConstraint</span></code><a class="headerlink" href="#exclusionconstraint" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">ExclusionConstraint</span></code>(<em><span class="o"><span class="pre">*</span></span></em>, <em><span class="n"><span class="pre">name</span></span></em>, <em><span class="n"><span class="pre">expressions</span></span></em>, <em><span class="n"><span class="pre">index_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">deferrable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">include</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">opclasses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>)<a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an exclusion constraint in the database. Internally, PostgreSQL
+implements exclusion constraints using indexes. The default index type is
+<a class="reference external" href="https://www.postgresql.org/docs/current/gist.html">GiST</a>. To use them,
+you need to activate the <a class="reference external" href="https://www.postgresql.org/docs/current/btree-gist.html">btree_gist extension</a> on PostgreSQL.
+You can install it using the
+<a class="reference internal" href="../operations/#django.contrib.postgres.operations.BtreeGistExtension" title="django.contrib.postgres.operations.BtreeGistExtension"><code class="xref py py-class docutils literal notranslate"><span class="pre">BtreeGistExtension</span></code></a> migration
+operation.</p>
+<p>If you attempt to insert a new row that conflicts with an existing row, an
+<a class="reference internal" href="../../../exceptions/#django.db.IntegrityError" title="django.db.IntegrityError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IntegrityError</span></code></a> is raised. Similarly, when update
+conflicts with an existing row.</p>
+</dd></dl>
+
+<div class="section" id="s-name">
+<span id="name"></span><h3><code class="docutils literal notranslate"><span class="pre">name</span></code><a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint.name">
+<code class="sig-prename descclassname"><span class="pre">ExclusionConstraint.</span></code><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The name of the constraint.</p>
+</div>
+<div class="section" id="s-expressions">
+<span id="expressions"></span><h3><code class="docutils literal notranslate"><span class="pre">expressions</span></code><a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint.expressions">
+<code class="sig-prename descclassname"><span class="pre">ExclusionConstraint.</span></code><code class="sig-name descname"><span class="pre">expressions</span></code><a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint.expressions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>An iterable of 2-tuples. The first element is an expression or string. The
+second element is an SQL operator represented as a string. To avoid typos, you
+may use <a class="reference internal" href="../fields/#django.contrib.postgres.fields.RangeOperators" title="django.contrib.postgres.fields.RangeOperators"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeOperators</span></code></a> which maps the
+operators with strings. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expressions</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;timespan&#39;</span><span class="p">,</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">ADJACENT_TO</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s1">&#39;room&#39;</span><span class="p">),</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">EQUAL</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition-restrictions-on-operators admonition">
+<p class="first admonition-title">Restrictions on operators.</p>
+<p class="last">Only commutative operators can be used in exclusion constraints.</p>
+</div>
+</div>
+<div class="section" id="s-index-type">
+<span id="index-type"></span><h3><code class="docutils literal notranslate"><span class="pre">index_type</span></code><a class="headerlink" href="#index-type" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint.index_type">
+<code class="sig-prename descclassname"><span class="pre">ExclusionConstraint.</span></code><code class="sig-name descname"><span class="pre">index_type</span></code><a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint.index_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The index type of the constraint. Accepted values are <code class="docutils literal notranslate"><span class="pre">GIST</span></code> or <code class="docutils literal notranslate"><span class="pre">SPGIST</span></code>.
+Matching is case insensitive. If not provided, the default index type is
+<code class="docutils literal notranslate"><span class="pre">GIST</span></code>.</p>
+</div>
+<div class="section" id="s-condition">
+<span id="condition"></span><h3><code class="docutils literal notranslate"><span class="pre">condition</span></code><a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint.condition">
+<code class="sig-prename descclassname"><span class="pre">ExclusionConstraint.</span></code><code class="sig-name descname"><span class="pre">condition</span></code><a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint.condition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A <a class="reference internal" href="../../../models/querysets/#django.db.models.Q" title="django.db.models.Q"><code class="xref py py-class docutils literal notranslate"><span class="pre">Q</span></code></a> object that specifies the condition to restrict
+a constraint to a subset of rows. For example,
+<code class="docutils literal notranslate"><span class="pre">condition=Q(cancelled=False)</span></code>.</p>
+<p>These conditions have the same database restrictions as
+<a class="reference internal" href="../../../models/indexes/#django.db.models.Index.condition" title="django.db.models.Index.condition"><code class="xref py py-attr docutils literal notranslate"><span class="pre">django.db.models.Index.condition</span></code></a>.</p>
+</div>
+<div class="section" id="s-deferrable">
+<span id="deferrable"></span><h3><code class="docutils literal notranslate"><span class="pre">deferrable</span></code><a class="headerlink" href="#deferrable" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint.deferrable">
+<code class="sig-prename descclassname"><span class="pre">ExclusionConstraint.</span></code><code class="sig-name descname"><span class="pre">deferrable</span></code><a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint.deferrable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Set this parameter to create a deferrable exclusion constraint. Accepted values
+are <code class="docutils literal notranslate"><span class="pre">Deferrable.DEFERRED</span></code> or <code class="docutils literal notranslate"><span class="pre">Deferrable.IMMEDIATE</span></code>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.postgres.constraints</span> <span class="kn">import</span> <span class="n">ExclusionConstraint</span>
+<span class="kn">from</span> <span class="nn">django.contrib.postgres.fields</span> <span class="kn">import</span> <span class="n">RangeOperators</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Deferrable</span>
+
+
+<span class="n">ExclusionConstraint</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;exclude_overlapping_deferred&#39;</span><span class="p">,</span>
+    <span class="n">expressions</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;timespan&#39;</span><span class="p">,</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">OVERLAPS</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">deferrable</span><span class="o">=</span><span class="n">Deferrable</span><span class="o">.</span><span class="n">DEFERRED</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>By default constraints are not deferred. A deferred constraint will not be
+enforced until the end of the transaction. An immediate constraint will be
+enforced immediately after every command.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Deferred exclusion constraints may lead to a <a class="reference external" href="https://www.postgresql.org/docs/current/sql-createtable.html#id-1.9.3.85.9.4">performance penalty</a>.</p>
+</div>
+</div>
+<div class="section" id="s-include">
+<span id="include"></span><h3><code class="docutils literal notranslate"><span class="pre">include</span></code><a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint.include">
+<code class="sig-prename descclassname"><span class="pre">ExclusionConstraint.</span></code><code class="sig-name descname"><span class="pre">include</span></code><a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint.include" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="versionadded">
+<span class="title">New in Django 3.2.</span> </div>
+<p>A list or tuple of the names of the fields to be included in the covering
+exclusion constraint as non-key columns. This allows index-only scans to be
+used for queries that select only included fields
+(<a class="reference internal" href="#django.contrib.postgres.constraints.ExclusionConstraint.include" title="django.contrib.postgres.constraints.ExclusionConstraint.include"><code class="xref py py-attr docutils literal notranslate"><span class="pre">include</span></code></a>) and filter only by indexed fields
+(<a class="reference internal" href="#django.contrib.postgres.constraints.ExclusionConstraint.expressions" title="django.contrib.postgres.constraints.ExclusionConstraint.expressions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">expressions</span></code></a>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">include</span></code> is supported only for GiST indexes on PostgreSQL 12+.</p>
+</div>
+<div class="section" id="s-opclasses">
+<span id="opclasses"></span><h3><code class="docutils literal notranslate"><span class="pre">opclasses</span></code><a class="headerlink" href="#opclasses" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.postgres.constraints.ExclusionConstraint.opclasses">
+<code class="sig-prename descclassname"><span class="pre">ExclusionConstraint.</span></code><code class="sig-name descname"><span class="pre">opclasses</span></code><a class="headerlink" href="#django.contrib.postgres.constraints.ExclusionConstraint.opclasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="versionadded">
+<span class="title">New in Django 3.2.</span> </div>
+<p>The names of the <a class="reference external" href="https://www.postgresql.org/docs/current/indexes-opclass.html">PostgreSQL operator classes</a> to use for
+this constraint. If you require a custom operator class, you must provide one
+for each expression in the constraint.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ExclusionConstraint</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;exclude_overlapping_opclasses&#39;</span><span class="p">,</span>
+    <span class="n">expressions</span><span class="o">=</span><span class="p">[(</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">OVERLAPS</span><span class="p">)],</span>
+    <span class="n">opclasses</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;circle_ops&#39;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>creates an exclusion constraint on <code class="docutils literal notranslate"><span class="pre">circle</span></code> using <code class="docutils literal notranslate"><span class="pre">circle_ops</span></code>.</p>
+</div>
+<div class="section" id="s-examples">
+<span id="examples"></span><h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>The following example restricts overlapping reservations in the same room, not
+taking canceled reservations into account:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.postgres.constraints</span> <span class="kn">import</span> <span class="n">ExclusionConstraint</span>
+<span class="kn">from</span> <span class="nn">django.contrib.postgres.fields</span> <span class="kn">import</span> <span class="n">DateTimeRangeField</span><span class="p">,</span> <span class="n">RangeOperators</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Q</span>
+
+<span class="k">class</span> <span class="nc">Room</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Reservation</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">room</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Room&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">timespan</span> <span class="o">=</span> <span class="n">DateTimeRangeField</span><span class="p">()</span>
+    <span class="n">cancelled</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">ExclusionConstraint</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;exclude_overlapping_reservations&#39;</span><span class="p">,</span>
+                <span class="n">expressions</span><span class="o">=</span><span class="p">[</span>
+                    <span class="p">(</span><span class="s1">&#39;timespan&#39;</span><span class="p">,</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">OVERLAPS</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;room&#39;</span><span class="p">,</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">EQUAL</span><span class="p">),</span>
+                <span class="p">],</span>
+                <span class="n">condition</span><span class="o">=</span><span class="n">Q</span><span class="p">(</span><span class="n">cancelled</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+<p>In case your model defines a range using two fields, instead of the native
+PostgreSQL range types, you should write an expression that uses the equivalent
+function (e.g. <code class="docutils literal notranslate"><span class="pre">TsTzRange()</span></code>), and use the delimiters for the field. Most
+often, the delimiters will be <code class="docutils literal notranslate"><span class="pre">'[)'</span></code>, meaning that the lower bound is
+inclusive and the upper bound is exclusive. You may use the
+<a class="reference internal" href="../fields/#django.contrib.postgres.fields.RangeBoundary" title="django.contrib.postgres.fields.RangeBoundary"><code class="xref py py-class docutils literal notranslate"><span class="pre">RangeBoundary</span></code></a> that provides an
+expression mapping for the <a class="reference external" href="https://www.postgresql.org/docs/current/rangetypes.html#RANGETYPES-INCLUSIVITY">range boundaries</a>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.postgres.constraints</span> <span class="kn">import</span> <span class="n">ExclusionConstraint</span>
+<span class="kn">from</span> <span class="nn">django.contrib.postgres.fields</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DateTimeRangeField</span><span class="p">,</span>
+    <span class="n">RangeBoundary</span><span class="p">,</span>
+    <span class="n">RangeOperators</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Func</span><span class="p">,</span> <span class="n">Q</span>
+
+
+<span class="k">class</span> <span class="nc">TsTzRange</span><span class="p">(</span><span class="n">Func</span><span class="p">):</span>
+    <span class="n">function</span> <span class="o">=</span> <span class="s1">&#39;TSTZRANGE&#39;</span>
+    <span class="n">output_field</span> <span class="o">=</span> <span class="n">DateTimeRangeField</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Reservation</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">room</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Room&#39;</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">()</span>
+    <span class="n">cancelled</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">ExclusionConstraint</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s1">&#39;exclude_overlapping_reservations&#39;</span><span class="p">,</span>
+                <span class="n">expressions</span><span class="o">=</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">TsTzRange</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">RangeBoundary</span><span class="p">()),</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">OVERLAPS</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;room&#39;</span><span class="p">,</span> <span class="n">RangeOperators</span><span class="o">.</span><span class="n">EQUAL</span><span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">condition</span><span class="o">=</span><span class="n">Q</span><span class="p">(</span><span class="n">cancelled</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

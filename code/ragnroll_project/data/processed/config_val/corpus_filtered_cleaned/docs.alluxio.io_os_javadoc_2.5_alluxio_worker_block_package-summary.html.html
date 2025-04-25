@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.worker.block (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.worker.block</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockStore.html" title="interface in alluxio.worker.block">BlockStore</a></td>
+<td class="colLast">
+<div class="block">A blob store interface to represent the local storage managing and serving all the blocks in the
+ local storage.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockStoreEventListener.html" title="interface in alluxio.worker.block">BlockStoreEventListener</a></td>
+<td class="colLast">
+<div class="block">A listener interface for receiving metadata mutation events of <a href="../../../alluxio/worker/block/BlockStore.html" title="interface in alluxio.worker.block"><code>BlockStore</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockStoreMeta.html" title="interface in alluxio.worker.block">BlockStoreMeta</a></td>
+<td class="colLast">
+<div class="block">Interface for the block store meta in Alluxio.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockWorker.html" title="interface in alluxio.worker.block">BlockWorker</a></td>
+<td class="colLast">
+<div class="block">A block worker in the Alluxio system.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/AbstractBlockStoreEventListener.html" title="class in alluxio.worker.block">AbstractBlockStoreEventListener</a></td>
+<td class="colLast">
+<div class="block">A block store event listener base class implementing the <a href="../../../alluxio/worker/block/BlockStoreEventListener.html" title="interface in alluxio.worker.block"><code>BlockStoreEventListener</code></a>
+ interface with empty methods bodies.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/AllocateOptions.html" title="class in alluxio.worker.block">AllocateOptions</a></td>
+<td class="colLast">
+<div class="block">Used to specify various options while allocating space.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/AsyncBlockRemover.html" title="class in alluxio.worker.block">AsyncBlockRemover</a></td>
+<td class="colLast">
+<div class="block">Asynchronous block removal service.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/AsyncCacheRequestManager.html" title="class in alluxio.worker.block">AsyncCacheRequestManager</a></td>
+<td class="colLast">
+<div class="block">Handles client requests to asynchronously cache blocks.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockHeartbeatReport.html" title="class in alluxio.worker.block">BlockHeartbeatReport</a></td>
+<td class="colLast">
+<div class="block">Container for the delta information in each worker-to-master heartbeat.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockHeartbeatReporter.html" title="class in alluxio.worker.block">BlockHeartbeatReporter</a></td>
+<td class="colLast">
+<div class="block">Represents the delta of the block store within one heartbeat period.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockLockManager.html" title="class in alluxio.worker.block">BlockLockManager</a></td>
+<td class="colLast">
+<div class="block">Handle all block locks.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMasterClient.html" title="class in alluxio.worker.block">BlockMasterClient</a></td>
+<td class="colLast">
+<div class="block">A wrapper for the gRPC client to interact with the block master, used by alluxio worker.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMasterClientPool.html" title="class in alluxio.worker.block">BlockMasterClientPool</a></td>
+<td class="colLast">
+<div class="block">Class for managing block master clients.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMasterSync.html" title="class in alluxio.worker.block">BlockMasterSync</a></td>
+<td class="colLast">
+<div class="block">Task that carries out the necessary block worker to master communications, including register and
+ heartbeat.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMetadataAllocatorView.html" title="class in alluxio.worker.block">BlockMetadataAllocatorView</a></td>
+<td class="colLast">
+<div class="block">This class exposes a narrower read-only view of block metadata to allocators.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMetadataEvictorView.html" title="class in alluxio.worker.block">BlockMetadataEvictorView</a></td>
+<td class="colLast">
+<div class="block">This class exposes a narrower view of <a href="../../../alluxio/worker/block/BlockMetadataManager.html" title="class in alluxio.worker.block"><code>BlockMetadataManager</code></a> to Evictors,
+ filtering out un-evictable blocks and un-allocatable space internally, so that evictors and
+ allocators can be developed with much simpler logic, without worrying about various constraints,
+ e.g.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMetadataManager.html" title="class in alluxio.worker.block">BlockMetadataManager</a></td>
+<td class="colLast">
+<div class="block">Manages the metadata of all blocks in managed space.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMetadataView.html" title="class in alluxio.worker.block">BlockMetadataView</a></td>
+<td class="colLast">
+<div class="block">This class is an abstract class for allocators and evictors to extend to provide
+ limited access to block metadata.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockMetricsReporter.html" title="class in alluxio.worker.block">BlockMetricsReporter</a></td>
+<td class="colLast">
+<div class="block">This class listens on block events and increases the metrics counters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockStoreLocation.html" title="class in alluxio.worker.block">BlockStoreLocation</a></td>
+<td class="colLast">
+<div class="block">Where to store a block within a block store.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockStoreMeta.Factory.html" title="class in alluxio.worker.block">BlockStoreMeta.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../../alluxio/worker/block/BlockStoreMeta.html" title="interface in alluxio.worker.block"><code>BlockStoreMeta</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockWorkerFactory.html" title="class in alluxio.worker.block">BlockWorkerFactory</a></td>
+<td class="colLast">
+<div class="block">Factory to create a <a href="../../../alluxio/worker/block/BlockWorker.html" title="interface in alluxio.worker.block"><code>BlockWorker</code></a> instance.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/ClientRWLock.html" title="class in alluxio.worker.block">ClientRWLock</a></td>
+<td class="colLast">
+<div class="block">Read/write lock associated with clients rather than threads.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/DefaultBlockStoreMeta.html" title="class in alluxio.worker.block">DefaultBlockStoreMeta</a></td>
+<td class="colLast">
+<div class="block">This class holds the metadata information of a block store.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/DefaultBlockWorker.html" title="class in alluxio.worker.block">DefaultBlockWorker</a></td>
+<td class="colLast">
+<div class="block">The class is responsible for managing all top level components of the Block Worker.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/DefaultBlockWorker.Metrics.html" title="class in alluxio.worker.block">DefaultBlockWorker.Metrics</a></td>
+<td class="colLast">
+<div class="block">This class contains some metrics related to the block worker.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/PinListSync.html" title="class in alluxio.worker.block">PinListSync</a></td>
+<td class="colLast">
+<div class="block">PinListSync periodically syncs the set of pinned inodes from master,  and saves the new pinned
+ inodes to the <a href="../../../alluxio/worker/block/BlockWorker.html" title="interface in alluxio.worker.block"><code>BlockWorker</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/RemoteBlockReader.html" title="class in alluxio.worker.block">RemoteBlockReader</a></td>
+<td class="colLast">
+<div class="block">Reads a block from a remote worker node.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/TieredBlockStore.html" title="class in alluxio.worker.block">TieredBlockStore</a></td>
+<td class="colLast">
+<div class="block">This class represents an object store that manages all the blocks in the local tiered storage.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/UfsInputStreamCache.html" title="class in alluxio.worker.block">UfsInputStreamCache</a></td>
+<td class="colLast">
+<div class="block">This class implements a <a href="../../../alluxio/worker/block/io/BlockReader.html" title="class in alluxio.worker.block.io"><code>BlockReader</code></a> to read a block directly from UFS, and
+ optionally cache the block to the Alluxio worker if the whole block it is read.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/UnderFileSystemBlockReader.html" title="class in alluxio.worker.block">UnderFileSystemBlockReader</a></td>
+<td class="colLast">
+<div class="block">This class implements a <a href="../../../alluxio/worker/block/io/BlockReader.html" title="class in alluxio.worker.block.io"><code>BlockReader</code></a> to read a block directly from UFS, and
+ optionally cache the block to the Alluxio worker if the whole block it is read.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/UnderFileSystemBlockStore.html" title="class in alluxio.worker.block">UnderFileSystemBlockStore</a></td>
+<td class="colLast">
+<div class="block">This class manages the virtual blocks in the UFS for delegated UFS reads/writes.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/block/BlockLockType.html" title="enum in alluxio.worker.block">BlockLockType</a></td>
+<td class="colLast">
+<div class="block">A read-write lock to guard one block.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  0.20.2 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  0.20.2 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-826">MAPREDUCE-826</a> | <i>Trivial</i> | <b>harchive doesn&#x2019;t use ToolRunner / harchive returns 0 even if the job fails with exception</b></li>
+</ul>
+<p>Use ToolRunner for archives job and return non zero error code on failure.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-112">MAPREDUCE-112</a> | <i>Blocker</i> | <b>Reduce Input Records and Reduce Output Records counters are not being set when using the new Mapreduce reducer API</b></li>
+</ul>
+<p>Updates of counters for reduce input and output records were added in the new API so they are available for jobs using the new API.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-6231">HADOOP-6231</a> | <i>Major</i> | <b>Allow caching of filesystem instances to be disabled on a per-instance basis</b></li>
+</ul>
+<p>Allow a general mechanism to disable the cache on a per filesystem basis by using property fs.&lt;schemename&gt;.impl.disable.cache. eg. fs.har.impl.disable.cache in core-default.xml</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-979">MAPREDUCE-979</a> | <i>Blocker</i> | <b>JobConf.getMemoryFor{Map|Reduce}Task doesn&#x2019;t fallback to newer config knobs when mapred.taskmaxvmem is set to DISABLED_MEMORY_LIMIT of -1</b></li>
+</ul>
+<p>Added support to fallback to new task memory configuration when deprecated memory configuration values are set to disabled.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-677">HDFS-677</a> | <i>Blocker</i> | <b>Rename failure due to quota results in deletion of src directory</b></li>
+</ul>
+<p>Rename properly considers the case where both source and destination are over quota; operation will fail with error indication.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-6097">HADOOP-6097</a> | <i>Major</i> | <b>Multiple bugs w/ Hadoop archives</b></li>
+</ul>
+<p>Bugs fixed for Hadoop archives: character escaping in paths, LineReader and file system caching.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-761">HDFS-761</a> | <i>Major</i> | <b>Failure to process rename operation from edits log due to quota verification</b></li>
+</ul>
+<p>Corrected an error when checking quota policy that resulted in a failure to read the edits log, stopping the primary/secondary name node.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-1068">MAPREDUCE-1068</a> | <i>Major</i> | <b>In hadoop-0.20.0 streaming job do not throw proper verbose error message if file is not present</b></li>
+</ul>
+<p>Fix streaming job to show proper message if file is is not present, for -file option.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-596">HDFS-596</a> | <i>Blocker</i> | <b>Memory leak in libhdfs: hdfsFreeFileInfo() in libhdfs does not free memory for mOwner and mGroup</b></li>
+</ul>
+<p>Memory leak in function hdfsFreeFileInfo in libhdfs. This bug affects fuse-dfs severely.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-1147">MAPREDUCE-1147</a> | <i>Blocker</i> | <b>Map output records counter missing for map-only jobs in new API</b></li>
+</ul>
+<p>Adds a counter to track the number of records emitted by map writing directly to HDFS i.e map tasks of job with 0 reducers.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-1182">MAPREDUCE-1182</a> | <i>Blocker</i> | <b>Reducers fail with OutOfMemoryError while copying Map outputs</b></li>
+</ul>
+<p>Modifies shuffle related memory parameters to use &#x2018;long&#x2019; from &#x2018;int&#x2019; so that sizes greater than maximum integer size are handled correctly</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-781">HDFS-781</a> | <i>Blocker</i> | <b>Metrics PendingDeletionBlocks is not decremented</b></li>
+</ul>
+<p>Correct PendingDeletionBlocks metric to properly decrement counts.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-793">HDFS-793</a> | <i>Blocker</i> | <b>DataNode should first receive the whole packet ack message before it constructs and sends its own ack message for the packet</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-6428">HADOOP-6428</a> | <i>Major</i> | <b>HttpServer sleeps with negative values</b></li>
+</ul>
+<p>Corrected arithmetic error that made sleep times less than zero.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-6460">HADOOP-6460</a> | <i>Blocker</i> | <b>Namenode runs of out of memory due to memory leak in ipc Server</b></li>
+</ul>
+<p>If an IPC server response buffer has grown to than 1MB, it is replaced by a smaller buffer to free up the Java heap that was used. This will improve the longevity of the name service.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-433">MAPREDUCE-433</a> | <i>Major</i> | <b>TestReduceFetch failed.</b></li>
+</ul>
+<p>Resolves the test failure by modifying the test to base it on spill counters rather than on bytes read/written. It also introduces a new configuration parameter &#x201c;mapred.job.shuffle.input.buffer.percent&#x201d; to provide finer grained control on the memory limit to be used during shuffle.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-6498">HADOOP-6498</a> | <i>Blocker</i> | <b>IPC client  bug may cause rpc call hang</b></li>
+</ul>
+<p>Correct synchronization error in IPC where handler thread could hang if request reader got an error.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-623">MAPREDUCE-623</a> | <i>Major</i> | <b>Resolve javac warnings in mapred</b></li>
+</ul>
+<p>Removes javac warnings by either resolving them or suppressing them (wherever resolution is not possible)</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

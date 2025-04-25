@@ -1,0 +1,1719 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>ZADD | Docs</title>
+    <meta name="description" content="Adds one or more members to a sorted set, or updates their scores. Creates the key if it doesn&#39;t exist.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/zadd/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="ZADD">
+  <meta property="og:description" content="Adds one or more members to a sorted set, or updates their scores. Creates the key if it doesn&#39;t exist.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="ZADD">
+  <meta itemprop="description" content="Adds one or more members to a sorted set, or updates their scores. Creates the key if it doesn&#39;t exist.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="2428">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ZADD">
+  <meta name="twitter:description" content="Adds one or more members to a sorted set, or updates their scores. Creates the key if it doesn&#39;t exist.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">ZADD
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">ZADD key [NX | XX] [GT | LT] [CH] [INCR] score member [score member
+  ...]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 1.2.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(log(N)) for each item added, where N is the number of elements in the sorted set.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@sortedset</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@fast</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Adds all the specified members with the specified scores to the sorted set
+stored at <code>key</code>.
+It is possible to specify multiple score / member pairs.
+If a specified member is already a member of the sorted set, the score is
+updated and the element reinserted at the right position to ensure the correct
+ordering.</p>
+<p>If <code>key</code> does not exist, a new sorted set with the specified members as sole
+members is created, like if the sorted set was empty. If the key exists but does not hold a sorted set, an error is returned.</p>
+<p>The score values should be the string representation of a double precision floating point number. <code>+inf</code> and <code>-inf</code> values are valid values as well.</p>
+<h2 id="zadd-options">ZADD options</h2>
+<p>ZADD supports a list of options, specified after the name of the key and before
+the first score argument. Options are:</p>
+<ul>
+<li><strong>XX</strong>: Only update elements that already exist. Don't add new elements.</li>
+<li><strong>NX</strong>: Only add new elements. Don't update already existing elements.</li>
+<li><strong>LT</strong>: Only update existing elements if the new score is <strong>less than</strong> the current score. This flag doesn't prevent adding new elements.</li>
+<li><strong>GT</strong>: Only update existing elements if the new score is <strong>greater than</strong> the current score. This flag doesn't prevent adding new elements.</li>
+<li><strong>CH</strong>: Modify the return value from the number of new elements added, to the total number of elements changed (CH is an abbreviation of <em>changed</em>). Changed elements are <strong>new elements added</strong> and elements already existing for which <strong>the score was updated</strong>. So elements specified in the command line having the same score as they had in the past are not counted. Note: normally the return value of <code>ZADD</code> only counts the number of new elements added.</li>
+<li><strong>INCR</strong>: When this option is specified <code>ZADD</code> acts like <a href="/docs/latest/commands/zincrby/"><code>ZINCRBY</code></a>. Only one score-element pair can be specified in this mode.</li>
+</ul>
+<p>Note: The <strong>GT</strong>, <strong>LT</strong> and <strong>NX</strong> options are mutually exclusive.</p>
+<h2 id="range-of-integer-scores-that-can-be-expressed-precisely">Range of integer scores that can be expressed precisely</h2>
+<p>Redis sorted sets use a <em>double 64-bit floating point number</em> to represent the score. In all the architectures we support, this is represented as an <strong>IEEE 754 floating point number</strong>, that is able to represent precisely integer numbers between <code>-(2^53)</code> and <code>+(2^53)</code> included. In more practical terms, all the integers between -9007199254740992 and 9007199254740992 are perfectly representable. Larger integers, or fractions, are internally represented in exponential form, so it is possible that you get only an approximation of the decimal number, or of the very big integer, that you set as score.</p>
+<h2 id="sorted-sets-101">Sorted sets 101</h2>
+<p>Sorted sets are sorted by their score in an ascending way.
+The same element only exists a single time, no repeated elements are
+permitted. The score can be modified both by <code>ZADD</code> that will update the
+element score, and as a side effect, its position on the sorted set, and
+by <a href="/docs/latest/commands/zincrby/"><code>ZINCRBY</code></a> that can be used in order to update the score relatively to its
+previous value.</p>
+<p>The current score of an element can be retrieved using the <a href="/docs/latest/commands/zscore/"><code>ZSCORE</code></a> command,
+that can also be used to verify if an element already exists or not.</p>
+<p>For an introduction to sorted sets, see the data types page on <a href="/develop/data-types#sorted-sets">sorted
+sets</a>.</p>
+<h2 id="elements-with-the-same-score">Elements with the same score</h2>
+<p>While the same element can't be repeated in a sorted set since every element
+is unique, it is possible to add multiple different elements <em>having the same score</em>. When multiple elements have the same score, they are <em>ordered lexicographically</em> (they are still ordered by score as a first key, however, locally, all the elements with the same score are relatively ordered lexicographically).</p>
+<p>The lexicographic ordering used is binary, it compares strings as array of bytes.</p>
+<p>If the user inserts all the elements in a sorted set with the same score (for example 0), all the elements of the sorted set are sorted lexicographically, and range queries on elements are possible using the command <a href="/docs/latest/commands/zrangebylex/"><code>ZRANGEBYLEX</code></a> (Note: it is also possible to query sorted sets by range of scores using <a href="/docs/latest/commands/zrangebyscore/"><code>ZRANGEBYSCORE</code></a>).</p>
+<h2 id="examples">Examples</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="codetabs cli group flex justify-start items-center flex-wrap box-border rounded-lg mt-0 mb-0 mx-auto bg-slate-900" id="cmds_sorted_set-stepzadd">
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_sorted_set-stepzadd" id="redis-cli_cmds_sorted_set-stepzadd" data-lang="redis-cli" class="radiotab w-0 h-0"
+               checked
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="redis-cli_cmds_sorted_set-stepzadd">
+            
+                &gt;_ Redis CLI
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_redis-cli_cmds_sorted_set-stepzadd" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_sorted_set-stepzadd">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line hl"><span class="cl">&gt; ZADD myzset 1 &#34;one&#34;
+</span></span><span class="line hl"><span class="cl">(integer) 1
+</span></span><span class="line hl"><span class="cl">&gt; ZADD myzset 1 &#34;uno&#34;
+</span></span><span class="line hl"><span class="cl">(integer) 1
+</span></span><span class="line hl"><span class="cl">&gt; ZADD myzset 2 &#34;two&#34; 3 &#34;three&#34;
+</span></span><span class="line hl"><span class="cl">(integer) 2
+</span></span><span class="line hl"><span class="cl">&gt; ZRANGE myzset 0 -1 WITHSCORES
+</span></span><span class="line hl"><span class="cl">1) &#34;one&#34;
+</span></span><span class="line hl"><span class="cl">2) &#34;1&#34;
+</span></span><span class="line hl"><span class="cl">3) &#34;uno&#34;
+</span></span><span class="line hl"><span class="cl">4) &#34;1&#34;
+</span></span><span class="line hl"><span class="cl">5) &#34;two&#34;
+</span></span><span class="line hl"><span class="cl">6) &#34;2&#34;
+</span></span><span class="line hl"><span class="cl">7) &#34;three&#34;
+</span></span><span class="line hl"><span class="cl">8) &#34;3&#34;</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_redis-cli_cmds_sorted_set-stepzadd')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+                <div class="flex-1 text-xs text-white overflow-ellipsis">Are you tired of using redis-cli? Try Redis Insight - the developer GUI for Redis.</div>
+                <div class="text-right">
+                    <a href="https://redis.com/redis-enterprise/redis-insight/" tabindex="1" class="rounded rounded-mx px-2 py-1 flex items-center text-white text-xs
+                    hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                    focus:ring-2 focus:white focus:border-slate-500" title="Get Redis Insight">
+                        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        </svg>
+                        <span>Get Redis Insight</span>
+                    </a>
+                </div>
+            
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_sorted_set-stepzadd" id="Python_cmds_sorted_set-stepzadd" data-lang="Python" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Python_cmds_sorted_set-stepzadd">
+            
+                Python
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Python_cmds_sorted_set-stepzadd" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_sorted_set-stepzadd">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redis</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;localhost&#34;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zadd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;one&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; 1</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zadd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;uno&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; 1</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zadd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;two&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&#34;three&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; 2</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zrange</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">withscores</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; [(&#39;one&#39;, 1.0), (&#39;uno&#39;, 1.0), (&#39;two&#39;, 2.0), (&#39;three&#39;, 3.0)]</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zadd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;one&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;two&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&#34;three&#34;</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; 3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zrange</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zrange</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; [&#39;three&#39;]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zrange</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; [&#39;two&#39;, &#39;three&#39;]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zadd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;one&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;two&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&#34;three&#34;</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zrange</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">withscores</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; [(&#39;one&#39;, 1.0), (&#39;two&#39;, 2.0)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zadd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;one&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;two&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&#34;three&#34;</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">zrange</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">byscore</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; [&#39;three&#39;]</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Python_cmds_sorted_set-stepzadd')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Python_cmds_sorted_set-stepzadd" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/redis-py/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Python Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/redis-py/tree/master/doctests/cmds_sorted_set.py' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_sorted_set-stepzadd" id="Nodejs_cmds_sorted_set-stepzadd" data-lang="Node-js" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Nodejs_cmds_sorted_set-stepzadd">
+            
+                Node.js
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Nodejs_cmds_sorted_set-stepzadd" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_sorted_set-stepzadd">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createClient</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">createClient</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Redis Client Error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">().</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">val1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zAdd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">[{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}]);</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val1</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1">// returns 1
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">val2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zAdd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">[{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;uno&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}]);</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val2</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1">// returns 1
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">val3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zAdd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">[{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}]);</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val3</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1">// returns 2
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">val4</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zRangeWithScores</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val4</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1">// returns [{value: &#39;one&#39;, score: 1}, {value: &#39;uno&#39;, score: 1}, {value: &#39;two&#39;, score: 2}, {value: &#39;three&#39;, score: 3} ]
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val5</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zAdd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// returns 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val6</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zRange</span><span class="p">(</span><span class="s1">&#39;myzset&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val6</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// returns [&#39;one&#39;, &#39;two&#39;, &#39;three&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val7</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zRange</span><span class="p">(</span><span class="s1">&#39;myzset&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val7</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// returns [&#39;three&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val8</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zRange</span><span class="p">(</span><span class="s1">&#39;myzset&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val8</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// returns [&#39;two&#39;, &#39;three&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val9</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zAdd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val9</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// returns 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val10</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zRangeWithScores</span><span class="p">(</span><span class="s1">&#39;myzset&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// returns [{value: &#39;one&#39;, score: 1}, {value: &#39;two&#39;, score: 2}]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val11</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zAdd</span><span class="p">(</span><span class="s2">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="nx">score</span><span class="o">:</span> <span class="mi">3</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">]);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val11</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// returns 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">val12</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">zRange</span><span class="p">(</span><span class="s1">&#39;myzset&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">{</span> <span class="nx">BY</span><span class="o">:</span> <span class="s1">&#39;SCORE&#39;</span><span class="p">,</span> <span class="nx">LIMIT</span><span class="o">:</span> <span class="p">{</span> <span class="nx">offset</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">count</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val12</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// &gt;&gt;&gt; [&#39;three&#39;]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Nodejs_cmds_sorted_set-stepzadd')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Nodejs_cmds_sorted_set-stepzadd" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/nodejs/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Node.js Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/node-redis/tree/emb-examples/doctests/cmds-sorted-set.js' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_sorted_set-stepzadd" id="Java-Sync_cmds_sorted_set-stepzadd" data-lang="Java-Sync" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Java-Sync_cmds_sorted_set-stepzadd">
+            
+                Java-Sync
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Java-Sync_cmds_sorted_set-stepzadd" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_sorted_set-stepzadd">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.UnifiedJedis</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.params.ZRangeParams</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.resps.Tuple</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.assertEquals</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CmdsSortedSetExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">UnifiedJedis</span><span class="w"> </span><span class="n">jedis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnifiedJedis</span><span class="p">(</span><span class="s">&#34;redis://localhost:6379&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;bzmpop&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;bzpopmax&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;bzpopmin&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zAddExampleParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">zAddExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">zAddResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zadd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zAddExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">zAddResult1</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; 1</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">zAddExampleParams</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">zAddExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;uno&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">zAddResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zadd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zAddExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">zAddResult2</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; 1</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">zAddExampleParams</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">zAddExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">zAddExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">zAddResult3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zadd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zAddExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">zAddResult3</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; 2</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Tuple</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zAddResult4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zrangeWithScores</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ZRangeParams</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Tuple</span><span class="w"> </span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="n">zAddResult4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Element: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getElement</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;, Score: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getScore</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Element: one, Score: 1.0</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Element: uno, Score: 1.0</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Element: two, Score: 2.0</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Element: three, Score: 3.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zadd&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zcard&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zcount&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zdiff&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zdiffstore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zincrby&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zinter&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zintercard&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zinterstore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zlexcount&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zmpop&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zmscore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zpopmax&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zpopmin&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrandmember&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeExampleParams1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams1</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams1</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams1</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">zRangeResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zadd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zRangeExampleParams1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">zRangeResult1</span><span class="p">);</span><span class="w">  </span><span class="c1">// &gt;&gt;&gt; 3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zrange</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ZRangeParams</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zRangeResult2</span><span class="p">));</span><span class="w">   </span><span class="c1">// &gt;&gt;&gt; one, two, three</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeResult3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zrange</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ZRangeParams</span><span class="p">(</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zRangeResult3</span><span class="p">));</span><span class="w">   </span><span class="c1">// &gt;&gt; three</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeResult4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zrange</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ZRangeParams</span><span class="p">(</span><span class="o">-</span><span class="n">2</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zRangeResult4</span><span class="p">));</span><span class="w">   </span><span class="c1">// &gt;&gt; two, three</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrange1&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeExampleParams2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams2</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams2</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams2</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">zRangeResult5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zadd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zRangeExampleParams2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">zRangeResult5</span><span class="p">);</span><span class="w">  </span><span class="c1">// &gt;&gt;&gt; 3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Tuple</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeResult6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zrangeWithScores</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ZRangeParams</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Tuple</span><span class="w"> </span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="n">zRangeResult6</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Element: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getElement</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;, Score: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">item</span><span class="p">.</span><span class="na">getScore</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Element: one, Score: 1.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Element: two, Score: 2.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrange2&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeExampleParams3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams3</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams3</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">2</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">zRangeExampleParams3</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">3</span><span class="p">.</span><span class="na">0</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">zRangeResult7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zadd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zRangeExampleParams3</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">zRangeResult7</span><span class="p">);</span><span class="w">  </span><span class="c1">// &gt;&gt;&gt; 3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">zRangeResult8</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">zrangeByScore</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;(1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;+inf&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">,</span><span class="w"> </span><span class="n">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span><span class="w"> </span><span class="n">zRangeResult8</span><span class="p">));</span><span class="w">   </span><span class="c1">// &gt;&gt;&gt; three</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrange3&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrangebylex&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrangebyscore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrangestore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrank&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrem&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zremrangebylex&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zremrangebyrank&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zremrangebyscore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrevrange&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrevrangebylex&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrevrangebyscore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zrevrank&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zscan&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zscore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zunion&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// Tests for &#39;zunionstore&#39; step.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">jedis</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Java-Sync_cmds_sorted_set-stepzadd')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Java-Sync_cmds_sorted_set-stepzadd" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/jedis/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Java-Sync Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/jedis/tree/master/src/test/java/io/redis/examples/CmdsSortedSetExample.java' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_sorted_set-stepzadd" id="Go_cmds_sorted_set-stepzadd" data-lang="Go" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Go_cmds_sorted_set-stepzadd">
+            
+                Go
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Go_cmds_sorted_set-stepzadd" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_sorted_set-stepzadd">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">example_commands_test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/redis/go-redis/v9&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_zadd_cmd</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">zAddResult1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZAdd</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zAddResult1</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 1</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">zAddResult2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZAdd</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;uno&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zAddResult2</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">zAddResult3</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZAdd</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zAddResult3</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 2</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">zAddResult4</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZRangeWithScores</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zAddResult4</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; [{1 one} {1 uno} {2 two} {3 three}]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_zrange1</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zrangeResult1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZAdd</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zrangeResult1</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zrangeResult2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZRange</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zrangeResult2</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; [one two three]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zrangeResult3</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZRange</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zrangeResult3</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; [three]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zrangeResult4</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZRange</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zrangeResult4</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; [two three]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_zrange2</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zRangeResult5</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZAdd</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zRangeResult5</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zRangeResult6</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZRangeWithScores</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zRangeResult6</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; [{1 one} {2 two}]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_zrange3</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zRangeResult7</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZAdd</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">Z</span><span class="p">{</span><span class="nx">Member</span><span class="p">:</span> <span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="nx">Score</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zRangeResult7</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">zRangeResult8</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">ZRangeArgs</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">redis</span><span class="p">.</span><span class="nx">ZRangeArgs</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Key</span><span class="p">:</span>     <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">ByScore</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Start</span><span class="p">:</span>   <span class="s">&#34;(1&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Stop</span><span class="p">:</span>    <span class="s">&#34;+inf&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Offset</span><span class="p">:</span>  <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Count</span><span class="p">:</span>   <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">zRangeResult8</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; [three]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Go_cmds_sorted_set-stepzadd')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Go_cmds_sorted_set-stepzadd" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/go/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Go Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/go-redis/tree/master/doctests/cmds_sorted_set_test.go' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_sorted_set-stepzadd" id="Csharp_cmds_sorted_set-stepzadd" data-lang="dotnet" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Csharp_cmds_sorted_set-stepzadd">
+            
+                C#
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Csharp_cmds_sorted_set-stepzadd" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_sorted_set-stepzadd">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">NRedisStack.Tests</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">StackExchange.Redis</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">CmdsSortedSet</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="k">void</span> <span class="n">run</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">muxer</span> <span class="p">=</span> <span class="n">ConnectionMultiplexer</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="s">&#34;localhost:6379&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">db</span> <span class="p">=</span> <span class="n">muxer</span><span class="p">.</span><span class="n">GetDatabase</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;bzmpop&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;bzpopmax&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;bzpopmin&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="kt">bool</span> <span class="n">zAddResult1</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetAdd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">zAddResult1</span><span class="p">);</span> <span class="c1">// &gt;&gt;&gt; True</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="kt">bool</span> <span class="n">zAddResult2</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetAdd</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="s">&#34;uno&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">zAddResult2</span><span class="p">);</span> <span class="c1">// &gt;&gt;&gt; True</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="kt">long</span> <span class="n">zAddResult3</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetAdd</span><span class="p">(</span>
+</span></span><span class="line hl"><span class="cl">            <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line hl"><span class="cl">            <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span>
+</span></span><span class="line hl"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">zAddResult3</span><span class="p">);</span> <span class="c1">// &gt;&gt;&gt; 2</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="n">SortedSetEntry</span><span class="p">[]</span> <span class="n">zAddResult4</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetRangeByRankWithScores</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&#34;{string.Join(&#34;</span><span class="p">,</span> <span class="s">&#34;, zAddResult4.Select(b =&gt; $&#34;</span><span class="p">{</span><span class="n">b</span><span class="p">.</span><span class="n">Element</span><span class="p">}:</span> <span class="p">{</span><span class="n">b</span><span class="p">.</span><span class="n">Score</span><span class="p">}</span><span class="s">&#34;))}&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">        <span class="c1">// &gt;&gt;&gt; one: 1, uno: 1, two: 2, three: 3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zadd&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zcard&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zcount&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zdiff&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zdiffstore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zincrby&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zinter&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zintercard&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zinterstore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zlexcount&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zmpop&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zmscore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zpopmax&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zpopmin&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrandmember&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">long</span> <span class="n">zRangeResult1</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetAdd</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">zRangeResult1</span><span class="p">);</span>   <span class="c1">// &gt;&gt;&gt; 3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span><span class="p">[]</span> <span class="n">zRangeResult2</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetRangeByRank</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">zRangeResult2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; one, two, three</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span><span class="p">[]</span> <span class="n">zRangeResult3</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetRangeByRank</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">zRangeResult3</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; three</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span><span class="p">[]</span> <span class="n">zRangeResult4</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetRangeByRank</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="p">-</span><span class="m">2</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">zRangeResult4</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; two, three</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrange1&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">long</span> <span class="n">zRangeResult5</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetAdd</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">SortedSetEntry</span><span class="p">[]</span> <span class="n">zRangeResult6</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetRangeByRankWithScores</span><span class="p">(</span><span class="s">&#34;myzset&#34;</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&#34;{string.Join(&#34;</span><span class="p">,</span> <span class="s">&#34;, zRangeResult6.Select(b =&gt; $&#34;</span><span class="p">{</span><span class="n">b</span><span class="p">.</span><span class="n">Element</span><span class="p">}:</span> <span class="p">{</span><span class="n">b</span><span class="p">.</span><span class="n">Score</span><span class="p">}</span><span class="s">&#34;))}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; one: 1, two: 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrange2&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">long</span> <span class="n">zRangeResult7</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetAdd</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;two&#34;</span><span class="p">,</span> <span class="m">2</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">SortedSetEntry</span><span class="p">(</span><span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span><span class="p">[]</span> <span class="n">zRangeResult8</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">SortedSetRangeByScore</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;myzset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="m">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">double</span><span class="p">.</span><span class="n">PositiveInfinity</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Exclude</span><span class="p">.</span><span class="n">Start</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">skip</span><span class="p">:</span> <span class="m">1</span><span class="p">,</span> <span class="n">take</span><span class="p">:</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">zRangeResult8</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; three</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrange3&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrangebylex&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrangebyscore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrangestore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrank&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrem&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zremrangebylex&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zremrangebyrank&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zremrangebyscore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrevrange&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrevrangebylex&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrevrangebyscore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zrevrank&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zscan&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zscore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zunion&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">// Tests for &#39;zunionstore&#39; step.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Csharp_cmds_sorted_set-stepzadd')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Csharp_cmds_sorted_set-stepzadd" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/dotnet/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                C# Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/NRedisStack/tree/master/tests/Doc/CmdsSortedSetExamples.cs' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+
+</div>
+
+
+
+
+<p>Give these commands a try in the interactive console:</p>
+<div class="bg-slate-900 border-b border-slate-700 rounded-t-xl px-4 py-3 w-full flex">
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+</div>  
+<form class="redis-cli overflow-y-auto max-h-80">
+ZADD myzset 1 "one"
+ZADD myzset 1 "uno"
+ZADD myzset 2 "two" 3 "three"
+ZRANGE myzset 0 -1 WITHSCORES
+</form>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>Any of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: if the operation was aborted because of a conflict with one of the <em>XX/NX/LT/GT</em> options.</li>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: the number of new members when the <em>CH</em> option is not used.</li>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: the number of new or updated members when the <em>CH</em> option is used.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: the updated score of the member when the <em>INCR</em> option is used.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>Any of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: if the operation was aborted because of a conflict with one of the <em>XX/NX/LT/GT</em> options.</li>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: the number of new members when the <em>CH</em> option is not used.</li>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: the number of new or updated members when the <em>CH</em> option is used.</li>
+<li><a href="../../develop/reference/protocol-spec#doubles">Double reply</a>: the updated score of the member when the <em>INCR</em> option is used.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 2.4.0: Accepts multiple elements.</li>
+            
+            <li>Starting with Redis version 3.0.2: Added the <code>XX</code>, <code>NX</code>, <code>CH</code> and <code>INCR</code> options.</li>
+            
+            <li>Starting with Redis version 6.2.0: Added the <code>GT</code> and <code>LT</code> options.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/zadd/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

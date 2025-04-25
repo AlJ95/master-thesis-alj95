@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.multi.process (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.multi.process</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/Clients.html" title="class in alluxio.multi.process">Clients</a></td>
+<td class="colLast">
+<div class="block">Container for various Alluxio clients.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/ExternalProcess.html" title="class in alluxio.multi.process">ExternalProcess</a></td>
+<td class="colLast">
+<div class="block">Class for launching another class in a new processes.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/LimitedLifeMasterProcess.html" title="class in alluxio.multi.process">LimitedLifeMasterProcess</a></td>
+<td class="colLast">
+<div class="block">Wrapper around AlluxioMaster which will exit after a limited amount of time.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/LimitedLifeWorkerProcess.html" title="class in alluxio.multi.process">LimitedLifeWorkerProcess</a></td>
+<td class="colLast">
+<div class="block">Wrapper around AlluxioWorker which will exit after a limited amount of time.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/Master.html" title="class in alluxio.multi.process">Master</a></td>
+<td class="colLast">
+<div class="block">Class for running and interacting with an Alluxio master in a separate process.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/MasterNetAddress.html" title="class in alluxio.multi.process">MasterNetAddress</a></td>
+<td class="colLast">
+<div class="block">Network addresses for an Alluxio master.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/MultiProcessCluster.html" title="class in alluxio.multi.process">MultiProcessCluster</a></td>
+<td class="colLast">
+<div class="block">Class for starting, stopping, and interacting with an Alluxio cluster where each master and
+ worker runs in its own process.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/MultiProcessCluster.Builder.html" title="class in alluxio.multi.process">MultiProcessCluster.Builder</a></td>
+<td class="colLast">
+<div class="block">Builder for <a href="../../../alluxio/multi/process/MultiProcessCluster.html" title="class in alluxio.multi.process"><code>MultiProcessCluster</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/PortCoordination.html" title="class in alluxio.multi.process">PortCoordination</a></td>
+<td class="colLast">
+<div class="block">Class for coordinating between test suites so that they don't conflict in ports.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/PortCoordination.ReservedPort.html" title="class in alluxio.multi.process">PortCoordination.ReservedPort</a></td>
+<td class="colLast">
+<div class="block">A port that has been reserved for the purposes of a single test.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/Utils.html" title="class in alluxio.multi.process">Utils</a></td>
+<td class="colLast">
+<div class="block">Utility methods for external test cluster classes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/Worker.html" title="class in alluxio.multi.process">Worker</a></td>
+<td class="colLast">
+<div class="block">Class for running and interacting with an Alluxio worker in a separate process.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/multi/process/MultiProcessCluster.DeployMode.html" title="enum in alluxio.multi.process">MultiProcessCluster.DeployMode</a></td>
+<td class="colLast">
+<div class="block">Deploy mode for the cluster.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

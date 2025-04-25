@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.collections (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.collections</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/FieldIndex.html" title="interface in alluxio.collections">FieldIndex</a>&lt;T,V&gt;</td>
+<td class="colLast">
+<div class="block">An interface representing an index for <a href="../../alluxio/collections/IndexedSet.html" title="class in alluxio.collections"><code>IndexedSet</code></a>, each index for this set must
+ implement the interface to define how to get the value of the field chosen as the index.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/collections/TwoKeyConcurrentMap.TriFunction.html" title="interface in alluxio.collections">TwoKeyConcurrentMap.TriFunction</a>&lt;A,B,C,R&gt;</td>
+<td class="colLast">
+<div class="block">A function with three arguments.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/ConcurrentHashSet.html" title="class in alluxio.collections">ConcurrentHashSet</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A concurrent hash set.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/collections/ConcurrentIdentityHashMap.html" title="class in alluxio.collections">ConcurrentIdentityHashMap</a>&lt;K,V&gt;</td>
+<td class="colLast">
+<div class="block">An implementation <a href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentHashMap.html?is-external=true" title="class or interface in java.util.concurrent"><code>ConcurrentHashMap</code></a> that utilizes identity semantics
+ with its keys
+
+ Having identity semantics means that it is possible to have two objects with which are
+ equal based on the object's <code>equals()</code> implementation, but not be overridden in the hash
+ map if you try to put both.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/DelegatingSet.html" title="class in alluxio.collections">DelegatingSet</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A set which delegates all methods to another set.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/collections/DirectedAcyclicGraph.html" title="class in alluxio.collections">DirectedAcyclicGraph</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A Directed Acyclic Graph (DAG).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/DirectedAcyclicGraphNode.html" title="class in alluxio.collections">DirectedAcyclicGraphNode</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A Directed Acyclic Graph (DAG) node.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/collections/IndexDefinition.html" title="class in alluxio.collections">IndexDefinition</a>&lt;T,V&gt;</td>
+<td class="colLast">
+<div class="block">A class representing an index for an <a href="../../alluxio/collections/IndexedSet.html" title="class in alluxio.collections"><code>IndexedSet</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/IndexedSet.html" title="class in alluxio.collections">IndexedSet</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A set of objects that are indexed and thus can be queried by specific fields of the object.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/collections/LockPool.html" title="class in alluxio.collections">LockPool</a>&lt;K&gt;</td>
+<td class="colLast">
+<div class="block">A resource pool specifically designed to contain locks and will NOT evict any entries
+ that are in use.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/NonUniqueFieldIndex.html" title="class in alluxio.collections">NonUniqueFieldIndex</a>&lt;T,V&gt;</td>
+<td class="colLast">
+<div class="block">A class representing a non-unique index.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/collections/Pair.html" title="class in alluxio.collections">Pair</a>&lt;T1,T2&gt;</td>
+<td class="colLast">
+<div class="block">A pair representation defined by two elements (of type First and type Second).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/PrefixList.html" title="class in alluxio.collections">PrefixList</a></td>
+<td class="colLast">
+<div class="block">Prefix list is used to do file filtering.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/collections/TwoKeyConcurrentMap.html" title="class in alluxio.collections">TwoKeyConcurrentMap</a>&lt;K1,K2,V,M extends <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K2,V&gt;&gt;</td>
+<td class="colLast">
+<div class="block">A two-level concurrent map implementation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/collections/UniqueFieldIndex.html" title="class in alluxio.collections">UniqueFieldIndex</a>&lt;T,V&gt;</td>
+<td class="colLast">
+<div class="block">A class representing a unique index.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BlockLocation (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+
+<div class="header">
+<div class="subTitle">org.apache.hadoop.fs</div>
+<h2 title="Class BlockLocation" class="title">Class BlockLocation</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+
+<li>
+<ul class="inheritance">
+<li>org.apache.hadoop.fs.BlockLocation</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></dd>
+</dl>
+<hr>
+<br>
+<pre>@InterfaceAudience.Public
+ @InterfaceStability.Stable
+public class <span class="typeNameLabel">BlockLocation</span>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
+<div class="block">Represents the network location of a block, information about the hosts
+ that contain block replicas, and other block metadata (E.g. the file
+ offset associated with the block, length, whether it is corrupt, etc).
+
+ For a single BlockLocation, it will have different meanings for replicated
+ and erasure coded files.
+
+ If the file is 3-replicated, offset and length of a BlockLocation represent
+ the absolute value in the file and the hosts are the 3 datanodes that
+ holding the replicas. Here is an example:
+ <pre>
+ BlockLocation(offset: 0, length: BLOCK_SIZE,
+   hosts: {"host1:9866", "host2:9866, host3:9866"})
+ </pre>
+
+ And if the file is erasure-coded, each BlockLocation represents a logical
+ block groups. Value offset is the offset of a block group in the file and
+ value length is the total length of a block group. Hosts of a BlockLocation
+ are the datanodes that holding all the data blocks and parity blocks of a
+ block group.
+ Suppose we have a RS_3_2 coded file (3 data units and 2 parity units).
+ A BlockLocation example will be like:
+ <pre>
+ BlockLocation(offset: 0, length: 3 * BLOCK_SIZE, hosts: {"host1:9866",
+   "host2:9866","host3:9866","host4:9866","host5:9866"})
+ </pre>
+
+ Please refer to
+ <a href="../../../../org/apache/hadoop/fs/FileSystem.html#getFileBlockLocations-org.apache.hadoop.fs.FileStatus-long-long-"><code>FileSystem.getFileBlockLocations(FileStatus, long, long)</code></a> or
+ <a href="../../../../org/apache/hadoop/fs/FileContext.html#getFileBlockLocations-org.apache.hadoop.fs.Path-long-long-"><code>FileContext.getFileBlockLocations(Path, long, long)</code></a>
+ for more examples.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../serialized-form.html#org.apache.hadoop.fs.BlockLocation">Serialized Form</a></dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+
+<ul class="blockList">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

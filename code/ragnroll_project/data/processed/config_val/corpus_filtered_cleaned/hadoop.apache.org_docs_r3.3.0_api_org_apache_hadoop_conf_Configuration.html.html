@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Configuration (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+
+<div class="header">
+<div class="subTitle">org.apache.hadoop.conf</div>
+<h2 title="Class Configuration" class="title">Class Configuration</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+
+<li>
+<ul class="inheritance">
+<li>org.apache.hadoop.conf.Configuration</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&gt;, <a href="../../../../org/apache/hadoop/io/Writable.html" title="interface in org.apache.hadoop.io">Writable</a></dd>
+</dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../org/apache/hadoop/mapred/JobConf.html" title="class in org.apache.hadoop.mapred">JobConf</a>, <a href="../../../../org/apache/hadoop/yarn/conf/YarnConfiguration.html" title="class in org.apache.hadoop.yarn.conf">YarnConfiguration</a></dd>
+</dl>
+<hr>
+<br>
+<pre>@InterfaceAudience.Public
+ @InterfaceStability.Stable
+public class <span class="typeNameLabel">Configuration</span>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&gt;, <a href="../../../../org/apache/hadoop/io/Writable.html" title="interface in org.apache.hadoop.io">Writable</a></pre>
+<div class="block">Provides access to configuration parameters.
+
+ <h3 id="Resources">Resources</h3>
+
+ <p>Configurations are specified by resources. A resource contains a set of
+ name/value pairs as XML data. Each resource is named by either a 
+ <code>String</code> or by a <a href="../../../../org/apache/hadoop/fs/Path.html" title="class in org.apache.hadoop.fs"><code>Path</code></a>. If named by a <code>String</code>, 
+ then the classpath is examined for a file with that name.  If named by a 
+ <code>Path</code>, then the local filesystem is examined directly, without 
+ referring to the classpath.
+
+ <p>Unless explicitly turned off, Hadoop by default specifies two 
+ resources, loaded in-order from the classpath: <ol>
+ <li><tt>
+ <a href="../../../../../hadoop-project-dist/hadoop-common/core-default.xml">
+ core-default.xml</a></tt>: Read-only defaults for hadoop.</li>
+ <li><tt>core-site.xml</tt>: Site-specific configuration for a given hadoop
+ installation.</li>
+ </ol>
+ Applications may add additional resources, which are loaded
+ subsequent to these resources in the order they are added.
+ 
+ <h4 id="FinalParams">Final Parameters</h4>
+
+ <p>Configuration parameters may be declared <i>final</i>. 
+ Once a resource declares a value final, no subsequently-loaded 
+ resource can alter that value.  
+ For example, one might define a final parameter with:
+ <pre><code>
+  &lt;property&gt;
+    &lt;name&gt;dfs.hosts.include&lt;/name&gt;
+    &lt;value&gt;/etc/hadoop/conf/hosts.include&lt;/value&gt;
+    <b>&lt;final&gt;true&lt;/final&gt;</b>
+  &lt;/property&gt;</code></pre>
+
+ Administrators typically define parameters as final in 
+ <tt>core-site.xml</tt> for values that user applications may not alter.
+
+ <h4 id="VariableExpansion">Variable Expansion</h4>
+
+ <p>Value strings are first processed for <i>variable expansion</i>. The
+ available properties are:<ol>
+ <li>Other properties defined in this Configuration; and, if a name is
+ undefined here,</li>
+ <li>Environment variables in <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#getenv--" title="class or interface in java.lang"><code>System.getenv()</code></a> if a name starts with
+ "env.", or</li>
+ <li>Properties in <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/System.html?is-external=true#getProperties--" title="class or interface in java.lang"><code>System.getProperties()</code></a>.</li>
+ </ol>
+
+ <p>For example, if a configuration resource contains the following property
+ definitions: 
+ <pre><code>
+  &lt;property&gt;
+    &lt;name&gt;basedir&lt;/name&gt;
+    &lt;value&gt;/user/${<i>user.name</i>}&lt;/value&gt;
+  &lt;/property&gt;
+  
+  &lt;property&gt;
+    &lt;name&gt;tempdir&lt;/name&gt;
+    &lt;value&gt;${<i>basedir</i>}/tmp&lt;/value&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;otherdir&lt;/name&gt;
+    &lt;value&gt;${<i>env.BASE_DIR</i>}/other&lt;/value&gt;
+  &lt;/property&gt;
+  </code></pre>
+
+ <p>When <tt>conf.get("tempdir")</tt> is called, then <tt>${<i>basedir</i>}</tt>
+ will be resolved to another property in this Configuration, while
+ <tt>${<i>user.name</i>}</tt> would then ordinarily be resolved to the value
+ of the System property with that name.
+ <p>When <tt>conf.get("otherdir")</tt> is called, then <tt>${<i>env.BASE_DIR</i>}</tt>
+ will be resolved to the value of the <tt>${<i>BASE_DIR</i>}</tt> environment variable.
+ It supports <tt>${<i>env.NAME:-default</i>}</tt> and <tt>${<i>env.NAME-default</i>}</tt> notations.
+ The former is resolved to "default" if <tt>${<i>NAME</i>}</tt> environment variable is undefined
+ or its value is empty.
+ The latter behaves the same way only if <tt>${<i>NAME</i>}</tt> is undefined.
+ <p>By default, warnings will be given to any deprecated configuration 
+ parameters and these are suppressible by configuring
+ <tt>log4j.logger.org.apache.hadoop.conf.Configuration.deprecation</tt> in
+ log4j.properties file.
+
+ <h4 id="Tags">Tags</h4>
+
+ <p>Optionally we can tag related properties together by using tag
+ attributes. System tags are defined by hadoop.tags.system property. Users
+ can define there own custom tags in  hadoop.tags.custom property.
+
+ <p>For example, we can tag existing property as:
+ <pre><code>
+  &lt;property&gt;
+    &lt;name&gt;dfs.replication&lt;/name&gt;
+    &lt;value&gt;3&lt;/value&gt;
+    &lt;tag&gt;HDFS,REQUIRED&lt;/tag&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;dfs.data.transfer.protection&lt;/name&gt;
+    &lt;value&gt;3&lt;/value&gt;
+    &lt;tag&gt;HDFS,SECURITY&lt;/tag&gt;
+  &lt;/property&gt;
+ </code></pre>
+ <p> Properties marked with tags can be retrieved with <tt>conf
+ .getAllPropertiesByTag("HDFS")</tt> or <tt>conf.getAllPropertiesByTags
+ (Arrays.asList("YARN","SECURITY"))</tt>.</p></div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+
+<ul class="blockList">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.proxy.s3 (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.proxy.s3</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3RestUtils.RestCallable.html" title="interface in alluxio.proxy.s3">S3RestUtils.RestCallable</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">An interface representing a callable.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/CompleteMultipartUploadResult.html" title="class in alluxio.proxy.s3">CompleteMultipartUploadResult</a></td>
+<td class="colLast">
+<div class="block">Result returned after requests for completing a multipart upload.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/InitiateMultipartUploadResult.html" title="class in alluxio.proxy.s3">InitiateMultipartUploadResult</a></td>
+<td class="colLast">
+<div class="block">Result returned after requests for initiating a multipart upload.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/ListAllMyBucketsResult.html" title="class in alluxio.proxy.s3">ListAllMyBucketsResult</a></td>
+<td class="colLast">
+<div class="block">Implementation of ListAllMyBucketsResult according to https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/ListBucketOptions.html" title="class in alluxio.proxy.s3">ListBucketOptions</a></td>
+<td class="colLast">
+<div class="block">The options for list bucket operation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/ListBucketResult.html" title="class in alluxio.proxy.s3">ListBucketResult</a></td>
+<td class="colLast">
+<div class="block">Get bucket result defined in https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html
+ It will be encoded into an XML string to be returned as a response for the REST call.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/ListPartsResult.html" title="class in alluxio.proxy.s3">ListPartsResult</a></td>
+<td class="colLast">
+<div class="block">Result returned after requests for listing parts of a multipart upload.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/ListPartsResult.Part.html" title="class in alluxio.proxy.s3">ListPartsResult.Part</a></td>
+<td class="colLast">
+<div class="block">Part contains metadata of a part of the object in multipart upload.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3Constants.html" title="class in alluxio.proxy.s3">S3Constants</a></td>
+<td class="colLast">
+<div class="block">Constants for S3 northbound API.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3Error.html" title="class in alluxio.proxy.s3">S3Error</a></td>
+<td class="colLast">
+<div class="block">Error response defined in http://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3ErrorCode.html" title="class in alluxio.proxy.s3">S3ErrorCode</a></td>
+<td class="colLast">
+<div class="block">Error codes defined in http://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html with
+ API version 2006-03-01.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3ErrorCode.Name.html" title="class in alluxio.proxy.s3">S3ErrorCode.Name</a></td>
+<td class="colLast">
+<div class="block">Error code names used in <a href="../../../alluxio/proxy/s3/S3ErrorCode.html" title="class in alluxio.proxy.s3"><code>S3ErrorCode</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3RestServiceHandler.html" title="class in alluxio.proxy.s3">S3RestServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a REST handler for Amazon S3 API.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3RestUtils.html" title="class in alluxio.proxy.s3">S3RestUtils</a></td>
+<td class="colLast">
+<div class="block">Utilities for handling S3 REST calls.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Exception</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proxy/s3/S3Exception.html" title="class in alluxio.proxy.s3">S3Exception</a></td>
+<td class="colLast">
+<div class="block">An exception thrown during processing S3 REST requests.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

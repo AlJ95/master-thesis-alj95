@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 40.7. Rules Versus Triggers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/rules-triggers.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="40.7. Rules Versus Triggers" />
+  <meta property="og:description" content="40.7.&amp;nbsp;Rules Versus Triggers Many things that can be done using triggers can also be implemented using the PostgreSQL rule system. …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/rules-triggers.html" title="PostgreSQL 17 - 40.7. Rules Versus Triggers" >Current</a>
+                          (<a href="/docs/17/rules-triggers.html" title="PostgreSQL 17 - 40.7. Rules Versus Triggers" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/rules-triggers.html" title="PostgreSQL 16 - 40.7. Rules Versus Triggers" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/rules-triggers.html" title="PostgreSQL 15 - 40.7. Rules Versus Triggers" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/rules-triggers.html" title="PostgreSQL 14 - 40.7. Rules Versus Triggers" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/rules-triggers.html" title="PostgreSQL 13 - 40.7. Rules Versus Triggers" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/rules-triggers.html" title="PostgreSQL devel - 40.7. Rules Versus Triggers"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/rules-triggers.html" title="PostgreSQL 12 - 40.7. Rules Versus Triggers"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/rules-triggers.html" title="PostgreSQL 11 - 40.7. Rules Versus Triggers"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/rules-triggers.html" title="PostgreSQL 10 - 40.7. Rules Versus Triggers"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/rules-triggers.html" title="PostgreSQL 9.6 - 40.7. Rules Versus Triggers"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/rules-triggers.html" title="PostgreSQL 9.5 - 40.7. Rules Versus Triggers"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/rules-triggers.html" title="PostgreSQL 9.4 - 40.7. Rules Versus Triggers"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/rules-triggers.html" title="PostgreSQL 9.3 - 40.7. Rules Versus Triggers"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/rules-triggers.html" title="PostgreSQL 9.2 - 40.7. Rules Versus Triggers"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/rules-triggers.html" title="PostgreSQL 9.1 - 40.7. Rules Versus Triggers"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/rules-triggers.html" title="PostgreSQL 9.0 - 40.7. Rules Versus Triggers"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/rules-triggers.html" title="PostgreSQL 8.4 - 40.7. Rules Versus Triggers"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/rules-triggers.html" title="PostgreSQL 8.3 - 40.7. Rules Versus Triggers"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/rules-triggers.html" title="PostgreSQL 8.2 - 40.7. Rules Versus Triggers"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/rules-triggers.html" title="PostgreSQL 8.1 - 40.7. Rules Versus Triggers"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/rules-triggers.html" title="PostgreSQL 8.0 - 40.7. Rules Versus Triggers"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/rules-triggers.html" title="PostgreSQL 7.4 - 40.7. Rules Versus Triggers"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/rules-triggers.html" title="PostgreSQL 7.3 - 40.7. Rules Versus Triggers"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/rules-triggers.html" title="PostgreSQL 7.2 - 40.7. Rules Versus Triggers"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/rules-triggers.html" title="PostgreSQL 7.1 - 40.7. Rules Versus Triggers"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">40.7.&nbsp;Rules Versus Triggers</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="rules-status.html" title="40.6.&nbsp;Rules and Command Status">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="rules.html" title="Chapter&nbsp;40.&nbsp;The Rule System">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;40.&nbsp;The Rule System</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="xplang.html" title="Chapter&nbsp;41.&nbsp;Procedural Languages">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="RULES-TRIGGERS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">40.7.&nbsp;Rules Versus Triggers</h2>
+      </div>
+    </div>
+  </div><a id="id-1.8.6.12.2" class="indexterm" name="id-1.8.6.12.2"></a><a id="id-1.8.6.12.3" class="indexterm" name="id-1.8.6.12.3"></a>
+  <p>Many things that can be done using triggers can also be implemented using the <span class="productname">PostgreSQL</span> rule system. One of the things that cannot be implemented by rules are some kinds of constraints, especially foreign keys. It is possible to place a qualified rule that rewrites a command to <code class="literal">NOTHING</code> if the value of a column does not appear in another table. But then the data is silently thrown away and that's not a good idea. If checks for valid values are required, and in the case of an invalid value an error message should be generated, it must be done by a trigger.</p>
+  <p>In this chapter, we focused on using rules to update views. All of the update rule examples in this chapter can also be implemented using <code class="literal">INSTEAD OF</code> triggers on the views. Writing such triggers is often easier than writing rules, particularly if complex logic is required to perform the update.</p>
+  <p>For the things that can be implemented by both, which is best depends on the usage of the database. A trigger is fired once for each affected row. A rule modifies the query or generates an additional query. So if many rows are affected in one statement, a rule issuing one extra command is likely to be faster than a trigger that is called for every single row and must re-determine what to do many times. However, the trigger approach is conceptually far simpler than the rule approach, and is easier for novices to get right.</p>
+  <p>Here we show an example of how the choice of rules versus triggers plays out in one situation. There are two tables:</p>
+  <pre class="programlisting">
+CREATE TABLE computer (
+    hostname        text,    -- indexed
+    manufacturer    text     -- indexed
+);
+
+CREATE TABLE software (
+    software        text,    -- indexed
+    hostname        text     -- indexed
+);
+</pre>
+  <p>Both tables have many thousands of rows and the indexes on <code class="structfield">hostname</code> are unique. The rule or trigger should implement a constraint that deletes rows from <code class="literal">software</code> that reference a deleted computer. The trigger would use this command:</p>
+  <pre class="programlisting">
+DELETE FROM software WHERE hostname = $1;
+</pre>
+  <p>Since the trigger is called for each individual row deleted from <code class="literal">computer</code>, it can prepare and save the plan for this command and pass the <code class="structfield">hostname</code> value in the parameter. The rule would be written as:</p>
+  <pre class="programlisting">
+CREATE RULE computer_del AS ON DELETE TO computer
+    DO DELETE FROM software WHERE hostname = OLD.hostname;
+</pre>
+  <p>Now we look at different types of deletes. In the case of a:</p>
+  <pre class="programlisting">
+DELETE FROM computer WHERE hostname = 'mypc.local.net';
+</pre>
+  <p>the table <code class="literal">computer</code> is scanned by index (fast), and the command issued by the trigger would also use an index scan (also fast). The extra command from the rule would be:</p>
+  <pre class="programlisting">
+DELETE FROM software WHERE computer.hostname = 'mypc.local.net'
+                       AND software.hostname = computer.hostname;
+</pre>
+  <p>Since there are appropriate indexes set up, the planner will create a plan of</p>
+  <pre class="literallayout">
+Nestloop
+  -&gt;  Index Scan using comp_hostidx on computer
+  -&gt;  Index Scan using soft_hostidx on software
+</pre>
+  <p>So there would be not that much difference in speed between the trigger and the rule implementation.</p>
+  <p>With the next delete we want to get rid of all the 2000 computers where the <code class="structfield">hostname</code> starts with <code class="literal">old</code>. There are two possible commands to do that. One is:</p>
+  <pre class="programlisting">
+DELETE FROM computer WHERE hostname &gt;= 'old'
+                       AND hostname &lt;  'ole'
+</pre>
+  <p>The command added by the rule will be:</p>
+  <pre class="programlisting">
+DELETE FROM software WHERE computer.hostname &gt;= 'old' AND computer.hostname &lt; 'ole'
+                       AND software.hostname = computer.hostname;
+</pre>
+  <p>with the plan</p>
+  <pre class="literallayout">
+Hash Join
+  -&gt;  Seq Scan on software
+  -&gt;  Hash
+    -&gt;  Index Scan using comp_hostidx on computer
+</pre>
+  <p>The other possible command is:</p>
+  <pre class="programlisting">
+DELETE FROM computer WHERE hostname ~ '^old';
+</pre>
+  <p>which results in the following executing plan for the command added by the rule:</p>
+  <pre class="literallayout">
+Nestloop
+  -&gt;  Index Scan using comp_hostidx on computer
+  -&gt;  Index Scan using soft_hostidx on software
+</pre>
+  <p>This shows, that the planner does not realize that the qualification for <code class="structfield">hostname</code> in <code class="literal">computer</code> could also be used for an index scan on <code class="literal">software</code> when there are multiple qualification expressions combined with <code class="literal">AND</code>, which is what it does in the regular-expression version of the command. The trigger will get invoked once for each of the 2000 old computers that have to be deleted, and that will result in one index scan over <code class="literal">computer</code> and 2000 index scans over <code class="literal">software</code>. The rule implementation will do it with two commands that use indexes. And it depends on the overall size of the table <code class="literal">software</code> whether the rule will still be faster in the sequential scan situation. 2000 command executions from the trigger over the SPI manager take some time, even if all the index blocks will soon be in the cache.</p>
+  <p>The last command we look at is:</p>
+  <pre class="programlisting">
+DELETE FROM computer WHERE manufacturer = 'bim';
+</pre>
+  <p>Again this could result in many rows to be deleted from <code class="literal">computer</code>. So the trigger will again run many commands through the executor. The command generated by the rule will be:</p>
+  <pre class="programlisting">
+DELETE FROM software WHERE computer.manufacturer = 'bim'
+                       AND software.hostname = computer.hostname;
+</pre>
+  <p>The plan for that command will again be the nested loop over two index scans, only using a different index on <code class="literal">computer</code>:</p>
+  <pre class="programlisting">
+Nestloop
+  -&gt;  Index Scan using comp_manufidx on computer
+  -&gt;  Index Scan using soft_hostidx on software
+</pre>
+  <p>In any of these cases, the extra commands from the rule system will be more or less independent from the number of affected rows in a command.</p>
+  <p>The summary is, rules will only be significantly slower than triggers if their actions result in large and badly qualified joins, a situation where the planner fails.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="rules-status.html" title="40.6.&nbsp;Rules and Command Status">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="rules.html" title="Chapter&nbsp;40.&nbsp;The Rule System">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="xplang.html" title="Chapter&nbsp;41.&nbsp;Procedural Languages">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">40.6.&nbsp;Rules and Command Status&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;41.&nbsp;Procedural Languages</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/rules-triggers.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

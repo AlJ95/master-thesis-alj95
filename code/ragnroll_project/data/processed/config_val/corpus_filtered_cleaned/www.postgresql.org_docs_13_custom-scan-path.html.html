@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 58.1. Creating Custom Scan Paths</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/custom-scan-path.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="58.1. Creating Custom Scan Paths" />
+  <meta property="og:description" content="58.1.&amp;nbsp;Creating Custom Scan Paths 58.1.1. Custom Scan Path Callbacks A custom scan provider will typically add paths for a base …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/custom-scan-path.html" title="PostgreSQL 17 - 58.1. Creating Custom Scan Paths" >Current</a>
+                          (<a href="/docs/17/custom-scan-path.html" title="PostgreSQL 17 - 58.1. Creating Custom Scan Paths" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/custom-scan-path.html" title="PostgreSQL 16 - 58.1. Creating Custom Scan Paths" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/custom-scan-path.html" title="PostgreSQL 15 - 58.1. Creating Custom Scan Paths" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/custom-scan-path.html" title="PostgreSQL 14 - 58.1. Creating Custom Scan Paths" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/custom-scan-path.html" title="PostgreSQL 13 - 58.1. Creating Custom Scan Paths" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/custom-scan-path.html" title="PostgreSQL devel - 58.1. Creating Custom Scan Paths"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/custom-scan-path.html" title="PostgreSQL 12 - 58.1. Creating Custom Scan Paths"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/custom-scan-path.html" title="PostgreSQL 11 - 58.1. Creating Custom Scan Paths"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/custom-scan-path.html" title="PostgreSQL 10 - 58.1. Creating Custom Scan Paths"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/custom-scan-path.html" title="PostgreSQL 9.6 - 58.1. Creating Custom Scan Paths"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/custom-scan-path.html" title="PostgreSQL 9.5 - 58.1. Creating Custom Scan Paths"  rel="nofollow">9.5</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">58.1.&nbsp;Creating Custom Scan Paths</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="custom-scan.html" title="Chapter&nbsp;58.&nbsp;Writing a Custom Scan Provider">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="custom-scan.html" title="Chapter&nbsp;58.&nbsp;Writing a Custom Scan Provider">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;58.&nbsp;Writing a Custom Scan Provider</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="custom-scan-plan.html" title="58.2.&nbsp;Creating Custom Scan Plans">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="CUSTOM-SCAN-PATH">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">58.1.&nbsp;Creating Custom Scan Paths</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="custom-scan-path.html#CUSTOM-SCAN-PATH-CALLBACKS">58.1.1. Custom Scan Path Callbacks</a></span></dt>
+    </dl>
+  </div>
+  <p>A custom scan provider will typically add paths for a base relation by setting the following hook, which is called after the core code has generated all the access paths it can for the relation (except for Gather paths, which are made after this call so that they can use partial paths added by the hook):</p>
+  <pre class="programlisting">
+typedef void (*set_rel_pathlist_hook_type) (PlannerInfo *root,
+                                            RelOptInfo *rel,
+                                            Index rti,
+                                            RangeTblEntry *rte);
+extern PGDLLIMPORT set_rel_pathlist_hook_type set_rel_pathlist_hook;
+</pre>
+  <p>Although this hook function can be used to examine, modify, or remove paths generated by the core system, a custom scan provider will typically confine itself to generating <code class="structname">CustomPath</code> objects and adding them to <code class="literal">rel</code> using <code class="function">add_path</code>. The custom scan provider is responsible for initializing the <code class="structname">CustomPath</code> object, which is declared like this:</p>
+  <pre class="programlisting">
+typedef struct CustomPath
+{
+    Path      path;
+    uint32    flags;
+    List     *custom_paths;
+    List     *custom_private;
+    const CustomPathMethods *methods;
+} CustomPath;
+</pre>
+  <p><code class="structfield">path</code> must be initialized as for any other path, including the row-count estimate, start and total cost, and sort ordering provided by this path. <code class="structfield">flags</code> is a bit mask, which should include <code class="literal">CUSTOMPATH_SUPPORT_BACKWARD_SCAN</code> if the custom path can support a backward scan and <code class="literal">CUSTOMPATH_SUPPORT_MARK_RESTORE</code> if it can support mark and restore. Both capabilities are optional. An optional <code class="structfield">custom_paths</code> is a list of <code class="structname">Path</code> nodes used by this custom-path node; these will be transformed into <code class="structname">Plan</code> nodes by planner. <code class="structfield">custom_private</code> can be used to store the custom path's private data. Private data should be stored in a form that can be handled by <code class="literal">nodeToString</code>, so that debugging routines that attempt to print the custom path will work as designed. <code class="structfield">methods</code> must point to a (usually statically allocated) object implementing the required custom path methods, which are further detailed below.</p>
+  <p>A custom scan provider can also provide join paths. Just as for base relations, such a path must produce the same output as would normally be produced by the join it replaces. To do this, the join provider should set the following hook, and then within the hook function, create <code class="structname">CustomPath</code> path(s) for the join relation.</p>
+  <pre class="programlisting">
+typedef void (*set_join_pathlist_hook_type) (PlannerInfo *root,
+                                             RelOptInfo *joinrel,
+                                             RelOptInfo *outerrel,
+                                             RelOptInfo *innerrel,
+                                             JoinType jointype,
+                                             JoinPathExtraData *extra);
+extern PGDLLIMPORT set_join_pathlist_hook_type set_join_pathlist_hook;
+</pre>
+  <p>This hook will be invoked repeatedly for the same join relation, with different combinations of inner and outer relations; it is the responsibility of the hook to minimize duplicated work.</p>
+  <div class="sect2" id="CUSTOM-SCAN-PATH-CALLBACKS">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">58.1.1.&nbsp;Custom Scan Path Callbacks</h3>
+        </div>
+      </div>
+    </div>
+    <pre class="programlisting">
+Plan *(*PlanCustomPath) (PlannerInfo *root,
+                         RelOptInfo *rel,
+                         CustomPath *best_path,
+                         List *tlist,
+                         List *clauses,
+                         List *custom_plans);
+</pre>
+    <p>Convert a custom path to a finished plan. The return value will generally be a <code class="literal">CustomScan</code> object, which the callback must allocate and initialize. See <a class="xref" href="custom-scan-plan.html" title="58.2.&nbsp;Creating Custom Scan Plans">Section&nbsp;58.2</a> for more details.</p>
+    <pre class="programlisting">
+List *(*ReparameterizeCustomPathByChild) (PlannerInfo *root,
+                                          List *custom_private,
+                                          RelOptInfo *child_rel);
+</pre>
+    <p>This callback is called while converting a path parameterized by the top-most parent of the given child relation <code class="literal">child_rel</code> to be parameterized by the child relation. The callback is used to reparameterize any paths or translate any expression nodes saved in the given <code class="literal">custom_private</code> member of a <code class="structname">CustomPath</code>. The callback may use <code class="literal">reparameterize_path_by_child</code>, <code class="literal">adjust_appendrel_attrs</code> or <code class="literal">adjust_appendrel_attrs_multilevel</code> as required.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="custom-scan.html" title="Chapter&nbsp;58.&nbsp;Writing a Custom Scan Provider">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="custom-scan.html" title="Chapter&nbsp;58.&nbsp;Writing a Custom Scan Provider">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="custom-scan-plan.html" title="58.2.&nbsp;Creating Custom Scan Plans">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Chapter&nbsp;58.&nbsp;Writing a Custom Scan Provider&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;58.2.&nbsp;Creating Custom Scan Plans</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/custom-scan-path.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

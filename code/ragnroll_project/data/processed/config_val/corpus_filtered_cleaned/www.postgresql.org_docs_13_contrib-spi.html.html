@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.36. spi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/contrib-spi.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.36. spi" />
+  <meta property="og:description" content="F.36.&amp;nbsp;spi F.36.1. refint — Functions for Implementing Referential Integrity F.36.2. autoinc — Functions for Autoincrementing Fields F.36.3. insert_username — Functions …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/contrib-spi.html" title="PostgreSQL 17 - F.36. spi" >Current</a>
+                          (<a href="/docs/17/contrib-spi.html" title="PostgreSQL 17 - F.36. spi" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/contrib-spi.html" title="PostgreSQL 16 - F.36. spi" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/contrib-spi.html" title="PostgreSQL 15 - F.36. spi" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/contrib-spi.html" title="PostgreSQL 14 - F.36. spi" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/contrib-spi.html" title="PostgreSQL 13 - F.36. spi" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/contrib-spi.html" title="PostgreSQL devel - F.36. spi"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/contrib-spi.html" title="PostgreSQL 12 - F.36. spi"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/contrib-spi.html" title="PostgreSQL 11 - F.36. spi"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/contrib-spi.html" title="PostgreSQL 10 - F.36. spi"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/contrib-spi.html" title="PostgreSQL 9.6 - F.36. spi"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/contrib-spi.html" title="PostgreSQL 9.5 - F.36. spi"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/contrib-spi.html" title="PostgreSQL 9.4 - F.36. spi"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/contrib-spi.html" title="PostgreSQL 9.3 - F.36. spi"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/contrib-spi.html" title="PostgreSQL 9.2 - F.36. spi"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/contrib-spi.html" title="PostgreSQL 9.1 - F.36. spi"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/contrib-spi.html" title="PostgreSQL 9.0 - F.36. spi"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/contrib-spi.html" title="PostgreSQL 8.4 - F.36. spi"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/contrib-spi.html" title="PostgreSQL 8.3 - F.36. spi"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.36.&nbsp;spi</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sepgsql.html" title="F.35.&nbsp;sepgsql">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sslinfo.html" title="F.37.&nbsp;sslinfo">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="CONTRIB-SPI">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.36.&nbsp;spi</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="contrib-spi.html#id-1.11.7.45.5">F.36.1. refint — Functions for Implementing Referential Integrity</a></span></dt>
+      <dt><span class="sect2"><a href="contrib-spi.html#id-1.11.7.45.6">F.36.2. autoinc — Functions for Autoincrementing Fields</a></span></dt>
+      <dt><span class="sect2"><a href="contrib-spi.html#id-1.11.7.45.7">F.36.3. insert_username — Functions for Tracking Who Changed a Table</a></span></dt>
+      <dt><span class="sect2"><a href="contrib-spi.html#id-1.11.7.45.8">F.36.4. moddatetime — Functions for Tracking Last Modification Time</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.45.2" class="indexterm" name="id-1.11.7.45.2"></a>
+  <p>The <span class="application">spi</span> module provides several workable examples of using the <a class="link" href="spi.html" title="Chapter&nbsp;46.&nbsp;Server Programming Interface">Server Programming Interface</a> (<acronym class="acronym">SPI</acronym>) and triggers. While these functions are of some value in their own right, they are even more useful as examples to modify for your own purposes. The functions are general enough to be used with any table, but you have to specify table and field names (as described below) while creating a trigger.</p>
+  <p>Each of the groups of functions described below is provided as a separately-installable extension.</p>
+  <div class="sect2" id="id-1.11.7.45.5">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.36.1.&nbsp;refint — Functions for Implementing Referential Integrity</h3>
+        </div>
+      </div>
+    </div>
+    <p><code class="function">check_primary_key()</code> and <code class="function">check_foreign_key()</code> are used to check foreign key constraints. (This functionality is long since superseded by the built-in foreign key mechanism, of course, but the module is still useful as an example.)</p>
+    <p><code class="function">check_primary_key()</code> checks the referencing table. To use, create a <code class="literal">BEFORE INSERT OR UPDATE</code> trigger using this function on a table referencing another table. Specify as the trigger arguments: the referencing table's column name(s) which form the foreign key, the referenced table name, and the column names in the referenced table which form the primary/unique key. To handle multiple foreign keys, create a trigger for each reference.</p>
+    <p><code class="function">check_foreign_key()</code> checks the referenced table. To use, create a <code class="literal">BEFORE DELETE OR UPDATE</code> trigger using this function on a table referenced by other table(s). Specify as the trigger arguments: the number of referencing tables for which the function has to perform checking, the action if a referencing key is found (<code class="literal">cascade</code> — to delete the referencing row, <code class="literal">restrict</code> — to abort transaction if referencing keys exist, <code class="literal">setnull</code> — to set referencing key fields to null), the triggered table's column names which form the primary/unique key, then the referencing table name and column names (repeated for as many referencing tables as were specified by first argument). Note that the primary/unique key columns should be marked NOT NULL and should have a unique index.</p>
+    <p>There are examples in <code class="filename">refint.example</code>.</p>
+  </div>
+  <div class="sect2" id="id-1.11.7.45.6">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.36.2.&nbsp;autoinc — Functions for Autoincrementing Fields</h3>
+        </div>
+      </div>
+    </div>
+    <p><code class="function">autoinc()</code> is a trigger that stores the next value of a sequence into an integer field. This has some overlap with the built-in <span class="quote">“<span class="quote">serial column</span>”</span> feature, but it is not the same: <code class="function">autoinc()</code> will override attempts to substitute a different field value during inserts, and optionally it can be used to increment the field during updates, too.</p>
+    <p>To use, create a <code class="literal">BEFORE INSERT</code> (or optionally <code class="literal">BEFORE INSERT OR UPDATE</code>) trigger using this function. Specify two trigger arguments: the name of the integer column to be modified, and the name of the sequence object that will supply values. (Actually, you can specify any number of pairs of such names, if you'd like to update more than one autoincrementing column.)</p>
+    <p>There is an example in <code class="filename">autoinc.example</code>.</p>
+  </div>
+  <div class="sect2" id="id-1.11.7.45.7">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.36.3.&nbsp;insert_username — Functions for Tracking Who Changed a Table</h3>
+        </div>
+      </div>
+    </div>
+    <p><code class="function">insert_username()</code> is a trigger that stores the current user's name into a text field. This can be useful for tracking who last modified a particular row within a table.</p>
+    <p>To use, create a <code class="literal">BEFORE INSERT</code> and/or <code class="literal">UPDATE</code> trigger using this function. Specify a single trigger argument: the name of the text column to be modified.</p>
+    <p>There is an example in <code class="filename">insert_username.example</code>.</p>
+  </div>
+  <div class="sect2" id="id-1.11.7.45.8">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.36.4.&nbsp;moddatetime — Functions for Tracking Last Modification Time</h3>
+        </div>
+      </div>
+    </div>
+    <p><code class="function">moddatetime()</code> is a trigger that stores the current time into a <code class="type">timestamp</code> field. This can be useful for tracking the last modification time of a particular row within a table.</p>
+    <p>To use, create a <code class="literal">BEFORE UPDATE</code> trigger using this function. Specify a single trigger argument: the name of the column to be modified. The column must be of type <code class="type">timestamp</code> or <code class="type">timestamp with time zone</code>.</p>
+    <p>There is an example in <code class="filename">moddatetime.example</code>.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sepgsql.html" title="F.35.&nbsp;sepgsql">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sslinfo.html" title="F.37.&nbsp;sslinfo">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.35.&nbsp;sepgsql&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.37.&nbsp;sslinfo</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/contrib-spi.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

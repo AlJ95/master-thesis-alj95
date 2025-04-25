@@ -1,0 +1,112 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Run etcd clusters inside containers | etcd</title>
+<meta name=description content="Running etcd with Docker using static bootstrapping"><meta property="og:url" content="https://etcd.io/docs/v3.5/op-guide/container/"><meta property="og:site_name" content="etcd"><meta property="og:title" content="Run etcd clusters inside containers"><meta property="og:description" content="Running etcd with Docker using static bootstrapping"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="docs"><meta property="article:modified_time" content="2025-01-16T18:09:01-08:00"><meta itemprop=name content="Run etcd clusters inside containers"><meta itemprop=description content="Running etcd with Docker using static bootstrapping"><meta itemprop=dateModified content="2025-01-16T18:09:01-08:00"><meta itemprop=wordCount content="459"><meta name=twitter:card content="summary"><meta name=twitter:title content="Run etcd clusters inside containers"><meta name=twitter:description content="Running etcd with Docker using static bootstrapping"></head><body class=td-page><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><main class="col-12 col-md-9 col-xl-8 ps-md-5" role=main><div class=td-content><h1>Run etcd clusters inside containers</h1><div class=lead>Running etcd with Docker using static bootstrapping</div><p>The following guide shows how to run etcd with Docker using the <a href=../clustering/#static>static bootstrap process</a>.</p><h2 id=docker>Docker</h2><p>In order to expose the etcd API to clients outside of Docker host, use the host IP address of the container. Please see <a href=https://docs.docker.com/engine/reference/commandline/inspect target=_blank rel=noopener><code>docker inspect</code></a> for more detail on how to get the IP address. Alternatively, specify <code>--net=host</code> flag to <code>docker run</code> command to skip placing the container inside of a separate network stack.</p><h3 id=running-a-single-node-etcd>Running a single node etcd</h3><p>Use the host IP address when configuring etcd:</p><pre tabindex=0><code>export NODE1=192.168.1.21
+</code></pre><p>Configure a Docker volume to store etcd data:</p><pre tabindex=0><code>docker volume create --name etcd-data
+export DATA_DIR=&#34;etcd-data&#34;
+</code></pre><p>Run the latest version of etcd (<code>v3.5.21</code> at the time of
+writing):</p><pre tabindex=0><code>ETCD_VERSION=v3.5.21
+REGISTRY=quay.io/coreos/etcd
+# available from v3.2.5
+REGISTRY=gcr.io/etcd-development/etcd
+
+docker run \
+  -p 2379:2379 \
+  -p 2380:2380 \
+  --volume=${DATA_DIR}:/etcd-data \
+  --name etcd ${REGISTRY}:${ETCD_VERSION} \
+  /usr/local/bin/etcd \
+  --data-dir=/etcd-data --name node1 \
+  --initial-advertise-peer-urls http://${NODE1}:2380 --listen-peer-urls http://0.0.0.0:2380 \
+  --advertise-client-urls http://${NODE1}:2379 --listen-client-urls http://0.0.0.0:2379 \
+  --initial-cluster node1=http://${NODE1}:2380
+</code></pre><p>List the cluster member:</p><pre tabindex=0><code>etcdctl --endpoints=http://${NODE1}:2379 member list
+</code></pre><h3 id=running-a-3-node-etcd-cluster>Running a 3 node etcd cluster</h3><pre tabindex=0><code>REGISTRY=quay.io/coreos/etcd
+# available from v3.2.5
+REGISTRY=gcr.io/etcd-development/etcd
+
+# For each machine
+ETCD_VERSION=v3.5.21
+TOKEN=my-etcd-token
+CLUSTER_STATE=new
+NAME_1=etcd-node-0
+NAME_2=etcd-node-1
+NAME_3=etcd-node-2
+HOST_1=10.20.30.1
+HOST_2=10.20.30.2
+HOST_3=10.20.30.3
+CLUSTER=${NAME_1}=http://${HOST_1}:2380,${NAME_2}=http://${HOST_2}:2380,${NAME_3}=http://${HOST_3}:2380
+DATA_DIR=/var/lib/etcd
+
+# For node 1
+THIS_NAME=${NAME_1}
+THIS_IP=${HOST_1}
+docker run \
+  -p 2379:2379 \
+  -p 2380:2380 \
+  --volume=${DATA_DIR}:/etcd-data \
+  --name etcd ${REGISTRY}:${ETCD_VERSION} \
+  /usr/local/bin/etcd \
+  --data-dir=/etcd-data --name ${THIS_NAME} \
+  --initial-advertise-peer-urls http://${THIS_IP}:2380 --listen-peer-urls http://0.0.0.0:2380 \
+  --advertise-client-urls http://${THIS_IP}:2379 --listen-client-urls http://0.0.0.0:2379 \
+  --initial-cluster ${CLUSTER} \
+  --initial-cluster-state ${CLUSTER_STATE} --initial-cluster-token ${TOKEN}
+
+# For node 2
+THIS_NAME=${NAME_2}
+THIS_IP=${HOST_2}
+docker run \
+  -p 2379:2379 \
+  -p 2380:2380 \
+  --volume=${DATA_DIR}:/etcd-data \
+  --name etcd ${REGISTRY}:${ETCD_VERSION} \
+  /usr/local/bin/etcd \
+  --data-dir=/etcd-data --name ${THIS_NAME} \
+  --initial-advertise-peer-urls http://${THIS_IP}:2380 --listen-peer-urls http://0.0.0.0:2380 \
+  --advertise-client-urls http://${THIS_IP}:2379 --listen-client-urls http://0.0.0.0:2379 \
+  --initial-cluster ${CLUSTER} \
+  --initial-cluster-state ${CLUSTER_STATE} --initial-cluster-token ${TOKEN}
+
+# For node 3
+THIS_NAME=${NAME_3}
+THIS_IP=${HOST_3}
+docker run \
+  -p 2379:2379 \
+  -p 2380:2380 \
+  --volume=${DATA_DIR}:/etcd-data \
+  --name etcd ${REGISTRY}:${ETCD_VERSION} \
+  /usr/local/bin/etcd \
+  --data-dir=/etcd-data --name ${THIS_NAME} \
+  --initial-advertise-peer-urls http://${THIS_IP}:2380 --listen-peer-urls http://0.0.0.0:2380 \
+  --advertise-client-urls http://${THIS_IP}:2379 --listen-client-urls http://0.0.0.0:2379 \
+  --initial-cluster ${CLUSTER} \
+  --initial-cluster-state ${CLUSTER_STATE} --initial-cluster-token ${TOKEN}
+</code></pre><p>To run <code>etcdctl</code> using API version 3:</p><pre tabindex=0><code>docker exec etcd /usr/local/bin/etcdctl put foo bar
+</code></pre><h2 id=bare-metal>Bare Metal</h2><p>To provision a 3 node etcd cluster on bare-metal, the examples in the <a href=https://github.com/coreos/coreos-baremetal/tree/master/examples target=_blank rel=noopener>baremetal repo</a> may be useful.</p><h2 id=mounting-a-certificate-volume>Mounting a certificate volume</h2><p>The etcd release container does not include default root certificates. To use HTTPS with certificates trusted by a root authority (e.g., for discovery), mount a certificate directory into the etcd container:</p><pre tabindex=0><code>ETCD_VERSION=v3.5.21
+REGISTRY=quay.io/coreos/etcd
+# available from v3.2.5
+REGISTRY=docker://gcr.io/etcd-development/etcd
+
+rkt run \
+  --insecure-options=image \
+  --volume etcd-ssl-certs-bundle,kind=host,source=/etc/ssl/certs/ca-certificates.crt \
+  --mount volume=etcd-ssl-certs-bundle,target=/etc/ssl/certs/ca-certificates.crt \
+  ${REGISTRY}:${ETCD_VERSION} -- --name my-name \
+  --initial-advertise-peer-urls http://localhost:2380 --listen-peer-urls http://localhost:2380 \
+  --advertise-client-urls http://localhost:2379 --listen-client-urls http://localhost:2379 \
+  --discovery https://discovery.etcd.io/c11fbcdc16972e45253491a24fcf45e1
+</code></pre><pre tabindex=0><code>ETCD_VERSION=v3.5.21
+REGISTRY=quay.io/coreos/etcd
+# available from v3.2.5
+REGISTRY=gcr.io/etcd-development/etcd
+
+docker run \
+  -p 2379:2379 \
+  -p 2380:2380 \
+  --volume=/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
+  ${REGISTRY}:${ETCD_VERSION} \
+  /usr/local/bin/etcd --name my-name \
+  --initial-advertise-peer-urls http://localhost:2380 --listen-peer-urls http://localhost:2380 \
+  --advertise-client-urls http://localhost:2379 --listen-client-urls http://localhost:2379 \
+  --discovery https://discovery.etcd.io/86a9ff6c8cb8b4c4544c1a2f88f8b801
+</code></pre><div class=d-print-none><h2 class=feedback--title>Feedback</h2><p class=feedback--question>Was this page helpful?</p><button class="btn btn-primary mb-4 feedback--answer feedback--answer-yes">Yes</button>
+<button class="btn btn-primary mb-4 feedback--answer feedback--answer-no">No</button><p class="feedback--response feedback--response-yes">Glad to hear it! Please <a href=https://github.com/etcd-io/website/issues/new>tell us how we can improve</a>.</p><p class="feedback--response feedback--response-no">Sorry to hear that. Please <a href=https://github.com/etcd-io/website/issues/new>tell us how we can improve</a>.</p></div><br><div class=td-page-meta__lastmod>Last modified January 16, 2025: <a href=https://github.com/etcd-io/website/commit/9f41e144d944720ef467165a62a2f78aa33a81cd>Remove refs to `latest` container tags (9f41e14)</a></div></div></main></div></div></div></body></html>

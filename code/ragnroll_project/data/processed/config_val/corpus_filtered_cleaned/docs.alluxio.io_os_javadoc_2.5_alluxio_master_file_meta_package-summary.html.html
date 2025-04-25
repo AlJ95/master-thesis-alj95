@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master.file.meta (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master.file.meta</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeDirectoryView.html" title="interface in alluxio.master.file.meta">InodeDirectoryView</a></td>
+<td class="colLast">
+<div class="block">Read-only interface for an inode directory.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeFileView.html" title="interface in alluxio.master.file.meta">InodeFileView</a></td>
+<td class="colLast">
+<div class="block">Read-only interface for an inode file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeLockList.html" title="interface in alluxio.master.file.meta">InodeLockList</a></td>
+<td class="colLast">
+<div class="block">Represents a locked path within the inode tree.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeView.html" title="interface in alluxio.master.file.meta">InodeView</a></td>
+<td class="colLast">
+<div class="block">Read-only view of an inode.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/UfsAbsentPathCache.html" title="interface in alluxio.master.file.meta">UfsAbsentPathCache</a></td>
+<td class="colLast">
+<div class="block">Cache for recording information about paths that are not present in UFS.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/UfsBlockLocationCache.html" title="interface in alluxio.master.file.meta">UfsBlockLocationCache</a></td>
+<td class="colLast">
+<div class="block">Cache for block locations in the UFS.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/AsyncUfsAbsentPathCache.html" title="class in alluxio.master.file.meta">AsyncUfsAbsentPathCache</a></td>
+<td class="colLast">
+<div class="block">This is a <a href="../../../../alluxio/master/file/meta/UfsAbsentPathCache.html" title="interface in alluxio.master.file.meta"><code>UfsAbsentPathCache</code></a> which implements asynchronous addition and removal to the
+ cache, since the processing of the path may be slow.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/CheckpointedIdHashSet.html" title="class in alluxio.master.file.meta">CheckpointedIdHashSet</a></td>
+<td class="colLast">
+<div class="block">A concurrent hash set of Long values that supports writing to and restoring from checkpoints.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/CompositeInodeLockList.html" title="class in alluxio.master.file.meta">CompositeInodeLockList</a></td>
+<td class="colLast">
+<div class="block">Manages the locks for a list of inodes, based off an existing lock list.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/Edge.html" title="class in alluxio.master.file.meta">Edge</a></td>
+<td class="colLast">
+<div class="block">An edge in the inode tree.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/EdgeEntry.html" title="class in alluxio.master.file.meta">EdgeEntry</a></td>
+<td class="colLast">
+<div class="block">Representation for an edge and the inode it points to.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/FileSystemMasterView.html" title="class in alluxio.master.file.meta">FileSystemMasterView</a></td>
+<td class="colLast">
+<div class="block">This class exposes a read-only view of <a href="../../../../alluxio/master/file/FileSystemMaster.html" title="interface in alluxio.master.file"><code>FileSystemMaster</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/Inode.html" title="class in alluxio.master.file.meta">Inode</a></td>
+<td class="colLast">
+<div class="block">Base class for read only inodes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeCounter.html" title="class in alluxio.master.file.meta">InodeCounter</a></td>
+<td class="colLast">
+<div class="block">A checkpointed atomic long.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeDirectory.html" title="class in alluxio.master.file.meta">InodeDirectory</a></td>
+<td class="colLast">
+<div class="block">Forwarding wrapper around an inode directory view.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeDirectoryIdGenerator.html" title="class in alluxio.master.file.meta">InodeDirectoryIdGenerator</a></td>
+<td class="colLast">
+<div class="block">Inode id management for directory inodes.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeFile.html" title="class in alluxio.master.file.meta">InodeFile</a></td>
+<td class="colLast">
+<div class="block">Forwarding wrapper around an inode file view.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeLockManager.html" title="class in alluxio.master.file.meta">InodeLockManager</a></td>
+<td class="colLast">
+<div class="block">Class for managing inode locking.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodePathPair.html" title="class in alluxio.master.file.meta">InodePathPair</a></td>
+<td class="colLast">
+<div class="block">This class represents a pair of <a href="../../../../alluxio/master/file/meta/LockedInodePath.html" title="class in alluxio.master.file.meta"><code>LockedInodePath</code></a>s.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeTree.html" title="class in alluxio.master.file.meta">InodeTree</a></td>
+<td class="colLast">
+<div class="block">Represents the tree of Inodes.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeTreeBufferedIterator.html" title="class in alluxio.master.file.meta">InodeTreeBufferedIterator</a></td>
+<td class="colLast">
+<div class="block">Used to iterate this InodeTree's state, while doing a read-ahead buffering.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeTreePersistentState.html" title="class in alluxio.master.file.meta">InodeTreePersistentState</a></td>
+<td class="colLast">
+<div class="block">Class for managing persistent inode tree state.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/LazyUfsBlockLocationCache.html" title="class in alluxio.master.file.meta">LazyUfsBlockLocationCache</a></td>
+<td class="colLast">
+<div class="block">Lazily cache the block locations only when needed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/LockedInodePath.html" title="class in alluxio.master.file.meta">LockedInodePath</a></td>
+<td class="colLast">
+<div class="block">This class represents a locked path within the inode tree, starting from the root.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/LockedInodePathList.html" title="class in alluxio.master.file.meta">LockedInodePathList</a></td>
+<td class="colLast">
+<div class="block">This class represents a list of locked inodePaths.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/LockingScheme.html" title="class in alluxio.master.file.meta">LockingScheme</a></td>
+<td class="colLast">
+<div class="block">This class represents information about how a path should be locked.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/MountTable.html" title="class in alluxio.master.file.meta">MountTable</a></td>
+<td class="colLast">
+<div class="block">This class is used for keeping track of Alluxio mount points.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/MountTable.State.html" title="class in alluxio.master.file.meta">MountTable.State</a></td>
+<td class="colLast">
+<div class="block">Persistent mount table state.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/MutableInode.html" title="class in alluxio.master.file.meta">MutableInode</a>&lt;T extends <a href="../../../../alluxio/master/file/meta/MutableInode.html" title="class in alluxio.master.file.meta">MutableInode</a>&gt;</td>
+<td class="colLast">
+<div class="block"><a href="../../../../alluxio/master/file/meta/MutableInode.html" title="class in alluxio.master.file.meta"><code>MutableInode</code></a> is an abstract class, with information shared by all types of Inodes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/MutableInodeDirectory.html" title="class in alluxio.master.file.meta">MutableInodeDirectory</a></td>
+<td class="colLast">
+<div class="block">Alluxio file system's directory representation in the file system master.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/MutableInodeFile.html" title="class in alluxio.master.file.meta">MutableInodeFile</a></td>
+<td class="colLast">
+<div class="block">Alluxio file system's file representation in the file system master.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/NoopUfsAbsentPathCache.html" title="class in alluxio.master.file.meta">NoopUfsAbsentPathCache</a></td>
+<td class="colLast">
+<div class="block">This is a noop version of <a href="../../../../alluxio/master/file/meta/UfsAbsentPathCache.html" title="interface in alluxio.master.file.meta"><code>UfsAbsentPathCache</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/PinnedInodeFileIds.html" title="class in alluxio.master.file.meta">PinnedInodeFileIds</a></td>
+<td class="colLast">
+<div class="block">Keeps track of which files are pinned.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/ReplicationLimitedFileIds.html" title="class in alluxio.master.file.meta">ReplicationLimitedFileIds</a></td>
+<td class="colLast">
+<div class="block">Keeps track of which files have limited replication factors.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/SimpleInodeLockList.html" title="class in alluxio.master.file.meta">SimpleInodeLockList</a></td>
+<td class="colLast">
+<div class="block">A simple inode lock list.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/ToBePersistedFileIds.html" title="class in alluxio.master.file.meta">ToBePersistedFileIds</a></td>
+<td class="colLast">
+<div class="block">Keeps track of which files are in the TO_BE_PERSISTED persistence state.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/TtlBucket.html" title="class in alluxio.master.file.meta">TtlBucket</a></td>
+<td class="colLast">
+<div class="block">A bucket with all inodes whose ttl value lies in the bucket's time interval.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/TtlBucketList.html" title="class in alluxio.master.file.meta">TtlBucketList</a></td>
+<td class="colLast">
+<div class="block">A list of non-empty <a href="../../../../alluxio/master/file/meta/TtlBucket.html" title="class in alluxio.master.file.meta"><code>TtlBucket</code></a>s sorted by ttl interval start time of each bucket.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/UfsAbsentPathCache.Factory.html" title="class in alluxio.master.file.meta">UfsAbsentPathCache.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory class for <a href="../../../../alluxio/master/file/meta/UfsAbsentPathCache.html" title="interface in alluxio.master.file.meta"><code>UfsAbsentPathCache</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/UfsBlockLocationCache.Factory.html" title="class in alluxio.master.file.meta">UfsBlockLocationCache.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory class for <a href="../../../../alluxio/master/file/meta/UfsBlockLocationCache.html" title="interface in alluxio.master.file.meta"><code>UfsBlockLocationCache</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/UfsSyncPathCache.html" title="class in alluxio.master.file.meta">UfsSyncPathCache</a></td>
+<td class="colLast">
+<div class="block">This cache maintains the Alluxio paths which have been synced with UFS.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/UfsSyncUtils.html" title="class in alluxio.master.file.meta">UfsSyncUtils</a></td>
+<td class="colLast">
+<div class="block">Util methods for UFS sync.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/UfsSyncUtils.SyncPlan.html" title="class in alluxio.master.file.meta">UfsSyncUtils.SyncPlan</a></td>
+<td class="colLast">
+<div class="block">A class describing how to sync an inode with the ufs.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/InodeTree.LockPattern.html" title="enum in alluxio.master.file.meta">InodeTree.LockPattern</a></td>
+<td class="colLast">
+<div class="block">Patterns of inode path locking.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/file/meta/PersistenceState.html" title="enum in alluxio.master.file.meta">PersistenceState</a></td>
+<td class="colLast">
+<div class="block">The persistence state of a file in the under-storage system.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

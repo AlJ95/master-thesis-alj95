@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>OBJECT ENCODING | Docs</title>
+    <meta name="description" content="Returns the internal encoding of a Redis object.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/object-encoding/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="OBJECT ENCODING">
+  <meta property="og:description" content="Returns the internal encoding of a Redis object.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="OBJECT ENCODING">
+  <meta itemprop="description" content="Returns the internal encoding of a Redis object.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="282">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="OBJECT ENCODING">
+  <meta name="twitter:description" content="Returns the internal encoding of a Redis object.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">OBJECT ENCODING
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">OBJECT ENCODING key</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 2.2.3</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@keyspace</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Returns the internal encoding for the Redis object stored at <code>&lt;key&gt;</code></p>
+<p>Redis objects can be encoded in different ways:</p>
+<ul>
+<li>
+<p>Strings can be encoded as:</p>
+<ul>
+<li><code>raw</code>, normal string encoding.</li>
+<li><code>int</code>, strings representing integers in a 64-bit signed interval, encoded in this way to save space.</li>
+<li><code>embstr</code>, an embedded string, which is an object where the internal simple dynamic string, <code>sds</code>, is an unmodifiable string allocated in the same chuck as the object itself.
+<code>embstr</code> can be strings with lengths up to the hardcoded limit of <code>OBJ_ENCODING_EMBSTR_SIZE_LIMIT</code> or 44 bytes.</li>
+</ul>
+</li>
+<li>
+<p>Lists can be encoded as:</p>
+<ul>
+<li><code>linkedlist</code>, simple list encoding. No longer used, an old list encoding.</li>
+<li><code>ziplist</code>, Redis &lt;= 6.2, a space-efficient encoding used for small lists.</li>
+<li><code>listpack</code>, Redis &gt;= 7.0, a space-efficient encoding used for small lists.</li>
+<li><code>quicklist</code>, encoded as linkedlist of ziplists or listpacks.</li>
+</ul>
+</li>
+<li>
+<p>Sets can be encoded as:</p>
+<ul>
+<li><code>hashtable</code>, normal set encoding.</li>
+<li><code>intset</code>, a special encoding used for small sets composed solely of integers.</li>
+<li><code>listpack</code>, Redis &gt;= 7.2, a space-efficient encoding used for small sets.</li>
+</ul>
+</li>
+<li>
+<p>Hashes can be encoded as:</p>
+<ul>
+<li><code>zipmap</code>, no longer used, an old hash encoding.</li>
+<li><code>hashtable</code>, normal hash encoding.</li>
+<li><code>ziplist</code>, Redis &lt;= 6.2, a space-efficient encoding used for small hashes.</li>
+<li><code>listpack</code>, Redis &gt;= 7.0, a space-efficient encoding used for small hashes.</li>
+</ul>
+</li>
+<li>
+<p>Sorted Sets can be encoded as:</p>
+<ul>
+<li><code>skiplist</code>, normal sorted set encoding.</li>
+<li><code>ziplist</code>, Redis &lt;= 6.2, a space-efficient encoding used for small sorted sets.</li>
+<li><code>listpack</code>, Redis &gt;= 7.0, a space-efficient encoding used for small sorted sets.</li>
+</ul>
+</li>
+<li>
+<p>Streams can be encoded as:</p>
+<ul>
+<li><code>stream</code>, encoded as a radix tree of listpacks.</li>
+</ul>
+</li>
+</ul>
+<p>All the specially encoded types are automatically converted to the general type once you perform an operation that makes it impossible for Redis to retain the space saving encoding.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: if the key doesn't exist.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: the encoding of the object.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: if the key doesn't exist.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: the encoding of the object.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/object-encoding/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

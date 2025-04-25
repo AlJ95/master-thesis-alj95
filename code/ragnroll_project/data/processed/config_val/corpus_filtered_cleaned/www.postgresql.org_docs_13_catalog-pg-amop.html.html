@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 51.4. pg_amop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/catalog-pg-amop.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="51.4. pg_amop" />
+  <meta property="og:description" content="51.4.&amp;nbsp;pg_amop The catalog pg_amop stores information about operators associated with access method operator families. There is one row for each …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/catalog-pg-amop.html" title="PostgreSQL 17 - 51.4. pg_amop" >Current</a>
+                          (<a href="/docs/17/catalog-pg-amop.html" title="PostgreSQL 17 - 51.4. pg_amop" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/catalog-pg-amop.html" title="PostgreSQL 16 - 51.4. pg_amop" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/catalog-pg-amop.html" title="PostgreSQL 15 - 51.4. pg_amop" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/catalog-pg-amop.html" title="PostgreSQL 14 - 51.4. pg_amop" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/catalog-pg-amop.html" title="PostgreSQL 13 - 51.4. pg_amop" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/catalog-pg-amop.html" title="PostgreSQL devel - 51.4. pg_amop"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/catalog-pg-amop.html" title="PostgreSQL 12 - 51.4. pg_amop"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/catalog-pg-amop.html" title="PostgreSQL 11 - 51.4. pg_amop"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/catalog-pg-amop.html" title="PostgreSQL 10 - 51.4. pg_amop"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/catalog-pg-amop.html" title="PostgreSQL 9.6 - 51.4. pg_amop"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/catalog-pg-amop.html" title="PostgreSQL 9.5 - 51.4. pg_amop"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/catalog-pg-amop.html" title="PostgreSQL 9.4 - 51.4. pg_amop"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/catalog-pg-amop.html" title="PostgreSQL 9.3 - 51.4. pg_amop"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/catalog-pg-amop.html" title="PostgreSQL 9.2 - 51.4. pg_amop"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/catalog-pg-amop.html" title="PostgreSQL 9.1 - 51.4. pg_amop"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/catalog-pg-amop.html" title="PostgreSQL 9.0 - 51.4. pg_amop"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/catalog-pg-amop.html" title="PostgreSQL 8.4 - 51.4. pg_amop"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/catalog-pg-amop.html" title="PostgreSQL 8.3 - 51.4. pg_amop"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/catalog-pg-amop.html" title="PostgreSQL 8.2 - 51.4. pg_amop"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/catalog-pg-amop.html" title="PostgreSQL 8.1 - 51.4. pg_amop"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/catalog-pg-amop.html" title="PostgreSQL 8.0 - 51.4. pg_amop"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/catalog-pg-amop.html" title="PostgreSQL 7.4 - 51.4. pg_amop"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/catalog-pg-amop.html" title="PostgreSQL 7.3 - 51.4. pg_amop"  rel="nofollow">7.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">51.4.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_amop</code></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="catalog-pg-am.html" title="51.3.&nbsp;pg_am">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="catalogs.html" title="Chapter&nbsp;51.&nbsp;System Catalogs">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;51.&nbsp;System Catalogs</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="catalog-pg-amproc.html" title="51.5.&nbsp;pg_amproc">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="CATALOG-PG-AMOP">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">51.4.&nbsp;<code class="structname">pg_amop</code></h2>
+      </div>
+    </div>
+  </div><a id="id-1.10.4.6.2" class="indexterm" name="id-1.10.4.6.2"></a>
+  <p>The catalog <code class="structname">pg_amop</code> stores information about operators associated with access method operator families. There is one row for each operator that is a member of an operator family. A family member can be either a <em class="firstterm">search</em> operator or an <em class="firstterm">ordering</em> operator. An operator can appear in more than one family, but cannot appear in more than one search position nor more than one ordering position within a family. (It is allowed, though unlikely, for an operator to be used for both search and ordering purposes.)</p>
+  <div class="table" id="id-1.10.4.6.4">
+    <p class="title"><strong>Table&nbsp;51.4.&nbsp;<code class="structname">pg_amop</code> Columns</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="pg_amop Columns" border="1">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="catalog_table_entry">
+              <p class="column_definition">Column Type</p>
+              <p>Description</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">oid</code> <code class="type">oid</code></p>
+              <p>Row identifier</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amopfamily</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-opfamily.html" title="51.35.&nbsp;pg_opfamily"><code class="structname">pg_opfamily</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The operator family this entry is for</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amoplefttype</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-type.html" title="51.62.&nbsp;pg_type"><code class="structname">pg_type</code></a>.<code class="structfield">oid</code>)</p>
+              <p>Left-hand input data type of operator</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amoprighttype</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-type.html" title="51.62.&nbsp;pg_type"><code class="structname">pg_type</code></a>.<code class="structfield">oid</code>)</p>
+              <p>Right-hand input data type of operator</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amopstrategy</code> <code class="type">int2</code></p>
+              <p>Operator strategy number</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amoppurpose</code> <code class="type">char</code></p>
+              <p>Operator purpose, either <code class="literal">s</code> for search or <code class="literal">o</code> for ordering</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amopopr</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-operator.html" title="51.34.&nbsp;pg_operator"><code class="structname">pg_operator</code></a>.<code class="structfield">oid</code>)</p>
+              <p>OID of the operator</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amopmethod</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-am.html" title="51.3.&nbsp;pg_am"><code class="structname">pg_am</code></a>.<code class="structfield">oid</code>)</p>
+              <p>Index access method operator family is for</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">amopsortfamily</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-opfamily.html" title="51.35.&nbsp;pg_opfamily"><code class="structname">pg_opfamily</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The B-tree operator family this entry sorts according to, if an ordering operator; zero if a search operator</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+  <p>A <span class="quote">“<span class="quote">search</span>”</span> operator entry indicates that an index of this operator family can be searched to find all rows satisfying <code class="literal">WHERE</code> <em class="replaceable"><code>indexed_column</code></em> <em class="replaceable"><code>operator</code></em> <em class="replaceable"><code>constant</code></em>. Obviously, such an operator must return <code class="type">boolean</code>, and its left-hand input type must match the index's column data type.</p>
+  <p>An <span class="quote">“<span class="quote">ordering</span>”</span> operator entry indicates that an index of this operator family can be scanned to return rows in the order represented by <code class="literal">ORDER BY</code> <em class="replaceable"><code>indexed_column</code></em> <em class="replaceable"><code>operator</code></em> <em class="replaceable"><code>constant</code></em>. Such an operator could return any sortable data type, though again its left-hand input type must match the index's column data type. The exact semantics of the <code class="literal">ORDER BY</code> are specified by the <code class="structfield">amopsortfamily</code> column, which must reference a B-tree operator family for the operator's result type.</p>
+  <div class="note">
+    <h3 class="title">Note</h3>
+    <p>At present, it's assumed that the sort order for an ordering operator is the default for the referenced operator family, i.e., <code class="literal">ASC NULLS LAST</code>. This might someday be relaxed by adding additional columns to specify sort options explicitly.</p>
+  </div>
+  <p>An entry's <code class="structfield">amopmethod</code> must match the <code class="structname">opfmethod</code> of its containing operator family (including <code class="structfield">amopmethod</code> here is an intentional denormalization of the catalog structure for performance reasons). Also, <code class="structfield">amoplefttype</code> and <code class="structfield">amoprighttype</code> must match the <code class="structfield">oprleft</code> and <code class="structfield">oprright</code> fields of the referenced <code class="structname">pg_operator</code> entry.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="catalog-pg-am.html" title="51.3.&nbsp;pg_am">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="catalogs.html" title="Chapter&nbsp;51.&nbsp;System Catalogs">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="catalog-pg-amproc.html" title="51.5.&nbsp;pg_amproc">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">51.3.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_am</code>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;51.5.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_amproc</code></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/catalog-pg-amop.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Quick Start</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Quick Start
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Quick Start</h1>
+<p>This document describes how to deploy services on YARN using the YARN Service framework.</p>
+<ul>
+
+
+
+
+
+
+</ul></li>
+
+
+
+
+
+</ul></li>
+
+</ul></li></ul>
+
+<div class="section">
+<h2><a name="Configure_and_start_HDFS_and_YARN_components"></a>Configure and start HDFS and YARN components</h2>
+<p>Start all the hadoop components for HDFS and YARN as usual. To enable the YARN Service framework, add this property to <tt>yarn-site.xml</tt> and restart the ResourceManager or set the property before the ResourceManager is started. This property is required for using the YARN Service framework through the CLI or the REST API.</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;description&gt;
+      Enable services rest api on ResourceManager.
+    &lt;/description&gt;
+    &lt;name&gt;yarn.webapp.api-service.enable&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+  &lt;/property&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h2><a name="Example_service"></a>Example service</h2>
+<p>Below is a simple service definition that launches sleep containers on YARN by writing a simple spec file and without writing any code.</p>
+
+<div>
+<div>
+<pre class="source">{
+  &quot;name&quot;: &quot;sleeper-service&quot;,
+  &quot;version&quot;: &quot;1.0&quot;,
+  &quot;components&quot; : 
+    [
+      {
+        &quot;name&quot;: &quot;sleeper&quot;,
+        &quot;number_of_containers&quot;: 1,
+        &quot;launch_command&quot;: &quot;sleep 900000&quot;,
+        &quot;resource&quot;: {
+          &quot;cpus&quot;: 1, 
+          &quot;memory&quot;: &quot;256&quot;
+       }
+      }
+    ]
+}
+</pre></div></div>
+
+<p>User can simply run a pre-built example service on YARN using below command:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -launch &lt;service-name&gt; &lt;example-name&gt;
+</pre></div></div>
+
+<p>e.g. Below command launches a <tt>sleeper</tt> service named as <tt>my-sleeper</tt> on YARN.</p>
+
+<div>
+<div>
+<pre class="source">yarn app -launch my-sleeper sleeper
+</pre></div></div>
+
+<p>For launching docker based services using YARN Service framework, please refer to <a href="YarnServiceAPI.html">API doc</a>.</p></div>
+<div class="section">
+<h2><a name="Manage_services_on_YARN_via_CLI"></a>Manage services on YARN via CLI</h2>
+<p>Below steps walk you through deploying a services on YARN using CLI. Refer to <a href="../YarnCommands.html">Yarn Commands</a> for the full list of commands and options.</p>
+<div class="section">
+<h3><a name="Deploy_a_service"></a>Deploy a service</h3>
+
+<div>
+<div>
+<pre class="source">yarn app -launch ${SERVICE_NAME} ${PATH_TO_SERVICE_DEF_FILE}
+</pre></div></div>
+
+<p>Params:</p>
+<ul>
+
+<li>SERVICE_NAME: The name of the service. Note that this needs to be unique across running services for the current user.</li>
+<li>PATH_TO_SERVICE_DEF: The path to the service definition file in JSON format.</li>
+</ul>
+<p>For example:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -launch sleeper-service /path/to/local/sleeper.json
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Flex_a_component_of_a_service"></a>Flex a component of a service</h3>
+<p>Increase or decrease the number of containers for a component.</p>
+
+<div>
+<div>
+<pre class="source">yarn app -flex ${SERVICE_NAME} -component ${COMPONENT_NAME} ${NUMBER_OF_CONTAINERS}
+</pre></div></div>
+
+<p>For example, for a service named <tt>sleeper-service</tt>:</p>
+<p>Set the <tt>sleeper</tt> component to <tt>2</tt> containers (absolute number).</p>
+
+<div>
+<div>
+<pre class="source">yarn app -flex sleeper-service -component sleeper 2
+</pre></div></div>
+
+<p>Relative changes are also supported for the ${NUMBER_OF_CONTAINERS} in the flex command, such as +2 or -2.</p></div>
+<div class="section">
+<h3><a name="Stop_a_service"></a>Stop a service</h3>
+<p>Stopping a service will stop all containers of the service and the ApplicationMaster, but does not delete the state of a service, such as the service root folder on hdfs.</p>
+
+<div>
+<div>
+<pre class="source">yarn app -stop ${SERVICE_NAME}
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Restart_a_stopped_service"></a>Restart a stopped service</h3>
+<p>Restarting a stopped service is easy - just call start!</p>
+
+<div>
+<div>
+<pre class="source">yarn app -start ${SERVICE_NAME}
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Destroy_a_service"></a>Destroy a service</h3>
+<p>In addition to stopping a service, it also deletes the service root folder on hdfs and the records in YARN Service Registry.</p>
+
+<div>
+<div>
+<pre class="source">yarn app -destroy ${SERVICE_NAME}
+</pre></div></div>
+</div></div>
+<div class="section">
+<h2><a name="Manage_services_on_YARN_via_REST_API"></a>Manage services on YARN via REST API</h2>
+<p>The YARN API Server REST API is activated as part of the ResourceManager when <tt>yarn.webapp.api-service.enable</tt> is set to true.</p>
+<p>Services can be deployed on YARN through the ResourceManager web endpoint.</p>
+<p>Refer to <a href="YarnServiceAPI.html">API doc</a>  for the detailed API specificatiosn.</p>
+<div class="section">
+<h3><a name="Deploy_a_service"></a>Deploy a service</h3>
+<p>POST the aforementioned example service definition to the ResourceManager api-server endpoint:</p>
+
+<div>
+<div>
+<pre class="source">POST  http://localhost:8088/app/v1/services
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Get_a_service_status"></a>Get a service status</h3>
+
+<div>
+<div>
+<pre class="source">GET  http://localhost:8088/app/v1/services/${SERVICE_NAME}
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Flex_a_component_of_a_service"></a>Flex a component of a service</h3>
+
+<div>
+<div>
+<pre class="source">PUT  http://localhost:8088/app/v1/services/${SERVICE_NAME}/components/${COMPONENT_NAME}
+</pre></div></div>
+
+<p><tt>PUT</tt> Request body:</p>
+
+<div>
+<div>
+<pre class="source">{
+    &quot;name&quot;: &quot;${COMPONENT_NAME}&quot;,
+    &quot;number_of_containers&quot;: ${COUNT}
+}
+</pre></div></div>
+
+<p>For example:</p>
+
+<div>
+<div>
+<pre class="source">{
+    &quot;name&quot;: &quot;sleeper&quot;,
+    &quot;number_of_containers&quot;: 2
+}
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Stop_a_service"></a>Stop a service</h3>
+<p>Stopping a service will stop all containers of the service and the ApplicationMaster, but does not delete the state of a service, such as the service root folder on hdfs.</p>
+
+<div>
+<div>
+<pre class="source">PUT  http://localhost:8088/app/v1/services/${SERVICE_NAME}
+</pre></div></div>
+
+<p><tt>PUT</tt> Request body:</p>
+
+<div>
+<div>
+<pre class="source">{
+  &quot;name&quot;: &quot;${SERVICE_NAME}&quot;,
+  &quot;state&quot;: &quot;STOPPED&quot;
+}
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Restart_a_stopped_service"></a>Restart a stopped service</h3>
+<p>Restarting a stopped service is easy.</p>
+
+<div>
+<div>
+<pre class="source">PUT  http://localhost:8088/app/v1/services/${SERVICE_NAME}
+</pre></div></div>
+
+<p><tt>PUT</tt> Request body:</p>
+
+<div>
+<div>
+<pre class="source">{
+  &quot;name&quot;: &quot;${SERVICE_NAME}&quot;,
+  &quot;state&quot;: &quot;STARTED&quot;
+}
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Destroy_a_service"></a>Destroy a service</h3>
+<p>In addition to stopping a service, it also deletes the service root folder on hdfs and the records in YARN Service Registry.</p>
+
+<div>
+<div>
+<pre class="source">DELETE  http://localhost:8088/app/v1/services/${SERVICE_NAME}
+</pre></div></div>
+</div></div>
+<div class="section">
+<h2><a name="Services_UI_with_YARN_UI2_and_Timeline_Service_v2"></a>Services UI with YARN UI2 and Timeline Service v2</h2>
+<p>A new <tt>service</tt> tab is added in the YARN UI2 specially to show YARN Services in a first class manner. The services framework posts the data into TimelineService and the <tt>service</tt> UI reads data from TimelineService to render its content.</p>
+<div class="section">
+<h3><a name="Enable_Timeline_Service_v2"></a>Enable Timeline Service v2</h3>
+<p>Please refer to <a href="../TimelineServiceV2.html">TimeLineService v2 doc</a> for how to enable Timeline Service v2.</p></div>
+<div class="section">
+<h3><a name="Enable_new_YARN_UI"></a>Enable new YARN UI</h3>
+<p>Set below config in <tt>yarn-site.xml</tt> and start ResourceManager. If you are building from source code, make sure you use <tt>-Pyarn-ui</tt> in the <tt>mvn</tt> command - this will generate the war file for the new YARN UI.</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;description&gt;To enable RM web ui2 application.&lt;/description&gt;
+    &lt;name&gt;yarn.webapp.ui2.enable&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+  &lt;/property&gt;
+</pre></div></div>
+
+<h1>Run with security</h1>
+<p>YARN service framework supports running in a secure (kerberized) environment. User needs to specify the kerberos principal name and keytab when they launch the service. E.g. A typical configuration looks like below:</p>
+
+<div>
+<div>
+<pre class="source">{
+  &quot;name&quot;: &quot;sample-service&quot;,
+  ...
+  ...
+  &quot;kerberos_principal&quot; : {
+    &quot;principal_name&quot; : &quot;hdfs-demo/_HOST@EXAMPLE.COM&quot;,
+    &quot;keytab&quot; : &quot;file:///etc/security/keytabs/hdfs.headless.keytab&quot;
+  }
+}
+</pre></div></div>
+
+<p>Note that <tt>_HOST</tt> is required in the <tt>principal_name</tt> field because Hadoop client validates that the server&#x2019;s (in this case, the AM&#x2019;s) principal has hostname present when communicating to the server. * principal_name : the principal name of the user who launches the service * keytab : URI of the keytab. Currently supports only files present on the bare host. * URI starts with <tt>file://</tt> - A path on the local host where the keytab is stored. It is assumed that admin pre-installs the keytabs on the local host before AM launches.</p>
+<h1>Run with Docker</h1>
+<p>The above example is only for a non-docker container based service. YARN Service Framework also provides first-class support for managing docker based services. Most of the steps for managing docker based services are the same except that in docker the <tt>Artifact</tt> type for a component is <tt>DOCKER</tt> and the Artifact <tt>id</tt> is the name of the docker image. For details in how to setup docker on YARN, please check <a href="../DockerContainers.html">Docker on YARN</a>.</p>
+<p>With docker support, it also opens up a set of new possibilities to implement features such as discovering service containers on YARN with DNS. Check <a href="ServiceDiscovery.html">ServiceDiscovery</a> for more details.</p></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

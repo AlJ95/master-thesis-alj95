@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>CLIENT TRACKING | Docs</title>
+    <meta name="description" content="Controls server-assisted client-side caching for the connection.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/client-tracking/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="CLIENT TRACKING">
+  <meta property="og:description" content="Controls server-assisted client-side caching for the connection.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="CLIENT TRACKING">
+  <meta itemprop="description" content="Controls server-assisted client-side caching for the connection.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="436">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CLIENT TRACKING">
+  <meta name="twitter:description" content="Controls server-assisted client-side caching for the connection.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">CLIENT TRACKING
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">CLIENT TRACKING &lt;ON | OFF&gt; [REDIRECT client-id] [PREFIX prefix
+  [PREFIX prefix ...]] [BCAST] [OPTIN] [OPTOUT] [NOLOOP]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 6.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1). Some options may introduce additional complexity.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@connection</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>This command enables the tracking feature of the Redis server, that is used
+for <a href="/docs/latest/develop/clients/client-side-caching/#tracking">server assisted client side caching</a>.</p>
+<p>When tracking is enabled Redis remembers the keys that the connection
+requested, in order to send later invalidation messages when such keys are
+modified. Invalidation messages are sent in the same connection (only available
+when the RESP3 protocol is used) or redirected in a different connection
+(available also with RESP2 and Pub/Sub). A special <em>broadcasting</em> mode is
+available where clients participating in this protocol receive every
+notification just subscribing to given key prefixes, regardless of the
+keys that they requested. Given the complexity of the argument please
+refer to <a href="/docs/latest/develop/reference/client-side-caching/">the main client side caching documentation</a> for the details. This manual page is only a reference for the options of this subcommand.</p>
+<p>In order to enable tracking, use:</p>
+<pre><code>CLIENT TRACKING on ... options ...
+</code></pre>
+<p>The feature will remain active in the current connection for all its life,
+unless tracking is turned off with <code>CLIENT TRACKING off</code> at some point.</p>
+<p>The following are the list of options that modify the behavior of the
+command when enabling tracking:</p>
+<ul>
+<li><code>REDIRECT &lt;id&gt;</code>: send invalidation messages to the connection with the specified ID. The connection must exist. You can get the ID of a connection using <a href="/docs/latest/commands/client-id/"><code>CLIENT ID</code></a>. If the connection we are redirecting to is terminated, when in RESP3 mode the connection with tracking enabled will receive <code>tracking-redir-broken</code> push messages in order to signal the condition.</li>
+<li><code>BCAST</code>: enable tracking in broadcasting mode. In this mode invalidation messages are reported for all the prefixes specified, regardless of the keys requested by the connection. Instead when the broadcasting mode is not enabled, Redis will track which keys are fetched using read-only commands, and will report invalidation messages only for such keys.</li>
+<li><code>PREFIX &lt;prefix&gt;</code>: for broadcasting, register a given key prefix, so that notifications will be provided only for keys starting with this string. This option can be given multiple times to register multiple prefixes. If broadcasting is enabled without this option, Redis will send notifications for every key. You can't delete a single prefix, but you can delete all prefixes by disabling and re-enabling tracking. Using this option adds the additional time complexity of O(N^2), where N is the total number of prefixes tracked.</li>
+<li><code>OPTIN</code>: when broadcasting is NOT active, normally don't track keys in read only commands, unless they are called immediately after a <code>CLIENT CACHING yes</code> command.</li>
+<li><code>OPTOUT</code>: when broadcasting is NOT active, normally track keys in read only commands, unless they are called immediately after a <code>CLIENT CACHING no</code> command.</li>
+<li><code>NOLOOP</code>: don't send notifications about keys modified by this connection itself.</li>
+</ul>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+              
+              <a href="../../develop/reference/protocol-spec#simple-strings">Simple string reply</a>: <code>OK</code> if the connection was successfully put in tracking mode or if the tracking mode was successfully disabled. Otherwise, an error is returned.
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/client-tracking/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.worker (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.worker</h1>
+<div class="docSummary">
+<div class="block">Worker process and utils for working with the worker remotely.</div>
+</div>
+<p>See:&nbsp;<a href="#package.description">Description</a></p>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/DataServer.html" title="interface in alluxio.worker">DataServer</a></td>
+<td class="colLast">
+<div class="block">Defines how to interact with a server running the data protocol.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/JobWorkerProcess.html" title="interface in alluxio.worker">JobWorkerProcess</a></td>
+<td class="colLast">
+<div class="block">A job worker in the Alluxio system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/SessionCleanable.html" title="interface in alluxio.worker">SessionCleanable</a></td>
+<td class="colLast">
+<div class="block">Interface for classes which track sessions and provide a method to clean any expired sessions.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/Worker.html" title="interface in alluxio.worker">Worker</a></td>
+<td class="colLast">
+<div class="block">Interface of an Alluxio worker.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/WorkerFactory.html" title="interface in alluxio.worker">WorkerFactory</a></td>
+<td class="colLast">
+<div class="block">Interface for factory of <a href="../../alluxio/worker/Worker.html" title="interface in alluxio.worker"><code>Worker</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/WorkerProcess.html" title="interface in alluxio.worker">WorkerProcess</a></td>
+<td class="colLast">
+<div class="block">A worker in the Alluxio system.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/AbstractWorker.html" title="class in alluxio.worker">AbstractWorker</a></td>
+<td class="colLast">
+<div class="block">This is the base class for all workers, and contains common functionality.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/AlluxioJobWorker.html" title="class in alluxio.worker">AlluxioJobWorker</a></td>
+<td class="colLast">
+<div class="block">Entry point for the Alluxio worker.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/AlluxioJobWorkerProcess.html" title="class in alluxio.worker">AlluxioJobWorkerProcess</a></td>
+<td class="colLast">
+<div class="block">This class is responsible for initializing the different workers that are configured to run.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/AlluxioJobWorkerRestServiceHandler.html" title="class in alluxio.worker">AlluxioJobWorkerRestServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a REST handler for requesting general job worker information.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/AlluxioWorker.html" title="class in alluxio.worker">AlluxioWorker</a></td>
+<td class="colLast">
+<div class="block">Entry point for the Alluxio worker.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/AlluxioWorkerMonitor.html" title="class in alluxio.worker">AlluxioWorkerMonitor</a></td>
+<td class="colLast">
+<div class="block">Alluxio worker monitor for inquiring AlluxioWorker service availability.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/AlluxioWorkerProcess.html" title="class in alluxio.worker">AlluxioWorkerProcess</a></td>
+<td class="colLast">
+<div class="block">This class encapsulates the different worker services that are configured to run.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/AlluxioWorkerRestServiceHandler.html" title="class in alluxio.worker">AlluxioWorkerRestServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a REST handler for requesting general worker information.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/BlockUtils.html" title="class in alluxio.worker">BlockUtils</a></td>
+<td class="colLast">
+<div class="block">Block related utils methods.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/DataServer.Factory.html" title="class in alluxio.worker">DataServer.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../alluxio/worker/DataServer.html" title="interface in alluxio.worker"><code>DataServer</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/JobWorker.html" title="class in alluxio.worker">JobWorker</a></td>
+<td class="colLast">
+<div class="block">A job worker that manages all the worker-related activities.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/JobWorkerIdRegistry.html" title="class in alluxio.worker">JobWorkerIdRegistry</a></td>
+<td class="colLast">
+<div class="block">The single place to get, set, and update job worker id.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/JobWorkerProcess.Factory.html" title="class in alluxio.worker">JobWorkerProcess.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for creating <a href="../../alluxio/worker/JobWorkerProcess.html" title="interface in alluxio.worker"><code>JobWorkerProcess</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/SessionCleaner.html" title="class in alluxio.worker">SessionCleaner</a></td>
+<td class="colLast">
+<div class="block">SessionCleaner periodically checks if any session have become zombies, removes the zombie session
+ and associated data when necessary.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/WorkerHealthCheckClient.html" title="class in alluxio.worker">WorkerHealthCheckClient</a></td>
+<td class="colLast">
+<div class="block">WorkerHealthCheckClient check if worker is serving RPC.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/worker/WorkerProcess.Factory.html" title="class in alluxio.worker">WorkerProcess.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for creating <a href="../../alluxio/worker/WorkerProcess.html" title="interface in alluxio.worker"><code>WorkerProcess</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/worker/WorkerRegistry.html" title="class in alluxio.worker">WorkerRegistry</a></td>
+<td class="colLast">
+<div class="block">A worker registry.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a name="package.description">
+
+</a>
+<h2 title="Package alluxio.worker Description">Package alluxio.worker Description</h2>
+<div class="block">Worker process and utils for working with the worker remotely.
+
+ Main entry point for the worker is <a href="../../alluxio/worker/AlluxioWorker.html#main-java.lang.String:A-"><code>AlluxioWorker.main(java.lang.String[])</code></a>
+ which gets started by the alluxio start scripts. The <a href="../../alluxio/worker/WorkerProcess.html" title="interface in alluxio.worker"><code>WorkerProcess</code></a>
+ spins up the different RPC services (gRPC, data) which are mostly wrappers around
+ <a href="../../alluxio/worker/block/BlockWorker.html" title="interface in alluxio.worker.block"><code>BlockWorker</code></a>.
+
+ <h1>Services</h1>
+
+ <h2>DataServer</h2>
+
+ This service is the main interaction between users and worker for reading and writing blocks.
+ The <a href="../../alluxio/worker/DataServer.html" title="interface in alluxio.worker"><code>DataServer</code></a> interface defines how to start/stop, and get port
+ details; to start, object init is used. The implementation of this interface is in
+ <a href="../../alluxio/worker/grpc/GrpcDataServer.html" title="class in alluxio.worker.grpc"><code>GrpcDataServer</code></a>. It creates an <a href="../../alluxio/worker/DataServer.html" title="interface in alluxio.worker"><code>DataServer</code></a>
+ instance based on gRPC which is a high performance universal remote procedure call framework.
+
+ Data server handles the following types of block requests:
+ <ul>
+   <li>Read blocks in worker storage from network</li>
+   <li>Read blocks in worker storage from local file system:
+     short-circuit read for local client</li>
+   <li>Read blocks in UFS</li>
+   <li>Write blocks in worker storage from network</li>
+   <li>Write blocks in worker storage from local file system:
+     short-circuit write for local client</li>
+   <li>Write blocks in UFS</li>
+ </ul>
+
+ The current protocol is described in <a href="../../alluxio/proto/dataserver/Protocol.html" title="class in alluxio.proto.dataserver"><code>Protocol</code></a>.
+ All the requests are generated by Protobuf to keep the protocol extensible but also
+ backward-compatible.</div>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>HttpFS &#x2013; Hadoop HDFS over HTTP - Server Setup</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="index.html">HttpFS</a>
+        &gt;
+        Hadoop HDFS over HTTP - Server Setup
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Hadoop HDFS over HTTP - Server Setup</h1>
+<p>This page explains how to quickly setup HttpFS with Pseudo authentication against a Hadoop cluster with Pseudo authentication.</p>
+<div class="section">
+<h2><a name="Install_HttpFS"></a>Install HttpFS</h2>
+
+<div>
+<div>
+<pre class="source">~ $ tar xzf  httpfs-3.3.0.tar.gz
+</pre></div></div>
+</div>
+<div class="section">
+<h2><a name="Configure_HttpFS"></a>Configure HttpFS</h2>
+<p>By default, HttpFS assumes that Hadoop configuration files (<tt>core-site.xml &amp; hdfs-site.xml</tt>) are in the HttpFS configuration directory.</p>
+<p>If this is not the case, add to the <tt>httpfs-site.xml</tt> file the <tt>httpfs.hadoop.config.dir</tt> property set to the location of the Hadoop configuration directory.</p></div>
+<div class="section">
+<h2><a name="Configure_Hadoop"></a>Configure Hadoop</h2>
+<p>Edit Hadoop <tt>core-site.xml</tt> and defined the Unix user that will run the HttpFS server as a proxyuser. For example:</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;hadoop.proxyuser.#HTTPFSUSER#.hosts&lt;/name&gt;
+    &lt;value&gt;httpfs-host.foo.com&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;hadoop.proxyuser.#HTTPFSUSER#.groups&lt;/name&gt;
+    &lt;value&gt;*&lt;/value&gt;
+  &lt;/property&gt;
+</pre></div></div>
+
+<p>IMPORTANT: Replace <tt>#HTTPFSUSER#</tt> with the Unix user that will start the HttpFS server.</p></div>
+<div class="section">
+<h2><a name="Restart_Hadoop"></a>Restart Hadoop</h2>
+<p>You need to restart Hadoop for the proxyuser configuration to become active.</p></div>
+<div class="section">
+<h2><a name="Start.2FStop_HttpFS"></a>Start/Stop HttpFS</h2>
+<p>To start/stop HttpFS, use <tt>hdfs --daemon start|stop httpfs</tt>. For example:</p>
+
+<div>
+<div>
+<pre class="source">hadoop-3.3.0 $ hdfs --daemon start httpfs
+</pre></div></div>
+
+<p>NOTE: The script <tt>httpfs.sh</tt> is deprecated. It is now just a wrapper of <tt>hdfs httpfs</tt>.</p></div>
+<div class="section">
+<h2><a name="Test_HttpFS_is_working"></a>Test HttpFS is working</h2>
+
+<div>
+<div>
+<pre class="source">$ curl -sS 'http://&lt;HTTPFSHOSTNAME&gt;:14000/webhdfs/v1?op=gethomedirectory&amp;user.name=hdfs'
+{&quot;Path&quot;:&quot;\/user\/hdfs&quot;}
+</pre></div></div>
+</div>
+<div class="section">
+<h2><a name="HttpFS_Configuration"></a>HttpFS Configuration</h2>
+<p>HttpFS preconfigures the HTTP port to 14000.</p>
+<p>HttpFS supports the following <a href="./httpfs-default.html">configuration properties</a> in the HttpFS&#x2019;s <tt>etc/hadoop/httpfs-site.xml</tt> configuration file.</p></div>
+<div class="section">
+<h2><a name="HttpFS_over_HTTPS_.28SSL.29"></a>HttpFS over HTTPS (SSL)</h2>
+<p>Enable SSL in <tt>etc/hadoop/httpfs-site.xml</tt>:</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;httpfs.ssl.enabled&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+    &lt;description&gt;
+      Whether SSL is enabled. Default is false, i.e. disabled.
+    &lt;/description&gt;
+  &lt;/property&gt;
+</pre></div></div>
+
+<p>Configure <tt>etc/hadoop/ssl-server.xml</tt> with proper values, for example:</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;ssl.server.keystore.location&lt;/name&gt;
+    &lt;value&gt;${user.home}/.keystore&lt;/value&gt;
+    &lt;description&gt;Keystore to be used. Must be specified.
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;ssl.server.keystore.password&lt;/name&gt;
+    &lt;value&gt;&lt;/value&gt;
+    &lt;description&gt;Must be specified.&lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;ssl.server.keystore.keypassword&lt;/name&gt;
+    &lt;value&gt;&lt;/value&gt;
+    &lt;description&gt;Must be specified.&lt;/description&gt;
+  &lt;/property&gt;
+</pre></div></div>
+
+<p>The SSL passwords can be secured by a credential provider. See <a href="../hadoop-project-dist/hadoop-common/CredentialProviderAPI.html">Credential Provider API</a>.</p>
+<p>You need to create an SSL certificate for the HttpFS server. As the <tt>httpfs</tt> Unix user, using the Java <tt>keytool</tt> command to create the SSL certificate:</p>
+
+<div>
+<div>
+<pre class="source">$ keytool -genkey -alias jetty -keyalg RSA
+</pre></div></div>
+
+<p>You will be asked a series of questions in an interactive prompt. It will create the keystore file, which will be named <b>.keystore</b> and located in the <tt>httpfs</tt> user home directory.</p>
+<p>The password you enter for &#x201c;keystore password&#x201d; must match the value of the property <tt>ssl.server.keystore.password</tt> set in the <tt>ssl-server.xml</tt> in the configuration directory.</p>
+<p>The answer to &#x201c;What is your first and last name?&#x201d; (i.e. &#x201c;CN&#x201d;) must be the hostname of the machine where the HttpFS Server will be running.</p>
+<p>Start HttpFS. It should work over HTTPS.</p>
+<p>Using the Hadoop <tt>FileSystem</tt> API or the Hadoop FS shell, use the <tt>swebhdfs://</tt> scheme. Make sure the JVM is picking up the truststore containing the public key of the SSL certificate if using a self-signed certificate. For more information about the client side settings, see <a href="../hadoop-project-dist/hadoop-hdfs/WebHDFS.html#SSL_Configurations_for_SWebHDFS">SSL Configurations for SWebHDFS</a>.</p>
+<p>NOTE: Some old SSL clients may use weak ciphers that are not supported by the HttpFS server. It is recommended to upgrade the SSL client.</p></div>
+<div class="section">
+<h2><a name="Deprecated_Environment_Variables"></a>Deprecated Environment Variables</h2>
+<p>The following environment variables are deprecated. Set the corresponding configuration properties instead.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th>Environment Variable        </th>
+<th> Configuration Property       </th>
+<th> Configuration File</th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td>HTTPFS_HTTP_HOSTNAME        </td>
+<td> httpfs.http.hostname         </td>
+<td> httpfs-site.xml</td></tr>
+<tr class="a">
+<td>HTTPFS_HTTP_PORT            </td>
+<td> httpfs.http.port             </td>
+<td> httpfs-site.xml</td></tr>
+<tr class="b">
+<td>HTTPFS_MAX_HTTP_HEADER_SIZE </td>
+<td> hadoop.http.max.request.header.size and hadoop.http.max.response.header.size </td>
+<td> httpfs-site.xml</td></tr>
+<tr class="a">
+<td>HTTPFS_MAX_THREADS          </td>
+<td> hadoop.http.max.threads      </td>
+<td> httpfs-site.xml</td></tr>
+<tr class="b">
+<td>HTTPFS_SSL_ENABLED          </td>
+<td> httpfs.ssl.enabled           </td>
+<td> httpfs-site.xml</td></tr>
+<tr class="a">
+<td>HTTPFS_SSL_KEYSTORE_FILE    </td>
+<td> ssl.server.keystore.location </td>
+<td> ssl-server.xml</td></tr>
+<tr class="b">
+<td>HTTPFS_SSL_KEYSTORE_PASS    </td>
+<td> ssl.server.keystore.password </td>
+<td> ssl-server.xml</td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h2><a name="HTTP_Default_Services"></a>HTTP Default Services</h2>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th>Name               </th>
+<th> Description</th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td>/conf              </td>
+<td> Display configuration properties</td></tr>
+<tr class="a">
+<td>/jmx               </td>
+<td> Java JMX management interface</td></tr>
+<tr class="b">
+<td>/logLevel          </td>
+<td> Get or set log level per class</td></tr>
+<tr class="a">
+<td>/logs              </td>
+<td> Display log files</td></tr>
+<tr class="b">
+<td>/stacks            </td>
+<td> Display JVM stacks</td></tr>
+<tr class="a">
+<td>/static/index.html </td>
+<td> The static home page</td></tr>
+</tbody>
+</table>
+<p>To control the access to servlet <tt>/conf</tt>, <tt>/jmx</tt>, <tt>/logLevel</tt>, <tt>/logs</tt>, and <tt>/stacks</tt>, configure the following properties in <tt>httpfs-site.xml</tt>:</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;hadoop.security.authorization&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+    &lt;description&gt;Is service-level authorization enabled?&lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;hadoop.security.instrumentation.requires.admin&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+    &lt;description&gt;
+      Indicates if administrator ACLs are required to access
+      instrumentation servlets (JMX, METRICS, CONF, STACKS).
+    &lt;/description&gt;
+  &lt;/property&gt;
+
+  &lt;property&gt;
+    &lt;name&gt;httpfs.http.administrators&lt;/name&gt;
+    &lt;value&gt;&lt;/value&gt;
+    &lt;description&gt;ACL for the admins, this configuration is used to control
+      who can access the default servlets for HttpFS server. The value
+      should be a comma separated list of users and groups. The user list
+      comes first and is separated by a space followed by the group list,
+      e.g. &quot;user1,user2 group1,group2&quot;. Both users and groups are optional,
+      so &quot;user1&quot;, &quot; group1&quot;, &quot;&quot;, &quot;user1 group1&quot;, &quot;user1,user2 group1,group2&quot;
+      are all valid (note the leading space in &quot; group1&quot;). '*' grants access
+      to all users and groups, e.g. '*', '* ' and ' *' are all valid.
+    &lt;/description&gt;
+  &lt;/property&gt;
+</pre></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

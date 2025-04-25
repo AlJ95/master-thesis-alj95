@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.security.authorization (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.security.authorization</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AccessControlList.html" title="class in alluxio.security.authorization">AccessControlList</a></td>
+<td class="colLast">
+<div class="block">Access control list for a file or directory.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AccessControlList.AccessControlListDeserializer.html" title="class in alluxio.security.authorization">AccessControlList.AccessControlListDeserializer</a></td>
+<td class="colLast">
+<div class="block">This is a custom json deserializer for AccessControlList class.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AccessControlList.AccessControlListSerializer.html" title="class in alluxio.security.authorization">AccessControlList.AccessControlListSerializer</a></td>
+<td class="colLast">
+<div class="block">This is a custom json serializer for AccessControlList class.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AclActions.html" title="class in alluxio.security.authorization">AclActions</a></td>
+<td class="colLast">
+<div class="block">Permitted actions of an entry in <a href="../../../alluxio/security/authorization/AccessControlList.html" title="class in alluxio.security.authorization"><code>AccessControlList</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AclEntry.html" title="class in alluxio.security.authorization">AclEntry</a></td>
+<td class="colLast">
+<div class="block">An entry in <a href="../../../alluxio/security/authorization/AccessControlList.html" title="class in alluxio.security.authorization"><code>AccessControlList</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AclEntry.Builder.html" title="class in alluxio.security.authorization">AclEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">Builder for <a href="../../../alluxio/security/authorization/AclEntry.html" title="class in alluxio.security.authorization"><code>AclEntry</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/DefaultAccessControlList.html" title="class in alluxio.security.authorization">DefaultAccessControlList</a></td>
+<td class="colLast">
+<div class="block">Default Access control list for a directory.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/ExtendedACLEntries.html" title="class in alluxio.security.authorization">ExtendedACLEntries</a></td>
+<td class="colLast">
+<div class="block">Stores the extended ACL entries.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/Mode.html" title="class in alluxio.security.authorization">Mode</a></td>
+<td class="colLast">
+<div class="block">POSIX style file/directory access mode.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/ModeParser.html" title="class in alluxio.security.authorization">ModeParser</a></td>
+<td class="colLast">
+<div class="block">Parser for <code>Mode</code> instances.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AclAction.html" title="enum in alluxio.security.authorization">AclAction</a></td>
+<td class="colLast">
+<div class="block">Actions to be controlled in <a href="../../../alluxio/security/authorization/AccessControlList.html" title="class in alluxio.security.authorization"><code>AccessControlList</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/AclEntryType.html" title="enum in alluxio.security.authorization">AclEntryType</a></td>
+<td class="colLast">
+<div class="block">Types of entries in <a href="../../../alluxio/security/authorization/AccessControlList.html" title="class in alluxio.security.authorization"><code>AccessControlList</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authorization/Mode.Bits.html" title="enum in alluxio.security.authorization">Mode.Bits</a></td>
+<td class="colLast">
+<div class="block">Mode bits.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

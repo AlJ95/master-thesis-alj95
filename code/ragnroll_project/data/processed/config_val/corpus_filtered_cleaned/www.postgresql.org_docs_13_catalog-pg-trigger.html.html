@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 51.56. pg_trigger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/catalog-pg-trigger.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="51.56. pg_trigger" />
+  <meta property="og:description" content="51.56.&amp;nbsp;pg_trigger The catalog pg_trigger stores triggers on tables and views. See CREATE TRIGGER for more information. Table&amp;nbsp;51.56.&amp;nbsp;pg_trigger Columns Column Type …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/catalog-pg-trigger.html" title="PostgreSQL 17 - 51.56. pg_trigger" >Current</a>
+                          (<a href="/docs/17/catalog-pg-trigger.html" title="PostgreSQL 17 - 51.56. pg_trigger" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/catalog-pg-trigger.html" title="PostgreSQL 16 - 51.56. pg_trigger" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/catalog-pg-trigger.html" title="PostgreSQL 15 - 51.56. pg_trigger" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/catalog-pg-trigger.html" title="PostgreSQL 14 - 51.56. pg_trigger" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/catalog-pg-trigger.html" title="PostgreSQL 13 - 51.56. pg_trigger" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/catalog-pg-trigger.html" title="PostgreSQL devel - 51.56. pg_trigger"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/catalog-pg-trigger.html" title="PostgreSQL 12 - 51.56. pg_trigger"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/catalog-pg-trigger.html" title="PostgreSQL 11 - 51.56. pg_trigger"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/catalog-pg-trigger.html" title="PostgreSQL 10 - 51.56. pg_trigger"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/catalog-pg-trigger.html" title="PostgreSQL 9.6 - 51.56. pg_trigger"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/catalog-pg-trigger.html" title="PostgreSQL 9.5 - 51.56. pg_trigger"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/catalog-pg-trigger.html" title="PostgreSQL 9.4 - 51.56. pg_trigger"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/catalog-pg-trigger.html" title="PostgreSQL 9.3 - 51.56. pg_trigger"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/catalog-pg-trigger.html" title="PostgreSQL 9.2 - 51.56. pg_trigger"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/catalog-pg-trigger.html" title="PostgreSQL 9.1 - 51.56. pg_trigger"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/catalog-pg-trigger.html" title="PostgreSQL 9.0 - 51.56. pg_trigger"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/catalog-pg-trigger.html" title="PostgreSQL 8.4 - 51.56. pg_trigger"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/catalog-pg-trigger.html" title="PostgreSQL 8.3 - 51.56. pg_trigger"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/catalog-pg-trigger.html" title="PostgreSQL 8.2 - 51.56. pg_trigger"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/catalog-pg-trigger.html" title="PostgreSQL 8.1 - 51.56. pg_trigger"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/catalog-pg-trigger.html" title="PostgreSQL 8.0 - 51.56. pg_trigger"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/catalog-pg-trigger.html" title="PostgreSQL 7.4 - 51.56. pg_trigger"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/catalog-pg-trigger.html" title="PostgreSQL 7.3 - 51.56. pg_trigger"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/catalog-pg-trigger.html" title="PostgreSQL 7.2 - 51.56. pg_trigger"  rel="nofollow">7.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">51.56.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_trigger</code></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="catalog-pg-transform.html" title="51.55.&nbsp;pg_transform">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="catalogs.html" title="Chapter&nbsp;51.&nbsp;System Catalogs">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;51.&nbsp;System Catalogs</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="catalog-pg-ts-config.html" title="51.57.&nbsp;pg_ts_config">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="CATALOG-PG-TRIGGER">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">51.56.&nbsp;<code class="structname">pg_trigger</code></h2>
+      </div>
+    </div>
+  </div><a id="id-1.10.4.58.2" class="indexterm" name="id-1.10.4.58.2"></a>
+  <p>The catalog <code class="structname">pg_trigger</code> stores triggers on tables and views. See <a class="xref" href="sql-createtrigger.html" title="CREATE TRIGGER"><span class="refentrytitle">CREATE TRIGGER</span></a> for more information.</p>
+  <div class="table" id="id-1.10.4.58.4">
+    <p class="title"><strong>Table&nbsp;51.56.&nbsp;<code class="structname">pg_trigger</code> Columns</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="pg_trigger Columns" border="1">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="catalog_table_entry">
+              <p class="column_definition">Column Type</p>
+              <p>Description</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">oid</code> <code class="type">oid</code></p>
+              <p>Row identifier</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgrelid</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-class.html" title="51.11.&nbsp;pg_class"><code class="structname">pg_class</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The table this trigger is on</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgparentid</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-trigger.html" title="51.56.&nbsp;pg_trigger"><code class="structname">pg_trigger</code></a>.<code class="structfield">oid</code>)</p>
+              <p>Parent trigger that this trigger is cloned from, zero if not a clone; this happens when partitions are created or attached to a partitioned table.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgname</code> <code class="type">name</code></p>
+              <p>Trigger name (must be unique among triggers of same table)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgfoid</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-proc.html" title="51.38.&nbsp;pg_proc"><code class="structname">pg_proc</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The function to be called</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgtype</code> <code class="type">int2</code></p>
+              <p>Bit mask identifying trigger firing conditions</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgenabled</code> <code class="type">char</code></p>
+              <p>Controls in which <a class="xref" href="runtime-config-client.html#GUC-SESSION-REPLICATION-ROLE">session_replication_role</a> modes the trigger fires. <code class="literal">O</code> = trigger fires in <span class="quote">“<span class="quote">origin</span>”</span> and <span class="quote">“<span class="quote">local</span>”</span> modes, <code class="literal">D</code> = trigger is disabled, <code class="literal">R</code> = trigger fires in <span class="quote">“<span class="quote">replica</span>”</span> mode, <code class="literal">A</code> = trigger fires always.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgisinternal</code> <code class="type">bool</code></p>
+              <p>True if trigger is internally generated (usually, to enforce the constraint identified by <code class="structfield">tgconstraint</code>)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgconstrrelid</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-class.html" title="51.11.&nbsp;pg_class"><code class="structname">pg_class</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The table referenced by a referential integrity constraint</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgconstrindid</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-class.html" title="51.11.&nbsp;pg_class"><code class="structname">pg_class</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The index supporting a unique, primary key, referential integrity, or exclusion constraint</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgconstraint</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-constraint.html" title="51.13.&nbsp;pg_constraint"><code class="structname">pg_constraint</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The <code class="structname">pg_constraint</code> entry associated with the trigger, if any</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgdeferrable</code> <code class="type">bool</code></p>
+              <p>True if constraint trigger is deferrable</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tginitdeferred</code> <code class="type">bool</code></p>
+              <p>True if constraint trigger is initially deferred</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgnargs</code> <code class="type">int2</code></p>
+              <p>Number of argument strings passed to trigger function</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgattr</code> <code class="type">int2vector</code> (references <a class="link" href="catalog-pg-attribute.html" title="51.7.&nbsp;pg_attribute"><code class="structname">pg_attribute</code></a>.<code class="structfield">attnum</code>)</p>
+              <p>Column numbers, if trigger is column-specific; otherwise an empty array</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgargs</code> <code class="type">bytea</code></p>
+              <p>Argument strings to pass to trigger, each NULL-terminated</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgqual</code> <code class="type">pg_node_tree</code></p>
+              <p>Expression tree (in <code class="function">nodeToString()</code> representation) for the trigger's <code class="literal">WHEN</code> condition, or null if none</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgoldtable</code> <code class="type">name</code></p>
+              <p><code class="literal">REFERENCING</code> clause name for <code class="literal">OLD TABLE</code>, or null if none</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">tgnewtable</code> <code class="type">name</code></p>
+              <p><code class="literal">REFERENCING</code> clause name for <code class="literal">NEW TABLE</code>, or null if none</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+  <p>Currently, column-specific triggering is supported only for <code class="literal">UPDATE</code> events, and so <code class="structfield">tgattr</code> is relevant only for that event type. <code class="structfield">tgtype</code> might contain bits for other event types as well, but those are presumed to be table-wide regardless of what is in <code class="structfield">tgattr</code>.</p>
+  <div class="note">
+    <h3 class="title">Note</h3>
+    <p>When <code class="structfield">tgconstraint</code> is nonzero, <code class="structfield">tgconstrrelid</code>, <code class="structfield">tgconstrindid</code>, <code class="structfield">tgdeferrable</code>, and <code class="structfield">tginitdeferred</code> are largely redundant with the referenced <code class="structname">pg_constraint</code> entry. However, it is possible for a non-deferrable trigger to be associated with a deferrable constraint: foreign key constraints can have some deferrable and some non-deferrable triggers.</p>
+  </div>
+  <div class="note">
+    <h3 class="title">Note</h3>
+    <p><code class="literal">pg_class.relhastriggers</code> must be true if a relation has any triggers in this catalog.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="catalog-pg-transform.html" title="51.55.&nbsp;pg_transform">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="catalogs.html" title="Chapter&nbsp;51.&nbsp;System Catalogs">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="catalog-pg-ts-config.html" title="51.57.&nbsp;pg_ts_config">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">51.55.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_transform</code>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;51.57.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_ts_config</code></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/catalog-pg-trigger.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

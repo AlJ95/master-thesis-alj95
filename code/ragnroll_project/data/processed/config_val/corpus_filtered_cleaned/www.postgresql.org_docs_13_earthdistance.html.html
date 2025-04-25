@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.13. earthdistance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/earthdistance.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.13. earthdistance" />
+  <meta property="og:description" content="F.13.&amp;nbsp;earthdistance F.13.1. Cube-Based Earth Distances F.13.2. Point-Based Earth Distances The earthdistance module provides two different approaches to calculating great circle …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/earthdistance.html" title="PostgreSQL 17 - F.13. earthdistance" >Current</a>
+                          (<a href="/docs/17/earthdistance.html" title="PostgreSQL 17 - F.13. earthdistance" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/earthdistance.html" title="PostgreSQL 16 - F.13. earthdistance" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/earthdistance.html" title="PostgreSQL 15 - F.13. earthdistance" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/earthdistance.html" title="PostgreSQL 14 - F.13. earthdistance" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/earthdistance.html" title="PostgreSQL 13 - F.13. earthdistance" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/earthdistance.html" title="PostgreSQL devel - F.13. earthdistance"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/earthdistance.html" title="PostgreSQL 12 - F.13. earthdistance"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/earthdistance.html" title="PostgreSQL 11 - F.13. earthdistance"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/earthdistance.html" title="PostgreSQL 10 - F.13. earthdistance"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/earthdistance.html" title="PostgreSQL 9.6 - F.13. earthdistance"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/earthdistance.html" title="PostgreSQL 9.5 - F.13. earthdistance"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/earthdistance.html" title="PostgreSQL 9.4 - F.13. earthdistance"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/earthdistance.html" title="PostgreSQL 9.3 - F.13. earthdistance"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/earthdistance.html" title="PostgreSQL 9.2 - F.13. earthdistance"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/earthdistance.html" title="PostgreSQL 9.1 - F.13. earthdistance"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/earthdistance.html" title="PostgreSQL 9.0 - F.13. earthdistance"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/earthdistance.html" title="PostgreSQL 8.4 - F.13. earthdistance"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/earthdistance.html" title="PostgreSQL 8.3 - F.13. earthdistance"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.13.&nbsp;earthdistance</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="dict-xsyn.html" title="F.12.&nbsp;dict_xsyn">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="file-fdw.html" title="F.14.&nbsp;file_fdw">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="EARTHDISTANCE">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.13.&nbsp;earthdistance</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="earthdistance.html#id-1.11.7.22.7">F.13.1. Cube-Based Earth Distances</a></span></dt>
+      <dt><span class="sect2"><a href="earthdistance.html#id-1.11.7.22.8">F.13.2. Point-Based Earth Distances</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.22.2" class="indexterm" name="id-1.11.7.22.2"></a>
+  <p>The <code class="filename">earthdistance</code> module provides two different approaches to calculating great circle distances on the surface of the Earth. The one described first depends on the <code class="filename">cube</code> module. The second one is based on the built-in <code class="type">point</code> data type, using longitude and latitude for the coordinates.</p>
+  <p>In this module, the Earth is assumed to be perfectly spherical. (If that's too inaccurate for you, you might want to look at the <span class="application"><a class="ulink" href="https://postgis.net/" target="_top">PostGIS</a></span> project.)</p>
+  <p>The <code class="filename">cube</code> module must be installed before <code class="filename">earthdistance</code> can be installed (although you can use the <code class="literal">CASCADE</code> option of <code class="command">CREATE EXTENSION</code> to install both in one command).</p>
+  <div class="caution">
+    <h3 class="title">Caution</h3>
+    <p>It is strongly recommended that <code class="filename">earthdistance</code> and <code class="filename">cube</code> be installed in the same schema, and that that schema be one for which CREATE privilege has not been and will not be granted to any untrusted users. Otherwise there are installation-time security hazards if <code class="filename">earthdistance</code>'s schema contains objects defined by a hostile user. Furthermore, when using <code class="filename">earthdistance</code>'s functions after installation, the entire search path should contain only trusted schemas.</p>
+  </div>
+  <div class="sect2" id="id-1.11.7.22.7">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.13.1.&nbsp;Cube-Based Earth Distances</h3>
+        </div>
+      </div>
+    </div>
+    <p>Data is stored in cubes that are points (both corners are the same) using 3 coordinates representing the x, y, and z distance from the center of the Earth. A domain <code class="type">earth</code> over <code class="type">cube</code> is provided, which includes constraint checks that the value meets these restrictions and is reasonably close to the actual surface of the Earth.</p>
+    <p>The radius of the Earth is obtained from the <code class="function">earth()</code> function. It is given in meters. But by changing this one function you can change the module to use some other units, or to use a different value of the radius that you feel is more appropriate.</p>
+    <p>This package has applications to astronomical databases as well. Astronomers will probably want to change <code class="function">earth()</code> to return a radius of <code class="literal">180/pi()</code> so that distances are in degrees.</p>
+    <p>Functions are provided to support input in latitude and longitude (in degrees), to support output of latitude and longitude, to calculate the great circle distance between two points and to easily specify a bounding box usable for index searches.</p>
+    <p>The provided functions are shown in <a class="xref" href="earthdistance.html#EARTHDISTANCE-CUBE-FUNCTIONS" title="Table&nbsp;F.5.&nbsp;Cube-Based Earthdistance Functions">Table&nbsp;F.5</a>.</p>
+    <div class="table" id="EARTHDISTANCE-CUBE-FUNCTIONS">
+      <p class="title"><strong>Table&nbsp;F.5.&nbsp;Cube-Based Earthdistance Functions</strong></p>
+      <div class="table-contents">
+        <table class="table" summary="Cube-Based Earthdistance Functions" border="1">
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="func_table_entry">
+                <p class="func_signature">Function</p>
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.1.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.1.1.1.1"></a> <code class="function">earth</code> () → <code class="returnvalue">float8</code></p>
+                <p>Returns the assumed radius of the Earth.</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.2.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.2.1.1.1"></a> <code class="function">sec_to_gc</code> ( <code class="type">float8</code> ) → <code class="returnvalue">float8</code></p>
+                <p>Converts the normal straight line (secant) distance between two points on the surface of the Earth to the great circle distance between them.</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.3.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.3.1.1.1"></a> <code class="function">gc_to_sec</code> ( <code class="type">float8</code> ) → <code class="returnvalue">float8</code></p>
+                <p>Converts the great circle distance between two points on the surface of the Earth to the normal straight line (secant) distance between them.</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.4.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.4.1.1.1"></a> <code class="function">ll_to_earth</code> ( <code class="type">float8</code>, <code class="type">float8</code> ) → <code class="returnvalue">earth</code></p>
+                <p>Returns the location of a point on the surface of the Earth given its latitude (argument 1) and longitude (argument 2) in degrees.</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.5.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.5.1.1.1"></a> <code class="function">latitude</code> ( <code class="type">earth</code> ) → <code class="returnvalue">float8</code></p>
+                <p>Returns the latitude in degrees of a point on the surface of the Earth.</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.6.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.6.1.1.1"></a> <code class="function">longitude</code> ( <code class="type">earth</code> ) → <code class="returnvalue">float8</code></p>
+                <p>Returns the longitude in degrees of a point on the surface of the Earth.</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.7.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.7.1.1.1"></a> <code class="function">earth_distance</code> ( <code class="type">earth</code>, <code class="type">earth</code> ) → <code class="returnvalue">float8</code></p>
+                <p>Returns the great circle distance between two points on the surface of the Earth.</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><a id="id-1.11.7.22.7.7.2.2.8.1.1.1" class="indexterm" name="id-1.11.7.22.7.7.2.2.8.1.1.1"></a> <code class="function">earth_box</code> ( <code class="type">earth</code>, <code class="type">float8</code> ) → <code class="returnvalue">cube</code></p>
+                <p>Returns a box suitable for an indexed search using the <code class="type">cube</code> <code class="literal">@&gt;</code> operator for points within a given great circle distance of a location. Some points in this box are further than the specified great circle distance from the location, so a second check using <code class="function">earth_distance</code> should be included in the query.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><br class="table-break" />
+  </div>
+  <div class="sect2" id="id-1.11.7.22.8">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.13.2.&nbsp;Point-Based Earth Distances</h3>
+        </div>
+      </div>
+    </div>
+    <p>The second part of the module relies on representing Earth locations as values of type <code class="type">point</code>, in which the first component is taken to represent longitude in degrees, and the second component is taken to represent latitude in degrees. Points are taken as (longitude, latitude) and not vice versa because longitude is closer to the intuitive idea of x-axis and latitude to y-axis.</p>
+    <p>A single operator is provided, shown in <a class="xref" href="earthdistance.html#EARTHDISTANCE-POINT-OPERATORS" title="Table&nbsp;F.6.&nbsp;Point-Based Earthdistance Operators">Table&nbsp;F.6</a>.</p>
+    <div class="table" id="EARTHDISTANCE-POINT-OPERATORS">
+      <p class="title"><strong>Table&nbsp;F.6.&nbsp;Point-Based Earthdistance Operators</strong></p>
+      <div class="table-contents">
+        <table class="table" summary="Point-Based Earthdistance Operators" border="1">
+          <colgroup>
+            <col />
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="func_table_entry">
+                <p class="func_signature">Operator</p>
+                <p>Description</p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="func_table_entry">
+                <p class="func_signature"><code class="type">point</code> <code class="literal">&lt;@&gt;</code> <code class="type">point</code> → <code class="returnvalue">float8</code></p>
+                <p>Computes the distance in statute miles between two points on the Earth's surface.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><br class="table-break" />
+    <p>Note that unlike the <code class="type">cube</code>-based part of the module, units are hardwired here: changing the <code class="function">earth()</code> function will not affect the results of this operator.</p>
+    <p>One disadvantage of the longitude/latitude representation is that you need to be careful about the edge conditions near the poles and near +/- 180 degrees of longitude. The <code class="type">cube</code>-based representation avoids these discontinuities.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="dict-xsyn.html" title="F.12.&nbsp;dict_xsyn">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="file-fdw.html" title="F.14.&nbsp;file_fdw">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.12.&nbsp;dict_xsyn&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.14.&nbsp;file_fdw</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/earthdistance.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

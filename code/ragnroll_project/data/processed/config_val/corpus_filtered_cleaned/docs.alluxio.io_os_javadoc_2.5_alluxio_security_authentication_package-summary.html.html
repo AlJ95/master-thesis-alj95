@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.security.authentication (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.security.authentication</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticationProvider.html" title="interface in alluxio.security.authentication">AuthenticationProvider</a></td>
+<td class="colLast">
+<div class="block">Abstraction for an authentication provider at SASL server for
+ <a href="../../../alluxio/security/authentication/AuthType.html#SIMPLE"><code>AuthType.SIMPLE</code></a> and <a href="../../../alluxio/security/authentication/AuthType.html#CUSTOM"><code>AuthType.CUSTOM</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticationServer.html" title="interface in alluxio.security.authentication">AuthenticationServer</a></td>
+<td class="colLast">
+<div class="block">Interface for authentication server implementations.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/SaslClientHandler.html" title="interface in alluxio.security.authentication">SaslClientHandler</a></td>
+<td class="colLast">
+<div class="block">Interface for authentication scheme specific <a href="http://docs.oracle.com/javase/7/docs/api/javax/security/sasl/SaslClient.html?is-external=true" title="class or interface in javax.security.sasl"><code>SaslClient</code></a> management.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/SaslServerHandler.html" title="interface in alluxio.security.authentication">SaslServerHandler</a></td>
+<td class="colLast">
+<div class="block">Interface for authentication scheme specific <a href="http://docs.oracle.com/javase/7/docs/api/javax/security/sasl/SaslServer.html?is-external=true" title="class or interface in javax.security.sasl"><code>SaslServer</code></a> management.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AbstractSaslClientHandler.html" title="class in alluxio.security.authentication">AbstractSaslClientHandler</a></td>
+<td class="colLast">
+<div class="block">Abstract <a href="../../../alluxio/security/authentication/SaslClientHandler.html" title="interface in alluxio.security.authentication"><code>SaslClientHandler</code></a> implementation that maintains <a href="http://docs.oracle.com/javase/7/docs/api/javax/security/sasl/SaslClient.html?is-external=true" title="class or interface in javax.security.sasl"><code>SaslClient</code></a> instance.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AbstractSaslServerHandler.html" title="class in alluxio.security.authentication">AbstractSaslServerHandler</a></td>
+<td class="colLast">
+<div class="block">Abstract <a href="../../../alluxio/security/authentication/SaslServerHandler.html" title="interface in alluxio.security.authentication"><code>SaslServerHandler</code></a> implementation that maintains <a href="http://docs.oracle.com/javase/7/docs/api/javax/security/sasl/SaslServer.html?is-external=true" title="class or interface in javax.security.sasl"><code>SaslServer</code></a> instance.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticatedChannelClientDriver.html" title="class in alluxio.security.authentication">AuthenticatedChannelClientDriver</a></td>
+<td class="colLast">
+<div class="block">Responsible for driving authentication traffic from client-side.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticatedChannelServerDriver.html" title="class in alluxio.security.authentication">AuthenticatedChannelServerDriver</a></td>
+<td class="colLast">
+<div class="block">Responsible for driving authentication traffic from server-side.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticatedClientUser.html" title="class in alluxio.security.authentication">AuthenticatedClientUser</a></td>
+<td class="colLast">
+<div class="block">An instance of this class represents a client user connecting to <a href="../../../alluxio/security/authentication/plain/PlainSaslServer.html" title="class in alluxio.security.authentication.plain"><code>PlainSaslServer</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticatedUserInfo.html" title="class in alluxio.security.authentication">AuthenticatedUserInfo</a></td>
+<td class="colLast">
+<div class="block">Used to define an authenticated user.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticatedUserInjector.html" title="class in alluxio.security.authentication">AuthenticatedUserInjector</a></td>
+<td class="colLast">
+<div class="block">Server side interceptor for setting authenticated user in <a href="../../../alluxio/security/authentication/AuthenticatedClientUser.html" title="class in alluxio.security.authentication"><code>AuthenticatedClientUser</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticationProvider.Factory.html" title="class in alluxio.security.authentication">AuthenticationProvider.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../../alluxio/security/authentication/AuthenticationProvider.html" title="interface in alluxio.security.authentication"><code>AuthenticationProvider</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthenticationUserUtils.html" title="class in alluxio.security.authentication">AuthenticationUserUtils</a></td>
+<td class="colLast">
+<div class="block">This class provides util methods for <a href="../../../alluxio/security/authentication/AuthenticationUserUtils.html" title="class in alluxio.security.authentication"><code>AuthenticationUserUtils</code></a>s.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/ChannelAuthenticator.html" title="class in alluxio.security.authentication">ChannelAuthenticator</a></td>
+<td class="colLast">
+<div class="block">Used to authenticate with the target host.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/ChannelIdInjector.html" title="class in alluxio.security.authentication">ChannelIdInjector</a></td>
+<td class="colLast">
+<div class="block">Client side interceptor that is used to augment outgoing metadata with the unique id for the
+ channel that the RPC is being called on.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/ClientIpAddressInjector.html" title="class in alluxio.security.authentication">ClientIpAddressInjector</a></td>
+<td class="colLast">
+<div class="block">Server side interceptor that is used to put remote client's IP Address to thread local storage.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/DefaultAuthenticationServer.html" title="class in alluxio.security.authentication">DefaultAuthenticationServer</a></td>
+<td class="colLast">
+<div class="block">Default implementation of <a href="../../../alluxio/security/authentication/AuthenticationServer.html" title="interface in alluxio.security.authentication"><code>AuthenticationServer</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/ImpersonationAuthenticator.html" title="class in alluxio.security.authentication">ImpersonationAuthenticator</a></td>
+<td class="colLast">
+<div class="block">An authenticator for impersonation users.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/security/authentication/AuthType.html" title="enum in alluxio.security.authentication">AuthType</a></td>
+<td class="colLast">
+<div class="block">Different authentication types for Alluxio.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

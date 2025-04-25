@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; BlockPlacementPolicies</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>BlockPlacementPolicies</h1>
+<ul>
+
+
+
+
+
+</ul>
+<section>
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>By default HDFS supports BlockPlacementPolicyDefault. Where one block on local and copy on 2 different nodes of same remote rack. Additional to this HDFS supports several different pluggable block placement policies. Users can choose the policy based on their infrastructure and use case. This document describes the detailed information about the type of policies with its use cases and configuration.</p></section><section>
+<h2><a name="BlockPlacementPolicyRackFaultTolerant"></a>BlockPlacementPolicyRackFaultTolerant</h2>
+<p>BlockPlacementPolicyRackFaultTolerant can be used to split the placement of blocks across multiple rack. By default, with replication of 3 BlockPlacementPolicyDefault will  put one replica on the local machine if the writer is on a datanode, otherwise on a random datanode in the same rack as that of the writer, another replica on a node in a different (remote) rack, and the last on a different node in the same remote rack. So totally 2 racks will be used, in scenario like 2 racks going down at the same time will cause data unavailability where using BlockPlacementPolicyRackFaultTolerant will help in placing 3 blocks on 3 different racks.</p>
+<p>For more details check <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-7891">HDFS-7891</a></p>
+<p></p>
+<p><b>Configurations :</b></p>
+<ul>
+
+<li>hdfs-site.xml</li>
+</ul>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;dfs.block.replicator.classname&lt;/name&gt;
+  &lt;value&gt;org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyRackFaultTolerant&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+</section><section>
+<h2><a name="BlockPlacementPolicyWithNodeGroup"></a>BlockPlacementPolicyWithNodeGroup</h2>
+<p>With new 3 layer hierarchical topology, a node group level got introduced, which maps well onto an infrastructure that is based on a virtualized environment. In Virtualized environment multiple vm&#x2019;s will be hosted on same physical machine. Vm&#x2019;s on the same physical host are affected by the same hardware failure. So mapping the physical host a node groups this block placement guarantees that it will never place more than one replica on the same node group (physical host), in case of node group failure, only one replica will be lost at the maximum.</p>
+<p><b>Configurations :</b></p>
+<ul>
+
+<li>core-site.xml</li>
+</ul>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;net.topology.impl&lt;/name&gt;
+  &lt;value&gt;org.apache.hadoop.net.NetworkTopologyWithNodeGroup&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+  &lt;name&gt;net.topology.nodegroup.aware&lt;/name&gt;
+  &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<ul>
+
+<li>hdfs-site.xml</li>
+</ul>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;dfs.block.replicator.classname&lt;/name&gt;
+  &lt;value&gt;
+    org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyWithNodeGroup
+  &lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<ul>
+
+<li>Topology script</li>
+</ul>
+<p>Topology script is the same as the examples above, the only difference is, instead of returning only <b>/{rack}</b>, the script should return <b>/{rack}/{nodegroup}</b>. Following is an example topology mapping table:</p>
+
+<div class="source">
+<div class="source">
+<pre>192.168.0.1 /rack1/nodegroup1
+192.168.0.2 /rack1/nodegroup1
+192.168.0.3 /rack1/nodegroup2
+192.168.0.4 /rack1/nodegroup2
+192.168.0.5 /rack2/nodegroup3
+192.168.0.6 /rack2/nodegroup3
+</pre></div></div>
+
+<p>For more details check <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8468">HDFS-8468</a></p></section><section>
+<h2><a name="BlockPlacementPolicyWithUpgradeDomain"></a>BlockPlacementPolicyWithUpgradeDomain</h2>
+<p>To address the limitation of block placement policy on rolling upgrade, the concept of upgrade domain has been added to HDFS via a new block placement policy. The idea is to group datanodes in a new dimension called upgrade domain, in addition to the existing rack-based grouping. For example, we can assign all datanodes in the first position of any rack to upgrade domain ud_01, nodes in the second position to upgrade domain ud_02 and so on. It will make sure replicas of any given block are distributed across machines from different upgrade domains. By default, 3 replicas of any given block are placed on 3 different upgrade domains. This means all datanodes belonging to a specific upgrade domain collectively won&#x2019;t store more than one replica of any block.</p>
+<p>For more details check <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-9006">HDFS-9006</a></p>
+<p>Detailed info about configuration  <a href="HdfsUpgradeDomain.html">Upgrade Domain Policy</a></p></section><section>
+<h2><a name="AvailableSpaceBlockPlacementPolicy"></a>AvailableSpaceBlockPlacementPolicy</h2>
+<p>The AvailableSpaceBlockPlacementPolicy is a space balanced block placement policy. It is similar to BlockPlacementPolicyDefault but will choose low used percent datanodes for new blocks with a little high possibility.</p>
+<p><b>Configurations :</b></p>
+<ul>
+
+<li>hdfs-site.xml</li>
+</ul>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;dfs.block.replicator.classname&lt;/name&gt;
+  &lt;value&gt;org.apache.hadoop.hdfs.server.blockmanagement.AvailableSpaceBlockPlacementPolicy&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;dfs.namenode.available-space-block-placement-policy.balanced-space-preference-fraction&lt;/name&gt;
+  &lt;value&gt;0.6&lt;/value&gt;
+  &lt;description&gt;
+    Special value between 0 and 1, noninclusive.  Increases chance of
+    placing blocks on Datanodes with less disk space used.
+  &lt;/description&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+&lt;name&gt;dfs.namenode.available-space-block-placement-policy.balanced-space-tolerance&lt;/name&gt;
+&lt;value&gt;5&lt;/value&gt;
+&lt;description&gt;
+    Special value between 0 and 20, inclusive. if the value is set beyond the scope,
+    this value will be set as 5 by default, Increases tolerance of
+    placing blocks on Datanodes with similar disk space used.
+&lt;/description&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;
+    dfs.namenode.available-space-block-placement-policy.balance-local-node
+  &lt;/name&gt;
+  &lt;value&gt;false&lt;/value&gt;
+  &lt;description&gt;
+    If true, balances the local node too.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>For more details check <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-8131">HDFS-8131</a></p></section><section>
+<h2><a name="AvailableSpaceRackFaultTolerantBlockPlacementPolicy"></a>AvailableSpaceRackFaultTolerantBlockPlacementPolicy</h2>
+<p>The AvailableSpaceRackFaultTolerantBlockPlacementPolicy is a space balanced block placement policy similar to AvailableSpaceBlockPlacementPolicy. It extends BlockPlacementPolicyRackFaultTolerant and distributes the blocks amongst maximum number of racks possible and at the same time will try to choose datanodes with low used percent with high probability.</p>
+<p><b>Configurations :</b></p>
+<ul>
+
+<li>hdfs-site.xml</li>
+</ul>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;dfs.block.replicator.classname&lt;/name&gt;
+  &lt;value&gt;org.apache.hadoop.hdfs.server.blockmanagement.AvailableSpaceRackFaultTolerantBlockPlacementPolicy&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;dfs.namenode.available-space-rack-fault-tolerant-block-placement-policy.balanced-space-preference-fraction&lt;/name&gt;
+  &lt;value&gt;0.6&lt;/value&gt;
+  &lt;description&gt;
+    Only used when the dfs.block.replicator.classname is set to
+    org.apache.hadoop.hdfs.server.blockmanagement.AvailableSpaceRackFaultTolerantBlockPlacementPolicy.
+    Special value between 0 and 1, noninclusive.  Increases chance of
+    placing blocks on Datanodes with less disk space used. More the value near 1
+    more are the chances of choosing the datanode with less percentage of data.
+    Similarly as the value moves near 0, the chances of choosing datanode with
+    high load increases as the value reaches near 0.
+  &lt;/description&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;dfs.namenode.available-space-rack-fault-tolerant-block-placement-policy.balanced-space-tolerance&lt;/name&gt;
+  &lt;value&gt;5&lt;/value&gt;
+  &lt;description&gt;
+    Only used when the dfs.block.replicator.classname is set to
+    org.apache.hadoop.hdfs.server.blockmanagement.AvailableSpaceRackFaultTolerantBlockPlacementPolicy.
+    Special value between 0 and 20, inclusive. if the value is set beyond the scope,
+    this value will be set as 5 by default, Increases tolerance of
+    placing blocks on Datanodes with similar disk space used.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>For more details check <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-15288">HDFS-15288</a></p></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

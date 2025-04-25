@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: ALTER TABLESPACE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-altertablespace.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="ALTER TABLESPACE" />
+  <meta property="og:description" content="ALTER TABLESPACE ALTER TABLESPACE — change the definition of a tablespace Synopsis ALTER TABLESPACE name RENAME TO new_name ALTER TABLESPACE …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-altertablespace.html" title="PostgreSQL 17 - ALTER TABLESPACE" >Current</a>
+                          (<a href="/docs/17/sql-altertablespace.html" title="PostgreSQL 17 - ALTER TABLESPACE" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-altertablespace.html" title="PostgreSQL 16 - ALTER TABLESPACE" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-altertablespace.html" title="PostgreSQL 15 - ALTER TABLESPACE" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-altertablespace.html" title="PostgreSQL 14 - ALTER TABLESPACE" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-altertablespace.html" title="PostgreSQL 13 - ALTER TABLESPACE" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-altertablespace.html" title="PostgreSQL devel - ALTER TABLESPACE"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-altertablespace.html" title="PostgreSQL 12 - ALTER TABLESPACE"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-altertablespace.html" title="PostgreSQL 11 - ALTER TABLESPACE"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-altertablespace.html" title="PostgreSQL 10 - ALTER TABLESPACE"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-altertablespace.html" title="PostgreSQL 9.6 - ALTER TABLESPACE"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-altertablespace.html" title="PostgreSQL 9.5 - ALTER TABLESPACE"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-altertablespace.html" title="PostgreSQL 9.4 - ALTER TABLESPACE"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-altertablespace.html" title="PostgreSQL 9.3 - ALTER TABLESPACE"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-altertablespace.html" title="PostgreSQL 9.2 - ALTER TABLESPACE"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-altertablespace.html" title="PostgreSQL 9.1 - ALTER TABLESPACE"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-altertablespace.html" title="PostgreSQL 9.0 - ALTER TABLESPACE"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/sql-altertablespace.html" title="PostgreSQL 8.4 - ALTER TABLESPACE"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/sql-altertablespace.html" title="PostgreSQL 8.3 - ALTER TABLESPACE"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/sql-altertablespace.html" title="PostgreSQL 8.2 - ALTER TABLESPACE"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/sql-altertablespace.html" title="PostgreSQL 8.1 - ALTER TABLESPACE"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/sql-altertablespace.html" title="PostgreSQL 8.0 - ALTER TABLESPACE"  rel="nofollow">8.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">ALTER TABLESPACE</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-altertable.html" title="ALTER TABLE">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-altertsconfig.html" title="ALTER TEXT SEARCH CONFIGURATION">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-ALTERTABLESPACE">
+  <div class="titlepage"></div><a id="id-1.9.3.36.1" class="indexterm" name="id-1.9.3.36.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">ALTER TABLESPACE</span></h2>
+    <p>ALTER TABLESPACE — change the definition of a tablespace</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+ALTER TABLESPACE <em class="replaceable"><code>name</code></em> RENAME TO <em class="replaceable"><code>new_name</code></em>
+ALTER TABLESPACE <em class="replaceable"><code>name</code></em> OWNER TO { <em class="replaceable"><code>new_owner</code></em> | CURRENT_USER | SESSION_USER }
+ALTER TABLESPACE <em class="replaceable"><code>name</code></em> SET ( <em class="replaceable"><code>tablespace_option</code></em> = <em class="replaceable"><code>value</code></em> [, ... ] )
+ALTER TABLESPACE <em class="replaceable"><code>name</code></em> RESET ( <em class="replaceable"><code>tablespace_option</code></em> [, ... ] )
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.36.5">
+    <h2>Description</h2>
+    <p><code class="command">ALTER TABLESPACE</code> can be used to change the definition of a tablespace.</p>
+    <p>You must own the tablespace to change the definition of a tablespace. To alter the owner, you must also be a direct or indirect member of the new owning role. (Note that superusers have these privileges automatically.)</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.36.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name of an existing tablespace.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_name</code></em></span></dt>
+        <dd>
+          <p>The new name of the tablespace. The new name cannot begin with <code class="literal">pg_</code>, as such names are reserved for system tablespaces.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_owner</code></em></span></dt>
+        <dd>
+          <p>The new owner of the tablespace.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>tablespace_option</code></em></span></dt>
+        <dd>
+          <p>A tablespace parameter to be set or reset. Currently, the only available parameters are <code class="varname">seq_page_cost</code>, <code class="varname">random_page_cost</code>, <code class="varname">effective_io_concurrency</code> and <code class="varname">maintenance_io_concurrency</code>. Setting these values for a particular tablespace will override the planner's usual estimate of the cost of reading pages from tables in that tablespace, and the executor's prefetching behavior, as established by the configuration parameters of the same name (see <a class="xref" href="runtime-config-query.html#GUC-SEQ-PAGE-COST">seq_page_cost</a>, <a class="xref" href="runtime-config-query.html#GUC-RANDOM-PAGE-COST">random_page_cost</a>, <a class="xref" href="runtime-config-resource.html#GUC-EFFECTIVE-IO-CONCURRENCY">effective_io_concurrency</a>, <a class="xref" href="runtime-config-resource.html#GUC-MAINTENANCE-IO-CONCURRENCY">maintenance_io_concurrency</a>). This may be useful if one tablespace is located on a disk which is faster or slower than the remainder of the I/O subsystem.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.3.36.7">
+    <h2>Examples</h2>
+    <p>Rename tablespace <code class="literal">index_space</code> to <code class="literal">fast_raid</code>:</p>
+    <pre class="programlisting">
+ALTER TABLESPACE index_space RENAME TO fast_raid;
+</pre>
+    <p>Change the owner of tablespace <code class="literal">index_space</code>:</p>
+    <pre class="programlisting">
+ALTER TABLESPACE index_space OWNER TO mary;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.36.8">
+    <h2>Compatibility</h2>
+    <p>There is no <code class="command">ALTER TABLESPACE</code> statement in the SQL standard.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.36.9">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-createtablespace.html" title="CREATE TABLESPACE"><span class="refentrytitle">CREATE TABLESPACE</span></a>, <a class="xref" href="sql-droptablespace.html" title="DROP TABLESPACE"><span class="refentrytitle">DROP TABLESPACE</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-altertable.html" title="ALTER TABLE">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-altertsconfig.html" title="ALTER TEXT SEARCH CONFIGURATION">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">ALTER TABLE&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;ALTER TEXT SEARCH CONFIGURATION</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-altertablespace.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

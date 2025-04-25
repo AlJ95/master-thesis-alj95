@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 43.4. Global Data in PL/Tcl</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/pltcl-global.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="43.4. Global Data in PL/Tcl" />
+  <meta property="og:description" content="43.4.&amp;nbsp;Global Data in PL/Tcl Sometimes it is useful to have some global data that is held between two calls to …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/pltcl-global.html" title="PostgreSQL 17 - 43.4. Global Data in PL/Tcl" >Current</a>
+                          (<a href="/docs/17/pltcl-global.html" title="PostgreSQL 17 - 43.4. Global Data in PL/Tcl" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/pltcl-global.html" title="PostgreSQL 16 - 43.4. Global Data in PL/Tcl" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/pltcl-global.html" title="PostgreSQL 15 - 43.4. Global Data in PL/Tcl" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/pltcl-global.html" title="PostgreSQL 14 - 43.4. Global Data in PL/Tcl" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/pltcl-global.html" title="PostgreSQL 13 - 43.4. Global Data in PL/Tcl" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/pltcl-global.html" title="PostgreSQL devel - 43.4. Global Data in PL/Tcl"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/pltcl-global.html" title="PostgreSQL 12 - 43.4. Global Data in PL/Tcl"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/pltcl-global.html" title="PostgreSQL 11 - 43.4. Global Data in PL/Tcl"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/pltcl-global.html" title="PostgreSQL 10 - 43.4. Global Data in PL/Tcl"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/pltcl-global.html" title="PostgreSQL 9.6 - 43.4. Global Data in PL/Tcl"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/pltcl-global.html" title="PostgreSQL 9.5 - 43.4. Global Data in PL/Tcl"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/pltcl-global.html" title="PostgreSQL 9.4 - 43.4. Global Data in PL/Tcl"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/pltcl-global.html" title="PostgreSQL 9.3 - 43.4. Global Data in PL/Tcl"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/pltcl-global.html" title="PostgreSQL 9.2 - 43.4. Global Data in PL/Tcl"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/pltcl-global.html" title="PostgreSQL 9.1 - 43.4. Global Data in PL/Tcl"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/pltcl-global.html" title="PostgreSQL 9.0 - 43.4. Global Data in PL/Tcl"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/pltcl-global.html" title="PostgreSQL 8.4 - 43.4. Global Data in PL/Tcl"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/pltcl-global.html" title="PostgreSQL 8.3 - 43.4. Global Data in PL/Tcl"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/pltcl-global.html" title="PostgreSQL 8.2 - 43.4. Global Data in PL/Tcl"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/pltcl-global.html" title="PostgreSQL 8.1 - 43.4. Global Data in PL/Tcl"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/pltcl-global.html" title="PostgreSQL 8.0 - 43.4. Global Data in PL/Tcl"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/pltcl-global.html" title="PostgreSQL 7.4 - 43.4. Global Data in PL/Tcl"  rel="nofollow">7.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">43.4.&nbsp;Global Data in PL/Tcl</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="pltcl-data.html" title="43.3.&nbsp;Data Values in PL/Tcl">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="pltcl.html" title="Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="pltcl-dbaccess.html" title="43.5.&nbsp;Database Access from PL/Tcl">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLTCL-GLOBAL">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">43.4.&nbsp;Global Data in PL/Tcl</h2>
+      </div>
+    </div>
+  </div><a id="id-1.8.9.8.2" class="indexterm" name="id-1.8.9.8.2"></a>
+  <p>Sometimes it is useful to have some global data that is held between two calls to a function or is shared between different functions. This is easily done in PL/Tcl, but there are some restrictions that must be understood.</p>
+  <p>For security reasons, PL/Tcl executes functions called by any one SQL role in a separate Tcl interpreter for that role. This prevents accidental or malicious interference by one user with the behavior of another user's PL/Tcl functions. Each such interpreter will have its own values for any <span class="quote">“<span class="quote">global</span>”</span> Tcl variables. Thus, two PL/Tcl functions will share the same global variables if and only if they are executed by the same SQL role. In an application wherein a single session executes code under multiple SQL roles (via <code class="literal">SECURITY DEFINER</code> functions, use of <code class="command">SET ROLE</code>, etc) you may need to take explicit steps to ensure that PL/Tcl functions can share data. To do that, make sure that functions that should communicate are owned by the same user, and mark them <code class="literal">SECURITY DEFINER</code>. You must of course take care that such functions can't be used to do anything unintended.</p>
+  <p>All PL/TclU functions used in a session execute in the same Tcl interpreter, which of course is distinct from the interpreter(s) used for PL/Tcl functions. So global data is automatically shared between PL/TclU functions. This is not considered a security risk because all PL/TclU functions execute at the same trust level, namely that of a database superuser.</p>
+  <p>To help protect PL/Tcl functions from unintentionally interfering with each other, a global array is made available to each function via the <code class="function">upvar</code> command. The global name of this variable is the function's internal name, and the local name is <code class="literal">GD</code>. It is recommended that <code class="literal">GD</code> be used for persistent private data of a function. Use regular Tcl global variables only for values that you specifically intend to be shared among multiple functions. (Note that the <code class="literal">GD</code> arrays are only global within a particular interpreter, so they do not bypass the security restrictions mentioned above.)</p>
+  <p>An example of using <code class="literal">GD</code> appears in the <code class="function">spi_execp</code> example below.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="pltcl-data.html" title="43.3.&nbsp;Data Values in PL/Tcl">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="pltcl.html" title="Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="pltcl-dbaccess.html" title="43.5.&nbsp;Database Access from PL/Tcl">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">43.3.&nbsp;Data Values in PL/Tcl&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;43.5.&nbsp;Database Access from PL/Tcl</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/pltcl-global.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Hadoop &#x2013; Apache Hadoop 3.3.0</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+        Apache Hadoop 3.3.0
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  <li class="none">
+            <strong>Overview</strong>
+          </li>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop 3.3.0</h1>
+<p>Apache Hadoop 3.3.0 incorporates a number of significant enhancements over the previous major release line (hadoop-3.2).</p>
+<h1>Overview</h1>
+<p>Users are encouraged to read the full set of release notes. This page provides an overview of the major changes.</p>
+<div class="section">
+<h2><a name="ARM_Support"></a>ARM Support</h2>
+<p>This is the first release to support ARM architectures.</p></div>
+<div class="section">
+<h2><a name="Upgrade_protobuf_from_2.5.0_to_something_newer"></a>Upgrade protobuf from 2.5.0 to something newer</h2>
+<p>Protobuf upgraded to 3.7.1 as protobuf-2.5.0 reached EOL.</p></div>
+<div class="section">
+<h2><a name="Java_11_runtime_support"></a>Java 11 runtime support</h2>
+<p>Java 11 runtime support is completed.</p></div>
+<div class="section">
+<h2><a name="Support_impersonation_for_AuthenticationFilter"></a>Support impersonation for AuthenticationFilter</h2>
+<p>External services or YARN service may need to call into WebHDFS or YARN REST API on behave of the user using web protocols. It would be good to support impersonation mechanism in AuthenticationFilter or similar extensions.</p></div>
+<div class="section">
+<h2><a name="s3A_Enhancements"></a>s3A Enhancements</h2>
+<p>Lots of enhancements to the S3A code including Delegation Token support, better handling of 404 caching, S3guard performance, resilience improvements</p></div>
+<div class="section">
+<h2><a name="ABFS_Enhancements"></a>ABFS Enhancements</h2>
+<p>Address issues which surface in the field and tune things which need tuning, add more tests where appropriate. Improve docs, especially troubleshooting.</p></div>
+<div class="section">
+<h2><a name="HDFS_RBF_stabilization"></a>HDFS RBF stabilization</h2>
+<p>HDFS Router now supports security. Also contains many bug fixes and improvements.</p></div>
+<div class="section">
+<h2><a name="Support_non-volatile_storage_class_memory.28SCM.29_in_HDFS_cache_directives.09."></a>Support non-volatile storage class memory(SCM) in HDFS cache directives	.</h2>
+<p>Aims to enable storage class memory first in read cache. Although storage class memory has non-volatile characteristics, to keep the same behavior as current read only cache, we don&#x2019;t use its persistent characteristics currently.</p></div>
+<div class="section">
+<h2><a name="Application_Catalog_for_YARN_applications."></a>Application Catalog for YARN applications.</h2>
+<p>application catalog system which provides an editorial and search interface for YARN applications. This improves usability of YARN for manage the life cycle of applications.</p></div>
+<div class="section">
+<h2><a name="Incorporate_Tencent_Cloud_COS_File_System_Implementation"></a>Incorporate Tencent Cloud COS File System Implementation</h2>
+<p>Tencent cloud is top 2 cloud vendors in China market and the object store COS is widely used among China&#x2019;s cloud users. This task implements a COSN filesytem to support Tencent cloud COS natively in Hadoop.</p></div>
+<div class="section">
+<h2><a name="Scheduling_of_opportunistic_containers"></a>Scheduling of opportunistic containers</h2>
+<p>scheduling of opportunistic container through the central RM (YARN-5220), through distributed scheduling (YARN-2877), as well as the scheduling of containers based on actual node utilization (YARN-1011) and the container promotion/demotion (YARN-5085).</p>
+<h1>Getting Started</h1>
+<p>The Hadoop documentation includes the information you need to get started using Hadoop. Begin with the <a href="./hadoop-project-dist/hadoop-common/SingleCluster.html">Single Node Setup</a> which shows you how to set up a single-node Hadoop installation. Then move on to the <a href="./hadoop-project-dist/hadoop-common/ClusterSetup.html">Cluster Setup</a> to learn how to set up a multi-node Hadoop installation.</p></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

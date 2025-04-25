@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>SETNX | Docs</title>
+    <meta name="description" content="Set the string value of a key only when the key doesn&#39;t exist.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/setnx/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="SETNX">
+  <meta property="og:description" content="Set the string value of a key only when the key doesn&#39;t exist.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="SETNX">
+  <meta itemprop="description" content="Set the string value of a key only when the key doesn&#39;t exist.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="714">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SETNX">
+  <meta name="twitter:description" content="Set the string value of a key only when the key doesn&#39;t exist.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">SETNX
+          <span class="text-base">(deprecated)</span>
+        </h1>
+        
+          <div class="border-l-8 pl-4">
+            <p>As of Redis version 2.6.12, this command is regarded as deprecated.</p>
+            <p>It can be replaced by <a href="/docs/latest/commands/set/"><code>SET</code></a> with the <code>NX</code> argument when migrating or writing new code.</p>
+          </div>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">SETNX key value</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 1.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@string</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@fast</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Set <code>key</code> to hold string <code>value</code> if <code>key</code> does not exist.
+In that case, it is equal to <a href="/docs/latest/commands/set/"><code>SET</code></a>.
+When <code>key</code> already holds a value, no operation is performed.
+<code>SETNX</code> is short for &quot;<strong>SET</strong> if <strong>N</strong>ot e<strong>X</strong>ists&quot;.</p>
+<h2 id="examples">Examples</h2>
+<div class="bg-slate-900 border-b border-slate-700 rounded-t-xl px-4 py-3 w-full flex">
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+</div>  
+<form class="redis-cli overflow-y-auto max-h-80">
+SETNX mykey "Hello"
+SETNX mykey "World"
+GET mykey
+</form>
+<h2 id="design-pattern-locking-with-setnx">Design pattern: Locking with <code>SETNX</code></h2>
+<p><strong>Please note that:</strong></p>
+<ol>
+<li>The following pattern is discouraged in favor of <a href="/docs/latest/develop/use/patterns/distributed-locks/">the Redlock algorithm</a> which is only a bit more complex to implement, but offers better guarantees and is fault tolerant.</li>
+<li>We document the old pattern anyway because certain existing implementations link to this page as a reference. Moreover it is an interesting example of how Redis commands can be used in order to mount programming primitives.</li>
+<li>Anyway even assuming a single-instance locking primitive, starting with 2.6.12 it is possible to create a much simpler locking primitive, equivalent to the one discussed here, using the <a href="/docs/latest/commands/set/"><code>SET</code></a> command to acquire the lock, and a simple Lua script to release the lock. The pattern is documented in the <a href="/docs/latest/commands/set/"><code>SET</code></a> command page.</li>
+</ol>
+<p>That said, <code>SETNX</code> can be used, and was historically used, as a locking primitive. For example, to acquire the lock of the key <code>foo</code>, the client could try the
+following:</p>
+<pre tabindex="0"><code>SETNX lock.foo &lt;current Unix time + lock timeout + 1&gt;
+</code></pre><p>If <code>SETNX</code> returns <code>1</code> the client acquired the lock, setting the <code>lock.foo</code> key
+to the Unix time at which the lock should no longer be considered valid.
+The client will later use <code>DEL lock.foo</code> in order to release the lock.</p>
+<p>If <code>SETNX</code> returns <code>0</code> the key is already locked by some other client.
+We can either return to the caller if it's a non blocking lock, or enter a loop
+retrying to hold the lock until we succeed or some kind of timeout expires.</p>
+<h3 id="handling-deadlocks">Handling deadlocks</h3>
+<p>In the above locking algorithm there is a problem: what happens if a client
+fails, crashes, or is otherwise not able to release the lock?
+It's possible to detect this condition because the lock key contains a UNIX
+timestamp.
+If such a timestamp is equal to the current Unix time the lock is no longer
+valid.</p>
+<p>When this happens we can't just call <a href="/docs/latest/commands/del/"><code>DEL</code></a> against the key to remove the lock
+and then try to issue a <code>SETNX</code>, as there is a race condition here, when
+multiple clients detected an expired lock and are trying to release it.</p>
+<ul>
+<li>C1 and C2 read <code>lock.foo</code> to check the timestamp, because they both received
+<code>0</code> after executing <code>SETNX</code>, as the lock is still held by C3 that crashed
+after holding the lock.</li>
+<li>C1 sends <code>DEL lock.foo</code></li>
+<li>C1 sends <code>SETNX lock.foo</code> and it succeeds</li>
+<li>C2 sends <code>DEL lock.foo</code></li>
+<li>C2 sends <code>SETNX lock.foo</code> and it succeeds</li>
+<li><strong>ERROR</strong>: both C1 and C2 acquired the lock because of the race condition.</li>
+</ul>
+<p>Fortunately, it's possible to avoid this issue using the following algorithm.
+Let's see how C4, our sane client, uses the good algorithm:</p>
+<ul>
+<li>
+<p>C4 sends <code>SETNX lock.foo</code> in order to acquire the lock</p>
+</li>
+<li>
+<p>The crashed client C3 still holds it, so Redis will reply with <code>0</code> to C4.</p>
+</li>
+<li>
+<p>C4 sends <code>GET lock.foo</code> to check if the lock expired.
+If it is not, it will sleep for some time and retry from the start.</p>
+</li>
+<li>
+<p>Instead, if the lock is expired because the Unix time at <code>lock.foo</code> is older
+than the current Unix time, C4 tries to perform:</p>
+<pre tabindex="0"><code>GETSET lock.foo &lt;current Unix timestamp + lock timeout + 1&gt;
+</code></pre></li>
+<li>
+<p>Because of the <a href="/docs/latest/commands/getset/"><code>GETSET</code></a> semantic, C4 can check if the old value stored at
+<code>key</code> is still an expired timestamp.
+If it is, the lock was acquired.</p>
+</li>
+<li>
+<p>If another client, for instance C5, was faster than C4 and acquired the lock
+with the <a href="/docs/latest/commands/getset/"><code>GETSET</code></a> operation, the C4 <a href="/docs/latest/commands/getset/"><code>GETSET</code></a> operation will return a non
+expired timestamp.
+C4 will simply restart from the first step.
+Note that even if C4 set the key a bit a few seconds in the future this is
+not a problem.</p>
+</li>
+</ul>
+<p>In order to make this locking algorithm more robust, a
+client holding a lock should always check the timeout didn't expire before
+unlocking the key with <a href="/docs/latest/commands/del/"><code>DEL</code></a> because client failures can be complex, not just
+crashing but also blocking a lot of time against some operations and trying
+to issue <a href="/docs/latest/commands/del/"><code>DEL</code></a> after a lot of time (when the LOCK is already held by another
+client).</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: <code>0</code> if the key was not set.</li>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: <code>1</code> if the key was set.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/setnx/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 1.6 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/1.6/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 1.6 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-1-6-release-notes">
+<span id="django-1-6-release-notes"></span><h1>Django 1.6 release notes<a class="headerlink" href="#django-1-6-release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Dedicated to Malcolm Tredinnick</p>
+<p>On March 17, 2013, the Django project and the free software community lost
+a very dear friend and developer.</p>
+<p>Malcolm was a long-time contributor to Django, a model community member, a
+brilliant mind, and a friend. His contributions to Django — and to many other
+open source projects — are nearly impossible to enumerate. Many on the core
+Django team had their first patches reviewed by him; his mentorship enriched
+us. His consideration, patience, and dedication will always be an inspiration
+to us.</p>
+<p>This release of Django is for Malcolm.</p>
+<p class="last">– The Django Developers</p>
+</div>
+<p><em>November 6, 2013</em></p>
+<p>Welcome to Django 1.6!</p>
+<p>These release notes cover the <a class="reference internal" href="#whats-new-1-6"><span class="std std-ref">new features</span></a>, as well as
+some <a class="reference internal" href="#backwards-incompatible-1-6"><span class="std std-ref">backwards incompatible changes</span></a> you’ll
+want to be aware of when upgrading from Django 1.5 or older versions. We’ve
+also dropped some features, which are detailed in <a class="reference internal" href="../../internals/deprecation/#deprecation-removed-in-1-6"><span class="std std-ref">our deprecation plan</span></a>, and we’ve <a class="reference internal" href="#deprecated-features-1-6"><span class="std std-ref">begun the deprecation process
+for some features</span></a>.</p>
+<div class="section" id="s-python-compatibility">
+<span id="python-compatibility"></span><h2>Python compatibility<a class="headerlink" href="#python-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Django 1.6, like Django 1.5, requires Python 2.6.5 or above. Python 3 is also
+officially supported. We <strong>highly recommend</strong> the latest minor release for each
+supported Python series (2.6.X, 2.7.X, 3.2.X, and 3.3.X).</p>
+<p>Django 1.6 will be the final release series to support Python 2.6; beginning
+with Django 1.7, the minimum supported Python version will be 2.7.</p>
+<p>Python 3.4 is not supported, but support will be added in Django 1.7.</p>
+</div>
+<div class="section" id="s-what-s-new-in-django-1-6">
+<span id="s-whats-new-1-6"></span><span id="what-s-new-in-django-1-6"></span><span id="whats-new-1-6"></span><h2>What’s new in Django 1.6<a class="headerlink" href="#what-s-new-in-django-1-6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-simplified-default-project-and-app-templates">
+<span id="simplified-default-project-and-app-templates"></span><h3>Simplified default project and app templates<a class="headerlink" href="#simplified-default-project-and-app-templates" title="Permalink to this headline">¶</a></h3>
+<p>The default templates used by <a class="reference internal" href="../../ref/django-admin/#django-admin-startproject"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">startproject</span></code></a> and <a class="reference internal" href="../../ref/django-admin/#django-admin-startapp"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">startapp</span></code></a>
+have been simplified and modernized. The <a class="reference internal" href="../../ref/contrib/admin/"><span class="doc">admin</span></a> is now enabled by default in new projects; the
+<a class="reference internal" href="../../ref/contrib/sites/"><span class="doc">sites</span></a> framework no longer is. <a class="reference internal" href="../../ref/clickjacking/#clickjacking-prevention"><span class="std std-ref">clickjacking
+prevention</span></a> is now on and the database defaults to
+SQLite.</p>
+<p>If the default templates don’t suit your tastes, you can use <a class="reference internal" href="../../ref/django-admin/#custom-app-and-project-templates"><span class="std std-ref">custom
+project and app templates</span></a>.</p>
+</div>
+<div class="section" id="s-improved-transaction-management">
+<span id="improved-transaction-management"></span><h3>Improved transaction management<a class="headerlink" href="#improved-transaction-management" title="Permalink to this headline">¶</a></h3>
+<p>Django’s transaction management was overhauled. Database-level autocommit is
+now turned on by default. This makes transaction handling more explicit and
+should improve performance. The existing APIs were deprecated, and new APIs
+were introduced, as described in the <a class="reference internal" href="../../topics/db/transactions/"><span class="doc">transaction management docs</span></a>.</p>
+</div>
+<div class="section" id="s-persistent-database-connections">
+<span id="persistent-database-connections"></span><h3>Persistent database connections<a class="headerlink" href="#persistent-database-connections" title="Permalink to this headline">¶</a></h3>
+<p>Django now supports reusing the same database connection for several requests.
+This avoids the overhead of re-establishing a connection at the beginning of
+each request. For backwards compatibility, this feature is disabled by
+default. See <a class="reference internal" href="../../ref/databases/#persistent-database-connections"><span class="std std-ref">Persistent connections</span></a> for details.</p>
+</div>
+<div class="section" id="s-discovery-of-tests-in-any-test-module">
+<span id="discovery-of-tests-in-any-test-module"></span><h3>Discovery of tests in any test module<a class="headerlink" href="#discovery-of-tests-in-any-test-module" title="Permalink to this headline">¶</a></h3>
+<p>Django 1.6 ships with a new test runner that allows more flexibility in the
+location of tests. The previous runner
+(<code class="docutils literal notranslate"><span class="pre">django.test.simple.DjangoTestSuiteRunner</span></code>) found tests only in the
+<code class="docutils literal notranslate"><span class="pre">models.py</span></code> and <code class="docutils literal notranslate"><span class="pre">tests.py</span></code> modules of a Python package in
+<a class="reference internal" href="../../ref/settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>.</p>
+<p>The new runner (<code class="docutils literal notranslate"><span class="pre">django.test.runner.DiscoverRunner</span></code>) uses the test discovery
+features built into <code class="docutils literal notranslate"><span class="pre">unittest2</span></code> (the version of <code class="docutils literal notranslate"><span class="pre">unittest</span></code> in the
+Python 2.7+ standard library, and bundled with Django). With test discovery,
+tests can be located in any module whose name matches the pattern <code class="docutils literal notranslate"><span class="pre">test*.py</span></code>.</p>
+<p>In addition, the test labels provided to <code class="docutils literal notranslate"><span class="pre">./manage.py</span> <span class="pre">test</span></code> to nominate
+specific tests to run must now be full Python dotted paths (or directory
+paths), rather than <code class="docutils literal notranslate"><span class="pre">applabel.TestCase.test_method_name</span></code> pseudo-paths. This
+allows running tests located anywhere in your codebase, rather than only in
+<a class="reference internal" href="../../ref/settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>. For more details, see <a class="reference internal" href="../../topics/testing/"><span class="doc">Testing in Django</span></a>.</p>
+<p>This change is backwards-incompatible; see the <a class="reference internal" href="#new-test-runner"><span class="std std-ref">backwards-incompatibility
+notes</span></a>.</p>
+</div>
+<div class="section" id="s-time-zone-aware-aggregation">
+<span id="time-zone-aware-aggregation"></span><h3>Time zone aware aggregation<a class="headerlink" href="#time-zone-aware-aggregation" title="Permalink to this headline">¶</a></h3>
+<p>The support for <a class="reference internal" href="../../topics/i18n/timezones/"><span class="doc">time zones</span></a> introduced in
+Django 1.4 didn’t work well with <a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.dates" title="django.db.models.query.QuerySet.dates"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QuerySet.dates()</span></code></a>: aggregation was always performed in
+UTC. This limitation was lifted in Django 1.6. Use <a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.datetimes" title="django.db.models.query.QuerySet.datetimes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QuerySet.datetimes()</span></code></a> to perform time zone aware
+aggregation on a <a class="reference internal" href="../../ref/models/fields/#django.db.models.DateTimeField" title="django.db.models.DateTimeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a>.</p>
+</div>
+<div class="section" id="s-support-for-savepoints-in-sqlite">
+<span id="support-for-savepoints-in-sqlite"></span><h3>Support for savepoints in SQLite<a class="headerlink" href="#support-for-savepoints-in-sqlite" title="Permalink to this headline">¶</a></h3>
+<p>Django 1.6 adds support for savepoints in SQLite, with some <a class="reference internal" href="../../topics/db/transactions/#savepoints-in-sqlite"><span class="std std-ref">limitations</span></a>.</p>
+</div>
+<div class="section" id="s-binaryfield-model-field">
+<span id="binaryfield-model-field"></span><h3><code class="docutils literal notranslate"><span class="pre">BinaryField</span></code> model field<a class="headerlink" href="#binaryfield-model-field" title="Permalink to this headline">¶</a></h3>
+<p>A new <a class="reference internal" href="../../ref/models/fields/#django.db.models.BinaryField" title="django.db.models.BinaryField"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.BinaryField</span></code></a> model field allows storage of raw
+binary data in the database.</p>
+</div>
+<div class="section" id="s-geodjango-form-widgets">
+<span id="geodjango-form-widgets"></span><h3>GeoDjango form widgets<a class="headerlink" href="#geodjango-form-widgets" title="Permalink to this headline">¶</a></h3>
+<p>GeoDjango now provides <a class="reference internal" href="../../ref/contrib/gis/forms-api/"><span class="doc">form fields and widgets</span></a>
+for its geo-specialized fields. They are OpenLayers-based by default, but they
+can be customized to use any other JS framework.</p>
+</div>
+<div class="section" id="s-check-management-command-added-for-verifying-compatibility">
+<span id="check-management-command-added-for-verifying-compatibility"></span><h3><code class="docutils literal notranslate"><span class="pre">check</span></code> management command added for verifying compatibility<a class="headerlink" href="#check-management-command-added-for-verifying-compatibility" title="Permalink to this headline">¶</a></h3>
+<p>A <a class="reference internal" href="../../ref/django-admin/#django-admin-check"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">check</span></code></a> management command was added, enabling you to verify if your
+current configuration (currently oriented at settings) is compatible with the
+current version of Django.</p>
+</div>
+<div class="section" id="s-model-save-algorithm-changed">
+<span id="model-save-algorithm-changed"></span><h3><a class="reference internal" href="../../ref/models/instances/#django.db.models.Model.save" title="django.db.models.Model.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.save()</span></code></a> algorithm changed<a class="headerlink" href="#model-save-algorithm-changed" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../../ref/models/instances/#django.db.models.Model.save" title="django.db.models.Model.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.save()</span></code></a> method now
+tries to directly <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> the database if the instance has a primary
+key value. Previously <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> was performed to determine if <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>
+or <code class="docutils literal notranslate"><span class="pre">INSERT</span></code> were needed. The new algorithm needs only one query for
+updating an existing row while the old algorithm needed two. See
+<a class="reference internal" href="../../ref/models/instances/#django.db.models.Model.save" title="django.db.models.Model.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Model.save()</span></code></a> for more details.</p>
+<p>In some rare cases the database doesn’t report that a matching row was
+found when doing an <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>. An example is the PostgreSQL <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">UPDATE</span></code>
+trigger which returns <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. In such cases it is possible to set
+<a class="reference internal" href="../../ref/models/options/#django.db.models.Options.select_on_save" title="django.db.models.Options.select_on_save"><code class="xref py py-attr docutils literal notranslate"><span class="pre">django.db.models.Options.select_on_save</span></code></a> flag to force saving to
+use the old algorithm.</p>
+</div>
+<div class="section" id="s-minor-features">
+<span id="minor-features"></span><h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Authentication backends can raise <code class="docutils literal notranslate"><span class="pre">PermissionDenied</span></code> to immediately fail
+the authentication chain.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">HttpOnly</span></code> flag can be set on the CSRF cookie with
+<a class="reference internal" href="../../ref/settings/#std-setting-CSRF_COOKIE_HTTPONLY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CSRF_COOKIE_HTTPONLY</span></code></a>.</li>
+<li>The <a class="reference internal" href="../../topics/testing/tools/#django.test.TransactionTestCase.assertQuerysetEqual" title="django.test.TransactionTestCase.assertQuerysetEqual"><code class="xref py py-meth docutils literal notranslate"><span class="pre">assertQuerysetEqual()</span></code></a> now checks
+for undefined order and raises <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if undefined
+order is spotted. The order is seen as undefined if the given <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code>
+isn’t ordered and there is more than one ordered value to compare against.</li>
+<li>Added <a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.earliest" title="django.db.models.query.QuerySet.earliest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">earliest()</span></code></a> for symmetry with
+<a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.latest" title="django.db.models.query.QuerySet.latest"><code class="xref py py-meth docutils literal notranslate"><span class="pre">latest()</span></code></a>.</li>
+<li>In addition to <a class="reference internal" href="../../ref/models/querysets/#std-fieldlookup-year"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">year</span></code></a>, <a class="reference internal" href="../../ref/models/querysets/#std-fieldlookup-month"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">month</span></code></a> and <a class="reference internal" href="../../ref/models/querysets/#std-fieldlookup-day"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">day</span></code></a>, the ORM
+now supports <a class="reference internal" href="../../ref/models/querysets/#std-fieldlookup-hour"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">hour</span></code></a>, <a class="reference internal" href="../../ref/models/querysets/#std-fieldlookup-minute"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">minute</span></code></a> and <a class="reference internal" href="../../ref/models/querysets/#std-fieldlookup-second"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">second</span></code></a> lookups.</li>
+<li>Django now wraps all <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0249/"><strong>PEP 249</strong></a> exceptions.</li>
+<li>The default widgets for <a class="reference internal" href="../../ref/forms/fields/#django.forms.EmailField" title="django.forms.EmailField"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmailField</span></code></a>,
+<a class="reference internal" href="../../ref/forms/fields/#django.forms.URLField" title="django.forms.URLField"><code class="xref py py-class docutils literal notranslate"><span class="pre">URLField</span></code></a>, <a class="reference internal" href="../../ref/forms/fields/#django.forms.IntegerField" title="django.forms.IntegerField"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegerField</span></code></a>,
+<a class="reference internal" href="../../ref/forms/fields/#django.forms.FloatField" title="django.forms.FloatField"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatField</span></code></a> and <a class="reference internal" href="../../ref/forms/fields/#django.forms.DecimalField" title="django.forms.DecimalField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DecimalField</span></code></a> use
+the new type attributes available in HTML5 (<code class="docutils literal notranslate"><span class="pre">type='email'</span></code>, <code class="docutils literal notranslate"><span class="pre">type='url'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">type='number'</span></code>). Note that due to erratic support of the <code class="docutils literal notranslate"><span class="pre">number</span></code>
+input type with localized numbers in current browsers, Django only uses it
+when numeric fields are not localized.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">number</span></code> argument for <a class="reference internal" href="../../topics/i18n/translation/#lazy-plural-translations"><span class="std std-ref">lazy plural translations</span></a> can be provided at translation time rather than
+at definition time.</li>
+<li>For custom management commands: Verification of the presence of valid
+settings in commands that ask for it by using the
+<code class="docutils literal notranslate"><span class="pre">BaseCommand.can_import_settings</span></code> internal
+option is now performed independently from handling of the locale that
+should be active during the execution of the command. The latter can now be
+influenced by the new
+<code class="docutils literal notranslate"><span class="pre">BaseCommand.leave_locale_alone</span></code> internal
+option. See <a class="reference internal" href="../../howto/custom-management-commands/#management-commands-and-locales"><span class="std std-ref">Management commands and locales</span></a> for more details.</li>
+<li>The <a class="reference internal" href="../../ref/class-based-views/mixins-editing/#django.views.generic.edit.DeletionMixin.success_url" title="django.views.generic.edit.DeletionMixin.success_url"><code class="xref py py-attr docutils literal notranslate"><span class="pre">success_url</span></code></a> of
+<a class="reference internal" href="../../ref/class-based-views/mixins-editing/#django.views.generic.edit.DeletionMixin" title="django.views.generic.edit.DeletionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeletionMixin</span></code></a> is now interpolated with
+its <code class="docutils literal notranslate"><span class="pre">object</span></code>’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>.</li>
+
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

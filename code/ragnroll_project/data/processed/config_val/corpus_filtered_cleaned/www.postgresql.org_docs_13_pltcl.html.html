@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: Chapter 43. PL/Tcl — Tcl Procedural Language</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/pltcl.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="Chapter 43. PL/Tcl — Tcl Procedural Language" />
+  <meta property="og:description" content="Chapter&amp;nbsp;43.&amp;nbsp;PL/Tcl — Tcl Procedural Language Table of Contents 43.1. Overview 43.2. PL/Tcl Functions and Arguments 43.3. Data Values in PL/Tcl …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/pltcl.html" title="PostgreSQL 17 - Chapter 43. PL/Tcl — Tcl Procedural Language" >Current</a>
+                          (<a href="/docs/17/pltcl.html" title="PostgreSQL 17 - Chapter 43. PL/Tcl — Tcl Procedural Language" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/pltcl.html" title="PostgreSQL 16 - Chapter 43. PL/Tcl — Tcl Procedural Language" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/pltcl.html" title="PostgreSQL 15 - Chapter 43. PL/Tcl — Tcl Procedural Language" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/pltcl.html" title="PostgreSQL 14 - Chapter 43. PL/Tcl — Tcl Procedural Language" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/pltcl.html" title="PostgreSQL 13 - Chapter 43. PL/Tcl — Tcl Procedural Language" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/pltcl.html" title="PostgreSQL devel - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/pltcl.html" title="PostgreSQL 12 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/pltcl.html" title="PostgreSQL 11 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/pltcl.html" title="PostgreSQL 10 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/pltcl.html" title="PostgreSQL 9.6 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/pltcl.html" title="PostgreSQL 9.5 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/pltcl.html" title="PostgreSQL 9.4 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/pltcl.html" title="PostgreSQL 9.3 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/pltcl.html" title="PostgreSQL 9.2 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/pltcl.html" title="PostgreSQL 9.1 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/pltcl.html" title="PostgreSQL 9.0 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/pltcl.html" title="PostgreSQL 8.4 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/pltcl.html" title="PostgreSQL 8.3 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/pltcl.html" title="PostgreSQL 8.2 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/pltcl.html" title="PostgreSQL 8.1 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/pltcl.html" title="PostgreSQL 8.0 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/pltcl.html" title="PostgreSQL 7.4 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/pltcl.html" title="PostgreSQL 7.3 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/pltcl.html" title="PostgreSQL 7.2 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/pltcl.html" title="PostgreSQL 7.1 - Chapter 43. PL/Tcl — Tcl Procedural Language"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="plpgsql-porting.html" title="42.13.&nbsp;Porting from Oracle PL/SQL">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="server-programming.html" title="Part&nbsp;V.&nbsp;Server Programming">Up</a></td>
+      <th width="60%" align="center">Part&nbsp;V.&nbsp;Server Programming</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="pltcl-overview.html" title="43.1.&nbsp;Overview">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="chapter" id="PLTCL">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title">Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <p><strong>Table of Contents</strong></p>
+    <dl class="toc">
+      <dt><span class="sect1"><a href="pltcl-overview.html">43.1. Overview</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-functions.html">43.2. PL/Tcl Functions and Arguments</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-data.html">43.3. Data Values in PL/Tcl</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-global.html">43.4. Global Data in PL/Tcl</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-dbaccess.html">43.5. Database Access from PL/Tcl</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-trigger.html">43.6. Trigger Functions in PL/Tcl</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-event-trigger.html">43.7. Event Trigger Functions in PL/Tcl</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-error-handling.html">43.8. Error Handling in PL/Tcl</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-subtransactions.html">43.9. Explicit Subtransactions in PL/Tcl</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-transactions.html">43.10. Transaction Management</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-config.html">43.11. PL/Tcl Configuration</a></span></dt>
+      <dt><span class="sect1"><a href="pltcl-procnames.html">43.12. Tcl Procedure Names</a></span></dt>
+    </dl>
+  </div><a id="id-1.8.9.2" class="indexterm" name="id-1.8.9.2"></a><a id="id-1.8.9.3" class="indexterm" name="id-1.8.9.3"></a>
+  <p>PL/Tcl is a loadable procedural language for the <span class="productname">PostgreSQL</span> database system that enables the <a class="ulink" href="https://www.tcl.tk/" target="_top">Tcl language</a> to be used to write <span class="productname">PostgreSQL</span> functions and procedures.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="plpgsql-porting.html" title="42.13.&nbsp;Porting from Oracle PL/SQL">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="server-programming.html" title="Part&nbsp;V.&nbsp;Server Programming">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="pltcl-overview.html" title="43.1.&nbsp;Overview">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">42.13.&nbsp;Porting from <span xmlns="http://www.w3.org/1999/xhtml" class="productname">Oracle</span> PL/SQL&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;43.1.&nbsp;Overview</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/pltcl.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

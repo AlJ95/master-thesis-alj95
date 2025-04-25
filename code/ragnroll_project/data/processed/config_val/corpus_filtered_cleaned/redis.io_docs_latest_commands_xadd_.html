@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>XADD | Docs</title>
+    <meta name="description" content="Appends a new message to a stream. Creates the key if it doesn&#39;t exist.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/xadd/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="XADD">
+  <meta property="og:description" content="Appends a new message to a stream. Creates the key if it doesn&#39;t exist.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="XADD">
+  <meta itemprop="description" content="Appends a new message to a stream. Creates the key if it doesn&#39;t exist.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="667">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XADD">
+  <meta name="twitter:description" content="Appends a new message to a stream. Creates the key if it doesn&#39;t exist.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">XADD
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">XADD key [NOMKSTREAM] [&lt;MAXLEN | MINID&gt; [= | ~] threshold
+  [LIMIT count]] &lt;* | id&gt; field value [field value ...]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 5.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1) when adding a new entry, O(N) when trimming where N being the number of entries evicted.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@stream</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@fast</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Appends the specified stream entry to the stream at the specified key.
+If the key does not exist, as a side effect of running this command the
+key is created with a stream value. The creation of stream's key can be
+disabled with the <code>NOMKSTREAM</code> option.</p>
+<p>An entry is composed of a list of field-value pairs.
+The field-value pairs are stored in the same order they are given by the user.
+Commands that read the stream, such as <a href="/docs/latest/commands/xrange/"><code>XRANGE</code></a> or <a href="/docs/latest/commands/xread/"><code>XREAD</code></a>, are guaranteed to return the fields and values exactly in the same order they were added by <code>XADD</code>.</p>
+<p><code>XADD</code> is the <em>only Redis command</em> that can add data to a stream, but
+there are other commands, such as <a href="/docs/latest/commands/xdel/"><code>XDEL</code></a> and <a href="/docs/latest/commands/xtrim/"><code>XTRIM</code></a>, that are able to
+remove data from a stream.</p>
+<h2 id="specifying-a-stream-id-as-an-argument">Specifying a Stream ID as an argument</h2>
+<p>A stream entry ID identifies a given entry inside a stream.</p>
+<p>The <code>XADD</code> command will auto-generate a unique ID for you if the ID argument
+specified is the <code>*</code> character (asterisk ASCII character). However, while
+useful only in very rare cases, it is possible to specify a well-formed ID, so
+that the new entry will be added exactly with the specified ID.</p>
+<p>IDs are specified by two numbers separated by a <code>-</code> character:</p>
+<pre><code>1526919030474-55
+</code></pre>
+<p>Both quantities are 64-bit numbers. When an ID is auto-generated, the
+first part is the Unix time in milliseconds of the Redis instance generating
+the ID. The second part is just a sequence number and is used in order to
+distinguish IDs generated in the same millisecond.</p>
+<p>You can also specify an incomplete ID, that consists only of the milliseconds part, which is interpreted as a zero value for sequence part.
+To have only the sequence part automatically generated, specify the milliseconds part followed by the <code>-</code> separator and the <code>*</code> character:</p>
+<pre tabindex="0"><code>&gt; XADD mystream 1526919030474-55 message &#34;Hello,&#34;
+&#34;1526919030474-55&#34;
+&gt; XADD mystream 1526919030474-* message &#34; World!&#34;
+&#34;1526919030474-56&#34;
+</code></pre><p>IDs are guaranteed to be always incremental: If you compare the ID of the
+entry just inserted it will be greater than any other past ID, so entries
+are totally ordered inside a stream. In order to guarantee this property,
+if the current top ID in the stream has a time greater than the current
+local time of the instance, the top entry time will be used instead, and
+the sequence part of the ID incremented. This may happen when, for instance,
+the local clock jumps backward, or if after a failover the new master has
+a different absolute time.</p>
+<p>When a user specified an explicit ID to <code>XADD</code>, the minimum valid ID is
+<code>0-1</code>, and the user <em>must</em> specify an ID which is greater than any other
+ID currently inside the stream, otherwise the command will fail and return an error. Usually
+resorting to specific IDs is useful only if you have another system generating
+unique IDs (for instance an SQL table) and you really want the Redis stream
+IDs to match the one of this other system.</p>
+<h2 id="capped-streams">Capped streams</h2>
+<p><code>XADD</code> incorporates the same semantics as the <a href="/docs/latest/commands/xtrim/"><code>XTRIM</code></a> command - refer to its documentation page for more information.
+This allows adding new entries and keeping the stream's size in check with a single call to <code>XADD</code>, effectively capping the stream with an arbitrary threshold.
+Although exact trimming is possible and is the default, due to the internal representation of streams it is more efficient to add an entry and trim stream with <code>XADD</code> using <strong>almost exact</strong> trimming (the <code>~</code> argument).</p>
+<p>For example, calling <code>XADD</code> in the following form:</p>
+<pre><code>XADD mystream MAXLEN ~ 1000 * ... entry fields here ...
+</code></pre>
+<p>Will add a new entry but will also evict old entries so that the stream will contain only 1000 entries, or at most a few tens more.</p>
+<h2 id="additional-information-about-streams">Additional information about streams</h2>
+<p>For further information about Redis streams please check our
+<a href="/docs/latest/develop/data-types/streams/">introduction to Redis Streams document</a>.</p>
+<h2 id="examples">Examples</h2>
+<div class="bg-slate-900 border-b border-slate-700 rounded-t-xl px-4 py-3 w-full flex">
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+</div>  
+<form class="redis-cli overflow-y-auto max-h-80">
+XADD mystream * name Sara surname OConnor
+XADD mystream * field1 value1 field2 value2 field3 value3
+XLEN mystream
+XRANGE mystream - +
+</form>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: The ID of the added entry. The ID is the one automatically generated if an asterisk (<code>*</code>) is passed as the <em>id</em> argument, otherwise the command just returns the same ID specified by the user during insertion.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: if the NOMKSTREAM option is given and the key doesn't exist.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: The ID of the added entry. The ID is the one automatically generated if an asterisk (<code>*</code>) is passed as the <em>id</em> argument, otherwise the command just returns the same ID specified by the user during insertion.</li>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: if the NOMKSTREAM option is given and the key doesn't exist.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 6.2.0: Added the <code>NOMKSTREAM</code> option, <code>MINID</code> trimming strategy and the <code>LIMIT</code> option.</li>
+            
+            <li>Starting with Redis version 7.0.0: Added support for the <code>&lt;ms&gt;-*</code> explicit ID form.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/xadd/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

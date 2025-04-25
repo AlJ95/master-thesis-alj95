@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Authentication for Hadoop HTTP web-consoles</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Authentication for Hadoop HTTP web-consoles</h1>
+<ul>
+
+
+
+</ul>
+<section>
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>This document describes how to configure Hadoop HTTP web-consoles to require user authentication.</p>
+<p>By default Hadoop HTTP web-consoles (ResourceManager, NameNode, NodeManagers and DataNodes) allow access without any form of authentication.</p>
+<p>Hadoop HTTP web-consoles can be configured to require Kerberos authentication using HTTP SPNEGO protocol (supported by browsers like Firefox and Internet Explorer).</p>
+<p>In addition, Hadoop HTTP web-consoles support the equivalent of Hadoop&#x2019;s Pseudo/Simple authentication. If this option is enabled, the user name must be specified in the first browser interaction using the user.name query string parameter. e.g. <code>http://localhost:8088/cluster?user.name=babu</code>.</p>
+<p>If a custom authentication mechanism is required for the HTTP web-consoles, it is possible to implement a plugin to support the alternate authentication mechanism (refer to Hadoop hadoop-auth for details on writing an <code>AuthenticationHandler</code>).</p>
+<p>The next section describes how to configure Hadoop HTTP web-consoles to require user authentication.</p></section><section>
+<h2><a name="Configuration"></a>Configuration</h2>
+<p>The following properties should be in the <code>core-site.xml</code> of all the nodes in the cluster.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Property Name                                          </th>
+<th align="left"> Default Value                                  </th>
+<th align="left"> Description                                                                                                                                                                                                                                                                                                                                                   </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <code>hadoop.http.filter.initializers</code>                      </td>
+<td align="left">                                                </td>
+<td align="left"> Add to this property the <code>org.apache.hadoop.security.AuthenticationFilterInitializer</code> initializer class.                                                                                                                                                                                                                                                      </td></tr>
+<tr class="a">
+<td align="left"> <code>hadoop.http.authentication.type</code>                      </td>
+<td align="left"> <code>simple</code>                                       </td>
+<td align="left"> Defines authentication used for the HTTP web-consoles. The supported values are: <code>simple</code> | <code>kerberos</code> | <code>#AUTHENTICATION_HANDLER_CLASSNAME#</code>.                                                                                                                                                                                                              </td></tr>
+<tr class="b">
+<td align="left"> <code>hadoop.http.authentication.token.validity</code>            </td>
+<td align="left"> <code>36000</code>                                        </td>
+<td align="left"> Indicates how long (in seconds) an authentication token is valid before it has to be renewed.                                                                                                                                                                                                                                                                 </td></tr>
+<tr class="a">
+<td align="left"> <code>hadoop.http.authentication.token.max-inactive-interval</code> </td>
+<td align="left"> <code>-1</code> (disabled)                            </td>
+<td align="left"> Specifies the time, in seconds, between client requests the server will invalidate the token.                                                                                                                                                                                                                                                                 </td></tr>
+<tr class="b">
+<td align="left"> <code>hadoop.http.authentication.signature.secret.file</code>     </td>
+<td align="left"> <code>$user.home/hadoop-http-auth-signature-secret</code> </td>
+<td align="left"> The signature secret file for signing the authentication tokens. A different secret should be used for each service in the cluster, ResourceManager, NameNode, DataNode and NodeManager. This file should be readable only by the Unix user running the daemons.                                                                                                         </td></tr>
+<tr class="a">
+<td align="left"> <code>hadoop.http.authentication.cookie.domain</code>             </td>
+<td align="left">                                                </td>
+<td align="left"> The domain to use for the HTTP cookie that stores the authentication token. For authentication to work correctly across all nodes in the cluster the domain must be correctly set. There is no default value, the HTTP cookie will not have a domain working only with the hostname issuing the HTTP cookie.                                                  </td></tr>
+<tr class="b">
+<td align="left"> <code>hadoop.http.authentication.cookie.persistent</code>         </td>
+<td align="left"> <code>false</code> (session cookie)                       </td>
+<td align="left"> Specifies the persistence of the HTTP cookie. If the value is true, the cookie is a persistent one. Otherwise, it is a session cookie. <i>IMPORTANT</i>: when using IP addresses, browsers ignore cookies with domain settings. For this setting to work properly all nodes in the cluster must be configured to generate URLs with <code>hostname.domain</code> names on it. </td></tr>
+<tr class="a">
+<td align="left"> <code>hadoop.http.authentication.simple.anonymous.allowed</code>  </td>
+<td align="left"> <code>true</code>                                         </td>
+<td align="left"> Indicates whether anonymous requests are allowed when using &#x2018;simple&#x2019; authentication.                                                                                                                                                                                                                                                                          </td></tr>
+<tr class="b">
+<td align="left"> <code>hadoop.http.authentication.kerberos.principal</code>        </td>
+<td align="left"> <code>HTTP/_HOST@$LOCALHOST</code>                        </td>
+<td align="left"> Indicates the Kerberos principal to be used for HTTP endpoint when using &#x2018;kerberos&#x2019; authentication. The principal short name must be <code>HTTP</code> per Kerberos HTTP SPNEGO specification. <code>_HOST</code> -if present- is replaced with bind address of the HTTP server.                                                                                                    </td></tr>
+<tr class="a">
+<td align="left"> <code>hadoop.http.authentication.kerberos.keytab</code>           </td>
+<td align="left"> <code>$user.home/hadoop.keytab</code>                     </td>
+<td align="left"> Location of the keytab file with the credentials for the Kerberos principal used for the HTTP endpoint.                                                                                                                                                                                                                                                       </td></tr>
+</tbody>
+</table></section><section>
+<h2><a name="CORS"></a>CORS</h2>
+<p>To enable cross-origin support (CORS), please set the following configuration parameters:</p>
+<p>Add org.apache.hadoop.security.HttpCrossOriginFilterInitializer to hadoop.http.filter.initializers in core-site.xml. You will also need to set the following properties in core-site.xml -</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Property                                 </th>
+<th align="left"> Default Value                                 </th>
+<th align="left"> Description                                                                            </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> hadoop.http.cross-origin.enabled         </td>
+<td align="left"> <code>false</code>                                       </td>
+<td align="left"> Enables cross origin support for all web-services                                      </td></tr>
+<tr class="a">
+<td align="left"> hadoop.http.cross-origin.allowed-origins </td>
+<td align="left"> <code>*</code>                                           </td>
+<td align="left"> Comma separated list of origins that are allowed. Values prefixed with <code>regex:</code> are interpreted as regular expressions. Values containing wildcards (<code>*</code>) are possible as well, here a regular expression is generated, the use is discouraged and support is only available for backward compatibility. </td></tr>
+<tr class="b">
+<td align="left"> hadoop.http.cross-origin.allowed-methods </td>
+<td align="left"> <code>GET,POST,HEAD</code>                               </td>
+<td align="left"> Comma separated list of methods that are allowed                                       </td></tr>
+<tr class="a">
+<td align="left"> hadoop.http.cross-origin.allowed-headers </td>
+<td align="left"> <code>X-Requested-With,Content-Type,Accept,Origin</code> </td>
+<td align="left"> Comma separated list of headers that are allowed                                       </td></tr>
+<tr class="b">
+<td align="left"> hadoop.http.cross-origin.max-age         </td>
+<td align="left"> <code>1800</code>                                        </td>
+<td align="left"> Number of seconds a pre-flighted request can be cached                                 </td></tr>
+</tbody>
+</table></section><section>
+<h2><a name="Trusted_Proxy"></a>Trusted Proxy</h2>
+<p>Trusted Proxy adds support to perform operations using end user instead of proxy user. It fetches the end user from doAs query parameter. To enable Trusted Proxy, please set the following configuration parameter:</p>
+<p>Add org.apache.hadoop.security.authentication.server.ProxyUserAuthenticationFilterInitializer to hadoop.http.filter.initializers in core-site.xml instead of org.apache.hadoop.security.AuthenticationFilterInitializer.</p></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

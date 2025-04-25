@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: Appendix E. Release Notes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/release.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="Appendix E. Release Notes" />
+  <meta property="og:description" content="Appendix&amp;nbsp;E.&amp;nbsp;Release Notes Table of Contents E.1. Release 13.20 E.1.1. Migration to Version 13.20 E.1.2. Changes E.2. Release 13.19 E.2.1. Migration …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/release.html" title="PostgreSQL 17 - Appendix E. Release Notes" >Current</a>
+                          (<a href="/docs/17/release.html" title="PostgreSQL 17 - Appendix E. Release Notes" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/release.html" title="PostgreSQL 16 - Appendix E. Release Notes" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/release.html" title="PostgreSQL 15 - Appendix E. Release Notes" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/release.html" title="PostgreSQL 14 - Appendix E. Release Notes" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/release.html" title="PostgreSQL 13 - Appendix E. Release Notes" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/release.html" title="PostgreSQL devel - Appendix E. Release Notes"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/release.html" title="PostgreSQL 12 - Appendix E. Release Notes"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/release.html" title="PostgreSQL 11 - Appendix E. Release Notes"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/release.html" title="PostgreSQL 10 - Appendix E. Release Notes"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/release.html" title="PostgreSQL 9.6 - Appendix E. Release Notes"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/release.html" title="PostgreSQL 9.5 - Appendix E. Release Notes"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/release.html" title="PostgreSQL 9.4 - Appendix E. Release Notes"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/release.html" title="PostgreSQL 9.3 - Appendix E. Release Notes"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/release.html" title="PostgreSQL 9.2 - Appendix E. Release Notes"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/release.html" title="PostgreSQL 9.1 - Appendix E. Release Notes"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/release.html" title="PostgreSQL 9.0 - Appendix E. Release Notes"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/release.html" title="PostgreSQL 8.4 - Appendix E. Release Notes"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/release.html" title="PostgreSQL 8.3 - Appendix E. Release Notes"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/release.html" title="PostgreSQL 8.2 - Appendix E. Release Notes"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/release.html" title="PostgreSQL 8.1 - Appendix E. Release Notes"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/release.html" title="PostgreSQL 8.0 - Appendix E. Release Notes"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/release.html" title="PostgreSQL 7.4 - Appendix E. Release Notes"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/release.html" title="PostgreSQL 7.3 - Appendix E. Release Notes"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/release.html" title="PostgreSQL 7.2 - Appendix E. Release Notes"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/release.html" title="PostgreSQL 7.1 - Appendix E. Release Notes"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">Appendix&nbsp;E.&nbsp;Release Notes</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="xml-limits-conformance.html" title="D.3.&nbsp;XML Limits and Conformance to SQL/XML">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="appendixes.html" title="Part&nbsp;VIII.&nbsp;Appendixes">Up</a></td>
+      <th width="60%" align="center">Part&nbsp;VIII.&nbsp;Appendixes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="release-13-20.html" title="E.1.&nbsp;Release 13.20">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="appendix" id="RELEASE">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title">Appendix&nbsp;E.&nbsp;Release Notes</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <p><strong>Table of Contents</strong></p>
+    <dl class="toc">
+      <dt><span class="sect1"><a href="release-13-20.html">E.1. Release 13.20</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-20.html#id-1.11.6.6.5">E.1.1. Migration to Version 13.20</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-20.html#id-1.11.6.6.6">E.1.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-19.html">E.2. Release 13.19</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-19.html#id-1.11.6.7.5">E.2.1. Migration to Version 13.19</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-19.html#id-1.11.6.7.6">E.2.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-18.html">E.3. Release 13.18</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-18.html#id-1.11.6.8.4">E.3.1. Migration to Version 13.18</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-18.html#id-1.11.6.8.5">E.3.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-17.html">E.4. Release 13.17</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-17.html#id-1.11.6.9.4">E.4.1. Migration to Version 13.17</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-17.html#id-1.11.6.9.5">E.4.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-16.html">E.5. Release 13.16</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-16.html#id-1.11.6.10.4">E.5.1. Migration to Version 13.16</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-16.html#id-1.11.6.10.5">E.5.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-15.html">E.6. Release 13.15</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-15.html#id-1.11.6.11.4">E.6.1. Migration to Version 13.15</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-15.html#id-1.11.6.11.5">E.6.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-14.html">E.7. Release 13.14</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-14.html#id-1.11.6.12.4">E.7.1. Migration to Version 13.14</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-14.html#id-1.11.6.12.5">E.7.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-13.html">E.8. Release 13.13</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-13.html#id-1.11.6.13.4">E.8.1. Migration to Version 13.13</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-13.html#id-1.11.6.13.5">E.8.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-12.html">E.9. Release 13.12</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-12.html#id-1.11.6.14.4">E.9.1. Migration to Version 13.12</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-12.html#id-1.11.6.14.5">E.9.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-11.html">E.10. Release 13.11</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-11.html#id-1.11.6.15.4">E.10.1. Migration to Version 13.11</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-11.html#id-1.11.6.15.5">E.10.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-10.html">E.11. Release 13.10</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-10.html#id-1.11.6.16.4">E.11.1. Migration to Version 13.10</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-10.html#id-1.11.6.16.5">E.11.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-9.html">E.12. Release 13.9</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-9.html#id-1.11.6.17.4">E.12.1. Migration to Version 13.9</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-9.html#id-1.11.6.17.5">E.12.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-8.html">E.13. Release 13.8</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-8.html#id-1.11.6.18.4">E.13.1. Migration to Version 13.8</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-8.html#id-1.11.6.18.5">E.13.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-7.html">E.14. Release 13.7</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-7.html#id-1.11.6.19.4">E.14.1. Migration to Version 13.7</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-7.html#id-1.11.6.19.5">E.14.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-6.html">E.15. Release 13.6</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-6.html#id-1.11.6.20.4">E.15.1. Migration to Version 13.6</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-6.html#id-1.11.6.20.5">E.15.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-5.html">E.16. Release 13.5</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-5.html#id-1.11.6.21.4">E.16.1. Migration to Version 13.5</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-5.html#id-1.11.6.21.5">E.16.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-4.html">E.17. Release 13.4</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-4.html#id-1.11.6.22.4">E.17.1. Migration to Version 13.4</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-4.html#id-1.11.6.22.5">E.17.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-3.html">E.18. Release 13.3</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-3.html#id-1.11.6.23.4">E.18.1. Migration to Version 13.3</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-3.html#id-1.11.6.23.5">E.18.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-2.html">E.19. Release 13.2</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-2.html#id-1.11.6.24.4">E.19.1. Migration to Version 13.2</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-2.html#id-1.11.6.24.5">E.19.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13-1.html">E.20. Release 13.1</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13-1.html#id-1.11.6.25.4">E.20.1. Migration to Version 13.1</a></span></dt>
+          <dt><span class="sect2"><a href="release-13-1.html#id-1.11.6.25.5">E.20.2. Changes</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-13.html">E.21. Release 13</a></span></dt>
+      <dd>
+        <dl>
+          <dt><span class="sect2"><a href="release-13.html#id-1.11.6.26.3">E.21.1. Overview</a></span></dt>
+          <dt><span class="sect2"><a href="release-13.html#id-1.11.6.26.4">E.21.2. Migration to Version 13</a></span></dt>
+          <dt><span class="sect2"><a href="release-13.html#id-1.11.6.26.5">E.21.3. Changes</a></span></dt>
+          <dt><span class="sect2"><a href="release-13.html#RELEASE-13-ACKNOWLEDGEMENTS">E.21.4. Acknowledgments</a></span></dt>
+        </dl>
+      </dd>
+      <dt><span class="sect1"><a href="release-prior.html">E.22. Prior Releases</a></span></dt>
+    </dl>
+  </div>
+  <p>The release notes contain the significant changes in each <span class="productname">PostgreSQL</span> release, with major features and migration issues listed at the top. The release notes do not contain changes that affect only a few users or changes that are internal and therefore not user-visible. For example, the optimizer is improved in almost every release, but the improvements are usually observed by users as simply faster queries.</p>
+  <p>A complete list of changes for each release can be obtained by viewing the <a class="link" href="git.html" title="I.1.&nbsp;Getting the Source via Git">Git</a> logs for each release. The <a class="ulink" href="https://www.postgresql.org/list/pgsql-committers/" target="_top"><code class="literal">pgsql-committers</code> email list</a> records all source code changes as well. There is also a <a class="ulink" href="https://git.postgresql.org/gitweb/?p=postgresql.git;a=summary" target="_top">web interface</a> that shows changes to specific files.</p>
+  <p>The name appearing next to each item represents the major developer for that item. Of course all changes involve community discussion and patch review, so each item is truly a community effort.</p>
+  <p id="RELEASE-COMMIT-LINKS">Section markers (§) in the release notes link to <a class="ulink" href="https://git.postgresql.org/gitweb/?p=postgresql.git" target="_top"><span class="application">gitweb</span></a> pages which show the primary <span class="application">git</span> commit messages and source tree changes responsible for the release note item. There might be additional <span class="application">git</span> commits which are not shown.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="xml-limits-conformance.html" title="D.3.&nbsp;XML Limits and Conformance to SQL/XML">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="appendixes.html" title="Part&nbsp;VIII.&nbsp;Appendixes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="release-13-20.html" title="E.1.&nbsp;Release 13.20">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">D.3.&nbsp;XML Limits and Conformance to SQL/XML&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;E.1.&nbsp;Release 13.20</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/release.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>
