@@ -8,7 +8,7 @@ def extract_run_params(yaml_file: str) -> dict:
     params = {}
     flatten_dict = _extract_nested_items(yaml_config)
     for key, value in flatten_dict:
-        if "api_key" in key or "required_variables" in key:
+        if "api_key" in key:
             continue
 
         params[key] = value
