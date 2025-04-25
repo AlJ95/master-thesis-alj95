@@ -1,0 +1,104 @@
+components:
+  answer_builder:
+    init_parameters: {}
+    type: pipelines.ciri.AnswerBuilder
+  answer_extractor1:
+    init_parameters: {}
+    type: pipelines.ciri.AnswerExtractor
+  answer_extractor2:
+    init_parameters: {}
+    type: pipelines.ciri.AnswerExtractor
+  answer_extractor3:
+    init_parameters: {}
+    type: pipelines.ciri.AnswerExtractor
+  list_joiner:
+    init_parameters:
+      list_type_: typing.List[bool]
+    type: haystack.components.joiners.list_joiner.ListJoiner
+  llm1:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-3.5-turbo-0125
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  llm2:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-3.5-turbo-0125
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  llm3:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-3.5-turbo-0125
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  prompt_builder1:
+    init_parameters:
+      required_variables:
+      - query
+      template: '{{query}}'
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  prompt_builder2:
+    init_parameters:
+      required_variables:
+      - query
+      template: '{{query}}'
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  prompt_builder3:
+    init_parameters:
+      required_variables:
+      - query
+      template: '{{query}}'
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+connection_type_validation: true
+connections:
+- receiver: llm1.prompt
+  sender: prompt_builder1.prompt
+- receiver: answer_extractor1.replies
+  sender: llm1.replies
+- receiver: list_joiner.values
+  sender: answer_extractor1.answer
+- receiver: llm2.prompt
+  sender: prompt_builder2.prompt
+- receiver: answer_extractor2.replies
+  sender: llm2.replies
+- receiver: list_joiner.values
+  sender: answer_extractor2.answer
+- receiver: llm3.prompt
+  sender: prompt_builder3.prompt
+- receiver: answer_extractor3.replies
+  sender: llm3.replies
+- receiver: list_joiner.values
+  sender: answer_extractor3.answer
+- receiver: answer_builder.answers
+  sender: list_joiner.values
+max_runs_per_component: 100
+metadata: {}
