@@ -1,0 +1,869 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.proto.journal (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.proto.journal</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.BlockContainerIdGeneratorEntryOrBuilder.html" title="interface in alluxio.proto.journal">Block.BlockContainerIdGeneratorEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.BlockInfoEntryOrBuilder.html" title="interface in alluxio.proto.journal">Block.BlockInfoEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.DeleteBlockEntryOrBuilder.html" title="interface in alluxio.proto.journal">Block.DeleteBlockEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.ActiveSyncTxIdEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.ActiveSyncTxIdEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AddMountPointEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.AddMountPointEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AddSyncPointEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.AddSyncPointEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AsyncPersistRequestEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.AsyncPersistRequestEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.CompleteFileEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.CompleteFileEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.DeleteFileEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.DeleteFileEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.DeleteMountPointEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.DeleteMountPointEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeDirectoryEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.InodeDirectoryEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeDirectoryIdGeneratorEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.InodeDirectoryIdGeneratorEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeFileEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.InodeFileEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeLastModificationTimeEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.InodeLastModificationTimeEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.NewBlockEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.NewBlockEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PersistDirectoryEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.PersistDirectoryEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PersistFileEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.PersistFileEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.RemoveSyncPointEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.RemoveSyncPointEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.RenameEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.RenameEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.SetAclEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.SetAclEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.SetAttributeEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.SetAttributeEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.StringPairEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.StringPairEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeDirectoryEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.UpdateInodeDirectoryEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.UpdateInodeEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeFileEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.UpdateInodeFileEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateUfsModeEntryOrBuilder.html" title="interface in alluxio.proto.journal">File.UpdateUfsModeEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Journal.JournalEntryOrBuilder.html" title="interface in alluxio.proto.journal">Journal.JournalEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.ClusterInfoEntryOrBuilder.html" title="interface in alluxio.proto.journal">Meta.ClusterInfoEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.PathPropertiesEntryOrBuilder.html" title="interface in alluxio.proto.journal">Meta.PathPropertiesEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.RemovePathPropertiesEntryOrBuilder.html" title="interface in alluxio.proto.journal">Meta.RemovePathPropertiesEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTableEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.AddTableEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTablePartitionsEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.AddTablePartitionsEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTransformJobInfoEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.AddTransformJobInfoEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AttachDbEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.AttachDbEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.CompleteTransformTableEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.CompleteTransformTableEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.DetachDbEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.DetachDbEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.RemoveTableEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.RemoveTableEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.RemoveTransformJobInfoEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.RemoveTransformJobInfoEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.UpdateDatabaseInfoEntryOrBuilder.html" title="interface in alluxio.proto.journal">Table.UpdateDatabaseInfoEntryOrBuilder</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.html" title="class in alluxio.proto.journal">Block</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.BlockContainerIdGeneratorEntry.html" title="class in alluxio.proto.journal">Block.BlockContainerIdGeneratorEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.BlockContainerIdGeneratorEntry.Builder.html" title="class in alluxio.proto.journal">Block.BlockContainerIdGeneratorEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.BlockInfoEntry.html" title="class in alluxio.proto.journal">Block.BlockInfoEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.BlockInfoEntry.Builder.html" title="class in alluxio.proto.journal">Block.BlockInfoEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.DeleteBlockEntry.html" title="class in alluxio.proto.journal">Block.DeleteBlockEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Block.DeleteBlockEntry.Builder.html" title="class in alluxio.proto.journal">Block.DeleteBlockEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.html" title="class in alluxio.proto.journal">File</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.ActiveSyncTxIdEntry.html" title="class in alluxio.proto.journal">File.ActiveSyncTxIdEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.ActiveSyncTxIdEntry.Builder.html" title="class in alluxio.proto.journal">File.ActiveSyncTxIdEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AddMountPointEntry.html" title="class in alluxio.proto.journal">File.AddMountPointEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 7</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AddMountPointEntry.Builder.html" title="class in alluxio.proto.journal">File.AddMountPointEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 7</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AddSyncPointEntry.html" title="class in alluxio.proto.journal">File.AddSyncPointEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AddSyncPointEntry.Builder.html" title="class in alluxio.proto.journal">File.AddSyncPointEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AsyncPersistRequestEntry.html" title="class in alluxio.proto.journal">File.AsyncPersistRequestEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.AsyncPersistRequestEntry.Builder.html" title="class in alluxio.proto.journal">File.AsyncPersistRequestEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.CompleteFileEntry.html" title="class in alluxio.proto.journal">File.CompleteFileEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.CompleteFileEntry.Builder.html" title="class in alluxio.proto.journal">File.CompleteFileEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.DeleteFileEntry.html" title="class in alluxio.proto.journal">File.DeleteFileEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.DeleteFileEntry.Builder.html" title="class in alluxio.proto.journal">File.DeleteFileEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.DeleteMountPointEntry.html" title="class in alluxio.proto.journal">File.DeleteMountPointEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.DeleteMountPointEntry.Builder.html" title="class in alluxio.proto.journal">File.DeleteMountPointEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeDirectoryEntry.html" title="class in alluxio.proto.journal">File.InodeDirectoryEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 21</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeDirectoryEntry.Builder.html" title="class in alluxio.proto.journal">File.InodeDirectoryEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 21</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeDirectoryIdGeneratorEntry.html" title="class in alluxio.proto.journal">File.InodeDirectoryIdGeneratorEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeDirectoryIdGeneratorEntry.Builder.html" title="class in alluxio.proto.journal">File.InodeDirectoryIdGeneratorEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeFileEntry.html" title="class in alluxio.proto.journal">File.InodeFileEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 30</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeFileEntry.Builder.html" title="class in alluxio.proto.journal">File.InodeFileEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 30</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeLastModificationTimeEntry.html" title="class in alluxio.proto.journal">File.InodeLastModificationTimeEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.InodeLastModificationTimeEntry.Builder.html" title="class in alluxio.proto.journal">File.InodeLastModificationTimeEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.NewBlockEntry.html" title="class in alluxio.proto.journal">File.NewBlockEntry</a></td>
+<td class="colLast">
+<div class="block">
+ Creates a new block for a file inode.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.NewBlockEntry.Builder.html" title="class in alluxio.proto.journal">File.NewBlockEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ Creates a new block for a file inode.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PersistDirectoryEntry.html" title="class in alluxio.proto.journal">File.PersistDirectoryEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PersistDirectoryEntry.Builder.html" title="class in alluxio.proto.journal">File.PersistDirectoryEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PersistFileEntry.html" title="class in alluxio.proto.journal">File.PersistFileEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 4</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PersistFileEntry.Builder.html" title="class in alluxio.proto.journal">File.PersistFileEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 4</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.RemoveSyncPointEntry.html" title="class in alluxio.proto.journal">File.RemoveSyncPointEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.RemoveSyncPointEntry.Builder.html" title="class in alluxio.proto.journal">File.RemoveSyncPointEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.RenameEntry.html" title="class in alluxio.proto.journal">File.RenameEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 8</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.RenameEntry.Builder.html" title="class in alluxio.proto.journal">File.RenameEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 8</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.SetAclEntry.html" title="class in alluxio.proto.journal">File.SetAclEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.SetAclEntry.Builder.html" title="class in alluxio.proto.journal">File.SetAclEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.SetAttributeEntry.html" title="class in alluxio.proto.journal">File.SetAttributeEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 15</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.SetAttributeEntry.Builder.html" title="class in alluxio.proto.journal">File.SetAttributeEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 15</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.StringPairEntry.html" title="class in alluxio.proto.journal">File.StringPairEntry</a></td>
+<td class="colLast">
+<div class="block">
+ A pair of strings, useful for maps.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.StringPairEntry.Builder.html" title="class in alluxio.proto.journal">File.StringPairEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ A pair of strings, useful for maps.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeDirectoryEntry.html" title="class in alluxio.proto.journal">File.UpdateInodeDirectoryEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeDirectoryEntry.Builder.html" title="class in alluxio.proto.journal">File.UpdateInodeDirectoryEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeEntry.html" title="class in alluxio.proto.journal">File.UpdateInodeEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 20</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeEntry.Builder.html" title="class in alluxio.proto.journal">File.UpdateInodeEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 20</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeFileEntry.html" title="class in alluxio.proto.journal">File.UpdateInodeFileEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 13</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateInodeFileEntry.Builder.html" title="class in alluxio.proto.journal">File.UpdateInodeFileEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 13</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateUfsModeEntry.html" title="class in alluxio.proto.journal">File.UpdateUfsModeEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UpdateUfsModeEntry.Builder.html" title="class in alluxio.proto.journal">File.UpdateUfsModeEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Journal.html" title="class in alluxio.proto.journal">Journal</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Journal.JournalEntry.html" title="class in alluxio.proto.journal">Journal.JournalEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 52</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Journal.JournalEntry.Builder.html" title="class in alluxio.proto.journal">Journal.JournalEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 52</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.html" title="class in alluxio.proto.journal">Meta</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.ClusterInfoEntry.html" title="class in alluxio.proto.journal">Meta.ClusterInfoEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.ClusterInfoEntry.Builder.html" title="class in alluxio.proto.journal">Meta.ClusterInfoEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.PathPropertiesEntry.html" title="class in alluxio.proto.journal">Meta.PathPropertiesEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.PathPropertiesEntry.Builder.html" title="class in alluxio.proto.journal">Meta.PathPropertiesEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.RemovePathPropertiesEntry.html" title="class in alluxio.proto.journal">Meta.RemovePathPropertiesEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Meta.RemovePathPropertiesEntry.Builder.html" title="class in alluxio.proto.journal">Meta.RemovePathPropertiesEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.html" title="class in alluxio.proto.journal">Table</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTableEntry.html" title="class in alluxio.proto.journal">Table.AddTableEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 13</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTableEntry.Builder.html" title="class in alluxio.proto.journal">Table.AddTableEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 13</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTablePartitionsEntry.html" title="class in alluxio.proto.journal">Table.AddTablePartitionsEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTablePartitionsEntry.Builder.html" title="class in alluxio.proto.journal">Table.AddTablePartitionsEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTransformJobInfoEntry.html" title="class in alluxio.proto.journal">Table.AddTransformJobInfoEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AddTransformJobInfoEntry.Builder.html" title="class in alluxio.proto.journal">Table.AddTransformJobInfoEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AttachDbEntry.html" title="class in alluxio.proto.journal">Table.AttachDbEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.AttachDbEntry.Builder.html" title="class in alluxio.proto.journal">Table.AttachDbEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.CompleteTransformTableEntry.html" title="class in alluxio.proto.journal">Table.CompleteTransformTableEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.CompleteTransformTableEntry.Builder.html" title="class in alluxio.proto.journal">Table.CompleteTransformTableEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.DetachDbEntry.html" title="class in alluxio.proto.journal">Table.DetachDbEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.DetachDbEntry.Builder.html" title="class in alluxio.proto.journal">Table.DetachDbEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 2</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.RemoveTableEntry.html" title="class in alluxio.proto.journal">Table.RemoveTableEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.RemoveTableEntry.Builder.html" title="class in alluxio.proto.journal">Table.RemoveTableEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 5</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.RemoveTransformJobInfoEntry.html" title="class in alluxio.proto.journal">Table.RemoveTransformJobInfoEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.RemoveTransformJobInfoEntry.Builder.html" title="class in alluxio.proto.journal">Table.RemoveTransformJobInfoEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 3</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.UpdateDatabaseInfoEntry.html" title="class in alluxio.proto.journal">Table.UpdateDatabaseInfoEntry</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/Table.UpdateDatabaseInfoEntry.Builder.html" title="class in alluxio.proto.journal">Table.UpdateDatabaseInfoEntry.Builder</a></td>
+<td class="colLast">
+<div class="block">
+ next available id: 6</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PSetAclAction.html" title="enum in alluxio.proto.journal">File.PSetAclAction</a></td>
+<td class="colLast">
+<div class="block">Protobuf enum <code>alluxio.proto.journal.PSetAclAction</code></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.PTtlAction.html" title="enum in alluxio.proto.journal">File.PTtlAction</a></td>
+<td class="colLast">
+<div class="block">Protobuf enum <code>alluxio.proto.journal.PTtlAction</code></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/proto/journal/File.UfsMode.html" title="enum in alluxio.proto.journal">File.UfsMode</a></td>
+<td class="colLast">
+<div class="block">Protobuf enum <code>alluxio.proto.journal.UfsMode</code></div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

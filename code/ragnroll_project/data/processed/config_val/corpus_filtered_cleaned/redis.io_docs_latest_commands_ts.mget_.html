@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>TS.MGET | Docs</title>
+    <meta name="description" content="Get the sample with the highest timestamp from each time series matching a specific filter">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/ts.mget/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="TS.MGET">
+  <meta property="og:description" content="Get the sample with the highest timestamp from each time series matching a specific filter">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="TS.MGET">
+  <meta itemprop="description" content="Get the sample with the highest timestamp from each time series matching a specific filter">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="751">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TS.MGET">
+  <meta name="twitter:description" content="Get the sample with the highest timestamp from each time series matching a specific filter">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">TS.MGET
+        </h1>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">TS.MGET [LATEST] [WITHLABELS | &lt;SELECTED_LABELS label...&gt;] FILTER filterExpr...
+</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / TimeSeries 1.0.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(n) where n is the number of time-series that match the filters</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@timeseries</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Get the sample with the highest timestamp from each time series matching a specific filter.</p>
+
+<div class="alert p-3 relative flex flex-row items-center text-base bg-redis-pencil-200 rounded-md">
+  <div class="p-2 pr-5">
+  <circle cx="10.5" cy="10.5" r="9.75" stroke="currentColor" stroke-width="1.5"/>
+  
+  
+</svg>
+  </div>
+  <div class="p-1 pl-6 border-l border-l-redis-ink-900 border-opacity-50">
+  
+  <div class="font-medium">Note:</div>
+  This command will reply only if the current user has read access to all keys that match the filter.
+Otherwise, it will reply with &quot;<em>(error): current user doesn't have read permission to one or more keys that match the specified filter</em>&quot;.</div>
+</div>
+
+<p><a href="#examples">Examples</a></p>
+<h2 id="required-arguments">Required arguments</h2>
+<details open>
+<summary><code>FILTER filterExpr...</code></summary>
+<p>filters time series based on their labels and label values. Each filter expression has one of the following syntaxes:</p>
+<ul>
+<li><code>label!=</code> - the time series has a label named <code>label</code></li>
+<li><code>label=value</code> - the time series has a label named <code>label</code> with a value equal to <code>value</code></li>
+<li><code>label=(value1,value2,...)</code> - the time series has a label named <code>label</code> with a value equal to one of the values in the list</li>
+<li><code>label=</code> - the time series does not have a label named <code>label</code></li>
+<li><code>label!=value</code> - the time series does not have a label named <code>label</code> with a value equal to <code>value</code></li>
+<li><code>label!=(value1,value2,...)</code> - the time series does not have a label named <code>label</code> with a value equal to any of the values in the list</li>
+</ul>
+<p><note><b>Notes:</b></p>
+<ul>
+<li>At least one filter expression with a syntax <code>label=value</code> or <code>label=(value1,value2,...)</code> is required.</li>
+<li>Filter expressions are conjunctive. For example, the filter <code>type=temperature room=study</code> means that a time series is a temperature time series of a study room.</li>
+<li>Whitespaces are unallowed in a filter expression except between quotes or double quotes in values - e.g., <code>x=&quot;y y&quot;</code> or <code>x='(y y,z z)'</code>.
+</note></li>
+</ul>
+</details>
+<h2 id="optional-arguments">Optional arguments</h2>
+<details open>
+<summary><code>LATEST</code> (since RedisTimeSeries v1.8)</summary> 
+<p>is used when a time series is a compaction. With <code>LATEST</code>, TS.MGET also reports the compacted value of the latest (possibly partial) bucket, given that this bucket's start time falls within <code>[fromTimestamp, toTimestamp]</code>. Without <code>LATEST</code>, TS.MGET does not report the latest (possibly partial) bucket. When a time series is not a compaction, <code>LATEST</code> is ignored.</p>
+<p>The data in the latest bucket of a compaction is possibly partial. A bucket is <em>closed</em> and compacted only upon the arrival of a new sample that <em>opens</em> a new <em>latest</em> bucket. There are cases, however, when the compacted value of the latest (possibly partial) bucket is also required. In such a case, use <code>LATEST</code>.</p>
+</details>
+<details open>
+<summary><code>WITHLABELS</code></summary> 
+<p>includes in the reply all label-value pairs representing metadata labels of the time series.
+If <code>WITHLABELS</code> or <code>SELECTED_LABELS</code> are not specified, by default, an empty list is reported as label-value pairs.</p>
+</details>
+<details open>
+<summary><code>SELECTED_LABELS label...</code> (since RedisTimeSeries v1.6)</summary> 
+<p>returns a subset of the label-value pairs that represent metadata labels of the time series.
+Use when a large number of labels exists per series, but only the values of some of the labels are required.
+If <code>WITHLABELS</code> or <code>SELECTED_LABELS</code> are not specified, by default, an empty list is reported as label-value pairs.</p>
+</details>
+<p><note><b>Note:</b> The <a href="/docs/latest/commands/mget/"><code>MGET</code></a> command cannot be part of a transaction when running on a Redis cluster.</note></p>
+<h2 id="return-value">Return value</h2>
+<ul>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#arrays">Array reply</a>: for each time series matching the specified filters, the following is reported:
+<ul>
+<li>bulk-string-reply: The time series key name</li>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#arrays">Array reply</a>: label-value pairs (<a href="/docs/latest/develop/reference/protocol-spec/#bulk-strings">Bulk string reply</a>, <a href="/docs/latest/develop/reference/protocol-spec/#bulk-strings">Bulk string reply</a>)
+<ul>
+<li>By default, an empty array is reported</li>
+<li>If <code>WITHLABELS</code> is specified, all labels associated with this time series are reported</li>
+<li>If <code>SELECTED_LABELS label...</code> is specified, the selected labels are reported (null value when no such label defined)</li>
+</ul>
+</li>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#arrays">Array reply</a>: a single timestamp-value pair (<a href="/docs/latest/develop/reference/protocol-spec/#integers">Integer reply</a>, <a href="/docs/latest/develop/reference/protocol-spec/#simple-strings">Simple string reply</a> (double))</li>
+</ul>
+</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<details open>
+<summary><b>Select labels to retrieve</b></summary>
+<p>Create time series for temperature in Tel Aviv and Jerusalem, then add different temperature samples.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.CREATE temp:TLV LABELS <span class="nb">type</span> temp location TLV
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.CREATE temp:JLM LABELS <span class="nb">type</span> temp location JLM
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.MADD temp:TLV <span class="m">1000</span> <span class="m">30</span> temp:TLV <span class="m">1010</span> <span class="m">35</span> temp:TLV <span class="m">1020</span> <span class="m">9999</span> temp:TLV <span class="m">1030</span> <span class="m">40</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1010</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1020</span>
+</span></span><span class="line"><span class="cl">4<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1030</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.MADD temp:JLM <span class="m">1005</span> <span class="m">30</span> temp:JLM <span class="m">1015</span> <span class="m">35</span> temp:JLM <span class="m">1025</span> <span class="m">9999</span> temp:JLM <span class="m">1035</span> <span class="m">40</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1005</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1015</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1025</span>
+</span></span><span class="line"><span class="cl">4<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1035</span></span></span></code></pre></div>
+<p>Get all the labels associated with the last sample.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.MGET WITHLABELS FILTER <span class="nv">type</span><span class="o">=</span>temp
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;temp:JLM&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> 1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;type&#34;</span>
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> <span class="s2">&#34;temp&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;location&#34;</span>
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> <span class="s2">&#34;JLM&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1035</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="m">40</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;temp:TLV&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> 1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;type&#34;</span>
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> <span class="s2">&#34;temp&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;location&#34;</span>
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> <span class="s2">&#34;TLV&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1030</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="m">40</span></span></span></code></pre></div>
+<p>To get only the <code>location</code> label for each last sample, use <code>SELECTED_LABELS</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.MGET SELECTED_LABELS location FILTER <span class="nv">type</span><span class="o">=</span>temp
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;temp:JLM&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> 1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;location&#34;</span>
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> <span class="s2">&#34;JLM&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1035</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="m">40</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;temp:TLV&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> 1<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;location&#34;</span>
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> <span class="s2">&#34;TLV&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1030</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="m">40</span></span></span></code></pre></div>
+</details>
+<h2 id="see-also">See also</h2>
+<p><a href="/docs/latest/commands/ts.mrange/"><code>TS.MRANGE</code></a> | <a href="/docs/latest/commands/ts.range/"><code>TS.RANGE</code></a> | <a href="/docs/latest/commands/ts.mrevrange/"><code>TS.MREVRANGE</code></a> | <a href="/docs/latest/commands/ts.revrange/"><code>TS.REVRANGE</code></a></p>
+<h2 id="related-topics">Related topics</h2>
+<p><a href="/docs/latest/develop/data-types/timeseries/">RedisTimeSeries</a></p>
+
+
+        
+        
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/ts.mget/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

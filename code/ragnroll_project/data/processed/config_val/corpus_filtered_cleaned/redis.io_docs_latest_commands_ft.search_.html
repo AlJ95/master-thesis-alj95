@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>FT.SEARCH | Docs</title>
+    <meta name="description" content="Searches the index with a textual query, returning either documents or just ids">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/ft.search/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="FT.SEARCH">
+  <meta property="og:description" content="Searches the index with a textual query, returning either documents or just ids">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="FT.SEARCH">
+  <meta itemprop="description" content="Searches the index with a textual query, returning either documents or just ids">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="2550">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FT.SEARCH">
+  <meta name="twitter:description" content="Searches the index with a textual query, returning either documents or just ids">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">FT.SEARCH
+        </h1>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">FT.SEARCH index query 
+  [NOCONTENT] 
+  [VERBATIM] 
+  [NOSTOPWORDS] 
+  [WITHSCORES] 
+  [WITHPAYLOADS] 
+  [WITHSORTKEYS] 
+  [FILTER numeric_field min max [ FILTER numeric_field min max ...]] 
+  [GEOFILTER geo_field lon lat radius m | km | mi | ft [ GEOFILTER geo_field lon lat radius m | km | mi | ft ...]] 
+  [INKEYS count key [key ...]] 
+  [INFIELDS count field [field ...]] 
+  [RETURN count identifier [AS property] [ identifier [AS property] ...]] 
+  [SUMMARIZE [ FIELDS count field [field ...]] [FRAGS num] [LEN fragsize] [SEPARATOR separator]] 
+  [HIGHLIGHT [ FIELDS count field [field ...]] [ TAGS open close]] 
+  [SLOP slop] 
+  [TIMEOUT timeout] 
+  [INORDER] 
+  [LANGUAGE language] 
+  [EXPANDER expander] 
+  [SCORER scorer] 
+  [EXPLAINSCORE] 
+  [PAYLOAD payload] 
+  [SORTBY sortby [ ASC | DESC] [WITHCOUNT]] 
+  [LIMIT offset num] 
+  [PARAMS nargs name value [ name value ...]] 
+  [DIALECT dialect]
+</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / Search 1.0.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@search</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Search the index with a textual query, returning either documents or just ids.</p>
+
+<div class="alert p-3 relative flex flex-row items-center text-base bg-redis-pencil-200 rounded-md">
+  <div class="p-2 pr-5">
+  <circle cx="10.5" cy="10.5" r="9.75" stroke="currentColor" stroke-width="1.5"/>
+  
+  
+</svg>
+  </div>
+  <div class="p-1 pl-6 border-l border-l-redis-ink-900 border-opacity-50">
+  
+  <div class="font-medium">Note:</div>
+  This command will only return keys to which the user has read access.</div>
+</div>
+
+<p><a href="#examples">Examples</a></p>
+<h2 id="required-arguments">Required arguments</h2>
+<details open>
+<summary><code>index</code></summary>
+<p>is index name. You must first create the index using <a href="/docs/latest/commands/ft.create/"><code>FT.CREATE</code></a>.</p>
+</details>
+<details open>
+<summary><code>query</code></summary> 
+<p>is text query to search. If it's more than a single word, put it in quotes. Refer to <a href="/docs/latest/develop/interact/search-and-query/query/">Query syntax</a> for more details.</p>
+</details>
+<h2 id="optional-arguments">Optional arguments</h2>
+<details open>
+<summary><code>NOCONTENT</code></summary>
+<p>returns the document ids and not the content. This is useful if RediSearch is only an index on an external document collection.</p>
+</details>
+<details open>
+<summary><code>VERBATIM</code></summary>
+<p>does not try to use stemming for query expansion but searches the query terms verbatim.</p>
+</details>
+<details open>
+<summary><code>NOSTOPWORDS</code></summary>
+<p>ignores any defined stop words in full text searches.</p>
+</details>
+<details open>
+<summary><code>WITHSCORES</code></summary>
+<p>also returns the relative internal score of each document. This can be used to merge results from multiple instances.</p>
+</details>
+<details open>
+<summary><code>WITHPAYLOADS</code></summary>
+<p>retrieves optional document payloads. See <a href="/docs/latest/commands/ft.create/"><code>FT.CREATE</code></a>. The payloads follow the document id and, if <code>WITHSCORES</code> is set, the scores.</p>
+</details>
+<details open>
+<summary><code>WITHSORTKEYS</code></summary>
+<p>returns the value of the sorting key, right after the id and score and/or payload, if requested. This is usually not needed, and exists for distributed search coordination purposes. This option is relevant only if used in conjunction with <code>SORTBY</code>.</p>
+</details>
+<details open>
+<summary><code>FILTER numeric_attribute min max</code></summary>
+<p>limits results to those having numeric values ranging between <code>min</code> and <code>max</code>, if numeric_attribute is defined as a numeric attribute in <a href="/docs/latest/commands/ft.create/"><code>FT.CREATE</code></a>.
+<code>min</code> and <code>max</code> follow <a href="/docs/latest/commands/zrange/"><code>ZRANGE</code></a> syntax, and can be <code>-inf</code>, <code>+inf</code>, and use <code>(</code> for exclusive ranges. Multiple numeric filters for different attributes are supported in one query.
+<strong>Deprecated since v2.10</strong>: <a href="/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2">Query dialect 2</a> explains the query syntax for numeric fields that replaces this argument.</p>
+</details>
+<details open>
+<summary><code>GEOFILTER {geo_attribute} {lon} {lat} {radius} m|km|mi|ft</code></summary>
+<p>filter the results to a given <code>radius</code> from <code>lon</code> and <code>lat</code>. Radius is given as a number and units. See <a href="/docs/latest/commands/georadius/"><code>GEORADIUS</code></a> for more details.
+<strong>Deprecated since v2.6</strong>: <a href="/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-3">Query dialect 3</a> explains the query syntax for geospatial fields that replaces this argument.</p>
+</details>
+<details open>
+<summary><code>INKEYS {num} {attribute} ...</code></summary>
+<p>limits the result to a given set of keys specified in the list. The first argument must be the length of the list and greater than zero. Non-existent keys are ignored, unless all the keys are non-existent.</p>
+</details>
+<details open>
+<summary><code>INFIELDS {num} {attribute} ...</code></summary>
+<p>filters the results to those appearing only in specific attributes of the document, like <code>title</code> or <code>URL</code>. You must include <code>num</code>, which is the number of attributes you're filtering by. For example, if you request <code>title</code> and <code>URL</code>, then <code>num</code> is 2.</p>
+</details>
+<details open>
+<summary><code>RETURN {num} {identifier} AS {property} ...</code></summary>
+<p>limits the attributes returned from the document. <code>num</code> is the number of attributes following the keyword. If <code>num</code> is 0, it acts like <code>NOCONTENT</code>.
+<code>identifier</code> is either an attribute name (for hashes and JSON) or a JSON Path expression (for JSON).
+<code>property</code> is an optional name used in the result. If not provided, the <code>identifier</code> is used in the result.</p>
+</details>
+<details open>
+<summary><code>SUMMARIZE ...</code></summary>
+<p>returns only the sections of the attribute that contain the matched text. See <a href="/docs/latest/develop/interact/search-and-query/advanced-concepts/highlight/">Highlighting</a> for more information.</p>
+</details>
+<details open>
+<summary><code>HIGHLIGHT ...</code></summary>
+<p>formats occurrences of matched text. See <a href="/docs/latest/develop/interact/search-and-query/advanced-concepts/highlight/">Highlighting</a> for more information.</p>
+</details>
+<details open>
+<summary><code>SLOP {slop}</code></summary>
+<p>is the number of intermediate terms allowed to appear between the terms of the query.
+Suppose you're searching for a phrase <em>hello world</em>.
+If some terms appear in-between <em>hello</em> and <em>world</em>, a <code>SLOP</code> greater than <code>0</code> allows for these text attributes to match.
+By default, there is no <code>SLOP</code> constraint.</p>
+</details>
+<details open>
+<summary><code>INORDER</code></summary>
+<p>requires the terms in the document to have the same order as the terms in the query, regardless of the offsets between them. Typically used in conjunction with <code>SLOP</code>. Default is <code>false</code>.</p>
+</details>
+<details open>
+<summary><code>LANGUAGE {language}</code></summary>
+<p>use a stemmer for the supplied language during search for query expansion. If querying documents in Chinese, set to <code>chinese</code> to
+properly tokenize the query terms. Defaults to English. If an unsupported language is sent, the command returns an error.
+See <a href="/docs/latest/commands/ft.create/"><code>FT.CREATE</code></a> for the list of languages. If <code>LANGUAGE</code> was specified as part of index
+creation, it doesn't need to specified with <code>FT.SEARCH</code>.</p>
+</details>
+<details open>
+<summary><code>EXPANDER {expander}</code></summary>
+<p>uses a custom query expander instead of the stemmer. See <a href="/docs/latest/develop/interact/search-and-query/administration/extensions/">Extensions</a>.</p>
+</details>
+<details open>
+<summary><code>SCORER {scorer}</code></summary>
+<p>uses a <a href="/docs/latest/develop/interact/search-and-query/advanced-concepts/scoring/">built-in</a> or a <a href="/docs/latest/develop/interact/search-and-query/administration/extensions/">user-provided</a> scoring function.</p>
+</details>
+<details open>
+<summary><code>EXPLAINSCORE</code></summary>
+<p>returns a textual description of how the scores were calculated. Using this option requires <code>WITHSCORES</code>.</p>
+</details>
+<details open>
+<summary><code>PAYLOAD {payload}</code></summary>
+<p>adds an arbitrary, binary safe payload that is exposed to custom scoring functions. See <a href="/docs/latest/develop/interact/search-and-query/administration/extensions/">Extensions</a>.</p>
+</details>
+<details open>
+<summary><code>SORTBY {attribute} [ASC|DESC] [WITHCOUNT]</code></summary>
+<p>orders the results by the value of this attribute. This applies to both text and numeric attributes. Attributes needed for <code>SORTBY</code> should be declared as <code>SORTABLE</code> in the index, in order to be available with very low latency. Note that this adds memory overhead.</p>
+<p><strong>Sorting Optimizations</strong>: performance is optimized for sorting operations on <code>DIALECT 4</code> in different scenarios:</p>
+<ul>
+<li>Skip Sorter - applied when there is no sort of any kind. The query can return after it reaches the <code>LIMIT</code> requested results.</li>
+<li>Partial Range - applied when there is a <code>SORTBY</code> clause over a numeric field, with no filter or filter by the same numeric field, the query iterate on a range large enough to satisfy the <code>LIMIT</code> requested results.</li>
+<li>Hybrid - applied when there is a <code>SORTBY</code> clause over a numeric field and another non-numeric filter. Some results will get filtered, and the initial range may not be large enough. The iterator is then rewinding with the following ranges, and an additional iteration takes place to collect the <code>LIMIT</code> requested results.</li>
+<li>No optimization - If there is a sort by score or by non-numeric field, there is no other option but to retrieve all results and compare their values.</li>
+</ul>
+<p><strong>Counts behavior</strong>: optional<code>WITHCOUNT</code>argument returns accurate counts for the query results with sorting. This operation processes all results in order to get an accurate count, being less performant than the optimized option (default behavior on <code>DIALECT 4</code>)</p>
+</details>
+<details open>
+<summary><code>LIMIT first num</code></summary>
+<p>limits the results to the offset and number of results given. Note that the offset is zero-indexed. The default is 0 10, which returns 10 items starting from the first result. You can use <code>LIMIT 0 0</code> to count the number of documents in the result set without actually returning them.</p>
+<p><strong><code>LIMIT</code> behavior</strong>:  If you use the <code>LIMIT</code> option without sorting, the results returned are non-deterministic, which means that subsequent queries may return duplicated or missing values. Add <code>SORTBY</code> with a unique field, or use <code>FT.AGGREGATE</code> with the <code>WITHCURSOR</code> option to ensure deterministic result set paging.</p>
+</details>
+<details open>
+<summary><code>TIMEOUT {milliseconds}</code></summary>
+<p>overrides the timeout parameter of the module.</p>
+</details>
+<details open>
+<summary><code>PARAMS {nargs} {name} {value}</code></summary>
+<p>defines one or more value parameters. Each parameter has a name and a value.</p>
+<p>You can reference parameters in the <code>query</code> by a <code>$</code>, followed by the parameter name, for example, <code>$user</code>. Each such reference in the search query to a parameter name is substituted by the corresponding parameter value. For example, with parameter definition <code>PARAMS 4 lon 29.69465 lat 34.95126</code>, the expression <code>@loc:[$lon $lat 10 km]</code> is evaluated to <code>@loc:[29.69465 34.95126 10 km]</code>. You cannot reference parameters in the query string where concrete values are not allowed, such as in field names, for example, <code>@loc</code>. To use <code>PARAMS</code>, set
+<a href="/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/#dialect-2"><code>DIALECT</code></a>
+to <code>2</code> or greater than <code>2</code> (this requires <a href="https://github.com/RediSearch/RediSearch/releases/tag/v2.4.3">RediSearch v2.4</a> or above).</p>
+</details>
+<details open>
+<summary><code>DIALECT {dialect_version}</code></summary>
+<p>selects the dialect version under which to execute the query. If not specified, the query will execute under the default dialect version set during module initial loading or via <a href="/docs/latest/commands/ft.config-set/"><code>FT.CONFIG SET</code></a> command. See <a href="/docs/latest/develop/interact/search-and-query/advanced-concepts/dialects/">Query dialects</a> for more information.</p>
+</details>
+<h2 id="return">Return</h2>
+<p>FT.SEARCH returns an array reply, where the first element is an integer reply of the total number of results, and then array reply pairs of document ids, and array replies of attribute/value pairs.</p>
+<div class="alert p-3 relative flex flex-row items-center text-base bg-redis-pencil-200 rounded-md">
+  <div class="p-2 pr-5">
+  <circle cx="10.5" cy="10.5" r="9.75" stroke="currentColor" stroke-width="1.5"/>
+  
+  
+</svg>
+  </div>
+  <div class="p-1 pl-6 border-l border-l-redis-ink-900 border-opacity-50">
+  <div class="font-medium">Notes:</div>
+  <ul>
+<li>If <code>NOCONTENT</code> is given, an array is returned where the first element is the total number of results, and the rest of the members are document ids.</li>
+<li>If a relevant key expires while a query is running, an attempt to load the key's value will return a null array. However, the key is still counted in the total number of results.</li>
+</ul>
+</div>
+</div>
+<h3 id="return-multiple-values">Return multiple values</h3>
+<p>When the index is defined <code>ON JSON</code>, a reply for a single attribute or a single JSONPath may return multiple values when the JSONPath matches multiple values, or when the JSONPath matches an array.</p>
+<p>Prior to RediSearch v2.6, only the first of the matched values was returned.
+Starting with RediSearch v2.6, all values are returned, wrapped with a top-level array.</p>
+<p>In order to maintain backward compatibility, the default behavior with RediSearch v2.6 is to return only the first value.</p>
+<p>To return all the values, use <code>DIALECT</code> 3 (or greater, when available).</p>
+<p>The <code>DIALECT</code> can be specified as a parameter in the FT.SEARCH command. If it is not specified, the <code>DEFAULT_DIALECT</code> is used, which can be set using <a href="/docs/latest/commands/ft.config-set/"><code>FT.CONFIG SET</code></a> or by passing it as an argument to the <code>redisearch</code> module when it is loaded.</p>
+<p>For example, with the following document and index:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">127.0.0.1:6379&gt; JSON.SET doc:1 $ <span class="s1">&#39;[{&#34;arr&#34;: [1, 2, 3]}, {&#34;val&#34;: &#34;hello&#34;}, {&#34;val&#34;: &#34;world&#34;}]&#39;</span>
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.CREATE idx ON JSON PREFIX <span class="m">1</span> doc: SCHEMA $..arr AS arr NUMERIC $..val AS val TEXT
+</span></span><span class="line"><span class="cl">OK
+</span></span></code></pre></div><p>Notice the different replies, with and without <code>DIALECT 3</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH idx * RETURN <span class="m">2</span> arr val
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;doc:1&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;arr&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> <span class="s2">&#34;[1,2,3]&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> <span class="s2">&#34;val&#34;</span>
+</span></span><span class="line"><span class="cl">   4<span class="o">)</span> <span class="s2">&#34;hello&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH idx * RETURN <span class="m">2</span> arr val DIALECT <span class="m">3</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;doc:1&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;arr&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> <span class="s2">&#34;[[1,2,3]]&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> <span class="s2">&#34;val&#34;</span>
+</span></span><span class="line"><span class="cl">   4<span class="o">)</span> <span class="s2">&#34;[\&#34;hello\&#34;,\&#34;world\&#34;]&#34;</span>
+</span></span></code></pre></div><h2 id="complexity">Complexity</h2>
+<p>FT.SEARCH complexity is O(n) for single word queries. <code>n</code> is the number of the results in the result set. Finding all the documents that have a specific term is O(1), however, a scan on all those documents is needed to load the documents data from redis hashes and return them.</p>
+<p>The time complexity for more complex queries varies, but in general it's proportional to the number of words, the number of intersection points between them and the number of results in the result set.</p>
+<h2 id="examples">Examples</h2>
+<details open>
+<summary><b>Search for a term in every text attribute</b></summary>
+<p>Search for the term &quot;wizard&quot; in every TEXT attribute of an index containing book data.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;wizard&#34;</span></span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a term in title attribute</b></summary>
+<p>Search for the term <em>dogs</em> in the <code>title</code> attribute.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;@title:dogs&#34;</span></span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for books from specific years</b></summary>
+<p>Search for books published in 2020 or 2021.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;@published_at:[2020 2021]&#34;</span></span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a restaurant by distance from longitude/latitude</b></summary>
+<p>Search for Chinese restaurants within 5 kilometers of longitude -122.41, latitude 37.77 (San Francisco).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH restaurants-idx <span class="s2">&#34;chinese @location:[-122.41 37.77 5 km]&#34;</span></span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a book by terms but boost specific term</b></summary>
+<p>Search for the term <em>dogs</em> or <em>cats</em> in the <code>title</code> attribute, but give matches of <em>dogs</em> a higher relevance score (also known as <em>boosting</em>).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;(@title:dogs | @title:cats) | (@title:dogs) =&gt; { </span><span class="nv">$weight</span><span class="s2">: 5.0; }&#34;</span></span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a book by a term and EXPLAINSCORE</b></summary>
+<p>Search for books with <em>dogs</em> in any TEXT attribute in the index and request an explanation of scoring for each result.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;dogs&#34;</span> WITHSCORES EXPLAINSCORE</span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a book by a term and TAG</b></summary>
+<p>Search for books with <em>space</em> in the title that have <code>science</code> in the TAG attribute <code>categories</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;@title:space @categories:{science}&#34;</span></span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a book by a term but limit the number</b></summary>
+<p>Search for books with <em>Python</em> in any <code>TEXT</code> attribute, returning 10 results starting with the 11th result in the entire result set (the offset parameter is zero-based), and return only the <code>title</code> attribute for each result.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;python&#34;</span> LIMIT <span class="m">10</span> <span class="m">10</span> RETURN <span class="m">1</span> title</span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a book by a term and price</b></summary>
+<p>Search for books with <em>Python</em> in any <code>TEXT</code> attribute, returning the price stored in the original JSON document.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;python&#34;</span> RETURN <span class="m">3</span> $.book.price AS price</span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a book by title and distance</b></summary>
+<p>Search for books with semantically similar title to <em>Planet Earth</em>. Return top 10 results sorted by distance.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH books-idx <span class="s2">&#34;*=&gt;[KNN 10 @title_embedding </span><span class="nv">$query_vec</span><span class="s2"> AS title_score]&#34;</span> PARAMS <span class="m">2</span> query_vec &lt;<span class="s2">&#34;Planet Earth&#34;</span> embedding BLOB&gt; SORTBY title_score DIALECT <span class="m">2</span></span></span></code></pre></div>
+</details>
+<details open>
+<summary><b>Search for a phrase using SLOP</b></summary>
+<p>Search for a phrase <em>hello world</em>.
+First, create an index.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.CREATE memes SCHEMA phrase TEXT
+</span></span><span class="line"><span class="cl">OK</span></span></code></pre></div>
+<p>Add variations of the phrase <em>hello world</em>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; HSET s1 phrase <span class="s2">&#34;hello world&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; HSET s2 phrase <span class="s2">&#34;hello simple world&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; HSET s3 phrase <span class="s2">&#34;hello somewhat less simple world&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; HSET s4 phrase <span class="s2">&#34;hello complicated yet encouraging problem solving world&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; HSET s5 phrase <span class="s2">&#34;hello complicated yet amazingly encouraging problem solving world&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span></span></span></code></pre></div>
+<p>Then, search for the phrase <em>hello world</em>. The result returns all documents that contain the phrase.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(hello world)&#39;</span> NOCONTENT 
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">5</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s1&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> <span class="s2">&#34;s2&#34;</span>
+</span></span><span class="line"><span class="cl">4<span class="o">)</span> <span class="s2">&#34;s3&#34;</span>
+</span></span><span class="line"><span class="cl">5<span class="o">)</span> <span class="s2">&#34;s4&#34;</span>
+</span></span><span class="line"><span class="cl">6<span class="o">)</span> <span class="s2">&#34;s5&#34;</span></span></span></code></pre></div>
+<p>Now, return all documents that have one of fewer words between <em>hello</em> and <em>world</em>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(hello world)&#39;</span> NOCONTENT SLOP <span class="m">1</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s1&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> <span class="s2">&#34;s2&#34;</span></span></span></code></pre></div>
+<p>Now, return all documents with three or fewer words between <em>hello</em> and <em>world</em>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(hello world)&#39;</span> NOCONTENT SLOP <span class="m">3</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s1&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> <span class="s2">&#34;s2&#34;</span>
+</span></span><span class="line"><span class="cl">4<span class="o">)</span> <span class="s2">&#34;s3&#34;</span></span></span></code></pre></div>
+<p><code>s5</code> needs a higher <code>SLOP</code> to match, <code>SLOP 6</code> or higher, to be exact. See what happens when you set <code>SLOP</code> to <code>5</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(hello world)&#39;</span> NOCONTENT SLOP <span class="m">5</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s1&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> <span class="s2">&#34;s2&#34;</span>
+</span></span><span class="line"><span class="cl">4<span class="o">)</span> <span class="s2">&#34;s3&#34;</span>
+</span></span><span class="line"><span class="cl">5<span class="o">)</span> <span class="s2">&#34;s4&#34;</span></span></span></code></pre></div>
+<p>If you add additional terms (and stemming), you get these results.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(hello amazing world)&#39;</span> NOCONTENT 
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s5&#34;</span></span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(hello encouraged world)&#39;</span> NOCONTENT SLOP <span class="m">5</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s4&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> <span class="s2">&#34;s5&#34;</span></span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(hello encouraged world)&#39;</span> NOCONTENT SLOP <span class="m">4</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s4&#34;</span></span></span></code></pre></div>
+<p>If you swap the terms, you can still retrieve the correct phrase.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(amazing hello world)&#39;</span> NOCONTENT
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;s5&#34;</span></span></span></code></pre></div>
+<p>But, if you use <code>INORDER</code>, you get zero results.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(amazing hello world)&#39;</span> NOCONTENT INORDER
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span></span></span></code></pre></div>
+<p>Likewise, if you use a query attribute <code>$inorder</code> set to <code>true</code>, <code>s5</code> is not retrieved.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH memes <span class="s1">&#39;@phrase:(amazing hello world)=&gt;{$inorder: true;}&#39;</span> NOCONTENT
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span></span></span></code></pre></div>
+<p>To sum up, the <code>INORDER</code> argument or <code>$inorder</code> query attribute require the query terms to match terms with similar ordering.</p>
+</details>
+<details open>
+<summary><b>Polygon Search with WITHIN, CONTAINS, INTERSECTS, and DISJOINT operators</b></summary>
+<p>Query for polygons which:</p>
+<ul>
+<li>contain a given geoshape</li>
+<li>are within a given geoshape</li>
+<li>intersect with a given geoshape</li>
+<li>are disjoint (nothing in common) with a given shape</li>
+</ul>
+<p><code>INTERSECTS</code> and <code>DISJOINT</code> were introduced in v2.10.</p>
+<p>First, create an index using <code>GEOSHAPE</code> type with a <code>FLAT</code> coordinate system:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.CREATE idx SCHEMA geom GEOSHAPE FLAT
+</span></span><span class="line"><span class="cl">OK</span></span></code></pre></div>
+<p>Adding a couple of geometries using <a href="/docs/latest/commands/hset/"><code>HSET</code></a>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; HSET small geom <span class="s1">&#39;POLYGON((1 1, 1 100, 100 100, 100 1, 1 1))&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; HSET large geom <span class="s1">&#39;POLYGON((1 1, 1 200, 200 200, 200 1, 1 1))&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span></span></span></code></pre></div>
+<p>Query with <code>WITHIN</code> operator:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH idx <span class="s1">&#39;@geom:[WITHIN $poly]&#39;</span> PARAMS <span class="m">2</span> poly <span class="s1">&#39;POLYGON((0 0, 0 150, 150 150, 150 0, 0 0))&#39;</span> DIALECT <span class="m">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;small&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;geom&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> <span class="s2">&#34;POLYGON((1 1, 1 100, 100 100, 100 1, 1 1))&#34;</span></span></span></code></pre></div>
+<p>Query with <code>CONTAINS</code> operator:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; FT.SEARCH idx <span class="s1">&#39;@geom:[CONTAINS $poly]&#39;</span> PARAMS <span class="m">2</span> poly <span class="s1">&#39;POLYGON((2 2, 2 50, 50 50, 50 2, 2 2))&#39;</span> DIALECT <span class="m">3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;small&#34;</span>
+</span></span><span class="line"><span class="cl">3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;geom&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> <span class="s2">&#34;POLYGON((1 1, 1 100, 100 100, 100 1, 1 1))&#34;</span>
+</span></span><span class="line"><span class="cl">4<span class="o">)</span> <span class="s2">&#34;large&#34;</span>
+</span></span><span class="line"><span class="cl">5<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;geom&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> <span class="s2">&#34;POLYGON((1 1, 1 200, 200 200, 200 1, 1 1))&#34;</span></span></span></code></pre></div>
+</details>
+<h2 id="see-also">See also</h2>
+<p><a href="/docs/latest/commands/ft.create/"><code>FT.CREATE</code></a> | <a href="/docs/latest/commands/ft.aggregate/"><code>FT.AGGREGATE</code></a></p>
+<h2 id="related-topics">Related topics</h2>
+<ul>
+
+
+
+
+</ul>
+
+
+        
+        
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 2.0.0: Deprecated <code>WITHPAYLOADS</code> and <code>PAYLOAD</code> arguments</li>
+            
+            <li>Starting with Redis version 2.6: Deprecated <code>GEOFILTER</code> argument</li>
+            
+            <li>Starting with Redis version 2.10: Deprecated <code>FILTER</code> argument</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/ft.search/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

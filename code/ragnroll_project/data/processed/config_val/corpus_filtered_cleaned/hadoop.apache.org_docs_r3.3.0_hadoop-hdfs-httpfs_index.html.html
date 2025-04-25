@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>HttpFS &#x2013; Hadoop HDFS over HTTP - Documentation Sets</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="index.html">HttpFS</a>
+        &gt;
+        Hadoop HDFS over HTTP - Documentation Sets
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Hadoop HDFS over HTTP - Documentation Sets</h1>
+<p>HttpFS is a server that provides a REST HTTP gateway supporting all HDFS File System operations (read and write). And it is interoperable with the <b>webhdfs</b> REST HTTP API.</p>
+<p>HttpFS can be used to transfer data between clusters running different versions of Hadoop (overcoming RPC versioning issues), for example using Hadoop DistCP.</p>
+<p>HttpFS can be used to access data in HDFS on a cluster behind of a firewall (the HttpFS server acts as a gateway and is the only system that is allowed to cross the firewall into the cluster).</p>
+<p>HttpFS can be used to access data in HDFS using HTTP utilities (such as curl and wget) and HTTP libraries Perl from other languages than Java.</p>
+<p>The <b>webhdfs</b> client FileSystem implementation can be used to access HttpFS using the Hadoop filesystem command (<tt>hadoop fs</tt>) line tool as well as from Java applications using the Hadoop FileSystem Java API.</p>
+<p>HttpFS has built-in security supporting Hadoop pseudo authentication and HTTP SPNEGO Kerberos and other pluggable authentication mechanisms. It also provides Hadoop proxy user support.</p>
+<div class="section">
+<h2><a name="How_Does_HttpFS_Works.3F"></a>How Does HttpFS Works?</h2>
+<p>HttpFS is a separate service from Hadoop NameNode.</p>
+<p>HttpFS itself is Java Jetty web-application.</p>
+<p>HttpFS HTTP web-service API calls are HTTP REST calls that map to a HDFS file system operation. For example, using the <tt>curl</tt> Unix command:</p>
+<ul>
+
+<li>
+
+<p><tt>$ curl 'http://httpfs-host:14000/webhdfs/v1/user/foo/README.txt?op=OPEN&amp;user.name=foo'</tt> returns the contents of the HDFS <tt>/user/foo/README.txt</tt> file.</p>
+</li>
+<li>
+
+<p><tt>$ curl 'http://httpfs-host:14000/webhdfs/v1/user/foo?op=LISTSTATUS&amp;user.name=foo'</tt> returns the contents of the HDFS <tt>/user/foo</tt> directory in JSON format.</p>
+</li>
+<li>
+
+<p><tt>$ curl 'http://httpfs-host:14000/webhdfs/v1/user/foo?op=GETTRASHROOT&amp;user.name=foo'</tt> returns the path <tt>/user/foo/.Trash</tt>, if <tt>/</tt> is an encrypted zone, returns the path <tt>/.Trash/foo</tt>. See <a href="../hadoop-project-dist/hadoop-hdfs/TransparentEncryption.html#Rename_and_Trash_considerations">more details</a> about trash path in an encrypted zone.</p>
+</li>
+<li>
+
+<p><tt>$ curl -X POST 'http://httpfs-host:14000/webhdfs/v1/user/foo/bar?op=MKDIRS&amp;user.name=foo'</tt> creates the HDFS <tt>/user/foo/bar</tt> directory.</p>
+</li>
+</ul></div>
+<div class="section">
+<h2><a name="User_and_Developer_Documentation"></a>User and Developer Documentation</h2>
+<ul>
+
+<li>
+
+<p><a href="./ServerSetup.html">HttpFS Server Setup</a></p>
+</li>
+<li>
+
+<p><a href="./UsingHttpTools.html">Using HTTP Tools</a></p>
+</li>
+</ul></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

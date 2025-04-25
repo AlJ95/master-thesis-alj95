@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 72.2. Backup Manifest File Object</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/backup-manifest-files.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="72.2. Backup Manifest File Object" />
+  <meta property="og:description" content="72.2.&amp;nbsp;Backup Manifest File Object The object which describes a single file contains either a Path key or an Encoded-Path key. …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/backup-manifest-files.html" title="PostgreSQL 17 - 72.2. Backup Manifest File Object" >Current</a>
+                          (<a href="/docs/17/backup-manifest-files.html" title="PostgreSQL 17 - 72.2. Backup Manifest File Object" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/backup-manifest-files.html" title="PostgreSQL 16 - 72.2. Backup Manifest File Object" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/backup-manifest-files.html" title="PostgreSQL 15 - 72.2. Backup Manifest File Object" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/backup-manifest-files.html" title="PostgreSQL 14 - 72.2. Backup Manifest File Object" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/backup-manifest-files.html" title="PostgreSQL 13 - 72.2. Backup Manifest File Object" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/backup-manifest-files.html" title="PostgreSQL devel - 72.2. Backup Manifest File Object"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">72.2.&nbsp;Backup Manifest File Object</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="backup-manifest-toplevel.html" title="72.1.&nbsp;Backup Manifest Top-level Object">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="backup-manifest-format.html" title="Chapter&nbsp;72.&nbsp;Backup Manifest Format">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;72.&nbsp;Backup Manifest Format</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="backup-manifest-wal-ranges.html" title="72.3.&nbsp;Backup Manifest WAL Range Object">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="BACKUP-MANIFEST-FILES">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">72.2.&nbsp;Backup Manifest File Object</h2>
+      </div>
+    </div>
+  </div>
+  <p>The object which describes a single file contains either a <code class="literal">Path</code> key or an <code class="literal">Encoded-Path</code> key. Normally, the <code class="literal">Path</code> key will be present. The associated string value is the path of the file relative to the root of the backup directory. Files located in a user-defined tablespace will have paths whose first two components are <code class="filename">pg_tblspc</code> and the OID of the tablespace. If the path is not a string that is legal in UTF-8, or if the user requests that encoded paths be used for all files, then the <code class="literal">Encoded-Path</code> key will be present instead. This stores the same data, but it is encoded as a string of hexadecimal digits. Each pair of hexadecimal digits in the string represents a single octet.</p>
+  <p>The following two keys are always present:</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt><span class="term"><code class="literal">Size</code></span></dt>
+      <dd>
+        <p>The expected size of this file, as an integer.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">Last-Modified</code></span></dt>
+      <dd>
+        <p>The last modification time of the file as reported by the server at the time of the backup. Unlike the other fields stored in the backup, this field is not used by <a class="xref" href="app-pgverifybackup.html" title="pg_verifybackup"><span class="refentrytitle">pg_verifybackup</span></a>. It is included only for informational purposes.</p>
+      </dd>
+    </dl>
+  </div>
+  <p>If the backup was taken with file checksums enabled, the following keys will be present:</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt><span class="term"><code class="literal">Checksum-Algorithm</code></span></dt>
+      <dd>
+        <p>The checksum algorithm used to compute a checksum for this file. Currently, this will be the same for every file in the backup manifest, but this may change in future releases. At present, the supported checksum algorithms are <code class="literal">CRC32C</code>, <code class="literal">SHA224</code>, <code class="literal">SHA256</code>, <code class="literal">SHA384</code>, and <code class="literal">SHA512</code>.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">Checksum</code></span></dt>
+      <dd>
+        <p>The checksum computed for this file, stored as a series of hexadecimal characters, two for each byte of the checksum.</p>
+      </dd>
+    </dl>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="backup-manifest-toplevel.html" title="72.1.&nbsp;Backup Manifest Top-level Object">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="backup-manifest-format.html" title="Chapter&nbsp;72.&nbsp;Backup Manifest Format">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="backup-manifest-wal-ranges.html" title="72.3.&nbsp;Backup Manifest WAL Range Object">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">72.1.&nbsp;Backup Manifest Top-level Object&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;72.3.&nbsp;Backup Manifest WAL Range Object</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/backup-manifest-files.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

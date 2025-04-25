@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 65.2. Built-in Operator Classes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/spgist-builtin-opclasses.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="65.2. Built-in Operator Classes" />
+  <meta property="og:description" content="65.2.&amp;nbsp;Built-in Operator Classes The core PostgreSQL distribution includes the SP-GiST operator classes shown in Table&amp;nbsp;65.1. Table&amp;nbsp;65.1.&amp;nbsp;Built-in SP-GiST Operator Classes Name …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/16/spgist-builtin-opclasses.html" title="PostgreSQL 16 - 65.2. Built-in Operator Classes" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/spgist-builtin-opclasses.html" title="PostgreSQL 15 - 65.2. Built-in Operator Classes" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/spgist-builtin-opclasses.html" title="PostgreSQL 14 - 65.2. Built-in Operator Classes" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/spgist-builtin-opclasses.html" title="PostgreSQL 13 - 65.2. Built-in Operator Classes" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/spgist-builtin-opclasses.html" title="PostgreSQL 12 - 65.2. Built-in Operator Classes"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/spgist-builtin-opclasses.html" title="PostgreSQL 11 - 65.2. Built-in Operator Classes"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/spgist-builtin-opclasses.html" title="PostgreSQL 10 - 65.2. Built-in Operator Classes"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/spgist-builtin-opclasses.html" title="PostgreSQL 9.6 - 65.2. Built-in Operator Classes"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/spgist-builtin-opclasses.html" title="PostgreSQL 9.5 - 65.2. Built-in Operator Classes"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/spgist-builtin-opclasses.html" title="PostgreSQL 9.4 - 65.2. Built-in Operator Classes"  rel="nofollow">9.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">65.2.&nbsp;Built-in Operator Classes</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="spgist-intro.html" title="65.1.&nbsp;Introduction">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="spgist.html" title="Chapter&nbsp;65.&nbsp;SP-GiST Indexes">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;65.&nbsp;SP-GiST Indexes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="spgist-extensibility.html" title="65.3.&nbsp;Extensibility">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="SPGIST-BUILTIN-OPCLASSES">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">65.2.&nbsp;Built-in Operator Classes</h2>
+      </div>
+    </div>
+  </div>
+  <p>The core <span class="productname">PostgreSQL</span> distribution includes the <acronym class="acronym">SP-GiST</acronym> operator classes shown in <a class="xref" href="spgist-builtin-opclasses.html#SPGIST-BUILTIN-OPCLASSES-TABLE" title="Table&nbsp;65.1.&nbsp;Built-in SP-GiST Operator Classes">Table&nbsp;65.1</a>.</p>
+  <div class="table" id="SPGIST-BUILTIN-OPCLASSES-TABLE">
+    <p class="title"><strong>Table&nbsp;65.1.&nbsp;Built-in <acronym class="acronym">SP-GiST</acronym> Operator Classes</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="Built-in SP-GiST Operator Classes" border="1">
+        <colgroup>
+          <col />
+          <col />
+          <col />
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Indexed Data Type</th>
+            <th>Indexable Operators</th>
+            <th>Ordering Operators</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="literal">kd_point_ops</code></td>
+            <td><code class="type">point</code></td>
+            <td><code class="literal">&lt;&lt;</code> <code class="literal">&lt;@</code> <code class="literal">&lt;^</code> <code class="literal">&gt;&gt;</code> <code class="literal">&gt;^</code> <code class="literal">~=</code></td>
+            <td><code class="literal">&lt;-&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code class="literal">quad_point_ops</code></td>
+            <td><code class="type">point</code></td>
+            <td><code class="literal">&lt;&lt;</code> <code class="literal">&lt;@</code> <code class="literal">&lt;^</code> <code class="literal">&gt;&gt;</code> <code class="literal">&gt;^</code> <code class="literal">~=</code></td>
+            <td><code class="literal">&lt;-&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code class="literal">range_ops</code></td>
+            <td>any range type</td>
+            <td><code class="literal">&amp;&amp;</code> <code class="literal">&amp;&lt;</code> <code class="literal">&amp;&gt;</code> <code class="literal">-|-</code> <code class="literal">&lt;&lt;</code> <code class="literal">&lt;@</code> <code class="literal">=</code> <code class="literal">&gt;&gt;</code> <code class="literal">@&gt;</code></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><code class="literal">box_ops</code></td>
+            <td><code class="type">box</code></td>
+            <td><code class="literal">&lt;&lt;</code> <code class="literal">&amp;&lt;</code> <code class="literal">&amp;&amp;</code> <code class="literal">&amp;&gt;</code> <code class="literal">&gt;&gt;</code> <code class="literal">~=</code> <code class="literal">@&gt;</code> <code class="literal">&lt;@</code> <code class="literal">&amp;&lt;|</code> <code class="literal">&lt;&lt;|</code> <code class="literal">|&gt;&gt;</code> <code class="literal">|&amp;&gt;</code></td>
+            <td><code class="literal">&lt;-&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code class="literal">poly_ops</code></td>
+            <td><code class="type">polygon</code></td>
+            <td><code class="literal">&lt;&lt;</code> <code class="literal">&amp;&lt;</code> <code class="literal">&amp;&amp;</code> <code class="literal">&amp;&gt;</code> <code class="literal">&gt;&gt;</code> <code class="literal">~=</code> <code class="literal">@&gt;</code> <code class="literal">&lt;@</code> <code class="literal">&amp;&lt;|</code> <code class="literal">&lt;&lt;|</code> <code class="literal">|&gt;&gt;</code> <code class="literal">|&amp;&gt;</code></td>
+            <td><code class="literal">&lt;-&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code class="literal">text_ops</code></td>
+            <td><code class="type">text</code></td>
+            <td><code class="literal">&lt;</code> <code class="literal">&lt;=</code> <code class="literal">=</code> <code class="literal">&gt;</code> <code class="literal">&gt;=</code> <code class="literal">~&lt;=~</code> <code class="literal">~&lt;~</code> <code class="literal">~&gt;=~</code> <code class="literal">~&gt;~</code> <code class="literal">^@</code></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><code class="literal">inet_ops</code></td>
+            <td><code class="type">inet</code>, <code class="type">cidr</code></td>
+            <td><code class="literal">&amp;&amp;</code> <code class="literal">&gt;&gt;</code> <code class="literal">&gt;&gt;=</code> <code class="literal">&gt;</code> <code class="literal">&gt;=</code> <code class="literal">&lt;&gt;</code> <code class="literal">&lt;&lt;</code> <code class="literal">&lt;&lt;=</code> <code class="literal">&lt;</code> <code class="literal">&lt;=</code> <code class="literal">=</code></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+  <p>Of the two operator classes for type <code class="type">point</code>, <code class="literal">quad_point_ops</code> is the default. <code class="literal">kd_point_ops</code> supports the same operators but uses a different index data structure that may offer better performance in some applications.</p>
+  <p>The <code class="literal">quad_point_ops</code>, <code class="literal">kd_point_ops</code> and <code class="literal">poly_ops</code> operator classes support the <code class="literal">&lt;-&gt;</code> ordering operator, which enables the k-nearest neighbor (<code class="literal">k-NN</code>) search over indexed point or polygon data sets.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="spgist-intro.html" title="65.1.&nbsp;Introduction">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="spgist.html" title="Chapter&nbsp;65.&nbsp;SP-GiST Indexes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="spgist-extensibility.html" title="65.3.&nbsp;Extensibility">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">65.1.&nbsp;Introduction&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;65.3.&nbsp;Extensibility</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/spgist-builtin-opclasses.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Geolocation with GeoIP2 | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/ref/contrib/gis/geoip2/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Geolocation with GeoIP2 | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-module-django.contrib.gis.geoip2">
+<span id="s-geolocation-with-geoip2"></span><span id="module-django.contrib.gis.geoip2"></span><span id="geolocation-with-geoip2"></span><h1>Geolocation with GeoIP2<a class="headerlink" href="#module-django.contrib.gis.geoip2" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#django.contrib.gis.geoip2.GeoIP2" title="django.contrib.gis.geoip2.GeoIP2"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeoIP2</span></code></a> object is a wrapper for the <a class="reference external" href="https://geoip2.readthedocs.io/">MaxMind geoip2 Python
+library</a>. <a class="footnote-reference" href="#id6" id="id1">[1]</a></p>
+<p>In order to perform IP-based geolocation, the <a class="reference internal" href="#django.contrib.gis.geoip2.GeoIP2" title="django.contrib.gis.geoip2.GeoIP2"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeoIP2</span></code></a> object requires
+the <a class="reference external" href="https://pypi.org/project/geoip2/">geoip2 Python library</a> and the GeoIP <code class="docutils literal notranslate"><span class="pre">Country</span></code> and/or <code class="docutils literal notranslate"><span class="pre">City</span></code>
+<a class="reference external" href="https://dev.maxmind.com/geoip/geolite2-free-geolocation-data">datasets in binary format</a> (the CSV files will not work!). Grab the
+<code class="docutils literal notranslate"><span class="pre">GeoLite2-Country.mmdb.gz</span></code> and <code class="docutils literal notranslate"><span class="pre">GeoLite2-City.mmdb.gz</span></code> files and unzip them
+in a directory corresponding to the <a class="reference internal" href="#std-setting-GEOIP_PATH"><code class="xref std std-setting docutils literal notranslate"><span class="pre">GEOIP_PATH</span></code></a> setting.</p>
+<p>Additionally, it is recommended to install the <a class="reference external" href="https://github.com/maxmind/libmaxminddb/">libmaxminddb C library</a>, so
+that <code class="docutils literal notranslate"><span class="pre">geoip2</span></code> can leverage the C library’s faster speed.</p>
+<div class="section" id="s-example">
+<span id="example"></span><h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example of its usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.contrib.gis.geoip2</span> <span class="kn">import</span> <span class="n">GeoIP2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">GeoIP2</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">country</span><span class="p">(</span><span class="s1">&#39;google.com&#39;</span><span class="p">)</span>
+<span class="go">{&#39;country_code&#39;: &#39;US&#39;, &#39;country_name&#39;: &#39;United States&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">city</span><span class="p">(</span><span class="s1">&#39;72.14.207.99&#39;</span><span class="p">)</span>
+<span class="go">{&#39;city&#39;: &#39;Mountain View&#39;,</span>
+<span class="go">&#39;continent_code&#39;: &#39;NA&#39;,</span>
+<span class="go">&#39;continent_name&#39;: &#39;North America&#39;,</span>
+<span class="go">&#39;country_code&#39;: &#39;US&#39;,</span>
+<span class="go">&#39;country_name&#39;: &#39;United States&#39;,</span>
+<span class="go">&#39;dma_code&#39;: 807,</span>
+<span class="go">&#39;is_in_european_union&#39;: False,</span>
+<span class="go">&#39;latitude&#39;: 37.419200897216797,</span>
+<span class="go">&#39;longitude&#39;: -122.05740356445312,</span>
+<span class="go">&#39;postal_code&#39;: &#39;94043&#39;,</span>
+<span class="go">&#39;region&#39;: &#39;CA&#39;,</span>
+<span class="go">&#39;time_zone&#39;: &#39;America/Los_Angeles&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">lat_lon</span><span class="p">(</span><span class="s1">&#39;salon.com&#39;</span><span class="p">)</span>
+<span class="go">(39.0437, -77.4875)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">lon_lat</span><span class="p">(</span><span class="s1">&#39;uh.edu&#39;</span><span class="p">)</span>
+<span class="go">(-95.4342, 29.834)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">geos</span><span class="p">(</span><span class="s1">&#39;24.124.1.80&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">wkt</span>
+<span class="go">&#39;POINT (-97 38)&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-api-reference">
+<span id="api-reference"></span><h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">GeoIP2</span></code>(<em><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em><span class="n"><span class="pre">country</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">city</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">GeoIP</span></code> object does not require any parameters to use the default
+settings. However, at the very least the <a class="reference internal" href="#std-setting-GEOIP_PATH"><code class="xref std std-setting docutils literal notranslate"><span class="pre">GEOIP_PATH</span></code></a> setting
+should be set with the path of the location of your GeoIP datasets. The
+following initialization keywords may be used to customize any of the
+defaults.</p>
+<table class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword Arguments</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">path</span></code></td>
+<td>Base directory to where GeoIP data is located or the
+full path to where the city or country data files
+(<code class="docutils literal notranslate"><span class="pre">.mmdb</span></code>) are located. Assumes that both the city and
+country datasets are located in this directory;
+overrides the <a class="reference internal" href="#std-setting-GEOIP_PATH"><code class="xref std std-setting docutils literal notranslate"><span class="pre">GEOIP_PATH</span></code></a> setting.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">cache</span></code></td>
+<td>The cache settings when opening up the GeoIP datasets. May
+be an integer in (0, 1, 2, 4, 8) corresponding to the
+<code class="docutils literal notranslate"><span class="pre">MODE_AUTO</span></code>, <code class="docutils literal notranslate"><span class="pre">MODE_MMAP_EXT</span></code>, <code class="docutils literal notranslate"><span class="pre">MODE_MMAP</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">GEOIP_INDEX_CACHE</span></code> <code class="docutils literal notranslate"><span class="pre">MODE_MEMORY</span></code> C API settings,
+respectively. Defaults to 0 (<code class="docutils literal notranslate"><span class="pre">MODE_AUTO</span></code>).</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">country</span></code></td>
+<td>The name of the GeoIP country data file. Defaults
+to <code class="docutils literal notranslate"><span class="pre">GeoLite2-Country.mmdb</span></code>. Setting this keyword
+overrides the <a class="reference internal" href="#std-setting-GEOIP_COUNTRY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">GEOIP_COUNTRY</span></code></a> setting.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">city</span></code></td>
+<td>The name of the GeoIP city data file. Defaults to
+<code class="docutils literal notranslate"><span class="pre">GeoLite2-City.mmdb</span></code>. Setting this keyword overrides
+the <a class="reference internal" href="#std-setting-GEOIP_CITY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">GEOIP_CITY</span></code></a> setting.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="s-methods">
+<span id="methods"></span><h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-instantiating">
+<span id="instantiating"></span><h3>Instantiating<a class="headerlink" href="#instantiating" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.open">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">open</span></code>(<em><span class="n"><span class="pre">path</span></span></em>, <em><span class="n"><span class="pre">cache</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.open" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This classmethod instantiates the GeoIP object from the given database path
+and given cache setting.</p>
+</div>
+<div class="section" id="s-querying">
+<span id="querying"></span><h3>Querying<a class="headerlink" href="#querying" title="Permalink to this headline">¶</a></h3>
+<p>All the following querying routines may take either a string IP address
+or a fully qualified domain name (FQDN). For example, both
+<code class="docutils literal notranslate"><span class="pre">'205.186.163.125'</span></code> and <code class="docutils literal notranslate"><span class="pre">'djangoproject.com'</span></code> would be valid query
+parameters.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.city">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">city</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.city" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a dictionary of city information for the given query. Some
+of the values in the dictionary may be undefined (<code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.country">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">country</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.country" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a dictionary with the country code and country for the given
+query.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.country_code">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">country_code</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.country_code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns the country code corresponding to the query.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.country_name">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">country_name</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.country_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns the country name corresponding to the query.</p>
+</div>
+<div class="section" id="s-coordinate-retrieval">
+<span id="coordinate-retrieval"></span><h3>Coordinate Retrieval<a class="headerlink" href="#coordinate-retrieval" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.coords">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">coords</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.coords" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a coordinate tuple of (longitude, latitude).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.lon_lat">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">lon_lat</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.lon_lat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a coordinate tuple of (longitude, latitude).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.lat_lon">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">lat_lon</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.lat_lon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a coordinate tuple of (latitude, longitude),</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2.geos">
+<code class="sig-prename descclassname"><span class="pre">GeoIP2.</span></code><code class="sig-name descname"><span class="pre">geos</span></code>(<em><span class="n"><span class="pre">query</span></span></em>)<a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2.geos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a <a class="reference internal" href="../geos/#django.contrib.gis.geos.Point" title="django.contrib.gis.geos.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a> object corresponding to the
+query.</p>
+</div>
+</div>
+<div class="section" id="s-settings">
+<span id="settings"></span><h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-geoip-path">
+<span id="s-std-setting-GEOIP_PATH"></span><span id="s-std:setting-GEOIP_PATH"></span><span id="geoip-path"></span><span id="std-setting-GEOIP_PATH"></span><span id="std:setting-GEOIP_PATH"></span><h3><code class="docutils literal notranslate"><span class="pre">GEOIP_PATH</span></code><a class="headerlink" href="#geoip-path" title="Permalink to this headline">¶</a></h3>
+<p>A string or <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a> specifying the directory where the GeoIP data
+files are located. This setting is <em>required</em> unless manually specified
+with <code class="docutils literal notranslate"><span class="pre">path</span></code> keyword when initializing the <a class="reference internal" href="#django.contrib.gis.geoip2.GeoIP2" title="django.contrib.gis.geoip2.GeoIP2"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeoIP2</span></code></a> object.</p>
+</div>
+<div class="section" id="s-geoip-country">
+<span id="s-std-setting-GEOIP_COUNTRY"></span><span id="s-std:setting-GEOIP_COUNTRY"></span><span id="geoip-country"></span><span id="std-setting-GEOIP_COUNTRY"></span><span id="std:setting-GEOIP_COUNTRY"></span><h3><code class="docutils literal notranslate"><span class="pre">GEOIP_COUNTRY</span></code><a class="headerlink" href="#geoip-country" title="Permalink to this headline">¶</a></h3>
+<p>The basename to use for the GeoIP country data file. Defaults to
+<code class="docutils literal notranslate"><span class="pre">'GeoLite2-Country.mmdb'</span></code>.</p>
+</div>
+<div class="section" id="s-geoip-city">
+<span id="s-std-setting-GEOIP_CITY"></span><span id="s-std:setting-GEOIP_CITY"></span><span id="geoip-city"></span><span id="std-setting-GEOIP_CITY"></span><span id="std:setting-GEOIP_CITY"></span><h3><code class="docutils literal notranslate"><span class="pre">GEOIP_CITY</span></code><a class="headerlink" href="#geoip-city" title="Permalink to this headline">¶</a></h3>
+<p>The basename to use for the GeoIP city data file. Defaults to
+<code class="docutils literal notranslate"><span class="pre">'GeoLite2-City.mmdb'</span></code>.</p>
+</div>
+</div>
+<div class="section" id="s-exceptions">
+<span id="exceptions"></span><h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="django.contrib.gis.geoip2.GeoIP2Exception">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">GeoIP2Exception</span></code><a class="headerlink" href="#django.contrib.gis.geoip2.GeoIP2Exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>The exception raised when an error occurs in a call to the underlying
+<code class="docutils literal notranslate"><span class="pre">geoip2</span></code> library.</p>
+</dd></dl>
+
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>GeoIP(R) is a registered trademark of MaxMind, Inc.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+</ul>
+</li>
+
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

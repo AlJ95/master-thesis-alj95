@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.17. intagg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/intagg.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.17. intagg" />
+  <meta property="og:description" content="F.17.&amp;nbsp;intagg F.17.1. Functions F.17.2. Sample Uses The intagg module provides an integer aggregator and an enumerator. intagg is now obsolete, …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/intagg.html" title="PostgreSQL 17 - F.17. intagg" >Current</a>
+                          (<a href="/docs/17/intagg.html" title="PostgreSQL 17 - F.17. intagg" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/intagg.html" title="PostgreSQL 16 - F.17. intagg" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/intagg.html" title="PostgreSQL 15 - F.17. intagg" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/intagg.html" title="PostgreSQL 14 - F.17. intagg" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/intagg.html" title="PostgreSQL 13 - F.17. intagg" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/intagg.html" title="PostgreSQL devel - F.17. intagg"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/intagg.html" title="PostgreSQL 12 - F.17. intagg"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/intagg.html" title="PostgreSQL 11 - F.17. intagg"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/intagg.html" title="PostgreSQL 10 - F.17. intagg"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/intagg.html" title="PostgreSQL 9.6 - F.17. intagg"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/intagg.html" title="PostgreSQL 9.5 - F.17. intagg"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/intagg.html" title="PostgreSQL 9.4 - F.17. intagg"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/intagg.html" title="PostgreSQL 9.3 - F.17. intagg"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/intagg.html" title="PostgreSQL 9.2 - F.17. intagg"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/intagg.html" title="PostgreSQL 9.1 - F.17. intagg"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/intagg.html" title="PostgreSQL 9.0 - F.17. intagg"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/intagg.html" title="PostgreSQL 8.4 - F.17. intagg"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/intagg.html" title="PostgreSQL 8.3 - F.17. intagg"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.17.&nbsp;intagg</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="hstore.html" title="F.16.&nbsp;hstore">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="intarray.html" title="F.18.&nbsp;intarray">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="INTAGG">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.17.&nbsp;intagg</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="intagg.html#id-1.11.7.26.4">F.17.1. Functions</a></span></dt>
+      <dt><span class="sect2"><a href="intagg.html#id-1.11.7.26.5">F.17.2. Sample Uses</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.26.2" class="indexterm" name="id-1.11.7.26.2"></a>
+  <p>The <code class="filename">intagg</code> module provides an integer aggregator and an enumerator. <code class="filename">intagg</code> is now obsolete, because there are built-in functions that provide a superset of its capabilities. However, the module is still provided as a compatibility wrapper around the built-in functions.</p>
+  <div class="sect2" id="id-1.11.7.26.4">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.17.1.&nbsp;Functions</h3>
+        </div>
+      </div>
+    </div><a id="id-1.11.7.26.4.2" class="indexterm" name="id-1.11.7.26.4.2"></a><a id="id-1.11.7.26.4.3" class="indexterm" name="id-1.11.7.26.4.3"></a>
+    <p>The aggregator is an aggregate function <code class="function">int_array_aggregate(integer)</code> that produces an integer array containing exactly the integers it is fed. This is a wrapper around <code class="function">array_agg</code>, which does the same thing for any array type.</p><a id="id-1.11.7.26.4.5" class="indexterm" name="id-1.11.7.26.4.5"></a>
+    <p>The enumerator is a function <code class="function">int_array_enum(integer[])</code> that returns <code class="type">setof integer</code>. It is essentially the reverse operation of the aggregator: given an array of integers, expand it into a set of rows. This is a wrapper around <code class="function">unnest</code>, which does the same thing for any array type.</p>
+  </div>
+  <div class="sect2" id="id-1.11.7.26.5">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.17.2.&nbsp;Sample Uses</h3>
+        </div>
+      </div>
+    </div>
+    <p>Many database systems have the notion of a one to many table. Such a table usually sits between two indexed tables, for example:</p>
+    <pre class="programlisting">
+CREATE TABLE left (id INT PRIMARY KEY, ...);
+CREATE TABLE right (id INT PRIMARY KEY, ...);
+CREATE TABLE one_to_many(left INT REFERENCES left, right INT REFERENCES right);
+</pre>
+    <p>It is typically used like this:</p>
+    <pre class="programlisting">
+SELECT right.* from right JOIN one_to_many ON (right.id = one_to_many.right)
+  WHERE one_to_many.left = <em class="replaceable"><code>item</code></em>;
+</pre>
+    <p>This will return all the items in the right hand table for an entry in the left hand table. This is a very common construct in SQL.</p>
+    <p>Now, this methodology can be cumbersome with a very large number of entries in the <code class="structname">one_to_many</code> table. Often, a join like this would result in an index scan and a fetch for each right hand entry in the table for a particular left hand entry. If you have a very dynamic system, there is not much you can do. However, if you have some data which is fairly static, you can create a summary table with the aggregator.</p>
+    <pre class="programlisting">
+CREATE TABLE summary AS
+  SELECT left, int_array_aggregate(right) AS right
+  FROM one_to_many
+  GROUP BY left;
+</pre>
+    <p>This will create a table with one row per left item, and an array of right items. Now this is pretty useless without some way of using the array; that's why there is an array enumerator. You can do</p>
+    <pre class="programlisting">
+SELECT left, int_array_enum(right) FROM summary WHERE left = <em class="replaceable"><code>item</code></em>;
+</pre>
+    <p>The above query using <code class="function">int_array_enum</code> produces the same results as</p>
+    <pre class="programlisting">
+SELECT left, right FROM one_to_many WHERE left = <em class="replaceable"><code>item</code></em>;
+</pre>
+    <p>The difference is that the query against the summary table has to get only one row from the table, whereas the direct query against <code class="structname">one_to_many</code> must index scan and fetch a row for each entry.</p>
+    <p>On one system, an <code class="command">EXPLAIN</code> showed a query with a cost of 8488 was reduced to a cost of 329. The original query was a join involving the <code class="structname">one_to_many</code> table, which was replaced by:</p>
+    <pre class="programlisting">
+SELECT right, count(right) FROM
+  ( SELECT left, int_array_enum(right) AS right
+    FROM summary JOIN (SELECT left FROM left_table WHERE left = <em class="replaceable"><code>item</code></em>) AS lefts
+         ON (summary.left = lefts.left)
+  ) AS list
+  GROUP BY right
+  ORDER BY count DESC;
+</pre>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="hstore.html" title="F.16.&nbsp;hstore">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="intarray.html" title="F.18.&nbsp;intarray">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.16.&nbsp;hstore&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.18.&nbsp;intarray</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/intagg.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 45.3. Data Values</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/plpython-data.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="45.3. Data Values" />
+  <meta property="og:description" content="45.3.&amp;nbsp;Data Values 45.3.1. Data Type Mapping 45.3.2. Null, None 45.3.3. Arrays, Lists 45.3.4. Composite Types 45.3.5. Set-Returning Functions Generally speaking, …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/plpython-data.html" title="PostgreSQL 17 - 45.3. Data Values" >Current</a>
+                          (<a href="/docs/17/plpython-data.html" title="PostgreSQL 17 - 45.3. Data Values" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/plpython-data.html" title="PostgreSQL 16 - 45.3. Data Values" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/plpython-data.html" title="PostgreSQL 15 - 45.3. Data Values" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/plpython-data.html" title="PostgreSQL 14 - 45.3. Data Values" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/plpython-data.html" title="PostgreSQL 13 - 45.3. Data Values" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/plpython-data.html" title="PostgreSQL devel - 45.3. Data Values"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/plpython-data.html" title="PostgreSQL 12 - 45.3. Data Values"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/plpython-data.html" title="PostgreSQL 11 - 45.3. Data Values"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/plpython-data.html" title="PostgreSQL 10 - 45.3. Data Values"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/plpython-data.html" title="PostgreSQL 9.6 - 45.3. Data Values"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/plpython-data.html" title="PostgreSQL 9.5 - 45.3. Data Values"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/plpython-data.html" title="PostgreSQL 9.4 - 45.3. Data Values"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/plpython-data.html" title="PostgreSQL 9.3 - 45.3. Data Values"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/plpython-data.html" title="PostgreSQL 9.2 - 45.3. Data Values"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/plpython-data.html" title="PostgreSQL 9.1 - 45.3. Data Values"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/plpython-data.html" title="PostgreSQL 9.0 - 45.3. Data Values"  rel="nofollow">9.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">45.3.&nbsp;Data Values</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="plpython-funcs.html" title="45.2.&nbsp;PL/Python Functions">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="plpython-sharing.html" title="45.4.&nbsp;Sharing Data">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLPYTHON-DATA">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">45.3.&nbsp;Data Values</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="plpython-data.html#id-1.8.11.11.3">45.3.1. Data Type Mapping</a></span></dt>
+      <dt><span class="sect2"><a href="plpython-data.html#id-1.8.11.11.4">45.3.2. Null, None</a></span></dt>
+      <dt><span class="sect2"><a href="plpython-data.html#PLPYTHON-ARRAYS">45.3.3. Arrays, Lists</a></span></dt>
+      <dt><span class="sect2"><a href="plpython-data.html#id-1.8.11.11.6">45.3.4. Composite Types</a></span></dt>
+      <dt><span class="sect2"><a href="plpython-data.html#id-1.8.11.11.7">45.3.5. Set-Returning Functions</a></span></dt>
+    </dl>
+  </div>
+  <p>Generally speaking, the aim of PL/Python is to provide a <span class="quote">“<span class="quote">natural</span>”</span> mapping between the PostgreSQL and the Python worlds. This informs the data mapping rules described below.</p>
+  <div class="sect2" id="id-1.8.11.11.3">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">45.3.1.&nbsp;Data Type Mapping</h3>
+        </div>
+      </div>
+    </div>
+    <p>When a PL/Python function is called, its arguments are converted from their PostgreSQL data type to a corresponding Python type:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>PostgreSQL <code class="type">boolean</code> is converted to Python <code class="type">bool</code>.</p>
+        </li>
+        <li class="listitem">
+          <p>PostgreSQL <code class="type">smallint</code> and <code class="type">int</code> are converted to Python <code class="type">int</code>. PostgreSQL <code class="type">bigint</code> and <code class="type">oid</code> are converted to <code class="type">long</code> in Python 2 and to <code class="type">int</code> in Python 3.</p>
+        </li>
+        <li class="listitem">
+          <p>PostgreSQL <code class="type">real</code> and <code class="type">double</code> are converted to Python <code class="type">float</code>.</p>
+        </li>
+        <li class="listitem">
+          <p>PostgreSQL <code class="type">numeric</code> is converted to Python <code class="type">Decimal</code>. This type is imported from the <code class="literal">cdecimal</code> package if that is available. Otherwise, <code class="literal">decimal.Decimal</code> from the standard library will be used. <code class="literal">cdecimal</code> is significantly faster than <code class="literal">decimal</code>. In Python 3.3 and up, however, <code class="literal">cdecimal</code> has been integrated into the standard library under the name <code class="literal">decimal</code>, so there is no longer any difference.</p>
+        </li>
+        <li class="listitem">
+          <p>PostgreSQL <code class="type">bytea</code> is converted to Python <code class="type">str</code> in Python 2 and to <code class="type">bytes</code> in Python 3. In Python 2, the string should be treated as a byte sequence without any character encoding.</p>
+        </li>
+        <li class="listitem">
+          <p>All other data types, including the PostgreSQL character string types, are converted to a Python <code class="type">str</code>. In Python 2, this string will be in the PostgreSQL server encoding; in Python 3, it will be a Unicode string like all strings.</p>
+        </li>
+        <li class="listitem">
+          <p>For nonscalar data types, see below.</p>
+        </li>
+      </ul>
+    </div>
+    <p>When a PL/Python function returns, its return value is converted to the function's declared PostgreSQL return data type as follows:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>When the PostgreSQL return type is <code class="type">boolean</code>, the return value will be evaluated for truth according to the <span class="emphasis"><em>Python</em></span> rules. That is, 0 and empty string are false, but notably <code class="literal">'f'</code> is true.</p>
+        </li>
+        <li class="listitem">
+          <p>When the PostgreSQL return type is <code class="type">bytea</code>, the return value will be converted to a string (Python 2) or bytes (Python 3) using the respective Python built-ins, with the result being converted to <code class="type">bytea</code>.</p>
+        </li>
+        <li class="listitem">
+          <p>For all other PostgreSQL return types, the return value is converted to a string using the Python built-in <code class="literal">str</code>, and the result is passed to the input function of the PostgreSQL data type. (If the Python value is a <code class="type">float</code>, it is converted using the <code class="literal">repr</code> built-in instead of <code class="literal">str</code>, to avoid loss of precision.)</p>
+          <p>Strings in Python 2 are required to be in the PostgreSQL server encoding when they are passed to PostgreSQL. Strings that are not valid in the current server encoding will raise an error, but not all encoding mismatches can be detected, so garbage data can still result when this is not done correctly. Unicode strings are converted to the correct encoding automatically, so it can be safer and more convenient to use those. In Python 3, all strings are Unicode strings.</p>
+        </li>
+        <li class="listitem">
+          <p>For nonscalar data types, see below.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Note that logical mismatches between the declared PostgreSQL return type and the Python data type of the actual return object are not flagged; the value will be converted in any case.</p>
+  </div>
+  <div class="sect2" id="id-1.8.11.11.4">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">45.3.2.&nbsp;Null, None</h3>
+        </div>
+      </div>
+    </div>
+    <p>If an SQL null value<a id="id-1.8.11.11.4.2.1" class="indexterm" name="id-1.8.11.11.4.2.1"></a> is passed to a function, the argument value will appear as <code class="symbol">None</code> in Python. For example, the function definition of <code class="function">pymax</code> shown in <a class="xref" href="plpython-funcs.html" title="45.2.&nbsp;PL/Python Functions">Section&nbsp;45.2</a> will return the wrong answer for null inputs. We could add <code class="literal">STRICT</code> to the function definition to make <span class="productname">PostgreSQL</span> do something more reasonable: if a null value is passed, the function will not be called at all, but will just return a null result automatically. Alternatively, we could check for null inputs in the function body:</p>
+    <pre class="programlisting">
+CREATE FUNCTION pymax (a integer, b integer)
+  RETURNS integer
+AS $$
+  if (a is None) or (b is None):
+    return None
+  if a &gt; b:
+    return a
+  return b
+$$ LANGUAGE plpythonu;
+</pre>
+    <p>As shown above, to return an SQL null value from a PL/Python function, return the value <code class="symbol">None</code>. This can be done whether the function is strict or not.</p>
+  </div>
+  <div class="sect2" id="PLPYTHON-ARRAYS">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">45.3.3.&nbsp;Arrays, Lists</h3>
+        </div>
+      </div>
+    </div>
+    <p>SQL array values are passed into PL/Python as a Python list. To return an SQL array value out of a PL/Python function, return a Python list:</p>
+    <pre class="programlisting">
+CREATE FUNCTION return_arr()
+  RETURNS int[]
+AS $$
+return [1, 2, 3, 4, 5]
+$$ LANGUAGE plpythonu;
+
+SELECT return_arr();
+ return_arr  
+-------------
+ {1,2,3,4,5}
+(1 row)
+</pre>
+    <p>Multidimensional arrays are passed into PL/Python as nested Python lists. A 2-dimensional array is a list of lists, for example. When returning a multi-dimensional SQL array out of a PL/Python function, the inner lists at each level must all be of the same size. For example:</p>
+    <pre class="programlisting">
+CREATE FUNCTION test_type_conversion_array_int4(x int4[]) RETURNS int4[] AS $$
+plpy.info(x, type(x))
+return x
+$$ LANGUAGE plpythonu;
+
+SELECT * FROM test_type_conversion_array_int4(ARRAY[[1,2,3],[4,5,6]]);
+INFO:  ([[1, 2, 3], [4, 5, 6]], &lt;type 'list'&gt;)
+ test_type_conversion_array_int4 
+---------------------------------
+ {{1,2,3},{4,5,6}}
+(1 row)
+</pre>
+    <p>Other Python sequences, like tuples, are also accepted for backwards-compatibility with PostgreSQL versions 9.6 and below, when multi-dimensional arrays were not supported. However, they are always treated as one-dimensional arrays, because they are ambiguous with composite types. For the same reason, when a composite type is used in a multi-dimensional array, it must be represented by a tuple, rather than a list.</p>
+    <p>Note that in Python, strings are sequences, which can have undesirable effects that might be familiar to Python programmers:</p>
+    <pre class="programlisting">
+CREATE FUNCTION return_str_arr()
+  RETURNS varchar[]
+AS $$
+return "hello"
+$$ LANGUAGE plpythonu;
+
+SELECT return_str_arr();
+ return_str_arr
+----------------
+ {h,e,l,l,o}
+(1 row)
+</pre>
+  </div>
+  <div class="sect2" id="id-1.8.11.11.6">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">45.3.4.&nbsp;Composite Types</h3>
+        </div>
+      </div>
+    </div>
+    <p>Composite-type arguments are passed to the function as Python mappings. The element names of the mapping are the attribute names of the composite type. If an attribute in the passed row has the null value, it has the value <code class="symbol">None</code> in the mapping. Here is an example:</p>
+    <pre class="programlisting">
+CREATE TABLE employee (
+  name text,
+  salary integer,
+  age integer
+);
+
+CREATE FUNCTION overpaid (e employee)
+  RETURNS boolean
+AS $$
+  if e["salary"] &gt; 200000:
+    return True
+  if (e["age"] &lt; 30) and (e["salary"] &gt; 100000):
+    return True
+  return False
+$$ LANGUAGE plpythonu;
+</pre>
+    <p>There are multiple ways to return row or composite types from a Python function. The following examples assume we have:</p>
+    <pre class="programlisting">
+CREATE TYPE named_value AS (
+  name   text,
+  value  integer
+);
+</pre>
+    <p>A composite result can be returned as a:</p>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term">Sequence type (a tuple or list, but not a set because it is not indexable)</span></dt>
+        <dd>
+          <p>Returned sequence objects must have the same number of items as the composite result type has fields. The item with index 0 is assigned to the first field of the composite type, 1 to the second and so on. For example:</p>
+          <pre class="programlisting">
+CREATE FUNCTION make_pair (name text, value integer)
+  RETURNS named_value
+AS $$
+  return ( name, value )
+  # or alternatively, as list: return [ name, value ]
+$$ LANGUAGE plpythonu;
+</pre>
+          <p>To return a SQL null for any column, insert <code class="symbol">None</code> at the corresponding position.</p>
+          <p>When an array of composite types is returned, it cannot be returned as a list, because it is ambiguous whether the Python list represents a composite type, or another array dimension.</p>
+        </dd>
+        <dt><span class="term">Mapping (dictionary)</span></dt>
+        <dd>
+          <p>The value for each result type column is retrieved from the mapping with the column name as key. Example:</p>
+          <pre class="programlisting">
+CREATE FUNCTION make_pair (name text, value integer)
+  RETURNS named_value
+AS $$
+  return { "name": name, "value": value }
+$$ LANGUAGE plpythonu;
+</pre>
+          <p>Any extra dictionary key/value pairs are ignored. Missing keys are treated as errors. To return a SQL null value for any column, insert <code class="symbol">None</code> with the corresponding column name as the key.</p>
+        </dd>
+        <dt><span class="term">Object (any object providing method <code class="literal">__getattr__</code>)</span></dt>
+        <dd>
+          <p>This works the same as a mapping. Example:</p>
+          <pre class="programlisting">
+CREATE FUNCTION make_pair (name text, value integer)
+  RETURNS named_value
+AS $$
+  class named_value:
+    def __init__ (self, n, v):
+      self.name = n
+      self.value = v
+  return named_value(name, value)
+
+  # or simply
+  class nv: pass
+  nv.name = name
+  nv.value = value
+  return nv
+$$ LANGUAGE plpythonu;
+</pre>
+        </dd>
+      </dl>
+    </div>
+    <p>Functions with <code class="literal">OUT</code> parameters are also supported. For example:</p>
+    <pre class="programlisting">
+CREATE FUNCTION multiout_simple(OUT i integer, OUT j integer) AS $$
+return (1, 2)
+$$ LANGUAGE plpythonu;
+
+SELECT * FROM multiout_simple();
+</pre>
+    <p>Output parameters of procedures are passed back the same way. For example:</p>
+    <pre class="programlisting">
+CREATE PROCEDURE python_triple(INOUT a integer, INOUT b integer) AS $$
+return (a * 3, b * 3)
+$$ LANGUAGE plpythonu;
+
+CALL python_triple(5, 10);
+</pre>
+  </div>
+  <div class="sect2" id="id-1.8.11.11.7">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">45.3.5.&nbsp;Set-Returning Functions</h3>
+        </div>
+      </div>
+    </div>
+    <p>A <span class="application">PL/Python</span> function can also return sets of scalar or composite types. There are several ways to achieve this because the returned object is internally turned into an iterator. The following examples assume we have composite type:</p>
+    <pre class="programlisting">
+CREATE TYPE greeting AS (
+  how text,
+  who text
+);
+</pre>
+    <p>A set result can be returned from a:</p>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term">Sequence type (tuple, list, set)</span></dt>
+        <dd>
+          <pre class="programlisting">
+CREATE FUNCTION greet (how text)
+  RETURNS SETOF greeting
+AS $$
+  # return tuple containing lists as composite types
+  # all other combinations work also
+  return ( [ how, "World" ], [ how, "PostgreSQL" ], [ how, "PL/Python" ] )
+$$ LANGUAGE plpythonu;
+</pre>
+        </dd>
+        <dt><span class="term">Iterator (any object providing <code class="symbol">__iter__</code> and <code class="symbol">next</code> methods)</span></dt>
+        <dd>
+          <pre class="programlisting">
+CREATE FUNCTION greet (how text)
+  RETURNS SETOF greeting
+AS $$
+  class producer:
+    def __init__ (self, how, who):
+      self.how = how
+      self.who = who
+      self.ndx = -1
+
+    def __iter__ (self):
+      return self
+
+    def next (self):
+      self.ndx += 1
+      if self.ndx == len(self.who):
+        raise StopIteration
+      return ( self.how, self.who[self.ndx] )
+
+  return producer(how, [ "World", "PostgreSQL", "PL/Python" ])
+$$ LANGUAGE plpythonu;
+</pre>
+        </dd>
+        <dt><span class="term">Generator (<code class="literal">yield</code>)</span></dt>
+        <dd>
+          <pre class="programlisting">
+CREATE FUNCTION greet (how text)
+  RETURNS SETOF greeting
+AS $$
+  for who in [ "World", "PostgreSQL", "PL/Python" ]:
+    yield ( how, who )
+$$ LANGUAGE plpythonu;
+</pre>
+        </dd>
+      </dl>
+    </div>
+    <p>Set-returning functions with <code class="literal">OUT</code> parameters (using <code class="literal">RETURNS SETOF record</code>) are also supported. For example:</p>
+    <pre class="programlisting">
+CREATE FUNCTION multiout_simple_setof(n integer, OUT integer, OUT integer) RETURNS SETOF record AS $$
+return [(1, 2)] * n
+$$ LANGUAGE plpythonu;
+
+SELECT * FROM multiout_simple_setof(3);
+</pre>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="plpython-funcs.html" title="45.2.&nbsp;PL/Python Functions">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="plpython-sharing.html" title="45.4.&nbsp;Sharing Data">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">45.2.&nbsp;PL/Python Functions&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;45.4.&nbsp;Sharing Data</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/plpython-data.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

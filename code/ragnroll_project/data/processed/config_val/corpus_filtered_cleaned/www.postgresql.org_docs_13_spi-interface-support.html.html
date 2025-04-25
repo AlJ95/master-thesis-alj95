@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 46.2. Interface Support Functions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/spi-interface-support.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="46.2. Interface Support Functions" />
+  <meta property="og:description" content="46.2.&amp;nbsp;Interface Support Functions SPI_fname — determine the column name for the specified column number SPI_fnumber — determine the column number …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/spi-interface-support.html" title="PostgreSQL 17 - 46.2. Interface Support Functions" >Current</a>
+                          (<a href="/docs/17/spi-interface-support.html" title="PostgreSQL 17 - 46.2. Interface Support Functions" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/spi-interface-support.html" title="PostgreSQL 16 - 46.2. Interface Support Functions" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/spi-interface-support.html" title="PostgreSQL 15 - 46.2. Interface Support Functions" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/spi-interface-support.html" title="PostgreSQL 14 - 46.2. Interface Support Functions" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/spi-interface-support.html" title="PostgreSQL 13 - 46.2. Interface Support Functions" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/spi-interface-support.html" title="PostgreSQL devel - 46.2. Interface Support Functions"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/spi-interface-support.html" title="PostgreSQL 12 - 46.2. Interface Support Functions"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/spi-interface-support.html" title="PostgreSQL 11 - 46.2. Interface Support Functions"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/spi-interface-support.html" title="PostgreSQL 10 - 46.2. Interface Support Functions"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/spi-interface-support.html" title="PostgreSQL 9.6 - 46.2. Interface Support Functions"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/spi-interface-support.html" title="PostgreSQL 9.5 - 46.2. Interface Support Functions"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/spi-interface-support.html" title="PostgreSQL 9.4 - 46.2. Interface Support Functions"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/spi-interface-support.html" title="PostgreSQL 9.3 - 46.2. Interface Support Functions"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/spi-interface-support.html" title="PostgreSQL 9.2 - 46.2. Interface Support Functions"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/spi-interface-support.html" title="PostgreSQL 9.1 - 46.2. Interface Support Functions"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/spi-interface-support.html" title="PostgreSQL 9.0 - 46.2. Interface Support Functions"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/spi-interface-support.html" title="PostgreSQL 8.4 - 46.2. Interface Support Functions"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/spi-interface-support.html" title="PostgreSQL 8.3 - 46.2. Interface Support Functions"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/spi-interface-support.html" title="PostgreSQL 8.2 - 46.2. Interface Support Functions"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/spi-interface-support.html" title="PostgreSQL 8.1 - 46.2. Interface Support Functions"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/spi-interface-support.html" title="PostgreSQL 8.0 - 46.2. Interface Support Functions"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/spi-interface-support.html" title="PostgreSQL 7.4 - 46.2. Interface Support Functions"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/spi-interface-support.html" title="PostgreSQL 7.3 - 46.2. Interface Support Functions"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/spi-interface-support.html" title="PostgreSQL 7.2 - 46.2. Interface Support Functions"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/spi-interface-support.html" title="PostgreSQL 7.1 - 46.2. Interface Support Functions"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">46.2.&nbsp;Interface Support Functions</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="spi-spi-register-trigger-data.html" title="SPI_register_trigger_data">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="spi.html" title="Chapter&nbsp;46.&nbsp;Server Programming Interface">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;46.&nbsp;Server Programming Interface</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="spi-spi-fname.html" title="SPI_fname">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="SPI-INTERFACE-SUPPORT">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">46.2.&nbsp;Interface Support Functions</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="refentrytitle"><a href="spi-spi-fname.html">SPI_fname</a></span> <span class="refpurpose">— determine the column name for the specified column number</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-fnumber.html">SPI_fnumber</a></span> <span class="refpurpose">— determine the column number for the specified column name</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-getvalue.html">SPI_getvalue</a></span> <span class="refpurpose">— return the string value of the specified column</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-getbinval.html">SPI_getbinval</a></span> <span class="refpurpose">— return the binary value of the specified column</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-gettype.html">SPI_gettype</a></span> <span class="refpurpose">— return the data type name of the specified column</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-gettypeid.html">SPI_gettypeid</a></span> <span class="refpurpose">— return the data type <acronym class="acronym">OID</acronym> of the specified column</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-getrelname.html">SPI_getrelname</a></span> <span class="refpurpose">— return the name of the specified relation</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-getnspname.html">SPI_getnspname</a></span> <span class="refpurpose">— return the namespace of the specified relation</span></dt>
+      <dt><span class="refentrytitle"><a href="spi-spi-result-code-string.html">SPI_result_code_string</a></span> <span class="refpurpose">— return error code as string</span></dt>
+    </dl>
+  </div>
+  <p>The functions described here provide an interface for extracting information from result sets returned by <code class="function">SPI_execute</code> and other SPI functions.</p>
+  <p>All functions described in this section can be used by both connected and unconnected C functions.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="spi-spi-register-trigger-data.html" title="SPI_register_trigger_data">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="spi.html" title="Chapter&nbsp;46.&nbsp;Server Programming Interface">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="spi-spi-fname.html" title="SPI_fname">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">SPI_register_trigger_data&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;SPI_fname</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/spi-interface-support.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

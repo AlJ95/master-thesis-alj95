@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: ALTER COLLATION</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-altercollation.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="ALTER COLLATION" />
+  <meta property="og:description" content="ALTER COLLATION ALTER COLLATION — change the definition of a collation Synopsis ALTER COLLATION name REFRESH VERSION ALTER COLLATION name …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-altercollation.html" title="PostgreSQL 17 - ALTER COLLATION" >Current</a>
+                          (<a href="/docs/17/sql-altercollation.html" title="PostgreSQL 17 - ALTER COLLATION" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-altercollation.html" title="PostgreSQL 16 - ALTER COLLATION" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-altercollation.html" title="PostgreSQL 15 - ALTER COLLATION" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-altercollation.html" title="PostgreSQL 14 - ALTER COLLATION" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-altercollation.html" title="PostgreSQL 13 - ALTER COLLATION" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-altercollation.html" title="PostgreSQL devel - ALTER COLLATION"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-altercollation.html" title="PostgreSQL 12 - ALTER COLLATION"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-altercollation.html" title="PostgreSQL 11 - ALTER COLLATION"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-altercollation.html" title="PostgreSQL 10 - ALTER COLLATION"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-altercollation.html" title="PostgreSQL 9.6 - ALTER COLLATION"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-altercollation.html" title="PostgreSQL 9.5 - ALTER COLLATION"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-altercollation.html" title="PostgreSQL 9.4 - ALTER COLLATION"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-altercollation.html" title="PostgreSQL 9.3 - ALTER COLLATION"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-altercollation.html" title="PostgreSQL 9.2 - ALTER COLLATION"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-altercollation.html" title="PostgreSQL 9.1 - ALTER COLLATION"  rel="nofollow">9.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">ALTER COLLATION</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-alteraggregate.html" title="ALTER AGGREGATE">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-alterconversion.html" title="ALTER CONVERSION">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-ALTERCOLLATION">
+  <div class="titlepage"></div><a id="id-1.9.3.5.1" class="indexterm" name="id-1.9.3.5.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">ALTER COLLATION</span></h2>
+    <p>ALTER COLLATION — change the definition of a collation</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+ALTER COLLATION <em class="replaceable"><code>name</code></em> REFRESH VERSION
+
+ALTER COLLATION <em class="replaceable"><code>name</code></em> RENAME TO <em class="replaceable"><code>new_name</code></em>
+ALTER COLLATION <em class="replaceable"><code>name</code></em> OWNER TO { <em class="replaceable"><code>new_owner</code></em> | CURRENT_USER | SESSION_USER }
+ALTER COLLATION <em class="replaceable"><code>name</code></em> SET SCHEMA <em class="replaceable"><code>new_schema</code></em>
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.5.5">
+    <h2>Description</h2>
+    <p><code class="command">ALTER COLLATION</code> changes the definition of a collation.</p>
+    <p>You must own the collation to use <code class="command">ALTER COLLATION</code>. To alter the owner, you must also be a direct or indirect member of the new owning role, and that role must have <code class="literal">CREATE</code> privilege on the collation's schema. (These restrictions enforce that altering the owner doesn't do anything you couldn't do by dropping and recreating the collation. However, a superuser can alter ownership of any collation anyway.)</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.5.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of an existing collation.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_name</code></em></span></dt>
+        <dd>
+          <p>The new name of the collation.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_owner</code></em></span></dt>
+        <dd>
+          <p>The new owner of the collation.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_schema</code></em></span></dt>
+        <dd>
+          <p>The new schema for the collation.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">REFRESH VERSION</code></span></dt>
+        <dd>
+          <p>Update the collation's version. See <a class="xref" href="sql-altercollation.html#SQL-ALTERCOLLATION-NOTES" title="Notes">Notes</a> below.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="SQL-ALTERCOLLATION-NOTES">
+    <h2>Notes</h2>
+    <p>When using collations provided by the ICU library, the ICU-specific version of the collator is recorded in the system catalog when the collation object is created. When the collation is used, the current version is checked against the recorded version, and a warning is issued when there is a mismatch, for example:</p>
+    <pre class="screen">
+WARNING:  collation "xx-x-icu" has version mismatch
+DETAIL:  The collation in the database was created using version 1.2.3.4, but the operating system provides version 2.3.4.5.
+HINT:  Rebuild all objects affected by this collation and run ALTER COLLATION pg_catalog."xx-x-icu" REFRESH VERSION, or build PostgreSQL with the right library version.
+</pre>
+    <p>A change in collation definitions can lead to corrupt indexes and other problems because the database system relies on stored objects having a certain sort order. Generally, this should be avoided, but it can happen in legitimate circumstances, such as when using <code class="command">pg_upgrade</code> to upgrade to server binaries linked with a newer version of ICU. When this happens, all objects depending on the collation should be rebuilt, for example, using <code class="command">REINDEX</code>. When that is done, the collation version can be refreshed using the command <code class="literal">ALTER COLLATION ... REFRESH VERSION</code>. This will update the system catalog to record the current collator version and will make the warning go away. Note that this does not actually check whether all affected objects have been rebuilt correctly.</p>
+    <p>When using collations provided by <code class="literal">libc</code> and <span class="productname">PostgreSQL</span> was built with the GNU C library, the C library's version is used as a collation version. Since collation definitions typically change only with GNU C library releases, this provides some defense against corruption, but it is not completely reliable.</p>
+    <p>Currently, there is no version tracking for the database default collation.</p>
+    <p>The following query can be used to identify all collations in the current database that need to be refreshed and the objects that depend on them:</p>
+    <pre class="programlisting">
+SELECT pg_describe_object(refclassid, refobjid, refobjsubid) AS "Collation",
+       pg_describe_object(classid, objid, objsubid) AS "Object"
+  FROM pg_depend d JOIN pg_collation c
+       ON refclassid = 'pg_collation'::regclass AND refobjid = c.oid
+  WHERE c.collversion &lt;&gt; pg_collation_actual_version(c.oid)
+  ORDER BY 1, 2;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.5.8">
+    <h2>Examples</h2>
+    <p>To rename the collation <code class="literal">de_DE</code> to <code class="literal">german</code>:</p>
+    <pre class="programlisting">
+ALTER COLLATION "de_DE" RENAME TO german;
+</pre>
+    <p>To change the owner of the collation <code class="literal">en_US</code> to <code class="literal">joe</code>:</p>
+    <pre class="programlisting">
+ALTER COLLATION "en_US" OWNER TO joe;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.5.9">
+    <h2>Compatibility</h2>
+    <p>There is no <code class="command">ALTER COLLATION</code> statement in the SQL standard.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.5.10">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-createcollation.html" title="CREATE COLLATION"><span class="refentrytitle">CREATE COLLATION</span></a>, <a class="xref" href="sql-dropcollation.html" title="DROP COLLATION"><span class="refentrytitle">DROP COLLATION</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-alteraggregate.html" title="ALTER AGGREGATE">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-alterconversion.html" title="ALTER CONVERSION">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">ALTER AGGREGATE&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;ALTER CONVERSION</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-altercollation.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

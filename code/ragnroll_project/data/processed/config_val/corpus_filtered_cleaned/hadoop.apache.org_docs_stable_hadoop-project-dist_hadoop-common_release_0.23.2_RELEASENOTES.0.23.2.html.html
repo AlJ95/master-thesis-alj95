@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  0.23.2 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  0.23.2 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-2887">HDFS-2887</a> | <i>Major</i> | <b>Define a FSVolume interface</b></li>
+</ul>
+<p>FSVolume, is a part of FSDatasetInterface implementation, should not be referred outside FSDataset.  A new FSVolumeInterface is defined.  The BlockVolumeChoosingPolicy.chooseVolume(..) method signature is also updated.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-2950">HDFS-2950</a> | <i>Minor</i> | <b>Secondary NN HTTPS address should be listed as a NAMESERVICE_SPECIFIC_KEY</b></li>
+</ul>
+<p>The configuration dfs.secondary.https.port has been renamed to dfs.namenode.secondary.https-port for consistency. The old configuration is still supported via a deprecation path.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3634">MAPREDUCE-3634</a> | <i>Major</i> | <b>All daemons should crash instead of hanging around when their EventHandlers get exceptions</b></li>
+</ul>
+<p>Fixed all daemons to crash instead of hanging around when their EventHandlers get exceptions.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3798">MAPREDUCE-3798</a> | <i>Major</i> | <b>TestJobCleanup testCustomCleanup is failing</b></li>
+</ul>
+<p>Fixed failing TestJobCleanup.testCusomCleanup() and moved it to the maven build.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-2907">HDFS-2907</a> | <i>Minor</i> | <b>Make FSDataset in Datanode Pluggable</b></li>
+</ul>
+<p>Add a private conf property dfs.datanode.fsdataset.factory to make FSDataset in Datanode pluggable.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3738">MAPREDUCE-3738</a> | <i>Critical</i> | <b>NM can hang during shutdown if AppLogAggregatorImpl thread dies unexpectedly</b></li>
+</ul>
+<p>Committed to trunk and branch-0.23. Thanks Jason.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3866">MAPREDUCE-3866</a> | <i>Minor</i> | <b>bin/yarn prints the command line unnecessarily</b></li>
+</ul>
+<p>Fixed the bin/yarn script to not print the command line unnecessarily.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3730">MAPREDUCE-3730</a> | <i>Minor</i> | <b>Allow restarted NM to rejoin cluster before RM expires it</b></li>
+</ul>
+<p>Modified RM to allow restarted NMs to be able to join the cluster without waiting for expiry.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-2793">MAPREDUCE-2793</a> | <i>Critical</i> | <b>[MR-279] Maintain consistency in naming appIDs, jobIDs and attemptIDs</b></li>
+</ul>
+<p>Corrected AppIDs, JobIDs, TaskAttemptIDs to be of correct format on the web pages.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3910">MAPREDUCE-3910</a> | <i>Blocker</i> | <b>user not allowed to submit jobs even though queue -showacls shows it allows</b></li>
+</ul>
+<p>Fixed a bug in CapacityScheduler LeafQueue which was causing app-submission to fail.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3686">MAPREDUCE-3686</a> | <i>Critical</i> | <b>history server web ui - job counter values for map/reduce not shown properly</b></li>
+</ul>
+<p>Fixed two bugs in Counters because of which web app displays zero counter values for framework counters.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3901">MAPREDUCE-3901</a> | <i>Major</i> | <b>lazy load JobHistory Task and TaskAttempt details</b></li>
+</ul>
+<p>Modified JobHistory records in YARN to lazily load job and task reports so as to improve UI response times.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-2855">MAPREDUCE-2855</a> | <i>Major</i> | <b>ResourceBundle lookup during counter name resolution takes a lot of time</b></li>
+</ul>
+<p>Passing a cached class-loader to ResourceBundle creator to minimize counter names lookup time.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3922">MAPREDUCE-3922</a> | <i>Minor</i> | <b>Fix the potential problem compiling 32 bit binaries on a x86_64 host.</b></li>
+</ul>
+<p>Fixed build to not compile 32bit container-executor binary by default on all platforms.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3931">MAPREDUCE-3931</a> | <i>Major</i> | <b>MR tasks failing due to changing timestamps on Resources to download</b></li>
+</ul>
+<p>Changed PB implementation of LocalResource to take locks so that race conditions don&#x2019;t fail tasks by inadvertantly changing the timestamps.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3920">MAPREDUCE-3920</a> | <i>Major</i> | <b>Revise yarn default port number selection</b></li>
+</ul>
+<p>port number changes for resourcemanager and nodemanager</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8131">HADOOP-8131</a> | <i>Critical</i> | <b>FsShell put doesn&#x2019;t correctly handle a non-existent dir</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3792">MAPREDUCE-3792</a> | <i>Critical</i> | <b>job -list displays only the jobs submitted by a particular user</b></li>
+</ul>
+<p>Fix &#x201c;bin/mapred job -list&#x201d; to display all jobs instead of only the jobs owned by the user.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3614">MAPREDUCE-3614</a> | <i>Major</i> | ** finalState UNDEFINED if AM is killed by hand**</li>
+</ul>
+<p>Fixed MR AM to close history file quickly and send a correct final state to the RM when it is killed.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3009">MAPREDUCE-3009</a> | <i>Major</i> | <b>RM UI -&gt; Applications -&gt; Application(Job History) -&gt; Map Tasks -&gt; Task ID -&gt; Node link is not working</b></li>
+</ul>
+<p>Fixed node link on JobHistory webapp.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3954">MAPREDUCE-3954</a> | <i>Blocker</i> | <b>Clean up passing HEAPSIZE to yarn and mapred commands.</b></li>
+</ul>
+<p>Added new envs to separate heap size for different daemons started via bin scripts.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3975">MAPREDUCE-3975</a> | <i>Blocker</i> | <b>Default value not set for Configuration parameter mapreduce.job.local.dir</b></li>
+</ul>
+<p>Exporting mapreduce.job.local.dir for mapreduce tasks to use as job-level shared scratch space.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3982">MAPREDUCE-3982</a> | <i>Critical</i> | <b>TestEmptyJob fails with FileNotFound</b></li>
+</ul>
+<p>Fixed FileOutputCommitter to not err out for an &#x2018;empty-job&#x2019; whose tasks don&#x2019;t write any outputs.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8164">HADOOP-8164</a> | <i>Major</i> | <b>Handle paths using back slash as path separator for windows only</b></li>
+</ul>
+<p>This jira only allows providing paths using back slash as separator on Windows. The back slash on *nix system will be used as escape character. The support for paths using back slash as path separator will be removed in HADOOP-8139 in release 23.3.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8175">HADOOP-8175</a> | <i>Major</i> | <b>Add mkdir -p flag</b></li>
+</ul>
+<p>FsShell mkdir now accepts a -p flag.  Like unix, mkdir -p will not fail if the directory already exists.  Unlike unix, intermediate directories are always created, regardless of the flag, to avoid incompatibilities at this time.</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

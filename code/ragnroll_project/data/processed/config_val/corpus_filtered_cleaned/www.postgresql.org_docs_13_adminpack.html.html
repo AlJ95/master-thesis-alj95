@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.1. adminpack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/adminpack.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.1. adminpack" />
+  <meta property="og:description" content="F.1.&amp;nbsp;adminpack adminpack provides a number of support functions which pgAdmin and other administration and management tools can use to provide …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/16/adminpack.html" title="PostgreSQL 16 - F.1. adminpack" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/adminpack.html" title="PostgreSQL 15 - F.1. adminpack" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/adminpack.html" title="PostgreSQL 14 - F.1. adminpack" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/adminpack.html" title="PostgreSQL 13 - F.1. adminpack" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/adminpack.html" title="PostgreSQL 12 - F.1. adminpack"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/adminpack.html" title="PostgreSQL 11 - F.1. adminpack"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/adminpack.html" title="PostgreSQL 10 - F.1. adminpack"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/adminpack.html" title="PostgreSQL 9.6 - F.1. adminpack"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/adminpack.html" title="PostgreSQL 9.5 - F.1. adminpack"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/adminpack.html" title="PostgreSQL 9.4 - F.1. adminpack"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/adminpack.html" title="PostgreSQL 9.3 - F.1. adminpack"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/adminpack.html" title="PostgreSQL 9.2 - F.1. adminpack"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/adminpack.html" title="PostgreSQL 9.1 - F.1. adminpack"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/adminpack.html" title="PostgreSQL 9.0 - F.1. adminpack"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/adminpack.html" title="PostgreSQL 8.4 - F.1. adminpack"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/adminpack.html" title="PostgreSQL 8.3 - F.1. adminpack"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.1.&nbsp;adminpack</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="amcheck.html" title="F.2.&nbsp;amcheck">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="ADMINPACK">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.1.&nbsp;adminpack</h2>
+      </div>
+    </div>
+  </div><a id="id-1.11.7.10.2" class="indexterm" name="id-1.11.7.10.2"></a>
+  <p><code class="filename">adminpack</code> provides a number of support functions which <span class="application">pgAdmin</span> and other administration and management tools can use to provide additional functionality, such as remote management of server log files. Use of all these functions is only allowed to the superuser by default but may be allowed to other users by using the <code class="command">GRANT</code> command.</p>
+  <p>The functions shown in <a class="xref" href="adminpack.html#FUNCTIONS-ADMINPACK-TABLE" title="Table&nbsp;F.1.&nbsp;adminpack Functions">Table&nbsp;F.1</a> provide write access to files on the machine hosting the server. (See also the functions in <a class="xref" href="functions-admin.html#FUNCTIONS-ADMIN-GENFILE-TABLE" title="Table&nbsp;9.95.&nbsp;Generic File Access Functions">Table&nbsp;9.95</a>, which provide read-only access.) Only files within the database cluster directory can be accessed, unless the user is a superuser or given one of the pg_read_server_files, or pg_write_server_files roles, as appropriate for the function, but either a relative or absolute path is allowable.</p>
+  <div class="table" id="FUNCTIONS-ADMINPACK-TABLE">
+    <p class="title"><strong>Table&nbsp;F.1.&nbsp;<code class="filename">adminpack</code> Functions</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="adminpack Functions" border="1">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="func_table_entry">
+              <p class="func_signature">Function</p>
+              <p>Description</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="func_table_entry">
+              <p class="func_signature"><code class="function">pg_catalog.pg_file_write</code> ( <em class="parameter"><code>filename</code></em> <code class="type">text</code>, <em class="parameter"><code>data</code></em> <code class="type">text</code>, <em class="parameter"><code>append</code></em> <code class="type">boolean</code> ) → <code class="returnvalue">bigint</code></p>
+              <p>Writes, or appends to, a text file.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="func_table_entry">
+              <p class="func_signature"><code class="function">pg_catalog.pg_file_sync</code> ( <em class="parameter"><code>filename</code></em> <code class="type">text</code> ) → <code class="returnvalue">void</code></p>
+              <p>Flushes a file or directory to disk.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="func_table_entry">
+              <p class="func_signature"><code class="function">pg_catalog.pg_file_rename</code> ( <em class="parameter"><code>oldname</code></em> <code class="type">text</code>, <em class="parameter"><code>newname</code></em> <code class="type">text</code> [<span class="optional">, <em class="parameter"><code>archivename</code></em> <code class="type">text</code></span> ] ) → <code class="returnvalue">boolean</code></p>
+              <p>Renames a file.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="func_table_entry">
+              <p class="func_signature"><code class="function">pg_catalog.pg_file_unlink</code> ( <em class="parameter"><code>filename</code></em> <code class="type">text</code> ) → <code class="returnvalue">boolean</code></p>
+              <p>Removes a file.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="func_table_entry">
+              <p class="func_signature"><code class="function">pg_catalog.pg_logdir_ls</code> () → <code class="returnvalue">setof record</code></p>
+              <p>Lists the log files in the <code class="varname">log_directory</code> directory.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+  <a id="id-1.11.7.10.6" class="indexterm" name="id-1.11.7.10.6"></a>
+  <p><code class="function">pg_file_write</code> writes the specified <em class="parameter"><code>data</code></em> into the file named by <em class="parameter"><code>filename</code></em>. If <em class="parameter"><code>append</code></em> is false, the file must not already exist. If <em class="parameter"><code>append</code></em> is true, the file can already exist, and will be appended to if so. Returns the number of bytes written.</p><a id="id-1.11.7.10.8" class="indexterm" name="id-1.11.7.10.8"></a>
+  <p><code class="function">pg_file_sync</code> fsyncs the specified file or directory named by <em class="parameter"><code>filename</code></em>. An error is thrown on failure (e.g., the specified file is not present). Note that <a class="xref" href="runtime-config-error-handling.html#GUC-DATA-SYNC-RETRY">data_sync_retry</a> has no effect on this function, and therefore a PANIC-level error will not be raised even on failure to flush database files.</p><a id="id-1.11.7.10.10" class="indexterm" name="id-1.11.7.10.10"></a>
+  <p><code class="function">pg_file_rename</code> renames a file. If <em class="parameter"><code>archivename</code></em> is omitted or NULL, it simply renames <em class="parameter"><code>oldname</code></em> to <em class="parameter"><code>newname</code></em> (which must not already exist). If <em class="parameter"><code>archivename</code></em> is provided, it first renames <em class="parameter"><code>newname</code></em> to <em class="parameter"><code>archivename</code></em> (which must not already exist), and then renames <em class="parameter"><code>oldname</code></em> to <em class="parameter"><code>newname</code></em>. In event of failure of the second rename step, it will try to rename <em class="parameter"><code>archivename</code></em> back to <em class="parameter"><code>newname</code></em> before reporting the error. Returns true on success, false if the source file(s) are not present or not writable; other cases throw errors.</p><a id="id-1.11.7.10.12" class="indexterm" name="id-1.11.7.10.12"></a>
+  <p><code class="function">pg_file_unlink</code> removes the specified file. Returns true on success, false if the specified file is not present or the <code class="function">unlink()</code> call fails; other cases throw errors.</p><a id="id-1.11.7.10.14" class="indexterm" name="id-1.11.7.10.14"></a>
+  <p><code class="function">pg_logdir_ls</code> returns the start timestamps and path names of all the log files in the <a class="xref" href="runtime-config-logging.html#GUC-LOG-DIRECTORY">log_directory</a> directory. The <a class="xref" href="runtime-config-logging.html#GUC-LOG-FILENAME">log_filename</a> parameter must have its default setting (<code class="literal">postgresql-%Y-%m-%d_%H%M%S.log</code>) to use this function.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="amcheck.html" title="F.2.&nbsp;amcheck">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Appendix&nbsp;F.&nbsp;Additional Supplied Modules&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.2.&nbsp;amcheck</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/adminpack.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

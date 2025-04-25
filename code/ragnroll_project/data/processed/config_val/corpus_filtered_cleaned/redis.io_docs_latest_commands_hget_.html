@@ -1,0 +1,1296 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>HGET | Docs</title>
+    <meta name="description" content="Returns the value of a field in a hash.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/hget/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="HGET">
+  <meta property="og:description" content="Returns the value of a field in a hash.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="HGET">
+  <meta itemprop="description" content="Returns the value of a field in a hash.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="1203">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="HGET">
+  <meta name="twitter:description" content="Returns the value of a field in a hash.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">HGET
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">HGET key field</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 2.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@hash</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@fast</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Returns the value associated with <code>field</code> in the hash stored at <code>key</code>.</p>
+<h2 id="examples">Examples</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="codetabs cli group flex justify-start items-center flex-wrap box-border rounded-lg mt-0 mb-0 mx-auto bg-slate-900" id="cmds_hash-stephget">
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_hash-stephget" id="redis-cli_cmds_hash-stephget" data-lang="redis-cli" class="radiotab w-0 h-0"
+               checked
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="redis-cli_cmds_hash-stephget">
+            
+                &gt;_ Redis CLI
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_redis-cli_cmds_hash-stephget" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_hash-stephget">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line hl"><span class="cl">&gt; HSET myhash field1 &#34;foo&#34;
+</span></span><span class="line hl"><span class="cl">(integer) 1
+</span></span><span class="line hl"><span class="cl">&gt; HGET myhash field1
+</span></span><span class="line hl"><span class="cl">&#34;foo&#34;
+</span></span><span class="line hl"><span class="cl">&gt; HGET myhash field2
+</span></span><span class="line hl"><span class="cl">(nil)</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_redis-cli_cmds_hash-stephget')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+                <div class="flex-1 text-xs text-white overflow-ellipsis">Are you tired of using redis-cli? Try Redis Insight - the developer GUI for Redis.</div>
+                <div class="text-right">
+                    <a href="https://redis.com/redis-enterprise/redis-insight/" tabindex="1" class="rounded rounded-mx px-2 py-1 flex items-center text-white text-xs
+                    hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                    focus:ring-2 focus:white focus:border-slate-500" title="Get Redis Insight">
+                        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        </svg>
+                        <span>Get Redis Insight</span>
+                    </a>
+                </div>
+            
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_hash-stephget" id="Python_cmds_hash-stephget" data-lang="Python" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Python_cmds_hash-stephget">
+            
+                Python
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Python_cmds_hash-stephget" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_hash-stephget">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redis</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;localhost&#34;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res1</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="s2">&#34;field1&#34;</span><span class="p">,</span> <span class="s2">&#34;Hello&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; 1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res2</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hget</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="s2">&#34;field1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; Hello</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res3</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;field2&#34;</span><span class="p">:</span> <span class="s2">&#34;Hi&#34;</span><span class="p">,</span> <span class="s2">&#34;field3&#34;</span><span class="p">:</span> <span class="s2">&#34;World&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res4</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hget</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="s2">&#34;field2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; Hi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res5</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hget</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="s2">&#34;field3&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; World</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res6</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hgetall</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># &gt;&gt;&gt; { &#34;field1&#34;: &#34;Hello&#34;, &#34;field2&#34;: &#34;Hi&#34;, &#34;field3&#34;: &#34;World&#34; }</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res7</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="s2">&#34;field1&#34;</span><span class="p">,</span> <span class="s2">&#34;foo&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res7</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; 1</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res8</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hget</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="s2">&#34;field1&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res8</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; foo</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res9</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hget</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="s2">&#34;field2&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res9</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; None</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res10</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;field1&#34;</span><span class="p">:</span> <span class="s2">&#34;Hello&#34;</span><span class="p">,</span> <span class="s2">&#34;field2&#34;</span><span class="p">:</span> <span class="s2">&#34;World&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res11</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hgetall</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res11</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; { &#34;field1&#34;: &#34;Hello&#34;, &#34;field2&#34;: &#34;World&#34; }</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res10</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;field1&#34;</span><span class="p">:</span> <span class="s2">&#34;Hello&#34;</span><span class="p">,</span> <span class="s2">&#34;field2&#34;</span><span class="p">:</span> <span class="s2">&#34;World&#34;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res11</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">hvals</span><span class="p">(</span><span class="s2">&#34;myhash&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res11</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; [ &#34;Hello&#34;, &#34;World&#34; ]</span>
+</span></span><span class="line"><span class="cl">
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Python_cmds_hash-stephget')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Python_cmds_hash-stephget" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/redis-py/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Python Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/redis-py/tree/master/doctests/cmds_hash.py' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_hash-stephget" id="Nodejs_cmds_hash-stephget" data-lang="Node-js" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Nodejs_cmds_hash-stephget">
+            
+                Node.js
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Nodejs_cmds_hash-stephget" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_hash-stephget">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">assert</span> <span class="nx">from</span> <span class="s1">&#39;node:assert&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createClient</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">createClient</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">().</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hSet</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">,</span> <span class="s1">&#39;field1&#39;</span><span class="p">,</span> <span class="s1">&#39;Hello&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res1</span><span class="p">)</span> <span class="c1">// 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hGet</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">,</span> <span class="s1">&#39;field1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res2</span><span class="p">)</span> <span class="c1">// Hello
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hSet</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;myhash&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;field2&#39;</span><span class="o">:</span> <span class="s1">&#39;Hi&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;field3&#39;</span><span class="o">:</span> <span class="s1">&#39;World&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res3</span><span class="p">)</span> <span class="c1">// 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res4</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hGet</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">,</span> <span class="s1">&#39;field2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res4</span><span class="p">)</span> <span class="c1">// Hi
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res5</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hGet</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">,</span> <span class="s1">&#39;field3&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res5</span><span class="p">)</span> <span class="c1">// World
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res6</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hGetAll</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res6</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">res7</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hSet</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">,</span> <span class="s1">&#39;field1&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res7</span><span class="p">)</span> <span class="c1">// 1
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">res8</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hGet</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">,</span> <span class="s1">&#39;field1&#39;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res8</span><span class="p">)</span> <span class="c1">// foo
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">res9</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hGet</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">,</span> <span class="s1">&#39;field2&#39;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res9</span><span class="p">)</span> <span class="c1">// null
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res10</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hSet</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;myhash&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;field1&#39;</span><span class="o">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;field2&#39;</span><span class="o">:</span> <span class="s1">&#39;World&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res11</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hGetAll</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res11</span><span class="p">)</span> <span class="c1">// [Object: null prototype] { field1: &#39;Hello&#39;, field2: &#39;World&#39; }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res12</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hSet</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="s1">&#39;myhash&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;field1&#39;</span><span class="o">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;field2&#39;</span><span class="o">:</span> <span class="s1">&#39;World&#39;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res13</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">hVals</span><span class="p">(</span><span class="s1">&#39;myhash&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res13</span><span class="p">)</span> <span class="c1">// [ &#39;Hello&#39;, &#39;World&#39; ]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Nodejs_cmds_hash-stephget')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Nodejs_cmds_hash-stephget" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/nodejs/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Node.js Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/node-redis/tree/emb-examples/doctests/cmds-hash.js' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_hash-stephget" id="Java-Sync_cmds_hash-stephget" data-lang="Java-Sync" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Java-Sync_cmds_hash-stephget">
+            
+                Java-Sync
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Java-Sync_cmds_hash-stephget" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_hash-stephget">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Map</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Collections</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.UnifiedJedis</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import static</span><span class="w"> </span><span class="nn">java.util.stream.Collectors.toList</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.assertEquals</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.assertNull</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CmdsHashExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">UnifiedJedis</span><span class="w"> </span><span class="n">jedis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnifiedJedis</span><span class="p">(</span><span class="s">&#34;redis://localhost:6379&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hGetExampleParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">hGetExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;foo&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">hGetResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hset</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">hGetExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hGetResult1</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; 1</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">hGetResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hget</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;field1&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hGetResult2</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; foo</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">hGetResult3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hget</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;field2&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hGetResult3</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; null</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hGetAllExampleParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hGetAllExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Hello&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hGetAllExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field2&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;World&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">hGetAllResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hset</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">hGetAllExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hGetAllResult1</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; 2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hGetAllResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hgetAll</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">hGetAllResult2</span><span class="p">.</span><span class="na">entrySet</span><span class="p">().</span><span class="na">stream</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">.</span><span class="na">sorted</span><span class="p">((</span><span class="n">s1</span><span class="p">,</span><span class="w"> </span><span class="n">s2</span><span class="p">)</span><span class="o">-&gt;</span><span class="w"> </span><span class="n">s1</span><span class="p">.</span><span class="na">getKey</span><span class="p">().</span><span class="na">compareTo</span><span class="p">(</span><span class="n">s2</span><span class="p">.</span><span class="na">getKey</span><span class="p">()))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">toList</span><span class="p">())</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">.</span><span class="na">toString</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; [field1=Hello, field2=World]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hSetExampleParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hSetExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Hello&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">hSetResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hset</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">hSetExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hSetResult1</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; 1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">hSetResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hget</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;field1&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hSetResult2</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; Hello</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hSetExampleParams</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hSetExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field2&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Hi&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hSetExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field3&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;World&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">hSetResult3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hset</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="n">hSetExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hSetResult3</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; 2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">hSetResult4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hget</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;field2&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hSetResult4</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; Hi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">hSetResult5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hget</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;field3&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hSetResult5</span><span class="p">);</span><span class="w">    </span><span class="c1">// &gt;&gt;&gt; World</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hSetResult6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hgetAll</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="n">hSetResult6</span><span class="p">.</span><span class="na">keySet</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Key: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;, Value: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">hSetResult6</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Key: field3, Value: World</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Key: field2, Value: Hi</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; Key: field1, Value: Hello</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hValsExampleParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hValsExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Hello&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">hValsExampleParams</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;field2&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;World&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">hValsResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hset</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">hValsExampleParams</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hValsResult1</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; 2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">hValsResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">hvals</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Collections</span><span class="p">.</span><span class="na">sort</span><span class="p">(</span><span class="n">hValsResult2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">hValsResult2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">// &gt;&gt;&gt; [Hello, World]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">jedis</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Java-Sync_cmds_hash-stephget')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Java-Sync_cmds_hash-stephget" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/jedis/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Java-Sync Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/jedis/tree/master/src/test/java/io/redis/examples/CmdsHashExample.java' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_hash-stephget" id="Go_cmds_hash-stephget" data-lang="Go" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Go_cmds_hash-stephget">
+            
+                Go
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Go_cmds_hash-stephget" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_hash-stephget">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">example_commands_test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;sort&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/redis/go-redis/v9&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_hset</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">res1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HSet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;Hello&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res1</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">res2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HGet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res2</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; Hello</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">res3</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HSet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;field2&#34;</span><span class="p">,</span> <span class="s">&#34;Hi&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;field3&#34;</span><span class="p">,</span> <span class="s">&#34;World&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res3</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">res4</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HGet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field2&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res4</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; Hi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">res5</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HGet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field3&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res5</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; World</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">res6</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HGetAll</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">keys</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">res6</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">res6</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">keys</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">sort</span><span class="p">.</span><span class="nf">Strings</span><span class="p">(</span><span class="nx">keys</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">key</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">keys</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Key: %v, value: %v\n&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">res6</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// &gt;&gt;&gt; Key: field1, value: Hello</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// &gt;&gt;&gt; Key: field2, value: Hi</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// &gt;&gt;&gt; Key: field3, value: World</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_hget</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">res7</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HSet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;foo&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res7</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 1</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">res8</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HGet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res8</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; foo</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">res9</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HGet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field2&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">res9</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; &lt;empty string&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_hgetall</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">hGetAllResult1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HSet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;Hello&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;field2&#34;</span><span class="p">,</span> <span class="s">&#34;World&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">hGetAllResult1</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">hGetAllResult2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HGetAll</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">keys</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">hGetAllResult2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">hGetAllResult2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">keys</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">sort</span><span class="p">.</span><span class="nf">Strings</span><span class="p">(</span><span class="nx">keys</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">key</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">keys</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Key: %v, value: %v\n&#34;</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">hGetAllResult2</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// &gt;&gt;&gt; Key: field1, value: Hello</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// &gt;&gt;&gt; Key: field2, value: World</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_hvals</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">hValsResult1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HSet</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;Hello&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="s">&#34;field2&#34;</span><span class="p">,</span> <span class="s">&#34;World&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">hValsResult1</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; 2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">hValsResult2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">HVals</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;myhash&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">sort</span><span class="p">.</span><span class="nf">Strings</span><span class="p">(</span><span class="nx">hValsResult2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">hValsResult2</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; [Hello World]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Go_cmds_hash-stephget')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Go_cmds_hash-stephget" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/go/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Go Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/go-redis/tree/master/doctests/cmds_hash_test.go' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_hash-stephget" id="Csharp_cmds_hash-stephget" data-lang="dotnet" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Csharp_cmds_hash-stephget">
+            
+                C#
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Csharp_cmds_hash-stephget" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_hash-stephget">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">StackExchange.Redis</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">CmdsHashExample</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="k">void</span> <span class="n">run</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">muxer</span> <span class="p">=</span> <span class="n">ConnectionMultiplexer</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="s">&#34;localhost:6379&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">db</span> <span class="p">=</span> <span class="n">muxer</span><span class="p">.</span><span class="n">GetDatabase</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="kt">bool</span> <span class="n">res1</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashSet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;foo&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="n">RedisValue</span> <span class="n">res2</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashGet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">res2</span><span class="p">);</span>    <span class="c1">// &gt;&gt;&gt; foo</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="n">RedisValue</span> <span class="n">res3</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashGet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field2&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">res3</span><span class="p">);</span>    <span class="c1">// &gt;&gt;&gt; Null</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">res4</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashSet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;Hello&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span> <span class="n">res5</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashGet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field1&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">res5</span><span class="p">);</span>    <span class="c1">// &gt;&gt;&gt; Hello</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="p">.</span><span class="n">HashSet</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;myhash&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">HashEntry</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">HashEntry</span><span class="p">(</span><span class="s">&#34;field2&#34;</span><span class="p">,</span> <span class="s">&#34;Hi&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">HashEntry</span><span class="p">(</span><span class="s">&#34;field3&#34;</span><span class="p">,</span> <span class="s">&#34;World&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span> <span class="n">res6</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashGet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field2&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">res6</span><span class="p">);</span>    <span class="c1">// &gt;&gt;&gt; Hi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span> <span class="n">res7</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashGet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span> <span class="s">&#34;field3&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">res7</span><span class="p">);</span>    <span class="c1">// &gt;&gt;&gt; World</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">HashEntry</span><span class="p">[]</span> <span class="n">res8</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashGetAll</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&#34;{string.Join(&#34;</span><span class="p">,</span> <span class="s">&#34;, res8.Select(h =&gt; $&#34;</span><span class="p">{</span><span class="n">h</span><span class="p">.</span><span class="n">Name</span><span class="p">}:</span> <span class="p">{</span><span class="n">h</span><span class="p">.</span><span class="n">Value</span><span class="p">}</span><span class="s">&#34;))}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; field1: Hello, field2: Hi, field3: World</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="p">.</span><span class="n">HashSet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">HashEntry</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">HashEntry</span><span class="p">(</span><span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;Hello&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">HashEntry</span><span class="p">(</span><span class="s">&#34;field2&#34;</span><span class="p">,</span> <span class="s">&#34;World&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">HashEntry</span><span class="p">[]</span> <span class="n">hGetAllResult</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashGetAll</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Array</span><span class="p">.</span><span class="n">Sort</span><span class="p">(</span><span class="n">hGetAllResult</span><span class="p">,</span> <span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">a1</span><span class="p">.</span><span class="n">Name</span><span class="p">.</span><span class="n">CompareTo</span><span class="p">(</span><span class="n">a2</span><span class="p">.</span><span class="n">Name</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">hGetAllResult</span><span class="p">.</span><span class="n">Select</span><span class="p">(</span><span class="n">e</span> <span class="p">=&gt;</span> <span class="s">$&#34;{e.Name}: {e.Value}&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; field1: Hello, field2: World</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">db</span><span class="p">.</span><span class="n">HashSet</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="n">HashEntry</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">HashEntry</span><span class="p">(</span><span class="s">&#34;field1&#34;</span><span class="p">,</span> <span class="s">&#34;Hello&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">HashEntry</span><span class="p">(</span><span class="s">&#34;field2&#34;</span><span class="p">,</span> <span class="s">&#34;World&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">RedisValue</span><span class="p">[]</span> <span class="n">hValsResult</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">HashValues</span><span class="p">(</span><span class="s">&#34;myhash&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Array</span><span class="p">.</span><span class="n">Sort</span><span class="p">(</span><span class="n">hValsResult</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">hValsResult</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// &gt;&gt;&gt; Hello, World</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Csharp_cmds_hash-stephget')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Csharp_cmds_hash-stephget" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/dotnet/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                C# Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/NRedisStack/tree/master/tests/Doc/CmdsHashExample.cs' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+
+</div>
+
+
+
+
+<p>Give these commands a try in the interactive console:</p>
+<div class="bg-slate-900 border-b border-slate-700 rounded-t-xl px-4 py-3 w-full flex">
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+</div>  
+<form class="redis-cli overflow-y-auto max-h-80">
+HSET myhash field1 "foo"
+HGET myhash field1
+HGET myhash field2
+</form>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: The value associated with the field.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: If the field is not present in the hash or key does not exist.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: The value associated with the field.</li>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: If the field is not present in the hash or key does not exist.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/hget/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

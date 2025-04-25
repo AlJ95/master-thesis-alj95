@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Apache Hadoop  0.23.3 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Apache Hadoop  0.23.3 Release Notes
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  0.23.3 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3348">MAPREDUCE-3348</a> | <i>Major</i> | <b>mapred job -status fails to give info even if the job is present in History</b></li>
+</ul>
+<p>Fixed a bug in MR client to redirect to JobHistoryServer correctly when RM forgets the app.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4072">MAPREDUCE-4072</a> | <i>Major</i> | <b>User set java.library.path seems to overwrite default creating problems native lib loading</b></li>
+</ul>
+<p>-Djava.library.path in mapred.child.java.opts can cause issues with native libraries.  LD_LIBRARY_PATH through mapred.child.env should be used instead.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4017">MAPREDUCE-4017</a> | <i>Trivial</i> | <b>Add jobname to jobsummary log</b></li>
+</ul>
+<p>The Job Summary log may contain commas in values that are escaped by a &#x2018;\&#x2019; character.  This was true before, but is more likely to be exposed now.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3812">MAPREDUCE-3812</a> | <i>Major</i> | <b>Lower default allocation sizes, fix allocation configurations and document them</b></li>
+</ul>
+<p>Removes two sets of previously available config properties:</p>
+<ol style="list-style-type: decimal">
+
+<li>( yarn.scheduler.fifo.minimum-allocation-mb and yarn.scheduler.fifo.maximum-allocation-mb ) and,</li>
+<li>( yarn.scheduler.capacity.minimum-allocation-mb and yarn.scheduler.capacity.maximum-allocation-mb )</li>
+</ol>
+<p>In favor of two new, generically named properties:</p>
+<ol style="list-style-type: decimal">
+
+<li>yarn.scheduler.minimum-allocation-mb - This acts as the floor value of memory resource requests for containers.</li>
+<li>yarn.scheduler.maximum-allocation-mb - This acts as the ceiling value of memory resource requests for containers.</li>
+</ol>
+<p>Both these properties need to be set at the ResourceManager (RM) to take effect, as the RM is where the scheduler resides.</p>
+<p>Also changes the default minimum and maximums to 128 MB and 10 GB respectively.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3318">HDFS-3318</a> | <i>Blocker</i> | <b>Hftp hangs on transfers &gt;2GB</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8327">HADOOP-8327</a> | <i>Major</i> | <b>distcpv2 and distcpv1 jars should not coexist</b></li>
+</ul>
+<p>Resolve sporadic distcp issue due to having two DistCp classes (v1 &amp; v2) in the classpath.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3543">MAPREDUCE-3543</a> | <i>Critical</i> | <b>Mavenize Gridmix.</b></li>
+</ul>
+<p>Note that to apply this you should first run the script - ./MAPREDUCE-3543v3.sh svn, then apply the patch.</p>
+<p>If this is merged to more then trunk, the version inside of hadoop-tools/hadoop-gridmix/pom.xml will need to be udpated accordingly.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4311">MAPREDUCE-4311</a> | <i>Major</i> | <b>Capacity scheduler.xml does not accept decimal values for capacity and maximum-capacity settings</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3940">MAPREDUCE-3940</a> | <i>Major</i> | <b>ContainerTokens should have an expiry interval</b></li>
+</ul>
+<p>ContainerTokens now have an expiry interval so that stale tokens cannot be used for launching containers.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8551">HADOOP-8551</a> | <i>Major</i> | <b>fs -mkdir creates parent directories without the -p option</b></li>
+</ul>
+<p>FsShell&#x2019;s &#x201c;mkdir&#x201d; no longer implicitly creates all non-existent parent directories.  The command adopts the posix compliant behavior of requiring the &#x201c;-p&#x201d; flag to auto-create parent directories.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8703">HADOOP-8703</a> | <i>Major</i> | <b>distcpV2: turn CRC checking off for 0 byte size</b></li>
+</ul>
+<p>distcp skips CRC on 0 byte files.</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

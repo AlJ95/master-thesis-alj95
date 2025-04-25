@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.worker.block.io (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.worker.block.io</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/BlockClientListener.html" title="interface in alluxio.worker.block.io">BlockClientListener</a></td>
+<td class="colLast">
+<div class="block">An interface to listen for creation and destruction of block clients.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/BlockClient.html" title="class in alluxio.worker.block.io">BlockClient</a></td>
+<td class="colLast">
+<div class="block">Provides basic tracking and representation for block reader/writer clients.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/BlockReader.html" title="class in alluxio.worker.block.io">BlockReader</a></td>
+<td class="colLast">
+<div class="block">An abstract reader class to access the data of a block stored in managed storage.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/BlockStreamTracker.html" title="class in alluxio.worker.block.io">BlockStreamTracker</a></td>
+<td class="colLast">
+<div class="block">Used to emit block reader/writer open/close events.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/BlockWriter.html" title="class in alluxio.worker.block.io">BlockWriter</a></td>
+<td class="colLast">
+<div class="block">An abstract writer class to write or update a block stored in managed storage.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/LocalFileBlockReader.html" title="class in alluxio.worker.block.io">LocalFileBlockReader</a></td>
+<td class="colLast">
+<div class="block">This class provides read access to a block data file locally stored in managed storage.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/LocalFileBlockWriter.html" title="class in alluxio.worker.block.io">LocalFileBlockWriter</a></td>
+<td class="colLast">
+<div class="block">This class provides write access to a temp block data file locally stored in managed storage.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/StoreBlockReader.html" title="class in alluxio.worker.block.io">StoreBlockReader</a></td>
+<td class="colLast">
+<div class="block">A local block reader used by block store.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/StoreBlockWriter.html" title="class in alluxio.worker.block.io">StoreBlockWriter</a></td>
+<td class="colLast">
+<div class="block">A local block writer used by block store.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/io/BlockClient.Type.html" title="enum in alluxio.worker.block.io">BlockClient.Type</a></td>
+<td class="colLast">
+<div class="block">Block client type.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

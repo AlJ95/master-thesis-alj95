@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 45.5. Anonymous Code Blocks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/plpython-do.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="45.5. Anonymous Code Blocks" />
+  <meta property="og:description" content="45.5.&amp;nbsp;Anonymous Code Blocks PL/Python also supports anonymous code blocks called with the DO statement: DO $$ # PL/Python code $$ …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/plpython-do.html" title="PostgreSQL 17 - 45.5. Anonymous Code Blocks" >Current</a>
+                          (<a href="/docs/17/plpython-do.html" title="PostgreSQL 17 - 45.5. Anonymous Code Blocks" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/plpython-do.html" title="PostgreSQL 16 - 45.5. Anonymous Code Blocks" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/plpython-do.html" title="PostgreSQL 15 - 45.5. Anonymous Code Blocks" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/plpython-do.html" title="PostgreSQL 14 - 45.5. Anonymous Code Blocks" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/plpython-do.html" title="PostgreSQL 13 - 45.5. Anonymous Code Blocks" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/plpython-do.html" title="PostgreSQL devel - 45.5. Anonymous Code Blocks"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/plpython-do.html" title="PostgreSQL 12 - 45.5. Anonymous Code Blocks"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/plpython-do.html" title="PostgreSQL 11 - 45.5. Anonymous Code Blocks"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/plpython-do.html" title="PostgreSQL 10 - 45.5. Anonymous Code Blocks"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/plpython-do.html" title="PostgreSQL 9.6 - 45.5. Anonymous Code Blocks"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/plpython-do.html" title="PostgreSQL 9.5 - 45.5. Anonymous Code Blocks"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/plpython-do.html" title="PostgreSQL 9.4 - 45.5. Anonymous Code Blocks"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/plpython-do.html" title="PostgreSQL 9.3 - 45.5. Anonymous Code Blocks"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/plpython-do.html" title="PostgreSQL 9.2 - 45.5. Anonymous Code Blocks"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/plpython-do.html" title="PostgreSQL 9.1 - 45.5. Anonymous Code Blocks"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/plpython-do.html" title="PostgreSQL 9.0 - 45.5. Anonymous Code Blocks"  rel="nofollow">9.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">45.5.&nbsp;Anonymous Code Blocks</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="plpython-sharing.html" title="45.4.&nbsp;Sharing Data">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="plpython-trigger.html" title="45.6.&nbsp;Trigger Functions">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLPYTHON-DO">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">45.5.&nbsp;Anonymous Code Blocks</h2>
+      </div>
+    </div>
+  </div>
+  <p>PL/Python also supports anonymous code blocks called with the <a class="xref" href="sql-do.html" title="DO"><span class="refentrytitle">DO</span></a> statement:</p>
+  <pre class="programlisting">
+DO $$
+    # PL/Python code
+$$ LANGUAGE plpythonu;
+</pre>
+  <p>An anonymous code block receives no arguments, and whatever value it might return is discarded. Otherwise it behaves just like a function.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="plpython-sharing.html" title="45.4.&nbsp;Sharing Data">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="plpython-trigger.html" title="45.6.&nbsp;Trigger Functions">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">45.4.&nbsp;Sharing Data&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;45.6.&nbsp;Trigger Functions</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/plpython-do.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

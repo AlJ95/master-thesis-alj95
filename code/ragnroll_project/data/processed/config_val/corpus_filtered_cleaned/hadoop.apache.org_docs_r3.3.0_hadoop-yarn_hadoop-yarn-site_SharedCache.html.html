@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; YARN Shared Cache</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        YARN Shared Cache
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>YARN Shared Cache</h1>
+<ul>
+
+
+
+
+
+</ul></li>
+
+
+</ul></li></ul>
+
+<div class="section">
+<h2><a name="Overview"></a>Overview</h2>
+<p>The YARN Shared Cache provides the facility to upload and manage shared application resources to HDFS in a safe and scalable manner. YARN applications can leverage resources uploaded by other applications or previous runs of the same application without having to re&#xad;upload and localize identical files multiple times. This will save network resources and reduce YARN application startup time.</p></div>
+<div class="section">
+<h2><a name="Current_Status_and_Future_Plans"></a>Current Status and Future Plans</h2>
+<p>Currently the YARN Shared Cache is released and ready to use. The major components are implemented and have been deployed in a large-scale production setting. There are still some pieces missing (i.e. strong authentication). These missing features will be implemented as part of a follow-up phase 2 effort. Please see <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-7282">YARN-7282</a> for more information.</p></div>
+<div class="section">
+<h2><a name="Architecture"></a>Architecture</h2>
+<p>The shared cache feature consists of 4 major components:</p>
+<ol style="list-style-type: decimal">
+
+<li>The shared cache client.</li>
+<li>The HDFS directory that acts as a cache.</li>
+<li>The shared cache manager (aka. SCM).</li>
+<li>The localization service and uploader.</li>
+</ol>
+<div class="section">
+<h3><a name="The_Shared_Cache_Client"></a>The Shared Cache Client</h3>
+<p>YARN application developers and users, should interact with the shared cache using the shared cache client. This client is responsible for interacting with the shared cache manager, computing the checksum of application resources, and claiming application resources in the shared cache. Once an application has claimed a resource, it is free to use that resource for the life-cycle of the application. Please see the SharedCacheClient.java javadoc for further documentation.</p></div>
+<div class="section">
+<h3><a name="The_Shared_Cache_HDFS_Directory"></a>The Shared Cache HDFS Directory</h3>
+<p>The shared cache HDFS directory stores all of the shared cache resources. It is protected by HDFS permissions and is globally readable, but writing is restricted to a trusted user. This HDFS directory is only modified by the shared cache manager and the resource uploader on the node manager. Resources are spread across a set of subdirectories using the resources&#x2019;s checksum:</p>
+
+<div>
+<div>
+<pre class="source">/sharedcache/a/8/9/a896857d078/foo.jar
+/sharedcache/5/0/f/50f11b09f87/bar.jar
+/sharedcache/a/6/7/a678cb1aa8f/job.jar
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Shared_Cache_Manager_.28SCM.29"></a>Shared Cache Manager (SCM)</h3>
+<p>The shared cache manager is responsible for serving requests from the client and managing the contents of the shared cache. It looks after both the meta data as well as the persisted resources in HDFS. It is made up of two major components, a back end store and a cleaner service. The SCM runs as a separate daemon process that can be placed on any node in the cluster. This allows for administrators to start/stop/upgrade the SCM without affecting other YARN components (i.e. the resource manager or node managers).</p>
+<p>The back end store is responsible for maintaining and persisting metadata about the shared cache. This includes the resources in the cache, when a resource was last used and a list of applications that are currently using the resource. The implementation for the backing store is pluggable and it currently uses an in-memory store that recreates its state after a restart.</p>
+<p>The cleaner service maintains the persisted resources in HDFS by ensuring that resources that are no longer used are removed from the cache. It scans the resources in the cache periodically and evicts resources if they are both stale and there are no live applications currently using the application.</p></div>
+<div class="section">
+<h3><a name="The_Shared_Cache_uploader_and_localization"></a>The Shared Cache uploader and localization</h3>
+<p>The shared cache uploader is a service that runs on the node manager and adds resources to the shared cache. It is responsible for verifying a resources checksum, uploading the resource to HDFS and notifying the shared cache manager that a resource has been added to the cache. It is important to note that the uploader service is asynchronous from the container launch and does not block the startup of a yarn application. In addition adding things to the cache is done in a best effort way and does not impact running applications. Once the uploader has placed a resource in the shared cache, YARN uses the normal node manager localization mechanism to make resources available to the application.</p></div></div>
+<div class="section">
+<h2><a name="Developing_YARN_applications_with_the_Shared_Cache"></a>Developing YARN applications with the Shared Cache</h2>
+<p>To support the YARN shared cache, an application must use the shared cache client during application submission. The shared cache client returns a URL corresponding to a resource if it is in the shared cache. To use the cached resource, a YARN application simply uses the cached URL to create a LocalResource object and sets setShouldBeUploadedToSharedCache to true during application submission.</p>
+<p>For example, here is how you would create a LocalResource using a cached URL:</p>
+
+<div>
+<div>
+<pre class="source">String localPathChecksum = sharedCacheClient.getFileChecksum(localPath);
+URL cachedResource = sharedCacheClient.use(appId, localPathChecksum);
+LocalResource resource = LocalResource.newInstance(cachedResource,
+      LocalResourceType.FILE, LocalResourceVisibility.PUBLIC
+      size, timestamp, null, true);
+</pre></div></div>
+</div>
+<div class="section">
+<h2><a name="Administrating_the_Shared_Cache"></a>Administrating the Shared Cache</h2>
+<div class="section">
+<h3><a name="Setting_up_the_shared_cache"></a>Setting up the shared cache</h3>
+<p>An administrator can initially set up the shared cache by following these steps:</p>
+<ol style="list-style-type: decimal">
+
+<li>Create an HDFS directory for the shared cache (default: /sharedcache).</li>
+<li>Set the shared cache directory permissions to 0755.</li>
+<li>Ensure that the shared cache directory is owned by the user that runs the shared cache manager daemon and the node manager.</li>
+<li>In the yarn-site.xml file, set <i>yarn.sharedcache.enabled</i> to true and <i>yarn.sharedcache.root-dir</i> to the directory specified in step 1. For more configuration parameters, see the configuration parameters section.</li>
+<li>Start the shared cache manager:</li>
+</ol>
+
+<div>
+<div>
+<pre class="source">/hadoop/bin/yarn --daemon start sharedcachemanager
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Configuration_parameters"></a>Configuration parameters</h3>
+<p>The configuration parameters can be found in yarn-default.xml and should be set in the yarn-site.xml file. Here are a list of configuration parameters and their defaults:</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th>Name </th>
+<th> Description </th>
+<th> Default value</th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td>yarn.sharedcache.enabled </td>
+<td> Whether the shared cache is enabled </td>
+<td> false</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.root-dir </td>
+<td> The root directory for the shared cache </td>
+<td> /sharedcache</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.nested-level </td>
+<td> The level of nested directories before getting to the checksum directories. It must be non-negative. </td>
+<td> 3</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.store.class </td>
+<td> The implementation to be used for the SCM store </td>
+<td> org.apache.hadoop.yarn.server.sharedcachemanager.store.InMemorySCMStore</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.app-checker.class </td>
+<td> The implementation to be used for the SCM app-checker </td>
+<td> org.apache.hadoop.yarn.server.sharedcachemanager.RemoteAppChecker</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.store.in-memory.staleness-period-mins </td>
+<td> A resource in the in-memory store is considered stale if the time since the last reference exceeds the staleness period. This value is specified in minutes. </td>
+<td> 10080</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.store.in-memory.initial-delay-mins </td>
+<td> Initial delay before the in-memory store runs its first check to remove dead initial applications. Specified in minutes. </td>
+<td> 10</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.store.in-memory.check-period-mins </td>
+<td> The frequency at which the in-memory store checks to remove dead initial applications. Specified in minutes. </td>
+<td> 720</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.admin.address </td>
+<td> The address of the admin interface in the SCM (shared cache manager) </td>
+<td> 0.0.0.0:8047</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.admin.thread-count </td>
+<td> The number of threads used to handle SCM admin interface (1 by default) </td>
+<td> 1</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.webapp.address </td>
+<td> The address of the web application in the SCM (shared cache manager) </td>
+<td> 0.0.0.0:8788</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.cleaner.period-mins </td>
+<td> The frequency at which a cleaner task runs. Specified in minutes. </td>
+<td> 1440</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.cleaner.initial-delay-mins </td>
+<td> Initial delay before the first cleaner task is scheduled. Specified in minutes. </td>
+<td> 10</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.cleaner.resource-sleep-ms </td>
+<td> The time to sleep between processing each shared cache resource. Specified in milliseconds. </td>
+<td> 0</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.uploader.server.address </td>
+<td> The address of the node manager interface in the SCM (shared cache manager) </td>
+<td> 0.0.0.0:8046</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.uploader.server.thread-count </td>
+<td> The number of threads used to handle shared cache manager requests from the node manager (50 by default) </td>
+<td> 50</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.client-server.address </td>
+<td> The address of the client interface in the SCM (shared cache manager) </td>
+<td> 0.0.0.0:8045</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.client-server.thread-count </td>
+<td> The number of threads used to handle shared cache manager requests from clients (50 by default) </td>
+<td> 50</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.checksum.algo.impl </td>
+<td> The algorithm used to compute checksums of files (SHA-256 by default) </td>
+<td> org.apache.hadoop.yarn.sharedcache.ChecksumSHA256Impl</td></tr>
+<tr class="a">
+<td>yarn.sharedcache.nm.uploader.replication.factor </td>
+<td> The replication factor for the node manager uploader for the shared cache (10 by default) </td>
+<td> 10</td></tr>
+<tr class="b">
+<td>yarn.sharedcache.nm.uploader.thread-count </td>
+<td> The number of threads used to upload files from a node manager instance (20 by default) </td>
+<td> 20</td></tr>
+</tbody>
+</table></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>XINFO GROUPS | Docs</title>
+    <meta name="description" content="Returns a list of the consumer groups of a stream.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/xinfo-groups/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="XINFO GROUPS">
+  <meta property="og:description" content="Returns a list of the consumer groups of a stream.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="XINFO GROUPS">
+  <meta itemprop="description" content="Returns a list of the consumer groups of a stream.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="590">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XINFO GROUPS">
+  <meta name="twitter:description" content="Returns a list of the consumer groups of a stream.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">XINFO GROUPS
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">XINFO GROUPS key</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 5.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@stream</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>This command returns the list of all consumer groups of the stream stored at <code>&lt;key&gt;</code>.</p>
+<p>By default, only the following information is provided for each of the groups:</p>
+<ul>
+<li><strong>name</strong>: the consumer group's name</li>
+<li><strong>consumers</strong>: the number of consumers in the group</li>
+<li><strong>pending</strong>: the length of the group's pending entries list (PEL), which are messages that were delivered but are yet to be acknowledged</li>
+<li><strong>last-delivered-id</strong>: the ID of the last entry delivered to the group's consumers</li>
+<li><strong>entries-read</strong>: the logical &quot;read counter&quot; of the last entry delivered to the group's consumers</li>
+<li><strong>lag</strong>: the number of entries in the stream that are still waiting to be delivered to the group's consumers, or a NULL when that number can't be determined.</li>
+</ul>
+<h3 id="consumer-group-lag">Consumer group lag</h3>
+<p>The lag of a given consumer group is the number of entries in the range between the group's <code>entries_read</code> and the stream's <code>entries_added</code>.
+Put differently, it is the number of entries that are yet to be delivered to the group's consumers.</p>
+<p>The values and trends of this metric are helpful in making scaling decisions about the consumer group.
+You can address high lag values by adding more consumers to the group, whereas low values may indicate that you can remove consumers from the group to scale it down.</p>
+<p>Redis reports the lag of a consumer group by keeping two counters: the number of all entries added to the stream and the number of logical reads made by the consumer group.
+The lag is the difference between these two.</p>
+<p>The stream's counter (the <code>entries_added</code> field of the <a href="/docs/latest/commands/xinfo-stream/"><code>XINFO STREAM</code></a> command) is incremented by one with every <a href="/docs/latest/commands/xadd/"><code>XADD</code></a> and counts all of the entries added to the stream during its lifetime.</p>
+<p>The consumer group's counter, <code>entries_read</code>, is the logical counter of entries the group had read.
+It is important to note that this counter is only a heuristic rather than an accurate counter, and therefore the use of the term &quot;logical&quot;.
+The counter attempts to reflect the number of entries that the group <strong>should have read</strong> to get to its current <code>last-delivered-id</code>.
+The <code>entries_read</code> counter is accurate only in a perfect world, where a consumer group starts at the stream's first entry and processes all of its entries (i.e., no entries deleted before processing).</p>
+<p>There are two special cases in which this mechanism is unable to report the lag:</p>
+<ol>
+<li>A consumer group is created or set with an arbitrary last delivered ID (the <a href="/docs/latest/commands/xgroup-create/"><code>XGROUP CREATE</code></a> and <a href="/docs/latest/commands/xgroup-setid/"><code>XGROUP SETID</code></a> commands, respectively).
+An arbitrary ID is any ID that isn't the ID of the stream's first entry, its last entry or the zero (&quot;0-0&quot;) ID.</li>
+<li>One or more entries between the group's <code>last-delivered-id</code> and the stream's <code>last-generated-id</code> were deleted (with <a href="/docs/latest/commands/xdel/"><code>XDEL</code></a> or a trimming operation).</li>
+</ol>
+<p>In both cases, the group's read counter is considered invalid, and the returned value is set to NULL to signal that the lag isn't currently available.</p>
+<p>However, the lag is only temporarily unavailable.
+It is restored automatically during regular operation as consumers keep processing messages.
+Once the consumer group delivers the last message in the stream to its members, it will be set with the correct logical read counter, and tracking its lag can be resumed.</p>
+<h2 id="examples">Examples</h2>
+<pre tabindex="0"><code>&gt; XINFO GROUPS mystream
+1)  1) &#34;name&#34;
+    2) &#34;mygroup&#34;
+    3) &#34;consumers&#34;
+    4) (integer) 2
+    5) &#34;pending&#34;
+    6) (integer) 2
+    7) &#34;last-delivered-id&#34;
+    8) &#34;1638126030001-0&#34;
+    9) &#34;entries-read&#34;
+   10) (integer) 2
+   11) &#34;lag&#34;
+   12) (integer) 0
+2)  1) &#34;name&#34;
+    2) &#34;some-other-group&#34;
+    3) &#34;consumers&#34;
+    4) (integer) 1
+    5) &#34;pending&#34;
+    6) (integer) 0
+    7) &#34;last-delivered-id&#34;
+    8) &#34;1638126028070-0&#34;
+    9) &#34;entries-read&#34;
+   10) (integer) 1
+   11) &#34;lag&#34;
+   12) (integer) 1
+</code></pre>
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+              
+              <a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: a list of consumer groups.
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 7.0.0: Added the <code>entries-read</code> and <code>lag</code> fields</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/xinfo-groups/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

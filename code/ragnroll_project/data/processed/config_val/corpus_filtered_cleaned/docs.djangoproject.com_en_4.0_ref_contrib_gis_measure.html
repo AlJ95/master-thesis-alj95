@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Measurement Objects | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/ref/contrib/gis/measure/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Measurement Objects | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-module-django.contrib.gis.measure">
+<span id="s-measurement-objects"></span><span id="module-django.contrib.gis.measure"></span><span id="measurement-objects"></span><h1>Measurement Objects<a class="headerlink" href="#module-django.contrib.gis.measure" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-django.contrib.gis.measure" title="django.contrib.gis.measure: GeoDjango's distance and area measurement objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.gis.measure</span></code></a> module contains objects that allow
+for convenient representation of distance and area units of measure. <a class="footnote-reference" href="#id3" id="id1">[1]</a>
+Specifically, it implements two objects, <a class="reference internal" href="#django.contrib.gis.measure.Distance" title="django.contrib.gis.measure.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Distance</span></code></a> and
+<a class="reference internal" href="#django.contrib.gis.measure.Area" title="django.contrib.gis.measure.Area"><code class="xref py py-class docutils literal notranslate"><span class="pre">Area</span></code></a> – both of which may be accessed via the
+<a class="reference internal" href="#django.contrib.gis.measure.D" title="django.contrib.gis.measure.D"><code class="xref py py-class docutils literal notranslate"><span class="pre">D</span></code></a> and <a class="reference internal" href="#django.contrib.gis.measure.A" title="django.contrib.gis.measure.A"><code class="xref py py-class docutils literal notranslate"><span class="pre">A</span></code></a> convenience aliases, respectively.</p>
+<div class="section" id="s-example">
+<span id="example"></span><h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#django.contrib.gis.measure.Distance" title="django.contrib.gis.measure.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Distance</span></code></a> objects may be instantiated using a keyword argument indicating the
+context of the units.  In the example below, two different distance objects are
+instantiated in units of kilometers (<code class="docutils literal notranslate"><span class="pre">km</span></code>) and miles (<code class="docutils literal notranslate"><span class="pre">mi</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.contrib.gis.measure</span> <span class="kn">import</span> <span class="n">D</span><span class="p">,</span> <span class="n">Distance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">Distance</span><span class="p">(</span><span class="n">km</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
+<span class="go">5.0 km</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">D</span><span class="p">(</span><span class="n">mi</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># `D` is an alias for `Distance`</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
+<span class="go">5.0 mi</span>
+</pre></div>
+</div>
+<p>For conversions, access the preferred unit attribute to get a converted
+distance quantity:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d1</span><span class="o">.</span><span class="n">mi</span><span class="p">)</span> <span class="c1"># Converting 5 kilometers to miles</span>
+<span class="go">3.10685596119</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d2</span><span class="o">.</span><span class="n">km</span><span class="p">)</span> <span class="c1"># Converting 5 miles to kilometers</span>
+<span class="go">8.04672</span>
+</pre></div>
+</div>
+<p>Moreover, arithmetic operations may be performed between the distance
+objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d1</span> <span class="o">+</span> <span class="n">d2</span><span class="p">)</span> <span class="c1"># Adding 5 miles to 5 kilometers</span>
+<span class="go">13.04672 km</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d2</span> <span class="o">-</span> <span class="n">d1</span><span class="p">)</span> <span class="c1"># Subtracting 5 kilometers from 5 miles</span>
+<span class="go">1.89314403881 mi</span>
+</pre></div>
+</div>
+<p>Two <a class="reference internal" href="#django.contrib.gis.measure.Distance" title="django.contrib.gis.measure.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Distance</span></code></a> objects multiplied together will yield an <a class="reference internal" href="#django.contrib.gis.measure.Area" title="django.contrib.gis.measure.Area"><code class="xref py py-class docutils literal notranslate"><span class="pre">Area</span></code></a>
+object, which uses squared units of measure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">*</span> <span class="n">d2</span> <span class="c1"># Returns an Area object.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">40.2336 sq_km</span>
+</pre></div>
+</div>
+<p>To determine what the attribute abbreviation of a unit is, the <code class="docutils literal notranslate"><span class="pre">unit_attname</span></code>
+class method may be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Distance</span><span class="o">.</span><span class="n">unit_attname</span><span class="p">(</span><span class="s1">&#39;US Survey Foot&#39;</span><span class="p">))</span>
+<span class="go">survey_ft</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">Distance</span><span class="o">.</span><span class="n">unit_attname</span><span class="p">(</span><span class="s1">&#39;centimeter&#39;</span><span class="p">))</span>
+<span class="go">cm</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-supported-units">
+<span id="s-id2"></span><span id="supported-units"></span><span id="id2"></span><h2>Supported units<a class="headerlink" href="#supported-units" title="Permalink to this headline">¶</a></h2>
+<table class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Unit Attribute</th>
+<th class="head">Full name or alias(es)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">km</span></code></td>
+<td>Kilometre, Kilometer</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">mi</span></code></td>
+<td>Mile</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">m</span></code></td>
+<td>Meter, Metre</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">yd</span></code></td>
+<td>Yard</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">ft</span></code></td>
+<td>Foot, Foot (International)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">survey_ft</span></code></td>
+<td>U.S. Foot, US survey foot</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">inch</span></code></td>
+<td>Inches</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">cm</span></code></td>
+<td>Centimeter</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">mm</span></code></td>
+<td>Millimetre, Millimeter</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">um</span></code></td>
+<td>Micrometer, Micrometre</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">british_ft</span></code></td>
+<td>British foot (Sears 1922)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">british_yd</span></code></td>
+<td>British yard (Sears 1922)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">british_chain_sears</span></code></td>
+<td>British chain (Sears 1922)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">indian_yd</span></code></td>
+<td>Indian yard, Yard (Indian)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">sears_yd</span></code></td>
+<td>Yard (Sears)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">clarke_ft</span></code></td>
+<td>Clarke’s Foot</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">chain</span></code></td>
+<td>Chain</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">chain_benoit</span></code></td>
+<td>Chain (Benoit)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">chain_sears</span></code></td>
+<td>Chain (Sears)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">british_chain_benoit</span></code></td>
+<td>British chain (Benoit 1895 B)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">british_chain_sears_truncated</span></code></td>
+<td>British chain (Sears 1922 truncated)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">gold_coast_ft</span></code></td>
+<td>Gold Coast foot</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">link</span></code></td>
+<td>Link</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">link_benoit</span></code></td>
+<td>Link (Benoit)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">link_sears</span></code></td>
+<td>Link (Sears)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">clarke_link</span></code></td>
+<td>Clarke’s link</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">fathom</span></code></td>
+<td>Fathom</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">rod</span></code></td>
+<td>Rod</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">furlong</span></code></td>
+<td>Furlong, Furrow Long</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">nm</span></code></td>
+<td>Nautical Mile</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">nm_uk</span></code></td>
+<td>Nautical Mile (UK)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">german_m</span></code></td>
+<td>German legal metre</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="#django.contrib.gis.measure.Area" title="django.contrib.gis.measure.Area"><code class="xref py py-class docutils literal notranslate"><span class="pre">Area</span></code></a> attributes are the same as <a class="reference internal" href="#django.contrib.gis.measure.Distance" title="django.contrib.gis.measure.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Distance</span></code></a> attributes,
+except they are prefixed with <code class="docutils literal notranslate"><span class="pre">sq_</span></code> (area units are square in nature).
+For example, <code class="docutils literal notranslate"><span class="pre">Area(sq_m=2)</span></code> creates an <a class="reference internal" href="#django.contrib.gis.measure.Area" title="django.contrib.gis.measure.Area"><code class="xref py py-class docutils literal notranslate"><span class="pre">Area</span></code></a> object
+representing two square meters.</p>
+</div>
+</div>
+<div class="section" id="s-measurement-api">
+<span id="measurement-api"></span><h2>Measurement API<a class="headerlink" href="#measurement-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-distance">
+<span id="distance"></span><h3><code class="docutils literal notranslate"><span class="pre">Distance</span></code><a class="headerlink" href="#distance" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.Distance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">Distance</span></code>(<em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="reference internal" href="../../../../_modules/django/contrib/gis/measure/#Distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.gis.measure.Distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>To initialize a distance object, pass in a keyword corresponding to the
+desired <a class="reference internal" href="#supported-units"><span class="std std-ref">unit attribute name</span></a> set with desired
+value. For example, the following creates a distance object representing 5
+miles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dist</span> <span class="o">=</span> <span class="n">Distance</span><span class="p">(</span><span class="n">mi</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.Distance.__getattr__">
+<code class="sig-name descname"><span class="pre">__getattr__</span></code>(<em><span class="n"><span class="pre">unit_att</span></span></em>)<a class="headerlink" href="#django.contrib.gis.measure.Distance.__getattr__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns the distance value in units corresponding to the given unit
+attribute. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">km</span><span class="p">)</span>
+<span class="go">8.04672</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.Distance.unit_attname">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">unit_attname</span></code>(<em><span class="n"><span class="pre">unit_name</span></span></em>)<a class="headerlink" href="#django.contrib.gis.measure.Distance.unit_attname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns the distance unit attribute name for the given full unit name. For
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Distance</span><span class="o">.</span><span class="n">unit_attname</span><span class="p">(</span><span class="s1">&#39;Mile&#39;</span><span class="p">)</span>
+<span class="go">&#39;mi&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">D</span></code><a class="headerlink" href="#django.contrib.gis.measure.D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#django.contrib.gis.measure.Distance" title="django.contrib.gis.measure.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Distance</span></code></a> class.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="s-area">
+<span id="area"></span><h3><code class="docutils literal notranslate"><span class="pre">Area</span></code><a class="headerlink" href="#area" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.Area">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">Area</span></code>(<em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="reference internal" href="../../../../_modules/django/contrib/gis/measure/#Area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.gis.measure.Area" title="Permalink to this definition">¶</a></dt>
+<dd><p>To initialize an area object, pass in a keyword corresponding to the
+desired <a class="reference internal" href="#supported-units"><span class="std std-ref">unit attribute name</span></a> set with desired
+value. For example, the following creates an area object representing 5
+square miles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Area</span><span class="p">(</span><span class="n">sq_mi</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.Area.__getattr__">
+<code class="sig-name descname"><span class="pre">__getattr__</span></code>(<em><span class="n"><span class="pre">unit_att</span></span></em>)<a class="headerlink" href="#django.contrib.gis.measure.Area.__getattr__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns the area value in units corresponding to the given unit attribute.
+For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">sq_km</span><span class="p">)</span>
+<span class="go">12.949940551680001</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.Area.unit_attname">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">unit_attname</span></code>(<em><span class="n"><span class="pre">unit_name</span></span></em>)<a class="headerlink" href="#django.contrib.gis.measure.Area.unit_attname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns the area unit attribute name for the given full unit name. For
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Area</span><span class="o">.</span><span class="n">unit_attname</span><span class="p">(</span><span class="s1">&#39;Kilometer&#39;</span><span class="p">)</span>
+<span class="go">&#39;sq_km&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.gis.measure.A">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">A</span></code><a class="headerlink" href="#django.contrib.gis.measure.A" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#django.contrib.gis.measure.Area" title="django.contrib.gis.measure.Area"><code class="xref py py-class docutils literal notranslate"><span class="pre">Area</span></code></a> class.</p>
+</dd></dl>
+
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://koordinates.com/">Robert Coup</a> is the initial author of the measure objects,
+and was inspired by Brian Beck’s work in <a class="reference external" href="https://github.com/geopy/geopy/">geopy</a>
+and Geoff Biggs’ PhD work on dimensioned units for robotics.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

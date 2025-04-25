@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: ALTER OPERATOR FAMILY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-alteropfamily.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="ALTER OPERATOR FAMILY" />
+  <meta property="og:description" content="ALTER OPERATOR FAMILY ALTER OPERATOR FAMILY — change the definition of an operator family Synopsis ALTER OPERATOR FAMILY name USING …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-alteropfamily.html" title="PostgreSQL 17 - ALTER OPERATOR FAMILY" >Current</a>
+                          (<a href="/docs/17/sql-alteropfamily.html" title="PostgreSQL 17 - ALTER OPERATOR FAMILY" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-alteropfamily.html" title="PostgreSQL 16 - ALTER OPERATOR FAMILY" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-alteropfamily.html" title="PostgreSQL 15 - ALTER OPERATOR FAMILY" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-alteropfamily.html" title="PostgreSQL 14 - ALTER OPERATOR FAMILY" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-alteropfamily.html" title="PostgreSQL 13 - ALTER OPERATOR FAMILY" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-alteropfamily.html" title="PostgreSQL devel - ALTER OPERATOR FAMILY"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-alteropfamily.html" title="PostgreSQL 12 - ALTER OPERATOR FAMILY"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-alteropfamily.html" title="PostgreSQL 11 - ALTER OPERATOR FAMILY"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-alteropfamily.html" title="PostgreSQL 10 - ALTER OPERATOR FAMILY"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-alteropfamily.html" title="PostgreSQL 9.6 - ALTER OPERATOR FAMILY"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-alteropfamily.html" title="PostgreSQL 9.5 - ALTER OPERATOR FAMILY"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-alteropfamily.html" title="PostgreSQL 9.4 - ALTER OPERATOR FAMILY"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-alteropfamily.html" title="PostgreSQL 9.3 - ALTER OPERATOR FAMILY"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-alteropfamily.html" title="PostgreSQL 9.2 - ALTER OPERATOR FAMILY"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-alteropfamily.html" title="PostgreSQL 9.1 - ALTER OPERATOR FAMILY"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-alteropfamily.html" title="PostgreSQL 9.0 - ALTER OPERATOR FAMILY"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/sql-alteropfamily.html" title="PostgreSQL 8.4 - ALTER OPERATOR FAMILY"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/sql-alteropfamily.html" title="PostgreSQL 8.3 - ALTER OPERATOR FAMILY"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">ALTER OPERATOR FAMILY</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-alteropclass.html" title="ALTER OPERATOR CLASS">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-alterpolicy.html" title="ALTER POLICY">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-ALTEROPFAMILY">
+  <div class="titlepage"></div><a id="id-1.9.3.22.1" class="indexterm" name="id-1.9.3.22.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">ALTER OPERATOR FAMILY</span></h2>
+    <p>ALTER OPERATOR FAMILY — change the definition of an operator family</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+ALTER OPERATOR FAMILY <em class="replaceable"><code>name</code></em> USING <em class="replaceable"><code>index_method</code></em> ADD
+  {  OPERATOR <em class="replaceable"><code>strategy_number</code></em> <em class="replaceable"><code>operator_name</code></em> ( <em class="replaceable"><code>op_type</code></em>, <em class="replaceable"><code>op_type</code></em> )
+              [ FOR SEARCH | FOR ORDER BY <em class="replaceable"><code>sort_family_name</code></em> ]
+   | FUNCTION <em class="replaceable"><code>support_number</code></em> [ ( <em class="replaceable"><code>op_type</code></em> [ , <em class="replaceable"><code>op_type</code></em> ] ) ]
+              <em class="replaceable"><code>function_name</code></em> [ ( <em class="replaceable"><code>argument_type</code></em> [, ...] ) ]
+  } [, ... ]
+
+ALTER OPERATOR FAMILY <em class="replaceable"><code>name</code></em> USING <em class="replaceable"><code>index_method</code></em> DROP
+  {  OPERATOR <em class="replaceable"><code>strategy_number</code></em> ( <em class="replaceable"><code>op_type</code></em> [ , <em class="replaceable"><code>op_type</code></em> ] )
+   | FUNCTION <em class="replaceable"><code>support_number</code></em> ( <em class="replaceable"><code>op_type</code></em> [ , <em class="replaceable"><code>op_type</code></em> ] )
+  } [, ... ]
+
+ALTER OPERATOR FAMILY <em class="replaceable"><code>name</code></em> USING <em class="replaceable"><code>index_method</code></em>
+    RENAME TO <em class="replaceable"><code>new_name</code></em>
+
+ALTER OPERATOR FAMILY <em class="replaceable"><code>name</code></em> USING <em class="replaceable"><code>index_method</code></em>
+    OWNER TO { <em class="replaceable"><code>new_owner</code></em> | CURRENT_USER | SESSION_USER }
+
+ALTER OPERATOR FAMILY <em class="replaceable"><code>name</code></em> USING <em class="replaceable"><code>index_method</code></em>
+    SET SCHEMA <em class="replaceable"><code>new_schema</code></em>
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.22.5">
+    <h2>Description</h2>
+    <p><code class="command">ALTER OPERATOR FAMILY</code> changes the definition of an operator family. You can add operators and support functions to the family, remove them from the family, or change the family's name or owner.</p>
+    <p>When operators and support functions are added to a family with <code class="command">ALTER OPERATOR FAMILY</code>, they are not part of any specific operator class within the family, but are just <span class="quote">“<span class="quote">loose</span>”</span> within the family. This indicates that these operators and functions are compatible with the family's semantics, but are not required for correct functioning of any specific index. (Operators and functions that are so required should be declared as part of an operator class, instead; see <a class="xref" href="sql-createopclass.html" title="CREATE OPERATOR CLASS"><span class="refentrytitle">CREATE OPERATOR CLASS</span></a>.) <span class="productname">PostgreSQL</span> will allow loose members of a family to be dropped from the family at any time, but members of an operator class cannot be dropped without dropping the whole class and any indexes that depend on it. Typically, single-data-type operators and functions are part of operator classes because they are needed to support an index on that specific data type, while cross-data-type operators and functions are made loose members of the family.</p>
+    <p>You must be a superuser to use <code class="command">ALTER OPERATOR FAMILY</code>. (This restriction is made because an erroneous operator family definition could confuse or even crash the server.)</p>
+    <p><code class="command">ALTER OPERATOR FAMILY</code> does not presently check whether the operator family definition includes all the operators and functions required by the index method, nor whether the operators and functions form a self-consistent set. It is the user's responsibility to define a valid operator family.</p>
+    <p>Refer to <a class="xref" href="xindex.html" title="37.16.&nbsp;Interfacing Extensions to Indexes">Section&nbsp;37.16</a> for further information.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.22.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of an existing operator family.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>index_method</code></em></span></dt>
+        <dd>
+          <p>The name of the index method this operator family is for.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>strategy_number</code></em></span></dt>
+        <dd>
+          <p>The index method's strategy number for an operator associated with the operator family.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>operator_name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of an operator associated with the operator family.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>op_type</code></em></span></dt>
+        <dd>
+          <p>In an <code class="literal">OPERATOR</code> clause, the operand data type(s) of the operator, or <code class="literal">NONE</code> to signify a left-unary or right-unary operator. Unlike the comparable syntax in <code class="command">CREATE OPERATOR CLASS</code>, the operand data types must always be specified.</p>
+          <p>In an <code class="literal">ADD FUNCTION</code> clause, the operand data type(s) the function is intended to support, if different from the input data type(s) of the function. For B-tree comparison functions and hash functions it is not necessary to specify <em class="replaceable"><code>op_type</code></em> since the function's input data type(s) are always the correct ones to use. For B-tree sort support functions, B-Tree equal image functions, and all functions in GiST, SP-GiST and GIN operator classes, it is necessary to specify the operand data type(s) the function is to be used with.</p>
+          <p>In a <code class="literal">DROP FUNCTION</code> clause, the operand data type(s) the function is intended to support must be specified.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>sort_family_name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of an existing <code class="literal">btree</code> operator family that describes the sort ordering associated with an ordering operator.</p>
+          <p>If neither <code class="literal">FOR SEARCH</code> nor <code class="literal">FOR ORDER BY</code> is specified, <code class="literal">FOR SEARCH</code> is the default.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>support_number</code></em></span></dt>
+        <dd>
+          <p>The index method's support function number for a function associated with the operator family.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>function_name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of a function that is an index method support function for the operator family. If no argument list is specified, the name must be unique in its schema.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>argument_type</code></em></span></dt>
+        <dd>
+          <p>The parameter data type(s) of the function.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_name</code></em></span></dt>
+        <dd>
+          <p>The new name of the operator family.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_owner</code></em></span></dt>
+        <dd>
+          <p>The new owner of the operator family.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>new_schema</code></em></span></dt>
+        <dd>
+          <p>The new schema for the operator family.</p>
+        </dd>
+      </dl>
+    </div>
+    <p>The <code class="literal">OPERATOR</code> and <code class="literal">FUNCTION</code> clauses can appear in any order.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.22.7">
+    <h2>Notes</h2>
+    <p>Notice that the <code class="literal">DROP</code> syntax only specifies the <span class="quote">“<span class="quote">slot</span>”</span> in the operator family, by strategy or support number and input data type(s). The name of the operator or function occupying the slot is not mentioned. Also, for <code class="literal">DROP FUNCTION</code> the type(s) to specify are the input data type(s) the function is intended to support; for GiST, SP-GiST and GIN indexes this might have nothing to do with the actual input argument types of the function.</p>
+    <p>Because the index machinery does not check access permissions on functions before using them, including a function or operator in an operator family is tantamount to granting public execute permission on it. This is usually not an issue for the sorts of functions that are useful in an operator family.</p>
+    <p>The operators should not be defined by SQL functions. A SQL function is likely to be inlined into the calling query, which will prevent the optimizer from recognizing that the query matches an index.</p>
+    <p>Before <span class="productname">PostgreSQL</span> 8.4, the <code class="literal">OPERATOR</code> clause could include a <code class="literal">RECHECK</code> option. This is no longer supported because whether an index operator is <span class="quote">“<span class="quote">lossy</span>”</span> is now determined on-the-fly at run time. This allows efficient handling of cases where an operator might or might not be lossy.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.22.8">
+    <h2>Examples</h2>
+    <p>The following example command adds cross-data-type operators and support functions to an operator family that already contains B-tree operator classes for data types <code class="type">int4</code> and <code class="type">int2</code>.</p>
+    <pre class="programlisting">
+ALTER OPERATOR FAMILY integer_ops USING btree ADD
+
+  -- int4 vs int2
+  OPERATOR 1 &lt; (int4, int2) ,
+  OPERATOR 2 &lt;= (int4, int2) ,
+  OPERATOR 3 = (int4, int2) ,
+  OPERATOR 4 &gt;= (int4, int2) ,
+  OPERATOR 5 &gt; (int4, int2) ,
+  FUNCTION 1 btint42cmp(int4, int2) ,
+
+  -- int2 vs int4
+  OPERATOR 1 &lt; (int2, int4) ,
+  OPERATOR 2 &lt;= (int2, int4) ,
+  OPERATOR 3 = (int2, int4) ,
+  OPERATOR 4 &gt;= (int2, int4) ,
+  OPERATOR 5 &gt; (int2, int4) ,
+  FUNCTION 1 btint24cmp(int2, int4) ;
+</pre>
+    <p>To remove these entries again:</p>
+    <pre class="programlisting">
+ALTER OPERATOR FAMILY integer_ops USING btree DROP
+
+  -- int4 vs int2
+  OPERATOR 1 (int4, int2) ,
+  OPERATOR 2 (int4, int2) ,
+  OPERATOR 3 (int4, int2) ,
+  OPERATOR 4 (int4, int2) ,
+  OPERATOR 5 (int4, int2) ,
+  FUNCTION 1 (int4, int2) ,
+
+  -- int2 vs int4
+  OPERATOR 1 (int2, int4) ,
+  OPERATOR 2 (int2, int4) ,
+  OPERATOR 3 (int2, int4) ,
+  OPERATOR 4 (int2, int4) ,
+  OPERATOR 5 (int2, int4) ,
+  FUNCTION 1 (int2, int4) ;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.22.9">
+    <h2>Compatibility</h2>
+    <p>There is no <code class="command">ALTER OPERATOR FAMILY</code> statement in the SQL standard.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.22.10">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-createopfamily.html" title="CREATE OPERATOR FAMILY"><span class="refentrytitle">CREATE OPERATOR FAMILY</span></a>, <a class="xref" href="sql-dropopfamily.html" title="DROP OPERATOR FAMILY"><span class="refentrytitle">DROP OPERATOR FAMILY</span></a>, <a class="xref" href="sql-createopclass.html" title="CREATE OPERATOR CLASS"><span class="refentrytitle">CREATE OPERATOR CLASS</span></a>, <a class="xref" href="sql-alteropclass.html" title="ALTER OPERATOR CLASS"><span class="refentrytitle">ALTER OPERATOR CLASS</span></a>, <a class="xref" href="sql-dropopclass.html" title="DROP OPERATOR CLASS"><span class="refentrytitle">DROP OPERATOR CLASS</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-alteropclass.html" title="ALTER OPERATOR CLASS">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-alterpolicy.html" title="ALTER POLICY">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">ALTER OPERATOR CLASS&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;ALTER POLICY</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-alteropfamily.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

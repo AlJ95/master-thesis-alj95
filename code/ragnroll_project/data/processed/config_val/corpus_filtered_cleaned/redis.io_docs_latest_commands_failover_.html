@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>FAILOVER | Docs</title>
+    <meta name="description" content="Starts a coordinated failover from a server to one of its replicas.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/failover/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="FAILOVER">
+  <meta property="og:description" content="Starts a coordinated failover from a server to one of its replicas.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="FAILOVER">
+  <meta itemprop="description" content="Starts a coordinated failover from a server to one of its replicas.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="680">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FAILOVER">
+  <meta name="twitter:description" content="Starts a coordinated failover from a server to one of its replicas.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">FAILOVER
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">FAILOVER [TO host port [FORCE]] [ABORT] [TIMEOUT milliseconds]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 6.2.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@admin</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@dangerous</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>This command will start a coordinated failover between the currently-connected-to master and one of its replicas.
+The failover is not synchronous, instead a background task will handle coordinating the failover.
+It is designed to limit data loss and unavailability of the cluster during the failover.
+This command is analogous to the <a href="/docs/latest/commands/cluster-failover/"><code>CLUSTER FAILOVER</code></a> command for non-clustered Redis and is similar to the failover support provided by sentinel.</p>
+<p>The specific details of the default failover flow are as follows:</p>
+<ol>
+<li>The master will internally start a <code>CLIENT PAUSE WRITE</code>, which will pause incoming writes and prevent the accumulation of new data in the replication stream.</li>
+<li>The master will monitor its replicas, waiting for a replica to indicate that it has fully consumed the replication stream. If the master has multiple replicas, it will only wait for the first replica to catch up.</li>
+<li>The master will then demote itself to a replica. This is done to prevent any dual master scenarios. NOTE: The master will not discard its data, so it will be able to rollback if the replica rejects the failover request in the next step.</li>
+<li>The previous master will send a special PSYNC request to the target replica, <code>PSYNC FAILOVER</code>, instructing the target replica to become a master.</li>
+<li>Once the previous master receives acknowledgement the <code>PSYNC FAILOVER</code> was accepted it will unpause its clients. If the PSYNC request is rejected, the master will abort the failover and return to normal.</li>
+</ol>
+<p>The field <code>master_failover_state</code> in <code>INFO replication</code> can be used to track the current state of the failover, which has the following values:</p>
+<ul>
+<li><code>no-failover</code>: There is no ongoing coordinated failover.</li>
+<li><code>waiting-for-sync</code>: The master is waiting for the replica to catch up to its replication offset.</li>
+<li><code>failover-in-progress</code>: The master has demoted itself, and is attempting to hand off ownership to a target replica.</li>
+</ul>
+<p>If the previous master had additional replicas attached to it, they will continue replicating from it as chained replicas. You will need to manually execute a <a href="/docs/latest/commands/replicaof/"><code>REPLICAOF</code></a> on these replicas to start replicating directly from the new master.</p>
+<h2 id="optional-arguments">Optional arguments</h2>
+<p>The following optional arguments exist to modify the behavior of the failover flow:</p>
+<ul>
+<li>
+<p><code>TIMEOUT</code> <em>milliseconds</em> -- This option allows specifying a maximum time a master will wait in the <code>waiting-for-sync</code> state before aborting the failover attempt and rolling back.
+This is intended to set an upper bound on the write outage the Redis cluster can experience.
+Failovers typically happen in less than a second, but could take longer if there is a large amount of write traffic or the replica is already behind in consuming the replication stream.
+If this value is not specified, the timeout can be considered to be &quot;infinite&quot;.</p>
+</li>
+<li>
+<p><code>TO</code> <em>HOST</em> <em>PORT</em> -- This option allows designating a specific replica, by its host and port, to failover to. The master will wait specifically for this replica to catch up to its replication offset, and then failover to it.</p>
+</li>
+<li>
+<p><code>FORCE</code> -- If both the <code>TIMEOUT</code> and <code>TO</code> options are set, the force flag can also be used to designate that once the timeout has elapsed, the master should failover to the target replica instead of rolling back.
+This can be used for a best-effort attempt at a failover without data loss, but limiting write outage.</p>
+</li>
+</ul>
+<p>NOTE: The master will always rollback if the <code>PSYNC FAILOVER</code> request is rejected by the target replica.</p>
+<h2 id="failover-abort">Failover abort</h2>
+<p>The failover command is intended to be safe from data loss and corruption, but can encounter some scenarios it can not automatically remediate from and may get stuck.
+For this purpose, the <code>FAILOVER ABORT</code> command exists, which will abort an ongoing failover and return the master to its normal state.
+The command has no side effects if issued in the <code>waiting-for-sync</code> state but can introduce multi-master scenarios in the <code>failover-in-progress</code> state.
+If a multi-master scenario is encountered, you will need to manually identify which master has the latest data and designate it as the master and have the other replicas.</p>
+<p>NOTE: <a href="/docs/latest/commands/replicaof/"><code>REPLICAOF</code></a> is disabled while a failover is in progress, this is to prevent unintended interactions with the failover that might cause data loss.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+              
+              <a href="../../develop/reference/protocol-spec#simple-strings">Simple string reply</a>: <code>OK</code> if the command was accepted and a coordinated failover is in progress. An error if the operation cannot be executed.
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/failover/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

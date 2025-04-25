@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  2.0.0-alpha Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  2.0.0-alpha Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-395">HDFS-395</a> | <i>Major</i> | <b>DFS Scalability: Incremental block reports</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-7524">HADOOP-7524</a> | <i>Major</i> | <b>Change RPC to allow multiple protocols including multiple versions of the same protocol</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-7704">HADOOP-7704</a> | <i>Minor</i> | <b>JsonFactory can be created only once and used for every next request to create JsonGenerator inside JMXJsonServlet</b></li>
+</ul>
+<p>Reduce number of object created by JMXJsonServlet. (Devaraj K via Eric Yang)</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-3818">MAPREDUCE-3818</a> | <i>Blocker</i> | <b>Trunk MRV1 compilation is broken.</b></li>
+</ul>
+<p>Fixed broken compilation in TestSubmitJob after the patch for HDFS-2895.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-2731">HDFS-2731</a> | <i>Major</i> | <b>HA: Autopopulate standby name dirs if they&#x2019;re empty</b></li>
+</ul>
+<p>The HA NameNode may now be started with the &#x201c;-bootstrapStandby&#x201d; flag. This causes it to copy the namespace information and most recent checkpoint from its HA pair, and save it to local storage, allowing an HA setup to be bootstrapped without use of rsync or external tools.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-2303">HDFS-2303</a> | <i>Major</i> | <b>Unbundle jsvc</b></li>
+</ul>
+<p>To run secure Datanodes users must install jsvc for their platform and set JSVC_HOME to point to the location of jsvc in their environment.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3044">HDFS-3044</a> | <i>Major</i> | <b>fsck move should be non-destructive by default</b></li>
+</ul>
+<p>The fsck &#x201c;move&#x201d; option is no longer destructive. It copies the accessible blocks of corrupt files to lost and found as before, but no longer deletes the corrupt files after copying the blocks. The original, destructive behavior can be enabled by specifying both the &#x201c;move&#x201d; and &#x201c;delete&#x201d; options.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8154">HADOOP-8154</a> | <i>Major</i> | <b>DNS#getIPs shouldn&#x2019;t silently return the local host IP for bogus interface names</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8184">HADOOP-8184</a> | <i>Major</i> | <b>ProtoBuf RPC engine does not need it own reply packet - it can use the IPC layer reply packet.</b></li>
+</ul>
+<p>This change will affect the output of errors for some Hadoop CLI commands. Specifically, the name of the exception class will no longer appear, and instead only the text of the exception message will appear.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8149">HADOOP-8149</a> | <i>Major</i> | <b>cap space usage of default log4j rolling policy</b></li>
+</ul>
+<p>Hadoop log files are now rolled by size instead of date (daily) by default. Tools that depend on the log file name format will need to be updated. Users who would like to maintain the previous settings of hadoop.root.logger and hadoop.security.logger can use their current log4j.properties files and update the HADOOP_ROOT_LOGGER and HADOOP_SECURITY_LOGGER environment variables to use DRFA and DRFAS respectively.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3137">HDFS-3137</a> | <i>Major</i> | <b>Bump LAST_UPGRADABLE_LAYOUT_VERSION to -16</b></li>
+</ul>
+<p>Upgrade from Hadoop versions earlier than 0.18 is not supported as of 2.0. To upgrade from an earlier release, first upgrade to 0.18, and then upgrade again from there.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3138">HDFS-3138</a> | <i>Major</i> | <b>Move DatanodeInfo#ipcPort to DatanodeID</b></li>
+</ul>
+<p>This change modifies DatanodeID, which is part of the client to server protocol, therefore clients must be upgraded with servers.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3164">HDFS-3164</a> | <i>Major</i> | <b>Move DatanodeInfo#hostName to DatanodeID</b></li>
+</ul>
+<p>This change modifies DatanodeID, which is part of the client to server protocol, therefore clients must be upgraded with servers.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3144">HDFS-3144</a> | <i>Major</i> | <b>Refactor DatanodeID#getName by use</b></li>
+</ul>
+<p>This change modifies DatanodeID, which is part of the client to server protocol, therefore clients must be upgraded with servers.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3004">HDFS-3004</a> | <i>Major</i> | <b>Implement Recovery Mode</b></li>
+</ul>
+<p>This is a new feature.  It is documented in hdfs_user_guide.xml.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8270">HADOOP-8270</a> | <i>Minor</i> | <b>hadoop-daemon.sh stop action should return 0 for an already stopped service</b></li>
+</ul>
+<p>The daemon stop action no longer returns failure when stopping an already stopped service.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3094">HDFS-3094</a> | <i>Major</i> | <b>add -nonInteractive and -force option to namenode -format command</b></li>
+</ul>
+<p>The &#x2018;namenode -format&#x2019; command now supports the flags &#x2018;-nonInteractive&#x2019; and &#x2018;-force&#x2019; to improve usefulness without user input.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8314">HADOOP-8314</a> | <i>Major</i> | <b>HttpServer#hasAdminAccess should return false if authorization is enabled but user is not authenticated</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3286">HDFS-3286</a> | <i>Major</i> | <b>When the threshold value for balancer is 0(zero) ,unexpected output is displayed</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

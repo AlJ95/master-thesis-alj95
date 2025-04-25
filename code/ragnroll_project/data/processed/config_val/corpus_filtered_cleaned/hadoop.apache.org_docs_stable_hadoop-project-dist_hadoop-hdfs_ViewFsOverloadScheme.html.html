@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; View File System Overload Scheme Guide</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>View File System Overload Scheme Guide</h1>
+<ul>
+
+
+
+
+</ul></li>
+
+</ul></li>
+</ul>
+<section>
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>The View File System Overload Scheme introduced to solve two key challenges with the View File System(ViewFS). The first problem is, to use ViewFS, users need to update fs.defaultFS with viewfs scheme (<code>viewfs://</code>). The second problem is that users need to copy the mount-table configurations to all the client nodes. The ViewFileSystemOverloadScheme is addressing these challenges.</p></section><section>
+<h2><a name="View_File_System_Overload_Scheme"></a>View File System Overload Scheme</h2><section>
+<h3><a name="Details"></a>Details</h3>
+<p>The View File System Overload Scheme is an extension to the View File System. This will allow users to continue to use their existing fs.defaultFS configured scheme or any new scheme name instead of using scheme <code>viewfs</code>. Mount link configurations key, value formats are same as in <a href="./ViewFs.html">ViewFS Guide</a>. If a user wants to continue use the same fs.defaultFS and wants to have more mount points, then mount link configurations should have the ViewFileSystemOverloadScheme initialized uri&#x2019;s hostname as the mount table name. Example if fs.defaultFS is <code>hdfs://mycluster</code>, then the mount link configuration key name should be like in the following format <code>fs.viewfs.mounttable.*mycluster*.link.&lt;mountLinkPath&gt;</code>. Even if the initialized fs uri has hostname:port, it will simply ignore the port number and only consider the hostname as the mount table name.  We will discuss more example configurations in following sections. If there are no mount links configured with the initializing uri&#x2019;s hostname as the mount table name, then it will automatically consider the current uri as fallback(<code>fs.viewfs.mounttable.*mycluster*.linkFallback</code>) target fs uri. If the initialized uri contains path part, it will consider only scheme and authority part, but not the path part. Example, if the initialized uri contains <code>hdfs://mycluster/data</code>, it will consider only <code>hdfs://mycluster</code> as fallback target fs uri. The path part <code>data</code> will be ignored.</p>
+<p>Another important improvement with the ViewFileSystemOverloadScheme is, administrators need not copy the <code>mount-table.xml</code> configuration file to 1000s of client nodes. Instead, they can keep the mount-table configuration file in a Hadoop compatible file system. So, keeping the configuration file in a central place makes administrators life easier as they can update mount-table in single place.</p></section><section>
+<h3><a name="Enabling_View_File_System_Overload_Scheme"></a>Enabling View File System Overload Scheme</h3>
+<p>To use this class, the following configurations needed to be added in core-site.xml file.</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.&lt;scheme&gt;.impl&lt;/name&gt;
+  &lt;value&gt;org.apache.hadoop.fs.viewfs.ViewFileSystemOverloadScheme&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>Here <code>&lt;scheme&gt;</code> should be same as the uri-scheme configured in fs.defautFS. For example if fs.defaultFS was configured with <code>hdfs://mycluster</code>, then the above configuration would be like below:</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.hdfs.impl&lt;/name&gt;
+  &lt;value&gt;org.apache.hadoop.fs.viewfs.ViewFileSystemOverloadScheme&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+</section><section>
+<h3><a name="Example_Configurations"></a>Example Configurations</h3>
+<p><b>Example 1:</b></p>
+<p>If users want some of their existing cluster (<code>hdfs://cluster</code>) data to mount with hdfs(<code>hdfs://cluster</code>) and other object store clusters(<code>o3fs://bucket1.volume1.omhost/</code>, <code>s3a://bucket1/</code>), the following example configurations can show how to add mount links.</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.cluster.link./user&lt;/name&gt;
+  &lt;value&gt;hdfs://cluster/user&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.cluster.link./data&lt;/name&gt;
+  &lt;value&gt;o3fs://bucket1.volume1/data&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.cluster.link./backup&lt;/name&gt;
+  &lt;value&gt;s3a://bucket1/backup/&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>Let&#x2019;s consider the following operations to understand where these operations will be delegated based on mount links.</p>
+<p><i>Op1:</i> Create a file with the path <code>hdfs://cluster/user/fileA</code>, then physically this file will be created at <code>hdfs://cluster/user/fileA</code>. This delegation happened based on the first configuration parameter in above configurations. Here <code>/user</code> mapped to <code>hdfs://cluster/user/</code>.</p>
+<p><i>Op2:</i> Create a file the path <code>hdfs://cluster/data/datafile</code>, then this file will be created at <code>o3fs://bucket1.volume1.omhost/data/datafile</code>. This delegation happened based on second configurations parameter in above configurations. Here <code>/data</code> was mapped with <code>o3fs://bucket1.volume1.omhost/data/</code>.</p>
+<p><i>Op3:</i> Create a file with the path <code>hdfs://cluster/backup/data.zip</code>, then  physically this file will be created at <code>s3a://bucket1/backup/data.zip</code>. This delegation happened based on the third configuration parameter in above configurations. Here <code>/backup</code> was mapped to <code>s3a://bucket1/backup/</code>.</p>
+<p><b>Example 2:</b></p>
+<p>If users want some of their existing cluster (<code>s3a://bucketA/</code>) data to mount with other hdfs cluster(<code>hdfs://cluster</code>) and object store clusters(<code>o3fs://bucket1.volume1.omhost/</code>, <code>s3a://bucketA/</code>), the following example configurations can show how to add mount links.</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.bucketA.link./user&lt;/name&gt;
+  &lt;value&gt;hdfs://cluster/user&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.bucketA.link./data&lt;/name&gt;
+  &lt;value&gt;o3fs://bucket1.volume1.omhost/data&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.bucketA.link./salesDB&lt;/name&gt;
+  &lt;value&gt;s3a://bucketA/salesDB/&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>Let&#x2019;s consider the following operations to understand to where these operations will be delegated based on mount links.</p>
+<p><i>Op1:</i> Create a file with the path <code>s3a://bucketA/user/fileA</code>, then this file will be created physically at <code>hdfs://cluster/user/fileA</code>. This delegation happened based on the first configuration parameter in above configurations. Here <code>/user</code> mapped to <code>hdfs://cluster/user</code>.</p>
+<p><i>Op2:</i> Create a file the path <code>s3a://bucketA/data/datafile</code>, then this file will be created at <code>o3fs://bucket1.volume1.omhost/data/datafile</code>. This delegation happened based on second configurations parameter in above configurations. Here <code>/data</code> was mapped with <code>o3fs://bucket1.volume1.omhost/data/</code>.</p>
+<p><i>Op3:</i> Create a file with the path <code>s3a://bucketA/salesDB/dbfile</code>, then  physically this file will be created at <code>s3a://bucketA/salesDB/dbfile</code>. This delegation happened based on the third configuration parameter in above configurations. Here <code>/salesDB</code> was mapped to <code>s3a://bucket1/salesDB</code>.</p>
+<p>Note: In above examples we used create operation only, but the same mechanism applies to any other file system APIs here.</p>
+<p>The following picture shows how the different schemes can be used in ViewFileSystemOverloadScheme compared to the ViewFileSystem.</p>
+<p></p>
+<p>Note: In ViewFsOverloadScheme, by default the mount links will not be represented as symlinks. The permission bits and isDirectory value will be propagated from the target directory/file.</p></section><section>
+<h3><a name="Central_Mount_Table_Configurations"></a>Central Mount Table Configurations</h3>
+<p>To enable central mount table configuration, we need to configure <code>fs.viewfs.mounttable.path</code> in <code>core-site.xml</code> with the value as the Hadoop compatible file system directory/file path, where the <code>mount-table.&lt;versionNumber&gt;.xml</code> file copied. Here versionNumber is an integer number and need to increase the version number and upload new file in same directory.</p>
+<p>The ViewFileSystemOverloadScheme always loads the highest version number <code>mount-table.&lt;versionNumber&gt;.xml</code>. Please don&#x2019;t replace the file with same name. Always increment the version number to take new file picked by newly initializing clients. Why we don&#x2019;t recommend to replace the files is that, some client might have already opened the connections to old mount-table files already and in middle of loading configuration files, and replacing files can make them fail.</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.path&lt;/name&gt;
+  &lt;value&gt;hdfs://cluster/config/mount-table-dir&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>If you are sure, you will never do updates to mount-table file, you can also configure file path directly like below. If you configure file path, it will not check any highest version number loading. Whatever file configured it will be loaded. However file name format should be same.</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.path&lt;/name&gt;
+  &lt;value&gt;hdfs://cluster/config/mount-table-dir/mount-table.&lt;versionNumber&gt;.xml&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>Note: we recommend not to configure mount-links in <code>core-site.xml</code> if you configure above valid path. Otherwise both mount links will be mixed and can lead to a confused behavior.</p>
+<p>If you copy the <code>mount-table.&lt;versionNumber&gt;.xml</code>, you may consider having big replication factor depending on your cluster size. So, that file will be available locally to majority of clients as applications(MR/YARN/HBASE..etc) use locality on HDFS when reading <code>mount-table.&lt;versionNumber&gt;.xml</code>.</p></section></section><section>
+<h2><a name="DFSAdmin_commands_with_View_File_System_Overload_Scheme"></a>DFSAdmin commands with View File System Overload Scheme</h2>
+<p>Please refer to the <a href="./HDFSCommands.html#dfsadmin_with_ViewFsOverloadScheme">HDFSCommands Guide</a></p></section><section>
+<h2><a name="Accessing_paths_without_authority"></a>Accessing paths without authority</h2>
+<p>Accessing paths like <code>hdfs:///foo/bar</code>, <code>hdfs:/foo/bar</code> or <code>viewfs:/foo/bar</code>, where the authority (cluster name or hostname) of the path is not specified, is very common. This is especially true when the same code is expected to run on multiple clusters with different names or HDFS Namenodes.</p>
+<p>When <code>ViewFileSystemOverloadScheme</code> is used (as described above), and if (a) the scheme of the path being accessed is different from the scheme of the path specified as <code>fs.defaultFS</code> and (b) if the path doesn&#x2019;t have an authority specified, accessing the path can result in an error like <code>Empty Mount table in config for viewfs://default/</code>. For example, when the following configuration is used but a path like <code>viewfs:/foo/bar</code> or <code>viewfs:///foo/bar</code> is accessed, such an error arises.</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.hdfs.impl&lt;/name&gt;
+  &lt;value&gt;org.apache.hadoop.fs.viewfs.ViewFileSystemOverloadScheme&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.defaultFS&lt;/name&gt;
+  &lt;value&gt;hdfs://cluster/&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+<section>
+<h3><a name="Solution"></a>Solution</h3>
+<p>To avoid the above problem, the configuration <code>fs.viewfs.mounttable.default.name.key</code> has to be set to the name of the cluster, i.e, the following should be added to <code>core-site.xml</code></p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;property&gt;
+  &lt;name&gt;fs.viewfs.mounttable.default.name.key&lt;/name&gt;
+  &lt;value&gt;cluster&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>The string in this configuration <code>cluster</code> should match the name of the authority in the value of <code>fs.defaultFS</code>. Further, the configuration should have a mount table configured correctly as in the above examples, i.e., the configurations <code>fs.viewfs.mounttable.*cluster*.link.&lt;mountLinkPath&gt;</code> should be set (note the same string <code>cluster</code> is used in these configurations).</p></section></section><section>
+<h2><a name="Appendix:_A_Mount_Table_Configuration_with_XInclude"></a>Appendix: A Mount Table Configuration with XInclude</h2>
+<p>If users have a HTTP server in trusted network and don&#x2019;t need authentication mechanism to it, you can also place your mount-table.xml file in that server and configure XInclude xml tag with <code>mount-table.xml</code> file.</p>
+
+<div class="source">
+<div class="source">
+<pre>&lt;configuration xmlns:xi=&quot;http://www.w3.org/2001/XInclude&quot;&gt;
+  &lt;xi:include href=&quot;http://myserver/mountTable/mountTable.xml&quot; /&gt;
+&lt;/configuration&gt;
+</pre></div></div>
+
+<p>The Apache Hadoop configuration has the capability to read the http urls from XInclude and load into configurations. If you choose this option, please don&#x2019;t configure mount-table configuration items in <code>core-site.xml</code> or at <code>fs.viewfs.mounttable.path</code>. Please note, Hadoop configuration XInclude does not use SPNego authentication when opening url. So, this will not work if http server where you placed <code>mount-table.xml</code> needs authentication.</p></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

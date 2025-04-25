@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop Archive Logs &#x2013; Hadoop Archive Logs Guide</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop Archive Logs</a>
+        &gt;
+        Hadoop Archive Logs Guide
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Hadoop Archive Logs Guide</h1>
+<ul>
+
+
+
+</ul>
+<div class="section">
+<h2><a name="Overview"></a>Overview</h2>
+<p>For clusters with a lot of YARN aggregated logs, it can be helpful to combine them into hadoop archives in order to reduce the number of small files, and hence the stress on the NameNode.  This tool provides an easy way to do this. Aggregated logs in hadoop archives can still be read by the Job History Server and by the <tt>yarn logs</tt> command.</p>
+<p>For more on hadoop archives, see <a href="../hadoop-archives/HadoopArchives.html">Hadoop Archives Guide</a>.</p></div>
+<div class="section">
+<h2><a name="How_to_Archive_Logs"></a>How to Archive Logs</h2>
+
+<div>
+<div>
+<pre class="source">usage: mapred archive-logs
+-force                         Force recreating the working directory if
+                               an existing one is found. This should
+                               only be used if you know that another
+                               instance is not currently running
+-help                          Prints this message
+-maxEligibleApps &lt;n&gt;           The maximum number of eligible apps to
+                               process (default: -1 (all))
+-maxTotalLogsSize &lt;megabytes&gt;  The maximum total logs size (in
+                               megabytes) required to be eligible
+                               (default: 1024)
+-memory &lt;megabytes&gt;            The amount of memory (in megabytes) for
+                               each container (default: 1024)
+-minNumberLogFiles &lt;n&gt;         The minimum number of log files required
+                               to be eligible (default: 20)
+-noProxy                       When specified, all processing will be
+                               done as the user running this command (or
+                               the YARN user if DefaultContainerExecutor
+                               is in use). When not specified, all
+                               processing will be done as the user who
+                               owns that application; if the user
+                               running this command is not allowed to
+                               impersonate that user, it will fail
+-verbose                       Print more details.
+</pre></div></div>
+
+<p>The tool only supports running one instance on a cluster at a time in order to prevent conflicts. It does this by checking for the existance of a directory named <tt>archive-logs-work</tt> under <tt>yarn.nodemanager.remote-app-log-dir</tt> in HDFS (default: <tt>/tmp/logs/archive-logs-work</tt>). If for some reason that directory was not cleaned up properly, and the tool refuses to run, you can force it with the <tt>-force</tt> option.</p>
+<p>The <tt>-help</tt> option prints out the usage information.</p>
+<p>The tool works by performing the following procedure:</p>
+<ol style="list-style-type: decimal">
+
+<li>Determine the list of eligible applications, based on the following criteria:
+<ul>
+
+<li>is not already archived</li>
+<li>its aggregation status has successfully completed</li>
+<li>has at least <tt>-minNumberLogFiles</tt> log files</li>
+<li>the sum of its log files size is less than <tt>-maxTotalLogsSize</tt> megabytes</li>
+</ul>
+</li>
+<li>If there are are more than <tt>-maxEligibleApps</tt> applications found, the newest applications are dropped. They can be processed next time.</li>
+<li>A shell script is generated based on the eligible applications</li>
+<li>The Distributed Shell program is run with the aformentioned script. It will run with <tt>-maxEligibleApps</tt> containers, one to process each application, and with <tt>-memory</tt> megabytes of memory. Each container runs the <tt>hadoop archives</tt> command for a single application and replaces its aggregated log files with the resulting archive.</li>
+</ol>
+<p>The <tt>-noProxy</tt> option makes the tool process everything as the user who is currently running it, or the YARN user if DefaultContainerExecutor is in use. When not specified, all processing will be done by the user who owns that application; if the user running this command is not allowed to impersonate that user, it will fail.  This is useful if you want an admin user to handle all aggregation without enabling impersonation.  With <tt>-noProxy</tt> the resulting HAR files will be owned by whoever ran the tool, instead of whoever originally owned the logs.</p>
+<p>The <tt>-verbose</tt> option makes the tool print more details about what it&#x2019;s doing.</p>
+<p>The end result of running the tool is that the original aggregated log files for a processed application will be replaced by a hadoop archive containing all of those logs.</p></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: CREATE OPERATOR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-createoperator.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="CREATE OPERATOR" />
+  <meta property="og:description" content="CREATE OPERATOR CREATE OPERATOR — define a new operator Synopsis CREATE OPERATOR name ( {FUNCTION|PROCEDURE} = function_name [, LEFTARG = …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-createoperator.html" title="PostgreSQL 17 - CREATE OPERATOR" >Current</a>
+                          (<a href="/docs/17/sql-createoperator.html" title="PostgreSQL 17 - CREATE OPERATOR" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-createoperator.html" title="PostgreSQL 16 - CREATE OPERATOR" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-createoperator.html" title="PostgreSQL 15 - CREATE OPERATOR" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-createoperator.html" title="PostgreSQL 14 - CREATE OPERATOR" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-createoperator.html" title="PostgreSQL 13 - CREATE OPERATOR" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-createoperator.html" title="PostgreSQL devel - CREATE OPERATOR"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-createoperator.html" title="PostgreSQL 12 - CREATE OPERATOR"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-createoperator.html" title="PostgreSQL 11 - CREATE OPERATOR"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-createoperator.html" title="PostgreSQL 10 - CREATE OPERATOR"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-createoperator.html" title="PostgreSQL 9.6 - CREATE OPERATOR"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-createoperator.html" title="PostgreSQL 9.5 - CREATE OPERATOR"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-createoperator.html" title="PostgreSQL 9.4 - CREATE OPERATOR"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-createoperator.html" title="PostgreSQL 9.3 - CREATE OPERATOR"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-createoperator.html" title="PostgreSQL 9.2 - CREATE OPERATOR"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-createoperator.html" title="PostgreSQL 9.1 - CREATE OPERATOR"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-createoperator.html" title="PostgreSQL 9.0 - CREATE OPERATOR"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/sql-createoperator.html" title="PostgreSQL 8.4 - CREATE OPERATOR"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/sql-createoperator.html" title="PostgreSQL 8.3 - CREATE OPERATOR"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/sql-createoperator.html" title="PostgreSQL 8.2 - CREATE OPERATOR"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/sql-createoperator.html" title="PostgreSQL 8.1 - CREATE OPERATOR"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/sql-createoperator.html" title="PostgreSQL 8.0 - CREATE OPERATOR"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/sql-createoperator.html" title="PostgreSQL 7.4 - CREATE OPERATOR"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/sql-createoperator.html" title="PostgreSQL 7.3 - CREATE OPERATOR"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/sql-createoperator.html" title="PostgreSQL 7.2 - CREATE OPERATOR"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/sql-createoperator.html" title="PostgreSQL 7.1 - CREATE OPERATOR"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">CREATE OPERATOR</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-creatematerializedview.html" title="CREATE MATERIALIZED VIEW">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-createopclass.html" title="CREATE OPERATOR CLASS">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-CREATEOPERATOR">
+  <div class="titlepage"></div><a id="id-1.9.3.72.1" class="indexterm" name="id-1.9.3.72.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">CREATE OPERATOR</span></h2>
+    <p>CREATE OPERATOR — define a new operator</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+CREATE OPERATOR <em class="replaceable"><code>name</code></em> (
+    {FUNCTION|PROCEDURE} = <em class="replaceable"><code>function_name</code></em>
+    [, LEFTARG = <em class="replaceable"><code>left_type</code></em> ] [, RIGHTARG = <em class="replaceable"><code>right_type</code></em> ]
+    [, COMMUTATOR = <em class="replaceable"><code>com_op</code></em> ] [, NEGATOR = <em class="replaceable"><code>neg_op</code></em> ]
+    [, RESTRICT = <em class="replaceable"><code>res_proc</code></em> ] [, JOIN = <em class="replaceable"><code>join_proc</code></em> ]
+    [, HASHES ] [, MERGES ]
+)
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.72.5">
+    <h2>Description</h2>
+    <p><code class="command">CREATE OPERATOR</code> defines a new operator, <em class="replaceable"><code>name</code></em>. The user who defines an operator becomes its owner. If a schema name is given then the operator is created in the specified schema. Otherwise it is created in the current schema.</p>
+    <p>The operator name is a sequence of up to <code class="symbol">NAMEDATALEN</code>-1 (63 by default) characters from the following list:</p>
+    <div class="literallayout">
+      <p><br />
+      +&nbsp;-&nbsp;*&nbsp;/&nbsp;&lt;&nbsp;&gt;&nbsp;=&nbsp;~&nbsp;!&nbsp;@&nbsp;#&nbsp;%&nbsp;^&nbsp;&amp;&nbsp;|&nbsp;`&nbsp;?<br /></p>
+    </div>
+    <p>There are a few restrictions on your choice of name:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p><code class="literal">--</code> and <code class="literal">/*</code> cannot appear anywhere in an operator name, since they will be taken as the start of a comment.</p>
+        </li>
+        <li class="listitem">
+          <p>A multicharacter operator name cannot end in <code class="literal">+</code> or <code class="literal">-</code>, unless the name also contains at least one of these characters:</p>
+          <div class="literallayout">
+            <p><br />
+            ~&nbsp;!&nbsp;@&nbsp;#&nbsp;%&nbsp;^&nbsp;&amp;&nbsp;|&nbsp;`&nbsp;?<br /></p>
+          </div>
+          <p>For example, <code class="literal">@-</code> is an allowed operator name, but <code class="literal">*-</code> is not. This restriction allows <span class="productname">PostgreSQL</span> to parse SQL-compliant commands without requiring spaces between tokens.</p>
+        </li>
+        <li class="listitem">
+          <p>The symbol <code class="literal">=&gt;</code> is reserved by the SQL grammar, so it cannot be used as an operator name.</p>
+        </li>
+      </ul>
+    </div>
+    <p>The operator <code class="literal">!=</code> is mapped to <code class="literal">&lt;&gt;</code> on input, so these two names are always equivalent.</p>
+    <p>At least one of <code class="literal">LEFTARG</code> and <code class="literal">RIGHTARG</code> must be defined. For binary operators, both must be defined. For right unary operators, only <code class="literal">LEFTARG</code> should be defined, while for left unary operators only <code class="literal">RIGHTARG</code> should be defined.</p>
+    <div class="note">
+      <h3 class="title">Note</h3>
+      <p>Right unary, also called postfix, operators are deprecated and will be removed in <span class="productname">PostgreSQL</span> version 14.</p>
+    </div>
+    <p>The <em class="replaceable"><code>function_name</code></em> function must have been previously defined using <code class="command">CREATE FUNCTION</code> and must be defined to accept the correct number of arguments (either one or two) of the indicated types.</p>
+    <p>In the syntax of <code class="literal">CREATE OPERATOR</code>, the keywords <code class="literal">FUNCTION</code> and <code class="literal">PROCEDURE</code> are equivalent, but the referenced function must in any case be a function, not a procedure. The use of the keyword <code class="literal">PROCEDURE</code> here is historical and deprecated.</p>
+    <p>The other clauses specify optional operator optimization clauses. Their meaning is detailed in <a class="xref" href="xoper-optimization.html" title="37.15.&nbsp;Operator Optimization Information">Section&nbsp;37.15</a>.</p>
+    <p>To be able to create an operator, you must have <code class="literal">USAGE</code> privilege on the argument types and the return type, as well as <code class="literal">EXECUTE</code> privilege on the underlying function. If a commutator or negator operator is specified, you must own these operators.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.72.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name of the operator to be defined. See above for allowable characters. The name can be schema-qualified, for example <code class="literal">CREATE OPERATOR myschema.+ (...)</code>. If not, then the operator is created in the current schema. Two operators in the same schema can have the same name if they operate on different data types. This is called <em class="firstterm">overloading</em>.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>function_name</code></em></span></dt>
+        <dd>
+          <p>The function used to implement this operator.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>left_type</code></em></span></dt>
+        <dd>
+          <p>The data type of the operator's left operand, if any. This option would be omitted for a left-unary operator.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>right_type</code></em></span></dt>
+        <dd>
+          <p>The data type of the operator's right operand, if any. This option would be omitted for a right-unary operator.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>com_op</code></em></span></dt>
+        <dd>
+          <p>The commutator of this operator.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>neg_op</code></em></span></dt>
+        <dd>
+          <p>The negator of this operator.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>res_proc</code></em></span></dt>
+        <dd>
+          <p>The restriction selectivity estimator function for this operator.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>join_proc</code></em></span></dt>
+        <dd>
+          <p>The join selectivity estimator function for this operator.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">HASHES</code></span></dt>
+        <dd>
+          <p>Indicates this operator can support a hash join.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">MERGES</code></span></dt>
+        <dd>
+          <p>Indicates this operator can support a merge join.</p>
+        </dd>
+      </dl>
+    </div>
+    <p>To give a schema-qualified operator name in <em class="replaceable"><code>com_op</code></em> or the other optional arguments, use the <code class="literal">OPERATOR()</code> syntax, for example:</p>
+    <pre class="programlisting">
+COMMUTATOR = OPERATOR(myschema.===) ,
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.72.7">
+    <h2>Notes</h2>
+    <p>Refer to <a class="xref" href="xoper.html" title="37.14.&nbsp;User-Defined Operators">Section&nbsp;37.14</a> for further information.</p>
+    <p>It is not possible to specify an operator's lexical precedence in <code class="command">CREATE OPERATOR</code>, because the parser's precedence behavior is hard-wired. See <a class="xref" href="sql-syntax-lexical.html#SQL-PRECEDENCE" title="4.1.6.&nbsp;Operator Precedence">Section&nbsp;4.1.6</a> for precedence details.</p>
+    <p>The obsolete options <code class="literal">SORT1</code>, <code class="literal">SORT2</code>, <code class="literal">LTCMP</code>, and <code class="literal">GTCMP</code> were formerly used to specify the names of sort operators associated with a merge-joinable operator. This is no longer necessary, since information about associated operators is found by looking at B-tree operator families instead. If one of these options is given, it is ignored except for implicitly setting <code class="literal">MERGES</code> true.</p>
+    <p>Use <a class="xref" href="sql-dropoperator.html" title="DROP OPERATOR"><span class="refentrytitle">DROP OPERATOR</span></a> to delete user-defined operators from a database. Use <a class="xref" href="sql-alteroperator.html" title="ALTER OPERATOR"><span class="refentrytitle">ALTER OPERATOR</span></a> to modify operators in a database.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.72.8">
+    <h2>Examples</h2>
+    <p>The following command defines a new operator, area-equality, for the data type <code class="type">box</code>:</p>
+    <pre class="programlisting">
+CREATE OPERATOR === (
+    LEFTARG = box,
+    RIGHTARG = box,
+    FUNCTION = area_equal_function,
+    COMMUTATOR = ===,
+    NEGATOR = !==,
+    RESTRICT = area_restriction_function,
+    JOIN = area_join_function,
+    HASHES, MERGES
+);
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.72.9">
+    <h2>Compatibility</h2>
+    <p><code class="command">CREATE OPERATOR</code> is a <span class="productname">PostgreSQL</span> extension. There are no provisions for user-defined operators in the SQL standard.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.72.10">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-alteroperator.html" title="ALTER OPERATOR"><span class="refentrytitle">ALTER OPERATOR</span></a>, <a class="xref" href="sql-createopclass.html" title="CREATE OPERATOR CLASS"><span class="refentrytitle">CREATE OPERATOR CLASS</span></a>, <a class="xref" href="sql-dropoperator.html" title="DROP OPERATOR"><span class="refentrytitle">DROP OPERATOR</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-creatematerializedview.html" title="CREATE MATERIALIZED VIEW">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-createopclass.html" title="CREATE OPERATOR CLASS">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">CREATE MATERIALIZED VIEW&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;CREATE OPERATOR CLASS</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-createoperator.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

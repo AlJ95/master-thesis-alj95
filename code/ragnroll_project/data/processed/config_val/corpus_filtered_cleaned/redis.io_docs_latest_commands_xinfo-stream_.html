@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>XINFO STREAM | Docs</title>
+    <meta name="description" content="Returns information about a stream.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/xinfo-stream/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="XINFO STREAM">
+  <meta property="og:description" content="Returns information about a stream.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="XINFO STREAM">
+  <meta itemprop="description" content="Returns information about a stream.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="776">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XINFO STREAM">
+  <meta name="twitter:description" content="Returns information about a stream.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">XINFO STREAM
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">XINFO STREAM key [FULL [COUNT count]]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 5.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@stream</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>This command returns information about the stream stored at <code>&lt;key&gt;</code>.</p>
+<p>The informative details provided by this command are:</p>
+<ul>
+<li><strong>length</strong>: the number of entries in the stream (see <a href="/docs/latest/commands/xlen/"><code>XLEN</code></a>)</li>
+<li><strong>radix-tree-keys</strong>: the number of keys in the underlying radix data structure</li>
+<li><strong>radix-tree-nodes</strong>: the number of nodes in the underlying radix data structure</li>
+<li><strong>groups</strong>: the number of consumer groups defined for the stream</li>
+<li><strong>last-generated-id</strong>: the ID of the least-recently entry that was added to the stream</li>
+<li><strong>max-deleted-entry-id</strong>: the maximal entry ID that was deleted from the stream</li>
+<li><strong>entries-added</strong>: the count of all entries added to the stream during its lifetime</li>
+<li><strong>first-entry</strong>: the ID and field-value tuples of the first entry in the stream</li>
+<li><strong>last-entry</strong>: the ID and field-value tuples of the last entry in the stream</li>
+</ul>
+<h3 id="the-full-modifier">The <code>FULL</code> modifier</h3>
+<p>The optional <code>FULL</code> modifier provides a more verbose reply.
+When provided, the <code>FULL</code> reply includes an <strong>entries</strong> array that consists of the stream entries (ID and field-value tuples) in ascending order.
+Furthermore, <strong>groups</strong> is also an array, and for each of the consumer groups it consists of the information reported by <a href="/docs/latest/commands/xinfo-groups/"><code>XINFO GROUPS</code></a> and <a href="/docs/latest/commands/xinfo-consumers/"><code>XINFO CONSUMERS</code></a>.</p>
+<p>The following information is provided for each of the groups:</p>
+<ul>
+<li><strong>name</strong>: the consumer group's name</li>
+<li><strong>last-delivered-id</strong>: the ID of the last entry delivered to the group's consumers</li>
+<li><strong>entries-read</strong>: the logical &quot;read counter&quot; of the last entry delivered to the group's consumers</li>
+<li><strong>lag</strong>: the number of entries in the stream that are still waiting to be delivered to the group's consumers, or a NULL when that number can't be determined.</li>
+<li><strong>pel-count</strong>: the length of the group's pending entries list (PEL), which are messages that were delivered but are yet to be acknowledged</li>
+<li><strong>pending</strong>: an array with pending entries information (see below)</li>
+<li><strong>consumers</strong>: an array with consumers information (see below)</li>
+</ul>
+<p>The following information is provided for each pending entry:</p>
+<ol>
+<li>The ID of the message.</li>
+<li>The name of the consumer that fetched the message and has still to acknowledge it. We call it the current <em>owner</em> of the message.</li>
+<li>The UNIX timestamp of when the message was delivered to this consumer.</li>
+<li>The number of times this message was delivered.</li>
+</ol>
+<p>The following information is provided for each consumer:</p>
+<ul>
+<li><strong>name</strong>: the consumer's name</li>
+<li><strong>seen-time</strong>: the UNIX timestamp of the last attempted interaction (Examples: <a href="/docs/latest/commands/xreadgroup/"><code>XREADGROUP</code></a>, <a href="/docs/latest/commands/xclaim/"><code>XCLAIM</code></a>, <a href="/docs/latest/commands/xautoclaim/"><code>XAUTOCLAIM</code></a>)</li>
+<li><strong>active-time</strong>: the UNIX timestamp of the last successful interaction (Examples: <a href="/docs/latest/commands/xreadgroup/"><code>XREADGROUP</code></a> that actually read some entries into the PEL, <a href="/docs/latest/commands/xclaim/"><code>XCLAIM</code></a>/<a href="/docs/latest/commands/xautoclaim/"><code>XAUTOCLAIM</code></a> that actually claimed some entries)</li>
+<li><strong>pel-count</strong>: the number of entries in the PEL: pending messages for the consumer, which are messages that were delivered but are yet to be acknowledged</li>
+<li><strong>pending</strong>: an array with pending entries information, has the same structure as described above, except the consumer name is omitted (redundant, since anyway we are in a specific consumer context)</li>
+</ul>
+<p>Note that before Redis 7.2.0, <strong>seen-time</strong> used to denote the last successful interaction.
+In 7.2.0, <strong>active-time</strong> was added and <strong>seen-time</strong> was changed to denote the last attempted interaction.</p>
+<p>The <code>COUNT</code> option can be used to limit the number of stream and PEL entries that are returned (The first <code>&lt;count&gt;</code> entries are returned).
+The default <code>COUNT</code> is 10 and a <code>COUNT</code> of 0 means that all entries will be returned (execution time may be long if the stream has a lot of entries).</p>
+<h2 id="examples">Examples</h2>
+<p>Default reply:</p>
+<pre tabindex="0"><code>&gt; XINFO STREAM mystream
+ 1) &#34;length&#34;
+ 2) (integer) 2
+ 3) &#34;radix-tree-keys&#34;
+ 4) (integer) 1
+ 5) &#34;radix-tree-nodes&#34;
+ 6) (integer) 2
+ 7) &#34;last-generated-id&#34;
+ 8) &#34;1638125141232-0&#34;
+ 9) &#34;max-deleted-entry-id&#34;
+10) &#34;0-0&#34;
+11) &#34;entries-added&#34;
+12) (integer) 2
+13) &#34;recorded-first-entry-id&#34;
+14) &#34;1719505260513-0&#34;
+15) &#34;groups&#34;
+16) (integer) 1
+17) &#34;first-entry&#34;
+18) 1) &#34;1638125133432-0&#34;
+    2) 1) &#34;message&#34;
+       2) &#34;apple&#34;
+19) &#34;last-entry&#34;
+20) 1) &#34;1638125141232-0&#34;
+    2) 1) &#34;message&#34;
+       2) &#34;banana&#34;
+</code></pre><p>Full reply:</p>
+<pre tabindex="0"><code>&gt; XADD mystream * foo bar
+&#34;1638125133432-0&#34;
+&gt; XADD mystream * foo bar2
+&#34;1638125141232-0&#34;
+&gt; XGROUP CREATE mystream mygroup 0-0
+OK
+&gt; XREADGROUP GROUP mygroup Alice COUNT 1 STREAMS mystream &gt;
+1) 1) &#34;mystream&#34;
+   2) 1) 1) &#34;1638125133432-0&#34;
+         2) 1) &#34;foo&#34;
+            2) &#34;bar&#34;
+&gt; XINFO STREAM mystream FULL
+ 1) &#34;length&#34;
+ 2) (integer) 2
+ 3) &#34;radix-tree-keys&#34;
+ 4) (integer) 1
+ 5) &#34;radix-tree-nodes&#34;
+ 6) (integer) 2
+ 7) &#34;last-generated-id&#34;
+ 8) &#34;1638125141232-0&#34;
+ 9) &#34;max-deleted-entry-id&#34;
+10) &#34;0-0&#34;
+11) &#34;entries-added&#34;
+12) (integer) 2
+13) &#34;recorded-first-entry-id&#34;
+14) &#34;1719505260513-0&#34;
+15) &#34;entries&#34;
+16) 1) 1) &#34;1638125133432-0&#34;
+       2) 1) &#34;foo&#34;
+          2) &#34;bar&#34;
+    2) 1) &#34;1638125141232-0&#34;
+       2) 1) &#34;foo&#34;
+          2) &#34;bar2&#34;
+17) &#34;groups&#34;
+18) 1)  1) &#34;name&#34;
+        2) &#34;mygroup&#34;
+        3) &#34;last-delivered-id&#34;
+        4) &#34;1638125133432-0&#34;
+        5) &#34;entries-read&#34;
+        6) (integer) 1
+        7) &#34;lag&#34;
+        8) (integer) 1
+        9) &#34;pel-count&#34;
+       10) (integer) 1
+       11) &#34;pending&#34;
+       12) 1) 1) &#34;1638125133432-0&#34;
+              2) &#34;Alice&#34;
+              3) (integer) 1638125153423
+              4) (integer) 1
+       13) &#34;consumers&#34;
+       14) 1) 1) &#34;name&#34;
+              2) &#34;Alice&#34;
+              3) &#34;seen-time&#34;
+              4) (integer) 1638125133422
+              5) &#34;active-time&#34;
+              6) (integer) 1638125133432
+              7) &#34;pel-count&#34;
+              8) (integer) 1
+              9) &#34;pending&#34;
+              10) 1) 1) &#34;1638125133432-0&#34;
+                     2) (integer) 1638125133432
+                     3) (integer) 1
+</code></pre>
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: when the <em>FULL</em> argument is used, a list of information about a stream in summary form.</li>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: when the <em>FULL</em> argument is used, a list of information about a stream in extended form.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#maps">Map reply</a>: when the <em>FULL</em> argument was not given, a list of information about a stream in summary form.</li>
+<li><a href="../../develop/reference/protocol-spec#maps">Map reply</a>: when the <em>FULL</em> argument was given, a list of information about a stream in extended form.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 6.0.0: Added the <code>FULL</code> modifier.</li>
+            
+            <li>Starting with Redis version 7.0.0: Added the <code>max-deleted-entry-id</code>, <code>entries-added</code>, <code>recorded-first-entry-id</code>, <code>entries-read</code> and <code>lag</code> fields</li>
+            
+            <li>Starting with Redis version 7.2.0: Added the <code>active-time</code> field, and changed the meaning of <code>seen-time</code>.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/xinfo-stream/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; HDFS Support for Multihomed Networks</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        HDFS Support for Multihomed Networks
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>HDFS Support for Multihomed Networks</h1>
+<p>This document is targetted to cluster administrators deploying <tt>HDFS</tt> in multihomed networks. Similar support for <tt>YARN</tt>/<tt>MapReduce</tt> is work in progress and will be documented when available.</p>
+<ul>
+
+
+
+</ul></li>
+</ul></li></ul>
+
+<div class="section">
+<h2><a name="Multihoming_Background"></a>Multihoming Background</h2>
+<p>In multihomed networks the cluster nodes are connected to more than one network interface. There could be multiple reasons for doing so.</p>
+<ol style="list-style-type: decimal">
+
+<li>
+
+<p><b>Security</b>: Security requirements may dictate that intra-cluster traffic be confined to a different network than the network used to transfer data in and out of the cluster.</p>
+</li>
+<li>
+
+<p><b>Performance</b>: Intra-cluster traffic may use one or more high bandwidth interconnects like Fiber Channel, Infiniband or 10GbE.</p>
+</li>
+<li>
+
+<p><b>Failover/Redundancy</b>: The nodes may have multiple network adapters connected to a single network to handle network adapter failure.</p>
+</li>
+</ol>
+<p>Note that NIC Bonding (also known as NIC Teaming or Link Aggregation) is a related but separate topic. The following settings are usually not applicable to a NIC bonding configuration which handles multiplexing and failover transparently while presenting a single &#x2018;logical network&#x2019; to applications.</p></div>
+<div class="section">
+<h2><a name="Fixing_Hadoop_Issues_In_Multihomed_Environments"></a>Fixing Hadoop Issues In Multihomed Environments</h2>
+<div class="section">
+<h3><a name="Ensuring_HDFS_Daemons_Bind_All_Interfaces"></a>Ensuring HDFS Daemons Bind All Interfaces</h3>
+<p>By default <tt>HDFS</tt> endpoints are specified as either hostnames or IP addresses. In either case <tt>HDFS</tt> daemons will bind to a single IP address making the daemons unreachable from other networks.</p>
+<p>The solution is to have separate setting for server endpoints to force binding the wildcard IP address <tt>INADDR_ANY</tt> i.e. <tt>0.0.0.0</tt>. Do NOT supply a port number with any of these settings.</p>
+<p><b>NOTE:</b> Prefer using hostnames over IP addresses in master/slave configuration files.</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;dfs.namenode.rpc-bind-host&lt;/name&gt;
+  &lt;value&gt;0.0.0.0&lt;/value&gt;
+  &lt;description&gt;
+    The actual address the RPC server will bind to. If this optional address is
+    set, it overrides only the hostname portion of dfs.namenode.rpc-address.
+    It can also be specified per name node or name service for HA/Federation.
+    This is useful for making the name node listen on all interfaces by
+    setting it to 0.0.0.0.
+  &lt;/description&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;dfs.namenode.servicerpc-bind-host&lt;/name&gt;
+  &lt;value&gt;0.0.0.0&lt;/value&gt;
+  &lt;description&gt;
+    The actual address the service RPC server will bind to. If this optional address is
+    set, it overrides only the hostname portion of dfs.namenode.servicerpc-address.
+    It can also be specified per name node or name service for HA/Federation.
+    This is useful for making the name node listen on all interfaces by
+    setting it to 0.0.0.0.
+  &lt;/description&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;dfs.namenode.http-bind-host&lt;/name&gt;
+  &lt;value&gt;0.0.0.0&lt;/value&gt;
+  &lt;description&gt;
+    The actual address the HTTP server will bind to. If this optional address
+    is set, it overrides only the hostname portion of dfs.namenode.http-address.
+    It can also be specified per name node or name service for HA/Federation.
+    This is useful for making the name node HTTP server listen on all
+    interfaces by setting it to 0.0.0.0.
+  &lt;/description&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;dfs.namenode.https-bind-host&lt;/name&gt;
+  &lt;value&gt;0.0.0.0&lt;/value&gt;
+  &lt;description&gt;
+    The actual address the HTTPS server will bind to. If this optional address
+    is set, it overrides only the hostname portion of dfs.namenode.https-address.
+    It can also be specified per name node or name service for HA/Federation.
+    This is useful for making the name node HTTPS server listen on all
+    interfaces by setting it to 0.0.0.0.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Clients_use_Hostnames_when_connecting_to_DataNodes"></a>Clients use Hostnames when connecting to DataNodes</h3>
+<p>By default <tt>HDFS</tt> clients connect to DataNodes using the IP address provided by the NameNode. Depending on the network configuration this IP address may be unreachable by the clients. The fix is letting clients perform their own DNS resolution of the DataNode hostname. The following setting enables this behavior.</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;dfs.client.use.datanode.hostname&lt;/name&gt;
+  &lt;value&gt;true&lt;/value&gt;
+  &lt;description&gt;Whether clients should use datanode hostnames when
+    connecting to datanodes.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="DataNodes_use_HostNames_when_connecting_to_other_DataNodes"></a>DataNodes use HostNames when connecting to other DataNodes</h3>
+<p>Rarely, the NameNode-resolved IP address for a DataNode may be unreachable from other DataNodes. The fix is to force DataNodes to perform their own DNS resolution for inter-DataNode connections. The following setting enables this behavior.</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;dfs.datanode.use.datanode.hostname&lt;/name&gt;
+  &lt;value&gt;true&lt;/value&gt;
+  &lt;description&gt;Whether datanodes should use datanode hostnames when
+    connecting to other datanodes for data transfer.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div></div>
+<div class="section">
+<h2><a name="Multihoming_and_Hadoop_Security"></a>Multihoming and Hadoop Security</h2>
+<p>Configuring multihomed hosts with <a href="../hadoop-common/SecureMode.html">Hadoop in Secure Mode</a> may require additional configuration.</p>
+<div class="section">
+<h3><a name="Hostname_Lookup"></a>Hostname Lookup</h3>
+<p>Kerberos principals for Hadoop Services are specified using the pattern <tt>ServiceName/_HOST@REALM.TLD</tt> e.g. <tt>nn/_HOST@REALM.TLD</tt>. This allows the same configuration file to be used on all hosts. Services will substitute <tt>_HOST</tt> in the principal with their own hostname looked up at runtime.</p>
+<p>When nodes are configured to have multiple hostnames in DNS or in <tt>/etc/hosts</tt> files, a service may lookup a different hostname than what is expected by the server. e.g. intra-cluster traffic between two services may be routed over a private interface but the client service looked up its public hostname. Kerberos authentication will fail since the hostname in the principal does not match the IP address over which the traffic arrived.</p>
+<p>The following setting (available starting Apache Hadoop 2.8.0) can be used to control the hostname looked up the service.</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;hadoop.security.dns.interface&lt;/name&gt;
+  &lt;description&gt;
+    The name of the Network Interface from which the service should determine
+    its host name for Kerberos login. e.g. eth2. In a multi-homed environment,
+    the setting can be used to affect the _HOST subsitution in the service
+    Kerberos principal. If this configuration value is not set, the service
+    will use its default hostname as returned by
+    InetAddress.getLocalHost().getCanonicalHostName().
+
+    Most clusters will not require this setting.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>Services can also be configured to use a specific DNS server for hostname lookups (rarely required).</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;hadoop.security.dns.nameserver&lt;/name&gt;
+  &lt;description&gt;
+    The host name or IP address of the name server (DNS) which a service Node
+    should use to determine its own host name for Kerberos Login. Requires
+    hadoop.security.dns.interface.
+
+    Most clusters will not require this setting.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

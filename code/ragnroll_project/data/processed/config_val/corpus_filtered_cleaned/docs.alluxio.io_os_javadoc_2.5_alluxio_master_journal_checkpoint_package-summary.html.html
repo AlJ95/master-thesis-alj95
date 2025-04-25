@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master.journal.checkpoint (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master.journal.checkpoint</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/Checkpointed.html" title="interface in alluxio.master.journal.checkpoint">Checkpointed</a></td>
+<td class="colLast">
+<div class="block">Base class for Alluxio classes which can be written to and read from metadata checkpoints.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CheckpointFormat.html" title="interface in alluxio.master.journal.checkpoint">CheckpointFormat</a></td>
+<td class="colLast">
+<div class="block">Interface for checkpoint formats.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CheckpointFormat.CheckpointReader.html" title="interface in alluxio.master.journal.checkpoint">CheckpointFormat.CheckpointReader</a></td>
+<td class="colLast">
+<div class="block">Interface for checkpoint readers.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CheckpointInputStream.html" title="class in alluxio.master.journal.checkpoint">CheckpointInputStream</a></td>
+<td class="colLast">
+<div class="block">Input stream for reading checkpoints.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CheckpointOutputStream.html" title="class in alluxio.master.journal.checkpoint">CheckpointOutputStream</a></td>
+<td class="colLast">
+<div class="block">Output stream for writing checkpoints.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CompoundCheckpointFormat.html" title="class in alluxio.master.journal.checkpoint">CompoundCheckpointFormat</a></td>
+<td class="colLast">
+<div class="block">Format for compound checkpoints.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CompoundCheckpointFormat.CompoundCheckpointReader.html" title="class in alluxio.master.journal.checkpoint">CompoundCheckpointFormat.CompoundCheckpointReader</a></td>
+<td class="colLast">
+<div class="block">Reader for compound checkpoints.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CompoundCheckpointFormat.CompoundCheckpointReader.Entry.html" title="class in alluxio.master.journal.checkpoint">CompoundCheckpointFormat.CompoundCheckpointReader.Entry</a></td>
+<td class="colLast">
+<div class="block">A compound checkpoint entry.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/InodeProtosCheckpointFormat.html" title="class in alluxio.master.journal.checkpoint">InodeProtosCheckpointFormat</a></td>
+<td class="colLast">
+<div class="block">Reads inode proto checkpoints.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/JournalCheckpointFormat.html" title="class in alluxio.master.journal.checkpoint">JournalCheckpointFormat</a></td>
+<td class="colLast">
+<div class="block">Format for checkpoints written as sequential JournalEntry protocol buffers.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/JournalCheckpointFormat.JournalCheckpointReader.html" title="class in alluxio.master.journal.checkpoint">JournalCheckpointFormat.JournalCheckpointReader</a></td>
+<td class="colLast">
+<div class="block">Reads journal entries from a checkpoint stream.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/LongCheckpointFormat.html" title="class in alluxio.master.journal.checkpoint">LongCheckpointFormat</a></td>
+<td class="colLast">
+<div class="block">Format for checkpoints containing a single long.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/LongCheckpointFormat.LongCheckpointReader.html" title="class in alluxio.master.journal.checkpoint">LongCheckpointFormat.LongCheckpointReader</a></td>
+<td class="colLast">
+<div class="block">Reads a checkpoint containing a single long.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/LongsCheckpointFormat.html" title="class in alluxio.master.journal.checkpoint">LongsCheckpointFormat</a></td>
+<td class="colLast">
+<div class="block">Format for checkpoints consisting of a list of longs written by a DataOutputStream.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/LongsCheckpointFormat.LongsCheckpointReader.html" title="class in alluxio.master.journal.checkpoint">LongsCheckpointFormat.LongsCheckpointReader</a></td>
+<td class="colLast">
+<div class="block">Reads a checkpoint of longs.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/TarballCheckpointFormat.html" title="class in alluxio.master.journal.checkpoint">TarballCheckpointFormat</a></td>
+<td class="colLast">
+<div class="block">Format for checkpoints written as tarballs.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/TarballCheckpointFormat.TarballCheckpointReader.html" title="class in alluxio.master.journal.checkpoint">TarballCheckpointFormat.TarballCheckpointReader</a></td>
+<td class="colLast">
+<div class="block">Reads a tarball-based checkpoint.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CheckpointName.html" title="enum in alluxio.master.journal.checkpoint">CheckpointName</a></td>
+<td class="colLast">
+<div class="block">Names for associating checkpoint data with the classes they represent.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/master/journal/checkpoint/CheckpointType.html" title="enum in alluxio.master.journal.checkpoint">CheckpointType</a></td>
+<td class="colLast">
+<div class="block">Enumeration of different checkpoint types used by the master.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Single object mixins | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/ref/class-based-views/mixins-single-object/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Single object mixins | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-single-object-mixins">
+<span id="single-object-mixins"></span><h1>Single object mixins<a class="headerlink" href="#single-object-mixins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="s-singleobjectmixin">
+<span id="singleobjectmixin"></span><h2><code class="docutils literal notranslate"><span class="pre">SingleObjectMixin</span></code><a class="headerlink" href="#singleobjectmixin" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.detail.</span></code><code class="sig-name descname"><span class="pre">SingleObjectMixin</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a mechanism for looking up an object associated with the
+current HTTP request.</p>
+<p><strong>Methods and Attributes</strong></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The model that this view will display data for. Specifying <code class="docutils literal notranslate"><span class="pre">model</span>
+<span class="pre">=</span> <span class="pre">Foo</span></code> is effectively the same as specifying <code class="docutils literal notranslate"><span class="pre">queryset</span> <span class="pre">=</span>
+<span class="pre">Foo.objects.all()</span></code>, where <code class="docutils literal notranslate"><span class="pre">objects</span></code> stands for <code class="docutils literal notranslate"><span class="pre">Foo</span></code>’s
+<a class="reference internal" href="../../../topics/db/managers/#default-managers"><span class="std std-ref">default manager</span></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.queryset">
+<code class="sig-name descname"><span class="pre">queryset</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> that represents the objects. If provided, the value of
+<code class="docutils literal notranslate"><span class="pre">queryset</span></code> supersedes the value provided for <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.model" title="django.views.generic.detail.SingleObjectMixin.model"><code class="xref py py-attr docutils literal notranslate"><span class="pre">model</span></code></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">queryset</span></code> is a class attribute with a <em>mutable</em> value so care
+must be taken when using it directly. Before using it, either call
+its <a class="reference internal" href="../../models/querysets/#django.db.models.query.QuerySet.all" title="django.db.models.query.QuerySet.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">all()</span></code></a> method or
+retrieve it with <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.get_queryset" title="django.views.generic.detail.SingleObjectMixin.get_queryset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_queryset()</span></code></a> which takes care of the
+cloning behind the scenes.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.slug_field">
+<code class="sig-name descname"><span class="pre">slug_field</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.slug_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the field on the model that contains the slug. By default,
+<code class="docutils literal notranslate"><span class="pre">slug_field</span></code> is <code class="docutils literal notranslate"><span class="pre">'slug'</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.slug_url_kwarg">
+<code class="sig-name descname"><span class="pre">slug_url_kwarg</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.slug_url_kwarg" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the URLConf keyword argument that contains the slug. By
+default, <code class="docutils literal notranslate"><span class="pre">slug_url_kwarg</span></code> is <code class="docutils literal notranslate"><span class="pre">'slug'</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.pk_url_kwarg">
+<code class="sig-name descname"><span class="pre">pk_url_kwarg</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.pk_url_kwarg" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the URLConf keyword argument that contains the primary key.
+By default, <code class="docutils literal notranslate"><span class="pre">pk_url_kwarg</span></code> is <code class="docutils literal notranslate"><span class="pre">'pk'</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.context_object_name">
+<code class="sig-name descname"><span class="pre">context_object_name</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Designates the name of the variable to use in the context.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.query_pk_and_slug">
+<code class="sig-name descname"><span class="pre">query_pk_and_slug</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.query_pk_and_slug" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, causes <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.get_object" title="django.views.generic.detail.SingleObjectMixin.get_object"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_object()</span></code></a> to perform its lookup using
+both the primary key and the slug. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>This attribute can help mitigate <a class="reference external" href="https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References">insecure direct object reference</a>
+attacks. When applications allow access to individual objects by a
+sequential primary key, an attacker could brute-force guess all URLs;
+thereby obtaining a list of all objects in the application. If users
+with access to individual objects should be prevented from obtaining
+this list, setting <code class="docutils literal notranslate"><span class="pre">query_pk_and_slug</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> will help prevent
+the guessing of URLs as each URL will require two correct,
+non-sequential arguments. Using a unique slug may serve the same
+purpose, but this scheme allows you to have non-unique slugs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.get_object">
+<code class="sig-name descname"><span class="pre">get_object</span></code>(<em><span class="n"><span class="pre">queryset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.get_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the single object that this view will display. If <code class="docutils literal notranslate"><span class="pre">queryset</span></code>
+is provided, that queryset will be used as the source of objects;
+otherwise, <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.get_queryset" title="django.views.generic.detail.SingleObjectMixin.get_queryset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_queryset()</span></code></a> will be used. <code class="docutils literal notranslate"><span class="pre">get_object()</span></code> looks
+for a <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.pk_url_kwarg" title="django.views.generic.detail.SingleObjectMixin.pk_url_kwarg"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pk_url_kwarg</span></code></a> argument in the arguments to the view; if
+this argument is found, this method performs a primary-key based lookup
+using that value. If this argument is not found, it looks for a
+<a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.slug_url_kwarg" title="django.views.generic.detail.SingleObjectMixin.slug_url_kwarg"><code class="xref py py-attr docutils literal notranslate"><span class="pre">slug_url_kwarg</span></code></a> argument, and performs a slug lookup using the
+<a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.slug_field" title="django.views.generic.detail.SingleObjectMixin.slug_field"><code class="xref py py-attr docutils literal notranslate"><span class="pre">slug_field</span></code></a>.</p>
+<p>When <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.query_pk_and_slug" title="django.views.generic.detail.SingleObjectMixin.query_pk_and_slug"><code class="xref py py-attr docutils literal notranslate"><span class="pre">query_pk_and_slug</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">get_object()</span></code> will
+perform its lookup using both the primary key and the slug.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.get_queryset">
+<code class="sig-name descname"><span class="pre">get_queryset</span></code>()<a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the queryset that will be used to retrieve the object that
+this view will display. By default, <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.get_queryset" title="django.views.generic.detail.SingleObjectMixin.get_queryset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_queryset()</span></code></a> returns the
+value of the <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.queryset" title="django.views.generic.detail.SingleObjectMixin.queryset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">queryset</span></code></a> attribute if it is set, otherwise
+it constructs a <a class="reference internal" href="../../models/querysets/#django.db.models.query.QuerySet" title="django.db.models.query.QuerySet"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code></a> by calling
+the <code class="docutils literal notranslate"><span class="pre">all()</span></code> method on the <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.model" title="django.views.generic.detail.SingleObjectMixin.model"><code class="xref py py-attr docutils literal notranslate"><span class="pre">model</span></code></a> attribute’s default manager.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.get_context_object_name">
+<code class="sig-name descname"><span class="pre">get_context_object_name</span></code>(<em><span class="n"><span class="pre">obj</span></span></em>)<a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.get_context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the context variable name that will be used to contain the
+data that this view is manipulating. If <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.context_object_name" title="django.views.generic.detail.SingleObjectMixin.context_object_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">context_object_name</span></code></a> is
+not set, the context name will be constructed from the <code class="docutils literal notranslate"><span class="pre">model_name</span></code>
+of the model that the queryset is composed from. For example, the model
+<code class="docutils literal notranslate"><span class="pre">Article</span></code> would have context object named <code class="docutils literal notranslate"><span class="pre">'article'</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.get_context_data">
+<code class="sig-name descname"><span class="pre">get_context_data</span></code>(<em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns context data for displaying the object.</p>
+<p>The base implementation of this method requires that the <code class="docutils literal notranslate"><span class="pre">self.object</span></code>
+attribute be set by the view (even if <code class="docutils literal notranslate"><span class="pre">None</span></code>). Be sure to do this if
+you are using this mixin without one of the built-in views that does so.</p>
+<p>It returns a dictionary with these contents:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">object</span></code>: The object that this view is displaying
+(<code class="docutils literal notranslate"><span class="pre">self.object</span></code>).</li>
+<li><code class="docutils literal notranslate"><span class="pre">context_object_name</span></code>: <code class="docutils literal notranslate"><span class="pre">self.object</span></code> will also be stored under
+the name returned by <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.get_context_object_name" title="django.views.generic.detail.SingleObjectMixin.get_context_object_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_context_object_name()</span></code></a>, which defaults
+to the lowercased version of the model name.</li>
+</ul>
+<div class="admonition-context-variables-override-values-from-template-context-processors admonition">
+<p class="first admonition-title">Context variables override values from template context processors</p>
+<p class="last">Any variables from <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.get_context_data" title="django.views.generic.detail.SingleObjectMixin.get_context_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_context_data()</span></code></a> take precedence over
+context variables from <a class="reference internal" href="../../templates/api/#subclassing-context-requestcontext"><span class="std std-ref">context processors</span></a>. For example, if your view
+sets the <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.model" title="django.views.generic.detail.SingleObjectMixin.model"><code class="xref py py-attr docutils literal notranslate"><span class="pre">model</span></code></a> attribute to
+<a class="reference internal" href="../../contrib/auth/#django.contrib.auth.models.User" title="django.contrib.auth.models.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a>, the default context
+object name of <code class="docutils literal notranslate"><span class="pre">user</span></code> would override the <code class="docutils literal notranslate"><span class="pre">user</span></code> variable from
+the <a class="reference internal" href="../../templates/api/#django.contrib.auth.context_processors.auth" title="django.contrib.auth.context_processors.auth"><code class="xref py py-func docutils literal notranslate"><span class="pre">django.contrib.auth.context_processors.auth()</span></code></a> context
+processor. Use <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.get_context_object_name" title="django.views.generic.detail.SingleObjectMixin.get_context_object_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_context_object_name()</span></code></a> to avoid a clash.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectMixin.get_slug_field">
+<code class="sig-name descname"><span class="pre">get_slug_field</span></code>()<a class="headerlink" href="#django.views.generic.detail.SingleObjectMixin.get_slug_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of a slug field to be used to look up by slug. By
+default this returns the value of <a class="reference internal" href="#django.views.generic.detail.SingleObjectMixin.slug_field" title="django.views.generic.detail.SingleObjectMixin.slug_field"><code class="xref py py-attr docutils literal notranslate"><span class="pre">slug_field</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="s-singleobjecttemplateresponsemixin">
+<span id="singleobjecttemplateresponsemixin"></span><h2><code class="docutils literal notranslate"><span class="pre">SingleObjectTemplateResponseMixin</span></code><a class="headerlink" href="#singleobjecttemplateresponsemixin" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectTemplateResponseMixin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.detail.</span></code><code class="sig-name descname"><span class="pre">SingleObjectTemplateResponseMixin</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectTemplateResponseMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mixin class that performs template-based response rendering for views
+that operate upon a single object instance. Requires that the view it is
+mixed with provides <code class="docutils literal notranslate"><span class="pre">self.object</span></code>, the object instance that the view is
+operating on. <code class="docutils literal notranslate"><span class="pre">self.object</span></code> will usually be, but is not required to be,
+an instance of a Django model. It may be <code class="docutils literal notranslate"><span class="pre">None</span></code> if the view is in the
+process of constructing a new instance.</p>
+<p><strong>Extends</strong></p>
+<ul class="simple">
+
+</ul>
+<p><strong>Methods and Attributes</strong></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectTemplateResponseMixin.template_name_field">
+<code class="sig-name descname"><span class="pre">template_name_field</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectTemplateResponseMixin.template_name_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>The field on the current object instance that can be used to determine
+the name of a candidate template. If either <code class="docutils literal notranslate"><span class="pre">template_name_field</span></code>
+itself or the value of the <code class="docutils literal notranslate"><span class="pre">template_name_field</span></code> on the current
+object instance is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the object will not be used for a
+candidate template name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectTemplateResponseMixin.template_name_suffix">
+<code class="sig-name descname"><span class="pre">template_name_suffix</span></code><a class="headerlink" href="#django.views.generic.detail.SingleObjectTemplateResponseMixin.template_name_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>The suffix to append to the auto-generated candidate template name.
+Default suffix is <code class="docutils literal notranslate"><span class="pre">_detail</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.detail.SingleObjectTemplateResponseMixin.get_template_names">
+<code class="sig-name descname"><span class="pre">get_template_names</span></code>()<a class="headerlink" href="#django.views.generic.detail.SingleObjectTemplateResponseMixin.get_template_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of candidate template names. Returns the following list:</p>
+<ul class="simple">
+<li>the value of <code class="docutils literal notranslate"><span class="pre">template_name</span></code> on the view (if provided)</li>
+<li>the contents of the <code class="docutils literal notranslate"><span class="pre">template_name_field</span></code> field on the
+object instance that the view is operating upon (if available)</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;app_label&gt;/&lt;model_name&gt;&lt;template_name_suffix&gt;.html</span></code></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Uses of Class org.apache.hadoop.fs.FileSystem (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+
+<li class="navBarCell1Rev">Use</li>
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h2 title="Uses of Class org.apache.hadoop.fs.FileSystem" class="title">Uses of Class<br>org.apache.hadoop.fs.FileSystem</h2>
+</div>
+<div class="classUseContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing packages, and an explanation">
+<caption><span>Packages that use <a href="../../../../../org/apache/hadoop/fs/FileSystem.html" title="class in org.apache.hadoop.fs">FileSystem</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Package</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.fs">org.apache.hadoop.fs</a></td>
+<td class="colLast">
+<div class="block">Implementations of <a href="../../../../../org/apache/hadoop/fs/AbstractFileSystem.html" title="class in org.apache.hadoop.fs"><code>AbstractFileSystem</code></a> for hdfs
+    over rpc and hdfs over web.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.fs.adl">org.apache.hadoop.fs.adl</a></td>
+<td class="colLast">
+<div class="block">Supporting classes for metrics instrumentation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.fs.azure">org.apache.hadoop.fs.azure</a></td>
+<td class="colLast">
+<div class="block">
+A distributed implementation of <a href="../../../../../org/apache/hadoop/fs/FileSystem.html" title="class in org.apache.hadoop.fs"><code>FileSystem</code></a> for reading and writing files on
+<a href="http://store.azure.com">Azure Block Storage</a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.fs.ftp">org.apache.hadoop.fs.ftp</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.fs.impl">org.apache.hadoop.fs.impl</a></td>
+<td class="colLast">
+<div class="block">This package contains implementation classes for use inside
+ filesystems.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.fs.s3native">org.apache.hadoop.fs.s3native</a></td>
+<td class="colLast">
+<div class="block">
+A distributed implementation of <a href="../../../../../org/apache/hadoop/fs/FileSystem.html" title="class in org.apache.hadoop.fs"><code>FileSystem</code></a> for reading and writing files on
+<a href="http://aws.amazon.com/s3">Amazon S3</a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.fs.viewfs">org.apache.hadoop.fs.viewfs</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.hdfs.server.namenode">org.apache.hadoop.hdfs.server.namenode</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.io">org.apache.hadoop.io</a></td>
+<td class="colLast">
+<div class="block">Generic i/o code for use when reading and writing data to the network,
+to databases, and to files.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.mapred">org.apache.hadoop.mapred</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.mapred.lib">org.apache.hadoop.mapred.lib</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.mapred.lib.db">org.apache.hadoop.mapred.lib.db</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.mapreduce">org.apache.hadoop.mapreduce</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.mapreduce.lib.input">org.apache.hadoop.mapreduce.lib.input</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.apache.hadoop.metrics2.sink">org.apache.hadoop.metrics2.sink</a></td>
+<td class="colLast">
+<div class="block">Builtin metrics sinks</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.hadoop.yarn.logaggregation.filecontroller">org.apache.hadoop.yarn.logaggregation.filecontroller</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<ul class="blockList">
+
+
+
+<li class="navBarCell1Rev">Use</li>
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

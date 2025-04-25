@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>BF.RESERVE | Docs</title>
+    <meta name="description" content="Creates a new Bloom Filter">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/bf.reserve/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="BF.RESERVE">
+  <meta property="og:description" content="Creates a new Bloom Filter">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="BF.RESERVE">
+  <meta itemprop="description" content="Creates a new Bloom Filter">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="446">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BF.RESERVE">
+  <meta name="twitter:description" content="Creates a new Bloom Filter">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">BF.RESERVE
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">BF.RESERVE key error_rate capacity [EXPANSION expansion]
+  [NONSCALING]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / Bloom 1.0.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@bloom</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@fast</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Creates an empty Bloom filter with a single sub-filter for the initial specified capacity and with an upper bound <code>error_rate</code>.</p>
+<p>By default, the filter auto-scales by creating additional sub-filters when <code>capacity</code> is reached.
+The new sub-filter is created with size of the previous sub-filter multiplied by <code>expansion</code>.</p>
+<p>Though the filter can scale up by creating sub-filters, it is recommended to reserve the estimated required <code>capacity</code> since maintaining and querying
+sub-filters requires additional memory (each sub-filter uses an extra bits and hash function) and consume  further CPU time than an equivalent filter that had
+the right capacity at creation time.</p>
+<p>The optimal number of hash functions is <code>ceil(-ln(error_rate) / ln(2))</code>.</p>
+<p>The required number of bits per item, given the desired <code>error_rate</code> and the optimal number of hash functions, is <code>-ln(error_rate) / ln(2)^2</code>. Hence, the required number of bits in the filter is <code>capacity * -ln(error_rate) / ln(2)^2</code>.</p>
+<ul>
+<li><strong>1%</strong>    error rate requires  7 hash functions and  9.585 bits per item.</li>
+<li><strong>0.1%</strong>  error rate requires 10 hash functions and 14.378 bits per item.</li>
+<li><strong>0.01%</strong> error rate requires 14 hash functions and 19.170 bits per item.</li>
+</ul>
+<h2 id="required-arguments">Required arguments</h2>
+<details open><summary><code>key</code></summary>
+<p>is key name for the the Bloom filter to be created.</p>
+</details>
+<details open><summary><code>error_rate</code></summary>
+<p>The desired probability for false positives. The rate is a decimal value between 0 and 1.
+For example, for a desired false positive rate of 0.1% (1 in 1000), error_rate should be set to 0.001.</p>
+</details>
+<details open><summary><code>capacity</code></summary>
+<p>The number of entries intended to be added to the filter.
+If your filter allows scaling, performance will begin to degrade after adding more items than this number.
+The actual degradation depends on how far the limit has been exceeded. Performance degrades linearly with the number of <code>sub-filters</code>.</p>
+</details>
+<h2 id="optional-arguments">Optional arguments</h2>
+<details open><summary><code>NONSCALING</code></summary>
+<p>Prevents the filter from creating additional sub-filters if initial capacity is reached.
+Non-scaling filters requires slightly less memory than their scaling counterparts. The filter returns an error when <code>capacity</code> is reached.</p>
+</details>
+<details open><summary><code>EXPANSION expansion</code></summary>
+<p>When <code>capacity</code> is reached, an additional sub-filter is created.
+The size of the new sub-filter is the size of the last sub-filter multiplied by <code>expansion</code>, specified as a positive integer.</p>
+<p>If the number of items to be stored in the filter is unknown, you use an <code>expansion</code> of <code>2</code> or more to reduce the number of sub-filters.
+Otherwise, you use an <code>expansion</code> of <code>1</code> to reduce memory consumption. The default value is <code>2</code>.</p>
+</details>
+<h2 id="return-value">Return value</h2>
+<p>Returns one of these replies:</p>
+<ul>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#simple-strings">Simple string reply</a> - <code>OK</code> if filter created successfully</li>
+<li>[] on error (invalid arguments, key already exists, etc.)</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; BF.RESERVE bf 0.01 <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">OK</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; BF.RESERVE bf 0.01 <span class="m">1000</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>error<span class="o">)</span> ERR item exists</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; BF.RESERVE bf_exp 0.01 <span class="m">1000</span> EXPANSION <span class="m">2</span>
+</span></span><span class="line"><span class="cl">OK</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; BF.RESERVE bf_non 0.01 <span class="m">1000</span> NONSCALING
+</span></span><span class="line"><span class="cl">OK</span></span></code></pre></div>
+
+
+        
+        
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/bf.reserve/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

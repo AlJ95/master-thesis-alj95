@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 1.4.11 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/1.4.11/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 1.4.11 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-1-4-11-release-notes">
+<span id="django-1-4-11-release-notes"></span><h1>Django 1.4.11 release notes<a class="headerlink" href="#django-1-4-11-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>April 21, 2014</em></p>
+<p>Django 1.4.11 fixes three security issues in 1.4.10. Additionally,
+Django’s vendored version of six, <code class="docutils literal notranslate"><span class="pre">django.utils.six</span></code>, has been
+upgraded to the latest release (1.6.1).</p>
+<div class="section" id="s-unexpected-code-execution-using-reverse">
+<span id="unexpected-code-execution-using-reverse"></span><h2>Unexpected code execution using <code class="docutils literal notranslate"><span class="pre">reverse()</span></code><a class="headerlink" href="#unexpected-code-execution-using-reverse" title="Permalink to this headline">¶</a></h2>
+<p>Django’s URL handling is based on a mapping of regex patterns
+(representing the URLs) to callable views, and Django’s own processing
+consists of matching a requested URL against those patterns to
+determine the appropriate view to invoke.</p>
+<p>Django also provides a convenience function – <code class="docutils literal notranslate"><span class="pre">reverse()</span></code> – which performs
+this process in the opposite direction. The <code class="docutils literal notranslate"><span class="pre">reverse()</span></code> function takes
+information about a view and returns a URL which would invoke that view. Use
+of <code class="docutils literal notranslate"><span class="pre">reverse()</span></code> is encouraged for application developers, as the output of
+<code class="docutils literal notranslate"><span class="pre">reverse()</span></code> is always based on the current URL patterns, meaning developers
+do not need to change other code when making changes to URLs.</p>
+<p>One argument signature for <code class="docutils literal notranslate"><span class="pre">reverse()</span></code> is to pass a dotted Python
+path to the desired view. In this situation, Django will import the
+module indicated by that dotted path as part of generating the
+resulting URL. If such a module has import-time side effects, those
+side effects will occur.</p>
+<p>Thus it is possible for an attacker to cause unexpected code
+execution, given the following conditions:</p>
+<ol class="arabic simple">
+<li>One or more views are present which construct a URL based on user
+input (commonly, a “next” parameter in a querystring indicating
+where to redirect upon successful completion of an action).</li>
+<li>One or more modules are known to an attacker to exist on the
+server’s Python import path, which perform code execution with side
+effects on importing.</li>
+</ol>
+<p>To remedy this, <code class="docutils literal notranslate"><span class="pre">reverse()</span></code> will now only accept and import dotted
+paths based on the view-containing modules listed in the project’s <a class="reference internal" href="../../topics/http/urls/"><span class="doc">URL
+pattern configuration</span></a>, so as to ensure that only modules
+the developer intended to be imported in this fashion can or will be imported.</p>
+</div>
+<div class="section" id="s-caching-of-anonymous-pages-could-reveal-csrf-token">
+<span id="caching-of-anonymous-pages-could-reveal-csrf-token"></span><h2>Caching of anonymous pages could reveal CSRF token<a class="headerlink" href="#caching-of-anonymous-pages-could-reveal-csrf-token" title="Permalink to this headline">¶</a></h2>
+<p>Django includes both a <a class="reference internal" href="../../topics/cache/"><span class="doc">caching framework</span></a> and a system
+for <a class="reference internal" href="../../ref/csrf/"><span class="doc">preventing cross-site request forgery (CSRF) attacks</span></a>. The CSRF-protection system is based on a random nonce
+sent to the client in a cookie which must be sent by the client on future
+requests and, in forms, a hidden value which must be submitted back with the
+form.</p>
+<p>The caching framework includes an option to cache responses to
+anonymous (i.e., unauthenticated) clients.</p>
+<p>When the first anonymous request to a given page is by a client which
+did not have a CSRF cookie, the cache framework will also cache the
+CSRF cookie and serve the same nonce to other anonymous clients who
+do not have a CSRF cookie. This can allow an attacker to obtain a
+valid CSRF cookie value and perform attacks which bypass the check for
+the cookie.</p>
+<p>To remedy this, the caching framework will no longer cache such
+responses. The heuristic for this will be:</p>
+<ol class="arabic simple">
+<li>If the incoming request did not submit any cookies, and</li>
+<li>If the response did send one or more cookies, and</li>
+<li>If the <code class="docutils literal notranslate"><span class="pre">Vary:</span> <span class="pre">Cookie</span></code> header is set on the response, then the
+response will not be cached.</li>
+</ol>
+</div>
+<div class="section" id="s-mysql-typecasting">
+<span id="mysql-typecasting"></span><h2>MySQL typecasting<a class="headerlink" href="#mysql-typecasting" title="Permalink to this headline">¶</a></h2>
+<p>The MySQL database is known to “typecast” on certain queries; for
+example, when querying a table which contains string values, but using
+a query which filters based on an integer value, MySQL will first
+silently coerce the strings to integers and return a result based on that.</p>
+<p>If a query is performed without first converting values to the
+appropriate type, this can produce unexpected results, similar to what
+would occur if the query itself had been manipulated.</p>
+<p>Django’s model field classes are aware of their own types and most
+such classes perform explicit conversion of query arguments to the
+correct database-level type before querying. However, three model
+field classes did not correctly convert their arguments:</p>
+<ul class="simple">
+
+
+<li><code class="docutils literal notranslate"><span class="pre">IPAddressField</span></code></li>
+</ul>
+<p>These three fields have been updated to convert their arguments to the
+correct types before querying.</p>
+<p>Additionally, developers of custom model fields are now warned via
+documentation to ensure their custom field classes will perform
+appropriate type conversions, and users of the <a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.raw" title="django.db.models.query.QuerySet.raw"><code class="xref py py-meth docutils literal notranslate"><span class="pre">raw()</span></code></a> and <a class="reference internal" href="../../ref/models/querysets/#django.db.models.query.QuerySet.extra" title="django.db.models.query.QuerySet.extra"><code class="xref py py-meth docutils literal notranslate"><span class="pre">extra()</span></code></a> query methods – which allow the
+developer to supply raw SQL or SQL fragments – will be advised to ensure they
+perform appropriate manual type conversions prior to executing queries.</p>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 66.6. Limitations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/gin-limit.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="66.6. Limitations" />
+  <meta property="og:description" content="66.6.&amp;nbsp;Limitations GIN assumes that indexable operators are strict. This means that extractValue will not be called at all on a …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/16/gin-limit.html" title="PostgreSQL 16 - 66.6. Limitations" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/gin-limit.html" title="PostgreSQL 15 - 66.6. Limitations" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/gin-limit.html" title="PostgreSQL 14 - 66.6. Limitations" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/gin-limit.html" title="PostgreSQL 13 - 66.6. Limitations" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/gin-limit.html" title="PostgreSQL 12 - 66.6. Limitations"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/gin-limit.html" title="PostgreSQL 11 - 66.6. Limitations"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/gin-limit.html" title="PostgreSQL 10 - 66.6. Limitations"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/gin-limit.html" title="PostgreSQL 9.6 - 66.6. Limitations"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/gin-limit.html" title="PostgreSQL 9.5 - 66.6. Limitations"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/gin-limit.html" title="PostgreSQL 9.4 - 66.6. Limitations"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/gin-limit.html" title="PostgreSQL 9.3 - 66.6. Limitations"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/gin-limit.html" title="PostgreSQL 9.2 - 66.6. Limitations"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/gin-limit.html" title="PostgreSQL 9.1 - 66.6. Limitations"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/gin-limit.html" title="PostgreSQL 9.0 - 66.6. Limitations"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/gin-limit.html" title="PostgreSQL 8.4 - 66.6. Limitations"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/gin-limit.html" title="PostgreSQL 8.3 - 66.6. Limitations"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/gin-limit.html" title="PostgreSQL 8.2 - 66.6. Limitations"  rel="nofollow">8.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">66.6.&nbsp;Limitations</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="gin-tips.html" title="66.5.&nbsp;GIN Tips and Tricks">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="gin.html" title="Chapter&nbsp;66.&nbsp;GIN Indexes">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;66.&nbsp;GIN Indexes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="gin-examples.html" title="66.7.&nbsp;Examples">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="GIN-LIMIT">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">66.6.&nbsp;Limitations</h2>
+      </div>
+    </div>
+  </div>
+  <p><acronym class="acronym">GIN</acronym> assumes that indexable operators are strict. This means that <code class="function">extractValue</code> will not be called at all on a null item value (instead, a placeholder index entry is created automatically), and <code class="function">extractQuery</code> will not be called on a null query value either (instead, the query is presumed to be unsatisfiable). Note however that null key values contained within a non-null composite item or query value are supported.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="gin-tips.html" title="66.5.&nbsp;GIN Tips and Tricks">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="gin.html" title="Chapter&nbsp;66.&nbsp;GIN Indexes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="gin-examples.html" title="66.7.&nbsp;Examples">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">66.5.&nbsp;GIN Tips and Tricks&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;66.7.&nbsp;Examples</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/gin-limit.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

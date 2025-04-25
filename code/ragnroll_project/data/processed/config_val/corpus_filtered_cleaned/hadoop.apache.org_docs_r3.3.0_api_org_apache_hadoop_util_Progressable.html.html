@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Progressable (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+
+<div class="header">
+<div class="subTitle">org.apache.hadoop.util</div>
+<h2 title="Interface Progressable" class="title">Interface Progressable</h2>
+</div>
+<div class="contentContainer">
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../org/apache/hadoop/mapreduce/MapContext.html" title="interface in org.apache.hadoop.mapreduce">MapContext</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;, <a href="../../../../org/apache/hadoop/mapreduce/ReduceContext.html" title="interface in org.apache.hadoop.mapreduce">ReduceContext</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;, <a href="../../../../org/apache/hadoop/mapred/Reporter.html" title="interface in org.apache.hadoop.mapred">Reporter</a>, <a href="../../../../org/apache/hadoop/mapreduce/TaskAttemptContext.html" title="interface in org.apache.hadoop.mapreduce">TaskAttemptContext</a>, <a href="../../../../org/apache/hadoop/mapred/TaskAttemptContext.html" title="interface in org.apache.hadoop.mapred">TaskAttemptContext</a>, <a href="../../../../org/apache/hadoop/mapreduce/TaskInputOutputContext.html" title="interface in org.apache.hadoop.mapreduce">TaskInputOutputContext</a>&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</dd>
+</dl>
+<hr>
+<br>
+<pre>@InterfaceAudience.Public
+ @InterfaceStability.Stable
+public interface <span class="typeNameLabel">Progressable</span></pre>
+<div class="block">A facility for reporting progress.
+ 
+ <p>Clients and/or applications can use the provided <code>Progressable</code>
+ to explicitly report progress to the Hadoop framework. This is especially
+ important for operations which take significant amount of time since,
+ in-lieu of the reported progress, the framework has to assume that an error
+ has occurred and time-out the operation.</p></div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+
+<ul class="blockList">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.worker.grpc (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.worker.grpc</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/BlockReadHandler.html" title="class in alluxio.worker.grpc">BlockReadHandler</a></td>
+<td class="colLast">
+<div class="block">This handler handles block read request.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/BlockReadRequest.html" title="class in alluxio.worker.grpc">BlockReadRequest</a></td>
+<td class="colLast">
+<div class="block">The internal representation of a block read request.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/BlockReadRequestContext.html" title="class in alluxio.worker.grpc">BlockReadRequestContext</a></td>
+<td class="colLast">
+<div class="block">Context of <a href="../../../alluxio/worker/grpc/BlockReadRequest.html" title="class in alluxio.worker.grpc"><code>BlockReadRequest</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/BlockWorkerImpl.html" title="class in alluxio.worker.grpc">BlockWorkerImpl</a></td>
+<td class="colLast">
+<div class="block">Server side implementation of the gRPC BlockWorker interface.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/BlockWriteHandler.html" title="class in alluxio.worker.grpc">BlockWriteHandler</a></td>
+<td class="colLast">
+<div class="block">This handler handles block write request.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/BlockWriteRequest.html" title="class in alluxio.worker.grpc">BlockWriteRequest</a></td>
+<td class="colLast">
+<div class="block">The block write request internal representation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/BlockWriteRequestContext.html" title="class in alluxio.worker.grpc">BlockWriteRequestContext</a></td>
+<td class="colLast">
+<div class="block">The block write request internal representation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/DataMessageServerRequestObserver.html" title="class in alluxio.worker.grpc">DataMessageServerRequestObserver</a>&lt;ReqT,ResT&gt;</td>
+<td class="colLast">
+<div class="block">A <code>StreamObserver</code> that handles raw data buffers.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/DataMessageServerStreamObserver.html" title="class in alluxio.worker.grpc">DataMessageServerStreamObserver</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A <code>StreamObserver</code> for handling raw data buffers.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/DelegationWriteHandler.html" title="class in alluxio.worker.grpc">DelegationWriteHandler</a></td>
+<td class="colLast">
+<div class="block">A write request handler that delegate worker write request of different types
+ to corresponding write handlers.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/GrpcDataServer.html" title="class in alluxio.worker.grpc">GrpcDataServer</a></td>
+<td class="colLast">
+<div class="block">Runs a gRPC data server that responds to block requests.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/ReadRequestContext.html" title="class in alluxio.worker.grpc">ReadRequestContext</a>&lt;T extends alluxio.worker.grpc.ReadRequest&gt;</td>
+<td class="colLast">
+<div class="block">Represents the context of a read request received from gRPC stream.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/UfsFallbackBlockWriteHandler.html" title="class in alluxio.worker.grpc">UfsFallbackBlockWriteHandler</a></td>
+<td class="colLast">
+<div class="block">This handler handles UFS block write request.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/UfsFileWriteHandler.html" title="class in alluxio.worker.grpc">UfsFileWriteHandler</a></td>
+<td class="colLast">
+<div class="block">This handler handles writes to a file in the under file system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/UfsFileWriteRequest.html" title="class in alluxio.worker.grpc">UfsFileWriteRequest</a></td>
+<td class="colLast">
+<div class="block">The UFS File write request internal representation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/UfsFileWriteRequestContext.html" title="class in alluxio.worker.grpc">UfsFileWriteRequestContext</a></td>
+<td class="colLast">
+<div class="block">The UFS File write request internal representation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/WriteRequest.html" title="class in alluxio.worker.grpc">WriteRequest</a></td>
+<td class="colLast">
+<div class="block">Represents a write request received from gRPC channel.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/worker/grpc/WriteRequestContext.html" title="class in alluxio.worker.grpc">WriteRequestContext</a>&lt;T extends <a href="../../../alluxio/worker/grpc/WriteRequest.html" title="class in alluxio.worker.grpc">WriteRequest</a>&gt;</td>
+<td class="colLast">
+<div class="block">Represents the context of a write request received from gRPC stream.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>FT.PROFILE | Docs</title>
+    <meta name="description" content="Performs a `FT.SEARCH` or `FT.AGGREGATE` command and collects performance information">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/ft.profile/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="FT.PROFILE">
+  <meta property="og:description" content="Performs a `FT.SEARCH` or `FT.AGGREGATE` command and collects performance information">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="FT.PROFILE">
+  <meta itemprop="description" content="Performs a `FT.SEARCH` or `FT.AGGREGATE` command and collects performance information">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="1795">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FT.PROFILE">
+  <meta name="twitter:description" content="Performs a `FT.SEARCH` or `FT.AGGREGATE` command and collects performance information">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">FT.PROFILE
+        </h1>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">FT.PROFILE index SEARCH | AGGREGATE [LIMITED] QUERY query
+</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / Search 2.2.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@search</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Apply <a href="/docs/latest/commands/ft.search/"><code>FT.SEARCH</code></a> or <a href="/docs/latest/commands/ft.aggregate/"><code>FT.AGGREGATE</code></a> command to collect performance details. For usage, see <a href="#examples">Examples</a>.</p>
+<h2 id="required-arguments">Required arguments</h2>
+<details open>
+<summary><code>index</code></summary>
+<p>is the name of an index created using <a href="/docs/latest/commands/ft.create/"><code>FT.CREATE</code></a>.</p>
+</details>
+<details open>
+<summary><code>SEARCH | AGGREGATE</code></summary>
+<p>represents the profile type, either <a href="/docs/latest/commands/ft.search/"><code>FT.SEARCH</code></a> or <a href="/docs/latest/commands/ft.aggregate/"><code>FT.AGGREGATE</code></a>.</p>
+</details>
+<details open>
+<summary><code>LIMITED</code></summary>
+<p>removes details of any <code>reader</code> iterators.</p>
+</details>
+<details open>
+<summary><code>QUERY {query}</code></summary>
+<p>is the query string, sent to <code>FT.SEARCH</code> or <code>FT.AGGREGATE</code>.</p>
+</details>
+<p><note><b>Note:</b> To reduce the size of the output, use <code>NOCONTENT</code> or <code>LIMIT 0 0</code> to reduce the number of reply results, or <code>LIMITED</code> to not reply with details of <code>reader iterators</code> inside built-in unions, such as <code>fuzzy</code> or <code>prefix</code> iterators.</note></p>
+<h2 id="return">Return</h2>
+<p><code>FT.PROFILE</code> returns a two-element array reply. The first element contains the results of the provided <code>FT.SEARCH</code> or <code>FT.AGGREGATE</code> command.
+The second element contains information about query creation, iterator profiles, and result processor profiles.
+Details of the second element follow in the sections below.</p>
+<h3 id="results">Results</h3>
+<p>This section contains the search results.</p>
+<h3 id="per-shard-profiles">Per-shard profiles</h3>
+<p>This section contains query execution details for each shard.
+When more than one shard is in play, the shards will be labeled <code>Shard #1</code>, <code>Shard #2</code>, etc.
+If there's only one shard, the label will be omitted.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Returned field name</th>
+          <th style="text-align: left">Definition</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>Total</code> <code>profile</code> <code>time</code></td>
+          <td style="text-align: left">The total run time (ms) of the query. Normally just a few ms.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Parsing</code> <code>time</code></td>
+          <td style="text-align: left">The time (ms) spent parsing the query and its parameters into a query plan. Normally just a few ms.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Pipeline</code> <code>creation</code> <code>time</code></td>
+          <td style="text-align: left">The creation time (ms) of the execution plan, including iterators, result processors, and reducers creation. Normally just a few ms for <code>FT.SEARCH</code> queries, but expect a larger number for <code>FT.AGGREGATE</code> queries.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Warning</code></td>
+          <td style="text-align: left">Errors that occurred during query execution.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="iterator-profiles">Iterator profiles</h3>
+<p>This section contains index iterator information, including <code>Type</code>, <code>Query Type</code>, <code>Term</code> (when applicable), <code>Time</code> (in ms), <code>Counter</code>, <code>Child iterator</code>, and <code>Size</code> information.
+Each iterator represents an executor for each part of the query plan, nested per the execution plan. The operation types mentioned below (<code>UNION</code>, etc) should match up with the provided query.</p>
+<p>Inverted-index iterators also include the number of elements they contain. Hybrid vector iterators return the top results from the vector index in batches, including the number of batches.</p>
+<p>Iterator types include:</p>
+<ul>
+<li><code>INTERSECT</code> (and) with <code>Child iterator</code></li>
+<li><code>UNION</code> (or) with <code>Child iterator</code></li>
+<li><code>NOT</code> (<code>-</code>) with <code>Child iterator</code></li>
+<li><code>Child iterator</code> - details of a sub-query component of a compound query.</li>
+<li><code>TEXT</code> with <code>Term</code></li>
+<li><code>TAG</code> with <code>Term</code></li>
+<li><code>NUMERIC</code> with <code>Term</code></li>
+<li><code>VECTOR</code></li>
+<li><code>EMPTY</code></li>
+<li><code>WILDCARD</code></li>
+<li><code>OPTIONAL</code></li>
+</ul>
+<p><strong>Notes on <code>Counter</code> and <code>Size</code></strong></p>
+<p>Counter is the number of times an iterator was interacted with. A very high value in comparison to others is a possible warning flag. <code>NUMERIC</code> and <code>Child interator</code> types are broken into ranges, and <code>Counter</code> will vary depending on the range. For <code>UNION</code>, the sum of the counters in child iterators should be equal or greater than the child iterator’s counters.</p>
+<p><code>Size</code> is the size of the document set. <code>Counter</code> should always be equal or less than <code>Size</code>.</p>
+<h3 id="result-processor-profiles">Result processor profiles</h3>
+<p>Result processors form a powerful pipeline in Redis Query Engine. They work in stages to gather, filter, score, sort, and return results as efficiently as possible based on complex query needs. Each processor reports <code>Time</code> information, which represents the total duration (in milliseconds, or ms) spent by the processor to complete its operation, and <code>Counter</code> information, which indicates the number of times the processor was invoked during the query.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Type</th>
+          <th style="text-align: left">Definition</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>Metrics</code> <code>Applier</code></td>
+          <td style="text-align: left">The <code>Metrics Applier</code> processor calculates or aggregates specific metrics related to the search results. For example, this might include applying a distance or similarity metric to vector search results, or calculating scores based on relevance or other parameters.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Index</code></td>
+          <td style="text-align: left">The <code>Index</code> processor is responsible for the core retrieval of matching documents from the index based on the initial query criteria (e.g., full-text terms, filters, or numeric ranges).</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Scorer</code></td>
+          <td style="text-align: left">The <code>Scorer</code> processor assigns a relevance score to each document based on the query’s specified scoring function. This function could involve factors like term frequency, inverse document frequency, or other weighted metrics.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Sorter</code></td>
+          <td style="text-align: left">The <code>Sorter</code> processor arranges the query results based on a specified sorting criterion. This could be a field value (e.g., sorting by price, date, or another attribute) or by the score assigned during the scoring phase. It operates after documents are fetched and scored, ensuring the results are ordered as required by the query (e.g., ascending or descending order). <code>Scorer</code> results will always be present in <code>FT.SEARCH</code> profiles.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Loader</code></td>
+          <td style="text-align: left">The <code>Loader</code> processor retrieves the document contents after the results have been sorted and filtered. It ensures that only the fields specified by the query are loaded, which improves efficiency, especially when dealing with large documents where only a few fields are needed.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Highlighter</code></td>
+          <td style="text-align: left">The <code>Highlighter</code> processor is used to highlight matching terms in the search results. This is especially useful for full-text search applications, where relevant terms are often emphasized in the UI.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Paginator</code></td>
+          <td style="text-align: left">The <code>Paginator</code> processor is responsible for handling pagination by limiting the results to a specific range (e.g., LIMIT 0 10).It trims down the set of results to fit the required pagination window, ensuring efficient memory usage when dealing with large result sets.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Vector</code> <code>Filter</code></td>
+          <td style="text-align: left">For vector searches, the <code>Vector Filter</code> processor is sometimes used to pre-process results based on vector similarity thresholds before the main scoring and sorting.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="coordinator">Coordinator</h3>
+<p>This section is only present when run in a multi-shard environment.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Returned field name</th>
+          <th style="text-align: left">Definition</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><code>Total coordinator time</code></td>
+          <td style="text-align: left">Time measured from the beginning of query execution until all shards have completed query execution. (ms)</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><code>Post-processing time</code></td>
+          <td style="text-align: left">The time spent generating the FT.PROFILE output (overhead) (ms).</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<details>
+<summary><b>Collect performance information about a simple JSON index.</b></summary>
+<p>Imagine you have (1) a dataset consisting of 10 JSON documents, each with the following structure;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;pickup_zone&#34;</span><span class="p">:</span> <span class="s2">&#34;POLYGON((-74.0610 40.7578, -73.9510 40.7578, -73.9510 40.6678, -74.0610 40.6678, -74.0610 40.7578))&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;store_location&#34;</span><span class="p">:</span> <span class="s2">&#34;-74.0060,40.7128&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;brand&#34;</span><span class="p">:</span> <span class="s2">&#34;Velorim&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;model&#34;</span><span class="p">:</span> <span class="s2">&#34;Jigger&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;price&#34;</span><span class="p">:</span> <span class="mi">270</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;description&#34;</span><span class="p">:</span> <span class="s2">&#34;Small and powerful, the Jigger is the best ride for the smallest of tikes! This is the tiniest kids’ pedal bike on the market available without a coaster brake, the Jigger is the vehicle of choice for the rare tenacious little rider raring to go.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;condition&#34;</span><span class="p">:</span> <span class="s2">&#34;new&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>And (2) a corresponding index:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">FT.CREATE idx:bicycle ON JSON PREFIX <span class="m">1</span> bicycle: SCORE 1.0 SCHEMA $.pickup_zone AS pickup_zone GEOSHAPE $.store_location AS store_location GEO $.brand AS brand TEXT WEIGHT 1.0 $.model AS model TEXT WEIGHT 1.0 $.description AS description TEXT WEIGHT 1.0 $.price AS price NUMERIC $.condition AS condition TAG SEPARATOR ,
+</span></span></code></pre></div><p>Here's an example of running the <code>FT.PROFILE</code> command for a compound query.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; ft.profile idx:bicycle search query <span class="s2">&#34;@description:(kids | small) @condition:{new | used}&#34;</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> 1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> <span class="s2">&#34;bicycle:0&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;</span>$<span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;{\&#34;pickup_zone\&#34;:\&#34;POLYGON((-74.0610 40.7578, -73.9510 40.7578, -73.9510 40.6678, -74.0610 40.6678, -74.0610 40.7578))\&#34;,\&#34;store_location\&#34;:\&#34;-74.0060,40.7128\&#34;,\&#34;brand\&#34;:\&#34;Velorim\&#34;,\&#34;model\&#34;:\&#34;Jigger\&#34;,\&#34;price\&#34;:270,\&#34;description\&#34;:\&#34;Small and powerful, the Jigger is the best ride for the smallest of tikes! This is the tiniest kids\xe2\x80\x99 pedal bike on the market available without a coaster brake, the Jigger is the vehicle of choice for the rare tenacious little rider raring to go.\&#34;,\&#34;condition\&#34;:\&#34;new\&#34;}&#34;</span>
+</span></span><span class="line"><span class="cl">   4<span class="o">)</span> <span class="s2">&#34;bicycle:1&#34;</span>
+</span></span><span class="line"><span class="cl">   5<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;</span>$<span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;{\&#34;pickup_zone\&#34;:\&#34;POLYGON((-118.2887 34.0972, -118.1987 34.0972, -118.1987 33.9872, -118.2887 33.9872, -118.2887 34.0972))\&#34;,\&#34;store_location\&#34;:\&#34;-118.2437,34.0522\&#34;,\&#34;brand\&#34;:\&#34;Bicyk\&#34;,\&#34;model\&#34;:\&#34;Hillcraft\&#34;,\&#34;price\&#34;:1200,\&#34;description\&#34;:\&#34;Kids want to ride with as little weight as possible. Especially on an incline! They may be at the age when a 27.5\\\&#34; wheel bike is just too clumsy coming off a 24\\\&#34; bike. The Hillcraft 26 is just the solution they need!\&#34;,\&#34;condition\&#34;:\&#34;used\&#34;}&#34;</span>
+</span></span><span class="line"><span class="cl">   6<span class="o">)</span> <span class="s2">&#34;bicycle:2&#34;</span>
+</span></span><span class="line"><span class="cl">   7<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;</span>$<span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;{\&#34;pickup_zone\&#34;:\&#34;POLYGON((-87.6848 41.9331, -87.5748 41.9331, -87.5748 41.8231, -87.6848 41.8231, -87.6848 41.9331))\&#34;,\&#34;store_location\&#34;:\&#34;-87.6298,41.8781\&#34;,\&#34;brand\&#34;:\&#34;Nord\&#34;,\&#34;model\&#34;:\&#34;Chook air 5\&#34;,\&#34;price\&#34;:815,\&#34;description\&#34;:\&#34;The Chook Air 5  gives kids aged six years and older a durable and uberlight mountain bike for their first experience on tracks and easy cruising through forests and fields. The lower  top tube makes it easy to mount and dismount in any situation, giving your kids greater safety on the trails.\&#34;,\&#34;condition\&#34;:\&#34;used\&#34;}&#34;</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> 1<span class="o">)</span> 1<span class="o">)</span> Total profile <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> 1<span class="o">)</span> Parsing <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> Pipeline creation <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">   4<span class="o">)</span> 1<span class="o">)</span> Warning
+</span></span><span class="line"><span class="cl">   5<span class="o">)</span> 1<span class="o">)</span> Iterators profile
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> INTERSECT
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">6</span>
+</span></span><span class="line"><span class="cl">         7<span class="o">)</span> Child iterators
+</span></span><span class="line"><span class="cl">         8<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">             2<span class="o">)</span> UNION
+</span></span><span class="line"><span class="cl">             3<span class="o">)</span> Query <span class="nb">type</span>
+</span></span><span class="line"><span class="cl">             4<span class="o">)</span> UNION
+</span></span><span class="line"><span class="cl">             5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">             6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">             7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">             8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">6</span>
+</span></span><span class="line"><span class="cl">             9<span class="o">)</span> Child iterators
+</span></span><span class="line"><span class="cl">            10<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">                 2<span class="o">)</span> UNION
+</span></span><span class="line"><span class="cl">                 3<span class="o">)</span> Query <span class="nb">type</span>
+</span></span><span class="line"><span class="cl">                 4<span class="o">)</span> UNION
+</span></span><span class="line"><span class="cl">                 5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">                 6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">                 7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">                 8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">                 9<span class="o">)</span> Child iterators
+</span></span><span class="line"><span class="cl">                10<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">                     2<span class="o">)</span> TEXT
+</span></span><span class="line"><span class="cl">                     3<span class="o">)</span> Term
+</span></span><span class="line"><span class="cl">                     4<span class="o">)</span> kids
+</span></span><span class="line"><span class="cl">                     5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">                     6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">                     7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">                     8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">                     9<span class="o">)</span> Size
+</span></span><span class="line"><span class="cl">                    10<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">                11<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">                     2<span class="o">)</span> TEXT
+</span></span><span class="line"><span class="cl">                     3<span class="o">)</span> Term
+</span></span><span class="line"><span class="cl">                     4<span class="o">)</span> +kid
+</span></span><span class="line"><span class="cl">                     5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">                     6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">                     7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">                     8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">                     9<span class="o">)</span> Size
+</span></span><span class="line"><span class="cl">                    10<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">            11<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">                 2<span class="o">)</span> TEXT
+</span></span><span class="line"><span class="cl">                 3<span class="o">)</span> Term
+</span></span><span class="line"><span class="cl">                 4<span class="o">)</span> small
+</span></span><span class="line"><span class="cl">                 5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">                 6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">                 7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">                 8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">                 9<span class="o">)</span> Size
+</span></span><span class="line"><span class="cl">                10<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">         9<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">             2<span class="o">)</span> UNION
+</span></span><span class="line"><span class="cl">             3<span class="o">)</span> Query <span class="nb">type</span>
+</span></span><span class="line"><span class="cl">             4<span class="o">)</span> TAG
+</span></span><span class="line"><span class="cl">             5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">             6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">             7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">             8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">6</span>
+</span></span><span class="line"><span class="cl">             9<span class="o">)</span> Child iterators
+</span></span><span class="line"><span class="cl">            10<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">                 2<span class="o">)</span> TAG
+</span></span><span class="line"><span class="cl">                 3<span class="o">)</span> Term
+</span></span><span class="line"><span class="cl">                 4<span class="o">)</span> new
+</span></span><span class="line"><span class="cl">                 5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">                 6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">                 7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">                 8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">                 9<span class="o">)</span> Size
+</span></span><span class="line"><span class="cl">                10<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">10</span>
+</span></span><span class="line"><span class="cl">            11<span class="o">)</span>  1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">                 2<span class="o">)</span> TAG
+</span></span><span class="line"><span class="cl">                 3<span class="o">)</span> Term
+</span></span><span class="line"><span class="cl">                 4<span class="o">)</span> used
+</span></span><span class="line"><span class="cl">                 5<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">                 6<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">                 7<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">                 8<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">4</span>
+</span></span><span class="line"><span class="cl">                 9<span class="o">)</span> Size
+</span></span><span class="line"><span class="cl">                10<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">8</span>
+</span></span><span class="line"><span class="cl">   6<span class="o">)</span> 1<span class="o">)</span> Result processors profile
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Index
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">      3<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Scorer
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">      4<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Sorter
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">      5<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Loader
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span></span></span></code></pre></div>
+</details>
+<details>
+<summary><b>Collect performance information about a JSON index that includes vector data.</b></summary>
+<p>For this example, you'll create a very simple vector database and index.</p>
+<p>Index:</p>
+<pre tabindex="0"><code class="language-redis" data-lang="redis">FT.CREATE vss_idx ON JSON PREFIX 1 vec: SCHEMA $.vector AS vector VECTOR FLAT 6 TYPE FLOAT32 DIM 4 DISTANCE_METRIC L2
+</code></pre><p>Database:</p>
+<pre tabindex="0"><code class="language-redis" data-lang="redis">JSON.SET vec:1 $ &#39;{&#34;vector&#34;:[1,1,1,1]}&#39;
+JSON.SET vec:2 $ &#39;{&#34;vector&#34;:[2,2,2,2]}&#39;
+JSON.SET vec:3 $ &#39;{&#34;vector&#34;:[3,3,3,3]}&#39;
+JSON.SET vec:4 $ &#39;{&#34;vector&#34;:[4,4,4,4]}&#39;
+</code></pre><p>Here's an example of running the <code>FT.PROFILE</code> command for a vector query.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; ft.profile vss_idx search query <span class="s2">&#34;*=&gt;[KNN 3 @vector </span><span class="nv">$query_vec</span><span class="s2">]&#34;</span> PARAMS <span class="m">2</span> query_vec <span class="s2">&#34;\x00\x00\x00@\x00\x00\x00@\x00\x00@@\x00\x00@@&#34;</span> SORTBY __vector_score DIALECT <span class="m">2</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> 1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> <span class="s2">&#34;vec:2&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;__vector_score&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;2&#34;</span>
+</span></span><span class="line"><span class="cl">      3<span class="o">)</span> <span class="s2">&#34;</span>$<span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      4<span class="o">)</span> <span class="s2">&#34;{\&#34;vector\&#34;:[2,2,2,2]}&#34;</span>
+</span></span><span class="line"><span class="cl">   4<span class="o">)</span> <span class="s2">&#34;vec:3&#34;</span>
+</span></span><span class="line"><span class="cl">   5<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;__vector_score&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;2&#34;</span>
+</span></span><span class="line"><span class="cl">      3<span class="o">)</span> <span class="s2">&#34;</span>$<span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      4<span class="o">)</span> <span class="s2">&#34;{\&#34;vector\&#34;:[3,3,3,3]}&#34;</span>
+</span></span><span class="line"><span class="cl">   6<span class="o">)</span> <span class="s2">&#34;vec:1&#34;</span>
+</span></span><span class="line"><span class="cl">   7<span class="o">)</span> 1<span class="o">)</span> <span class="s2">&#34;__vector_score&#34;</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;10&#34;</span>
+</span></span><span class="line"><span class="cl">      3<span class="o">)</span> <span class="s2">&#34;</span>$<span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">      4<span class="o">)</span> <span class="s2">&#34;{\&#34;vector\&#34;:[1,1,1,1]}&#34;</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> 1<span class="o">)</span> 1<span class="o">)</span> Total profile <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">   2<span class="o">)</span> 1<span class="o">)</span> Parsing <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">   3<span class="o">)</span> 1<span class="o">)</span> Pipeline creation <span class="nb">time</span>
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">   4<span class="o">)</span> 1<span class="o">)</span> Warning
+</span></span><span class="line"><span class="cl">   5<span class="o">)</span> 1<span class="o">)</span> Iterators profile
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> VECTOR
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">   6<span class="o">)</span> 1<span class="o">)</span> Result processors profile
+</span></span><span class="line"><span class="cl">      2<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Index
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">      3<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Metrics Applier
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">      4<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Sorter
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">      5<span class="o">)</span> 1<span class="o">)</span> Type
+</span></span><span class="line"><span class="cl">         2<span class="o">)</span> Loader
+</span></span><span class="line"><span class="cl">         3<span class="o">)</span> Time
+</span></span><span class="line"><span class="cl">         4<span class="o">)</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">         5<span class="o">)</span> Counter
+</span></span><span class="line"><span class="cl">         6<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span></span></span></code></pre></div>
+</details>
+<h2 id="see-also">See also</h2>
+<p><a href="/docs/latest/commands/ft.search/"><code>FT.SEARCH</code></a> | <a href="/docs/latest/commands/ft.aggregate/"><code>FT.AGGREGATE</code></a></p>
+<h2 id="related-topics">Related topics</h2>
+<p><a href="/docs/latest/develop/interact/search-and-query/">RediSearch</a></p>
+
+
+        
+        
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/ft.profile/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

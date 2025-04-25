@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.cli.fs.command (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.cli.fs.command</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/AbstractDistributedJobCommand.html" title="class in alluxio.cli.fs.command">AbstractDistributedJobCommand</a></td>
+<td class="colLast">
+<div class="block">The base class for all the distributed job based <a href="../../../../alluxio/cli/Command.html" title="interface in alluxio.cli"><code>Command</code></a> classes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/AbstractFileSystemCommand.html" title="class in alluxio.cli.fs.command">AbstractFileSystemCommand</a></td>
+<td class="colLast">
+<div class="block">The base class for all the FileSystem <a href="../../../../alluxio/cli/Command.html" title="interface in alluxio.cli"><code>Command</code></a> classes.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/CatCommand.html" title="class in alluxio.cli.fs.command">CatCommand</a></td>
+<td class="colLast">
+<div class="block">Prints the file's contents to the console.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/CheckConsistencyCommand.html" title="class in alluxio.cli.fs.command">CheckConsistencyCommand</a></td>
+<td class="colLast">
+<div class="block">Command for checking the consistency of a file or folder between Alluxio and the under storage.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/ChecksumCommand.html" title="class in alluxio.cli.fs.command">ChecksumCommand</a></td>
+<td class="colLast">
+<div class="block">Calculates the MD5 checksum for a file.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/ChgrpCommand.html" title="class in alluxio.cli.fs.command">ChgrpCommand</a></td>
+<td class="colLast">
+<div class="block">Changes the group of a file or directory specified by args.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/ChmodCommand.html" title="class in alluxio.cli.fs.command">ChmodCommand</a></td>
+<td class="colLast">
+<div class="block">Changes the permission of a file or directory specified by args.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/ChownCommand.html" title="class in alluxio.cli.fs.command">ChownCommand</a></td>
+<td class="colLast">
+<div class="block">Changes the owner of a file or directory specified by args.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/CopyFromLocalCommand.html" title="class in alluxio.cli.fs.command">CopyFromLocalCommand</a></td>
+<td class="colLast">
+<div class="block">Copies the specified file specified by "source path" to the path specified by "remote path".</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/CopyToLocalCommand.html" title="class in alluxio.cli.fs.command">CopyToLocalCommand</a></td>
+<td class="colLast">
+<div class="block">Copies a file or a directory from the Alluxio filesystem to the local filesystem.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/CountCommand.html" title="class in alluxio.cli.fs.command">CountCommand</a></td>
+<td class="colLast">
+<div class="block">Displays the number of folders and files matching the specified prefix in args.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/CpCommand.html" title="class in alluxio.cli.fs.command">CpCommand</a></td>
+<td class="colLast">
+<div class="block">Copies a file or a directory in the Alluxio filesystem.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/DistributedCpCommand.html" title="class in alluxio.cli.fs.command">DistributedCpCommand</a></td>
+<td class="colLast">
+<div class="block">Copies a file or directory specified by args.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/DistributedLoadCommand.html" title="class in alluxio.cli.fs.command">DistributedLoadCommand</a></td>
+<td class="colLast">
+<div class="block">Loads a file or directory in Alluxio space, makes it resident in memory.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/DistributedMvCommand.html" title="class in alluxio.cli.fs.command">DistributedMvCommand</a></td>
+<td class="colLast">
+<div class="block">Moves a file or directory specified by args.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/DuCommand.html" title="class in alluxio.cli.fs.command">DuCommand</a></td>
+<td class="colLast">
+<div class="block">Displays the size of a file or a directory specified by argv.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/FileSystemCommandUtils.html" title="class in alluxio.cli.fs.command">FileSystemCommandUtils</a></td>
+<td class="colLast">
+<div class="block">Common util methods for executing commands.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/FreeCommand.html" title="class in alluxio.cli.fs.command">FreeCommand</a></td>
+<td class="colLast">
+<div class="block">Frees the given file or folder from Alluxio storage (recursively freeing all children if a
+ folder).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/GetCapacityBytesCommand.html" title="class in alluxio.cli.fs.command">GetCapacityBytesCommand</a></td>
+<td class="colLast">
+<div class="block">Gets the capacity of the <a href="../../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/GetFaclCommand.html" title="class in alluxio.cli.fs.command">GetFaclCommand</a></td>
+<td class="colLast">
+<div class="block">Displays ACL info of a path.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/GetSyncPathListCommand.html" title="class in alluxio.cli.fs.command">GetSyncPathListCommand</a></td>
+<td class="colLast">
+<div class="block">This class represents a getSyncPathList Command.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/GetUsedBytesCommand.html" title="class in alluxio.cli.fs.command">GetUsedBytesCommand</a></td>
+<td class="colLast">
+<div class="block">Gets number of bytes used in the <a href="../../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/HeadCommand.html" title="class in alluxio.cli.fs.command">HeadCommand</a></td>
+<td class="colLast">
+<div class="block">Prints the file's first n bytes (by default, 1KB) to the console.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/HelpCommand.html" title="class in alluxio.cli.fs.command">HelpCommand</a></td>
+<td class="colLast">
+<div class="block">Command for print help message for the given command.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/LeaderCommand.html" title="class in alluxio.cli.fs.command">LeaderCommand</a></td>
+<td class="colLast">
+<div class="block">Prints the current leader master host name.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/LoadCommand.html" title="class in alluxio.cli.fs.command">LoadCommand</a></td>
+<td class="colLast">
+<div class="block">Loads a file or directory in Alluxio space, making it resident in Alluxio.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/LoadMetadataCommand.html" title="class in alluxio.cli.fs.command">LoadMetadataCommand</a></td>
+<td class="colLast">
+<div class="block">Loads metadata about a path in the UFS to Alluxio.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/LocationCommand.html" title="class in alluxio.cli.fs.command">LocationCommand</a></td>
+<td class="colLast">
+<div class="block">Displays a list of hosts that have the file specified in args stored.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/LsCommand.html" title="class in alluxio.cli.fs.command">LsCommand</a></td>
+<td class="colLast">
+<div class="block">Displays information for the path specified in args.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/MasterInfoCommand.html" title="class in alluxio.cli.fs.command">MasterInfoCommand</a></td>
+<td class="colLast">
+<div class="block">Prints information regarding master fault tolerance such as leader address, list of master
+ addresses, and the configured Zookeeper address.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/MkdirCommand.html" title="class in alluxio.cli.fs.command">MkdirCommand</a></td>
+<td class="colLast">
+<div class="block">Creates a new directory specified by the path in args, including any parent folders that are
+ required.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/MountCommand.html" title="class in alluxio.cli.fs.command">MountCommand</a></td>
+<td class="colLast">
+<div class="block">Mounts a UFS path onto an Alluxio path.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/MvCommand.html" title="class in alluxio.cli.fs.command">MvCommand</a></td>
+<td class="colLast">
+<div class="block">Renames a file or directory specified by args.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/PersistCommand.html" title="class in alluxio.cli.fs.command">PersistCommand</a></td>
+<td class="colLast">
+<div class="block">Persists files or directories currently stored only in Alluxio to the UnderFileSystem.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/PinCommand.html" title="class in alluxio.cli.fs.command">PinCommand</a></td>
+<td class="colLast">
+<div class="block">Pins the given file or folder (recursively pinning all children if a folder).</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/RmCommand.html" title="class in alluxio.cli.fs.command">RmCommand</a></td>
+<td class="colLast">
+<div class="block">Removes the file specified by argv.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/SetFaclCommand.html" title="class in alluxio.cli.fs.command">SetFaclCommand</a></td>
+<td class="colLast">
+<div class="block">Displays ACL info of a path.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/SetReplicationCommand.html" title="class in alluxio.cli.fs.command">SetReplicationCommand</a></td>
+<td class="colLast">
+<div class="block">Changes the replication level of a file or directory specified by args.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/SetTtlCommand.html" title="class in alluxio.cli.fs.command">SetTtlCommand</a></td>
+<td class="colLast">
+<div class="block">Sets a new TTL value for the file at path both of the TTL value and the path are specified by
+ args.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/StartSyncCommand.html" title="class in alluxio.cli.fs.command">StartSyncCommand</a></td>
+<td class="colLast">
+<div class="block">Start a polling sync of a particular path.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/StatCommand.html" title="class in alluxio.cli.fs.command">StatCommand</a></td>
+<td class="colLast">
+<div class="block">Displays the path's info.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/StopSyncCommand.html" title="class in alluxio.cli.fs.command">StopSyncCommand</a></td>
+<td class="colLast">
+<div class="block">This class represents a stop sync command.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/TailCommand.html" title="class in alluxio.cli.fs.command">TailCommand</a></td>
+<td class="colLast">
+<div class="block">Prints the file's last n bytes (by default, 1KB) to the console.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/TestCommand.html" title="class in alluxio.cli.fs.command">TestCommand</a></td>
+<td class="colLast">
+<div class="block">Tests properties of the path specified in args.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/TouchCommand.html" title="class in alluxio.cli.fs.command">TouchCommand</a></td>
+<td class="colLast">
+<div class="block">Creates a 0 byte file specified by argv.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/UnmountCommand.html" title="class in alluxio.cli.fs.command">UnmountCommand</a></td>
+<td class="colLast">
+<div class="block">Unmounts an Alluxio path.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/UnpinCommand.html" title="class in alluxio.cli.fs.command">UnpinCommand</a></td>
+<td class="colLast">
+<div class="block">Unpins the given file or folder (recursively unpinning all children if a folder).</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/UnsetTtlCommand.html" title="class in alluxio.cli.fs.command">UnsetTtlCommand</a></td>
+<td class="colLast">
+<div class="block">Unsets the TTL value for the given path.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/cli/fs/command/UpdateMountCommand.html" title="class in alluxio.cli.fs.command">UpdateMountCommand</a></td>
+<td class="colLast">
+<div class="block">Update options for an Alluxio mount point.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

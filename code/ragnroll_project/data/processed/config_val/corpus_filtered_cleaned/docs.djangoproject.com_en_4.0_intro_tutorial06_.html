@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Writing your first Django app, part 6 | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/intro/tutorial06/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Writing your first Django app, part 6 | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-writing-your-first-django-app-part-6">
+<span id="writing-your-first-django-app-part-6"></span><h1>Writing your first Django app, part 6<a class="headerlink" href="#writing-your-first-django-app-part-6" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial begins where <a class="reference internal" href="../tutorial05/"><span class="doc">Tutorial 5</span></a> left off.
+We’ve built a tested web-poll application, and we’ll now add a stylesheet and
+an image.</p>
+<p>Aside from the HTML generated by the server, web applications generally need
+to serve additional files — such as images, JavaScript, or CSS — necessary to
+render the complete web page. In Django, we refer to these files as “static
+files”.</p>
+<p>For small projects, this isn’t a big deal, because you can keep the static
+files somewhere your web server can find it. However, in bigger projects –
+especially those comprised of multiple apps – dealing with the multiple sets
+of static files provided by each application starts to get tricky.</p>
+<p>That’s what <code class="docutils literal notranslate"><span class="pre">django.contrib.staticfiles</span></code> is for: it collects static files
+from each of your applications (and any other places you specify) into a
+single location that can easily be served in production.</p>
+<div class="admonition-where-to-get-help admonition">
+<p class="first admonition-title">Where to get help:</p>
+<p class="last">If you’re having trouble going through this tutorial, please head over to
+the <a class="reference internal" href="../../faq/help/"><span class="doc">Getting Help</span></a> section of the FAQ.</p>
+</div>
+<div class="section" id="s-customize-your-app-s-look-and-feel">
+<span id="customize-your-app-s-look-and-feel"></span><h2>Customize your <em>app’s</em> look and feel<a class="headerlink" href="#customize-your-app-s-look-and-feel" title="Permalink to this headline">¶</a></h2>
+<p>First, create a directory called <code class="docutils literal notranslate"><span class="pre">static</span></code> in your <code class="docutils literal notranslate"><span class="pre">polls</span></code> directory. Django
+will look for static files there, similarly to how Django finds templates
+inside <code class="docutils literal notranslate"><span class="pre">polls/templates/</span></code>.</p>
+<p>Django’s <a class="reference internal" href="../../ref/settings/#std-setting-STATICFILES_FINDERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATICFILES_FINDERS</span></code></a> setting contains a list
+of finders that know how to discover static files from various
+sources. One of the defaults is <code class="docutils literal notranslate"><span class="pre">AppDirectoriesFinder</span></code> which
+looks for a “static” subdirectory in each of the
+<a class="reference internal" href="../../ref/settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>, like the one in <code class="docutils literal notranslate"><span class="pre">polls</span></code> we just created. The admin
+site uses the same directory structure for its static files.</p>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">static</span></code> directory you have just created, create another directory
+called <code class="docutils literal notranslate"><span class="pre">polls</span></code> and within that create a file called <code class="docutils literal notranslate"><span class="pre">style.css</span></code>. In other
+words, your stylesheet should be at <code class="docutils literal notranslate"><span class="pre">polls/static/polls/style.css</span></code>. Because
+of how the <code class="docutils literal notranslate"><span class="pre">AppDirectoriesFinder</span></code> staticfile finder works, you can refer to
+this static file in Django as <code class="docutils literal notranslate"><span class="pre">polls/style.css</span></code>, similar to how you reference
+the path for templates.</p>
+<div class="admonition-static-file-namespacing admonition">
+<p class="first admonition-title">Static file namespacing</p>
+<p class="last">Just like templates, we <em>might</em> be able to get away with putting our static
+files directly in <code class="docutils literal notranslate"><span class="pre">polls/static</span></code> (rather than creating another <code class="docutils literal notranslate"><span class="pre">polls</span></code>
+subdirectory), but it would actually be a bad idea. Django will choose the
+first static file it finds whose name matches, and if you had a static file
+with the same name in a <em>different</em> application, Django would be unable to
+distinguish between them. We need to be able to point Django at the right
+one, and the best way to ensure this is by <em>namespacing</em> them. That is, by
+putting those static files inside <em>another</em> directory named for the
+application itself.</p>
+</div>
+<p>Put the following code in that stylesheet (<code class="docutils literal notranslate"><span class="pre">polls/static/polls/style.css</span></code>):</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/static/polls/style.css</span></code></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">li</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">green</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Next, add the following at the top of <code class="docutils literal notranslate"><span class="pre">polls/templates/polls/index.html</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/index.html</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">load</span> <span class="nv">static</span> <span class="cp">%}</span>
+
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">static</span> <span class="s1">&#39;polls/style.css&#39;</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">static</span> <span class="pre">%}</span></code> template tag generates the absolute URL of static files.</p>
+<p>That’s all you need to do for development.</p>
+<p>Start the server (or restart it if it’s already running):</p>
+<div class="console-block" id="console-block-0">
+<input class="c-tab-unix" id="c-tab-0-unix" type="radio" name="console-0" checked>
+<label for="c-tab-0-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-0-win" type="radio" name="console-0">
+<label for="c-tab-0-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-0-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py runserver
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-0-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py runserver
+</pre></div>
+</section>
+</div>
+<p>Reload <code class="docutils literal notranslate"><span class="pre">http://localhost:8000/polls/</span></code> and you should see that the question
+links are green (Django style!) which means that your stylesheet was properly
+loaded.</p>
+</div>
+<div class="section" id="s-adding-a-background-image">
+<span id="adding-a-background-image"></span><h2>Adding a background-image<a class="headerlink" href="#adding-a-background-image" title="Permalink to this headline">¶</a></h2>
+<p>Next, we’ll create a subdirectory for images. Create an <code class="docutils literal notranslate"><span class="pre">images</span></code> subdirectory
+in the <code class="docutils literal notranslate"><span class="pre">polls/static/polls/</span></code> directory. Inside this directory, put an image
+called <code class="docutils literal notranslate"><span class="pre">background.gif</span></code>. In other words, put your image in
+<code class="docutils literal notranslate"><span class="pre">polls/static/polls/images/background.gif</span></code>.</p>
+<p>Then, add to your stylesheet (<code class="docutils literal notranslate"><span class="pre">polls/static/polls/style.css</span></code>):</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/static/polls/style.css</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">body</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="w"> </span><span class="nb">url</span><span class="p">(</span><span class="s2">&quot;images/background.gif&quot;</span><span class="p">)</span><span class="w"> </span><span class="kc">no-repeat</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<p>Reload <code class="docutils literal notranslate"><span class="pre">http://localhost:8000/polls/</span></code> and you should see the background
+loaded in the top left of the screen.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">static</span> <span class="pre">%}</span></code> template tag is not available for use in static files
+which aren’t generated by Django, like your stylesheet. You should always
+use <strong>relative paths</strong> to link your static files between each other,
+because then you can change <a class="reference internal" href="../../ref/settings/#std-setting-STATIC_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_URL</span></code></a> (used by the
+<a class="reference internal" href="../../ref/templates/builtins/#std-templatetag-static"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">static</span></code></a> template tag to generate its URLs) without having to modify
+a bunch of paths in your static files as well.</p>
+</div>
+<p>These are the <strong>basics</strong>. For more details on settings and other bits included
+with the framework see
+<a class="reference internal" href="../../howto/static-files/"><span class="doc">the static files howto</span></a> and
+<a class="reference internal" href="../../ref/contrib/staticfiles/"><span class="doc">the staticfiles reference</span></a>. <a class="reference internal" href="../../howto/static-files/deployment/"><span class="doc">Deploying
+static files</span></a> discusses how to use static
+files on a real server.</p>
+<p>When you’re comfortable with the static files, read <a class="reference internal" href="../tutorial07/"><span class="doc">part 7 of this
+tutorial</span></a> to learn how to customize Django’s
+automatically-generated admin site.</p>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

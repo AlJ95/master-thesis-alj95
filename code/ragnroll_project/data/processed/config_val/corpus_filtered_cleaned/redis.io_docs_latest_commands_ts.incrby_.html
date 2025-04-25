@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>TS.INCRBY | Docs</title>
+    <meta name="description" content="Increase the value of the sample with the maximum existing timestamp, or create a new sample with a value equal to the value of the sample with the maximum existing timestamp with a given increment">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/ts.incrby/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="TS.INCRBY">
+  <meta property="og:description" content="Increase the value of the sample with the maximum existing timestamp, or create a new sample with a value equal to the value of the sample with the maximum existing timestamp with a given increment">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="TS.INCRBY">
+  <meta itemprop="description" content="Increase the value of the sample with the maximum existing timestamp, or create a new sample with a value equal to the value of the sample with the maximum existing timestamp with a given increment">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="948">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TS.INCRBY">
+  <meta name="twitter:description" content="Increase the value of the sample with the maximum existing timestamp, or create a new sample with a value equal to the value of the sample with the maximum existing timestamp with a given increment">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">TS.INCRBY
+        </h1>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">TS.INCRBY key addend 
+  [TIMESTAMP timestamp] 
+  [RETENTION retentionPeriod] 
+  [ENCODING &lt;COMPRESSED|UNCOMPRESSED&gt;] 
+  [CHUNK_SIZE size] 
+  [DUPLICATE_POLICY policy] 
+  [IGNORE ignoreMaxTimediff ignoreMaxValDiff]   
+  [LABELS [label value ...]]
+</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / TimeSeries 1.0.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(M) when M is the amount of compaction rules or O(1) with no compaction</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@timeseries</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Increase the value of the sample with the maximum existing timestamp, or create a new sample with a value equal to the value of the sample with the maximum existing timestamp with a given increment</p>
+<p><a href="#examples">Examples</a></p>
+<h2 id="required-arguments">Required arguments</h2>
+<details open><summary><code>key</code></summary> 
+<p>is key name for the time series.</p>
+</details>
+<details open><summary><code>addend</code></summary> 
+<p>is numeric value of the addend (double).</p>
+</details>
+<p><note><b>Notes</b></p>
+<ul>
+<li>When specified key does not exist, a new time series is created.</li>
+<li>You can use this command as a counter or gauge that automatically gets history as a time series.</li>
+<li>If a policy for handling duplicate samples (<code>IGNORE</code>) is defined for this time series - <code>TS.INCRBY</code> operations are affected as well (sample additions/modifications can be filtered).</li>
+<li>Explicitly adding samples to a compacted time series (using <a href="/docs/latest/commands/ts.add/"><code>TS.ADD</code></a>, <a href="/docs/latest/commands/ts.madd/"><code>TS.MADD</code></a>, <code>TS.INCRBY</code>, or <a href="/docs/latest/commands/ts.decrby/"><code>TS.DECRBY</code></a>) may result in inconsistencies between the raw and the compacted data. The compaction process may override such samples.<br>
+</note></li>
+</ul>
+<h2 id="optional-arguments">Optional arguments</h2>
+<details open><summary><code>TIMESTAMP timestamp</code></summary> 
+<p>is Unix time (integer, in milliseconds) specifying the sample timestamp or <code>*</code> to set the sample timestamp to the Unix time of the server's clock.</p>
+<p>Unix time is the number of milliseconds that have elapsed since 00:00:00 UTC on 1 January 1970, the Unix epoch, without adjustments made due to leap seconds.</p>
+<p><code>timestamp</code> must be equal to or higher than the maximum existing timestamp. When equal, the value of the sample with the maximum existing timestamp is increased. If it is higher, a new sample with a timestamp set to <code>timestamp</code> is created, and its value is set to the value of the sample with the maximum existing timestamp plus <code>addend</code>.</p>
+<p>If the time series is empty, the value is set to <code>addend</code>.</p>
+<p>When not specified, the timestamp is set to the Unix time of the server's clock.</p>
+</details>
+<details open><summary><code>RETENTION retentionPeriod</code></summmary> 
+<p>is maximum retention period, compared to the maximum existing timestamp, in milliseconds.</p>
+<p>Use it only if you are creating a new time series. It is ignored if you are adding samples to an existing time series. See <code>RETENTION</code> in <a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a>.</p>
+</details>
+<details open><summary><code>ENCODING enc</code></summary> 
+<p>specifies the series sample encoding format.</p>
+<p>Use it only if you are creating a new time series. It is ignored if you are adding samples to an existing time series. See <code>ENCODING</code> in <a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a>.</p>
+</details>
+<details open><summary><code>CHUNK_SIZE size</code></summary> 
+<p>is memory size, in bytes, allocated for each data chunk.</p>
+<p>Use it only if you are creating a new time series. It is ignored if you are adding samples to an existing time series. See <code>CHUNK_SIZE</code> in <a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a>.</p>
+</details>
+<details open><summary><code>DUPLICATE_POLICY policy</code></summary>
+<p>is policy for handling insertion (<a href="/docs/latest/commands/ts.add/"><code>TS.ADD</code></a> and <a href="/docs/latest/commands/ts.madd/"><code>TS.MADD</code></a>) of multiple samples with identical timestamps.</p>
+<p>Use it only if you are creating a new time series. It is ignored if you are adding samples to an existing time series. See <code>DUPLICATE_POLICY</code> in <a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a>.</p>
+</details>
+<details open><summary><code>IGNORE ignoreMaxTimediff ignoreMaxValDiff</code></summary> 
+<p>is the policy for handling duplicate samples. A new sample is considered a duplicate and is ignored if the following conditions are met:</p>
+<ul>
+<li>The time series is not a compaction;</li>
+<li>The time series' <code>DUPLICATE_POLICY</code> IS <code>LAST</code>;</li>
+<li>The sample is added in-order (<code>timestamp ≥ max_timestamp</code>);</li>
+<li>The difference of the current timestamp from the previous timestamp (<code>timestamp - max_timestamp</code>) is less than or equal to <code>IGNORE_MAX_TIME_DIFF</code>;</li>
+<li>The absolute value difference of the current value from the value at the previous maximum timestamp (<code>abs(value - value_at_max_timestamp</code>) is less than or equal to <code>IGNORE_MAX_VAL_DIFF</code>.</li>
+</ul>
+<p>where <code>max_timestamp</code> is the timestamp of the sample with the largest timestamp in the time series, and <code>value_at_max_timestamp</code> is the value at <code>max_timestamp</code>.</p>
+<p>When not specified: set to the global <a href="/docs/latest/develop/data-types/timeseries/configuration/#ignore_max_time_diff-and-ignore_max_val_diff">IGNORE_MAX_TIME_DIFF</a> and <a href="/docs/latest/develop/data-types/timeseries/configuration/#ignore_max_time_diff-and-ignore_max_val_diff">IGNORE_MAX_VAL_DIFF</a>, which are, by default, both set to 0.</p>
+<p>These parameters are used when creating a new time series to set the per-key parameters, and are ignored when called with an existing time series (the existing per-key configuration parameters are used).</p>
+</details>
+<details open><summary><code>LABELS [{label value}...]</code></summary> 
+<p>is set of label-value pairs that represent metadata labels of the key and serve as a secondary index.</p>
+<p>Use it only if you are creating a new time series. It is ignored if you are adding samples to an existing time series. See <code>LABELS</code> in <a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a>.</p>
+</details>
+<p><note><b>Notes</b></p>
+<ul>
+<li>You can use this command to create a new time series and add a sample to it in a single command.
+<code>RETENTION</code>, <code>ENCODING</code>, <code>CHUNK_SIZE</code>, <code>DUPLICATE_POLICY</code>, <code>IGNORE</code>, and <code>LABELS</code> are used only when creating a new time series, and ignored when adding or modifying samples in an existing time series.</li>
+<li>Setting <code>RETENTION</code> and <code>LABELS</code> introduces additional time complexity.
+</note></li>
+</ul>
+<h2 id="return-value">Return value</h2>
+<p>Returns one of these replies:</p>
+<ul>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#integers">Integer reply</a> - the timestamp of the upserted sample. If the sample is ignored (See <code>IGNORE</code> in <a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a>), the reply will be the largest timestamp in the time series.</li>
+<li>[] on error (invalid arguments, wrong key type, etc.), or when <code>timestamp</code> is not equal to or higher than the maximum existing timestamp</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<details open><summary><b>Store sum of data from several sources</b></summary> 
+<p>Suppose you are getting number of orders or total income per minute from several points of sale, and you want to store only the combined value. Call TS.INCRBY for each point-of-sale report.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.INCRBY a <span class="m">232</span> TIMESTAMP 1657811829000		// point-of-sale <span class="c1">#1</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1657811829000</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.INCRBY a <span class="m">157</span> TIMESTAMP 1657811829000		// point-of-sale <span class="c1">#2</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1657811829000</span>
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.INCRBY a <span class="m">432</span> TIMESTAMP 1657811829000		// point-of-sale <span class="c1">#3</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1657811829000</span></span></span></code></pre></div>
+<p>Note that the timestamps must arrive in non-decreasing order.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; ts.incrby a <span class="m">100</span> TIMESTAMP <span class="m">50</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>error<span class="o">)</span> TSDB: timestamp must be equal to or higher than the maximum existing timestamp</span></span></code></pre></div>
+<p>You can achieve similar results without such protection using <code>TS.ADD key timestamp value ON_DUPLICATE sum</code>.</p>
+</details>
+<details open><summary><b>Count sensor captures</b></summary>
+<p>Suppose a sensor ticks whenever a car is passed on a road, and you want to count occurrences. Whenever you get a tick from the sensor you can simply call:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.INCRBY a <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>integer<span class="o">)</span> <span class="m">1658431553109</span></span></span></code></pre></div>
+<p>The timestamp is filled automatically.</p>
+</details>
+<h2 id="see-also">See also</h2>
+<p><a href="/docs/latest/commands/ts.decrby/"><code>TS.DECRBY</code></a> | <a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a></p>
+<h2 id="related-topics">Related topics</h2>
+<p><a href="/docs/latest/develop/data-types/timeseries/">RedisTimeSeries</a></p>
+
+
+        
+        
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/ts.incrby/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

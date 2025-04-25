@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: SET ROLE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-set-role.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="SET ROLE" />
+  <meta property="og:description" content="SET ROLE SET ROLE — set the current user identifier of the current session Synopsis SET [ SESSION | LOCAL …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-set-role.html" title="PostgreSQL 17 - SET ROLE" >Current</a>
+                          (<a href="/docs/17/sql-set-role.html" title="PostgreSQL 17 - SET ROLE" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-set-role.html" title="PostgreSQL 16 - SET ROLE" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-set-role.html" title="PostgreSQL 15 - SET ROLE" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-set-role.html" title="PostgreSQL 14 - SET ROLE" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-set-role.html" title="PostgreSQL 13 - SET ROLE" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-set-role.html" title="PostgreSQL devel - SET ROLE"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-set-role.html" title="PostgreSQL 12 - SET ROLE"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-set-role.html" title="PostgreSQL 11 - SET ROLE"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-set-role.html" title="PostgreSQL 10 - SET ROLE"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-set-role.html" title="PostgreSQL 9.6 - SET ROLE"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-set-role.html" title="PostgreSQL 9.5 - SET ROLE"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-set-role.html" title="PostgreSQL 9.4 - SET ROLE"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-set-role.html" title="PostgreSQL 9.3 - SET ROLE"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-set-role.html" title="PostgreSQL 9.2 - SET ROLE"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-set-role.html" title="PostgreSQL 9.1 - SET ROLE"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-set-role.html" title="PostgreSQL 9.0 - SET ROLE"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/sql-set-role.html" title="PostgreSQL 8.4 - SET ROLE"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/sql-set-role.html" title="PostgreSQL 8.3 - SET ROLE"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/sql-set-role.html" title="PostgreSQL 8.2 - SET ROLE"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/sql-set-role.html" title="PostgreSQL 8.1 - SET ROLE"  rel="nofollow">8.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">SET ROLE</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-set-constraints.html" title="SET CONSTRAINTS">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-set-session-authorization.html" title="SET SESSION AUTHORIZATION">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-SET-ROLE">
+  <div class="titlepage"></div><a id="id-1.9.3.175.1" class="indexterm" name="id-1.9.3.175.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">SET ROLE</span></h2>
+    <p>SET ROLE — set the current user identifier of the current session</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+SET [ SESSION | LOCAL ] ROLE <em class="replaceable"><code>role_name</code></em>
+SET [ SESSION | LOCAL ] ROLE NONE
+RESET ROLE
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.175.5">
+    <h2>Description</h2>
+    <p>This command sets the current user identifier of the current SQL session to be <em class="replaceable"><code>role_name</code></em>. The role name can be written as either an identifier or a string literal. After <code class="command">SET ROLE</code>, permissions checking for SQL commands is carried out as though the named role were the one that had logged in originally.</p>
+    <p>The specified <em class="replaceable"><code>role_name</code></em> must be a role that the current session user is a member of. (If the session user is a superuser, any role can be selected.)</p>
+    <p>The <code class="literal">SESSION</code> and <code class="literal">LOCAL</code> modifiers act the same as for the regular <a class="xref" href="sql-set.html" title="SET"><span class="refentrytitle">SET</span></a> command.</p>
+    <p><code class="literal">SET ROLE NONE</code> sets the current user identifier to the current session user identifier, as returned by <code class="function">session_user</code>. <code class="literal">RESET ROLE</code> sets the current user identifier to the connection-time setting specified by the <a class="link" href="libpq-connect.html#LIBPQ-CONNECT-OPTIONS">command-line options</a>, <a class="link" href="sql-alterrole.html" title="ALTER ROLE"><code class="command">ALTER ROLE</code></a>, or <a class="link" href="sql-alterdatabase.html" title="ALTER DATABASE"><code class="command">ALTER DATABASE</code></a>, if any such settings exist. Otherwise, <code class="literal">RESET ROLE</code> sets the current user identifier to the current session user identifier. These forms can be executed by any user.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.175.6">
+    <h2>Notes</h2>
+    <p>Using this command, it is possible to either add privileges or restrict one's privileges. If the session user role has the <code class="literal">INHERIT</code> attribute, then it automatically has all the privileges of every role that it could <code class="command">SET ROLE</code> to; in this case <code class="command">SET ROLE</code> effectively drops all the privileges assigned directly to the session user and to the other roles it is a member of, leaving only the privileges available to the named role. On the other hand, if the session user role has the <code class="literal">NOINHERIT</code> attribute, <code class="command">SET ROLE</code> drops the privileges assigned directly to the session user and instead acquires the privileges available to the named role.</p>
+    <p>In particular, when a superuser chooses to <code class="command">SET ROLE</code> to a non-superuser role, they lose their superuser privileges.</p>
+    <p><code class="command">SET ROLE</code> has effects comparable to <a class="xref" href="sql-set-session-authorization.html" title="SET SESSION AUTHORIZATION"><span class="refentrytitle">SET SESSION AUTHORIZATION</span></a>, but the privilege checks involved are quite different. Also, <code class="command">SET SESSION AUTHORIZATION</code> determines which roles are allowable for later <code class="command">SET ROLE</code> commands, whereas changing roles with <code class="command">SET ROLE</code> does not change the set of roles allowed to a later <code class="command">SET ROLE</code>.</p>
+    <p><code class="command">SET ROLE</code> does not process session variables as specified by the role's <a class="xref" href="sql-alterrole.html" title="ALTER ROLE"><span class="refentrytitle">ALTER ROLE</span></a> settings; this only happens during login.</p>
+    <p><code class="command">SET ROLE</code> cannot be used within a <code class="literal">SECURITY DEFINER</code> function.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.175.7">
+    <h2>Examples</h2>
+    <pre class="programlisting">
+SELECT SESSION_USER, CURRENT_USER;
+
+ session_user | current_user 
+--------------+--------------
+ peter        | peter
+
+SET ROLE 'paul';
+
+SELECT SESSION_USER, CURRENT_USER;
+
+ session_user | current_user 
+--------------+--------------
+ peter        | paul
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.175.8">
+    <h2>Compatibility</h2>
+    <p><span class="productname">PostgreSQL</span> allows identifier syntax (<code class="literal">"<em class="replaceable"><code>rolename</code></em>"</code>), while the SQL standard requires the role name to be written as a string literal. SQL does not allow this command during a transaction; <span class="productname">PostgreSQL</span> does not make this restriction because there is no reason to. The <code class="literal">SESSION</code> and <code class="literal">LOCAL</code> modifiers are a <span class="productname">PostgreSQL</span> extension, as is the <code class="literal">RESET</code> syntax.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.175.9">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-set-session-authorization.html" title="SET SESSION AUTHORIZATION"><span class="refentrytitle">SET SESSION AUTHORIZATION</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-set-constraints.html" title="SET CONSTRAINTS">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-set-session-authorization.html" title="SET SESSION AUTHORIZATION">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">SET CONSTRAINTS&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;SET SESSION AUTHORIZATION</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-set-role.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>
