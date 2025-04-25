@@ -133,7 +133,7 @@ class AsyncMultiRetriever:
 
 
 # Rewriter
-pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuraiton. Rewrite this as sort of documentation page for each of this configuration.
+pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuration. Rewrite this as sort of documentation page for each of this configuration.
 Example (docker):
 Query:
 ```
