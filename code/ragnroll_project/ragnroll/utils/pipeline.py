@@ -38,7 +38,7 @@ def generate_pipeline_configurations(configuration_file_path: Path) -> List[Path
         if isinstance(data, dict):
             for key, value in data.items():
                 new_path = f"{path}.{key}" if path else key
-                if isinstance(value, list) and key not in ["connections", "env_vars"] and value:
+                if isinstance(value, list) and key not in ["connections", "env_vars", "required_variables"] and value:
                     matrix_parameters[new_path] = value
                 find_lists_in_yaml(value, new_path)
 
