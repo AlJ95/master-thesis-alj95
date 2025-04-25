@@ -206,6 +206,8 @@ def run_evaluations(
             validate_pipeline(pipeline)
 
             params = extract_run_params(config_path)
+            params["corpus_dir"] = corpus_dir
+            params["val_data_path"] = val_data_path
             
             mlflow.log_params(params)
 
