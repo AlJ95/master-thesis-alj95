@@ -108,6 +108,32 @@ We also rebuilt the Ciri system within our Haystack RAG architecture and used it
 Based on the analysis of the initial configuration, the first reconfiguration phase focused on ...
 
 
+\paragraph{Evaluate different Architectures}
+
+\paragraph{Improving Content Source Quality}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|r|r|r|r|}
+        \hline
+        \textbf{System} & \textbf{Files} & \textbf{Original Size} & \textbf{New Size} & \textbf{Reduction} \\
+        \hline
+        alluxio & 230 & 20.64MB & 19.58MB & 5.16\% \\
+        django & 634 & 37.10MB & 22.05MB & 40.58\% \\
+        etcd & 113 & 19.27MB & 1.86MB & 90.33\% \\
+        hbase & 440 & 26.42MB & 18.30MB & 30.74\% \\
+        hdfs & 108 & 2.83MB & 2.09MB & 26.18\% \\
+        postgresql & 1137 & 26.50MB & 22.94MB & 13.43\% \\
+        redis & 515 & 93.69MB & 8.33MB & 91.11\% \\
+        yarn & 563 & 40.93MB & 27.43MB & 32.99\% \\
+        zookeeper & 35 & 2.29MB & 2.12MB & 7.45\% \\
+        \hline
+        \textbf{TOTAL} & \textbf{3775} & \textbf{269.68MB} & \textbf{124.70MB} & \textbf{37.55\%} \\
+        \hline
+    \end{tabular}
+    \caption{HTML Documentation Cleanup Statistics}
+    \label{tab:cleanup_stats}
+\end{table}
 \paragraph{Reconfiguration II} \label{sec:exp_reconfig_2}
 
 
