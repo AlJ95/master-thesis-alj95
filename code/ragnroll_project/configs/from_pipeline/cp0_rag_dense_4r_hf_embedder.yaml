@@ -26,7 +26,8 @@ components:
         - HF_TOKEN
         strict: false
         type: env_var
-      tokenizer_kwargs: null
+      tokenizer_kwargs:
+        model_max_length: 2048
       truncate_dim: null
       trust_remote_code: false
     type: haystack.components.embedders.sentence_transformers_text_embedder.SentenceTransformersTextEmbedder
@@ -81,7 +82,7 @@ components:
           bm25_parameters: {}
           bm25_tokenization_regex: (?u)\b\w\w+\b
           embedding_similarity_function: dot_product
-          index: 7b718d14-821f-4ffc-991d-33b7ca2ea216
+          index: 9d57a283-0b93-4879-b668-6df50060b82b
         type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
       filter_policy: replace
       filters: null
