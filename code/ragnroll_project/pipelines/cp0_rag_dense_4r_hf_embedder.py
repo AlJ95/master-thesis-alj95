@@ -125,9 +125,9 @@ CMD ["python", "-m", "http.server", "8000"]
 ´´´
 """
 
-result = pipeline.run(data=dict(query=query), include_outputs_from=["rewriter", "output_adapter", "embedder", "retriever", "ranker", "prompt_builder", "llm", "answer_builder"])
+# result = pipeline.run(data=dict(query=query), include_outputs_from=["rewriter", "output_adapter", "embedder", "retriever", "ranker", "prompt_builder", "llm", "answer_builder"])
 
-for key, value in result.items():
-    print(key)
-    print(value)
-    print("-"*100)
+# for key, value in result.items():
+#     print(key)
+#     print(value)
+#     print("-"*100)
