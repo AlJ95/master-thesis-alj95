@@ -7,7 +7,7 @@ components:
   embedder:
     init_parameters:
       backend: torch
-      batch_size: 32
+      batch_size: 8
       config_kwargs: null
       device:
         device: cpu
@@ -82,7 +82,7 @@ components:
           bm25_parameters: {}
           bm25_tokenization_regex: (?u)\b\w\w+\b
           embedding_similarity_function: dot_product
-          index: 9d57a283-0b93-4879-b668-6df50060b82b
+          index: 46714958-6dc4-4ee4-b718-729cd2a59d1a
         type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
       filter_policy: replace
       filters: null
