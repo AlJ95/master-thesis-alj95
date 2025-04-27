@@ -10,6 +10,8 @@ from haystack.components.embedders import (
     HuggingFaceAPIDocumentEmbedder,
     AzureOpenAIDocumentEmbedder
     )
+from haystack.utils.device import ComponentDevice
+from haystack.utils import Secret
 import json
 import logging
 import yaml
@@ -144,7 +146,10 @@ def _get_document_embedder_from_text_embedder(text_embedder: Dict):
     """
     Get a document embedder from a text embedder.
     """
-    del text_embedder["init_parameters"]["api_key"]
+    try:
+        del text_embedder["init_parameters"]["api_key"]
+    except:
+        pass
     if "OpenAITextEmbedder" in text_embedder["type"]:
         return OpenAIDocumentEmbedder(**text_embedder["init_parameters"])
     elif "HuggingFaceAPITextEmbedder" in text_embedder["type"]:
@@ -152,6 +157,12 @@ def _get_document_embedder_from_text_embedder(text_embedder: Dict):
     elif "AzureOpenAITextEmbedder" in text_embedder["type"]:
         return AzureOpenAIDocumentEmbedder(**text_embedder["init_parameters"])
     elif "SentenceTransformersTextEmbedder" in text_embedder["type"]:
+        if "device" in text_embedder["init_parameters"]:
+            text_embedder["init_parameters"]["device"] = ComponentDevice.from_dict(text_embedder["init_parameters"]["device"])
+        
+        if "token" in text_embedder["init_parameters"] and text_embedder["init_parameters"]["token"]["type"] == "env_var":
+            text_embedder["init_parameters"]["token"] = Secret.from_env_var(text_embedder["init_parameters"]["token"]["env_vars"])
+        
         doc_embedder = SentenceTransformersDocumentEmbedder(**text_embedder["init_parameters"])
         doc_embedder.warm_up()
         return doc_embedder
