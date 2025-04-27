@@ -111,7 +111,6 @@ def convert_local_files(corpus_dir: Path) -> List[Document]:
     
     # Find all files with supported extensions
     for file_path in corpus_dir.glob("**/*"):
-        print(f"Processing file: {file_path}")
         if file_path.is_file() and file_path.suffix.lower() in supported_extensions:
             try:
                 # Skip the urls.csv file as it's handled separately
