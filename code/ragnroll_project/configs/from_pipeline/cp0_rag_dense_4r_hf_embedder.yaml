@@ -1,0 +1,154 @@
+components:
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(valid|invalid)"
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
+  embedder:
+    init_parameters:
+      backend: torch
+      batch_size: 32
+      config_kwargs: null
+      device:
+        device: cpu
+        type: single
+      encode_kwargs: null
+      model: infly/inf-retriever-v1-1.5b
+      model_kwargs: null
+      normalize_embeddings: false
+      precision: float32
+      prefix: ''
+      progress_bar: true
+      suffix: ''
+      token:
+        env_vars:
+        - HF_API_TOKEN
+        - HF_TOKEN
+        strict: false
+        type: env_var
+      tokenizer_kwargs: null
+      truncate_dim: null
+      trust_remote_code: false
+    type: haystack.components.embedders.sentence_transformers_text_embedder.SentenceTransformersTextEmbedder
+  llm:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-4o-mini
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  output_adapter:
+    init_parameters:
+      custom_filters: {}
+      output_type: str
+      template: '{{ replies[0] }}'
+      unsafe: false
+    type: haystack.components.converters.output_adapter.OutputAdapter
+  prompt_builder:
+    init_parameters:
+      required_variables:
+      - query
+      template: "\n\n        Given these documents, answer the question.\n       \
+        \                                                \n        Is the following\
+        \ configuration valid?\n\n        Your answer is used within a pipeline and\
+        \ must follow the following format:\n        \"The answer is \"valid\"\" or\
+        \ \"The answer is \"invalid\"\" with quotation marks. Also allowed are \"\
+        yes\" or \"no\", \"true\" or \"false\", \"1\" or \"0\".\n        After stating\
+        \ your answer, explain your answer in detail.\n\n        Example:\n      \
+        \  Question: London is the capital of France.\n        Answer: \"false\",\
+        \ because the capital of France is Paris, not London.\n\n        Documents:\n\
+        \n        {% for doc in documents %}\n        {{ doc.content }}\n\n      \
+        \  {% endfor %}        \n\n        Configuration: {{query}}\n\n\n        Answer: "
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  ranker:
+    init_parameters:
+      top_k: null
+      word_count_threshold: null
+    type: haystack.components.rankers.lost_in_the_middle.LostInTheMiddleRanker
+  retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: {}
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: 7b718d14-821f-4ffc-991d-33b7ca2ea216
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      return_embedding: false
+      scale_score: false
+      top_k: 10
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  rewriter:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: gpt-4o-mini
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  rewriter_prompt:
+    init_parameters:
+      required_variables:
+      - query
+      template: "The following query consists of a configuration. Rewrite this as\
+        \ sort of documentation page for each of this configuration.\nExample (docker):\n\
+        #######################################################\nQuery:\n```\nFROM\
+        \ python:3.10\n\nCMD [\"python\", \"-m\", \"http.server\", \"8000\"]\n```\n\
+        \nDocumentation:\nFROM\n\nFROM [--platform=<platform>] <image> [AS <name>]\n\
+        Or\n\n\nFROM [--platform=<platform>] <image>[:<tag>] [AS <name>]\nOr\n\n\n\
+        FROM [--platform=<platform>] <image>[@<digest>] [AS <name>]\nThe FROM instruction\
+        \ initializes a new build stage and sets the base image for subsequent instructions.\
+        \ As such, a valid Dockerfile must start with a FROM instruction. The image\
+        \ can be any valid image.\n                                              \
+        \   \n--------------------------------\nCMD\nThe CMD instruction sets the\
+        \ command to be executed when running a container from an image.\n\nYou can\
+        \ specify CMD instructions using shell or exec forms:\n\nCMD [\"executable\"\
+        ,\"param1\",\"param2\"] (exec form)\nCMD [\"param1\",\"param2\"] (exec form,\
+        \ as default parameters to ENTRYPOINT)\nCMD command param1 param2 (shell form)\n\
+        There can only be one CMD instruction in a Dockerfile. If you list more than\
+        \ one CMD, only the last one takes effect.\n\nThe purpose of a CMD is to provide\
+        \ defaults for an executing container. These defaults can include an executable,\
+        \ or they can omit the executable, in which case you must specify an ENTRYPOINT\
+        \ instruction as well.\n```                                              \
+        \   \n#######################################################\n          \
+        \                                       \n\nOnly return the documentation,\
+        \ no other text.\nQuery: {{query}}\n"
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+connection_type_validation: true
+connections:
+- receiver: rewriter.prompt
+  sender: rewriter_prompt.prompt
+- receiver: output_adapter.replies
+  sender: rewriter.replies
+- receiver: embedder.text
+  sender: output_adapter.output
+- receiver: retriever.query_embedding
+  sender: embedder.embedding
+- receiver: ranker.documents
+  sender: retriever.documents
+- receiver: prompt_builder.documents
+  sender: ranker.documents
+- receiver: llm.prompt
+  sender: prompt_builder.prompt
+- receiver: answer_builder.replies
+  sender: llm.replies
+max_runs_per_component: 100
+metadata: {}
