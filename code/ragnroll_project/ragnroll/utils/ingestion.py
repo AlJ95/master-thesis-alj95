@@ -144,7 +144,10 @@ def _get_document_embedder_from_text_embedder(text_embedder: Dict):
     """
     Get a document embedder from a text embedder.
     """
-    del text_embedder["init_parameters"]["api_key"]
+    try:
+        del text_embedder["init_parameters"]["api_key"]
+    except:
+        pass
     if "OpenAITextEmbedder" in text_embedder["type"]:
         return OpenAIDocumentEmbedder(**text_embedder["init_parameters"])
     elif "HuggingFaceAPITextEmbedder" in text_embedder["type"]:
