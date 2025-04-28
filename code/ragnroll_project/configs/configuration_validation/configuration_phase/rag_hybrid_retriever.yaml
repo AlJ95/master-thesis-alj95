@@ -1,4 +1,7 @@
 components:
+  embedder_adapter:
+    init_parameters: {}
+    type: pipelines.components.embedder_adapter.EmbedderAdapter
   bm25_retriever:
     init_parameters:
       document_store:
@@ -106,10 +109,12 @@ connections:
   sender: joiner.documents
 - receiver: joiner.documents
   sender: bm25_retriever.documents
-- receiver: embedding_retriever.query_embedding
-  sender: embedder.embedding
 - receiver: joiner.documents
   sender: embedding_retriever.documents
+- receiver: embedding_retriever.query_embedding
+  sender: embedder.embedding
+- receiver: embedder.text
+  sender: embedder_adapter.text
 max_runs_per_component: 100
 metadata: 
   chunking:
