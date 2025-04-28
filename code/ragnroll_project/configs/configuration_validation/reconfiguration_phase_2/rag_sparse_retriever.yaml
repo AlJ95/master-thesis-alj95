@@ -105,3 +105,4 @@ metadata:
   reasoning: false
   reconfiguration_phase: 2
   hypothesis2: "Data Cleaning is more important then Architecture Design."
+  ciri_eval_dataset: True
