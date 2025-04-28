@@ -1,0 +1,11 @@
+{
+    "0e642": "Hybrid RAGs have a higher retrieval quality than sparse or dense RAGs.",
+    "11ce5": "Most recent LLM models do not need retrieval for configuration validation and local models are sufficient.",
+    "41ee4": "Iterative embedding and retrieval for each configuration item can improve the performance of the pipeline.",
+    "ce287": "The top models gemini-2.0 and deepseek gpt-4o handle this task well, how about Coding Models?",
+    "be30b": "Most recent LLM models do not need retrieval for configuration validation and OS models are sufficient.",
+    "8ff9f": "Most recent LLM models with web search do not need a customized RAG for configuration validation.",
+    "fb8b3": "Most recent LLM models do not need retrieval for configuration validation.",
+    "efba7": "Dense RAGs have a higher retrieval quality than sparse RAGs.",
+    "983b9": "Sparse RAGs have a higher retrieval quality than dense RAGs."
+}
