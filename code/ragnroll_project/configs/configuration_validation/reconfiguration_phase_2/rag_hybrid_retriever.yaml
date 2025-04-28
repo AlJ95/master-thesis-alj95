@@ -1,0 +1,129 @@
+components:
+  embedder_adapter:
+    init_parameters: {}
+    type: pipelines.components.embedder_adapter.EmbedderAdapter
+  bm25_retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          bm25_algorithm: BM25L
+          bm25_parameters: &id001 {}
+          bm25_tokenization_regex: (?u)\b\w\w+\b
+          embedding_similarity_function: dot_product
+          index: d3e9c471-1c4e-4e3e-9c5a-03aee7147ac1
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      filter_policy: replace
+      filters: null
+      scale_score: false
+      top_k: 10
+    type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
+  joiner:
+    init_parameters:
+      join_mode: merge
+      sort_by_score: true
+      top_k: null
+      weights: 
+        - [1, 2]
+        - [1, 1]
+        - [2, 1]
+    type: haystack.components.joiners.document_joiner.DocumentJoiner
+  embedder:
+    init_parameters:
+      api_base_url: null
+      api_key:
+        env_vars:
+        - OPENAI_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: text-embedding-3-small
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+  embedding_retriever:
+    init_parameters:
+      document_store:
+        init_parameters:
+          embedding_similarity_function: dot_product
+        type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
+      return_embedding: false
+      scale_score: false
+      top_k: 10
+    type: haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever
+  prompt_builder:
+    init_parameters:
+      required_variables: null
+      template: '
+
+        Given these documents, answer the question.
+
+        Your answer is used within a pipeline and must follow the following format:
+        "The answer is "valid"" or "The answer is "invalid"" with quotation marks. Also allowed are "yes" or "no", "true" or "false", "1" or "0".
+        After stating your answer, explain your answer in detail.
+
+        Example:
+        Question: London is the capital of France.
+        Answer: "false", because the capital of France is Paris, not London.
+
+        Documents:
+
+        {% for doc in documents %}\
+
+        {{ doc.content }}
+
+        {% endfor %}
+
+        Question: {{query}}        
+
+        Answer:
+
+        '
+      variables: null
+    type: haystack.components.builders.prompt_builder.PromptBuilder
+  llm:
+    init_parameters:
+      api_base_url: https://openrouter.ai/api/v1
+      api_key:
+        env_vars:
+        - OPENROUTER_API_KEY
+        strict: true
+        type: env_var
+      generation_kwargs: {}
+      model: [deepseek/deepseek-chat-v3-0324, openai/gpt-4o-mini-2024-07-18]
+      organization: null
+      streaming_callback: null
+      system_prompt: null
+    type: haystack.components.generators.openai.OpenAIGenerator
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(valid|invalid)".
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
+connections:
+- receiver: answer_builder.replies
+  sender: llm.replies
+- receiver: llm
+  sender: prompt_builder
+- receiver: prompt_builder.documents
+  sender: joiner.documents
+- receiver: joiner.documents
+  sender: bm25_retriever.documents
+- receiver: joiner.documents
+  sender: embedding_retriever.documents
+- receiver: embedding_retriever.query_embedding
+  sender: embedder.embedding
+- receiver: embedder.text
+  sender: embedder_adapter.text
+max_runs_per_component: 100
+metadata: 
+  chunking:
+    split: true
+    chunk_size: 500
+    chunk_overlap: 150
+    chunk_separator: "\n\n"
+  hypothesis: "Hybrid RAGs have a higher retrieval quality than sparse or dense RAGs."
+  hypothesis2: "Data Cleaning is more important then Architecture Design."
+  reasoning: false
+  retrieval_type: hybrid
+  reconfiguration_phase: 2
