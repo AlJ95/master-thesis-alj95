@@ -218,7 +218,6 @@ def run_evaluations(
             
             pipeline.add_component("tracer", LangfuseConnector(run_name))
             data = load_evaluation_data(val_data_path)
-            data["test_cases"] = data["test_cases"][:2]
 
             evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
             result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
