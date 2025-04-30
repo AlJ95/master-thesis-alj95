@@ -141,6 +141,8 @@ def run_evaluations(
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
     test_size: int = typer.Option(20, help="Test size"),
     random_state: int = typer.Option(42, help="Random state"),
+    positive_label: str = typer.Option("valid", help="Positive label"),
+    negative_label: str = typer.Option("invalid", help="Negative label"),
 ):
     from .utils.pipeline import gather_config_paths, config_to_pipeline, validate_pipeline
     from .evaluation.eval import Evaluator
@@ -216,9 +218,9 @@ def run_evaluations(
             
             pipeline.add_component("tracer", LangfuseConnector(run_name))
             data = load_evaluation_data(val_data_path)
-            data["test_cases"] = data["test_cases"][:20]
+            data["test_cases"] = data["test_cases"][:2]
 
-            evaluator = Evaluator(pipeline)
+            evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
             result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
 
             traces = fetch_current_traces(run_name)
