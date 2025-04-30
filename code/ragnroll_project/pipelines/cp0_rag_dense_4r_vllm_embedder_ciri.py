@@ -69,7 +69,7 @@ Query: {{query}}
         required_variables=["query"]))
 pipeline.add_component("rewriter", OpenAIGenerator(api_base_url=api_base_url, api_key=api_key))
 pipeline.add_component("output_adapter", OutputAdapter(template="{{ replies[0] }}", output_type=str))
-pipeline.add_component("embedder", OpenAITextEmbedder(model="infly/inf-retriever-v1-1.5b", api_key=Secret.from_env_var("VLLM_API_KEY"), api_base_url="https://w7mxnj4radnct8-8000.proxy.runpod.net/v1"))
+pipeline.add_component("embedder", OpenAITextEmbedder(model="infly/inf-retriever-v1-1.5b", api_base_url="https://w7mxnj4radnct8-8000.proxy.runpod.net/v1"))
 pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=InMemoryDocumentStore()))
 pipeline.add_component("ranker", LostInTheMiddleRanker())
 pipeline.add_component("prompt_builder", PromptBuilder(template="""{{query}}""", required_variables=["query"]))
