@@ -231,12 +231,16 @@ def run_evaluations(
             results = pd.concat([result, traces], axis=1)
             gathered_results.append(results)
 
-            if Path(output_directory).exists():
-                pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
-            else:
-                pd.concat(gathered_results).T.to_csv(output_directory)
+            try:
+                if Path(output_directory).exists():
+                    pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
+                else:
+                    pd.concat(gathered_results).T.to_csv(output_directory)
 
-            print(f"Evaluation results saved to {output_directory}")
+                print(f"Evaluation results saved to {output_directory}")
+            except Exception as e:
+                print(f"Warning: {e}")
+                print(f"Evaluation results not saved to {output_directory}")
 
 
     return
