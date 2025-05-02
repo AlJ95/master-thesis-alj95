@@ -33,6 +33,8 @@ The baselines `llm-standalone` and `naive-rag` serve as essential benchmarks for
      - `OPENAI_BASE_URL`: Base URL for OpenAI API (e.g., "https://openrouter.ai/api/v1" for OpenRouter)
      - Langfuse configuration variables (see .env.local for details)
 
+   **Note:** Custom API-KEY environment variables like using `VLLM_API_KEY` for OpenAI API does not work. You must use OPENAI_API_KEY as environment variable.
+
 3. Update security settings in `docker-compose.yml`:
    - Find all instances marked with `#CHANGEME` and replace them with secure values
 

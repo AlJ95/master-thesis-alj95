@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev&nbsp;Package</li>
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/AbstractClient.RpcCallable.html" title="interface in alluxio">AbstractClient.RpcCallable</a>&lt;V&gt;</td>
+<td class="colLast">
+<div class="block">The RPC to be executed in <a href="../alluxio/AbstractClient.html#retryRPC-alluxio.AbstractClient.RpcCallable-org.slf4j.Logger-java.lang.String-java.lang.String-java.lang.Object...-"><code>AbstractClient.retryRPC(alluxio.AbstractClient.RpcCallable&lt;V&gt;, org.slf4j.Logger, java.lang.String, java.lang.String, java.lang.Object...)</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/Client.html" title="interface in alluxio">Client</a></td>
+<td class="colLast">
+<div class="block">Interface for a client in the Alluxio system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/HealthCheckClient.html" title="interface in alluxio">HealthCheckClient</a></td>
+<td class="colLast">
+<div class="block">Client for checking service availability.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/Positioned.html" title="interface in alluxio">Positioned</a></td>
+<td class="colLast">
+<div class="block">An interface for an object which tracks and can report its current position (for example a
+ stream).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/Process.html" title="interface in alluxio">Process</a></td>
+<td class="colLast">
+<div class="block">Interface representing an Alluxio process.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/RestUtils.RestCallable.html" title="interface in alluxio">RestUtils.RestCallable</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">An interface representing a callable.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/RpcUtils.RpcCallableThrowsIOException.html" title="interface in alluxio">RpcUtils.RpcCallableThrowsIOException</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">An interface representing a callable which can only throw Alluxio or IO exceptions.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/RpcUtils.StreamingRpcCallable.html" title="interface in alluxio">RpcUtils.StreamingRpcCallable</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">An interface representing a streaming RPC callable.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/Seekable.html" title="interface in alluxio">Seekable</a></td>
+<td class="colLast">
+<div class="block">This interface should be implemented by all Alluxio streams which support moving the read
+ position to a specific byte offset.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/Server.html" title="interface in alluxio">Server</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">Interface representing an Alluxio server.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/AbstractClient.html" title="class in alluxio">AbstractClient</a></td>
+<td class="colLast">
+<div class="block">The base class for clients.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/AbstractMasterClient.html" title="class in alluxio">AbstractMasterClient</a></td>
+<td class="colLast">
+<div class="block">The base class for master clients.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/AlluxioRemoteLogFilter.html" title="class in alluxio">AlluxioRemoteLogFilter</a></td>
+<td class="colLast">
+<div class="block">Thin filter to add MDC information to <code>LoggingEvent</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/AlluxioURI.html" title="class in alluxio">AlluxioURI</a></td>
+<td class="colLast">
+<div class="block">This class represents a URI in the Alluxio system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/ClientContext.html" title="class in alluxio">ClientContext</a></td>
+<td class="colLast">
+<div class="block">A <a href="../alluxio/ClientContext.html" title="class in alluxio"><code>ClientContext</code></a> contains information required and pertaining to making network
+ connections and performing operations with remote Alluxio processes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/Constants.html" title="class in alluxio">Constants</a></td>
+<td class="colLast">
+<div class="block">System wide constants.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/DefaultSupplier.html" title="class in alluxio">DefaultSupplier</a></td>
+<td class="colLast">
+<div class="block">Supplier for a configuration property default.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/MasterStorageTierAssoc.html" title="class in alluxio">MasterStorageTierAssoc</a></td>
+<td class="colLast">
+<div class="block"><a href="../alluxio/StorageTierAssoc.html" title="class in alluxio"><code>StorageTierAssoc</code></a> for masters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/ProcessUtils.html" title="class in alluxio">ProcessUtils</a></td>
+<td class="colLast">
+<div class="block">Utility methods for Alluxio <a href="../alluxio/Process.html" title="interface in alluxio"><code>Process</code></a>es.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/ProjectConstants.html" title="class in alluxio">ProjectConstants</a></td>
+<td class="colLast">
+<div class="block">Project constants from compilation time by maven.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/Registry.html" title="class in alluxio">Registry</a>&lt;T extends <a href="../alluxio/Server.html" title="interface in alluxio">Server</a>&lt;U&gt;,U&gt;</td>
+<td class="colLast">
+<div class="block">Class for registering individual <a href="../alluxio/Server.html" title="interface in alluxio"><code>Server</code></a>s that run within an Alluxio process.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/RestUtils.html" title="class in alluxio">RestUtils</a></td>
+<td class="colLast">
+<div class="block">Utilities for handling REST calls.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/RestUtils.ErrorResponse.html" title="class in alluxio">RestUtils.ErrorResponse</a></td>
+<td class="colLast">
+<div class="block">Error response when <a href="../alluxio/RestUtils.RestCallable.html#call--"><code>RestUtils.RestCallable.call()</code></a> throws an exception.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/RpcUtils.html" title="class in alluxio">RpcUtils</a></td>
+<td class="colLast">
+<div class="block">Utilities for handling server RPC calls.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/RuntimeConstants.html" title="class in alluxio">RuntimeConstants</a></td>
+<td class="colLast">
+<div class="block">System constants that are determined during runtime.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/SessionInfo.html" title="class in alluxio">SessionInfo</a></td>
+<td class="colLast">
+<div class="block">Represents one session in the worker daemon.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/Sessions.html" title="class in alluxio">Sessions</a></td>
+<td class="colLast">
+<div class="block"><code>Sessions</code> represents and manages all sessions contacting a worker.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/StorageTierAssoc.html" title="class in alluxio">StorageTierAssoc</a></td>
+<td class="colLast">
+<div class="block">Creates a two-way mapping between storage tier aliases and ordinal numbers from the given
+ <a href="../alluxio/conf/ServerConfiguration.html" title="class in alluxio.conf"><code>ServerConfiguration</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/StreamCache.html" title="class in alluxio">StreamCache</a></td>
+<td class="colLast">
+<div class="block">Cache for storing file input and output streams.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/SyncInfo.html" title="class in alluxio">SyncInfo</a></td>
+<td class="colLast">
+<div class="block">This class is used to represent what the active syncing process should sync.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../alluxio/UfsConstants.html" title="class in alluxio">UfsConstants</a></td>
+<td class="colLast">
+<div class="block">Ufs constants from compilation time by maven.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../alluxio/WorkerStorageTierAssoc.html" title="class in alluxio">WorkerStorageTierAssoc</a></td>
+<td class="colLast">
+<div class="block"><a href="../alluxio/StorageTierAssoc.html" title="class in alluxio"><code>StorageTierAssoc</code></a> for workers.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li>Prev&nbsp;Package</li>
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.client.block.policy (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.client.block.policy</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/BlockLocationPolicy.html" title="interface in alluxio.client.block.policy">BlockLocationPolicy</a></td>
+<td class="colLast">
+<div class="block">
+ Interface for determining the Alluxio worker location to serve a block write or UFS block read.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/BlockLocationPolicy.Factory.html" title="class in alluxio.client.block.policy">BlockLocationPolicy.Factory</a></td>
+<td class="colLast">
+<div class="block">The factory for the <a href="../../../../alluxio/client/block/policy/BlockLocationPolicy.html" title="interface in alluxio.client.block.policy"><code>BlockLocationPolicy</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/DeterministicHashPolicy.html" title="class in alluxio.client.block.policy">DeterministicHashPolicy</a></td>
+<td class="colLast">
+<div class="block">This policy maps blockId to several deterministic Alluxio workers.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/LocalFirstAvoidEvictionPolicy.html" title="class in alluxio.client.block.policy">LocalFirstAvoidEvictionPolicy</a></td>
+<td class="colLast">
+<div class="block">A policy that returns local host first, and if the local worker doesn't have enough availability,
+ it randomly picks a worker from the active workers list for each block write.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/LocalFirstPolicy.html" title="class in alluxio.client.block.policy">LocalFirstPolicy</a></td>
+<td class="colLast">
+<div class="block">A policy that returns local host first, and if the local worker doesn't have enough availability,
+ it randomly picks a worker from the active workers list for each block write.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/MostAvailableFirstPolicy.html" title="class in alluxio.client.block.policy">MostAvailableFirstPolicy</a></td>
+<td class="colLast">
+<div class="block">A policy that returns the worker with the most available bytes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/RoundRobinPolicy.html" title="class in alluxio.client.block.policy">RoundRobinPolicy</a></td>
+<td class="colLast">
+<div class="block">A policy that chooses the worker for the next block in a round-robin manner and skips workers
+ that do not have enough space.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/policy/SpecificHostPolicy.html" title="class in alluxio.client.block.policy">SpecificHostPolicy</a></td>
+<td class="colLast">
+<div class="block">Always returns a worker with the specified hostname.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

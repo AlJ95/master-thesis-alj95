@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/Master.html" title="interface in alluxio.master">Master</a></td>
+<td class="colLast">
+<div class="block">This interface contains common operations for all masters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterFactory.html" title="interface in alluxio.master">MasterFactory</a>&lt;T extends <a href="../../alluxio/master/MasterContext.html" title="class in alluxio.master">MasterContext</a>&gt;</td>
+<td class="colLast">
+<div class="block">Interface for factory of <a href="../../alluxio/master/Master.html" title="interface in alluxio.master"><code>Master</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterInquireClient.html" title="interface in alluxio.master">MasterInquireClient</a></td>
+<td class="colLast">
+<div class="block">Client for determining the primary master.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterInquireClient.ConnectDetails.html" title="interface in alluxio.master">MasterInquireClient.ConnectDetails</a></td>
+<td class="colLast">
+<div class="block">Interface for representing master inquire connect details.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/PrimarySelector.html" title="interface in alluxio.master">PrimarySelector</a></td>
+<td class="colLast">
+<div class="block">Interface for a class which can determine whether the local master is the primary.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/SafeModeManager.html" title="interface in alluxio.master">SafeModeManager</a></td>
+<td class="colLast">
+<div class="block">Interface for managing safe mode state.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/AbstractLocalAlluxioCluster.html" title="class in alluxio.master">AbstractLocalAlluxioCluster</a></td>
+<td class="colLast">
+<div class="block">Local Alluxio cluster.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/AbstractMaster.html" title="class in alluxio.master">AbstractMaster</a></td>
+<td class="colLast">
+<div class="block">This is the base class for all masters, and contains common functionality.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/AbstractPrimarySelector.html" title="class in alluxio.master">AbstractPrimarySelector</a></td>
+<td class="colLast">
+<div class="block">Base class for implementing primary selectors.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioJobMaster.html" title="class in alluxio.master">AlluxioJobMaster</a></td>
+<td class="colLast">
+<div class="block">Entry point for the Alluxio job master program.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioJobMasterProcess.html" title="class in alluxio.master">AlluxioJobMasterProcess</a></td>
+<td class="colLast">
+<div class="block">This class is responsible for initializing the different masters that are configured to run.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioJobMasterRestServiceHandler.html" title="class in alluxio.master">AlluxioJobMasterRestServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a REST handler for requesting general job master information.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioMaster.html" title="class in alluxio.master">AlluxioMaster</a></td>
+<td class="colLast">
+<div class="block">Entry point for the Alluxio master.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioMasterMonitor.html" title="class in alluxio.master">AlluxioMasterMonitor</a></td>
+<td class="colLast">
+<div class="block">Alluxio master monitor for inquiring the AlluxioMaster service availability.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioMasterProcess.html" title="class in alluxio.master">AlluxioMasterProcess</a></td>
+<td class="colLast">
+<div class="block">An Alluxio Master which runs a web and rpc server to handle FileSystem operations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioMasterProcess.Factory.html" title="class in alluxio.master">AlluxioMasterProcess.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for creating <a href="../../alluxio/master/AlluxioMasterProcess.html" title="class in alluxio.master"><code>AlluxioMasterProcess</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/AlluxioSecondaryMaster.html" title="class in alluxio.master">AlluxioSecondaryMaster</a></td>
+<td class="colLast">
+<div class="block">The secondary Alluxio master that replays journal logs and writes checkpoints.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/BackupManager.html" title="class in alluxio.master">BackupManager</a></td>
+<td class="colLast">
+<div class="block">Manages creating and restoring from backups.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/ClientPool.html" title="class in alluxio.master">ClientPool</a></td>
+<td class="colLast">
+<div class="block">Keeps a collection of all clients (<a href="../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a>) returned.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/CoreMaster.html" title="class in alluxio.master">CoreMaster</a></td>
+<td class="colLast">
+<div class="block">Abstract class for masters that run in the core master process.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/CoreMasterContext.html" title="class in alluxio.master">CoreMasterContext</a></td>
+<td class="colLast">
+<div class="block">This class stores fields that are specific to core masters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/CoreMasterContext.Builder.html" title="class in alluxio.master">CoreMasterContext.Builder</a></td>
+<td class="colLast">
+<div class="block">Constructs <a href="../../alluxio/master/CoreMasterContext.html" title="class in alluxio.master"><code>CoreMasterContext</code></a>s.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/DefaultSafeModeManager.html" title="class in alluxio.master">DefaultSafeModeManager</a></td>
+<td class="colLast">
+<div class="block">Manages safe mode state for Alluxio master.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/LocalAlluxioCluster.html" title="class in alluxio.master">LocalAlluxioCluster</a></td>
+<td class="colLast">
+<div class="block">Local Alluxio cluster for integration tests.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/LocalAlluxioJobCluster.html" title="class in alluxio.master">LocalAlluxioJobCluster</a></td>
+<td class="colLast">
+<div class="block">Local Alluxio job cluster.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/LocalAlluxioMaster.html" title="class in alluxio.master">LocalAlluxioMaster</a></td>
+<td class="colLast">
+<div class="block">Constructs an isolated master.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterClientContext.html" title="class in alluxio.master">MasterClientContext</a></td>
+<td class="colLast">
+<div class="block">Configuration for constructing an Alluxio master client.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterClientContextBuilder.html" title="class in alluxio.master">MasterClientContextBuilder</a></td>
+<td class="colLast">
+<div class="block">This class can be used to obtain instances of a <a href="../../alluxio/master/MasterClientContext.html" title="class in alluxio.master"><code>MasterClientContext</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterContext.html" title="class in alluxio.master">MasterContext</a>&lt;T extends <a href="../../alluxio/underfs/UfsManager.html" title="interface in alluxio.underfs">UfsManager</a>&gt;</td>
+<td class="colLast">
+<div class="block">Stores context information for Alluxio masters.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterHealthCheckClient.html" title="class in alluxio.master">MasterHealthCheckClient</a></td>
+<td class="colLast">
+<div class="block">MasterHealthCheckClient check whether Alluxio master is serving RPC requests and
+ if the AlluxioMaster process is running in all master hosts.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterHealthCheckClient.Builder.html" title="class in alluxio.master">MasterHealthCheckClient.Builder</a></td>
+<td class="colLast">
+<div class="block">Builder for a <a href="../../alluxio/master/MasterHealthCheckClient.html" title="class in alluxio.master"><code>MasterHealthCheckClient</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterInquireClient.Factory.html" title="class in alluxio.master">MasterInquireClient.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for getting a master inquire client.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterProcess.html" title="class in alluxio.master">MasterProcess</a></td>
+<td class="colLast">
+<div class="block">Defines a set of methods which any <a href="../../alluxio/master/MasterProcess.html" title="class in alluxio.master"><code>MasterProcess</code></a> should implement.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterRegistry.html" title="class in alluxio.master">MasterRegistry</a></td>
+<td class="colLast">
+<div class="block">A master registry.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterUtils.html" title="class in alluxio.master">MasterUtils</a></td>
+<td class="colLast">
+<div class="block">This class encapsulates the different master services that are configured to run.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/MultiMasterLocalAlluxioCluster.html" title="class in alluxio.master">MultiMasterLocalAlluxioCluster</a></td>
+<td class="colLast">
+<div class="block">A local Alluxio cluster with multiple masters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/NoopMaster.html" title="class in alluxio.master">NoopMaster</a></td>
+<td class="colLast">
+<div class="block">Master implementation that does nothing.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/NoopUfsManager.html" title="class in alluxio.master">NoopUfsManager</a></td>
+<td class="colLast">
+<div class="block">Implementation of UfsManager that does nothing.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/PollingMasterInquireClient.html" title="class in alluxio.master">PollingMasterInquireClient</a></td>
+<td class="colLast">
+<div class="block">PollingMasterInquireClient finds the address of the primary master by polling a list of master
+ addresses to see if their RPC servers are serving.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/PollingMasterInquireClient.MultiMasterConnectDetails.html" title="class in alluxio.master">PollingMasterInquireClient.MultiMasterConnectDetails</a></td>
+<td class="colLast">
+<div class="block">Details used to connect to the leader Alluxio master when there are multiple potential leaders.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/PrimarySelector.Factory.html" title="class in alluxio.master">PrimarySelector.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for creating primary selectors.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/PrimarySelectorClient.html" title="class in alluxio.master">PrimarySelectorClient</a></td>
+<td class="colLast">
+<div class="block">Masters use this client to elect a leader.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/ProtobufUtils.html" title="class in alluxio.master">ProtobufUtils</a></td>
+<td class="colLast">
+<div class="block">Utility methods for conversion between wire types and protobuf types.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/ServiceUtils.html" title="class in alluxio.master">ServiceUtils</a></td>
+<td class="colLast">
+<div class="block">Utility methods for Alluxio services.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/SingleMasterInquireClient.html" title="class in alluxio.master">SingleMasterInquireClient</a></td>
+<td class="colLast">
+<div class="block">A <a href="../../alluxio/master/MasterInquireClient.html" title="interface in alluxio.master"><code>MasterInquireClient</code></a> which always returns a fixed master address.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/SingleMasterInquireClient.SingleMasterConnectDetails.html" title="class in alluxio.master">SingleMasterInquireClient.SingleMasterConnectDetails</a></td>
+<td class="colLast">
+<div class="block">Connect details for a single master inquire client.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/StateLockManager.html" title="class in alluxio.master">StateLockManager</a></td>
+<td class="colLast">
+<div class="block">Provides graceful and interruptable locking protocol for taking the state lock.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/StateLockOptions.html" title="class in alluxio.master">StateLockOptions</a></td>
+<td class="colLast">
+<div class="block">Used to define state-lock options for taking it exclusively.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/TestUtils.html" title="class in alluxio.master">TestUtils</a></td>
+<td class="colLast">
+<div class="block">Test utilities.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/ZkMasterInquireClient.html" title="class in alluxio.master">ZkMasterInquireClient</a></td>
+<td class="colLast">
+<div class="block">Utility to get leader from zookeeper.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/ZkMasterInquireClient.ZkMasterConnectDetails.html" title="class in alluxio.master">ZkMasterInquireClient.ZkMasterConnectDetails</a></td>
+<td class="colLast">
+<div class="block">Details used to connect to the leader Alluxio master via Zookeeper.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/MasterHealthCheckClient.MasterType.html" title="enum in alluxio.master">MasterHealthCheckClient.MasterType</a></td>
+<td class="colLast">
+<div class="block">An enum mapping master types to fully qualified class names.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/PrimarySelector.State.html" title="enum in alluxio.master">PrimarySelector.State</a></td>
+<td class="colLast">
+<div class="block">The state for the primary selector.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/master/PrimarySelectorClient.ZookeeperConnectionErrorPolicy.html" title="enum in alluxio.master">PrimarySelectorClient.ZookeeperConnectionErrorPolicy</a></td>
+<td class="colLast">
+<div class="block">Defines supported connection error policies for leader election.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/master/StateLockOptions.GraceMode.html" title="enum in alluxio.master">StateLockOptions.GraceMode</a></td>
+<td class="colLast">
+<div class="block">Defines the grace mode of exclusive locking of the state-lock.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

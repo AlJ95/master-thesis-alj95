@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 3.0.1 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/3.0.1/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 3.0.1 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-3-0-1-release-notes">
+<span id="django-3-0-1-release-notes"></span><h1>Django 3.0.1 release notes<a class="headerlink" href="#django-3-0-1-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>December 18, 2019</em></p>
+<p>Django 3.0.1 fixes a security issue and several bugs in 3.0.</p>
+<div class="section" id="s-cve-2019-19844-potential-account-hijack-via-password-reset-form">
+<span id="cve-2019-19844-potential-account-hijack-via-password-reset-form"></span><h2>CVE-2019-19844: Potential account hijack via password reset form<a class="headerlink" href="#cve-2019-19844-potential-account-hijack-via-password-reset-form" title="Permalink to this headline">¶</a></h2>
+<p>By submitting a suitably crafted email address making use of Unicode
+characters, that compared equal to an existing user email when lower-cased for
+comparison, an attacker could be sent a password reset token for the matched
+account.</p>
+<p>In order to avoid this vulnerability, password reset requests now compare the
+submitted email using the stricter, recommended algorithm for case-insensitive
+comparison of two identifiers from <a class="reference external" href="https://www.unicode.org/reports/tr36/#Recommendations_General">Unicode Technical Report 36, section
+2.11.2(B)(2)</a>. Upon a match, the email containing the reset token will be
+sent to the email address on record rather than the submitted address.</p>
+</div>
+<div class="section" id="s-bugfixes">
+<span id="bugfixes"></span><h2>Bugfixes<a class="headerlink" href="#bugfixes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Fixed a regression in Django 3.0 by restoring the ability to use Django
+inside Jupyter and other environments that force an async context, by adding
+an option to disable <a class="reference internal" href="../../topics/async/#async-safety"><span class="std std-ref">Async safety</span></a> mechanism with
+<span class="target" id="index-0"></span><a class="reference internal" href="../../topics/async/#envvar-DJANGO_ALLOW_ASYNC_UNSAFE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">DJANGO_ALLOW_ASYNC_UNSAFE</span></code></a> environment variable (<a class="reference external" href="https://code.djangoproject.com/ticket/31056">#31056</a>).</li>
+<li>Fixed a regression in Django 3.0 where <code class="docutils literal notranslate"><span class="pre">RegexPattern</span></code>, used by
+<a class="reference internal" href="../../ref/urls/#django.urls.re_path" title="django.urls.re_path"><code class="xref py py-func docutils literal notranslate"><span class="pre">re_path()</span></code></a>, returned positional arguments to be passed to
+the view when all optional named groups were missing (<a class="reference external" href="https://code.djangoproject.com/ticket/31061">#31061</a>).</li>
+<li>Reallowed, following a regression in Django 3.0,
+<a class="reference internal" href="../../ref/models/expressions/#django.db.models.expressions.Window" title="django.db.models.expressions.Window"><code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code></a> expressions to be used in
+conditions outside of queryset filters, e.g. in
+<a class="reference internal" href="../../ref/models/conditional-expressions/#django.db.models.expressions.When" title="django.db.models.expressions.When"><code class="xref py py-class docutils literal notranslate"><span class="pre">When</span></code></a> conditions (<a class="reference external" href="https://code.djangoproject.com/ticket/31060">#31060</a>).</li>
+<li>Fixed a data loss possibility in
+<a class="reference internal" href="../../ref/contrib/postgres/forms/#django.contrib.postgres.forms.SplitArrayField" title="django.contrib.postgres.forms.SplitArrayField"><code class="xref py py-class docutils literal notranslate"><span class="pre">SplitArrayField</span></code></a>. When using with
+<code class="docutils literal notranslate"><span class="pre">ArrayField(BooleanField())</span></code>, all values after the first <code class="docutils literal notranslate"><span class="pre">True</span></code> value
+were marked as checked instead of preserving passed values (<a class="reference external" href="https://code.djangoproject.com/ticket/31073">#31073</a>).</li>
+</ul>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

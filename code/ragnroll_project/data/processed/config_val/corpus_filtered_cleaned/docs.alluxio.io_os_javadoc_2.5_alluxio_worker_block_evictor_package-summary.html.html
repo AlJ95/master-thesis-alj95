@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.worker.block.evictor (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.worker.block.evictor</h1>
+<div class="docSummary">
+<div class="block">Set of evictors for evicting or moving blocks to other locations.</div>
+</div>
+<p>See:&nbsp;<a href="#package.description">Description</a></p>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/Evictor.html" title="interface in alluxio.worker.block.evictor">Evictor</a></td>
+<td class="colLast">
+<div class="block">Interface for the eviction policy in Alluxio.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/AbstractEvictor.html" title="class in alluxio.worker.block.evictor">AbstractEvictor</a></td>
+<td class="colLast">Deprecated
+<div class="block"><span class="deprecationComment">use block annotator instead</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/BlockTransferInfo.html" title="class in alluxio.worker.block.evictor">BlockTransferInfo</a></td>
+<td class="colLast">
+<div class="block">Provides information about the transfer of a block.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/EvictionPlan.html" title="class in alluxio.worker.block.evictor">EvictionPlan</a></td>
+<td class="colLast">
+<div class="block">This class provides information about the blocks that need to be moved when evicting.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/Evictor.Factory.html" title="class in alluxio.worker.block.evictor">Evictor.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../../../alluxio/worker/block/evictor/Evictor.html" title="interface in alluxio.worker.block.evictor"><code>Evictor</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/EvictorUtils.html" title="class in alluxio.worker.block.evictor">EvictorUtils</a></td>
+<td class="colLast">
+<div class="block">Utility functions for the evictor package.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/LRUEvictor.html" title="class in alluxio.worker.block.evictor">LRUEvictor</a></td>
+<td class="colLast">Deprecated
+<div class="block"><span class="deprecationComment">use block annotator instead</span></div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/evictor/Evictor.Mode.html" title="enum in alluxio.worker.block.evictor">Evictor.Mode</a></td>
+<td class="colLast">
+<div class="block">The eviction mode.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a name="package.description">
+
+</a>
+<h2 title="Package alluxio.worker.block.evictor Description">Package alluxio.worker.block.evictor Description</h2>
+<div class="block">Set of evictors for evicting or moving blocks to other locations.
+
+ The main entry point is <a href="../../../../alluxio/worker/block/evictor/Evictor.html" title="interface in alluxio.worker.block.evictor"><code>Evictor</code></a> which returns an evictor by
+ calling alluxio.worker.block.Evictor.Factory#create.
+
+ <h2>Evictor</h2>
+
+ All evictors implement <a href="../../../../alluxio/worker/block/evictor/Evictor.html" title="interface in alluxio.worker.block.evictor"><code>Evictor</code></a> interface. In order to evict
+ blocks by different policies, each evictor only need to implement
+ <a href="../../../../alluxio/worker/block/evictor/Evictor.html#freeSpaceWithView-long-alluxio.worker.block.BlockStoreLocation-alluxio.worker.block.BlockMetadataEvictorView-"><code>Evictor.freeSpaceWithView(long,
+ alluxio.worker.block.BlockStoreLocation, alluxio.worker.block.BlockMetadataEvictorView)</code></a>
+ method. When this method is called, blocks will be evicted or moved if no enough space left.
+
+ <h3>Cascading Eviction</h3> Cascading Eviction means evict blocks recursively and is only called
+ in <a href="../../../../alluxio/worker/block/evictor/Evictor.html#freeSpaceWithView-long-alluxio.worker.block.BlockStoreLocation-alluxio.worker.block.BlockMetadataEvictorView-"><code>Evictor.freeSpaceWithView(long,
+ alluxio.worker.block.BlockStoreLocation, alluxio.worker.block.BlockMetadataEvictorView)</code></a>
+ method. Cascading Eviction will try to free space in next tier view where blocks need to be
+ transferred to, if the next tier view does not have enough free space to hold the blocks, the
+ next next tier view will be tried and so on until the bottom tier is reached, if blocks can not
+ even be transferred to the bottom tier, they will be evicted, otherwise, only blocks to be freed
+ in the bottom tier will be evicted.
+
+ For example,
+ <code>alluxio.worker.block.evictor.LRUEvictor#cascadingEvict(long,
+ alluxio.worker.block.BlockStoreLocation,EvictionPlan)</code>
+ is an implementation of Cascading Eviction.
+
+ <h3>Eviction Plan</h3>
+
+ Eviction plan will be returned when
+ <a href="../../../../alluxio/worker/block/evictor/Evictor.html#freeSpaceWithView-long-alluxio.worker.block.BlockStoreLocation-alluxio.worker.block.BlockMetadataEvictorView-"><code>Evictor.freeSpaceWithView(long,
+ alluxio.worker.block.BlockStoreLocation, alluxio.worker.block.BlockMetadataEvictorView)</code></a>
+ is called. The eviction plan will return two block lists, one is the blocks to be removed
+ directly and another is the blocks to be moved to lower tier views.</div>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

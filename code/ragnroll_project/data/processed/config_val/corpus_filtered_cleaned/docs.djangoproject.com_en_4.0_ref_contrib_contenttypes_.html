@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="The contenttypes framework | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/ref/contrib/contenttypes/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>The contenttypes framework | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-module-django.contrib.contenttypes">
+<span id="s-the-contenttypes-framework"></span><span id="module-django.contrib.contenttypes"></span><span id="the-contenttypes-framework"></span><h1>The contenttypes framework<a class="headerlink" href="#module-django.contrib.contenttypes" title="Permalink to this headline">¶</a></h1>
+<p>Django includes a <a class="reference internal" href="#module-django.contrib.contenttypes" title="django.contrib.contenttypes: Provides generic interface to installed models."><code class="xref py py-mod docutils literal notranslate"><span class="pre">contenttypes</span></code></a> application that can
+track all of the models installed in your Django-powered project, providing a
+high-level, generic interface for working with your models.</p>
+<div class="section" id="s-overview">
+<span id="overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>At the heart of the contenttypes application is the
+<a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> model, which lives at
+<code class="docutils literal notranslate"><span class="pre">django.contrib.contenttypes.models.ContentType</span></code>. Instances of
+<a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> represent and store
+information about the models installed in your project, and new instances of
+<a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> are automatically
+created whenever new models are installed.</p>
+<p>Instances of <a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> have
+methods for returning the model classes they represent and for querying objects
+from those models. <a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a>
+also has a <a class="reference internal" href="../../../topics/db/managers/#custom-managers"><span class="std std-ref">custom manager</span></a> that adds methods for
+working with <a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> and for
+obtaining instances of <a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a>
+for a particular model.</p>
+<p>Relations between your models and
+<a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> can also be used to
+enable “generic” relationships between an instance of one of your
+models and instances of any model you have installed.</p>
+</div>
+<div class="section" id="s-installing-the-contenttypes-framework">
+<span id="installing-the-contenttypes-framework"></span><h2>Installing the contenttypes framework<a class="headerlink" href="#installing-the-contenttypes-framework" title="Permalink to this headline">¶</a></h2>
+<p>The contenttypes framework is included in the default
+<a class="reference internal" href="../../settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> list created by <code class="docutils literal notranslate"><span class="pre">django-admin</span> <span class="pre">startproject</span></code>,
+but if you’ve removed it or if you manually set up your
+<a class="reference internal" href="../../settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> list, you can enable it by adding
+<code class="docutils literal notranslate"><span class="pre">'django.contrib.contenttypes'</span></code> to your <a class="reference internal" href="../../settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting.</p>
+<p>It’s generally a good idea to have the contenttypes framework
+installed; several of Django’s other bundled applications require it:</p>
+<ul class="simple">
+<li>The admin application uses it to log the history of each object
+added or changed through the admin interface.</li>
+<li>Django’s <a class="reference internal" href="../../../topics/auth/#module-django.contrib.auth" title="django.contrib.auth: Django's authentication framework."><code class="xref py py-mod docutils literal notranslate"><span class="pre">authentication</span> <span class="pre">framework</span></code></a> uses it
+to tie user permissions to specific models.</li>
+</ul>
+</div>
+<div class="section" id="s-the-contenttype-model">
+<span id="the-contenttype-model"></span><h2>The <code class="docutils literal notranslate"><span class="pre">ContentType</span></code> model<a class="headerlink" href="#the-contenttype-model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.models.ContentType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">ContentType</span></code><a class="headerlink" href="#django.contrib.contenttypes.models.ContentType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each instance of <a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a>
+has two fields which, taken together, uniquely describe an installed
+model:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.models.ContentType.app_label">
+<code class="sig-name descname"><span class="pre">app_label</span></code><a class="headerlink" href="#django.contrib.contenttypes.models.ContentType.app_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the application the model is part of. This is taken from
+the <a class="reference internal" href="#django.contrib.contenttypes.models.ContentType.app_label" title="django.contrib.contenttypes.models.ContentType.app_label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">app_label</span></code></a> attribute of the model, and includes only the
+<em>last</em> part of the application’s Python import path;
+<code class="docutils literal notranslate"><span class="pre">django.contrib.contenttypes</span></code>, for example, becomes an
+<a class="reference internal" href="#django.contrib.contenttypes.models.ContentType.app_label" title="django.contrib.contenttypes.models.ContentType.app_label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">app_label</span></code></a> of <code class="docutils literal notranslate"><span class="pre">contenttypes</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.models.ContentType.model">
+<code class="sig-name descname"><span class="pre">model</span></code><a class="headerlink" href="#django.contrib.contenttypes.models.ContentType.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the model class.</p>
+</dd></dl>
+
+<p>Additionally, the following property is available:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.models.ContentType.name">
+<code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django.contrib.contenttypes.models.ContentType.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The human-readable name of the content type. This is taken from the
+<a class="reference internal" href="../../models/fields/#django.db.models.Field.verbose_name" title="django.db.models.Field.verbose_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">verbose_name</span></code></a>
+attribute of the model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Let’s look at an example to see how this works. If you already have
+the <a class="reference internal" href="#module-django.contrib.contenttypes" title="django.contrib.contenttypes: Provides generic interface to installed models."><code class="xref py py-mod docutils literal notranslate"><span class="pre">contenttypes</span></code></a> application installed, and then add
+<a class="reference internal" href="../sites/#module-django.contrib.sites" title="django.contrib.sites: Lets you operate multiple websites from the same database and Django project"><code class="xref py py-mod docutils literal notranslate"><span class="pre">the</span> <span class="pre">sites</span> <span class="pre">application</span></code></a> to your
+<a class="reference internal" href="../../settings/#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting and run <code class="docutils literal notranslate"><span class="pre">manage.py</span> <span class="pre">migrate</span></code> to install it,
+the model <a class="reference internal" href="../sites/#django.contrib.sites.models.Site" title="django.contrib.sites.models.Site"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.sites.models.Site</span></code></a> will be installed into
+your database. Along with it a new instance of
+<a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> will be
+created with the following values:</p>
+<ul class="simple">
+
+<li>A formset factory, <a class="reference internal" href="#django.contrib.contenttypes.forms.generic_inlineformset_factory" title="django.contrib.contenttypes.forms.generic_inlineformset_factory"><code class="xref py py-func docutils literal notranslate"><span class="pre">generic_inlineformset_factory()</span></code></a>, for use with
+<a class="reference internal" href="#django.contrib.contenttypes.fields.GenericForeignKey" title="django.contrib.contenttypes.fields.GenericForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericForeignKey</span></code></a>.</li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.forms.BaseGenericInlineFormSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">BaseGenericInlineFormSet</span></code><a class="headerlink" href="#django.contrib.contenttypes.forms.BaseGenericInlineFormSet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.forms.generic_inlineformset_factory">
+<code class="sig-name descname"><span class="pre">generic_inlineformset_factory</span></code>(<em><span class="n"><span class="pre">model</span></span></em>, <em><span class="n"><span class="pre">form</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ModelForm</span></span></em>, <em><span class="n"><span class="pre">formset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BaseGenericInlineFormSet</span></span></em>, <em><span class="n"><span class="pre">ct_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'content_type'</span></span></em>, <em><span class="n"><span class="pre">fk_field</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object_id'</span></span></em>, <em><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">extra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em><span class="n"><span class="pre">can_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">can_delete</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="n"><span class="pre">max_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">formfield_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">validate_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">for_concrete_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em><span class="n"><span class="pre">min_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">validate_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em><span class="n"><span class="pre">absolute_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">can_delete_extra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>)<a class="headerlink" href="#django.contrib.contenttypes.forms.generic_inlineformset_factory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <code class="docutils literal notranslate"><span class="pre">GenericInlineFormSet</span></code> using
+<a class="reference internal" href="../../forms/models/#django.forms.models.modelformset_factory" title="django.forms.models.modelformset_factory"><code class="xref py py-func docutils literal notranslate"><span class="pre">modelformset_factory()</span></code></a>.</p>
+<p>You must provide <code class="docutils literal notranslate"><span class="pre">ct_field</span></code> and <code class="docutils literal notranslate"><span class="pre">fk_field</span></code> if they are different from
+the defaults, <code class="docutils literal notranslate"><span class="pre">content_type</span></code> and <code class="docutils literal notranslate"><span class="pre">object_id</span></code> respectively. Other
+parameters are similar to those documented in
+<a class="reference internal" href="../../forms/models/#django.forms.models.modelformset_factory" title="django.forms.models.modelformset_factory"><code class="xref py py-func docutils literal notranslate"><span class="pre">modelformset_factory()</span></code></a> and
+<a class="reference internal" href="../../forms/models/#django.forms.models.inlineformset_factory" title="django.forms.models.inlineformset_factory"><code class="xref py py-func docutils literal notranslate"><span class="pre">inlineformset_factory()</span></code></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">for_concrete_model</span></code> argument corresponds to the
+<a class="reference internal" href="#django.contrib.contenttypes.fields.GenericForeignKey.for_concrete_model" title="django.contrib.contenttypes.fields.GenericForeignKey.for_concrete_model"><code class="xref py py-class docutils literal notranslate"><span class="pre">for_concrete_model</span></code></a>
+argument on <code class="docutils literal notranslate"><span class="pre">GenericForeignKey</span></code>.</p>
+<div class="versionchanged">
+<span class="title">Changed in Django 3.2:</span> <p>The <code class="docutils literal notranslate"><span class="pre">absolute_max</span></code> and <code class="docutils literal notranslate"><span class="pre">can_delete_extra</span></code> arguments were added.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="module-django.contrib.contenttypes.admin"></span></div>
+<div class="section" id="s-generic-relations-in-admin">
+<span id="generic-relations-in-admin"></span><h3>Generic relations in admin<a class="headerlink" href="#generic-relations-in-admin" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#module-django.contrib.contenttypes.admin" title="django.contrib.contenttypes.admin"><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.contenttypes.admin</span></code></a> module provides
+<a class="reference internal" href="#django.contrib.contenttypes.admin.GenericTabularInline" title="django.contrib.contenttypes.admin.GenericTabularInline"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericTabularInline</span></code></a> and
+<a class="reference internal" href="#django.contrib.contenttypes.admin.GenericStackedInline" title="django.contrib.contenttypes.admin.GenericStackedInline"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericStackedInline</span></code></a> (subclasses of
+<a class="reference internal" href="#django.contrib.contenttypes.admin.GenericInlineModelAdmin" title="django.contrib.contenttypes.admin.GenericInlineModelAdmin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericInlineModelAdmin</span></code></a>)</p>
+<p>These classes and functions enable the use of generic relations in forms
+and the admin. See the <a class="reference internal" href="../../../topics/forms/modelforms/"><span class="doc">model formset</span></a> and
+<a class="reference internal" href="../admin/#using-generic-relations-as-an-inline"><span class="std std-ref">admin</span></a> documentation for more
+information.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.admin.GenericInlineModelAdmin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">GenericInlineModelAdmin</span></code><a class="headerlink" href="#django.contrib.contenttypes.admin.GenericInlineModelAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#django.contrib.contenttypes.admin.GenericInlineModelAdmin" title="django.contrib.contenttypes.admin.GenericInlineModelAdmin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericInlineModelAdmin</span></code></a>
+class inherits all properties from an
+<a class="reference internal" href="../admin/#django.contrib.admin.InlineModelAdmin" title="django.contrib.admin.InlineModelAdmin"><code class="xref py py-class docutils literal notranslate"><span class="pre">InlineModelAdmin</span></code></a> class. However,
+it adds a couple of its own for working with the generic relation:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.admin.GenericInlineModelAdmin.ct_field">
+<code class="sig-name descname"><span class="pre">ct_field</span></code><a class="headerlink" href="#django.contrib.contenttypes.admin.GenericInlineModelAdmin.ct_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the
+<a class="reference internal" href="#django.contrib.contenttypes.models.ContentType" title="django.contrib.contenttypes.models.ContentType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentType</span></code></a> foreign key
+field on the model. Defaults to <code class="docutils literal notranslate"><span class="pre">content_type</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.admin.GenericInlineModelAdmin.ct_fk_field">
+<code class="sig-name descname"><span class="pre">ct_fk_field</span></code><a class="headerlink" href="#django.contrib.contenttypes.admin.GenericInlineModelAdmin.ct_fk_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the integer field that represents the ID of the related
+object. Defaults to <code class="docutils literal notranslate"><span class="pre">object_id</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.admin.GenericTabularInline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">GenericTabularInline</span></code><a class="headerlink" href="#django.contrib.contenttypes.admin.GenericTabularInline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.contenttypes.admin.GenericStackedInline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">GenericStackedInline</span></code><a class="headerlink" href="#django.contrib.contenttypes.admin.GenericStackedInline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclasses of <a class="reference internal" href="#django.contrib.contenttypes.admin.GenericInlineModelAdmin" title="django.contrib.contenttypes.admin.GenericInlineModelAdmin"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericInlineModelAdmin</span></code></a> with stacked and tabular
+layouts, respectively.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+</ul>
+</li>
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

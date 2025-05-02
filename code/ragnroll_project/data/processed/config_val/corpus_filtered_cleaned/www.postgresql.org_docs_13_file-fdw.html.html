@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.14. file_fdw</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/file-fdw.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.14. file_fdw" />
+  <meta property="og:description" content="F.14.&amp;nbsp;file_fdw The file_fdw module provides the foreign-data wrapper file_fdw, which can be used to access data files in the server&#x27;s …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/file-fdw.html" title="PostgreSQL 17 - F.14. file_fdw" >Current</a>
+                          (<a href="/docs/17/file-fdw.html" title="PostgreSQL 17 - F.14. file_fdw" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/file-fdw.html" title="PostgreSQL 16 - F.14. file_fdw" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/file-fdw.html" title="PostgreSQL 15 - F.14. file_fdw" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/file-fdw.html" title="PostgreSQL 14 - F.14. file_fdw" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/file-fdw.html" title="PostgreSQL 13 - F.14. file_fdw" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/file-fdw.html" title="PostgreSQL devel - F.14. file_fdw"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/file-fdw.html" title="PostgreSQL 12 - F.14. file_fdw"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/file-fdw.html" title="PostgreSQL 11 - F.14. file_fdw"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/file-fdw.html" title="PostgreSQL 10 - F.14. file_fdw"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/file-fdw.html" title="PostgreSQL 9.6 - F.14. file_fdw"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/file-fdw.html" title="PostgreSQL 9.5 - F.14. file_fdw"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/file-fdw.html" title="PostgreSQL 9.4 - F.14. file_fdw"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/file-fdw.html" title="PostgreSQL 9.3 - F.14. file_fdw"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/file-fdw.html" title="PostgreSQL 9.2 - F.14. file_fdw"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/file-fdw.html" title="PostgreSQL 9.1 - F.14. file_fdw"  rel="nofollow">9.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.14.&nbsp;file_fdw</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="earthdistance.html" title="F.13.&nbsp;earthdistance">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="fuzzystrmatch.html" title="F.15.&nbsp;fuzzystrmatch">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="FILE-FDW">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.14.&nbsp;file_fdw</h2>
+      </div>
+    </div>
+  </div><a id="id-1.11.7.23.2" class="indexterm" name="id-1.11.7.23.2"></a>
+  <p>The <code class="filename">file_fdw</code> module provides the foreign-data wrapper <code class="function">file_fdw</code>, which can be used to access data files in the server's file system, or to execute programs on the server and read their output. The data file or program output must be in a format that can be read by <code class="command">COPY FROM</code>; see <a class="xref" href="sql-copy.html" title="COPY"><span class="refentrytitle">COPY</span></a> for details. Access to data files is currently read-only.</p>
+  <p>A foreign table created using this wrapper can have the following options:</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt><span class="term"><code class="literal">filename</code></span></dt>
+      <dd>
+        <p>Specifies the file to be read. Relative paths are relative to the data directory. Either <code class="literal">filename</code> or <code class="literal">program</code> must be specified, but not both.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">program</code></span></dt>
+      <dd>
+        <p>Specifies the command to be executed. The standard output of this command will be read as though <code class="command">COPY FROM PROGRAM</code> were used. Either <code class="literal">program</code> or <code class="literal">filename</code> must be specified, but not both.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">format</code></span></dt>
+      <dd>
+        <p>Specifies the data format, the same as <code class="command">COPY</code>'s <code class="literal">FORMAT</code> option.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">header</code></span></dt>
+      <dd>
+        <p>Specifies whether the data has a header line, the same as <code class="command">COPY</code>'s <code class="literal">HEADER</code> option.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">delimiter</code></span></dt>
+      <dd>
+        <p>Specifies the data delimiter character, the same as <code class="command">COPY</code>'s <code class="literal">DELIMITER</code> option.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">quote</code></span></dt>
+      <dd>
+        <p>Specifies the data quote character, the same as <code class="command">COPY</code>'s <code class="literal">QUOTE</code> option.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">escape</code></span></dt>
+      <dd>
+        <p>Specifies the data escape character, the same as <code class="command">COPY</code>'s <code class="literal">ESCAPE</code> option.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">null</code></span></dt>
+      <dd>
+        <p>Specifies the data null string, the same as <code class="command">COPY</code>'s <code class="literal">NULL</code> option.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">encoding</code></span></dt>
+      <dd>
+        <p>Specifies the data encoding, the same as <code class="command">COPY</code>'s <code class="literal">ENCODING</code> option.</p>
+      </dd>
+    </dl>
+  </div>
+  <p>Note that while <code class="command">COPY</code> allows options such as <code class="literal">HEADER</code> to be specified without a corresponding value, the foreign table option syntax requires a value to be present in all cases. To activate <code class="command">COPY</code> options typically written without a value, you can pass the value TRUE, since all such options are Booleans.</p>
+  <p>A column of a foreign table created using this wrapper can have the following options:</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt><span class="term"><code class="literal">force_not_null</code></span></dt>
+      <dd>
+        <p>This is a Boolean option. If true, it specifies that values of the column should not be matched against the null string (that is, the table-level <code class="literal">null</code> option). This has the same effect as listing the column in <code class="command">COPY</code>'s <code class="literal">FORCE_NOT_NULL</code> option.</p>
+      </dd>
+      <dt><span class="term"><code class="literal">force_null</code></span></dt>
+      <dd>
+        <p>This is a Boolean option. If true, it specifies that values of the column which match the null string are returned as <code class="literal">NULL</code> even if the value is quoted. Without this option, only unquoted values matching the null string are returned as <code class="literal">NULL</code>. This has the same effect as listing the column in <code class="command">COPY</code>'s <code class="literal">FORCE_NULL</code> option.</p>
+      </dd>
+    </dl>
+  </div>
+  <p><code class="command">COPY</code>'s <code class="literal">FORCE_QUOTE</code> option is currently not supported by <code class="literal">file_fdw</code>.</p>
+  <p>These options can only be specified for a foreign table or its columns, not in the options of the <code class="literal">file_fdw</code> foreign-data wrapper, nor in the options of a server or user mapping using the wrapper.</p>
+  <p>Changing table-level options requires being a superuser or having the privileges of the default role <code class="literal">pg_read_server_files</code> (to use a filename) or the default role <code class="literal">pg_execute_server_program</code> (to use a program), for security reasons: only certain users should be able to control which file is read or which program is run. In principle regular users could be allowed to change the other options, but that's not supported at present.</p>
+  <p>When specifying the <code class="literal">program</code> option, keep in mind that the option string is executed by the shell. If you need to pass any arguments to the command that come from an untrusted source, you must be careful to strip or escape any characters that might have special meaning to the shell. For security reasons, it is best to use a fixed command string, or at least avoid passing any user input in it.</p>
+  <p>For a foreign table using <code class="literal">file_fdw</code>, <code class="command">EXPLAIN</code> shows the name of the file to be read or program to be run. For a file, unless <code class="literal">COSTS OFF</code> is specified, the file size (in bytes) is shown as well.</p>
+  <div class="example" id="id-1.11.7.23.14">
+    <p class="title"><strong>Example&nbsp;F.1.&nbsp;Create a Foreign Table for PostgreSQL CSV Logs</strong></p>
+    <div class="example-contents">
+      <p>One of the obvious uses for <code class="literal">file_fdw</code> is to make the PostgreSQL activity log available as a table for querying. To do this, first you must be <a class="link" href="runtime-config-logging.html#RUNTIME-CONFIG-LOGGING-CSVLOG" title="19.8.4.&nbsp;Using CSV-Format Log Output">logging to a CSV file,</a> which here we will call <code class="literal">pglog.csv</code>. First, install <code class="literal">file_fdw</code> as an extension:</p>
+      <pre class="programlisting">
+CREATE EXTENSION file_fdw;
+</pre>
+      <p>Then create a foreign server:</p>
+      <pre class="programlisting">
+CREATE SERVER pglog FOREIGN DATA WRAPPER file_fdw;
+</pre>
+      <p>Now you are ready to create the foreign data table. Using the <code class="command">CREATE FOREIGN TABLE</code> command, you will need to define the columns for the table, the CSV file name, and its format:</p>
+      <pre class="programlisting">
+CREATE FOREIGN TABLE pglog (
+  log_time timestamp(3) with time zone,
+  user_name text,
+  database_name text,
+  process_id integer,
+  connection_from text,
+  session_id text,
+  session_line_num bigint,
+  command_tag text,
+  session_start_time timestamp with time zone,
+  virtual_transaction_id text,
+  transaction_id bigint,
+  error_severity text,
+  sql_state_code text,
+  message text,
+  detail text,
+  hint text,
+  internal_query text,
+  internal_query_pos integer,
+  context text,
+  query text,
+  query_pos integer,
+  location text,
+  application_name text,
+  backend_type text
+) SERVER pglog
+OPTIONS ( filename 'log/pglog.csv', format 'csv' );
+</pre>
+      <p>That's it — now you can query your log directly. In production, of course, you would need to define some way to deal with log rotation.</p>
+    </div>
+  </div><br class="example-break" />
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="earthdistance.html" title="F.13.&nbsp;earthdistance">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="fuzzystrmatch.html" title="F.15.&nbsp;fuzzystrmatch">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.13.&nbsp;earthdistance&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.15.&nbsp;fuzzystrmatch</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/file-fdw.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

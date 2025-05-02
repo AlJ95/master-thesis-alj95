@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.client.block.stream (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.client.block.stream</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/BlockWorkerClient.html" title="interface in alluxio.client.block.stream">BlockWorkerClient</a></td>
+<td class="colLast">
+<div class="block">gRPC client for worker communication.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/DataReader.html" title="interface in alluxio.client.block.stream">DataReader</a></td>
+<td class="colLast">
+<div class="block">The interface to read data chunks.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/DataReader.Factory.html" title="interface in alluxio.client.block.stream">DataReader.Factory</a></td>
+<td class="colLast">
+<div class="block">The factory interface to create <a href="../../../../alluxio/client/block/stream/DataReader.html" title="interface in alluxio.client.block.stream"><code>DataReader</code></a>s.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/DataWriter.html" title="interface in alluxio.client.block.stream">DataWriter</a></td>
+<td class="colLast">
+<div class="block">The interface to write data.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/BlockInStream.html" title="class in alluxio.client.block.stream">BlockInStream</a></td>
+<td class="colLast">
+<div class="block">Provides an <a href="http://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code>InputStream</code></a> implementation that is based on <a href="../../../../alluxio/client/block/stream/DataReader.html" title="interface in alluxio.client.block.stream"><code>DataReader</code></a>s to
+ stream data chunk by chunk.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/BlockOutStream.html" title="class in alluxio.client.block.stream">BlockOutStream</a></td>
+<td class="colLast">
+<div class="block">Provides an <a href="http://docs.oracle.com/javase/7/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io"><code>OutputStream</code></a> implementation that is based on <a href="../../../../alluxio/client/block/stream/DataWriter.html" title="interface in alluxio.client.block.stream"><code>DataWriter</code></a> which
+ streams data chunk by chunk.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/BlockWorkerClient.Factory.html" title="class in alluxio.client.block.stream">BlockWorkerClient.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for block worker client.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/BlockWorkerClientPool.html" title="class in alluxio.client.block.stream">BlockWorkerClientPool</a></td>
+<td class="colLast">
+<div class="block">Class for managing block worker clients.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/BufferCachingGrpcDataReader.html" title="class in alluxio.client.block.stream">BufferCachingGrpcDataReader</a></td>
+<td class="colLast">
+<div class="block">A gRPC data reader that responsible for reading from a specific block.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/DataMessageClientResponseObserver.html" title="class in alluxio.client.block.stream">DataMessageClientResponseObserver</a>&lt;ReqT,RespT&gt;</td>
+<td class="colLast">
+<div class="block">A <code>StreamObserver</code> that handles raw data buffers.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/DataWriter.Factory.html" title="class in alluxio.client.block.stream">DataWriter.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../../../alluxio/client/block/stream/DataWriter.html" title="interface in alluxio.client.block.stream"><code>DataWriter</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/DefaultBlockWorkerClient.html" title="class in alluxio.client.block.stream">DefaultBlockWorkerClient</a></td>
+<td class="colLast">
+<div class="block">Default implementation of <a href="../../../../alluxio/client/block/stream/BlockWorkerClient.html" title="interface in alluxio.client.block.stream"><code>BlockWorkerClient</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/GrpcBlockingStream.html" title="class in alluxio.client.block.stream">GrpcBlockingStream</a>&lt;ReqT,ResT&gt;</td>
+<td class="colLast">
+<div class="block">A helper class for accessing gRPC bi-directional stream synchronously.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/GrpcDataMessageBlockingStream.html" title="class in alluxio.client.block.stream">GrpcDataMessageBlockingStream</a>&lt;ReqT,ResT&gt;</td>
+<td class="colLast">
+<div class="block">A helper class for accessing gRPC bi-directional stream synchronously.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/GrpcDataReader.html" title="class in alluxio.client.block.stream">GrpcDataReader</a></td>
+<td class="colLast">
+<div class="block">A gRPC data reader that streams a region from gRPC data server.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/GrpcDataReader.Factory.html" title="class in alluxio.client.block.stream">GrpcDataReader.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory class to create <a href="../../../../alluxio/client/block/stream/GrpcDataReader.html" title="class in alluxio.client.block.stream"><code>GrpcDataReader</code></a>s.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/GrpcDataWriter.html" title="class in alluxio.client.block.stream">GrpcDataWriter</a></td>
+<td class="colLast">
+<div class="block">A gRPC data writer that streams a full block or a UFS file to a gRPC data server.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/LocalFileDataReader.html" title="class in alluxio.client.block.stream">LocalFileDataReader</a></td>
+<td class="colLast">
+<div class="block">A data reader that simply reads packets from a local file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/LocalFileDataReader.Factory.html" title="class in alluxio.client.block.stream">LocalFileDataReader.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory class to create <a href="../../../../alluxio/client/block/stream/LocalFileDataReader.html" title="class in alluxio.client.block.stream"><code>LocalFileDataReader</code></a>s.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/LocalFileDataWriter.html" title="class in alluxio.client.block.stream">LocalFileDataWriter</a></td>
+<td class="colLast">
+<div class="block">A local data writer that simply writes packets to a local file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/SharedGrpcDataReader.html" title="class in alluxio.client.block.stream">SharedGrpcDataReader</a></td>
+<td class="colLast">
+<div class="block">A shared gRPC data reader that cache blocks data for multi-thread accessing.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/SharedGrpcDataReader.Factory.html" title="class in alluxio.client.block.stream">SharedGrpcDataReader.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory class to create <a href="../../../../alluxio/client/block/stream/SharedGrpcDataReader.html" title="class in alluxio.client.block.stream"><code>SharedGrpcDataReader</code></a>s.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/StreamSerializationClientInterceptor.html" title="class in alluxio.client.block.stream">StreamSerializationClientInterceptor</a></td>
+<td class="colLast">
+<div class="block">Serialization interceptor for client.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/UfsFallbackLocalFileDataWriter.html" title="class in alluxio.client.block.stream">UfsFallbackLocalFileDataWriter</a></td>
+<td class="colLast">
+<div class="block">A data writer that writes to local first and fallback to UFS block writes when the block
+ storage on this local worker is full.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/UnderFileSystemFileOutStream.html" title="class in alluxio.client.block.stream">UnderFileSystemFileOutStream</a></td>
+<td class="colLast">
+<div class="block">Provides a streaming API to write to a file in the under file system through an Alluxio
+ worker's data server.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/block/stream/BlockInStream.BlockInStreamSource.html" title="enum in alluxio.client.block.stream">BlockInStream.BlockInStreamSource</a></td>
+<td class="colLast">
+<div class="block">the source tracking where the block is from.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

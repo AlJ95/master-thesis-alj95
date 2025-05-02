@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>org.apache.hadoop.mapred.lib.aggregate (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;org.apache.hadoop.mapred.lib.aggregate</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregator.html" title="interface in org.apache.hadoop.mapred.lib.aggregate">ValueAggregator</a>&lt;E&gt;</td>
+<td class="colLast">
+<div class="block">This interface defines the minimal protocol for value aggregators.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregatorDescriptor.html" title="interface in org.apache.hadoop.mapred.lib.aggregate">ValueAggregatorDescriptor</a></td>
+<td class="colLast">
+<div class="block">This interface defines the contract a value aggregator descriptor must
+ support.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/DoubleValueSum.html" title="class in org.apache.hadoop.mapred.lib.aggregate">DoubleValueSum</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that sums up a sequence of double
+ values.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/LongValueMax.html" title="class in org.apache.hadoop.mapred.lib.aggregate">LongValueMax</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that maintain the maximum of 
+ a sequence of long values.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/LongValueMin.html" title="class in org.apache.hadoop.mapred.lib.aggregate">LongValueMin</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that maintain the minimum of 
+ a sequence of long values.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/LongValueSum.html" title="class in org.apache.hadoop.mapred.lib.aggregate">LongValueSum</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that sums up 
+ a sequence of long values.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/StringValueMax.html" title="class in org.apache.hadoop.mapred.lib.aggregate">StringValueMax</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that maintain the biggest of 
+ a sequence of strings.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/StringValueMin.html" title="class in org.apache.hadoop.mapred.lib.aggregate">StringValueMin</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that maintain the smallest of 
+ a sequence of strings.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/UniqValueCount.html" title="class in org.apache.hadoop.mapred.lib.aggregate">UniqValueCount</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that dedupes a sequence of objects.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/UserDefinedValueAggregatorDescriptor.html" title="class in org.apache.hadoop.mapred.lib.aggregate">UserDefinedValueAggregatorDescriptor</a></td>
+<td class="colLast">
+<div class="block">This class implements a wrapper for a user defined value aggregator 
+ descriptor.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregatorBaseDescriptor.html" title="class in org.apache.hadoop.mapred.lib.aggregate">ValueAggregatorBaseDescriptor</a></td>
+<td class="colLast">
+<div class="block">This class implements the common functionalities of 
+ the subclasses of ValueAggregatorDescriptor class.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregatorCombiner.html" title="class in org.apache.hadoop.mapred.lib.aggregate">ValueAggregatorCombiner</a>&lt;K1 extends <a href="../../../../../../org/apache/hadoop/io/WritableComparable.html" title="interface in org.apache.hadoop.io">WritableComparable</a>,V1 extends <a href="../../../../../../org/apache/hadoop/io/Writable.html" title="interface in org.apache.hadoop.io">Writable</a>&gt;</td>
+<td class="colLast">
+<div class="block">This class implements the generic combiner of Aggregate.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregatorJob.html" title="class in org.apache.hadoop.mapred.lib.aggregate">ValueAggregatorJob</a></td>
+<td class="colLast">
+<div class="block">This is the main class for creating a map/reduce job using Aggregate
+ framework.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregatorJobBase.html" title="class in org.apache.hadoop.mapred.lib.aggregate">ValueAggregatorJobBase</a>&lt;K1 extends <a href="../../../../../../org/apache/hadoop/io/WritableComparable.html" title="interface in org.apache.hadoop.io">WritableComparable</a>,V1 extends <a href="../../../../../../org/apache/hadoop/io/Writable.html" title="interface in org.apache.hadoop.io">Writable</a>&gt;</td>
+<td class="colLast">
+<div class="block">This abstract class implements some common functionalities of the
+ the generic mapper, reducer and combiner classes of Aggregate.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregatorMapper.html" title="class in org.apache.hadoop.mapred.lib.aggregate">ValueAggregatorMapper</a>&lt;K1 extends <a href="../../../../../../org/apache/hadoop/io/WritableComparable.html" title="interface in org.apache.hadoop.io">WritableComparable</a>,V1 extends <a href="../../../../../../org/apache/hadoop/io/Writable.html" title="interface in org.apache.hadoop.io">Writable</a>&gt;</td>
+<td class="colLast">
+<div class="block">This class implements the generic mapper of Aggregate.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueAggregatorReducer.html" title="class in org.apache.hadoop.mapred.lib.aggregate">ValueAggregatorReducer</a>&lt;K1 extends <a href="../../../../../../org/apache/hadoop/io/WritableComparable.html" title="interface in org.apache.hadoop.io">WritableComparable</a>,V1 extends <a href="../../../../../../org/apache/hadoop/io/Writable.html" title="interface in org.apache.hadoop.io">Writable</a>&gt;</td>
+<td class="colLast">
+<div class="block">This class implements the generic reducer of Aggregate.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/apache/hadoop/mapred/lib/aggregate/ValueHistogram.html" title="class in org.apache.hadoop.mapred.lib.aggregate">ValueHistogram</a></td>
+<td class="colLast">
+<div class="block">This class implements a value aggregator that computes the 
+ histogram of a sequence of strings.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

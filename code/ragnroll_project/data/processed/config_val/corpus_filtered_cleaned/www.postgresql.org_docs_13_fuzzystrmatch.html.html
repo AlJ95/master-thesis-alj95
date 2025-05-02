@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.15. fuzzystrmatch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/fuzzystrmatch.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.15. fuzzystrmatch" />
+  <meta property="og:description" content="F.15.&amp;nbsp;fuzzystrmatch F.15.1. Soundex F.15.2. Levenshtein F.15.3. Metaphone F.15.4. Double Metaphone The fuzzystrmatch module provides several functions to determine similarities and …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/fuzzystrmatch.html" title="PostgreSQL 17 - F.15. fuzzystrmatch" >Current</a>
+                          (<a href="/docs/17/fuzzystrmatch.html" title="PostgreSQL 17 - F.15. fuzzystrmatch" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/fuzzystrmatch.html" title="PostgreSQL 16 - F.15. fuzzystrmatch" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/fuzzystrmatch.html" title="PostgreSQL 15 - F.15. fuzzystrmatch" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/fuzzystrmatch.html" title="PostgreSQL 14 - F.15. fuzzystrmatch" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/fuzzystrmatch.html" title="PostgreSQL 13 - F.15. fuzzystrmatch" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/fuzzystrmatch.html" title="PostgreSQL devel - F.15. fuzzystrmatch"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/fuzzystrmatch.html" title="PostgreSQL 12 - F.15. fuzzystrmatch"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/fuzzystrmatch.html" title="PostgreSQL 11 - F.15. fuzzystrmatch"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/fuzzystrmatch.html" title="PostgreSQL 10 - F.15. fuzzystrmatch"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/fuzzystrmatch.html" title="PostgreSQL 9.6 - F.15. fuzzystrmatch"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/fuzzystrmatch.html" title="PostgreSQL 9.5 - F.15. fuzzystrmatch"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/fuzzystrmatch.html" title="PostgreSQL 9.4 - F.15. fuzzystrmatch"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/fuzzystrmatch.html" title="PostgreSQL 9.3 - F.15. fuzzystrmatch"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/fuzzystrmatch.html" title="PostgreSQL 9.2 - F.15. fuzzystrmatch"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/fuzzystrmatch.html" title="PostgreSQL 9.1 - F.15. fuzzystrmatch"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/fuzzystrmatch.html" title="PostgreSQL 9.0 - F.15. fuzzystrmatch"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/fuzzystrmatch.html" title="PostgreSQL 8.4 - F.15. fuzzystrmatch"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/fuzzystrmatch.html" title="PostgreSQL 8.3 - F.15. fuzzystrmatch"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.15.&nbsp;fuzzystrmatch</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="file-fdw.html" title="F.14.&nbsp;file_fdw">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="hstore.html" title="F.16.&nbsp;hstore">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="FUZZYSTRMATCH">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.15.&nbsp;fuzzystrmatch</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="fuzzystrmatch.html#id-1.11.7.24.6">F.15.1. Soundex</a></span></dt>
+      <dt><span class="sect2"><a href="fuzzystrmatch.html#id-1.11.7.24.7">F.15.2. Levenshtein</a></span></dt>
+      <dt><span class="sect2"><a href="fuzzystrmatch.html#id-1.11.7.24.8">F.15.3. Metaphone</a></span></dt>
+      <dt><span class="sect2"><a href="fuzzystrmatch.html#id-1.11.7.24.9">F.15.4. Double Metaphone</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.24.2" class="indexterm" name="id-1.11.7.24.2"></a>
+  <p>The <code class="filename">fuzzystrmatch</code> module provides several functions to determine similarities and distance between strings.</p>
+  <div class="caution">
+    <h3 class="title">Caution</h3>
+    <p>At present, the <code class="function">soundex</code>, <code class="function">metaphone</code>, <code class="function">dmetaphone</code>, and <code class="function">dmetaphone_alt</code> functions do not work well with multibyte encodings (such as UTF-8).</p>
+  </div>
+  <p>This module is considered <span class="quote">“<span class="quote">trusted</span>”</span>, that is, it can be installed by non-superusers who have <code class="literal">CREATE</code> privilege on the current database.</p>
+  <div class="sect2" id="id-1.11.7.24.6">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.15.1.&nbsp;Soundex</h3>
+        </div>
+      </div>
+    </div>
+    <p>The Soundex system is a method of matching similar-sounding names by converting them to the same code. It was initially used by the United States Census in 1880, 1900, and 1910. Note that Soundex is not very useful for non-English names.</p>
+    <p>The <code class="filename">fuzzystrmatch</code> module provides two functions for working with Soundex codes:</p><a id="id-1.11.7.24.6.4" class="indexterm" name="id-1.11.7.24.6.4"></a><a id="id-1.11.7.24.6.5" class="indexterm" name="id-1.11.7.24.6.5"></a>
+    <pre class="synopsis">
+soundex(text) returns text
+difference(text, text) returns int
+</pre>
+    <p>The <code class="function">soundex</code> function converts a string to its Soundex code. The <code class="function">difference</code> function converts two strings to their Soundex codes and then reports the number of matching code positions. Since Soundex codes have four characters, the result ranges from zero to four, with zero being no match and four being an exact match. (Thus, the function is misnamed — <code class="function">similarity</code> would have been a better name.)</p>
+    <p>Here are some usage examples:</p>
+    <pre class="programlisting">
+SELECT soundex('hello world!');
+
+SELECT soundex('Anne'), soundex('Ann'), difference('Anne', 'Ann');
+SELECT soundex('Anne'), soundex('Andrew'), difference('Anne', 'Andrew');
+SELECT soundex('Anne'), soundex('Margaret'), difference('Anne', 'Margaret');
+
+CREATE TABLE s (nm text);
+
+INSERT INTO s VALUES ('john');
+INSERT INTO s VALUES ('joan');
+INSERT INTO s VALUES ('wobbly');
+INSERT INTO s VALUES ('jack');
+
+SELECT * FROM s WHERE soundex(nm) = soundex('john');
+
+SELECT * FROM s WHERE difference(s.nm, 'john') &gt; 2;
+</pre>
+  </div>
+  <div class="sect2" id="id-1.11.7.24.7">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.15.2.&nbsp;Levenshtein</h3>
+        </div>
+      </div>
+    </div>
+    <p>This function calculates the Levenshtein distance between two strings:</p><a id="id-1.11.7.24.7.3" class="indexterm" name="id-1.11.7.24.7.3"></a><a id="id-1.11.7.24.7.4" class="indexterm" name="id-1.11.7.24.7.4"></a>
+    <pre class="synopsis">
+levenshtein(text source, text target, int ins_cost, int del_cost, int sub_cost) returns int
+levenshtein(text source, text target) returns int
+levenshtein_less_equal(text source, text target, int ins_cost, int del_cost, int sub_cost, int max_d) returns int
+levenshtein_less_equal(text source, text target, int max_d) returns int
+</pre>
+    <p>Both <code class="literal">source</code> and <code class="literal">target</code> can be any non-null string, with a maximum of 255 characters. The cost parameters specify how much to charge for a character insertion, deletion, or substitution, respectively. You can omit the cost parameters, as in the second version of the function; in that case they all default to 1.</p>
+    <p><code class="function">levenshtein_less_equal</code> is an accelerated version of the Levenshtein function for use when only small distances are of interest. If the actual distance is less than or equal to <code class="literal">max_d</code>, then <code class="function">levenshtein_less_equal</code> returns the correct distance; otherwise it returns some value greater than <code class="literal">max_d</code>. If <code class="literal">max_d</code> is negative then the behavior is the same as <code class="function">levenshtein</code>.</p>
+    <p>Examples:</p>
+    <pre class="screen">
+test=# SELECT levenshtein('GUMBO', 'GAMBOL');
+ levenshtein
+-------------
+           2
+(1 row)
+
+test=# SELECT levenshtein('GUMBO', 'GAMBOL', 2, 1, 1);
+ levenshtein
+-------------
+           3
+(1 row)
+
+test=# SELECT levenshtein_less_equal('extensive', 'exhaustive', 2);
+ levenshtein_less_equal
+------------------------
+                      3
+(1 row)
+
+test=# SELECT levenshtein_less_equal('extensive', 'exhaustive', 4);
+ levenshtein_less_equal
+------------------------
+                      4
+(1 row)
+</pre>
+  </div>
+  <div class="sect2" id="id-1.11.7.24.8">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.15.3.&nbsp;Metaphone</h3>
+        </div>
+      </div>
+    </div>
+    <p>Metaphone, like Soundex, is based on the idea of constructing a representative code for an input string. Two strings are then deemed similar if they have the same codes.</p>
+    <p>This function calculates the metaphone code of an input string:</p><a id="id-1.11.7.24.8.4" class="indexterm" name="id-1.11.7.24.8.4"></a>
+    <pre class="synopsis">
+metaphone(text source, int max_output_length) returns text
+</pre>
+    <p><code class="literal">source</code> has to be a non-null string with a maximum of 255 characters. <code class="literal">max_output_length</code> sets the maximum length of the output metaphone code; if longer, the output is truncated to this length.</p>
+    <p>Example:</p>
+    <pre class="screen">
+test=# SELECT metaphone('GUMBO', 4);
+ metaphone
+-----------
+ KM
+(1 row)
+</pre>
+  </div>
+  <div class="sect2" id="id-1.11.7.24.9">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.15.4.&nbsp;Double Metaphone</h3>
+        </div>
+      </div>
+    </div>
+    <p>The Double Metaphone system computes two <span class="quote">“<span class="quote">sounds like</span>”</span> strings for a given input string — a <span class="quote">“<span class="quote">primary</span>”</span> and an <span class="quote">“<span class="quote">alternate</span>”</span>. In most cases they are the same, but for non-English names especially they can be a bit different, depending on pronunciation. These functions compute the primary and alternate codes:</p><a id="id-1.11.7.24.9.3" class="indexterm" name="id-1.11.7.24.9.3"></a><a id="id-1.11.7.24.9.4" class="indexterm" name="id-1.11.7.24.9.4"></a>
+    <pre class="synopsis">
+dmetaphone(text source) returns text
+dmetaphone_alt(text source) returns text
+</pre>
+    <p>There is no length limit on the input strings.</p>
+    <p>Example:</p>
+    <pre class="screen">
+test=# SELECT dmetaphone('gumbo');
+ dmetaphone
+------------
+ KMP
+(1 row)
+</pre>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="file-fdw.html" title="F.14.&nbsp;file_fdw">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="hstore.html" title="F.16.&nbsp;hstore">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.14.&nbsp;file_fdw&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.16.&nbsp;hstore</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/fuzzystrmatch.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

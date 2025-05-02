@@ -1,0 +1,2110 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: D.2. Unsupported Features</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/unsupported-features-sql-standard.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="D.2. Unsupported Features" />
+  <meta property="og:description" content="D.2.&amp;nbsp;Unsupported Features The following features defined in SQL:2016 are not implemented in this release of PostgreSQL. In a few cases, …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/unsupported-features-sql-standard.html" title="PostgreSQL 17 - D.2. Unsupported Features" >Current</a>
+                          (<a href="/docs/17/unsupported-features-sql-standard.html" title="PostgreSQL 17 - D.2. Unsupported Features" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/unsupported-features-sql-standard.html" title="PostgreSQL 16 - D.2. Unsupported Features" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/unsupported-features-sql-standard.html" title="PostgreSQL 15 - D.2. Unsupported Features" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/unsupported-features-sql-standard.html" title="PostgreSQL 14 - D.2. Unsupported Features" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/unsupported-features-sql-standard.html" title="PostgreSQL 13 - D.2. Unsupported Features" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/unsupported-features-sql-standard.html" title="PostgreSQL devel - D.2. Unsupported Features"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/unsupported-features-sql-standard.html" title="PostgreSQL 12 - D.2. Unsupported Features"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/unsupported-features-sql-standard.html" title="PostgreSQL 11 - D.2. Unsupported Features"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/unsupported-features-sql-standard.html" title="PostgreSQL 10 - D.2. Unsupported Features"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/unsupported-features-sql-standard.html" title="PostgreSQL 9.6 - D.2. Unsupported Features"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/unsupported-features-sql-standard.html" title="PostgreSQL 9.5 - D.2. Unsupported Features"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/unsupported-features-sql-standard.html" title="PostgreSQL 9.4 - D.2. Unsupported Features"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/unsupported-features-sql-standard.html" title="PostgreSQL 9.3 - D.2. Unsupported Features"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/unsupported-features-sql-standard.html" title="PostgreSQL 9.2 - D.2. Unsupported Features"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/unsupported-features-sql-standard.html" title="PostgreSQL 9.1 - D.2. Unsupported Features"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/unsupported-features-sql-standard.html" title="PostgreSQL 9.0 - D.2. Unsupported Features"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/unsupported-features-sql-standard.html" title="PostgreSQL 8.4 - D.2. Unsupported Features"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/unsupported-features-sql-standard.html" title="PostgreSQL 8.3 - D.2. Unsupported Features"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/unsupported-features-sql-standard.html" title="PostgreSQL 8.2 - D.2. Unsupported Features"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/unsupported-features-sql-standard.html" title="PostgreSQL 8.1 - D.2. Unsupported Features"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/unsupported-features-sql-standard.html" title="PostgreSQL 8.0 - D.2. Unsupported Features"  rel="nofollow">8.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">D.2.&nbsp;Unsupported Features</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="features-sql-standard.html" title="D.1.&nbsp;Supported Features">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="features.html" title="Appendix&nbsp;D.&nbsp;SQL Conformance">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;D.&nbsp;SQL Conformance</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="xml-limits-conformance.html" title="D.3.&nbsp;XML Limits and Conformance to SQL/XML">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="UNSUPPORTED-FEATURES-SQL-STANDARD">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">D.2.&nbsp;Unsupported Features</h2>
+      </div>
+    </div>
+  </div>
+  <p>The following features defined in <acronym class="acronym">SQL:2016</acronym> are not implemented in this release of <span class="productname">PostgreSQL</span>. In a few cases, equivalent functionality is available.</p>
+  <div class="informaltable">
+    <table class="informaltable" border="1">
+      <colgroup>
+        <col class="col1" />
+        <col class="col2" />
+        <col class="col3" />
+        <col class="col4" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Identifier</th>
+          <th>Core?</th>
+          <th>Description</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>B011</td>
+          <td>&nbsp;</td>
+          <td>Embedded Ada</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B013</td>
+          <td>&nbsp;</td>
+          <td>Embedded COBOL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B014</td>
+          <td>&nbsp;</td>
+          <td>Embedded Fortran</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B015</td>
+          <td>&nbsp;</td>
+          <td>Embedded MUMPS</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B016</td>
+          <td>&nbsp;</td>
+          <td>Embedded Pascal</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B017</td>
+          <td>&nbsp;</td>
+          <td>Embedded PL/I</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B031</td>
+          <td>&nbsp;</td>
+          <td>Basic dynamic SQL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B032</td>
+          <td>&nbsp;</td>
+          <td>Extended dynamic SQL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B032-01</td>
+          <td>&nbsp;</td>
+          <td>&lt;describe input statement&gt;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B033</td>
+          <td>&nbsp;</td>
+          <td>Untyped SQL-invoked function arguments</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B034</td>
+          <td>&nbsp;</td>
+          <td>Dynamic specification of cursor attributes</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B035</td>
+          <td>&nbsp;</td>
+          <td>Non-extended descriptor names</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B041</td>
+          <td>&nbsp;</td>
+          <td>Extensions to embedded SQL exception declarations</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B051</td>
+          <td>&nbsp;</td>
+          <td>Enhanced execution rights</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B111</td>
+          <td>&nbsp;</td>
+          <td>Module language Ada</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B112</td>
+          <td>&nbsp;</td>
+          <td>Module language C</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B113</td>
+          <td>&nbsp;</td>
+          <td>Module language COBOL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B114</td>
+          <td>&nbsp;</td>
+          <td>Module language Fortran</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B115</td>
+          <td>&nbsp;</td>
+          <td>Module language MUMPS</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B116</td>
+          <td>&nbsp;</td>
+          <td>Module language Pascal</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B117</td>
+          <td>&nbsp;</td>
+          <td>Module language PL/I</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B121</td>
+          <td>&nbsp;</td>
+          <td>Routine language Ada</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B122</td>
+          <td>&nbsp;</td>
+          <td>Routine language C</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B123</td>
+          <td>&nbsp;</td>
+          <td>Routine language COBOL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B124</td>
+          <td>&nbsp;</td>
+          <td>Routine language Fortran</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B125</td>
+          <td>&nbsp;</td>
+          <td>Routine language MUMPS</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B126</td>
+          <td>&nbsp;</td>
+          <td>Routine language Pascal</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B127</td>
+          <td>&nbsp;</td>
+          <td>Routine language PL/I</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B128</td>
+          <td>&nbsp;</td>
+          <td>Routine language SQL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B200</td>
+          <td>&nbsp;</td>
+          <td>Polymorphic table functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B201</td>
+          <td>&nbsp;</td>
+          <td>More than one PTF generic table parameter</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B202</td>
+          <td>&nbsp;</td>
+          <td>PTF Copartitioning</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B203</td>
+          <td>&nbsp;</td>
+          <td>More than one copartition specification</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B204</td>
+          <td>&nbsp;</td>
+          <td>PRUNE WHEN EMPTY</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B205</td>
+          <td>&nbsp;</td>
+          <td>Pass-through columns</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B206</td>
+          <td>&nbsp;</td>
+          <td>PTF descriptor parameters</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B207</td>
+          <td>&nbsp;</td>
+          <td>Cross products of partitionings</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B208</td>
+          <td>&nbsp;</td>
+          <td>PTF component procedure interface</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B209</td>
+          <td>&nbsp;</td>
+          <td>PTF extended names</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B211</td>
+          <td>&nbsp;</td>
+          <td>Module language Ada: VARCHAR and NUMERIC support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>B221</td>
+          <td>&nbsp;</td>
+          <td>Routine language Ada: VARCHAR and NUMERIC support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F054</td>
+          <td>&nbsp;</td>
+          <td>TIMESTAMP in DATE type precedence list</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F121</td>
+          <td>&nbsp;</td>
+          <td>Basic diagnostics management</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F121-01</td>
+          <td>&nbsp;</td>
+          <td>GET DIAGNOSTICS statement</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F121-02</td>
+          <td>&nbsp;</td>
+          <td>SET TRANSACTION statement: DIAGNOSTICS SIZE clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F122</td>
+          <td>&nbsp;</td>
+          <td>Enhanced diagnostics management</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F123</td>
+          <td>&nbsp;</td>
+          <td>All diagnostics</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F263</td>
+          <td>&nbsp;</td>
+          <td>Comma-separated predicates in simple CASE expression</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F291</td>
+          <td>&nbsp;</td>
+          <td>UNIQUE predicate</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F301</td>
+          <td>&nbsp;</td>
+          <td>CORRESPONDING in query expressions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F312</td>
+          <td>&nbsp;</td>
+          <td>MERGE statement</td>
+          <td>consider INSERT ... ON CONFLICT DO UPDATE</td>
+        </tr>
+        <tr>
+          <td>F313</td>
+          <td>&nbsp;</td>
+          <td>Enhanced MERGE statement</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F314</td>
+          <td>&nbsp;</td>
+          <td>MERGE statement with DELETE branch</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F341</td>
+          <td>&nbsp;</td>
+          <td>Usage tables</td>
+          <td>no ROUTINE_*_USAGE tables</td>
+        </tr>
+        <tr>
+          <td>F403</td>
+          <td>&nbsp;</td>
+          <td>Partitioned joined tables</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F404</td>
+          <td>&nbsp;</td>
+          <td>Range variable for common column names</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F451</td>
+          <td>&nbsp;</td>
+          <td>Character set definition</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F461</td>
+          <td>&nbsp;</td>
+          <td>Named character sets</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F492</td>
+          <td>&nbsp;</td>
+          <td>Optional table constraint enforcement</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F521</td>
+          <td>&nbsp;</td>
+          <td>Assertions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F671</td>
+          <td>&nbsp;</td>
+          <td>Subqueries in CHECK</td>
+          <td>intentionally omitted</td>
+        </tr>
+        <tr>
+          <td>F673</td>
+          <td>&nbsp;</td>
+          <td>Reads SQL-data routine invocations in CHECK constraints</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F693</td>
+          <td>&nbsp;</td>
+          <td>SQL-session and client module collations</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F695</td>
+          <td>&nbsp;</td>
+          <td>Translation support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F696</td>
+          <td>&nbsp;</td>
+          <td>Additional translation documentation</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F721</td>
+          <td>&nbsp;</td>
+          <td>Deferrable constraints</td>
+          <td>foreign and unique keys only</td>
+        </tr>
+        <tr>
+          <td>F741</td>
+          <td>&nbsp;</td>
+          <td>Referential MATCH types</td>
+          <td>no partial match yet</td>
+        </tr>
+        <tr>
+          <td>F812</td>
+          <td>Core</td>
+          <td>Basic flagging</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F813</td>
+          <td>&nbsp;</td>
+          <td>Extended flagging</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F821</td>
+          <td>&nbsp;</td>
+          <td>Local table references</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F831</td>
+          <td>&nbsp;</td>
+          <td>Full cursor update</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F831-01</td>
+          <td>&nbsp;</td>
+          <td>Updatable scrollable cursors</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F831-02</td>
+          <td>&nbsp;</td>
+          <td>Updatable ordered cursors</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F841</td>
+          <td>&nbsp;</td>
+          <td>LIKE_REGEX predicate</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F842</td>
+          <td>&nbsp;</td>
+          <td>OCCURRENCES_REGEX function</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F843</td>
+          <td>&nbsp;</td>
+          <td>POSITION_REGEX function</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F844</td>
+          <td>&nbsp;</td>
+          <td>SUBSTRING_REGEX function</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F845</td>
+          <td>&nbsp;</td>
+          <td>TRANSLATE_REGEX function</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F846</td>
+          <td>&nbsp;</td>
+          <td>Octet support in regular expression operators</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F847</td>
+          <td>&nbsp;</td>
+          <td>Nonconstant regular expressions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>F866</td>
+          <td>&nbsp;</td>
+          <td>FETCH FIRST clause: PERCENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>R010</td>
+          <td>&nbsp;</td>
+          <td>Row pattern recognition: FROM clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>R020</td>
+          <td>&nbsp;</td>
+          <td>Row pattern recognition: WINDOW clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>R030</td>
+          <td>&nbsp;</td>
+          <td>Row pattern recognition: full aggregate support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S011</td>
+          <td>Core</td>
+          <td>Distinct data types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S011-01</td>
+          <td>Core</td>
+          <td>USER_DEFINED_TYPES view</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S023</td>
+          <td>&nbsp;</td>
+          <td>Basic structured types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S024</td>
+          <td>&nbsp;</td>
+          <td>Enhanced structured types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S025</td>
+          <td>&nbsp;</td>
+          <td>Final structured types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S026</td>
+          <td>&nbsp;</td>
+          <td>Self-referencing structured types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S027</td>
+          <td>&nbsp;</td>
+          <td>Create method by specific method name</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S028</td>
+          <td>&nbsp;</td>
+          <td>Permutable UDT options list</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S041</td>
+          <td>&nbsp;</td>
+          <td>Basic reference types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S043</td>
+          <td>&nbsp;</td>
+          <td>Enhanced reference types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S051</td>
+          <td>&nbsp;</td>
+          <td>Create table of type</td>
+          <td>partially supported</td>
+        </tr>
+        <tr>
+          <td>S081</td>
+          <td>&nbsp;</td>
+          <td>Subtables</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S091</td>
+          <td>&nbsp;</td>
+          <td>Basic array support</td>
+          <td>partially supported</td>
+        </tr>
+        <tr>
+          <td>S091-01</td>
+          <td>&nbsp;</td>
+          <td>Arrays of built-in data types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S091-02</td>
+          <td>&nbsp;</td>
+          <td>Arrays of distinct types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S091-03</td>
+          <td>&nbsp;</td>
+          <td>Array expressions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S094</td>
+          <td>&nbsp;</td>
+          <td>Arrays of reference types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S097</td>
+          <td>&nbsp;</td>
+          <td>Array element assignment</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S151</td>
+          <td>&nbsp;</td>
+          <td>Type predicate</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S161</td>
+          <td>&nbsp;</td>
+          <td>Subtype treatment</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S162</td>
+          <td>&nbsp;</td>
+          <td>Subtype treatment for references</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S202</td>
+          <td>&nbsp;</td>
+          <td>SQL-invoked routines on multisets</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S231</td>
+          <td>&nbsp;</td>
+          <td>Structured type locators</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S232</td>
+          <td>&nbsp;</td>
+          <td>Array locators</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S233</td>
+          <td>&nbsp;</td>
+          <td>Multiset locators</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S241</td>
+          <td>&nbsp;</td>
+          <td>Transform functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S242</td>
+          <td>&nbsp;</td>
+          <td>Alter transform statement</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S251</td>
+          <td>&nbsp;</td>
+          <td>User-defined orderings</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S261</td>
+          <td>&nbsp;</td>
+          <td>Specific type method</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S271</td>
+          <td>&nbsp;</td>
+          <td>Basic multiset support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S272</td>
+          <td>&nbsp;</td>
+          <td>Multisets of user-defined types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S274</td>
+          <td>&nbsp;</td>
+          <td>Multisets of reference types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S275</td>
+          <td>&nbsp;</td>
+          <td>Advanced multiset support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S281</td>
+          <td>&nbsp;</td>
+          <td>Nested collection types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S291</td>
+          <td>&nbsp;</td>
+          <td>Unique constraint on entire row</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S401</td>
+          <td>&nbsp;</td>
+          <td>Distinct types based on array types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S402</td>
+          <td>&nbsp;</td>
+          <td>Distinct types based on distinct types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S403</td>
+          <td>&nbsp;</td>
+          <td>ARRAY_MAX_CARDINALITY</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>S404</td>
+          <td>&nbsp;</td>
+          <td>TRIM_ARRAY</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T011</td>
+          <td>&nbsp;</td>
+          <td>Timestamp in Information Schema</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T021</td>
+          <td>&nbsp;</td>
+          <td>BINARY and VARBINARY data types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T022</td>
+          <td>&nbsp;</td>
+          <td>Advanced support for BINARY and VARBINARY data types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T023</td>
+          <td>&nbsp;</td>
+          <td>Compound binary literal</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T024</td>
+          <td>&nbsp;</td>
+          <td>Spaces in binary literals</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T041</td>
+          <td>&nbsp;</td>
+          <td>Basic LOB data type support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T041-01</td>
+          <td>&nbsp;</td>
+          <td>BLOB data type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T041-02</td>
+          <td>&nbsp;</td>
+          <td>CLOB data type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T041-03</td>
+          <td>&nbsp;</td>
+          <td>POSITION, LENGTH, LOWER, TRIM, UPPER, and SUBSTRING functions for LOB data types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T041-04</td>
+          <td>&nbsp;</td>
+          <td>Concatenation of LOB data types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T041-05</td>
+          <td>&nbsp;</td>
+          <td>LOB locator: non-holdable</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T042</td>
+          <td>&nbsp;</td>
+          <td>Extended LOB data type support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T043</td>
+          <td>&nbsp;</td>
+          <td>Multiplier T</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T044</td>
+          <td>&nbsp;</td>
+          <td>Multiplier P</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T051</td>
+          <td>&nbsp;</td>
+          <td>Row types</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T053</td>
+          <td>&nbsp;</td>
+          <td>Explicit aliases for all-fields reference</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T061</td>
+          <td>&nbsp;</td>
+          <td>UCS support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T076</td>
+          <td>&nbsp;</td>
+          <td>DECFLOAT data type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T101</td>
+          <td>&nbsp;</td>
+          <td>Enhanced nullability determination</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T111</td>
+          <td>&nbsp;</td>
+          <td>Updatable joins, unions, and columns</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T175</td>
+          <td>&nbsp;</td>
+          <td>Generated columns</td>
+          <td>mostly supported</td>
+        </tr>
+        <tr>
+          <td>T176</td>
+          <td>&nbsp;</td>
+          <td>Sequence generator support</td>
+          <td>supported except for NEXT VALUE FOR</td>
+        </tr>
+        <tr>
+          <td>T180</td>
+          <td>&nbsp;</td>
+          <td>System-versioned tables</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T181</td>
+          <td>&nbsp;</td>
+          <td>Application-time period tables</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T211</td>
+          <td>&nbsp;</td>
+          <td>Basic trigger capability</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T211-06</td>
+          <td>&nbsp;</td>
+          <td>Support for run-time rules for the interaction of triggers and constraints</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T211-08</td>
+          <td>&nbsp;</td>
+          <td>Multiple triggers for the same event are executed in the order in which they were created in the catalog</td>
+          <td>intentionally omitted</td>
+        </tr>
+        <tr>
+          <td>T251</td>
+          <td>&nbsp;</td>
+          <td>SET TRANSACTION statement: LOCAL option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T272</td>
+          <td>&nbsp;</td>
+          <td>Enhanced savepoint management</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T301</td>
+          <td>&nbsp;</td>
+          <td>Functional dependencies</td>
+          <td>partially supported</td>
+        </tr>
+        <tr>
+          <td>T321</td>
+          <td>Core</td>
+          <td>Basic SQL-invoked routines</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T321-05</td>
+          <td>Core</td>
+          <td>RETURN statement</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T322</td>
+          <td>&nbsp;</td>
+          <td>Declared data type attributes</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T324</td>
+          <td>&nbsp;</td>
+          <td>Explicit security for SQL routines</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T326</td>
+          <td>&nbsp;</td>
+          <td>Table functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T332</td>
+          <td>&nbsp;</td>
+          <td>Extended roles</td>
+          <td>mostly supported</td>
+        </tr>
+        <tr>
+          <td>T434</td>
+          <td>&nbsp;</td>
+          <td>GROUP BY DISTINCT</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T471</td>
+          <td>&nbsp;</td>
+          <td>Result sets return value</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T472</td>
+          <td>&nbsp;</td>
+          <td>DESCRIBE CURSOR</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T495</td>
+          <td>&nbsp;</td>
+          <td>Combined data change and retrieval</td>
+          <td>different syntax</td>
+        </tr>
+        <tr>
+          <td>T502</td>
+          <td>&nbsp;</td>
+          <td>Period predicates</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T511</td>
+          <td>&nbsp;</td>
+          <td>Transaction counts</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T522</td>
+          <td>&nbsp;</td>
+          <td>Default values for IN parameters of SQL-invoked procedures</td>
+          <td>supported except DEFAULT key word in invocation</td>
+        </tr>
+        <tr>
+          <td>T561</td>
+          <td>&nbsp;</td>
+          <td>Holdable locators</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T571</td>
+          <td>&nbsp;</td>
+          <td>Array-returning external SQL-invoked functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T572</td>
+          <td>&nbsp;</td>
+          <td>Multiset-returning external SQL-invoked functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T601</td>
+          <td>&nbsp;</td>
+          <td>Local cursor references</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T616</td>
+          <td>&nbsp;</td>
+          <td>Null treatment option for LEAD and LAG functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T618</td>
+          <td>&nbsp;</td>
+          <td>NTH_VALUE function</td>
+          <td>function exists, but some options missing</td>
+        </tr>
+        <tr>
+          <td>T619</td>
+          <td>&nbsp;</td>
+          <td>Nested window functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T625</td>
+          <td>&nbsp;</td>
+          <td>LISTAGG</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T641</td>
+          <td>&nbsp;</td>
+          <td>Multiple column assignment</td>
+          <td>only some syntax variants supported</td>
+        </tr>
+        <tr>
+          <td>T652</td>
+          <td>&nbsp;</td>
+          <td>SQL-dynamic statements in SQL routines</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T654</td>
+          <td>&nbsp;</td>
+          <td>SQL-dynamic statements in external routines</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T811</td>
+          <td>&nbsp;</td>
+          <td>Basic SQL/JSON constructor functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T812</td>
+          <td>&nbsp;</td>
+          <td>SQL/JSON: JSON_OBJECTAGG</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T813</td>
+          <td>&nbsp;</td>
+          <td>SQL/JSON: JSON_ARRAYAGG with ORDER BY</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T814</td>
+          <td>&nbsp;</td>
+          <td>Colon in JSON_OBJECT or JSON_OBJECTAGG</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T821</td>
+          <td>&nbsp;</td>
+          <td>Basic SQL/JSON query operators</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T822</td>
+          <td>&nbsp;</td>
+          <td>SQL/JSON: IS JSON WITH UNIQUE KEYS predicate</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T823</td>
+          <td>&nbsp;</td>
+          <td>SQL/JSON: PASSING clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T824</td>
+          <td>&nbsp;</td>
+          <td>JSON_TABLE: specific PLAN clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T825</td>
+          <td>&nbsp;</td>
+          <td>SQL/JSON: ON EMPTY and ON ERROR clauses</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T826</td>
+          <td>&nbsp;</td>
+          <td>General value expression in ON ERROR or ON EMPTY clauses</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T827</td>
+          <td>&nbsp;</td>
+          <td>JSON_TABLE: sibling NESTED COLUMNS clauses</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T828</td>
+          <td>&nbsp;</td>
+          <td>JSON_QUERY</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T829</td>
+          <td>&nbsp;</td>
+          <td>JSON_QUERY: array wrapper options</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T830</td>
+          <td>&nbsp;</td>
+          <td>Enforcing unique keys in SQL/JSON constructor functions</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T838</td>
+          <td>&nbsp;</td>
+          <td>JSON_TABLE: PLAN DEFAULT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>T839</td>
+          <td>&nbsp;</td>
+          <td>Formatted cast of datetimes to/from character strings</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M001</td>
+          <td>&nbsp;</td>
+          <td>Datalinks</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M002</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via SQL/CLI</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M003</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via Embedded SQL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M004</td>
+          <td>&nbsp;</td>
+          <td>Foreign data support</td>
+          <td>partially supported</td>
+        </tr>
+        <tr>
+          <td>M005</td>
+          <td>&nbsp;</td>
+          <td>Foreign schema support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M006</td>
+          <td>&nbsp;</td>
+          <td>GetSQLString routine</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M007</td>
+          <td>&nbsp;</td>
+          <td>TransmitRequest</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M009</td>
+          <td>&nbsp;</td>
+          <td>GetOpts and GetStatistics routines</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M010</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper support</td>
+          <td>different API</td>
+        </tr>
+        <tr>
+          <td>M011</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via Ada</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M012</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via C</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M013</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via COBOL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M014</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via Fortran</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M015</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via M</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M016</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via Pascal</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M017</td>
+          <td>&nbsp;</td>
+          <td>Datalinks via PL/I</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M018</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper interface routines in Ada</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M019</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper interface routines in C</td>
+          <td>different API</td>
+        </tr>
+        <tr>
+          <td>M020</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper interface routines in COBOL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M021</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper interface routines in Fortran</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M022</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper interface routines in MUMPS</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M023</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper interface routines in Pascal</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M024</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper interface routines in PL/I</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M030</td>
+          <td>&nbsp;</td>
+          <td>SQL-server foreign data support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>M031</td>
+          <td>&nbsp;</td>
+          <td>Foreign data wrapper general routines</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X012</td>
+          <td>&nbsp;</td>
+          <td>Multisets of XML type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X013</td>
+          <td>&nbsp;</td>
+          <td>Distinct types of XML type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X015</td>
+          <td>&nbsp;</td>
+          <td>Fields of XML type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X025</td>
+          <td>&nbsp;</td>
+          <td>XMLCast</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X030</td>
+          <td>&nbsp;</td>
+          <td>XMLDocument</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X038</td>
+          <td>&nbsp;</td>
+          <td>XMLText</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X065</td>
+          <td>&nbsp;</td>
+          <td>XMLParse: BLOB input and CONTENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X066</td>
+          <td>&nbsp;</td>
+          <td>XMLParse: BLOB input and DOCUMENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X068</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: BOM</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X069</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: INDENT</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X073</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: BLOB serialization and CONTENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X074</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: BLOB serialization and DOCUMENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X075</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: BLOB serialization</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X076</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: VERSION</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X077</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: explicit ENCODING option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X078</td>
+          <td>&nbsp;</td>
+          <td>XMLSerialize: explicit XML declaration</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X080</td>
+          <td>&nbsp;</td>
+          <td>Namespaces in XML publishing</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X081</td>
+          <td>&nbsp;</td>
+          <td>Query-level XML namespace declarations</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X082</td>
+          <td>&nbsp;</td>
+          <td>XML namespace declarations in DML</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X083</td>
+          <td>&nbsp;</td>
+          <td>XML namespace declarations in DDL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X084</td>
+          <td>&nbsp;</td>
+          <td>XML namespace declarations in compound statements</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X085</td>
+          <td>&nbsp;</td>
+          <td>Predefined namespace prefixes</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X086</td>
+          <td>&nbsp;</td>
+          <td>XML namespace declarations in XMLTable</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X091</td>
+          <td>&nbsp;</td>
+          <td>XML content predicate</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X096</td>
+          <td>&nbsp;</td>
+          <td>XMLExists</td>
+          <td>XPath 1.0 only</td>
+        </tr>
+        <tr>
+          <td>X100</td>
+          <td>&nbsp;</td>
+          <td>Host language support for XML: CONTENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X101</td>
+          <td>&nbsp;</td>
+          <td>Host language support for XML: DOCUMENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X110</td>
+          <td>&nbsp;</td>
+          <td>Host language support for XML: VARCHAR mapping</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X111</td>
+          <td>&nbsp;</td>
+          <td>Host language support for XML: CLOB mapping</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X112</td>
+          <td>&nbsp;</td>
+          <td>Host language support for XML: BLOB mapping</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X113</td>
+          <td>&nbsp;</td>
+          <td>Host language support for XML: STRIP WHITESPACE option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X114</td>
+          <td>&nbsp;</td>
+          <td>Host language support for XML: PRESERVE WHITESPACE option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X131</td>
+          <td>&nbsp;</td>
+          <td>Query-level XMLBINARY clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X132</td>
+          <td>&nbsp;</td>
+          <td>XMLBINARY clause in DML</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X133</td>
+          <td>&nbsp;</td>
+          <td>XMLBINARY clause in DDL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X134</td>
+          <td>&nbsp;</td>
+          <td>XMLBINARY clause in compound statements</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X135</td>
+          <td>&nbsp;</td>
+          <td>XMLBINARY clause in subqueries</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X141</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate: data-driven case</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X142</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate: ACCORDING TO clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X143</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate: ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X144</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate: schema location</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X145</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate outside check constraints</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X151</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate with DOCUMENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X152</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate with CONTENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X153</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate with SEQUENCE option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X155</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate: NAMESPACE without ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X157</td>
+          <td>&nbsp;</td>
+          <td>IS VALID predicate: NO NAMESPACE with ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X160</td>
+          <td>&nbsp;</td>
+          <td>Basic Information Schema for registered XML Schemas</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X161</td>
+          <td>&nbsp;</td>
+          <td>Advanced Information Schema for registered XML Schemas</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X170</td>
+          <td>&nbsp;</td>
+          <td>XML null handling options</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X171</td>
+          <td>&nbsp;</td>
+          <td>NIL ON NO CONTENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X181</td>
+          <td>&nbsp;</td>
+          <td>XML(DOCUMENT(UNTYPED)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X182</td>
+          <td>&nbsp;</td>
+          <td>XML(DOCUMENT(ANY)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X190</td>
+          <td>&nbsp;</td>
+          <td>XML(SEQUENCE) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X191</td>
+          <td>&nbsp;</td>
+          <td>XML(DOCUMENT(XMLSCHEMA)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X192</td>
+          <td>&nbsp;</td>
+          <td>XML(CONTENT(XMLSCHEMA)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X200</td>
+          <td>&nbsp;</td>
+          <td>XMLQuery</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X201</td>
+          <td>&nbsp;</td>
+          <td>XMLQuery: RETURNING CONTENT</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X202</td>
+          <td>&nbsp;</td>
+          <td>XMLQuery: RETURNING SEQUENCE</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X203</td>
+          <td>&nbsp;</td>
+          <td>XMLQuery: passing a context item</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X204</td>
+          <td>&nbsp;</td>
+          <td>XMLQuery: initializing an XQuery variable</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X205</td>
+          <td>&nbsp;</td>
+          <td>XMLQuery: EMPTY ON EMPTY option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X206</td>
+          <td>&nbsp;</td>
+          <td>XMLQuery: NULL ON EMPTY option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X211</td>
+          <td>&nbsp;</td>
+          <td>XML 1.1 support</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X222</td>
+          <td>&nbsp;</td>
+          <td>XML passing mechanism BY REF</td>
+          <td>parser accepts BY REF but ignores it; passing is always BY VALUE</td>
+        </tr>
+        <tr>
+          <td>X231</td>
+          <td>&nbsp;</td>
+          <td>XML(CONTENT(UNTYPED)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X232</td>
+          <td>&nbsp;</td>
+          <td>XML(CONTENT(ANY)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X241</td>
+          <td>&nbsp;</td>
+          <td>RETURNING CONTENT in XML publishing</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X242</td>
+          <td>&nbsp;</td>
+          <td>RETURNING SEQUENCE in XML publishing</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X251</td>
+          <td>&nbsp;</td>
+          <td>Persistent XML values of XML(DOCUMENT(UNTYPED)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X252</td>
+          <td>&nbsp;</td>
+          <td>Persistent XML values of XML(DOCUMENT(ANY)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X253</td>
+          <td>&nbsp;</td>
+          <td>Persistent XML values of XML(CONTENT(UNTYPED)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X254</td>
+          <td>&nbsp;</td>
+          <td>Persistent XML values of XML(CONTENT(ANY)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X255</td>
+          <td>&nbsp;</td>
+          <td>Persistent XML values of XML(SEQUENCE) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X256</td>
+          <td>&nbsp;</td>
+          <td>Persistent XML values of XML(DOCUMENT(XMLSCHEMA)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X257</td>
+          <td>&nbsp;</td>
+          <td>Persistent XML values of XML(CONTENT(XMLSCHEMA)) type</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X260</td>
+          <td>&nbsp;</td>
+          <td>XML type: ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X261</td>
+          <td>&nbsp;</td>
+          <td>XML type: NAMESPACE without ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X263</td>
+          <td>&nbsp;</td>
+          <td>XML type: NO NAMESPACE with ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X264</td>
+          <td>&nbsp;</td>
+          <td>XML type: schema location</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X271</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate: data-driven case</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X272</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate: ACCORDING TO clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X273</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate: ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X274</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate: schema location</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X281</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate with DOCUMENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X282</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate with CONTENT option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X283</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate with SEQUENCE option</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X284</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate: NAMESPACE without ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X286</td>
+          <td>&nbsp;</td>
+          <td>XMLValidate: NO NAMESPACE with ELEMENT clause</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>X300</td>
+          <td>&nbsp;</td>
+          <td>XMLTable</td>
+          <td>XPath 1.0 only</td>
+        </tr>
+        <tr>
+          <td>X305</td>
+          <td>&nbsp;</td>
+          <td>XMLTable: initializing an XQuery variable</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="features-sql-standard.html" title="D.1.&nbsp;Supported Features">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="features.html" title="Appendix&nbsp;D.&nbsp;SQL Conformance">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="xml-limits-conformance.html" title="D.3.&nbsp;XML Limits and Conformance to SQL/XML">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">D.1.&nbsp;Supported Features&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;D.3.&nbsp;XML Limits and Conformance to SQL/XML</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/unsupported-features-sql-standard.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

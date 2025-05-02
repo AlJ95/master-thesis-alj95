@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="How to deploy static files | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/howto/static-files/deployment/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>How to deploy static files | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-how-to-deploy-static-files">
+<span id="how-to-deploy-static-files"></span><h1>How to deploy static files<a class="headerlink" href="#how-to-deploy-static-files" title="Permalink to this headline">¶</a></h1>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">For an introduction to the use of <a class="reference internal" href="../../../ref/contrib/staticfiles/#module-django.contrib.staticfiles" title="django.contrib.staticfiles: An app for handling static files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.staticfiles</span></code></a>, see
+<a class="reference internal" href="../"><span class="doc">How to manage static files (e.g. images, JavaScript, CSS)</span></a>.</p>
+</div>
+<div class="section" id="s-serving-static-files-in-production">
+<span id="s-staticfiles-production"></span><span id="serving-static-files-in-production"></span><span id="staticfiles-production"></span><h2>Serving static files in production<a class="headerlink" href="#serving-static-files-in-production" title="Permalink to this headline">¶</a></h2>
+<p>The basic outline of putting static files into production consists of two
+steps: run the <a class="reference internal" href="../../../ref/contrib/staticfiles/#django-admin-collectstatic"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">collectstatic</span></code></a> command when static files change, then
+arrange for the collected static files directory (<a class="reference internal" href="../../../ref/settings/#std-setting-STATIC_ROOT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_ROOT</span></code></a>) to be
+moved to the static file server and served. Depending on
+<a class="reference internal" href="../../../ref/settings/#std-setting-STATICFILES_STORAGE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATICFILES_STORAGE</span></code></a>, files may need to be moved to a new location
+manually or the <a class="reference internal" href="../../../ref/contrib/staticfiles/#django.contrib.staticfiles.storage.StaticFilesStorage.post_process" title="django.contrib.staticfiles.storage.StaticFilesStorage.post_process"><code class="xref py py-func docutils literal notranslate"><span class="pre">post_process</span></code></a> method of
+the <code class="docutils literal notranslate"><span class="pre">Storage</span></code> class might take care of that.</p>
+<p>As with all deployment tasks, the devil’s in the details. Every production
+setup will be a bit different, so you’ll need to adapt the basic outline to fit
+your needs. Below are a few common patterns that might help.</p>
+<div class="section" id="s-serving-the-site-and-your-static-files-from-the-same-server">
+<span id="serving-the-site-and-your-static-files-from-the-same-server"></span><h3>Serving the site and your static files from the same server<a class="headerlink" href="#serving-the-site-and-your-static-files-from-the-same-server" title="Permalink to this headline">¶</a></h3>
+<p>If you want to serve your static files from the same server that’s already
+serving your site, the process may look something like:</p>
+<ul class="simple">
+<li>Push your code up to the deployment server.</li>
+<li>On the server, run <a class="reference internal" href="../../../ref/contrib/staticfiles/#django-admin-collectstatic"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">collectstatic</span></code></a> to copy all the static files
+into <a class="reference internal" href="../../../ref/settings/#std-setting-STATIC_ROOT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_ROOT</span></code></a>.</li>
+<li>Configure your web server to serve the files in <a class="reference internal" href="../../../ref/settings/#std-setting-STATIC_ROOT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_ROOT</span></code></a>
+under the URL <a class="reference internal" href="../../../ref/settings/#std-setting-STATIC_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_URL</span></code></a>. For example, here’s
+<a class="reference internal" href="../../deployment/wsgi/modwsgi/#serving-files"><span class="std std-ref">how to do this with Apache and mod_wsgi</span></a>.</li>
+</ul>
+<p>You’ll probably want to automate this process, especially if you’ve got
+multiple web servers.</p>
+</div>
+<div class="section" id="s-serving-static-files-from-a-dedicated-server">
+<span id="serving-static-files-from-a-dedicated-server"></span><h3>Serving static files from a dedicated server<a class="headerlink" href="#serving-static-files-from-a-dedicated-server" title="Permalink to this headline">¶</a></h3>
+<p>Most larger Django sites use a separate web server – i.e., one that’s not also
+running Django – for serving static files. This server often runs a different
+type of web server – faster but less full-featured. Some common choices are:</p>
+<ul class="simple">
+
+<li>A stripped-down version of <a class="reference external" href="https://httpd.apache.org/">Apache</a></li>
+</ul>
+<p>Configuring these servers is out of scope of this document; check each
+server’s respective documentation for instructions.</p>
+<p>Since your static file server won’t be running Django, you’ll need to modify
+the deployment strategy to look something like:</p>
+<ul class="simple">
+<li>When your static files change, run <a class="reference internal" href="../../../ref/contrib/staticfiles/#django-admin-collectstatic"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">collectstatic</span></code></a> locally.</li>
+<li>Push your local <a class="reference internal" href="../../../ref/settings/#std-setting-STATIC_ROOT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_ROOT</span></code></a> up to the static file server into the
+directory that’s being served. <a class="reference external" href="https://rsync.samba.org/">rsync</a> is a
+common choice for this step since it only needs to transfer the bits of
+static files that have changed.</li>
+</ul>
+</div>
+<div class="section" id="s-serving-static-files-from-a-cloud-service-or-cdn">
+<span id="s-staticfiles-from-cdn"></span><span id="serving-static-files-from-a-cloud-service-or-cdn"></span><span id="staticfiles-from-cdn"></span><h3>Serving static files from a cloud service or CDN<a class="headerlink" href="#serving-static-files-from-a-cloud-service-or-cdn" title="Permalink to this headline">¶</a></h3>
+<p>Another common tactic is to serve static files from a cloud storage provider
+like Amazon’s S3 and/or a CDN (content delivery network). This lets you
+ignore the problems of serving static files and can often make for
+faster-loading web pages (especially when using a CDN).</p>
+<p>When using these services, the basic workflow would look a bit like the above,
+except that instead of using <code class="docutils literal notranslate"><span class="pre">rsync</span></code> to transfer your static files to the
+server you’d need to transfer the static files to the storage provider or CDN.</p>
+<p>There’s any number of ways you might do this, but if the provider has an API,
+you can use a <a class="reference internal" href="../../custom-file-storage/"><span class="doc">custom file storage backend</span></a>
+to integrate the CDN with your Django project. If you’ve written or are using a
+3rd party custom storage backend, you can tell <a class="reference internal" href="../../../ref/contrib/staticfiles/#django-admin-collectstatic"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">collectstatic</span></code></a> to use
+it by setting <a class="reference internal" href="../../../ref/settings/#std-setting-STATICFILES_STORAGE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATICFILES_STORAGE</span></code></a> to the storage engine.</p>
+<p>For example, if you’ve written an S3 storage backend in
+<code class="docutils literal notranslate"><span class="pre">myproject.storage.S3Storage</span></code> you could use it with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">STATICFILES_STORAGE</span> <span class="o">=</span> <span class="s1">&#39;myproject.storage.S3Storage&#39;</span>
+</pre></div>
+</div>
+<p>Once that’s done, all you have to do is run <a class="reference internal" href="../../../ref/contrib/staticfiles/#django-admin-collectstatic"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">collectstatic</span></code></a> and your
+static files would be pushed through your storage package up to S3. If you
+later needed to switch to a different storage provider, you may only have to
+change your <a class="reference internal" href="../../../ref/settings/#std-setting-STATICFILES_STORAGE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATICFILES_STORAGE</span></code></a> setting.</p>
+<p>For details on how you’d write one of these backends, see
+<a class="reference internal" href="../../custom-file-storage/"><span class="doc">How to write a custom storage class</span></a>. There are 3rd party apps available that
+provide storage backends for many common file storage APIs. A good starting
+point is the <a class="reference external" href="https://djangopackages.org/grids/g/storage-backends/">overview at djangopackages.org</a>.</p>
+</div>
+</div>
+<div class="section" id="s-learn-more">
+<span id="learn-more"></span><h2>Learn more<a class="headerlink" href="#learn-more" title="Permalink to this headline">¶</a></h2>
+<p>For complete details on all the settings, commands, template tags, and other
+pieces included in <a class="reference internal" href="../../../ref/contrib/staticfiles/#module-django.contrib.staticfiles" title="django.contrib.staticfiles: An app for handling static files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.staticfiles</span></code></a>, see <a class="reference internal" href="../../../ref/contrib/staticfiles/"><span class="doc">the
+staticfiles reference</span></a>.</p>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

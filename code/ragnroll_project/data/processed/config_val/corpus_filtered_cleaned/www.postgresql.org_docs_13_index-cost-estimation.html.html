@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 61.6. Index Cost Estimation Functions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/index-cost-estimation.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="61.6. Index Cost Estimation Functions" />
+  <meta property="og:description" content="61.6.&amp;nbsp;Index Cost Estimation Functions The amcostestimate function is given information describing a possible index scan, including lists of WHERE and …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/index-cost-estimation.html" title="PostgreSQL 17 - 61.6. Index Cost Estimation Functions" >Current</a>
+                          (<a href="/docs/17/index-cost-estimation.html" title="PostgreSQL 17 - 61.6. Index Cost Estimation Functions" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/index-cost-estimation.html" title="PostgreSQL 16 - 61.6. Index Cost Estimation Functions" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/index-cost-estimation.html" title="PostgreSQL 15 - 61.6. Index Cost Estimation Functions" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/index-cost-estimation.html" title="PostgreSQL 14 - 61.6. Index Cost Estimation Functions" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/index-cost-estimation.html" title="PostgreSQL 13 - 61.6. Index Cost Estimation Functions" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/index-cost-estimation.html" title="PostgreSQL devel - 61.6. Index Cost Estimation Functions"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/index-cost-estimation.html" title="PostgreSQL 12 - 61.6. Index Cost Estimation Functions"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/index-cost-estimation.html" title="PostgreSQL 11 - 61.6. Index Cost Estimation Functions"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/index-cost-estimation.html" title="PostgreSQL 10 - 61.6. Index Cost Estimation Functions"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/index-cost-estimation.html" title="PostgreSQL 9.6 - 61.6. Index Cost Estimation Functions"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/index-cost-estimation.html" title="PostgreSQL 9.5 - 61.6. Index Cost Estimation Functions"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/index-cost-estimation.html" title="PostgreSQL 9.4 - 61.6. Index Cost Estimation Functions"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/index-cost-estimation.html" title="PostgreSQL 9.3 - 61.6. Index Cost Estimation Functions"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/index-cost-estimation.html" title="PostgreSQL 9.2 - 61.6. Index Cost Estimation Functions"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/index-cost-estimation.html" title="PostgreSQL 9.1 - 61.6. Index Cost Estimation Functions"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/index-cost-estimation.html" title="PostgreSQL 9.0 - 61.6. Index Cost Estimation Functions"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/index-cost-estimation.html" title="PostgreSQL 8.4 - 61.6. Index Cost Estimation Functions"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/index-cost-estimation.html" title="PostgreSQL 8.3 - 61.6. Index Cost Estimation Functions"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/index-cost-estimation.html" title="PostgreSQL 8.2 - 61.6. Index Cost Estimation Functions"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/index-cost-estimation.html" title="PostgreSQL 8.1 - 61.6. Index Cost Estimation Functions"  rel="nofollow">8.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">61.6.&nbsp;Index Cost Estimation Functions</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="index-unique-checks.html" title="61.5.&nbsp;Index Uniqueness Checks">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="indexam.html" title="Chapter&nbsp;61.&nbsp;Index Access Method Interface Definition">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;61.&nbsp;Index Access Method Interface Definition</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="generic-wal.html" title="Chapter&nbsp;62.&nbsp;Generic WAL Records">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="INDEX-COST-ESTIMATION">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">61.6.&nbsp;Index Cost Estimation Functions</h2>
+      </div>
+    </div>
+  </div>
+  <p>The <code class="function">amcostestimate</code> function is given information describing a possible index scan, including lists of WHERE and ORDER BY clauses that have been determined to be usable with the index. It must return estimates of the cost of accessing the index and the selectivity of the WHERE clauses (that is, the fraction of parent-table rows that will be retrieved during the index scan). For simple cases, nearly all the work of the cost estimator can be done by calling standard routines in the optimizer; the point of having an <code class="function">amcostestimate</code> function is to allow index access methods to provide index-type-specific knowledge, in case it is possible to improve on the standard estimates.</p>
+  <p>Each <code class="function">amcostestimate</code> function must have the signature:</p>
+  <pre class="programlisting">
+void
+amcostestimate (PlannerInfo *root,
+                IndexPath *path,
+                double loop_count,
+                Cost *indexStartupCost,
+                Cost *indexTotalCost,
+                Selectivity *indexSelectivity,
+                double *indexCorrelation,
+                double *indexPages);
+</pre>
+  <p>The first three parameters are inputs:</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt><span class="term"><em class="parameter"><code>root</code></em></span></dt>
+      <dd>
+        <p>The planner's information about the query being processed.</p>
+      </dd>
+      <dt><span class="term"><em class="parameter"><code>path</code></em></span></dt>
+      <dd>
+        <p>The index access path being considered. All fields except cost and selectivity values are valid.</p>
+      </dd>
+      <dt><span class="term"><em class="parameter"><code>loop_count</code></em></span></dt>
+      <dd>
+        <p>The number of repetitions of the index scan that should be factored into the cost estimates. This will typically be greater than one when considering a parameterized scan for use in the inside of a nestloop join. Note that the cost estimates should still be for just one scan; a larger <em class="parameter"><code>loop_count</code></em> means that it may be appropriate to allow for some caching effects across multiple scans.</p>
+      </dd>
+    </dl>
+  </div>
+  <p>The last five parameters are pass-by-reference outputs:</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt><span class="term"><em class="parameter"><code>*indexStartupCost</code></em></span></dt>
+      <dd>
+        <p>Set to cost of index start-up processing</p>
+      </dd>
+      <dt><span class="term"><em class="parameter"><code>*indexTotalCost</code></em></span></dt>
+      <dd>
+        <p>Set to total cost of index processing</p>
+      </dd>
+      <dt><span class="term"><em class="parameter"><code>*indexSelectivity</code></em></span></dt>
+      <dd>
+        <p>Set to index selectivity</p>
+      </dd>
+      <dt><span class="term"><em class="parameter"><code>*indexCorrelation</code></em></span></dt>
+      <dd>
+        <p>Set to correlation coefficient between index scan order and underlying table's order</p>
+      </dd>
+      <dt><span class="term"><em class="parameter"><code>*indexPages</code></em></span></dt>
+      <dd>
+        <p>Set to number of index leaf pages</p>
+      </dd>
+    </dl>
+  </div>
+  <p>Note that cost estimate functions must be written in C, not in SQL or any available procedural language, because they must access internal data structures of the planner/optimizer.</p>
+  <p>The index access costs should be computed using the parameters used by <code class="filename">src/backend/optimizer/path/costsize.c</code>: a sequential disk block fetch has cost <code class="varname">seq_page_cost</code>, a nonsequential fetch has cost <code class="varname">random_page_cost</code>, and the cost of processing one index row should usually be taken as <code class="varname">cpu_index_tuple_cost</code>. In addition, an appropriate multiple of <code class="varname">cpu_operator_cost</code> should be charged for any comparison operators invoked during index processing (especially evaluation of the indexquals themselves).</p>
+  <p>The access costs should include all disk and CPU costs associated with scanning the index itself, but <span class="emphasis"><em>not</em></span> the costs of retrieving or processing the parent-table rows that are identified by the index.</p>
+  <p>The <span class="quote">“<span class="quote">start-up cost</span>”</span> is the part of the total scan cost that must be expended before we can begin to fetch the first row. For most indexes this can be taken as zero, but an index type with a high start-up cost might want to set it nonzero.</p>
+  <p>The <em class="parameter"><code>indexSelectivity</code></em> should be set to the estimated fraction of the parent table rows that will be retrieved during the index scan. In the case of a lossy query, this will typically be higher than the fraction of rows that actually pass the given qual conditions.</p>
+  <p>The <em class="parameter"><code>indexCorrelation</code></em> should be set to the correlation (ranging between -1.0 and 1.0) between the index order and the table order. This is used to adjust the estimate for the cost of fetching rows from the parent table.</p>
+  <p>The <em class="parameter"><code>indexPages</code></em> should be set to the number of leaf pages. This is used to estimate the number of workers for parallel index scan.</p>
+  <p>When <em class="parameter"><code>loop_count</code></em> is greater than one, the returned numbers should be averages expected for any one scan of the index.</p>
+  <div class="procedure" id="id-1.10.14.12.13">
+    <p class="title"><strong>Cost Estimation</strong></p>
+    <p>A typical cost estimator will proceed as follows:</p>
+    <ol class="procedure" type="1">
+      <li class="step">
+        <p>Estimate and return the fraction of parent-table rows that will be visited based on the given qual conditions. In the absence of any index-type-specific knowledge, use the standard optimizer function <code class="function">clauselist_selectivity()</code>:</p>
+        <pre class="programlisting">
+*indexSelectivity = clauselist_selectivity(root, path-&gt;indexquals,
+                                           path-&gt;indexinfo-&gt;rel-&gt;relid,
+                                           JOIN_INNER, NULL);
+</pre>
+      </li>
+      <li class="step">
+        <p>Estimate the number of index rows that will be visited during the scan. For many index types this is the same as <em class="parameter"><code>indexSelectivity</code></em> times the number of rows in the index, but it might be more. (Note that the index's size in pages and rows is available from the <code class="literal">path-&gt;indexinfo</code> struct.)</p>
+      </li>
+      <li class="step">
+        <p>Estimate the number of index pages that will be retrieved during the scan. This might be just <em class="parameter"><code>indexSelectivity</code></em> times the index's size in pages.</p>
+      </li>
+      <li class="step">
+        <p>Compute the index access cost. A generic estimator might do this:</p>
+        <pre class="programlisting">
+/*
+ * Our generic assumption is that the index pages will be read
+ * sequentially, so they cost seq_page_cost each, not random_page_cost.
+ * Also, we charge for evaluation of the indexquals at each index row.
+ * All the costs are assumed to be paid incrementally during the scan.
+ */
+cost_qual_eval(&amp;index_qual_cost, path-&gt;indexquals, root);
+*indexStartupCost = index_qual_cost.startup;
+*indexTotalCost = seq_page_cost * numIndexPages +
+    (cpu_index_tuple_cost + index_qual_cost.per_tuple) * numIndexTuples;
+</pre>
+        <p>However, the above does not account for amortization of index reads across repeated index scans.</p>
+      </li>
+      <li class="step">
+        <p>Estimate the index correlation. For a simple ordered index on a single field, this can be retrieved from pg_statistic. If the correlation is not known, the conservative estimate is zero (no correlation).</p>
+      </li>
+    </ol>
+  </div>
+  <p>Examples of cost estimator functions can be found in <code class="filename">src/backend/utils/adt/selfuncs.c</code>.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="index-unique-checks.html" title="61.5.&nbsp;Index Uniqueness Checks">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="indexam.html" title="Chapter&nbsp;61.&nbsp;Index Access Method Interface Definition">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="generic-wal.html" title="Chapter&nbsp;62.&nbsp;Generic WAL Records">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">61.5.&nbsp;Index Uniqueness Checks&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;62.&nbsp;Generic WAL Records</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/index-cost-estimation.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

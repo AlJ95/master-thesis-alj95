@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: DROP FUNCTION</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-dropfunction.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="DROP FUNCTION" />
+  <meta property="og:description" content="DROP FUNCTION DROP FUNCTION — remove a function Synopsis DROP FUNCTION [ IF EXISTS ] name [ ( [ [ …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-dropfunction.html" title="PostgreSQL 17 - DROP FUNCTION" >Current</a>
+                          (<a href="/docs/17/sql-dropfunction.html" title="PostgreSQL 17 - DROP FUNCTION" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-dropfunction.html" title="PostgreSQL 16 - DROP FUNCTION" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-dropfunction.html" title="PostgreSQL 15 - DROP FUNCTION" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-dropfunction.html" title="PostgreSQL 14 - DROP FUNCTION" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-dropfunction.html" title="PostgreSQL 13 - DROP FUNCTION" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-dropfunction.html" title="PostgreSQL devel - DROP FUNCTION"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-dropfunction.html" title="PostgreSQL 12 - DROP FUNCTION"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-dropfunction.html" title="PostgreSQL 11 - DROP FUNCTION"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-dropfunction.html" title="PostgreSQL 10 - DROP FUNCTION"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-dropfunction.html" title="PostgreSQL 9.6 - DROP FUNCTION"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-dropfunction.html" title="PostgreSQL 9.5 - DROP FUNCTION"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-dropfunction.html" title="PostgreSQL 9.4 - DROP FUNCTION"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-dropfunction.html" title="PostgreSQL 9.3 - DROP FUNCTION"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-dropfunction.html" title="PostgreSQL 9.2 - DROP FUNCTION"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-dropfunction.html" title="PostgreSQL 9.1 - DROP FUNCTION"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-dropfunction.html" title="PostgreSQL 9.0 - DROP FUNCTION"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/sql-dropfunction.html" title="PostgreSQL 8.4 - DROP FUNCTION"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/sql-dropfunction.html" title="PostgreSQL 8.3 - DROP FUNCTION"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/sql-dropfunction.html" title="PostgreSQL 8.2 - DROP FUNCTION"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/sql-dropfunction.html" title="PostgreSQL 8.1 - DROP FUNCTION"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/sql-dropfunction.html" title="PostgreSQL 8.0 - DROP FUNCTION"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/sql-dropfunction.html" title="PostgreSQL 7.4 - DROP FUNCTION"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/sql-dropfunction.html" title="PostgreSQL 7.3 - DROP FUNCTION"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/sql-dropfunction.html" title="PostgreSQL 7.2 - DROP FUNCTION"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/sql-dropfunction.html" title="PostgreSQL 7.1 - DROP FUNCTION"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">DROP FUNCTION</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-dropforeigntable.html" title="DROP FOREIGN TABLE">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-dropgroup.html" title="DROP GROUP">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-DROPFUNCTION">
+  <div class="titlepage"></div><a id="id-1.9.3.114.1" class="indexterm" name="id-1.9.3.114.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">DROP FUNCTION</span></h2>
+    <p>DROP FUNCTION — remove a function</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+DROP FUNCTION [ IF EXISTS ] <em class="replaceable"><code>name</code></em> [ ( [ [ <em class="replaceable"><code>argmode</code></em> ] [ <em class="replaceable"><code>argname</code></em> ] <em class="replaceable"><code>argtype</code></em> [, ...] ] ) ] [, ...]
+    [ CASCADE | RESTRICT ]
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.114.5">
+    <h2>Description</h2>
+    <p><code class="command">DROP FUNCTION</code> removes the definition of an existing function. To execute this command the user must be the owner of the function. The argument types to the function must be specified, since several different functions can exist with the same name and different argument lists.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.114.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="literal">IF EXISTS</code></span></dt>
+        <dd>
+          <p>Do not throw an error if the function does not exist. A notice is issued in this case.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of an existing function. If no argument list is specified, the name must be unique in its schema.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>argmode</code></em></span></dt>
+        <dd>
+          <p>The mode of an argument: <code class="literal">IN</code>, <code class="literal">OUT</code>, <code class="literal">INOUT</code>, or <code class="literal">VARIADIC</code>. If omitted, the default is <code class="literal">IN</code>. Note that <code class="command">DROP FUNCTION</code> does not actually pay any attention to <code class="literal">OUT</code> arguments, since only the input arguments are needed to determine the function's identity. So it is sufficient to list the <code class="literal">IN</code>, <code class="literal">INOUT</code>, and <code class="literal">VARIADIC</code> arguments.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>argname</code></em></span></dt>
+        <dd>
+          <p>The name of an argument. Note that <code class="command">DROP FUNCTION</code> does not actually pay any attention to argument names, since only the argument data types are needed to determine the function's identity.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>argtype</code></em></span></dt>
+        <dd>
+          <p>The data type(s) of the function's arguments (optionally schema-qualified), if any.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">CASCADE</code></span></dt>
+        <dd>
+          <p>Automatically drop objects that depend on the function (such as operators or triggers), and in turn all objects that depend on those objects (see <a class="xref" href="ddl-depend.html" title="5.14.&nbsp;Dependency Tracking">Section&nbsp;5.14</a>).</p>
+        </dd>
+        <dt><span class="term"><code class="literal">RESTRICT</code></span></dt>
+        <dd>
+          <p>Refuse to drop the function if any objects depend on it. This is the default.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="SQL-DROPFUNCTION-EXAMPLES">
+    <h2>Examples</h2>
+    <p>This command removes the square root function:</p>
+    <pre class="programlisting">
+DROP FUNCTION sqrt(integer);
+</pre>
+    <p>Drop multiple functions in one command:</p>
+    <pre class="programlisting">
+DROP FUNCTION sqrt(integer), sqrt(bigint);
+</pre>
+    <p>If the function name is unique in its schema, it can be referred to without an argument list:</p>
+    <pre class="programlisting">
+DROP FUNCTION update_employee_salaries;
+</pre>
+    <p>Note that this is different from</p>
+    <pre class="programlisting">
+DROP FUNCTION update_employee_salaries();
+</pre>
+    <p>which refers to a function with zero arguments, whereas the first variant can refer to a function with any number of arguments, including zero, as long as the name is unique.</p>
+  </div>
+  <div class="refsect1" id="SQL-DROPFUNCTION-COMPATIBILITY">
+    <h2>Compatibility</h2>
+    <p>This command conforms to the SQL standard, with these <span class="productname">PostgreSQL</span> extensions:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>The standard only allows one function to be dropped per command.</p>
+        </li>
+        <li class="listitem">
+          <p>The <code class="literal">IF EXISTS</code> option</p>
+        </li>
+        <li class="listitem">
+          <p>The ability to specify argument modes and names</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.3.114.9">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-createfunction.html" title="CREATE FUNCTION"><span class="refentrytitle">CREATE FUNCTION</span></a>, <a class="xref" href="sql-alterfunction.html" title="ALTER FUNCTION"><span class="refentrytitle">ALTER FUNCTION</span></a>, <a class="xref" href="sql-dropprocedure.html" title="DROP PROCEDURE"><span class="refentrytitle">DROP PROCEDURE</span></a>, <a class="xref" href="sql-droproutine.html" title="DROP ROUTINE"><span class="refentrytitle">DROP ROUTINE</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-dropforeigntable.html" title="DROP FOREIGN TABLE">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-dropgroup.html" title="DROP GROUP">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">DROP FOREIGN TABLE&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;DROP GROUP</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-dropfunction.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

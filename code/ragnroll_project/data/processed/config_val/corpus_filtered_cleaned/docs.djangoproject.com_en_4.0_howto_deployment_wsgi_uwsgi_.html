@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="How to use Django with uWSGI | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/howto/deployment/wsgi/uwsgi/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>How to use Django with uWSGI | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-how-to-use-django-with-uwsgi">
+<span id="how-to-use-django-with-uwsgi"></span><h1>How to use Django with uWSGI<a class="headerlink" href="#how-to-use-django-with-uwsgi" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://uwsgi-docs.readthedocs.io/">uWSGI</a> is a fast, self-healing and developer/sysadmin-friendly application
+container server coded in pure C.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The uWSGI docs offer a <a class="reference external" href="https://uwsgi.readthedocs.io/en/latest/tutorials/Django_and_nginx.html">tutorial</a> covering Django, nginx, and uWSGI (one
+possible deployment setup of many). The docs below are focused on how to
+integrate Django with uWSGI.</p>
+</div>
+<div class="section" id="s-prerequisite-uwsgi">
+<span id="prerequisite-uwsgi"></span><h2>Prerequisite: uWSGI<a class="headerlink" href="#prerequisite-uwsgi" title="Permalink to this headline">¶</a></h2>
+<p>The uWSGI wiki describes several <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Install.html">installation procedures</a>. Using pip, the
+Python package manager, you can install any uWSGI version with a single
+command. For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Install current stable version.
+<span class="gp">$ </span>python -m pip install uwsgi
+
+<span class="gp"># </span>Or install LTS <span class="o">(</span>long term support<span class="o">)</span>.
+<span class="gp">$ </span>python -m pip install https://projects.unbit.it/downloads/uwsgi-lts.tar.gz
+</pre></div>
+</div>
+<div class="section" id="s-uwsgi-model">
+<span id="uwsgi-model"></span><h3>uWSGI model<a class="headerlink" href="#uwsgi-model" title="Permalink to this headline">¶</a></h3>
+<p>uWSGI operates on a client-server model. Your web server (e.g., nginx, Apache)
+communicates with a <code class="docutils literal notranslate"><span class="pre">django-uwsgi</span></code> “worker” process to serve dynamic content.</p>
+</div>
+<div class="section" id="s-configuring-and-starting-the-uwsgi-server-for-django">
+<span id="configuring-and-starting-the-uwsgi-server-for-django"></span><h3>Configuring and starting the uWSGI server for Django<a class="headerlink" href="#configuring-and-starting-the-uwsgi-server-for-django" title="Permalink to this headline">¶</a></h3>
+<p>uWSGI supports multiple ways to configure the process. See uWSGI’s
+<a class="reference external" href="https://uwsgi.readthedocs.io/en/latest/Configuration.html">configuration documentation</a>.</p>
+<p>Here’s an example command to start a uWSGI server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uwsgi --chdir<span class="o">=</span>/path/to/your/project <span class="se">\</span>
+    --module<span class="o">=</span>mysite.wsgi:application <span class="se">\</span>
+    --env <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>mysite.settings <span class="se">\</span>
+    --master --pidfile<span class="o">=</span>/tmp/project-master.pid <span class="se">\</span>
+    --socket<span class="o">=</span><span class="m">127</span>.0.0.1:49152 <span class="se">\ </span>     <span class="c1"># can also be a file</span>
+    --processes<span class="o">=</span><span class="m">5</span> <span class="se">\ </span>                <span class="c1"># number of worker processes</span>
+    --uid<span class="o">=</span><span class="m">1000</span> --gid<span class="o">=</span><span class="m">2000</span> <span class="se">\ </span>        <span class="c1"># if root, uwsgi can drop privileges</span>
+    --harakiri<span class="o">=</span><span class="m">20</span> <span class="se">\ </span>                <span class="c1"># respawn processes taking more than 20 seconds</span>
+    --max-requests<span class="o">=</span><span class="m">5000</span> <span class="se">\ </span>          <span class="c1"># respawn processes after serving 5000 requests</span>
+    --vacuum <span class="se">\ </span>                     <span class="c1"># clear environment on exit</span>
+    --home<span class="o">=</span>/path/to/virtual/env <span class="se">\ </span>  <span class="c1"># optional path to a virtual environment</span>
+    --daemonize<span class="o">=</span>/var/log/uwsgi/yourproject.log      <span class="c1"># background the process</span>
+</pre></div>
+</div>
+<p>This assumes you have a top-level project package named <code class="docutils literal notranslate"><span class="pre">mysite</span></code>, and
+within it a module <code class="file docutils literal notranslate"><span class="pre">mysite/wsgi.py</span></code> that contains a WSGI <code class="docutils literal notranslate"><span class="pre">application</span></code>
+object. This is the layout you’ll have if you ran <code class="docutils literal notranslate"><span class="pre">django-admin</span>
+<span class="pre">startproject</span> <span class="pre">mysite</span></code> (using your own project name in place of <code class="docutils literal notranslate"><span class="pre">mysite</span></code>) with
+a recent version of Django. If this file doesn’t exist, you’ll need to create
+it. See the <a class="reference internal" href="../"><span class="doc">How to deploy with WSGI</span></a> documentation for the default
+contents you should put in this file and what else you can add to it.</p>
+<p>The Django-specific options here are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">chdir</span></code>: The path to the directory that needs to be on Python’s import
+path – i.e., the directory containing the <code class="docutils literal notranslate"><span class="pre">mysite</span></code> package.</li>
+<li><code class="docutils literal notranslate"><span class="pre">module</span></code>: The WSGI module to use – probably the <code class="docutils literal notranslate"><span class="pre">mysite.wsgi</span></code> module
+that <a class="reference internal" href="../../../../ref/django-admin/#django-admin-startproject"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">startproject</span></code></a> creates.</li>
+<li><code class="docutils literal notranslate"><span class="pre">env</span></code>: Should probably contain at least <span class="target" id="index-0"></span><a class="reference internal" href="../../../../topics/settings/#envvar-DJANGO_SETTINGS_MODULE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">DJANGO_SETTINGS_MODULE</span></code></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">home</span></code>: Optional path to your project virtual environment.</li>
+</ul>
+<p>Example ini configuration file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
+<span class="nv">chdir</span><span class="o">=</span>/path/to/your/project
+<span class="nv">module</span><span class="o">=</span>mysite.wsgi:application
+<span class="nv">master</span><span class="o">=</span>True
+<span class="nv">pidfile</span><span class="o">=</span>/tmp/project-master.pid
+<span class="nv">vacuum</span><span class="o">=</span>True
+max-requests<span class="o">=</span><span class="m">5000</span>
+<span class="nv">daemonize</span><span class="o">=</span>/var/log/uwsgi/yourproject.log
+</pre></div>
+</div>
+<p>Example ini configuration file usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uwsgi --ini uwsgi.ini
+</pre></div>
+</div>
+<div class="admonition-fixing-unicodeencodeerror-for-file-uploads admonition">
+<p class="first admonition-title">Fixing <code class="docutils literal notranslate"><span class="pre">UnicodeEncodeError</span></code> for file uploads</p>
+<p>If you get a <code class="docutils literal notranslate"><span class="pre">UnicodeEncodeError</span></code> when uploading files with file names
+that contain non-ASCII characters, make sure uWSGI is configured to accept
+non-ASCII file names by adding this to your <code class="docutils literal notranslate"><span class="pre">uwsgi.ini</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">env</span> <span class="o">=</span> <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+</pre></div>
+</div>
+<p class="last">See the <a class="reference internal" href="../../../../ref/unicode/#unicode-files"><span class="std std-ref">Files</span></a> section of the Unicode reference guide for
+details.</p>
+</div>
+<p>See the uWSGI docs on <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Management.html">managing the uWSGI process</a> for information on
+starting, stopping and reloading the uWSGI workers.</p>
+</div>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

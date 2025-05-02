@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 7.5. Sorting Rows</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/queries-order.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="7.5. Sorting Rows" />
+  <meta property="og:description" content="7.5.&amp;nbsp;Sorting Rows After a query has produced an output table (after the select list has been processed) it can optionally …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/queries-order.html" title="PostgreSQL 17 - 7.5. Sorting Rows" >Current</a>
+                          (<a href="/docs/17/queries-order.html" title="PostgreSQL 17 - 7.5. Sorting Rows" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/queries-order.html" title="PostgreSQL 16 - 7.5. Sorting Rows" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/queries-order.html" title="PostgreSQL 15 - 7.5. Sorting Rows" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/queries-order.html" title="PostgreSQL 14 - 7.5. Sorting Rows" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/queries-order.html" title="PostgreSQL 13 - 7.5. Sorting Rows" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/queries-order.html" title="PostgreSQL devel - 7.5. Sorting Rows"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/queries-order.html" title="PostgreSQL 12 - 7.5. Sorting Rows"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/queries-order.html" title="PostgreSQL 11 - 7.5. Sorting Rows"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/queries-order.html" title="PostgreSQL 10 - 7.5. Sorting Rows"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/queries-order.html" title="PostgreSQL 9.6 - 7.5. Sorting Rows"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/queries-order.html" title="PostgreSQL 9.5 - 7.5. Sorting Rows"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/queries-order.html" title="PostgreSQL 9.4 - 7.5. Sorting Rows"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/queries-order.html" title="PostgreSQL 9.3 - 7.5. Sorting Rows"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/queries-order.html" title="PostgreSQL 9.2 - 7.5. Sorting Rows"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/queries-order.html" title="PostgreSQL 9.1 - 7.5. Sorting Rows"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/queries-order.html" title="PostgreSQL 9.0 - 7.5. Sorting Rows"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/queries-order.html" title="PostgreSQL 8.4 - 7.5. Sorting Rows"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/queries-order.html" title="PostgreSQL 8.3 - 7.5. Sorting Rows"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/queries-order.html" title="PostgreSQL 8.2 - 7.5. Sorting Rows"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/queries-order.html" title="PostgreSQL 8.1 - 7.5. Sorting Rows"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/queries-order.html" title="PostgreSQL 8.0 - 7.5. Sorting Rows"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/queries-order.html" title="PostgreSQL 7.4 - 7.5. Sorting Rows"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/queries-order.html" title="PostgreSQL 7.3 - 7.5. Sorting Rows"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/queries-order.html" title="PostgreSQL 7.2 - 7.5. Sorting Rows"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/queries-order.html" title="PostgreSQL 7.1 - 7.5. Sorting Rows"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">7.5.&nbsp;Sorting Rows</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="queries-union.html" title="7.4.&nbsp;Combining Queries">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="queries.html" title="Chapter&nbsp;7.&nbsp;Queries">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;7.&nbsp;Queries</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="queries-limit.html" title="7.6.&nbsp;LIMIT and OFFSET">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="QUERIES-ORDER">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">7.5.&nbsp;Sorting Rows</h2>
+      </div>
+    </div>
+  </div><a id="id-1.5.6.9.2" class="indexterm" name="id-1.5.6.9.2"></a><a id="id-1.5.6.9.3" class="indexterm" name="id-1.5.6.9.3"></a>
+  <p>After a query has produced an output table (after the select list has been processed) it can optionally be sorted. If sorting is not chosen, the rows will be returned in an unspecified order. The actual order in that case will depend on the scan and join plan types and the order on disk, but it must not be relied on. A particular output ordering can only be guaranteed if the sort step is explicitly chosen.</p>
+  <p>The <code class="literal">ORDER BY</code> clause specifies the sort order:</p>
+  <pre class="synopsis">
+SELECT <em class="replaceable"><code>select_list</code></em>
+    FROM <em class="replaceable"><code>table_expression</code></em>
+    ORDER BY <em class="replaceable"><code>sort_expression1</code></em> [<span class="optional">ASC | DESC</span>] [<span class="optional">NULLS { FIRST | LAST }</span>]
+             [<span class="optional">, <em class="replaceable"><code>sort_expression2</code></em> [<span class="optional">ASC | DESC</span>] [<span class="optional">NULLS { FIRST | LAST }</span>] ...</span>]
+</pre>
+  <p>The sort expression(s) can be any expression that would be valid in the query's select list. An example is:</p>
+  <pre class="programlisting">
+SELECT a, b FROM table1 ORDER BY a + b, c;
+</pre>
+  <p>When more than one expression is specified, the later values are used to sort rows that are equal according to the earlier values. Each expression can be followed by an optional <code class="literal">ASC</code> or <code class="literal">DESC</code> keyword to set the sort direction to ascending or descending. <code class="literal">ASC</code> order is the default. Ascending order puts smaller values first, where <span class="quote">“<span class="quote">smaller</span>”</span> is defined in terms of the <code class="literal">&lt;</code> operator. Similarly, descending order is determined with the <code class="literal">&gt;</code> operator. <a href="#ftn.id-1.5.6.9.5.10" class="footnote"><sup class="footnote" id="id-1.5.6.9.5.10">[5]</sup></a></p>
+  <p>The <code class="literal">NULLS FIRST</code> and <code class="literal">NULLS LAST</code> options can be used to determine whether nulls appear before or after non-null values in the sort ordering. By default, null values sort as if larger than any non-null value; that is, <code class="literal">NULLS FIRST</code> is the default for <code class="literal">DESC</code> order, and <code class="literal">NULLS LAST</code> otherwise.</p>
+  <p>Note that the ordering options are considered independently for each sort column. For example <code class="literal">ORDER BY x, y DESC</code> means <code class="literal">ORDER BY x ASC, y DESC</code>, which is not the same as <code class="literal">ORDER BY x DESC, y DESC</code>.</p>
+  <p>A <em class="replaceable"><code>sort_expression</code></em> can also be the column label or number of an output column, as in:</p>
+  <pre class="programlisting">
+SELECT a + b AS sum, c FROM table1 ORDER BY sum;
+SELECT a, max(b) FROM table1 GROUP BY a ORDER BY 1;
+</pre>
+  <p>both of which sort by the first output column. Note that an output column name has to stand alone, that is, it cannot be used in an expression — for example, this is <span class="emphasis"><em>not</em></span> correct:</p>
+  <pre class="programlisting">
+SELECT a + b AS sum, c FROM table1 ORDER BY sum + c;          -- wrong
+</pre>
+  <p>This restriction is made to reduce ambiguity. There is still ambiguity if an <code class="literal">ORDER BY</code> item is a simple name that could match either an output column name or a column from the table expression. The output column is used in such cases. This would only cause confusion if you use <code class="literal">AS</code> to rename an output column to match some other table column's name.</p>
+  <p><code class="literal">ORDER BY</code> can be applied to the result of a <code class="literal">UNION</code>, <code class="literal">INTERSECT</code>, or <code class="literal">EXCEPT</code> combination, but in this case it is only permitted to sort by output column names or numbers, not by expressions.</p>
+  <div class="footnotes">
+    <br />
+    <hr style="width:100; text-align:left;margin-left: 0" />
+    <div id="ftn.id-1.5.6.9.5.10" class="footnote">
+      <p><a href="#id-1.5.6.9.5.10" class="para"><sup class="para">[5]</sup></a> Actually, <span class="productname">PostgreSQL</span> uses the <em class="firstterm">default B-tree operator class</em> for the expression's data type to determine the sort ordering for <code class="literal">ASC</code> and <code class="literal">DESC</code>. Conventionally, data types will be set up so that the <code class="literal">&lt;</code> and <code class="literal">&gt;</code> operators correspond to this sort ordering, but a user-defined data type's designer could choose to do something different.</p>
+    </div>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="queries-union.html" title="7.4.&nbsp;Combining Queries">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="queries.html" title="Chapter&nbsp;7.&nbsp;Queries">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="queries-limit.html" title="7.6.&nbsp;LIMIT and OFFSET">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">7.4.&nbsp;Combining Queries&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;7.6.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="literal">LIMIT</code> and <code xmlns="http://www.w3.org/1999/xhtml" class="literal">OFFSET</code></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/queries-order.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

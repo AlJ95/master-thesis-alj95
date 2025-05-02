@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; HDFS Upgrade Domain</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>HDFS Upgrade Domain</h1>
+<ul>
+
+
+
+
+</ul></li>
+
+</ul>
+<section>
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>The current default HDFS block placement policy guarantees that a block&#x2019;s 3 replicas will be placed on at least 2 racks. Specifically one replica is placed on one rack and the other two replicas are placed on another rack during write pipeline. This is a good compromise between rack diversity and write-pipeline efficiency. Note that subsequent load balancing or machine membership change might cause 3 replicas of a block to be distributed across 3 different racks. Thus any 3 datanodes in different racks could store 3 replicas of a block.</p>
+<p>However, the default placement policy impacts how we should perform datanode rolling upgrade. <a href="./HdfsRollingUpgrade.html">HDFS Rolling Upgrade document</a> explains how the datanodes can be upgraded in a rolling fashion without downtime. Because any 3 datanodes in different racks could store all the replicas of a block, it is important to perform sequential restart of datanodes one at a time in order to minimize the impact on data availability and read/write operations. Upgrading one rack at a time is another option; but that will increase the chance of data unavailability if there is machine failure at another rack during the upgrade.</p>
+<p>The side effect of this sequential datanode rolling upgrade strategy is longer upgrade duration for larger clusters.</p></section><section>
+<h2><a name="Architecture"></a>Architecture</h2>
+<p>To address the limitation of block placement policy on rolling upgrade, the concept of upgrade domain has been added to HDFS via a new block placement policy. The idea is to group datanodes in a new dimension called upgrade domain, in addition to the existing rack-based grouping. For example, we can assign all datanodes in the first position of any rack to upgrade domain ud_01, nodes in the second position to upgrade domain ud_02 and so on.</p>
+<p>The namenode provides BlockPlacementPolicy interface to support any custom block placement besides the default block placement policy. A new upgrade domain block placement policy based on this interface is available in HDFS. It will make sure replicas of any given block are distributed across machines from different upgrade domains. By default, 3 replicas of any given block are placed on 3 different upgrade domains. This means all datanodes belonging to a specific upgrade domain collectively won&#x2019;t store more than one replica of any block.</p>
+<p>With upgrade domain block placement policy in place, we can upgrade all datanodes belonging to one upgrade domain at the same time without impacting data availability. Only after finishing upgrading one upgrade domain we move to the next upgrade domain until all upgrade domains have been upgraded. Such procedure will ensure no two replicas of any given block will be upgraded at the same time. This means we can upgrade many machines at the same time for a large cluster. And as the cluster continues to scale, new machines will be added to the existing upgrade domains without impact the parallelism of the upgrade.</p>
+<p>For an existing cluster with the default block placement policy, after switching to the new upgrade domain block placement policy, any newly created blocks will conform the new policy. The old blocks allocated based on the old policy need to migrated the new policy. There is a migrator tool you can use. See HDFS-8789 for details.</p></section><section>
+<h2><a name="Settings"></a>Settings</h2>
+<p>To enable upgrade domain on your clusters, please follow these steps:</p>
+<ul>
+
+<li>Assign datanodes to individual upgrade domain groups.</li>
+<li>Enable upgrade domain block placement policy.</li>
+<li>Migrate blocks allocated based on old block placement policy to the new upgrade domain policy.</li>
+</ul><section>
+<h3><a name="Upgrade_domain_id_assignment"></a>Upgrade domain id assignment</h3>
+<p>How a datanode maps to an upgrade domain id is defined by administrators and specific to the cluster layout. A common way to use the rack position of the machine as its upgrade domain id.</p>
+<p>To configure mapping from host name to its upgrade domain id, we need to use json-based host configuration file. by setting the following property as explained in <a href="./hdfs-default.xml">hdfs-default.xml</a>.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Setting </th>
+<th align="left"> Value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"><code>dfs.namenode.hosts.provider.classname</code> </td>
+<td align="left"> <code>org.apache.hadoop.hdfs.server.blockmanagement.CombinedHostFileManager</code></td></tr>
+<tr class="a">
+<td align="left"><code>dfs.hosts</code></td>
+<td align="left"> the path of the json hosts file </td></tr>
+</tbody>
+</table>
+<p>The json hosts file defines the property for all hosts. In the following example, there are 4 datanodes in 2 racks; the machines at rack position 01 belong to upgrade domain 01; the machines at rack position 02 belong to upgrade domain 02.</p>
+
+<div class="source">
+<div class="source">
+<pre>[
+  {
+    &quot;hostName&quot;: &quot;dcA&#xad;rackA&#xad;01&quot;,
+    &quot;upgradeDomain&quot;: &quot;01&quot;
+  },
+  {
+    &quot;hostName&quot;: &quot;dcA&#xad;rackA&#xad;02&quot;,
+    &quot;upgradeDomain&quot;: &quot;02&quot;
+  },
+  {
+    &quot;hostName&quot;: &quot;dcA&#xad;rackB&#xad;01&quot;,
+    &quot;upgradeDomain&quot;: &quot;01&quot;
+  },
+  {
+    &quot;hostName&quot;: &quot;dcA&#xad;rackB&#xad;02&quot;,
+    &quot;upgradeDomain&quot;: &quot;02&quot;
+  }
+]
+</pre></div></div>
+</section><section>
+<h3><a name="Enable_upgrade_domain_block_placement_policy"></a>Enable upgrade domain block placement policy</h3>
+<p>After each datanode has been assigned an upgrade domain id, the next step is to enable upgrade domain block placement policy with the following configuration as explained in <a href="./hdfs-default.xml">hdfs-default.xml</a>.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Setting </th>
+<th align="left"> Value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"><code>dfs.block.replicator.classname</code></td>
+<td align="left"> <code>org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyWithUpgradeDomain</code> </td></tr>
+</tbody>
+</table>
+<p>After restarting of namenode, the new policy will be used for any new block allocation.</p></section><section>
+<h3><a name="Migration"></a>Migration</h3>
+<p>If you change the block placement policy of an existing cluster, you will need to make sure the blocks allocated prior to the block placement policy change conform the new block placement policy.</p>
+<p>HDFS-8789 provides the initial draft patch of a client-side migration tool. After the tool is committed, we will be able to describe how to use the tool.</p></section></section><section>
+<h2><a name="Rolling_restart_based_on_upgrade_domains"></a>Rolling restart based on upgrade domains</h2>
+<p>During cluster administration, we might need to restart datanodes to pick up new configuration, new hadoop release or JVM version and so on. With upgrade domains enabled and all blocks on the cluster conform to the new policy, we can now restart datanodes in batches, one upgrade domain at a time. Whether it is manual process or via automation, the steps are</p>
+<ul>
+
+<li>Group datanodes by upgrade domains based on dfsadmin or JMX&#x2019;s datanode information.</li>
+<li>For each upgrade domain
+<ul>
+
+<li>(Optional) put all the nodes in that upgrade domain to maintenance state (refer to <a href="./HdfsDataNodeAdminGuide.html">HdfsDataNodeAdminGuide.html</a>).</li>
+<li>Restart all those nodes.</li>
+<li>Check if all datanodes are healthy after restart. Unhealthy nodes should be decommissioned.</li>
+<li>(Optional) Take all those nodes out of maintenance state.</li>
+</ul>
+</li>
+</ul></section><section>
+<h2><a name="Metrics"></a>Metrics</h2>
+<p>Upgrade domains are part of namenode&#x2019;s JMX. As explained in <a href="./HDFSCommands.html">HDFSCommands.html</a>, you can also verify upgrade domains using the following commands.</p>
+<p>Use <code>dfsadmin</code> to check upgrade domains at the cluster level.</p>
+<p><code>hdfs dfsadmin -report</code></p>
+<p>Use <code>fsck</code> to check upgrade domains of datanodes storing data at a specific path.</p>
+<p><code>hdfs fsck &lt;path&gt; -files -blocks -upgradedomains</code></p></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 35.9. Preprocessor Directives</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/ecpg-preproc.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="35.9. Preprocessor Directives" />
+  <meta property="og:description" content="35.9.&amp;nbsp;Preprocessor Directives 35.9.1. Including Files 35.9.2. The define and undef Directives 35.9.3. ifdef, ifndef, elif, else, and endif Directives Several …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/ecpg-preproc.html" title="PostgreSQL 17 - 35.9. Preprocessor Directives" >Current</a>
+                          (<a href="/docs/17/ecpg-preproc.html" title="PostgreSQL 17 - 35.9. Preprocessor Directives" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/ecpg-preproc.html" title="PostgreSQL 16 - 35.9. Preprocessor Directives" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/ecpg-preproc.html" title="PostgreSQL 15 - 35.9. Preprocessor Directives" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/ecpg-preproc.html" title="PostgreSQL 14 - 35.9. Preprocessor Directives" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/ecpg-preproc.html" title="PostgreSQL 13 - 35.9. Preprocessor Directives" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/ecpg-preproc.html" title="PostgreSQL devel - 35.9. Preprocessor Directives"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/ecpg-preproc.html" title="PostgreSQL 12 - 35.9. Preprocessor Directives"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/ecpg-preproc.html" title="PostgreSQL 11 - 35.9. Preprocessor Directives"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/ecpg-preproc.html" title="PostgreSQL 10 - 35.9. Preprocessor Directives"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/ecpg-preproc.html" title="PostgreSQL 9.6 - 35.9. Preprocessor Directives"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/ecpg-preproc.html" title="PostgreSQL 9.5 - 35.9. Preprocessor Directives"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/ecpg-preproc.html" title="PostgreSQL 9.4 - 35.9. Preprocessor Directives"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/ecpg-preproc.html" title="PostgreSQL 9.3 - 35.9. Preprocessor Directives"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/ecpg-preproc.html" title="PostgreSQL 9.2 - 35.9. Preprocessor Directives"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/ecpg-preproc.html" title="PostgreSQL 9.1 - 35.9. Preprocessor Directives"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/ecpg-preproc.html" title="PostgreSQL 9.0 - 35.9. Preprocessor Directives"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/ecpg-preproc.html" title="PostgreSQL 8.4 - 35.9. Preprocessor Directives"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/ecpg-preproc.html" title="PostgreSQL 8.3 - 35.9. Preprocessor Directives"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/ecpg-preproc.html" title="PostgreSQL 8.2 - 35.9. Preprocessor Directives"  rel="nofollow">8.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">35.9.&nbsp;Preprocessor Directives</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="ecpg-errors.html" title="35.8.&nbsp;Error Handling">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="ecpg.html" title="Chapter&nbsp;35.&nbsp;ECPG — Embedded SQL in C">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;35.&nbsp;<span xmlns="http://www.w3.org/1999/xhtml" class="application">ECPG</span> — Embedded <acronym xmlns="http://www.w3.org/1999/xhtml" class="acronym">SQL</acronym> in C</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="ecpg-process.html" title="35.10.&nbsp;Processing Embedded SQL Programs">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="ECPG-PREPROC">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">35.9.&nbsp;Preprocessor Directives</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="ecpg-preproc.html#ECPG-INCLUDE">35.9.1. Including Files</a></span></dt>
+      <dt><span class="sect2"><a href="ecpg-preproc.html#ECPG-DEFINE">35.9.2. The define and undef Directives</a></span></dt>
+      <dt><span class="sect2"><a href="ecpg-preproc.html#ECPG-IFDEF">35.9.3. ifdef, ifndef, elif, else, and endif Directives</a></span></dt>
+    </dl>
+  </div>
+  <p>Several preprocessor directives are available that modify how the <code class="command">ecpg</code> preprocessor parses and processes a file.</p>
+  <div class="sect2" id="ECPG-INCLUDE">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">35.9.1.&nbsp;Including Files</h3>
+        </div>
+      </div>
+    </div>
+    <p>To include an external file into your embedded SQL program, use:</p>
+    <pre class="programlisting">
+EXEC SQL INCLUDE <em class="replaceable"><code>filename</code></em>;
+EXEC SQL INCLUDE &lt;<em class="replaceable"><code>filename</code></em>&gt;;
+EXEC SQL INCLUDE "<em class="replaceable"><code>filename</code></em>";
+</pre>
+    <p>The embedded SQL preprocessor will look for a file named <code class="literal"><em class="replaceable"><code>filename</code></em>.h</code>, preprocess it, and include it in the resulting C output. Thus, embedded SQL statements in the included file are handled correctly.</p>
+    <p>The <code class="command">ecpg</code> preprocessor will search a file at several directories in following order:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">current directory</li>
+        <li class="listitem"><code class="filename">/usr/local/include</code></li>
+        <li class="listitem">PostgreSQL include directory, defined at build time (e.g., <code class="filename">/usr/local/pgsql/include</code>)</li>
+        <li class="listitem"><code class="filename">/usr/include</code></li>
+      </ul>
+    </div>
+    <p>But when <code class="literal">EXEC SQL INCLUDE "<em class="replaceable"><code>filename</code></em>"</code> is used, only the current directory is searched.</p>
+    <p>In each directory, the preprocessor will first look for the file name as given, and if not found will append <code class="literal">.h</code> to the file name and try again (unless the specified file name already has that suffix).</p>
+    <p>Note that <code class="command">EXEC SQL INCLUDE</code> is <span class="emphasis"><em>not</em></span> the same as:</p>
+    <pre class="programlisting">
+#include &lt;<em class="replaceable"><code>filename</code></em>.h&gt;
+</pre>
+    <p>because this file would not be subject to SQL command preprocessing. Naturally, you can continue to use the C <code class="literal">#include</code> directive to include other header files.</p>
+    <div class="note">
+      <h3 class="title">Note</h3>
+      <p>The include file name is case-sensitive, even though the rest of the <code class="literal">EXEC SQL INCLUDE</code> command follows the normal SQL case-sensitivity rules.</p>
+    </div>
+  </div>
+  <div class="sect2" id="ECPG-DEFINE">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">35.9.2.&nbsp;The define and undef Directives</h3>
+        </div>
+      </div>
+    </div>
+    <p>Similar to the directive <code class="literal">#define</code> that is known from C, embedded SQL has a similar concept:</p>
+    <pre class="programlisting">
+EXEC SQL DEFINE <em class="replaceable"><code>name</code></em>;
+EXEC SQL DEFINE <em class="replaceable"><code>name</code></em> <em class="replaceable"><code>value</code></em>;
+</pre>
+    <p>So you can define a name:</p>
+    <pre class="programlisting">
+EXEC SQL DEFINE HAVE_FEATURE;
+</pre>
+    <p>And you can also define constants:</p>
+    <pre class="programlisting">
+EXEC SQL DEFINE MYNUMBER 12;
+EXEC SQL DEFINE MYSTRING 'abc';
+</pre>
+    <p>Use <code class="literal">undef</code> to remove a previous definition:</p>
+    <pre class="programlisting">
+EXEC SQL UNDEF MYNUMBER;
+</pre>
+    <p>Of course you can continue to use the C versions <code class="literal">#define</code> and <code class="literal">#undef</code> in your embedded SQL program. The difference is where your defined values get evaluated. If you use <code class="literal">EXEC SQL DEFINE</code> then the <code class="command">ecpg</code> preprocessor evaluates the defines and substitutes the values. For example if you write:</p>
+    <pre class="programlisting">
+EXEC SQL DEFINE MYNUMBER 12;
+...
+EXEC SQL UPDATE Tbl SET col = MYNUMBER;
+</pre>
+    <p>then <code class="command">ecpg</code> will already do the substitution and your C compiler will never see any name or identifier <code class="literal">MYNUMBER</code>. Note that you cannot use <code class="literal">#define</code> for a constant that you are going to use in an embedded SQL query because in this case the embedded SQL precompiler is not able to see this declaration.</p>
+    <p>If multiple input files are named on the <code class="command">ecpg</code> preprocessor's command line, the effects of <code class="literal">EXEC SQL DEFINE</code> and <code class="literal">EXEC SQL UNDEF</code> do not carry across files: each file starts with only the symbols defined by <code class="option">-D</code> switches on the command line.</p>
+  </div>
+  <div class="sect2" id="ECPG-IFDEF">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">35.9.3.&nbsp;ifdef, ifndef, elif, else, and endif Directives</h3>
+        </div>
+      </div>
+    </div>
+    <p>You can use the following directives to compile code sections conditionally:</p>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="literal">EXEC SQL ifdef <em class="replaceable"><code>name</code></em>;</code></span></dt>
+        <dd>
+          <p>Checks a <em class="replaceable"><code>name</code></em> and processes subsequent lines if <em class="replaceable"><code>name</code></em> has been defined via <code class="literal">EXEC SQL define <em class="replaceable"><code>name</code></em></code>.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">EXEC SQL ifndef <em class="replaceable"><code>name</code></em>;</code></span></dt>
+        <dd>
+          <p>Checks a <em class="replaceable"><code>name</code></em> and processes subsequent lines if <em class="replaceable"><code>name</code></em> has <span class="emphasis"><em>not</em></span> been defined via <code class="literal">EXEC SQL define <em class="replaceable"><code>name</code></em></code>.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">EXEC SQL elif <em class="replaceable"><code>name</code></em>;</code></span></dt>
+        <dd>
+          <p>Begins an optional alternative section after an <code class="literal">EXEC SQL ifdef <em class="replaceable"><code>name</code></em></code> or <code class="literal">EXEC SQL ifndef <em class="replaceable"><code>name</code></em></code> directive. Any number of <code class="literal">elif</code> sections can appear. Lines following an <code class="literal">elif</code> will be processed if <em class="replaceable"><code>name</code></em> has been defined <span class="emphasis"><em>and</em></span> no previous section of the same <code class="literal">ifdef</code>/<code class="literal">ifndef</code>...<code class="literal">endif</code> construct has been processed.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">EXEC SQL else;</code></span></dt>
+        <dd>
+          <p>Begins an optional, final alternative section after an <code class="literal">EXEC SQL ifdef <em class="replaceable"><code>name</code></em></code> or <code class="literal">EXEC SQL ifndef <em class="replaceable"><code>name</code></em></code> directive. Subsequent lines will be processed if no previous section of the same <code class="literal">ifdef</code>/<code class="literal">ifndef</code>...<code class="literal">endif</code> construct has been processed.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">EXEC SQL endif;</code></span></dt>
+        <dd>
+          <p>Ends an <code class="literal">ifdef</code>/<code class="literal">ifndef</code>...<code class="literal">endif</code> construct. Subsequent lines are processed normally.</p>
+        </dd>
+      </dl>
+    </div>
+    <p><code class="literal">ifdef</code>/<code class="literal">ifndef</code>...<code class="literal">endif</code> constructs can be nested, up to 127 levels deep.</p>
+    <p>This example will compile exactly one of the three <code class="literal">SET TIMEZONE</code> commands:</p>
+    <pre class="programlisting">
+EXEC SQL ifdef TZVAR;
+EXEC SQL SET TIMEZONE TO TZVAR;
+EXEC SQL elif TZNAME;
+EXEC SQL SET TIMEZONE TO TZNAME;
+EXEC SQL else;
+EXEC SQL SET TIMEZONE TO 'GMT';
+EXEC SQL endif;
+</pre>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="ecpg-errors.html" title="35.8.&nbsp;Error Handling">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="ecpg.html" title="Chapter&nbsp;35.&nbsp;ECPG — Embedded SQL in C">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="ecpg-process.html" title="35.10.&nbsp;Processing Embedded SQL Programs">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">35.8.&nbsp;Error Handling&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;35.10.&nbsp;Processing Embedded SQL Programs</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/ecpg-preproc.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

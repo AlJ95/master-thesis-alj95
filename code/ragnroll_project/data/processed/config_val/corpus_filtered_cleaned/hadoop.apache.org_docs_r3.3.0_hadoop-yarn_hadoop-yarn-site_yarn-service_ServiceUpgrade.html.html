@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Service Upgrade (Experimental Feature - Tech Preview)</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Service Upgrade (Experimental Feature - Tech Preview)
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Service Upgrade (Experimental Feature - Tech Preview)</h1>
+<p>Yarn service provides a way of upgrading/downgrading long running applications without shutting down the application to minimize the downtime during this process. This is an experimental feature which is currently not enabled by default.</p>
+<div class="section">
+<h2><a name="Overview"></a>Overview</h2>
+<p>Upgrading a Yarn Service is a 3 steps (or 2 steps when auto-finalization of upgrade is chosen) process:</p>
+<ol style="list-style-type: decimal">
+
+<li>
+
+<p>Initiate service upgrade.<br />
+This step involves providing the service spec of the newer version of the service. Once, the service upgrade is initiated, the state of the service is changed to <tt>UPGRADING</tt>.</p>
+</li>
+<li>
+
+<p>Upgrade component instances.<br />
+This step involves triggering upgrade of individual component instance. By providing an API to upgrade at instance level, users can orchestrate upgrade of the entire service in any order which is relevant for the service.<br />
+In addition, there are APIs to upgrade multiple instances, all instances of a component, and all instances of multiple components.</p>
+</li>
+<li>
+
+<p>Finalize upgrade.<br />
+This step involves finalization of upgrade. With an explicit step to finalize the upgrade, users have a chance to cancel current upgrade in progress. When the user chose to cancel, the service will make the best effort to revert to the previous version.<br />
+<br />
+When the upgrade is finalized, the old service definition is overwritten by the new service definition and the service state changes to <tt>STABLE</tt>.<br />
+A service can be auto-finalized when the upgrade is initialized with <tt>-autoFinalize</tt> option. With auto-finalization, when all the component-instances of the service have been upgraded, finalization will be performed automatically by the service framework.\</p>
+</li>
+</ol>
+<p>Hadoop 3.2.0 onwards canceling upgrade and express upgrade is also supported.</p>
+<ol style="list-style-type: decimal">
+
+<li>
+
+<p>Cancel upgrade.<br />
+Before the upgrade of the service is finalized, the user has an option to cancel the upgrade. This step resolves the dependencies between the components and then sequentially rolls back each component which was upgraded.</p>
+</li>
+<li>
+
+<p>Express upgrade.<br />
+This is a one-step process to upgrade all the components of the service. It involves providing the service spec of the newer version of the service. The service master then performs the following steps automatically:<br />
+a. Discovers all the components that require an upgrade.<br />
+b. Resolve dependencies between these components.<br />
+c. Triggers upgrade of the components sequentially.</p>
+</li>
+</ol></div>
+<div class="section">
+<h2><a name="Upgrade_Example"></a>Upgrade Example</h2>
+<p>This example shows upgrade of sleeper service. Below is the sleeper service definition</p>
+
+<div>
+<div>
+<pre class="source">{
+  &quot;name&quot;: &quot;sleeper-service&quot;,
+  &quot;components&quot; :
+    [
+      {
+        &quot;name&quot;: &quot;sleeper&quot;,
+        &quot;version&quot;: &quot;1.0.0&quot;,
+        &quot;number_of_containers&quot;: 1,
+        &quot;launch_command&quot;: &quot;sleep 900000&quot;,
+        &quot;resource&quot;: {
+          &quot;cpus&quot;: 1,
+          &quot;memory&quot;: &quot;256&quot;
+       }
+      }
+    ]
+}
+</pre></div></div>
+
+<p>Assuming, user launched an instance of sleeper service named as <tt>my-sleeper</tt>:</p>
+
+<div>
+<div>
+<pre class="source">{
+  &quot;components&quot;:
+    [
+      {
+        &quot;configuration&quot;: {...},
+        &quot;containers&quot;:
+          [
+            {
+              &quot;bare_host&quot;: &quot;0.0.0.0&quot;,
+              &quot;component_instance_name&quot;: &quot;sleeper-0&quot;,
+              &quot;hostname&quot;: &quot;example.local&quot;,
+              &quot;id&quot;: &quot;container_1531508836237_0002_01_000002&quot;,
+              &quot;ip&quot;: &quot;0.0.0.0&quot;,
+              &quot;launch_time&quot;: 1531941023675,
+              &quot;state&quot;: &quot;READY&quot;
+            },
+            {
+              &quot;bare_host&quot;: &quot;0.0.0.0&quot;,
+              &quot;component_instance_name&quot;: &quot;sleeper-1&quot;,
+              &quot;hostname&quot;: &quot;example.local&quot;,
+              &quot;id&quot;: &quot;container_1531508836237_0002_01_000003&quot;,
+              &quot;ip&quot;: &quot;0.0.0.0&quot;,
+              &quot;launch_time&quot;: 1531941024680,
+              &quot;state&quot;: &quot;READY&quot;
+            }
+          ],
+        &quot;dependencies&quot;: [],
+        &quot;launch_command&quot;: &quot;sleep 900000&quot;,
+        &quot;name&quot;: &quot;sleeper&quot;,
+        &quot;number_of_containers&quot;: 2,
+        &quot;quicklinks&quot;: [],
+        &quot;resource&quot;: {...},
+        &quot;restart_policy&quot;: &quot;ALWAYS&quot;,
+        &quot;run_privileged_container&quot;: false,
+        &quot;state&quot;: &quot;STABLE&quot;
+      }
+    ],
+  &quot;configuration&quot;: {...},
+  &quot;id&quot;: &quot;application_1531508836237_0002&quot;,
+  &quot;kerberos_principal&quot;: {},
+  &quot;lifetime&quot;: -1,
+  &quot;name&quot;: &quot;my-sleeper&quot;,
+  &quot;quicklinks&quot;: {},
+  &quot;state&quot;: &quot;STABLE&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;
+}
+</pre></div></div>
+
+<div class="section">
+<h3><a name="Enable_Service_Upgrade"></a>Enable Service Upgrade</h3>
+<p>Below is the configuration in <tt>yarn-site.xml</tt> required for enabling service upgrade.</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;yarn.service.upgrade.enabled&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+  &lt;/property&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Initiate_Upgrade"></a>Initiate Upgrade</h3>
+<p>User can initiate upgrade using the below command:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade ${service_name} -initate ${path_to_new_service_def_file} [-autoFinalize]
+</pre></div></div>
+
+<p>e.g. To upgrade <tt>my-sleeper</tt> to sleep for <i>1200000</i> instead of <i>900000</i>, the user can upgrade the service to version 1.0.1. Below is the service definition for version 1.0.1 of sleeper-service:</p>
+
+<div>
+<div>
+<pre class="source">{
+  &quot;components&quot; :
+    [
+      {
+        &quot;name&quot;: &quot;sleeper&quot;,
+        &quot;version&quot;: &quot;1.0.1&quot;,
+        &quot;number_of_containers&quot;: 1,
+        &quot;launch_command&quot;: &quot;sleep 1200000&quot;,
+        &quot;resource&quot;: {
+          &quot;cpus&quot;: 1,
+          &quot;memory&quot;: &quot;256&quot;
+        }
+      }
+    ]
+}
+</pre></div></div>
+
+<p>The command below initiates the upgrade to version 1.0.1.</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade my-sleeper -initiate sleeper_v101.json
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Upgrade_Instance"></a>Upgrade Instance</h3>
+<p>User can upgrade a component instance using the below command:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade ${service_name} -instances ${comma_separated_list_of_instance_names}
+</pre></div></div>
+
+<p>e.g. The command below upgrades <tt>sleeper-0</tt> and <tt>sleeper-1</tt> instances of <tt>my-service</tt>:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade my-sleeper -instances sleeper-0,sleeper-1
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Upgrade_Component"></a>Upgrade Component</h3>
+<p>User can upgrade a component, that is, all the instances of a component with one command:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade ${service_name} -components ${comma_separated_list_of_component_names}
+</pre></div></div>
+
+<p>e.g. The command below upgrades all the instances of <tt>sleeper</tt> component of <tt>my-service</tt>:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -ugrade my-sleeper -components sleeper
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Finalize_Upgrade"></a>Finalize Upgrade</h3>
+<p>User must finalize the upgrade using the below command (since autoFinalize was not specified during initiate):</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade ${service_name} -finalize
+</pre></div></div>
+
+<p>e.g. The command below finalizes the upgrade of <tt>my-sleeper</tt>:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade my-sleeper -finalize
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Cancel_Upgrade"></a>Cancel Upgrade</h3>
+<p>User can cancel an upgrade before it is finalized using the below command:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade ${service_name} -cancel
+</pre></div></div>
+
+<p>e.g. Before the upgrade is finalized, the command below cancels the upgrade of <tt>my-sleeper</tt>:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade my-sleeper -cancel
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="Express_Upgrade"></a>Express Upgrade</h3>
+<p>User can upgrade a service in one using the below command:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade ${service_name} -express ${path_to_new_service_def_file}
+</pre></div></div>
+
+<p>e.g. The command below express upgrades <tt>my-sleeper</tt>:</p>
+
+<div>
+<div>
+<pre class="source">yarn app -upgrade my-sleeper -express sleeper_v101.json
+</pre></div></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

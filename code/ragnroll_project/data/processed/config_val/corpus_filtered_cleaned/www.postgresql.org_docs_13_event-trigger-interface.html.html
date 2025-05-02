@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 39.3. Writing Event Trigger Functions in C</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/event-trigger-interface.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="39.3. Writing Event Trigger Functions in C" />
+  <meta property="og:description" content="39.3.&amp;nbsp;Writing Event Trigger Functions in C This section describes the low-level details of the interface to an event trigger function. …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/event-trigger-interface.html" title="PostgreSQL 17 - 39.3. Writing Event Trigger Functions in C" >Current</a>
+                          (<a href="/docs/17/event-trigger-interface.html" title="PostgreSQL 17 - 39.3. Writing Event Trigger Functions in C" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/event-trigger-interface.html" title="PostgreSQL 16 - 39.3. Writing Event Trigger Functions in C" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/event-trigger-interface.html" title="PostgreSQL 15 - 39.3. Writing Event Trigger Functions in C" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/event-trigger-interface.html" title="PostgreSQL 14 - 39.3. Writing Event Trigger Functions in C" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/event-trigger-interface.html" title="PostgreSQL 13 - 39.3. Writing Event Trigger Functions in C" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/event-trigger-interface.html" title="PostgreSQL devel - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/event-trigger-interface.html" title="PostgreSQL 12 - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/event-trigger-interface.html" title="PostgreSQL 11 - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/event-trigger-interface.html" title="PostgreSQL 10 - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/event-trigger-interface.html" title="PostgreSQL 9.6 - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/event-trigger-interface.html" title="PostgreSQL 9.5 - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/event-trigger-interface.html" title="PostgreSQL 9.4 - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/event-trigger-interface.html" title="PostgreSQL 9.3 - 39.3. Writing Event Trigger Functions in C"  rel="nofollow">9.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">39.3.&nbsp;Writing Event Trigger Functions in C</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="event-trigger-matrix.html" title="39.2.&nbsp;Event Trigger Firing Matrix">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="event-triggers.html" title="Chapter&nbsp;39.&nbsp;Event Triggers">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;39.&nbsp;Event Triggers</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="event-trigger-example.html" title="39.4.&nbsp;A Complete Event Trigger Example">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="EVENT-TRIGGER-INTERFACE">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">39.3.&nbsp;Writing Event Trigger Functions in C</h2>
+      </div>
+    </div>
+  </div><a id="id-1.8.5.7.2" class="indexterm" name="id-1.8.5.7.2"></a>
+  <p>This section describes the low-level details of the interface to an event trigger function. This information is only needed when writing event trigger functions in C. If you are using a higher-level language then these details are handled for you. In most cases you should consider using a procedural language before writing your event triggers in C. The documentation of each procedural language explains how to write an event trigger in that language.</p>
+  <p>Event trigger functions must use the <span class="quote">“<span class="quote">version 1</span>”</span> function manager interface.</p>
+  <p>When a function is called by the event trigger manager, it is not passed any normal arguments, but it is passed a <span class="quote">“<span class="quote">context</span>”</span> pointer pointing to a <code class="structname">EventTriggerData</code> structure. C functions can check whether they were called from the event trigger manager or not by executing the macro:</p>
+  <pre class="programlisting">
+CALLED_AS_EVENT_TRIGGER(fcinfo)
+</pre>
+  <p>which expands to:</p>
+  <pre class="programlisting">
+((fcinfo)-&gt;context != NULL &amp;&amp; IsA((fcinfo)-&gt;context, EventTriggerData))
+</pre>
+  <p>If this returns true, then it is safe to cast <code class="literal">fcinfo-&gt;context</code> to type <code class="literal">EventTriggerData *</code> and make use of the pointed-to <code class="structname">EventTriggerData</code> structure. The function must <span class="emphasis"><em>not</em></span> alter the <code class="structname">EventTriggerData</code> structure or any of the data it points to.</p>
+  <p><code class="structname">struct EventTriggerData</code> is defined in <code class="filename">commands/event_trigger.h</code>:</p>
+  <pre class="programlisting">
+typedef struct EventTriggerData
+{
+    NodeTag     type;
+    const char *event;      /* event name */
+    Node       *parsetree;  /* parse tree */
+    CommandTag  tag;        /* command tag */
+} EventTriggerData;
+</pre>
+  <p>where the members are defined as follows:</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt><span class="term"><code class="structfield">type</code></span></dt>
+      <dd>
+        <p>Always <code class="literal">T_EventTriggerData</code>.</p>
+      </dd>
+      <dt><span class="term"><code class="structfield">event</code></span></dt>
+      <dd>
+        <p>Describes the event for which the function is called, one of <code class="literal">"ddl_command_start"</code>, <code class="literal">"ddl_command_end"</code>, <code class="literal">"sql_drop"</code>, <code class="literal">"table_rewrite"</code>. See <a class="xref" href="event-trigger-definition.html" title="39.1.&nbsp;Overview of Event Trigger Behavior">Section&nbsp;39.1</a> for the meaning of these events.</p>
+      </dd>
+      <dt><span class="term"><code class="structfield">parsetree</code></span></dt>
+      <dd>
+        <p>A pointer to the parse tree of the command. Check the PostgreSQL source code for details. The parse tree structure is subject to change without notice.</p>
+      </dd>
+      <dt><span class="term"><code class="structfield">tag</code></span></dt>
+      <dd>
+        <p>The command tag associated with the event for which the event trigger is run, for example <code class="literal">"CREATE FUNCTION"</code>.</p>
+      </dd>
+    </dl>
+  </div>
+  <p>An event trigger function must return a <code class="symbol">NULL</code> pointer (<span class="emphasis"><em>not</em></span> an SQL null value, that is, do not set <em class="parameter"><code>isNull</code></em> true).</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="event-trigger-matrix.html" title="39.2.&nbsp;Event Trigger Firing Matrix">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="event-triggers.html" title="Chapter&nbsp;39.&nbsp;Event Triggers">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="event-trigger-example.html" title="39.4.&nbsp;A Complete Event Trigger Example">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">39.2.&nbsp;Event Trigger Firing Matrix&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;39.4.&nbsp;A Complete Event Trigger Example</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/event-trigger-interface.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

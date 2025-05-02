@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>XCLAIM | Docs</title>
+    <meta name="description" content="Changes, or acquires, ownership of a message in a consumer group, as if the message was delivered a consumer group member.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/xclaim/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="XCLAIM">
+  <meta property="og:description" content="Changes, or acquires, ownership of a message in a consumer group, as if the message was delivered a consumer group member.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="XCLAIM">
+  <meta itemprop="description" content="Changes, or acquires, ownership of a message in a consumer group, as if the message was delivered a consumer group member.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="770">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XCLAIM">
+  <meta name="twitter:description" content="Changes, or acquires, ownership of a message in a consumer group, as if the message was delivered a consumer group member.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">XCLAIM
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">XCLAIM key group consumer min-idle-time id [id ...] [IDLE ms]
+  [TIME unix-time-milliseconds] [RETRYCOUNT count] [FORCE] [JUSTID]
+  [LASTID lastid]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 5.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(log N) with N being the number of messages in the PEL of the consumer group.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@stream</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@fast</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>In the context of a stream consumer group, this command changes the ownership
+of a pending message, so that the new owner is the consumer specified as the
+command argument. Normally this is what happens:</p>
+<ol>
+<li>There is a stream with an associated consumer group.</li>
+<li>Some consumer A reads a message via <a href="/docs/latest/commands/xreadgroup/"><code>XREADGROUP</code></a> from a stream, in the context of that consumer group.</li>
+<li>As a side effect a pending message entry is created in the Pending Entries List (PEL) of the consumer group: it means the message was delivered to a given consumer, but it was not yet acknowledged via <a href="/docs/latest/commands/xack/"><code>XACK</code></a>.</li>
+<li>Then suddenly that consumer fails forever.</li>
+<li>Other consumers may inspect the list of pending messages, that are stale for quite some time, using the <a href="/docs/latest/commands/xpending/"><code>XPENDING</code></a> command. In order to continue processing such messages, they use <code>XCLAIM</code> to acquire the ownership of the message and continue. Consumers can also use the <a href="/docs/latest/commands/xautoclaim/"><code>XAUTOCLAIM</code></a> command to automatically scan and claim stale pending messages.</li>
+</ol>
+<p>This dynamic is clearly explained in the <a href="/docs/latest/develop/data-types/streams/">Stream intro documentation</a>.</p>
+<p>Note that the message is claimed only if its idle time is greater than the minimum idle time we specify when calling <code>XCLAIM</code>. Because as a side effect <code>XCLAIM</code> will also reset the idle time (since this is a new attempt at processing the message), two consumers trying to claim a message at the same time will never both succeed: only one will successfully claim the message. This avoids that we process a given message multiple times in a trivial way (yet multiple processing is possible and unavoidable in the general case).</p>
+<p>Moreover, as a side effect, <code>XCLAIM</code> will increment the count of attempted deliveries of the message unless the <code>JUSTID</code> option has been specified (which only delivers the message ID, not the message itself). In this way messages that cannot be processed for some reason, for instance because the consumers crash attempting to process them, will start to have a larger counter and can be detected inside the system.</p>
+<p><code>XCLAIM</code> will not claim a message in the following cases:</p>
+<ol>
+<li>The message doesn't exist in the group PEL (i.e. it was never read by any consumer)</li>
+<li>The message exists in the group PEL but not in the stream itself (i.e. the message was read but never acknowledged, and then was deleted from the stream, either by trimming or by <a href="/docs/latest/commands/xdel/"><code>XDEL</code></a>)</li>
+</ol>
+<p>In both cases the reply will not contain a corresponding entry to that message (i.e. the length of the reply array may be smaller than the number of IDs provided to <code>XCLAIM</code>).
+In the latter case, the message will also be deleted from the PEL in which it was found. This feature was introduced in Redis 7.0.</p>
+<h2 id="command-options">Command options</h2>
+<p>The command has multiple options, however most are mainly for internal use in
+order to transfer the effects of <code>XCLAIM</code> or other commands to the AOF file
+and to propagate the same effects to the replicas, and are unlikely to be
+useful to normal users:</p>
+<ol>
+<li><code>IDLE &lt;ms&gt;</code>: Set the idle time (last time it was delivered) of the message. If IDLE is not specified, an IDLE of 0 is assumed, that is, the time count is reset because the message has now a new owner trying to process it.</li>
+<li><code>TIME &lt;ms-unix-time&gt;</code>: This is the same as IDLE but instead of a relative amount of milliseconds, it sets the idle time to a specific Unix time (in milliseconds). This is useful in order to rewrite the AOF file generating <code>XCLAIM</code> commands.</li>
+<li><code>RETRYCOUNT &lt;count&gt;</code>: Set the retry counter to the specified value. This counter is incremented every time a message is delivered again. Normally <code>XCLAIM</code> does not alter this counter, which is just served to clients when the XPENDING command is called: this way clients can detect anomalies, like messages that are never processed for some reason after a big number of delivery attempts.</li>
+<li><code>FORCE</code>: Creates the pending message entry in the PEL even if certain specified IDs are not already in the PEL assigned to a different client. However the message must be exist in the stream, otherwise the IDs of non existing messages are ignored.</li>
+<li><code>JUSTID</code>: Return just an array of IDs of messages successfully claimed, without returning the actual message. Using this option means the retry counter is not incremented.</li>
+</ol>
+<h2 id="examples">Examples</h2>
+<pre tabindex="0"><code>&gt; XCLAIM mystream mygroup Alice 3600000 1526569498055-0
+1) 1) 1526569498055-0
+   2) 1) &#34;message&#34;
+      2) &#34;orange&#34;
+</code></pre><p>In the above example we claim the message with ID <code>1526569498055-0</code>, only if the message is idle for at least one hour without the original consumer or some other consumer making progresses (acknowledging or claiming it), and assigns the ownership to the consumer <code>Alice</code>.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>Any of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: when the <em>JUSTID</em> option is specified, an array of IDs of messages successfully claimed.</li>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: an array of stream entries, each of which contains an array of two elements, the entry ID and the entry data itself.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/xclaim/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

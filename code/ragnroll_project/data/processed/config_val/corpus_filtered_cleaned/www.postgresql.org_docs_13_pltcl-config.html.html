@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 43.11. PL/Tcl Configuration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/pltcl-config.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="43.11. PL/Tcl Configuration" />
+  <meta property="og:description" content="43.11.&amp;nbsp;PL/Tcl Configuration This section lists configuration parameters that affect PL/Tcl. pltcl.start_proc (string) This parameter, if set to a nonempty string, …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/pltcl-config.html" title="PostgreSQL 17 - 43.11. PL/Tcl Configuration" >Current</a>
+                          (<a href="/docs/17/pltcl-config.html" title="PostgreSQL 17 - 43.11. PL/Tcl Configuration" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/pltcl-config.html" title="PostgreSQL 16 - 43.11. PL/Tcl Configuration" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/pltcl-config.html" title="PostgreSQL 15 - 43.11. PL/Tcl Configuration" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/pltcl-config.html" title="PostgreSQL 14 - 43.11. PL/Tcl Configuration" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/pltcl-config.html" title="PostgreSQL 13 - 43.11. PL/Tcl Configuration" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/pltcl-config.html" title="PostgreSQL devel - 43.11. PL/Tcl Configuration"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/pltcl-config.html" title="PostgreSQL 12 - 43.11. PL/Tcl Configuration"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/pltcl-config.html" title="PostgreSQL 11 - 43.11. PL/Tcl Configuration"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/pltcl-config.html" title="PostgreSQL 10 - 43.11. PL/Tcl Configuration"  rel="nofollow">10</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">43.11.&nbsp;PL/Tcl Configuration</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="pltcl-transactions.html" title="43.10.&nbsp;Transaction Management">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="pltcl.html" title="Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="pltcl-procnames.html" title="43.12.&nbsp;Tcl Procedure Names">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLTCL-CONFIG">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">43.11.&nbsp;PL/Tcl Configuration</h2>
+      </div>
+    </div>
+  </div>
+  <p>This section lists configuration parameters that affect <span class="application">PL/Tcl</span>.</p>
+  <div class="variablelist">
+    <dl class="variablelist">
+      <dt id="GUC-PLTCL-START-PROC"><span class="term"><code class="varname">pltcl.start_proc</code> (<code class="type">string</code>) <a id="id-1.8.9.15.3.1.1.3" class="indexterm" name="id-1.8.9.15.3.1.1.3"></a></span></dt>
+      <dd>
+        <p>This parameter, if set to a nonempty string, specifies the name (possibly schema-qualified) of a parameterless PL/Tcl function that is to be executed whenever a new Tcl interpreter is created for PL/Tcl. Such a function can perform per-session initialization, such as loading additional Tcl code. A new Tcl interpreter is created when a PL/Tcl function is first executed in a database session, or when an additional interpreter has to be created because a PL/Tcl function is called by a new SQL role.</p>
+        <p>The referenced function must be written in the <code class="literal">pltcl</code> language, and must not be marked <code class="literal">SECURITY DEFINER</code>. (These restrictions ensure that it runs in the interpreter it's supposed to initialize.) The current user must have permission to call it, too.</p>
+        <p>If the function fails with an error it will abort the function call that caused the new interpreter to be created and propagate out to the calling query, causing the current transaction or subtransaction to be aborted. Any actions already done within Tcl won't be undone; however, that interpreter won't be used again. If the language is used again the initialization will be attempted again within a fresh Tcl interpreter.</p>
+        <p>Only superusers can change this setting. Although this setting can be changed within a session, such changes will not affect Tcl interpreters that have already been created.</p>
+      </dd>
+      <dt id="GUC-PLTCLU-START-PROC"><span class="term"><code class="varname">pltclu.start_proc</code> (<code class="type">string</code>) <a id="id-1.8.9.15.3.2.1.3" class="indexterm" name="id-1.8.9.15.3.2.1.3"></a></span></dt>
+      <dd>
+        <p>This parameter is exactly like <code class="varname">pltcl.start_proc</code>, except that it applies to PL/TclU. The referenced function must be written in the <code class="literal">pltclu</code> language.</p>
+      </dd>
+    </dl>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="pltcl-transactions.html" title="43.10.&nbsp;Transaction Management">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="pltcl.html" title="Chapter&nbsp;43.&nbsp;PL/Tcl — Tcl Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="pltcl-procnames.html" title="43.12.&nbsp;Tcl Procedure Names">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">43.10.&nbsp;Transaction Management&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;43.12.&nbsp;Tcl Procedure Names</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/pltcl-config.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

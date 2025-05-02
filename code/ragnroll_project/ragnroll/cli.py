@@ -141,6 +141,8 @@ def run_evaluations(
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
     test_size: int = typer.Option(20, help="Test size"),
     random_state: int = typer.Option(42, help="Random state"),
+    positive_label: str = typer.Option("valid", help="Positive label"),
+    negative_label: str = typer.Option("invalid", help="Negative label"),
 ):
     from .utils.pipeline import gather_config_paths, config_to_pipeline, validate_pipeline
     from .evaluation.eval import Evaluator
@@ -216,9 +218,8 @@ def run_evaluations(
             
             pipeline.add_component("tracer", LangfuseConnector(run_name))
             data = load_evaluation_data(val_data_path)
-            data["test_cases"] = data["test_cases"][:20]
 
-            evaluator = Evaluator(pipeline)
+            evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
             result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
 
             traces = fetch_current_traces(run_name)
@@ -230,12 +231,16 @@ def run_evaluations(
             results = pd.concat([result, traces], axis=1)
             gathered_results.append(results)
 
-            if Path(output_directory).exists():
-                pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
-            else:
-                pd.concat(gathered_results).T.to_csv(output_directory)
+            try:
+                if Path(output_directory).exists():
+                    pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
+                else:
+                    pd.concat(gathered_results).T.to_csv(output_directory)
 
-            print(f"Evaluation results saved to {output_directory}")
+                print(f"Evaluation results saved to {output_directory}")
+            except Exception as e:
+                print(f"Warning: {e}")
+                print(f"Evaluation results not saved to {output_directory}")
 
 
     return

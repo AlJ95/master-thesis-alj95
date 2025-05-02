@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  3.3.5 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  3.3.5 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-17956">HADOOP-17956</a> | <i>Major</i> | <b>Replace all default Charset usage with UTF-8</b></li>
+</ul>
+<p>All of the default charset usages have been replaced to UTF-8. If the default charset of your environment is not UTF-8, the behavior can be different.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-15983">HADOOP-15983</a> | <i>Major</i> | <b>Use jersey-json that is built to use jackson2</b></li>
+</ul>
+<p>Use modified jersey-json 1.20 in <a class="externalLink" href="https://github.com/pjfanning/jersey-1.x/tree/v1.20">https://github.com/pjfanning/jersey-1.x/tree/v1.20</a> that uses Jackson 2.x. By this change, Jackson 1.x dependency has been removed from Hadoop. downstream applications which explicitly exclude jersey from transitive dependencies must now exclude com.github.pjfanning:jersey-json</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-16595">HDFS-16595</a> | <i>Major</i> | <b>Slow peer metrics - add median, mad and upper latency limits</b></li>
+</ul>
+<p>Namenode metrics that represent Slownode Json now include three important factors (median, median absolute deviation, upper latency limit) that can help user determine how urgently a given slownode requires manual intervention.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-17833">HADOOP-17833</a> | <i>Minor</i> | <b>Improve Magic Committer Performance</b></li>
+</ul>
+<p>S3A filesytem&#x2019;s createFile() operation supports an option to disable all safety checks when creating a file. Consult the documentation and use with care</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-18382">HADOOP-18382</a> | <i>Minor</i> | <b>Upgrade AWS SDK to V2 - Prerequisites</b></li>
+</ul>
+<p>In preparation for an (incompatible but necessary) move to the AWS SDK v2, some uses of internal/deprecated uses of AWS classes/interfaces are logged as warnings, though only once during the life of a JVM. Set the log &#x201c;org.apache.hadoop.fs.s3a.SDKV2Upgrade&#x201d; to only log at INFO to hide these.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-18442">HADOOP-18442</a> | <i>Major</i> | <b>Remove the hadoop-openstack module</b></li>
+</ul>
+<p>The <a class="externalLink" href="swift://">swift://</a> connector for openstack support has been removed. It had fundamental problems (swift&#x2019;s handling of files &gt; 4GB). A subset of the S3 protocol is now exported by almost all object store services -please use that through the s3a connector instead. The hadoop-openstack jar remains, only now it is empty of code. This is to ensure that projects which declare the JAR a dependency will still have successful builds.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-17563">HADOOP-17563</a> | <i>Major</i> | <b>Update Bouncy Castle to 1.68 or later</b></li>
+</ul>
+<p>bouncy castle 1.68+ is a multirelease JAR containing java classes compiled for different target JREs. older versions of asm.jar and maven shade plugin may have problems with these. fix: upgrade the dependencies</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-18528">HADOOP-18528</a> | <i>Major</i> | <b>Disable abfs prefetching by default</b></li>
+</ul>
+<p>ABFS block prefetching has been disabled to avoid HADOOP-18521 and buffer sharing on multithreaded processes (Hive, Spark etc). This will have little/no performance impact on queries against Parquet or ORC data, but can slow down sequential stream processing, including CSV files -however, the read data will be correct. It may slow down distcp downloads, where the race condition does not arise. For maximum distcp performance re-enable the readahead by setting fs.abfs.enable.readahead to true.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-18621">HADOOP-18621</a> | <i>Critical</i> | <b>CryptoOutputStream::close leak when encrypted zones + quota exceptions</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

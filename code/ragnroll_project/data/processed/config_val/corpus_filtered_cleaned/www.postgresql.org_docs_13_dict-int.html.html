@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.11. dict_int</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/dict-int.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.11. dict_int" />
+  <meta property="og:description" content="F.11.&amp;nbsp;dict_int F.11.1. Configuration F.11.2. Usage dict_int is an example of an add-on dictionary template for full-text search. The motivation for …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/dict-int.html" title="PostgreSQL 17 - F.11. dict_int" >Current</a>
+                          (<a href="/docs/17/dict-int.html" title="PostgreSQL 17 - F.11. dict_int" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/dict-int.html" title="PostgreSQL 16 - F.11. dict_int" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/dict-int.html" title="PostgreSQL 15 - F.11. dict_int" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/dict-int.html" title="PostgreSQL 14 - F.11. dict_int" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/dict-int.html" title="PostgreSQL 13 - F.11. dict_int" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/dict-int.html" title="PostgreSQL devel - F.11. dict_int"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/dict-int.html" title="PostgreSQL 12 - F.11. dict_int"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/dict-int.html" title="PostgreSQL 11 - F.11. dict_int"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/dict-int.html" title="PostgreSQL 10 - F.11. dict_int"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/dict-int.html" title="PostgreSQL 9.6 - F.11. dict_int"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/dict-int.html" title="PostgreSQL 9.5 - F.11. dict_int"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/dict-int.html" title="PostgreSQL 9.4 - F.11. dict_int"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/dict-int.html" title="PostgreSQL 9.3 - F.11. dict_int"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/dict-int.html" title="PostgreSQL 9.2 - F.11. dict_int"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/dict-int.html" title="PostgreSQL 9.1 - F.11. dict_int"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/dict-int.html" title="PostgreSQL 9.0 - F.11. dict_int"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/dict-int.html" title="PostgreSQL 8.4 - F.11. dict_int"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/dict-int.html" title="PostgreSQL 8.3 - F.11. dict_int"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.11.&nbsp;dict_int</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="contrib-dblink-build-sql-update.html" title="dblink_build_sql_update">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="dict-xsyn.html" title="F.12.&nbsp;dict_xsyn">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="DICT-INT">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.11.&nbsp;dict_int</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="dict-int.html#id-1.11.7.20.5">F.11.1. Configuration</a></span></dt>
+      <dt><span class="sect2"><a href="dict-int.html#id-1.11.7.20.6">F.11.2. Usage</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.20.2" class="indexterm" name="id-1.11.7.20.2"></a>
+  <p><code class="filename">dict_int</code> is an example of an add-on dictionary template for full-text search. The motivation for this example dictionary is to control the indexing of integers (signed and unsigned), allowing such numbers to be indexed while preventing excessive growth in the number of unique words, which greatly affects the performance of searching.</p>
+  <p>This module is considered <span class="quote">“<span class="quote">trusted</span>”</span>, that is, it can be installed by non-superusers who have <code class="literal">CREATE</code> privilege on the current database.</p>
+  <div class="sect2" id="id-1.11.7.20.5">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.11.1.&nbsp;Configuration</h3>
+        </div>
+      </div>
+    </div>
+    <p>The dictionary accepts three options:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>The <code class="literal">maxlen</code> parameter specifies the maximum number of digits allowed in an integer word. The default value is 6.</p>
+        </li>
+        <li class="listitem">
+          <p>The <code class="literal">rejectlong</code> parameter specifies whether an overlength integer should be truncated or ignored. If <code class="literal">rejectlong</code> is <code class="literal">false</code> (the default), the dictionary returns the first <code class="literal">maxlen</code> digits of the integer. If <code class="literal">rejectlong</code> is <code class="literal">true</code>, the dictionary treats an overlength integer as a stop word, so that it will not be indexed. Note that this also means that such an integer cannot be searched for.</p>
+        </li>
+        <li class="listitem">
+          <p>The <code class="literal">absval</code> parameter specifies whether leading <span class="quote">“<span class="quote"><code class="literal">+</code></span>”</span> or <span class="quote">“<span class="quote"><code class="literal">-</code></span>”</span> signs should be removed from integer words. The default is <code class="literal">false</code>. When <code class="literal">true</code>, the sign is removed before <code class="literal">maxlen</code> is applied.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="sect2" id="id-1.11.7.20.6">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.11.2.&nbsp;Usage</h3>
+        </div>
+      </div>
+    </div>
+    <p>Installing the <code class="literal">dict_int</code> extension creates a text search template <code class="literal">intdict_template</code> and a dictionary <code class="literal">intdict</code> based on it, with the default parameters. You can alter the parameters, for example</p>
+    <pre class="programlisting">
+mydb# ALTER TEXT SEARCH DICTIONARY intdict (MAXLEN = 4, REJECTLONG = true);
+ALTER TEXT SEARCH DICTIONARY
+</pre>
+    <p>or create new dictionaries based on the template.</p>
+    <p>To test the dictionary, you can try</p>
+    <pre class="programlisting">
+mydb# select ts_lexize('intdict', '12345678');
+ ts_lexize
+-----------
+ {123456}
+</pre>
+    <p>but real-world usage will involve including it in a text search configuration as described in <a class="xref" href="textsearch.html" title="Chapter&nbsp;12.&nbsp;Full Text Search">Chapter&nbsp;12</a>. That might look like this:</p>
+    <pre class="programlisting">
+ALTER TEXT SEARCH CONFIGURATION english
+    ALTER MAPPING FOR int, uint WITH intdict;
+</pre>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="contrib-dblink-build-sql-update.html" title="dblink_build_sql_update">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="dict-xsyn.html" title="F.12.&nbsp;dict_xsyn">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">dblink_build_sql_update&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.12.&nbsp;dict_xsyn</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/dict-int.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

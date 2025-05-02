@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Reducer (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+
+<div class="header">
+<div class="subTitle">org.apache.hadoop.mapreduce</div>
+<h2 title="Class Reducer" class="title">Class Reducer&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+
+<li>
+<ul class="inheritance">
+<li>org.apache.hadoop.mapreduce.Reducer&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../org/apache/hadoop/mapreduce/lib/chain/ChainReducer.html" title="class in org.apache.hadoop.mapreduce.lib.chain">ChainReducer</a>, <a href="../../../../org/apache/hadoop/mapreduce/lib/fieldsel/FieldSelectionReducer.html" title="class in org.apache.hadoop.mapreduce.lib.fieldsel">FieldSelectionReducer</a>, <a href="../../../../org/apache/hadoop/mapreduce/lib/reduce/IntSumReducer.html" title="class in org.apache.hadoop.mapreduce.lib.reduce">IntSumReducer</a>, <a href="../../../../org/apache/hadoop/mapreduce/lib/reduce/LongSumReducer.html" title="class in org.apache.hadoop.mapreduce.lib.reduce">LongSumReducer</a>, <a href="../../../../org/apache/hadoop/mapreduce/lib/aggregate/ValueAggregatorCombiner.html" title="class in org.apache.hadoop.mapreduce.lib.aggregate">ValueAggregatorCombiner</a>, <a href="../../../../org/apache/hadoop/mapreduce/lib/aggregate/ValueAggregatorReducer.html" title="class in org.apache.hadoop.mapreduce.lib.aggregate">ValueAggregatorReducer</a>, <a href="../../../../org/apache/hadoop/mapreduce/lib/reduce/WrappedReducer.html" title="class in org.apache.hadoop.mapreduce.lib.reduce">WrappedReducer</a></dd>
+</dl>
+<hr>
+<br>
+<pre><a href="../../../../org/apache/hadoop/mapreduce/task/annotation/Checkpointable.html" title="annotation in org.apache.hadoop.mapreduce.task.annotation">@Checkpointable</a>
+ @InterfaceAudience.Public
+ @InterfaceStability.Stable
+public class <span class="typeNameLabel">Reducer&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;</span>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+<div class="block">Reduces a set of intermediate values which share a key to a smaller set of
+ values.  
+ 
+ <p><code>Reducer</code> implementations 
+ can access the <a href="../../../../org/apache/hadoop/conf/Configuration.html" title="class in org.apache.hadoop.conf"><code>Configuration</code></a> for the job via the 
+ <a href="../../../../org/apache/hadoop/mapreduce/JobContext.html#getConfiguration--"><code>JobContext.getConfiguration()</code></a> method.</p>
+
+ <p><code>Reducer</code> has 3 primary phases:</p>
+ <ol>
+   <li>
+   
+   <b id="Shuffle">Shuffle</b>
+   
+   <p>The <code>Reducer</code> copies the sorted output from each 
+   <a href="../../../../org/apache/hadoop/mapreduce/Mapper.html" title="class in org.apache.hadoop.mapreduce"><code>Mapper</code></a> using HTTP across the network.</p>
+   </li>
+   
+   <li>
+   <b id="Sort">Sort</b>
+   
+   <p>The framework merge sorts <code>Reducer</code> inputs by 
+   <code>key</code>s 
+   (since different <code>Mapper</code>s may have output the same key).</p>
+   
+   <p>The shuffle and sort phases occur simultaneously i.e. while outputs are
+   being fetched they are merged.</p>
+      
+   <b id="SecondarySort">SecondarySort</b>
+   
+   <p>To achieve a secondary sort on the values returned by the value 
+   iterator, the application should extend the key with the secondary
+   key and define a grouping comparator. The keys will be sorted using the
+   entire key, but will be grouped using the grouping comparator to decide
+   which keys and values are sent in the same call to reduce.The grouping 
+   comparator is specified via 
+   <a href="../../../../org/apache/hadoop/mapreduce/Job.html#setGroupingComparatorClass-java.lang.Class-"><code>Job.setGroupingComparatorClass(Class)</code></a>. The sort order is
+   controlled by 
+   <a href="../../../../org/apache/hadoop/mapreduce/Job.html#setSortComparatorClass-java.lang.Class-"><code>Job.setSortComparatorClass(Class)</code></a>.</p>
+   
+   
+   For example, say that you want to find duplicate web pages and tag them 
+   all with the url of the "best" known example. You would set up the job 
+   like:
+   <ul>
+     <li>Map Input Key: url</li>
+     <li>Map Input Value: document</li>
+     <li>Map Output Key: document checksum, url pagerank</li>
+     <li>Map Output Value: url</li>
+     <li>Partitioner: by checksum</li>
+     <li>OutputKeyComparator: by checksum and then decreasing pagerank</li>
+     <li>OutputValueGroupingComparator: by checksum</li>
+   </ul>
+   </li>
+   
+   <li>   
+   <b id="Reduce">Reduce</b>
+   
+   <p>In this phase the 
+   <a href="../../../../org/apache/hadoop/mapreduce/Reducer.html#reduce-KEYIN-java.lang.Iterable-org.apache.hadoop.mapreduce.Reducer.Context-"><code>reduce(Object, Iterable, org.apache.hadoop.mapreduce.Reducer.Context)</code></a>
+   method is called for each <code>&lt;key, (collection of values)&gt;</code> in
+   the sorted inputs.</p>
+   <p>The output of the reduce task is typically written to a 
+   <a href="../../../../org/apache/hadoop/mapreduce/RecordWriter.html" title="class in org.apache.hadoop.mapreduce"><code>RecordWriter</code></a> via 
+   <a href="../../../../org/apache/hadoop/mapreduce/TaskInputOutputContext.html#write-KEYOUT-VALUEOUT-"><code>TaskInputOutputContext.write(Object, Object)</code></a>.</p>
+   </li>
+ </ol>
+ 
+ <p>The output of the <code>Reducer</code> is <b>not re-sorted</b>.</p>
+ 
+ <p>Example:</p>
+ <p><blockquote><pre>
+ public class IntSumReducer&lt;Key&gt; extends Reducer&lt;Key,IntWritable,
+                                                 Key,IntWritable&gt; {
+   private IntWritable result = new IntWritable();
+ 
+   public void reduce(Key key, Iterable&lt;IntWritable&gt; values,
+                      Context context) throws IOException, InterruptedException {
+     int sum = 0;
+     for (IntWritable val : values) {
+       sum += val.get();
+     }
+     result.set(sum);
+     context.write(key, result);
+   }
+ }
+ </pre></blockquote></div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../org/apache/hadoop/mapreduce/Mapper.html" title="class in org.apache.hadoop.mapreduce"><code>Mapper</code></a>, 
+<a href="../../../../org/apache/hadoop/mapreduce/Partitioner.html" title="class in org.apache.hadoop.mapreduce"><code>Partitioner</code></a></dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+
+<ul class="blockList">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

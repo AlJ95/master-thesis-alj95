@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>JSON.ARRINSERT | Docs</title>
+    <meta name="description" content="Inserts the JSON scalar(s) value at the specified index in the array at path">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/json.arrinsert/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="JSON.ARRINSERT">
+  <meta property="og:description" content="Inserts the JSON scalar(s) value at the specified index in the array at path">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="JSON.ARRINSERT">
+  <meta itemprop="description" content="Inserts the JSON scalar(s) value at the specified index in the array at path">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="300">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="JSON.ARRINSERT">
+  <meta name="twitter:description" content="Inserts the JSON scalar(s) value at the specified index in the array at path">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">JSON.ARRINSERT
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">JSON.ARRINSERT key path index value [value ...]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / JSON 1.0.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N) when path is evaluated to a single value where N is the size of the array, O(N) when path is evaluated to multiple values, where N is the size of the key</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@json</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Insert the <code>json</code> values into the array at <code>path</code> before the <code>index</code> (shifts to the right)</p>
+<p><a href="#examples">Examples</a></p>
+<h2 id="required-arguments">Required arguments</h2>
+<details open><summary><code>key</code></summary> 
+<p>is key to modify.</p>
+</details>
+<details open><summary><code>value</code></summary> 
+<p>is one or more values to insert in one or more arrays.</p>
+<div class="alert p-3 relative flex flex-row items-center text-base bg-redis-pencil-200 rounded-md">
+  <div class="p-2 pr-5">
+  <circle cx="10.5" cy="10.5" r="9.75" stroke="currentColor" stroke-width="1.5"/>
+  
+  
+</svg>
+  </div>
+  <div class="p-1 pl-6 border-l border-l-redis-ink-900 border-opacity-50">
+  <div class="font-medium">About using strings with JSON commands:</div>
+  To specify a string as an array value to insert, wrap the quoted string with an additional set of single quotes. Example: <code>'&quot;silver&quot;'</code>. For more detailed use, see <a href="#examples">Examples</a>.</div>
+</div>
+</details>
+<details open><summary><code>index</code></summary> 
+<p>is position in the array where you want to insert a value. The index must be in the array's range. Inserting at <code>index</code> 0 prepends to the array. Negative index values start from the end of the array.</p>
+</details>
+<h2 id="optional-arguments">Optional arguments</h2>
+<details open><summary><code>path</code></summary> 
+<p>is JSONPath to specify. Default is root <code>$</code>.</p>
+</details>
+<h2 id="return-value">Return value</h2>
+<p><code>JSON.ARRINSERT</code> returns an <a href="/docs/latest/develop/reference/protocol-spec/#resp-arrays">array</a> of integer replies for each path, the array's new size, or <code>nil</code>, if the matching JSON value is not an array.
+For more information about replies, see <a href="/docs/latest/develop/reference/protocol-spec/">Redis serialization protocol specification</a>.</p>
+<h2 id="examples">Examples</h2>
+<details open>
+<summary><b>Add new colors to a specific place in a list of product colors</b></summary>
+<p>Create a document for noise-cancelling headphones in black and silver colors.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; JSON.SET item:1 $ <span class="s1">&#39;{&#34;name&#34;:&#34;Noise-cancelling Bluetooth headphones&#34;,&#34;description&#34;:&#34;Wireless Bluetooth headphones with noise-cancelling technology&#34;,&#34;connection&#34;:{&#34;wireless&#34;:true,&#34;type&#34;:&#34;Bluetooth&#34;},&#34;price&#34;:99.98,&#34;stock&#34;:25,&#34;colors&#34;:[&#34;black&#34;,&#34;silver&#34;]}&#39;</span>
+</span></span><span class="line"><span class="cl">OK</span></span></code></pre></div>
+<p>Add color <code>blue</code> to the end of the <code>colors</code> array. <code>JSON.ARRAPEND</code> returns the array's new size.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; JSON.ARRAPPEND item:1 $.colors <span class="s1">&#39;&#34;blue&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span></span></span></code></pre></div>
+<p>Return the new length of the <code>colors</code> array.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; JSON.GET item:1
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;{\&#34;name\&#34;:\&#34;Noise-cancelling Bluetooth headphones\&#34;,\&#34;description\&#34;:\&#34;Wireless Bluetooth headphones with noise-cancelling technology\&#34;,\&#34;connection\&#34;:{\&#34;wireless\&#34;:true,\&#34;type\&#34;:\&#34;Bluetooth\&#34;},\&#34;price\&#34;:99.98,\&#34;stock\&#34;:25,\&#34;colors\&#34;:[\&#34;black\&#34;,\&#34;silver\&#34;,\&#34;blue\&#34;]}&#34;</span></span></span></code></pre></div>
+<p>Get the list of colors for the product.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; JSON.GET item:1 <span class="s1">&#39;$.colors[*]&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;[\&#34;black\&#34;,\&#34;silver\&#34;,\&#34;blue\&#34;]&#34;</span></span></span></code></pre></div>
+<p>Insert two more colors after the second color. You now have five colors.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; JSON.ARRINSERT item:1 $.colors <span class="m">2</span> <span class="s1">&#39;&#34;yellow&#34;&#39;</span> <span class="s1">&#39;&#34;gold&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="o">(</span>integer<span class="o">)</span> <span class="m">5</span></span></span></code></pre></div>
+<p>Get the updated list of colors.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">redis&gt; JSON.GET item:1 $.colors
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;[[\&#34;black\&#34;,\&#34;silver\&#34;,\&#34;yellow\&#34;,\&#34;gold\&#34;,\&#34;blue\&#34;]]&#34;</span></span></span></code></pre></div>
+</details>
+<h2 id="see-also">See also</h2>
+<p><a href="/docs/latest/commands/json.arrappend/"><code>JSON.ARRAPPEND</code></a> | <a href="/docs/latest/commands/json.arrindex/"><code>JSON.ARRINDEX</code></a></p>
+<h2 id="related-topics">Related topics</h2>
+<ul>
+
+
+</ul>
+
+
+        
+        
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/json.arrinsert/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

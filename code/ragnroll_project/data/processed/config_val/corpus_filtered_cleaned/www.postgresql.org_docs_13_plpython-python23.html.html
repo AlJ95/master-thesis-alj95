@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 45.1. Python 2 vs. Python 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/plpython-python23.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="45.1. Python 2 vs. Python 3" />
+  <meta property="og:description" content="45.1.&amp;nbsp;Python 2 vs. Python 3 PL/Python supports both the Python 2 and Python 3 language variants. (The PostgreSQL installation instructions …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/plpython-python23.html" title="PostgreSQL 17 - 45.1. Python 2 vs. Python 3" >Current</a>
+                          (<a href="/docs/17/plpython-python23.html" title="PostgreSQL 17 - 45.1. Python 2 vs. Python 3" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/plpython-python23.html" title="PostgreSQL 16 - 45.1. Python 2 vs. Python 3" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/plpython-python23.html" title="PostgreSQL 15 - 45.1. Python 2 vs. Python 3" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/plpython-python23.html" title="PostgreSQL 14 - 45.1. Python 2 vs. Python 3" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/plpython-python23.html" title="PostgreSQL 13 - 45.1. Python 2 vs. Python 3" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/plpython-python23.html" title="PostgreSQL devel - 45.1. Python 2 vs. Python 3"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/plpython-python23.html" title="PostgreSQL 12 - 45.1. Python 2 vs. Python 3"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/plpython-python23.html" title="PostgreSQL 11 - 45.1. Python 2 vs. Python 3"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/plpython-python23.html" title="PostgreSQL 10 - 45.1. Python 2 vs. Python 3"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/plpython-python23.html" title="PostgreSQL 9.6 - 45.1. Python 2 vs. Python 3"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/plpython-python23.html" title="PostgreSQL 9.5 - 45.1. Python 2 vs. Python 3"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/plpython-python23.html" title="PostgreSQL 9.4 - 45.1. Python 2 vs. Python 3"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/plpython-python23.html" title="PostgreSQL 9.3 - 45.1. Python 2 vs. Python 3"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/plpython-python23.html" title="PostgreSQL 9.2 - 45.1. Python 2 vs. Python 3"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/plpython-python23.html" title="PostgreSQL 9.1 - 45.1. Python 2 vs. Python 3"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/plpython-python23.html" title="PostgreSQL 9.0 - 45.1. Python 2 vs. Python 3"  rel="nofollow">9.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">45.1.&nbsp;Python 2 vs. Python 3</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="plpython-funcs.html" title="45.2.&nbsp;PL/Python Functions">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLPYTHON-PYTHON23">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">45.1.&nbsp;Python 2 vs. Python 3</h2>
+      </div>
+    </div>
+  </div>
+  <p>PL/Python supports both the Python 2 and Python 3 language variants. (The PostgreSQL installation instructions might contain more precise information about the exact supported minor versions of Python.) Because the Python 2 and Python 3 language variants are incompatible in some important aspects, the following naming and transitioning scheme is used by PL/Python to avoid mixing them:</p>
+  <div class="itemizedlist">
+    <ul class="itemizedlist" style="list-style-type: disc;">
+      <li class="listitem">
+        <p>The PostgreSQL language named <code class="literal">plpython2u</code> implements PL/Python based on the Python 2 language variant.</p>
+      </li>
+      <li class="listitem">
+        <p>The PostgreSQL language named <code class="literal">plpython3u</code> implements PL/Python based on the Python 3 language variant.</p>
+      </li>
+      <li class="listitem">
+        <p>The language named <code class="literal">plpythonu</code> implements PL/Python based on the default Python language variant, which is currently Python 2. (This default is independent of what any local Python installations might consider to be their <span class="quote">“<span class="quote">default</span>”</span>, for example, what <code class="filename">/usr/bin/python</code> might be.) The default will probably be changed to Python 3 in a distant future release of PostgreSQL, depending on the progress of the migration to Python 3 in the Python community.</p>
+      </li>
+    </ul>
+  </div>
+  <p>This scheme is analogous to the recommendations in <a class="ulink" href="https://www.python.org/dev/peps/pep-0394/" target="_top">PEP 394</a> regarding the naming and transitioning of the <code class="command">python</code> command.</p>
+  <p>It depends on the build configuration or the installed packages whether PL/Python for Python 2 or Python 3 or both are available.</p>
+  <div class="tip">
+    <h3 class="title">Tip</h3>
+    <p>The built variant depends on which Python version was found during the installation or which version was explicitly set using the <code class="envar">PYTHON</code> environment variable; see <a class="xref" href="install-procedure.html" title="16.4.&nbsp;Installation Procedure">Section&nbsp;16.4</a>. To make both variants of PL/Python available in one installation, the source tree has to be configured and built twice.</p>
+  </div>
+  <p>This results in the following usage and migration strategy:</p>
+  <div class="itemizedlist">
+    <ul class="itemizedlist" style="list-style-type: disc;">
+      <li class="listitem">
+        <p>Existing users and users who are currently not interested in Python 3 use the language name <code class="literal">plpythonu</code> and don't have to change anything for the foreseeable future. It is recommended to gradually <span class="quote">“<span class="quote">future-proof</span>”</span> the code via migration to Python 2.6/2.7 to simplify the eventual migration to Python 3.</p>
+        <p>In practice, many PL/Python functions will migrate to Python 3 with few or no changes.</p>
+      </li>
+      <li class="listitem">
+        <p>Users who know that they have heavily Python 2 dependent code and don't plan to ever change it can make use of the <code class="literal">plpython2u</code> language name. This will continue to work into the very distant future, until Python 2 support might be completely dropped by PostgreSQL.</p>
+      </li>
+      <li class="listitem">
+        <p>Users who want to dive into Python 3 can use the <code class="literal">plpython3u</code> language name, which will keep working forever by today's standards. In the distant future, when Python 3 might become the default, they might like to remove the <span class="quote">“<span class="quote">3</span>”</span> for aesthetic reasons.</p>
+      </li>
+      <li class="listitem">
+        <p>Daredevils, who want to build a Python-3-only operating system environment, can change the contents of <code class="literal">plpythonu</code>'s extension control and script files to make <code class="literal">plpythonu</code> be equivalent to <code class="literal">plpython3u</code>, keeping in mind that this would make their installation incompatible with most of the rest of the world.</p>
+      </li>
+    </ul>
+  </div>
+  <p>See also the document <a class="ulink" href="https://docs.python.org/3/whatsnew/3.0.html" target="_top">What's New In Python 3.0</a> for more information about porting to Python 3.</p>
+  <p>It is not allowed to use PL/Python based on Python 2 and PL/Python based on Python 3 in the same session, because the symbols in the dynamic modules would clash, which could result in crashes of the PostgreSQL server process. There is a check that prevents mixing Python major versions in a session, which will abort the session if a mismatch is detected. It is possible, however, to use both PL/Python variants in the same database, from separate sessions.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="plpython.html" title="Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="plpython-funcs.html" title="45.2.&nbsp;PL/Python Functions">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Chapter&nbsp;45.&nbsp;PL/Python — Python Procedural Language&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;45.2.&nbsp;PL/Python Functions</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/plpython-python23.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

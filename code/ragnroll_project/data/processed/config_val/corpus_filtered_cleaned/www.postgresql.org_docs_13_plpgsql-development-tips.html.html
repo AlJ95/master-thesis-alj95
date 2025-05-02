@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 42.12. Tips for Developing in PL/pgSQL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/plpgsql-development-tips.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="42.12. Tips for Developing in PL/pgSQL" />
+  <meta property="og:description" content="42.12.&amp;nbsp;Tips for Developing in PL/pgSQL 42.12.1. Handling of Quotation Marks 42.12.2. Additional Compile-Time and Run-Time Checks One good way to …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/plpgsql-development-tips.html" title="PostgreSQL 17 - 42.12. Tips for Developing in PL/pgSQL" >Current</a>
+                          (<a href="/docs/17/plpgsql-development-tips.html" title="PostgreSQL 17 - 42.12. Tips for Developing in PL/pgSQL" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/plpgsql-development-tips.html" title="PostgreSQL 16 - 42.12. Tips for Developing in PL/pgSQL" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/plpgsql-development-tips.html" title="PostgreSQL 15 - 42.12. Tips for Developing in PL/pgSQL" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/plpgsql-development-tips.html" title="PostgreSQL 14 - 42.12. Tips for Developing in PL/pgSQL" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/plpgsql-development-tips.html" title="PostgreSQL 13 - 42.12. Tips for Developing in PL/pgSQL" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/plpgsql-development-tips.html" title="PostgreSQL devel - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/plpgsql-development-tips.html" title="PostgreSQL 12 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/plpgsql-development-tips.html" title="PostgreSQL 11 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/plpgsql-development-tips.html" title="PostgreSQL 10 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/plpgsql-development-tips.html" title="PostgreSQL 9.6 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/plpgsql-development-tips.html" title="PostgreSQL 9.5 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/plpgsql-development-tips.html" title="PostgreSQL 9.4 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/plpgsql-development-tips.html" title="PostgreSQL 9.3 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/plpgsql-development-tips.html" title="PostgreSQL 9.2 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/plpgsql-development-tips.html" title="PostgreSQL 9.1 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/plpgsql-development-tips.html" title="PostgreSQL 9.0 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/plpgsql-development-tips.html" title="PostgreSQL 8.4 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/plpgsql-development-tips.html" title="PostgreSQL 8.3 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/plpgsql-development-tips.html" title="PostgreSQL 8.2 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/plpgsql-development-tips.html" title="PostgreSQL 8.1 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/plpgsql-development-tips.html" title="PostgreSQL 8.0 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/plpgsql-development-tips.html" title="PostgreSQL 7.4 - 42.12. Tips for Developing in PL/pgSQL"  rel="nofollow">7.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">42.12.&nbsp;Tips for Developing in <span xmlns="http://www.w3.org/1999/xhtml" class="application">PL/pgSQL</span></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="plpgsql-implementation.html" title="42.11.&nbsp;PL/pgSQL under the Hood">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="plpgsql.html" title="Chapter&nbsp;42.&nbsp;PL/pgSQL — SQL Procedural Language">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;42.&nbsp;<span xmlns="http://www.w3.org/1999/xhtml" class="application">PL/pgSQL</span> — <acronym xmlns="http://www.w3.org/1999/xhtml" class="acronym">SQL</acronym> Procedural Language</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="plpgsql-porting.html" title="42.13.&nbsp;Porting from Oracle PL/SQL">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="PLPGSQL-DEVELOPMENT-TIPS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">42.12.&nbsp;Tips for Developing in <span class="application">PL/pgSQL</span></h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="plpgsql-development-tips.html#PLPGSQL-QUOTE-TIPS">42.12.1. Handling of Quotation Marks</a></span></dt>
+      <dt><span class="sect2"><a href="plpgsql-development-tips.html#PLPGSQL-EXTRA-CHECKS">42.12.2. Additional Compile-Time and Run-Time Checks</a></span></dt>
+    </dl>
+  </div>
+  <p>One good way to develop in <span class="application">PL/pgSQL</span> is to use the text editor of your choice to create your functions, and in another window, use <span class="application">psql</span> to load and test those functions. If you are doing it this way, it is a good idea to write the function using <code class="command">CREATE OR REPLACE FUNCTION</code>. That way you can just reload the file to update the function definition. For example:</p>
+  <pre class="programlisting">
+CREATE OR REPLACE FUNCTION testfunc(integer) RETURNS integer AS $$
+          ....
+$$ LANGUAGE plpgsql;
+</pre>
+  <p>While running <span class="application">psql</span>, you can load or reload such a function definition file with:</p>
+  <pre class="programlisting">
+\i filename.sql
+</pre>
+  <p>and then immediately issue SQL commands to test the function.</p>
+  <p>Another good way to develop in <span class="application">PL/pgSQL</span> is with a GUI database access tool that facilitates development in a procedural language. One example of such a tool is <span class="application">pgAdmin</span>, although others exist. These tools often provide convenient features such as escaping single quotes and making it easier to recreate and debug functions.</p>
+  <div class="sect2" id="PLPGSQL-QUOTE-TIPS">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">42.12.1.&nbsp;Handling of Quotation Marks</h3>
+        </div>
+      </div>
+    </div>
+    <p>The code of a <span class="application">PL/pgSQL</span> function is specified in <code class="command">CREATE FUNCTION</code> as a string literal. If you write the string literal in the ordinary way with surrounding single quotes, then any single quotes inside the function body must be doubled; likewise any backslashes must be doubled (assuming escape string syntax is used). Doubling quotes is at best tedious, and in more complicated cases the code can become downright incomprehensible, because you can easily find yourself needing half a dozen or more adjacent quote marks. It's recommended that you instead write the function body as a <span class="quote">“<span class="quote">dollar-quoted</span>”</span> string literal (see <a class="xref" href="sql-syntax-lexical.html#SQL-SYNTAX-DOLLAR-QUOTING" title="4.1.2.4.&nbsp;Dollar-Quoted String Constants">Section&nbsp;4.1.2.4</a>). In the dollar-quoting approach, you never double any quote marks, but instead take care to choose a different dollar-quoting delimiter for each level of nesting you need. For example, you might write the <code class="command">CREATE FUNCTION</code> command as:</p>
+    <pre class="programlisting">
+CREATE OR REPLACE FUNCTION testfunc(integer) RETURNS integer AS $PROC$
+          ....
+$PROC$ LANGUAGE plpgsql;
+</pre>
+    <p>Within this, you might use quote marks for simple literal strings in SQL commands and <code class="literal">$$</code> to delimit fragments of SQL commands that you are assembling as strings. If you need to quote text that includes <code class="literal">$$</code>, you could use <code class="literal">$Q$</code>, and so on.</p>
+    <p>The following chart shows what you have to do when writing quote marks without dollar quoting. It might be useful when translating pre-dollar quoting code into something more comprehensible.</p>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term">1 quotation mark</span></dt>
+        <dd>
+          <p>To begin and end the function body, for example:</p>
+          <pre class="programlisting">
+CREATE FUNCTION foo() RETURNS integer AS '
+          ....
+' LANGUAGE plpgsql;
+</pre>
+          <p>Anywhere within a single-quoted function body, quote marks <span class="emphasis"><em>must</em></span> appear in pairs.</p>
+        </dd>
+        <dt><span class="term">2 quotation marks</span></dt>
+        <dd>
+          <p>For string literals inside the function body, for example:</p>
+          <pre class="programlisting">
+a_output := ''Blah'';
+SELECT * FROM users WHERE f_name=''foobar'';
+</pre>
+          <p>In the dollar-quoting approach, you'd just write:</p>
+          <pre class="programlisting">
+a_output := 'Blah';
+SELECT * FROM users WHERE f_name='foobar';
+</pre>
+          <p>which is exactly what the <span class="application">PL/pgSQL</span> parser would see in either case.</p>
+        </dd>
+        <dt><span class="term">4 quotation marks</span></dt>
+        <dd>
+          <p>When you need a single quotation mark in a string constant inside the function body, for example:</p>
+          <pre class="programlisting">
+a_output := a_output || '' AND name LIKE ''''foobar'''' AND xyz''
+</pre>
+          <p>The value actually appended to <code class="literal">a_output</code> would be: <code class="literal">AND name LIKE 'foobar' AND xyz</code>.</p>
+          <p>In the dollar-quoting approach, you'd write:</p>
+          <pre class="programlisting">
+a_output := a_output || $$ AND name LIKE 'foobar' AND xyz$$
+</pre>
+          <p>being careful that any dollar-quote delimiters around this are not just <code class="literal">$$</code>.</p>
+        </dd>
+        <dt><span class="term">6 quotation marks</span></dt>
+        <dd>
+          <p>When a single quotation mark in a string inside the function body is adjacent to the end of that string constant, for example:</p>
+          <pre class="programlisting">
+a_output := a_output || '' AND name LIKE ''''foobar''''''
+</pre>
+          <p>The value appended to <code class="literal">a_output</code> would then be: <code class="literal">AND name LIKE 'foobar'</code>.</p>
+          <p>In the dollar-quoting approach, this becomes:</p>
+          <pre class="programlisting">
+a_output := a_output || $$ AND name LIKE 'foobar'$$
+</pre>
+        </dd>
+        <dt><span class="term">10 quotation marks</span></dt>
+        <dd>
+          <p>When you want two single quotation marks in a string constant (which accounts for 8 quotation marks) and this is adjacent to the end of that string constant (2 more). You will probably only need that if you are writing a function that generates other functions, as in <a class="xref" href="plpgsql-porting.html#PLPGSQL-PORTING-EX2" title="Example&nbsp;42.10.&nbsp;Porting a Function that Creates Another Function from PL/SQL to PL/pgSQL">Example&nbsp;42.10</a>. For example:</p>
+          <pre class="programlisting">
+a_output := a_output || '' if v_'' ||
+    referrer_keys.kind || '' like ''''''''''
+    || referrer_keys.key_string || ''''''''''
+    then return ''''''  || referrer_keys.referrer_type
+    || ''''''; end if;'';
+</pre>
+          <p>The value of <code class="literal">a_output</code> would then be:</p>
+          <pre class="programlisting">
+if v_... like ''...'' then return ''...''; end if;
+</pre>
+          <p>In the dollar-quoting approach, this becomes:</p>
+          <pre class="programlisting">
+a_output := a_output || $$ if v_$$ || referrer_keys.kind || $$ like '$$
+    || referrer_keys.key_string || $$'
+    then return '$$  || referrer_keys.referrer_type
+    || $$'; end if;$$;
+</pre>
+          <p>where we assume we only need to put single quote marks into <code class="literal">a_output</code>, because it will be re-quoted before use.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="sect2" id="PLPGSQL-EXTRA-CHECKS">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">42.12.2.&nbsp;Additional Compile-Time and Run-Time Checks</h3>
+        </div>
+      </div>
+    </div>
+    <p>To aid the user in finding instances of simple but common problems before they cause harm, <span class="application">PL/pgSQL</span> provides additional <em class="replaceable"><code>checks</code></em>. When enabled, depending on the configuration, they can be used to emit either a <code class="literal">WARNING</code> or an <code class="literal">ERROR</code> during the compilation of a function. A function which has received a <code class="literal">WARNING</code> can be executed without producing further messages, so you are advised to test in a separate development environment.</p>
+    <p>Setting <code class="varname">plpgsql.extra_warnings</code>, or <code class="varname">plpgsql.extra_errors</code>, as appropriate, to <code class="literal">"all"</code> is encouraged in development and/or testing environments.</p>
+    <p>These additional checks are enabled through the configuration variables <code class="varname">plpgsql.extra_warnings</code> for warnings and <code class="varname">plpgsql.extra_errors</code> for errors. Both can be set either to a comma-separated list of checks, <code class="literal">"none"</code> or <code class="literal">"all"</code>. The default is <code class="literal">"none"</code>. Currently the list of available checks includes:</p>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="varname">shadowed_variables</code></span></dt>
+        <dd>
+          <p>Checks if a declaration shadows a previously defined variable.</p>
+        </dd>
+        <dt><span class="term"><code class="varname">strict_multi_assignment</code></span></dt>
+        <dd>
+          <p>Some <span class="application">PL/PgSQL</span> commands allow assigning values to more than one variable at a time, such as <code class="command">SELECT INTO</code>. Typically, the number of target variables and the number of source variables should match, though <span class="application">PL/PgSQL</span> will use <code class="literal">NULL</code> for missing values and extra variables are ignored. Enabling this check will cause <span class="application">PL/PgSQL</span> to throw a <code class="literal">WARNING</code> or <code class="literal">ERROR</code> whenever the number of target variables and the number of source variables are different.</p>
+        </dd>
+        <dt><span class="term"><code class="varname">too_many_rows</code></span></dt>
+        <dd>
+          <p>Enabling this check will cause <span class="application">PL/PgSQL</span> to check if a given query returns more than one row when an <code class="literal">INTO</code> clause is used. As an <code class="literal">INTO</code> statement will only ever use one row, having a query return multiple rows is generally either inefficient and/or nondeterministic and therefore is likely an error.</p>
+        </dd>
+      </dl>
+    </div>
+    <p>The following example shows the effect of <code class="varname">plpgsql.extra_warnings</code> set to <code class="varname">shadowed_variables</code>:</p>
+    <pre class="programlisting">
+SET plpgsql.extra_warnings TO 'shadowed_variables';
+
+CREATE FUNCTION foo(f1 int) RETURNS int AS $$
+DECLARE
+f1 int;
+BEGIN
+RETURN f1;
+END;
+$$ LANGUAGE plpgsql;
+WARNING:  variable "f1" shadows a previously defined variable
+LINE 3: f1 int;
+        ^
+CREATE FUNCTION
+</pre>
+    <p>The below example shows the effects of setting <code class="varname">plpgsql.extra_warnings</code> to <code class="varname">strict_multi_assignment</code>:</p>
+    <pre class="programlisting">
+SET plpgsql.extra_warnings TO 'strict_multi_assignment';
+
+CREATE OR REPLACE FUNCTION public.foo()
+ RETURNS void
+ LANGUAGE plpgsql
+AS $$
+DECLARE
+  x int;
+  y int;
+BEGIN
+  SELECT 1 INTO x, y;
+  SELECT 1, 2 INTO x, y;
+  SELECT 1, 2, 3 INTO x, y;
+END;
+$$;
+
+SELECT foo();
+WARNING:  number of source and target fields in assignment does not match
+DETAIL:  strict_multi_assignment check of extra_warnings is active.
+HINT:  Make sure the query returns the exact list of columns.
+WARNING:  number of source and target fields in assignment does not match
+DETAIL:  strict_multi_assignment check of extra_warnings is active.
+HINT:  Make sure the query returns the exact list of columns.
+
+ foo 
+-----
+ 
+(1 row)
+</pre>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="plpgsql-implementation.html" title="42.11.&nbsp;PL/pgSQL under the Hood">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="plpgsql.html" title="Chapter&nbsp;42.&nbsp;PL/pgSQL — SQL Procedural Language">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="plpgsql-porting.html" title="42.13.&nbsp;Porting from Oracle PL/SQL">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">42.11.&nbsp;<span xmlns="http://www.w3.org/1999/xhtml" class="application">PL/pgSQL</span> under the Hood&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;42.13.&nbsp;Porting from <span xmlns="http://www.w3.org/1999/xhtml" class="productname">Oracle</span> PL/SQL</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/plpgsql-development-tips.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

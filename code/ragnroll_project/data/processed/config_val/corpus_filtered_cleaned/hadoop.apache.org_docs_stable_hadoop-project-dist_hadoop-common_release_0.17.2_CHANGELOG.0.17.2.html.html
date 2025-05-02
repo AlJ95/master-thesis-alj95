@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop Changelog</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop Changelog</h1><section>
+<h2><a name="Release_0.17.2_-_2008-08-11"></a>Release 0.17.2 - 2008-08-11</h2><section>
+<h3><a name="BUG_FIXES:"></a>BUG FIXES:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3370">HADOOP-3370</a> </td>
+<td align="left"> failed tasks may stay forever in TaskTracker.runningJobs </td>
+<td align="left">  Critical </td>
+<td align="left"> . </td>
+<td align="left"> Zheng Shao </td>
+<td align="left"> Zheng Shao </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3633">HADOOP-3633</a> </td>
+<td align="left"> Uncaught exception in DataXceiveServer </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Koji Noguchi </td>
+<td align="left"> Konstantin Shvachko </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3681">HADOOP-3681</a> </td>
+<td align="left"> Infinite loop in dfs close </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Koji Noguchi </td>
+<td align="left"> Lohit Vijayarenu </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3002">HADOOP-3002</a> </td>
+<td align="left"> HDFS should not remove blocks while in safemode. </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Konstantin Shvachko </td>
+<td align="left"> Konstantin Shvachko </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3685">HADOOP-3685</a> </td>
+<td align="left"> Unbalanced replication target </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Koji Noguchi </td>
+<td align="left"> Hairong Kuang </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3758">HADOOP-3758</a> </td>
+<td align="left"> Excessive exceptions in HDFS namenode log file </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Jim Huang </td>
+<td align="left"> Lohit Vijayarenu </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3760">HADOOP-3760</a> </td>
+<td align="left"> DFS operations fail because of Stream closed error </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Amar Kamat </td>
+<td align="left"> Lohit Vijayarenu </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3707">HADOOP-3707</a> </td>
+<td align="left"> Frequent DiskOutOfSpaceException on almost-full datanodes </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Koji Noguchi </td>
+<td align="left"> Raghu Angadi </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3678">HADOOP-3678</a> </td>
+<td align="left"> Avoid spurious &#x201c;DataXceiver: java.io.IOException: Connection reset by peer&#x201d; errors in DataNode log </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Raghu Angadi </td>
+<td align="left"> Raghu Angadi </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3813">HADOOP-3813</a> </td>
+<td align="left"> RPC queue overload of JobTracker </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Christian Kunz </td>
+<td align="left"> Amareshwari Sriramadasu </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3859">HADOOP-3859</a> </td>
+<td align="left"> 1000  concurrent read on a single file failing  the task/client </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Koji Noguchi </td>
+<td align="left"> Johan Oskarsson </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-3931">HADOOP-3931</a> </td>
+<td align="left"> Bug in MapTask.MapOutputBuffer.collect leads to an unnecessary and harmful &#x2018;reset&#x2019; </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Arun C Murthy </td>
+<td align="left"> Chris Douglas </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4773">HADOOP-4773</a> </td>
+<td align="left"> namenode startup error, hadoop-user-namenode.pid permission denied. </td>
+<td align="left">  Critical </td>
+<td align="left"> . </td>
+<td align="left"> Focus </td>
+<td align="left">  </td></tr>
+</tbody>
+</table></section></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

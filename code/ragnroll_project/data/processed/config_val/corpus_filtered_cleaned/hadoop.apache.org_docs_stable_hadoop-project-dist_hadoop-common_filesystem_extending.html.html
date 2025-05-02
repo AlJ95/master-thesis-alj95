@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Extending the File System specification and its tests</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Extending the File System specification and its tests</h1>
+<ul>
+</ul>
+
+<p>The FileSystem specification is incomplete. It doesn&#x2019;t cover all operations or even interfaces and classes in the FileSystem APIs. There may be some minor issues with those that it does cover, such as corner cases, failure modes, and other unexpected outcomes. It may also be that a standard FileSystem significantly diverges from the specification, and it is felt that this needs to be documented and coped with in tests.</p>
+<p>Finally, the FileSystem classes and methods are not fixed forever. They may be extended with new operations on existing classes, as well as potentially entirely new classes and interfaces.</p>
+<p>Accordingly, do not view this specification as a complete static document, any more than the rest of the Hadoop code.</p>
+<ol style="list-style-type: decimal">
+
+<li>View it as a live document to accompany the reference implementation (HDFS), and the tests used to validate filesystems.</li>
+<li>Don&#x2019;t be afraid to extend or correct it.</li>
+<li>If you are proposing enhancements to the FileSystem APIs, you should extend the specification to match.</li>
+</ol><section>
+<h2><a name="How_to_update_this_specification"></a>How to update this specification</h2>
+<ol style="list-style-type: decimal">
+
+<li>
+
+<p>Although found in the <code>hadoop-common</code> codebase, the HDFS team has ownership of the FileSystem and FileContext APIs. Work with them on the hdfs-dev mailing list.</p>
+</li>
+<li>
+
+<p>Create JIRA issues in the <code>HADOOP</code> project, component <code>fs</code>, to cover changes in the APIs and/or specification.</p>
+</li>
+<li>
+
+<p>Code changes will of course require tests. Ideally, changes to the specification itself are accompanied by new tests.</p>
+</li>
+<li>
+
+<p>If the change involves operations that already have an <code>Abstract*ContractTest</code>, add new test methods to the class and verify that they work on filesystem-specific tests that subclass it. That includes the object stores as well as the local and HDFS filesystems.</p>
+</li>
+<li>
+
+<p>If the changes add a new operation, add a new abstract test class with the same contract-driven architecture as the existing one, and an implementation subclass for all filesystems that support the operation.</p>
+</li>
+<li>
+
+<p>Add test methods to verify that invalid preconditions result in the expected failures.</p>
+</li>
+<li>
+
+<p>Add test methods to verify that valid preconditions result in the expected final state of the filesystem. Testing as little as possible per test aids in tracking down problems.</p>
+</li>
+<li>
+
+<p>If possible, add tests to show concurrency expectations.</p>
+</li>
+</ol>
+<p>If a FileSystem fails a newly added test, then it may be because:</p>
+<ul>
+
+<li>The specification is wrong.</li>
+<li>The test is wrong.</li>
+<li>The test is looking for the wrong exception (i.e. it is too strict).</li>
+<li>The specification and tests are correct -and it is the filesystem is not consistent with expectations.</li>
+</ul>
+<p>HDFS has to be treated as correct in its behavior. If the test and specification do not match this behavior, then the specification needs to be updated. Even so, there may be cases where the FS could be changed:</p>
+<ol style="list-style-type: decimal">
+
+<li>The exception raised is a generic <code>IOException</code>, when a more informative subclass, such as <code>EOFException</code> can be raised.</li>
+<li>The FileSystem does not fail correctly when passed an invalid set of arguments. This MAY be correctable, though must be done cautiously.</li>
+</ol>
+<p>If the mismatch is in LocalFileSystem, then it probably can&#x2019;t be corrected, as this is the native filesystem as accessed via the Java IO APIs.</p>
+<p>For other FileSystems, their behaviour MAY be updated to more accurately reflect the behavior of HDFS and/or LocalFileSystem. For most operations this is straightforward, though the semantics of <code>rename()</code> are complicated enough that it is not clear that HDFS is the correct reference.</p>
+<p>If a test fails and it is felt that it is a unfixable FileSystem-specific issue, then a new contract option to allow for different interpretations of the results should be added to the <code>ContractOptions</code> interface, the test modified to react to the presence/absence of the option, and the XML contract files for the standard FileSystems updated to indicate when a feature/failure mode is present.</p></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop Azure Data Lake support &#x2013; Hadoop Azure Data Lake Support</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop Azure Data Lake support</a>
+        &gt;
+        Hadoop Azure Data Lake Support
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Hadoop Azure Data Lake Support</h1>
+<ul>
+</ul></li>
+
+
+</ul></li>
+
+
+</ul></li>
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<div class="section">
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>The <tt>hadoop-azure-datalake</tt> module provides support for integration with the <a class="externalLink" href="https://azure.microsoft.com/en-in/documentation/services/data-lake-store/">Azure Data Lake Store</a>. This support comes via the JAR file <tt>azure-datalake-store.jar</tt>.</p>
+<div class="section">
+<h3><a name="Related_Documents"></a>Related Documents</h3>
+<ul>
+
+
+<li>Under services in left nav, look for Azure Active Directory and click it.</li>
+<li>Using &#x201c;App Registrations&#x201d; in the menu, create &#x201c;Web Application&#x201d;. Remember the name you create here - that is what you will add to your ADL account as authorized user.</li>
+<li>Go through the wizard</li>
+<li>Once app is created, go to &#x201c;keys&#x201d; under &#x201c;settings&#x201d; for the app</li>
+<li>Select a key duration and hit save. Save the generated keys.</li>
+<li>Go back to the App Registrations page, and click on the &#x201c;Endpoints&#x201d; button at the top a. Note down the  &#x201c;Token Endpoint&#x201d; URL</li>
+<li>Note down the properties you will need to auth:
+<ul>
+
+<li>The &#x201c;Application ID&#x201d; of the Web App you created above</li>
+<li>The key you just generated above</li>
+<li>The token endpoint</li>
+</ul>
+</li>
+</ol></div>
+<div class="section">
+<h5><a name="Adding_the_service_principal_to_your_ADL_Account"></a>Adding the service principal to your ADL Account</h5>
+<ol style="list-style-type: decimal">
+
+<li>Go to the portal again, and open your ADL account</li>
+<li>Select <tt>Access control (IAM)</tt></li>
+<li>Add your user name you created in Step 6 above (note that it does not show up in the list, but will be found if you searched for the name)</li>
+<li>Add &#x201c;Owner&#x201d; role</li>
+</ol></div>
+<div class="section">
+<h5><a name="Configure_core-site.xml"></a>Configure core-site.xml</h5>
+<p>Add the following properties to your <tt>core-site.xml</tt></p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.access.token.provider.type&lt;/name&gt;
+  &lt;value&gt;ClientCredential&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.refresh.url&lt;/name&gt;
+  &lt;value&gt;TOKEN ENDPOINT FROM STEP 7 ABOVE&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.client.id&lt;/name&gt;
+  &lt;value&gt;CLIENT ID FROM STEP 7 ABOVE&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.credential&lt;/name&gt;
+  &lt;value&gt;PASSWORD FROM STEP 7 ABOVE&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div></div>
+<div class="section">
+<h4><a name="Using_MSI_.28Managed_Service_Identity.29"></a>Using MSI (Managed Service Identity)</h4>
+<p>Azure VMs can be provisioned with &#x201c;service identities&#x201d; that are managed by the Identity extension within the VM. The advantage of doing this is that the credentials are managed by the extension, and do not have to be put into core-site.xml.</p>
+<p>To use MSI, modify the VM deployment template to use the identity extension. Note the port number you specified in the template: this is the port number for the REST endpoint of the token service exposed to localhost by the identity extension in the VM. The default recommended port number is 50342 - if the recommended port number is used, then the msi.port setting below can be omitted in the configuration.</p>
+<div class="section">
+<h5><a name="Configure_core-site.xml"></a>Configure core-site.xml</h5>
+<p>Add the following properties to your <tt>core-site.xml</tt></p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.access.token.provider.type&lt;/name&gt;
+  &lt;value&gt;Msi&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.msi.port&lt;/name&gt;
+  &lt;value&gt;PORT NUMBER FROM ABOVE (if different from the default of 50342)&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div></div></div>
+<div class="section">
+<h3><a name="Using_Device_Code_Auth_for_interactive_login"></a>Using Device Code Auth for interactive login</h3>
+<p><b>Note:</b> This auth method is suitable for running interactive tools, but will not work for jobs submitted to a cluster.</p>
+<p>To use user-based login, Azure ActiveDirectory provides login flow using device code.</p>
+<p>To use device code flow, user must first create a <b>Native</b> app registration in the Azure portal, and provide the client ID for the app as a config. Here are the steps:</p>
+<ol style="list-style-type: decimal">
+
+<li>Go to <a class="externalLink" href="https://portal.azure.com">the portal</a></li>
+<li>Under services in left nav, look for Azure Active Directory and click on it.</li>
+<li>Using &#x201c;App Registrations&#x201d; in the menu, create &#x201c;Native Application&#x201d;.</li>
+<li>Go through the wizard</li>
+<li>Once app is created, note down the &#x201c;Appplication ID&#x201d; of the app</li>
+<li>Grant permissions to the app:
+<ol style="list-style-type: decimal">
+
+<li>Click on &#x201c;Permissions&#x201d; for the app, and then add &#x201c;Azure Data Lake&#x201d; and &#x201c;Windows Azure Service Management API&#x201d; permissions</li>
+<li>Click on &#x201c;Grant Permissions&#x201d; to add the permissions to the app</li>
+</ol>
+</li>
+</ol>
+<p>Add the following properties to your <tt>core-site.xml</tt></p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.devicecode.clientappid&lt;/name&gt;
+  &lt;value&gt;APP ID FROM STEP 5 ABOVE&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+
+<p>It is usually not desirable to add DeviceCode as the default token provider type. But it can be used when using a local command:</p>
+
+<div>
+<div>
+<pre class="source"> hadoop fs -Dfs.adl.oauth2.access.token.provider.type=DeviceCode -ls ...
+</pre></div></div>
+
+<p>Running this will print a URL and device code that can be used to login from any browser (even on a different machine, outside of the ssh session). Once the login is done, the command continues.</p>
+<div class="section">
+<h4><a name="Protecting_the_Credentials_with_Credential_Providers"></a>Protecting the Credentials with Credential Providers</h4>
+<p>In many Hadoop clusters, the <tt>core-site.xml</tt> file is world-readable. To protect these credentials, it is recommended that you use the credential provider framework to securely store them and access them.</p>
+<p>All ADLS credential properties can be protected by credential providers. For additional reading on the credential provider API, see <a href="../hadoop-project-dist/hadoop-common/CredentialProviderAPI.html">Credential Provider API</a>.</p>
+<div class="section">
+<h5><a name="Provisioning"></a>Provisioning</h5>
+
+<div>
+<div>
+<pre class="source">hadoop credential create fs.adl.oauth2.client.id -value 123
+    -provider localjceks://file/home/foo/adls.jceks
+hadoop credential create fs.adl.oauth2.refresh.token -value 123
+    -provider localjceks://file/home/foo/adls.jceks
+</pre></div></div>
+</div>
+<div class="section">
+<h5><a name="Configuring_core-site.xml_or_command_line_property"></a>Configuring core-site.xml or command line property</h5>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.access.token.provider.type&lt;/name&gt;
+  &lt;value&gt;RefreshToken&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+  &lt;name&gt;hadoop.security.credential.provider.path&lt;/name&gt;
+  &lt;value&gt;localjceks://file/home/foo/adls.jceks&lt;/value&gt;
+  &lt;description&gt;Path to interrogate for protected credentials.&lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h5><a name="Running_DistCp"></a>Running DistCp</h5>
+
+<div>
+<div>
+<pre class="source">hadoop distcp
+    [-D fs.adl.oauth2.access.token.provider.type=RefreshToken
+     -D hadoop.security.credential.provider.path=localjceks://file/home/user/adls.jceks]
+    hdfs://&lt;NameNode Hostname&gt;:9001/user/foo/srcDir
+    adl://&lt;Account Name&gt;.azuredatalakestore.net/tgtDir/
+</pre></div></div>
+
+<p>NOTE: You may optionally add the provider path property to the <tt>distcp</tt> command line instead of added job specific configuration to a generic <tt>core-site.xml</tt>. The square brackets above illustrate this capability.`</p></div></div></div>
+<div class="section">
+<h3><a name="Accessing_adl_URLs"></a>Accessing adl URLs</h3>
+<p>After credentials are configured in <tt>core-site.xml</tt>, any Hadoop component may reference files in that Azure Data Lake Storage account by using URLs of the following format:</p>
+
+<div>
+<div>
+<pre class="source">adl://&lt;Account Name&gt;.azuredatalakestore.net/&lt;path&gt;
+</pre></div></div>
+
+<p>The schemes <tt>adl</tt> identifies a URL on a Hadoop-compatible file system backed by Azure Data Lake Storage.  <tt>adl</tt> utilizes encrypted HTTPS access for all interaction with the Azure Data Lake Storage API.</p>
+<p>For example, the following <a href="../hadoop-project-dist/hadoop-common/FileSystemShell.html">FileSystem Shell</a> commands demonstrate access to a storage account named <tt>youraccount</tt>.</p>
+
+<div>
+<div>
+<pre class="source">hadoop fs -mkdir adl://yourcontainer.azuredatalakestore.net/testDir
+
+hadoop fs -put testFile adl://yourcontainer.azuredatalakestore.net/testDir/testFile
+
+hadoop fs -cat adl://yourcontainer.azuredatalakestore.net/testDir/testFile
+test file content
+</pre></div></div>
+</div>
+<div class="section">
+<h3><a name="User.2FGroup_Representation"></a>User/Group Representation</h3>
+<p>The <tt>hadoop-azure-datalake</tt> module provides support for configuring how User/Group information is represented during <tt>getFileStatus()</tt>, <tt>listStatus()</tt>,  and <tt>getAclStatus()</tt> calls..</p>
+<p>Add the following properties to <tt>core-site.xml</tt></p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;adl.feature.ownerandgroup.enableupn&lt;/name&gt;
+  &lt;value&gt;true&lt;/value&gt;
+  &lt;description&gt;
+    When true : User and Group in FileStatus/AclStatus response is
+    represented as user friendly name as per Azure AD profile.
+
+    When false (default) : User and Group in FileStatus/AclStatus
+    response is represented by the unique identifier from Azure AD
+    profile (Object ID as GUID).
+
+    For performance optimization, Recommended default value.
+  &lt;/description&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div></div>
+<div class="section">
+<h2><a name="Configurations_for_different_ADL_accounts"></a>Configurations for different ADL accounts</h2>
+<p>Different ADL accounts can be accessed with different ADL client configurations. This also allows for different login details.</p>
+<ol style="list-style-type: decimal">
+
+<li>All <tt>fs.adl</tt> options can be set on a per account basis.</li>
+<li>The account specific option is set by replacing the <tt>fs.adl.</tt> prefix on an option with <tt>fs.adl.account.ACCOUNTNAME.</tt>, where <tt>ACCOUNTNAME</tt> is the name of the account.</li>
+<li>When connecting to an account, all options explicitly set will override the base <tt>fs.adl.</tt> values.</li>
+</ol>
+<p>As an example, a configuration could have a base configuration to use the public account <tt>adl://&lt;some-public-account&gt;.azuredatalakestore.net/</tt> and an account-specific configuration to use some private account <tt>adl://myprivateaccount.azuredatalakestore.net/</tt></p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.client.id&lt;/name&gt;
+  &lt;value&gt;CLIENTID&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.adl.oauth2.credential&lt;/name&gt;
+  &lt;value&gt;CREDENTIAL&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.adl.account.myprivateaccount.oauth2.client.id&lt;/name&gt;
+  &lt;value&gt;CLIENTID1&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+  &lt;name&gt;fs.adl.account.myprivateaccount.oauth2.credential&lt;/name&gt;
+  &lt;value&gt;CREDENTIAL1&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h2><a name="Testing_the_azure-datalake-store_Module"></a>Testing the azure-datalake-store Module</h2>
+<p>The <tt>hadoop-azure</tt> module includes a full suite of unit tests. Most of the tests will run without additional configuration by running <tt>mvn test</tt>. This includes tests against mocked storage, which is an in-memory emulation of Azure Data Lake Storage.</p>
+<p>A selection of tests can run against the Azure Data Lake Storage. To run these tests, please create <tt>src/test/resources/auth-keys.xml</tt> with Adl account information mentioned in the above sections and the following properties.</p>
+
+<div>
+<div>
+<pre class="source">&lt;property&gt;
+    &lt;name&gt;fs.adl.test.contract.enable&lt;/name&gt;
+    &lt;value&gt;true&lt;/value&gt;
+&lt;/property&gt;
+
+&lt;property&gt;
+    &lt;name&gt;test.fs.adl.name&lt;/name&gt;
+    &lt;value&gt;adl://yourcontainer.azuredatalakestore.net&lt;/value&gt;
+&lt;/property&gt;
+</pre></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

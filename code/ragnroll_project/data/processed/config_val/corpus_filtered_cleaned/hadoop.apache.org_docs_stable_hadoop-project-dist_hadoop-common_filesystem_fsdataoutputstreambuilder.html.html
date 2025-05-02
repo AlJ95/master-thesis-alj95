@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; class org.apache.hadoop.fs.FSDataOutputStreamBuilder</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+
+
+
+<h1>class <code>org.apache.hadoop.fs.FSDataOutputStreamBuilder</code></h1>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+</ul></li>
+
+
+
+
+
+
+</ul></li>
+</ul></li>
+
+</ul></li></ul>
+
+<p>Builder pattern for <code>FSDataOutputStream</code> and its subclasses. It is used to create a new file or open an existing file on <code>FileSystem</code> for write.</p><section>
+<h2><a name="Invariants"></a>Invariants</h2>
+<p>The <code>FSDataOutputStreamBuilder</code> interface does not validate parameters and modify the state of <code>FileSystem</code> until <code>build()</code> is invoked.</p></section><section>
+<h2><a name="Implementation-agnostic_parameters."></a>Implementation-agnostic parameters.</h2><section>
+<h3><a name="FSDataOutputStreamBuilder_create.28.29"></a><a name="Builder.create"></a> <code>FSDataOutputStreamBuilder create()</code></h3>
+<p>Specify <code>FSDataOutputStreamBuilder</code> to create a file on <code>FileSystem</code>, equivalent to <code>CreateFlag#CREATE</code>.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_append.28.29"></a><a name="Builder.append"></a> <code>FSDataOutputStreamBuilder append()</code></h3>
+<p>Specify <code>FSDataOutputStreamBuilder</code> to append to an existing file on <code>FileSystem</code>, equivalent to <code>CreateFlag#APPEND</code>.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_overwrite.28boolean_overwrite.29"></a><a name="Builder.overwrite"></a> <code>FSDataOutputStreamBuilder overwrite(boolean overwrite)</code></h3>
+<p>Specify <code>FSDataOutputStreamBuilder</code> to overwrite an existing file or not. If giving <code>overwrite==true</code>, it truncates an existing file, equivalent to <code>CreateFlag#OVERWITE</code>.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_permission.28FsPermission_permission.29"></a><a name="Builder.permission"></a> <code>FSDataOutputStreamBuilder permission(FsPermission permission)</code></h3>
+<p>Set permission for the file.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_bufferSize.28int_bufSize.29"></a><a name="Builder.bufferSize"></a> <code>FSDataOutputStreamBuilder bufferSize(int bufSize)</code></h3>
+<p>Set the size of the buffer to be used.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_replication.28short_replica.29"></a><a name="Builder.replication"></a> <code>FSDataOutputStreamBuilder replication(short replica)</code></h3>
+<p>Set the replication factor.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_blockSize.28long_size.29"></a><a name="Builder.blockSize"></a> <code>FSDataOutputStreamBuilder blockSize(long size)</code></h3>
+<p>Set block size in bytes.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_recursive.28.29"></a><a name="Builder.recursive"></a> <code>FSDataOutputStreamBuilder recursive()</code></h3>
+<p>Create parent directories if they do not exist.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_progress.28Progresable_prog.29"></a><a name="Builder.progress"></a> <code>FSDataOutputStreamBuilder progress(Progresable prog)</code></h3>
+<p>Set the facility of reporting progress.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_checksumOpt.28ChecksumOpt_chksumOpt.29"></a><a name="Builder.checksumOpt"></a> <code>FSDataOutputStreamBuilder checksumOpt(ChecksumOpt chksumOpt)</code></h3>
+<p>Set checksum opt.</p></section><section>
+<h3><a name="Set_optional_or_mandatory_parameters"></a>Set optional or mandatory parameters</h3>
+
+<div class="source">
+<div class="source">
+<pre>FSDataOutputStreamBuilder opt(String key, ...)
+FSDataOutputStreamBuilder must(String key, ...)
+</pre></div></div>
+
+<p>Set optional or mandatory parameters to the builder. Using <code>opt()</code> or <code>must()</code>, client can specify FS-specific parameters without inspecting the concrete type of <code>FileSystem</code>.</p>
+
+<div class="source">
+<div class="source">
+<pre>// Don't
+if (fs instanceof FooFileSystem) {
+    FooFileSystem fs = (FooFileSystem) fs;
+    out = dfs.createFile(path)
+        .optionA()
+        .optionB(&quot;value&quot;)
+        .cache()
+        .build()
+} else if (fs instanceof BarFileSystem) {
+    ...
+}
+
+// Do
+out = fs.createFile(path)
+    .permission(perm)
+    .bufferSize(bufSize)
+    .opt(&quot;foofs:option.a&quot;, true)
+    .opt(&quot;foofs:option.b&quot;, &quot;value&quot;)
+    .opt(&quot;barfs:cache&quot;, true)
+    .must(&quot;foofs:cache&quot;, true)
+    .must(&quot;barfs:cache-size&quot;, 256 * 1024 * 1024)
+    .build();
+</pre></div></div>
+<section>
+<h4><a name="Implementation_Notes"></a>Implementation Notes</h4>
+<p>The concrete <code>FileSystem</code> and/or <code>FSDataOutputStreamBuilder</code> implementation MUST verify that implementation-agnostic parameters (i.e., &quot;syncable<code>) or implementation-specific parameters (i.e., &quot;foofs:cache&quot;) are supported.</code>FileSystem<code>will satisfy optional parameters (via</code>opt(key, &#x2026;)<code>) on best effort. If the mandatory parameters (via</code>must(key, &#x2026;)<code>) can not be satisfied in the</code>FileSystem<code>,</code>IllegalArgumentException<code>must be thrown in</code>build()`.</p>
+<p>The behavior of resolving the conflicts between the parameters set by builder methods (i.e., <code>bufferSize()</code>) and <code>opt()</code>/<code>must()</code> is as follows:</p>
+<blockquote>
+
+<p>The last option specified defines the value and its optional/mandatory state.</p>
+</blockquote></section></section></section><section>
+<h2><a name="HDFS-specific_parameters."></a>HDFS-specific parameters.</h2>
+<p><code>HdfsDataOutputStreamBuilder extends FSDataOutputStreamBuilder</code> provides additional HDFS-specific parameters, for further customize file creation / append behavior.</p><section>
+<h3><a name="FSDataOutpuStreamBuilder_favoredNodes.28InetSocketAddress.5B.5D_nodes.29"></a><code>FSDataOutpuStreamBuilder favoredNodes(InetSocketAddress[] nodes)</code></h3>
+<p>Set favored DataNodes for new blocks.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_syncBlock.28.29"></a><code>FSDataOutputStreamBuilder syncBlock()</code></h3>
+<p>Force closed blocks to the disk device. See <code>CreateFlag#SYNC_BLOCK</code></p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_lazyPersist.28.29"></a><code>FSDataOutputStreamBuilder lazyPersist()</code></h3>
+<p>Create the block on transient storage if possible.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_newBlock.28.29"></a><code>FSDataOutputStreamBuilder newBlock()</code></h3>
+<p>Append data to a new block instead of the end of the last partial block.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_noLocalWrite.28.29"></a><code>FSDataOutputStreamBuilder noLocalWrite()</code></h3>
+<p>Advise that a block replica NOT be written to the local DataNode.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_ecPolicyName.28.29"></a><code>FSDataOutputStreamBuilder ecPolicyName()</code></h3>
+<p>Enforce the file to be a striped file with erasure coding policy &#x2018;policyName&#x2019;, no matter what its parent directory&#x2019;s replication or erasure coding policy is.</p></section><section>
+<h3><a name="FSDataOutputStreamBuilder_replicate.28.29"></a><code>FSDataOutputStreamBuilder replicate()</code></h3>
+<p>Enforce the file to be a replicated file, no matter what its parent directory&#x2019;s replication or erasure coding policy is.</p></section></section><section>
+<h2><a name="Builder_interface"></a>Builder interface</h2><section>
+<h3><a name="FSDataOutputStream_build.28.29"></a><a name="Builder.build"></a> <code>FSDataOutputStream build()</code></h3>
+<p>Create a new file or append an existing file on the underlying <code>FileSystem</code>, and return <code>FSDataOutputStream</code> for write.</p><section>
+<h4><a name="Preconditions"></a>Preconditions</h4>
+<p>The following combinations of parameters are not supported:</p>
+
+<div class="source">
+<div class="source">
+<pre>if APPEND|OVERWRITE: raise HadoopIllegalArgumentException
+if CREATE|APPEND|OVERWRITE: raise HadoopIllegalArgumentExdeption
+</pre></div></div>
+
+<p><code>FileSystem</code> may reject the request for other reasons and throw <code>IOException</code>, see <code>FileSystem#create(path, ...)</code> and <code>FileSystem#append()</code>.</p></section><section>
+<h4><a name="Postconditions"></a>Postconditions</h4>
+
+<div class="source">
+<div class="source">
+<pre>FS' where :
+   FS'.Files'[p] == []
+   ancestors(p) is-subset-of FS'.Directories'
+
+result = FSDataOutputStream
+</pre></div></div>
+
+<p>The result is <code>FSDataOutputStream</code> to be used to write data to filesystem.</p></section></section></section><section>
+<h2><a name="S3A-specific_options"></a><a name="s3a"></a> S3A-specific options</h2>
+<p>Here are the custom options which the S3A Connector supports.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Name                        </th>
+<th> Type      </th>
+<th> Meaning                                </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> <code>fs.s3a.create.performance</code> </td>
+<td> <code>boolean</code> </td>
+<td> create a file with maximum performance </td></tr>
+<tr class="a">
+<td> <code>fs.s3a.create.header</code>      </td>
+<td> <code>string</code>  </td>
+<td> prefix for user supplied headers       </td></tr>
+</tbody>
+</table><section>
+<h3><a name="fs.s3a.create.performance"></a><code>fs.s3a.create.performance</code></h3>
+<p>Prioritize file creation performance over safety checks for filesystem consistency.</p>
+<p>This: 1. Skips the <code>LIST</code> call which makes sure a file is being created over a directory. Risk: a file is created over a directory. 2. Ignores the overwrite flag. 3. Never issues a <code>DELETE</code> call to delete parent directory markers.</p>
+<p>It is possible to probe an S3A Filesystem instance for this capability through the <code>hasPathCapability(path, &quot;fs.s3a.create.performance&quot;)</code> check.</p>
+<p>Creating files with this option over existing directories is likely to make S3A filesystem clients behave inconsistently.</p>
+<p>Operations optimized for directories (e.g. listing calls) are likely to see the directory tree not the file; operations optimized for files (<code>getFileStatus()</code>, <code>isFile()</code>) more likely to see the file. The exact form of the inconsistencies, and which operations/parameters trigger this are undefined and may change between even minor releases.</p>
+<p>Using this option is the equivalent of pressing and holding down the &#x201c;Electronic Stability Control&#x201d; button on a rear-wheel drive car for five seconds: the safety checks are off. Things wil be faster if the driver knew what they were doing. If they didn&#x2019;t, the fact they had held the button down will be used as evidence at the inquest as proof that they made a conscious decision to choose speed over safety and that the outcome was their own fault.</p>
+<p>Note: the option can be set for an entire filesystem. Again, the safety checks are there to more closely match the semantics of a classic filesystem, and to reduce the likelihood that the object store ends up in a state which diverges so much from the classic directory + tree structur that applications get confused.</p>
+<p>Accordingly: <i>Use if and only if you are confident that the conditions are met.</i></p></section><section>
+<h3><a name="fs.s3a.create.header_User-supplied_header_support"></a><code>fs.s3a.create.header</code> User-supplied header support</h3>
+<p>Options with the prefix <code>fs.s3a.create.header.</code> will be added to the S3 object metadata as &#x201c;user defined metadata&#x201d;. This metadata is visible to all applications. It can also be retrieved through the FileSystem/FileContext <code>listXAttrs()</code> and <code>getXAttrs()</code> API calls with the prefix <code>header.</code></p>
+<p>When an object is renamed, the metadata is propagated the copy created.</p>
+<p>It is possible to probe an S3A Filesystem instance for this capability through the <code>hasPathCapability(path, &quot;fs.s3a.create.header&quot;)</code> check.</p></section></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

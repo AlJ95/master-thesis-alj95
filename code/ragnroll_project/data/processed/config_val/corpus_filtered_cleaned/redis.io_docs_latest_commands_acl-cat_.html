@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>ACL CAT | Docs</title>
+    <meta name="description" content="Lists the ACL categories, or the commands inside a category.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/acl-cat/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="ACL CAT">
+  <meta property="og:description" content="Lists the ACL categories, or the commands inside a category.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="ACL CAT">
+  <meta itemprop="description" content="Lists the ACL categories, or the commands inside a category.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="260">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ACL CAT">
+  <meta name="twitter:description" content="Lists the ACL categories, or the commands inside a category.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">ACL CAT
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">ACL CAT [category]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 6.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1) since the categories and commands are a fixed set.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>The command shows the available ACL categories if called without arguments.
+If a category name is given, the command shows all the Redis commands in
+the specified category.</p>
+<p>ACL categories are very useful in order to create ACL rules that include or
+exclude a large set of commands at once, without specifying every single
+command. For instance, the following rule will let the user <code>karin</code> perform
+everything but the most dangerous operations that may affect the server
+stability:</p>
+<pre><code>ACL SETUSER karin on +@all -@dangerous
+</code></pre>
+<p>We first add all the commands to the set of commands that <code>karin</code> is able
+to execute, but then we remove all the dangerous commands.</p>
+<p>Checking for all the available categories is as simple as:</p>
+<pre tabindex="0"><code>&gt; ACL CAT
+ 1) &#34;keyspace&#34;
+ 2) &#34;read&#34;
+ 3) &#34;write&#34;
+ 4) &#34;set&#34;
+ 5) &#34;sortedset&#34;
+ 6) &#34;list&#34;
+ 7) &#34;hash&#34;
+ 8) &#34;string&#34;
+ 9) &#34;bitmap&#34;
+10) &#34;hyperloglog&#34;
+11) &#34;geo&#34;
+12) &#34;stream&#34;
+13) &#34;pubsub&#34;
+14) &#34;admin&#34;
+15) &#34;fast&#34;
+16) &#34;slow&#34;
+17) &#34;blocking&#34;
+18) &#34;dangerous&#34;
+19) &#34;connection&#34;
+20) &#34;transaction&#34;
+21) &#34;scripting&#34;
+22) &#34;json&#34;
+23) &#34;search&#34;
+24) &#34;tdigest&#34;
+25) &#34;cms&#34;
+26) &#34;bloom&#34;
+27) &#34;cuckoo&#34;
+28) &#34;topk&#34;
+29) &#34;timeseries&#34;
+</code></pre><p>Then we may want to know what commands are part of a given category:</p>
+<pre tabindex="0"><code>&gt; ACL CAT dangerous
+ 1) &#34;flushdb&#34;
+ 2) &#34;acl&#34;
+ 3) &#34;slowlog&#34;
+ 4) &#34;debug&#34;
+ 5) &#34;role&#34;
+ 6) &#34;keys&#34;
+ 7) &#34;pfselftest&#34;
+ 8) &#34;client&#34;
+ 9) &#34;bgrewriteaof&#34;
+10) &#34;replicaof&#34;
+11) &#34;monitor&#34;
+12) &#34;restore-asking&#34;
+13) &#34;latency&#34;
+14) &#34;replconf&#34;
+15) &#34;pfdebug&#34;
+16) &#34;bgsave&#34;
+17) &#34;sync&#34;
+18) &#34;config&#34;
+19) &#34;flushall&#34;
+20) &#34;cluster&#34;
+21) &#34;info&#34;
+22) &#34;lastsave&#34;
+23) &#34;slaveof&#34;
+24) &#34;swapdb&#34;
+25) &#34;module&#34;
+26) &#34;restore&#34;
+27) &#34;migrate&#34;
+28) &#34;save&#34;
+29) &#34;shutdown&#34;
+30) &#34;psync&#34;
+31) &#34;sort&#34;
+</code></pre>
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: an array of <a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a> elements representing ACL categories or commands in a given category.</li>
+<li><a href="../../develop/reference/protocol-spec#simple-errors">Simple error reply</a>: the command returns an error if an invalid category name is given.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/acl-cat/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

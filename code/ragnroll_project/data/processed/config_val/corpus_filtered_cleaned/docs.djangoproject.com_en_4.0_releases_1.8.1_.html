@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 1.8.1 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/1.8.1/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 1.8.1 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-1-8-1-release-notes">
+<span id="django-1-8-1-release-notes"></span><h1>Django 1.8.1 release notes<a class="headerlink" href="#django-1-8-1-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>May 1, 2015</em></p>
+<p>Django 1.8.1 fixes several bugs in 1.8 and includes some optimizations in the
+migrations framework.</p>
+<div class="section" id="s-bugfixes">
+<span id="bugfixes"></span><h2>Bugfixes<a class="headerlink" href="#bugfixes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Added support for serializing <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">timedelta</span></code></a> objects in
+migrations (<a class="reference external" href="https://code.djangoproject.com/ticket/24566">#24566</a>).</li>
+<li>Restored proper parsing of the <a class="reference internal" href="../../ref/django-admin/#django-admin-testserver"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">testserver</span></code></a> command’s positional
+arguments (fixture names) (<a class="reference external" href="https://code.djangoproject.com/ticket/24571">#24571</a>).</li>
+<li>Prevented <code class="docutils literal notranslate"><span class="pre">TypeError</span></code> in translation functions <code class="docutils literal notranslate"><span class="pre">check_for_language()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">get_language_bidi()</span></code> when translations are deactivated (<a class="reference external" href="https://code.djangoproject.com/ticket/24569">#24569</a>).</li>
+<li>Fixed <a class="reference internal" href="../../ref/django-admin/#django-admin-squashmigrations"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">squashmigrations</span></code></a> command when using
+<a class="reference internal" href="../../ref/migration-operations/#django.db.migrations.operations.SeparateDatabaseAndState" title="django.db.migrations.operations.SeparateDatabaseAndState"><code class="xref py py-class docutils literal notranslate"><span class="pre">SeparateDatabaseAndState</span></code></a>
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24278">#24278</a>).</li>
+<li>Stripped microseconds from <code class="docutils literal notranslate"><span class="pre">datetime</span></code> values when using an older version of
+the MySQLdb DB API driver as it does not support fractional seconds
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24584">#24584</a>).</li>
+<li>Fixed a migration crash when altering
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.ManyToManyField" title="django.db.models.ManyToManyField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManyToManyField</span></code></a>s (<a class="reference external" href="https://code.djangoproject.com/ticket/24513">#24513</a>).</li>
+<li>Fixed a crash with <code class="docutils literal notranslate"><span class="pre">QuerySet.update()</span></code> on foreign keys to one-to-one fields
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24578">#24578</a>).</li>
+<li>Fixed a regression in the model detail view of
+<a class="reference internal" href="../../ref/contrib/admin/admindocs/#module-django.contrib.admindocs" title="django.contrib.admindocs: Django's admin documentation generator."><code class="xref py py-mod docutils literal notranslate"><span class="pre">admindocs</span></code></a> when a model has a reverse foreign key
+relation (<a class="reference external" href="https://code.djangoproject.com/ticket/24624">#24624</a>).</li>
+<li>Prevented arbitrary file inclusions in <a class="reference internal" href="../../ref/contrib/admin/admindocs/#module-django.contrib.admindocs" title="django.contrib.admindocs: Django's admin documentation generator."><code class="xref py py-mod docutils literal notranslate"><span class="pre">admindocs</span></code></a>
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24625">#24625</a>).</li>
+<li>Fixed a crash with <code class="docutils literal notranslate"><span class="pre">QuerySet.update()</span></code> on foreign keys to instances with
+<code class="docutils literal notranslate"><span class="pre">uuid</span></code> primary keys (<a class="reference external" href="https://code.djangoproject.com/ticket/24611">#24611</a>).</li>
+<li>Fixed database introspection with SQLite 3.8.9 (released April 8, 2015)
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24637">#24637</a>).</li>
+<li>Updated <code class="docutils literal notranslate"><span class="pre">urlpatterns</span></code> examples generated by <a class="reference internal" href="../../ref/django-admin/#django-admin-startproject"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">startproject</span></code></a> to
+remove usage of referencing views by dotted path in
+<code class="docutils literal notranslate"><span class="pre">django.conf.urls.url()</span></code> which is deprecated in Django 1.8
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24635">#24635</a>).</li>
+<li>Fixed queries where an expression was referenced in <code class="docutils literal notranslate"><span class="pre">order_by()</span></code>, but wasn’t
+part of the select clause. An example query is
+<code class="docutils literal notranslate"><span class="pre">qs.annotate(foo=F('field')).values('pk').order_by('foo'))</span></code> (<a class="reference external" href="https://code.djangoproject.com/ticket/24615">#24615</a>).</li>
+<li>Fixed a database table name quoting regression (<a class="reference external" href="https://code.djangoproject.com/ticket/24605">#24605</a>).</li>
+<li>Prevented the loss of <code class="docutils literal notranslate"><span class="pre">null</span></code>/<code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">null</span></code> column properties during field
+alteration of MySQL databases (<a class="reference external" href="https://code.djangoproject.com/ticket/24595">#24595</a>).</li>
+<li>Fixed JavaScript path of <code class="docutils literal notranslate"><span class="pre">contrib.admin</span></code>’s related field widget when using
+alternate static file storages (<a class="reference external" href="https://code.djangoproject.com/ticket/24655">#24655</a>).</li>
+<li>Fixed a migration crash when adding new relations to models
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24573">#24573</a>).</li>
+<li>Fixed a migration crash when applying migrations with model managers on
+Python 3 that were generated on Python 2 (<a class="reference external" href="https://code.djangoproject.com/ticket/24701">#24701</a>).</li>
+<li>Restored the ability to use iterators as queryset filter arguments
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24719">#24719</a>).</li>
+<li>Fixed a migration crash when renaming the target model of a many-to-many
+relation (<a class="reference external" href="https://code.djangoproject.com/ticket/24725">#24725</a>).</li>
+<li>Removed flushing of the test database with <a class="reference internal" href="../../ref/django-admin/#cmdoption-test-keepdb"><code class="xref std std-option docutils literal notranslate"><span class="pre">test</span> <span class="pre">--keepdb</span></code></a>, which
+prevented apps with data migrations from using the option (<a class="reference external" href="https://code.djangoproject.com/ticket/24729">#24729</a>).</li>
+<li>Fixed <code class="docutils literal notranslate"><span class="pre">makemessages</span></code> crash in some locales (<a class="reference external" href="https://code.djangoproject.com/ticket/23271">#23271</a>).</li>
+<li>Fixed help text positioning of <code class="docutils literal notranslate"><span class="pre">contrib.admin</span></code> fields that use the
+<code class="docutils literal notranslate"><span class="pre">ModelAdmin.filter_horizontal</span></code> and <code class="docutils literal notranslate"><span class="pre">filter_vertical</span></code> options
+(<a class="reference external" href="https://code.djangoproject.com/ticket/24676">#24676</a>).</li>
+<li>Fixed <code class="docutils literal notranslate"><span class="pre">AttributeError:</span> <span class="pre">function</span> <span class="pre">'GDALAllRegister'</span> <span class="pre">not</span> <span class="pre">found</span></code> error when
+initializing <code class="docutils literal notranslate"><span class="pre">contrib.gis</span></code> on Windows.</li>
+</ul>
+</div>
+<div class="section" id="s-optimizations">
+<span id="optimizations"></span><h2>Optimizations<a class="headerlink" href="#optimizations" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Changed <code class="docutils literal notranslate"><span class="pre">ModelState</span></code> to deepcopy fields instead of deconstructing and
+reconstructing (<a class="reference external" href="https://code.djangoproject.com/ticket/24591">#24591</a>). This speeds up the rendering of model
+states and reduces memory usage when running <a class="reference internal" href="../../ref/django-admin/#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">manage.py</span> <span class="pre">migrate</span></code></a> (although other changes in this release may negate any performance
+benefits).</li>
+</ul>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: pg_test_fsync</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/pgtestfsync.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="pg_test_fsync" />
+  <meta property="og:description" content="pg_test_fsync pg_test_fsync — determine fastest wal_sync_method for PostgreSQL Synopsis pg_test_fsync [option...] Description pg_test_fsync is intended to give you a reasonable …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/pgtestfsync.html" title="PostgreSQL 17 - pg_test_fsync" >Current</a>
+                          (<a href="/docs/17/pgtestfsync.html" title="PostgreSQL 17 - pg_test_fsync" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/pgtestfsync.html" title="PostgreSQL 16 - pg_test_fsync" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/pgtestfsync.html" title="PostgreSQL 15 - pg_test_fsync" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/pgtestfsync.html" title="PostgreSQL 14 - pg_test_fsync" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/pgtestfsync.html" title="PostgreSQL 13 - pg_test_fsync" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/pgtestfsync.html" title="PostgreSQL devel - pg_test_fsync"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/pgtestfsync.html" title="PostgreSQL 12 - pg_test_fsync"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/pgtestfsync.html" title="PostgreSQL 11 - pg_test_fsync"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/pgtestfsync.html" title="PostgreSQL 10 - pg_test_fsync"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/pgtestfsync.html" title="PostgreSQL 9.6 - pg_test_fsync"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/pgtestfsync.html" title="PostgreSQL 9.5 - pg_test_fsync"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/pgtestfsync.html" title="PostgreSQL 9.4 - pg_test_fsync"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/pgtestfsync.html" title="PostgreSQL 9.3 - pg_test_fsync"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/pgtestfsync.html" title="PostgreSQL 9.2 - pg_test_fsync"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/pgtestfsync.html" title="PostgreSQL 9.1 - pg_test_fsync"  rel="nofollow">9.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center"><span xmlns="http://www.w3.org/1999/xhtml" class="application">pg_test_fsync</span></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="app-pgrewind.html" title="pg_rewind">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="reference-server.html" title="PostgreSQL Server Applications">Up</a></td>
+      <th width="60%" align="center">PostgreSQL Server Applications</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="pgtesttiming.html" title="pg_test_timing">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="PGTESTFSYNC">
+  <div class="titlepage"></div><a id="id-1.9.5.10.1" class="indexterm" name="id-1.9.5.10.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle"><span class="application">pg_test_fsync</span></span></h2>
+    <p>pg_test_fsync — determine fastest <code class="varname">wal_sync_method</code> for <span class="productname">PostgreSQL</span></p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <div class="cmdsynopsis">
+      <p id="id-1.9.5.10.4.1"><code class="command">pg_test_fsync</code> [<em class="replaceable"><code>option</code></em>...]</p>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.5.10.5">
+    <h2>Description</h2>
+    <p><span class="application">pg_test_fsync</span> is intended to give you a reasonable idea of what the fastest <a class="xref" href="runtime-config-wal.html#GUC-WAL-SYNC-METHOD">wal_sync_method</a> is on your specific system, as well as supplying diagnostic information in the event of an identified I/O problem. However, differences shown by <span class="application">pg_test_fsync</span> might not make any significant difference in real database throughput, especially since many database servers are not speed-limited by their write-ahead logs. <span class="application">pg_test_fsync</span> reports average file sync operation time in microseconds for each <code class="literal">wal_sync_method</code>, which can also be used to inform efforts to optimize the value of <a class="xref" href="runtime-config-wal.html#GUC-COMMIT-DELAY">commit_delay</a>.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.5.10.6">
+    <h2>Options</h2>
+    <p><span class="application">pg_test_fsync</span> accepts the following command-line options:</p>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="option">-f</code><br /></span><span class="term"><code class="option">--filename</code></span></dt>
+        <dd>
+          <p>Specifies the file name to write test data in. This file should be in the same file system that the <code class="filename">pg_wal</code> directory is or will be placed in. (<code class="filename">pg_wal</code> contains the <acronym class="acronym">WAL</acronym> files.) The default is <code class="filename">pg_test_fsync.out</code> in the current directory.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-s</code><br /></span><span class="term"><code class="option">--secs-per-test</code></span></dt>
+        <dd>
+          <p>Specifies the number of seconds for each test. The more time per test, the greater the test's accuracy, but the longer it takes to run. The default is 5 seconds, which allows the program to complete in under 2 minutes.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-V</code><br /></span><span class="term"><code class="option">--version</code></span></dt>
+        <dd>
+          <p>Print the <span class="application">pg_test_fsync</span> version and exit.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-?</code><br /></span><span class="term"><code class="option">--help</code></span></dt>
+        <dd>
+          <p>Show help about <span class="application">pg_test_fsync</span> command line arguments, and exit.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.5.10.7">
+    <h2>Environment</h2>
+    <p>The environment variable <code class="envar">PG_COLOR</code> specifies whether to use color in diagnostic messages. Possible values are <code class="literal">always</code>, <code class="literal">auto</code> and <code class="literal">never</code>.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.5.10.8">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="app-postgres.html" title="postgres"><span class="refentrytitle"><span class="application">postgres</span></span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="app-pgrewind.html" title="pg_rewind">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="reference-server.html" title="PostgreSQL Server Applications">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="pgtesttiming.html" title="pg_test_timing">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top"><span xmlns="http://www.w3.org/1999/xhtml" class="application">pg_rewind</span>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;<span xmlns="http://www.w3.org/1999/xhtml" class="application">pg_test_timing</span></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/pgtestfsync.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

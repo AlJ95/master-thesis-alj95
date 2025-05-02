@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: pg_isready</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/app-pg-isready.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="pg_isready" />
+  <meta property="og:description" content="pg_isready pg_isready — check the connection status of a PostgreSQL server Synopsis pg_isready [connection-option...] [option...] Description pg_isready is a utility …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/app-pg-isready.html" title="PostgreSQL 17 - pg_isready" >Current</a>
+                          (<a href="/docs/17/app-pg-isready.html" title="PostgreSQL 17 - pg_isready" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/app-pg-isready.html" title="PostgreSQL 16 - pg_isready" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/app-pg-isready.html" title="PostgreSQL 15 - pg_isready" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/app-pg-isready.html" title="PostgreSQL 14 - pg_isready" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/app-pg-isready.html" title="PostgreSQL 13 - pg_isready" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/app-pg-isready.html" title="PostgreSQL devel - pg_isready"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/app-pg-isready.html" title="PostgreSQL 12 - pg_isready"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/app-pg-isready.html" title="PostgreSQL 11 - pg_isready"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/app-pg-isready.html" title="PostgreSQL 10 - pg_isready"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/app-pg-isready.html" title="PostgreSQL 9.6 - pg_isready"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/app-pg-isready.html" title="PostgreSQL 9.5 - pg_isready"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/app-pg-isready.html" title="PostgreSQL 9.4 - pg_isready"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/app-pg-isready.html" title="PostgreSQL 9.3 - pg_isready"  rel="nofollow">9.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center"><span xmlns="http://www.w3.org/1999/xhtml" class="application">pg_isready</span></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="app-pg-dumpall.html" title="pg_dumpall">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="reference-client.html" title="PostgreSQL Client Applications">Up</a></td>
+      <th width="60%" align="center">PostgreSQL Client Applications</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="app-pgreceivewal.html" title="pg_receivewal">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="APP-PG-ISREADY">
+  <div class="titlepage"></div><a id="id-1.9.4.14.1" class="indexterm" name="id-1.9.4.14.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle"><span class="application">pg_isready</span></span></h2>
+    <p>pg_isready — check the connection status of a <span class="productname">PostgreSQL</span> server</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <div class="cmdsynopsis">
+      <p id="id-1.9.4.14.4.1"><code class="command">pg_isready</code> [<em class="replaceable"><code>connection-option</code></em>...] [<em class="replaceable"><code>option</code></em>...]</p>
+    </div>
+  </div>
+  <div class="refsect1" id="APP-PG-ISREADY-DESCRIPTION">
+    <h2>Description</h2>
+    <p><span class="application">pg_isready</span> is a utility for checking the connection status of a <span class="productname">PostgreSQL</span> database server. The exit status specifies the result of the connection check.</p>
+  </div>
+  <div class="refsect1" id="APP-PG-ISREADY-OPTIONS">
+    <h2>Options</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="option">-d <em class="replaceable"><code>dbname</code></em></code><br /></span><span class="term"><code class="option">--dbname=<em class="replaceable"><code>dbname</code></em></code></span></dt>
+        <dd>
+          <p>Specifies the name of the database to connect to. The <em class="replaceable"><code>dbname</code></em> can be a <a class="link" href="libpq-connect.html#LIBPQ-CONNSTRING" title="33.1.1.&nbsp;Connection Strings">connection string</a>. If so, connection string parameters will override any conflicting command line options.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-h <em class="replaceable"><code>hostname</code></em></code><br /></span><span class="term"><code class="option">--host=<em class="replaceable"><code>hostname</code></em></code></span></dt>
+        <dd>
+          <p>Specifies the host name of the machine on which the server is running. If the value begins with a slash, it is used as the directory for the Unix-domain socket.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-p <em class="replaceable"><code>port</code></em></code><br /></span><span class="term"><code class="option">--port=<em class="replaceable"><code>port</code></em></code></span></dt>
+        <dd>
+          <p>Specifies the TCP port or the local Unix-domain socket file extension on which the server is listening for connections. Defaults to the value of the <code class="envar">PGPORT</code> environment variable or, if not set, to the port specified at compile time, usually 5432.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-q</code><br /></span><span class="term"><code class="option">--quiet</code></span></dt>
+        <dd>
+          <p>Do not display status message. This is useful when scripting.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-t <em class="replaceable"><code>seconds</code></em></code><br /></span><span class="term"><code class="option">--timeout=<em class="replaceable"><code>seconds</code></em></code></span></dt>
+        <dd>
+          <p>The maximum number of seconds to wait when attempting connection before returning that the server is not responding. Setting to 0 disables. The default is 3 seconds.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-U <em class="replaceable"><code>username</code></em></code><br /></span><span class="term"><code class="option">--username=<em class="replaceable"><code>username</code></em></code></span></dt>
+        <dd>
+          <p>Connect to the database as the user <em class="replaceable"><code>username</code></em> instead of the default.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-V</code><br /></span><span class="term"><code class="option">--version</code></span></dt>
+        <dd>
+          <p>Print the <span class="application">pg_isready</span> version and exit.</p>
+        </dd>
+        <dt><span class="term"><code class="option">-?</code><br /></span><span class="term"><code class="option">--help</code></span></dt>
+        <dd>
+          <p>Show help about <span class="application">pg_isready</span> command line arguments, and exit.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.4.14.7">
+    <h2>Exit Status</h2>
+    <p><span class="application">pg_isready</span> returns <code class="literal">0</code> to the shell if the server is accepting connections normally, <code class="literal">1</code> if the server is rejecting connections (for example during startup), <code class="literal">2</code> if there was no response to the connection attempt, and <code class="literal">3</code> if no attempt was made (for example due to invalid parameters).</p>
+  </div>
+  <div class="refsect1" id="id-1.9.4.14.8">
+    <h2>Environment</h2>
+    <p><code class="command">pg_isready</code>, like most other <span class="productname">PostgreSQL</span> utilities, also uses the environment variables supported by <span class="application">libpq</span> (see <a class="xref" href="libpq-envars.html" title="33.14.&nbsp;Environment Variables">Section&nbsp;33.14</a>).</p>
+    <p>The environment variable <code class="envar">PG_COLOR</code> specifies whether to use color in diagnostic messages. Possible values are <code class="literal">always</code>, <code class="literal">auto</code> and <code class="literal">never</code>.</p>
+  </div>
+  <div class="refsect1" id="APP-PG-ISREADY-NOTES">
+    <h2>Notes</h2>
+    <p>It is not necessary to supply correct user name, password, or database name values to obtain the server status; however, if incorrect values are provided, the server will log a failed connection attempt.</p>
+  </div>
+  <div class="refsect1" id="APP-PG-ISREADY-EXAMPLES">
+    <h2>Examples</h2>
+    <p>Standard Usage:</p>
+    <pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>pg_isready</code></strong>
+<code class="computeroutput">/tmp:5432 - accepting connections</code>
+<code class="prompt">$</code> <strong class="userinput"><code>echo $?</code></strong>
+<code class="computeroutput">0</code>
+</pre>
+    <p>Running with connection parameters to a <span class="productname">PostgreSQL</span> cluster in startup:</p>
+    <pre class="screen">
+<code class="prompt">$ </code><strong class="userinput"><code>pg_isready -h localhost -p 5433</code></strong>
+<code class="computeroutput">localhost:5433 - rejecting connections</code>
+<code class="prompt">$</code> <strong class="userinput"><code>echo $?</code></strong>
+<code class="computeroutput">1</code>
+</pre>
+    <p>Running with connection parameters to a non-responsive <span class="productname">PostgreSQL</span> cluster:</p>
+    <pre class="screen">
+<code class="prompt">$ </code><strong class="userinput"><code>pg_isready -h someremotehost</code></strong>
+<code class="computeroutput">someremotehost:5432 - no response</code>
+<code class="prompt">$</code> <strong class="userinput"><code>echo $?</code></strong>
+<code class="computeroutput">2</code>
+</pre>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="app-pg-dumpall.html" title="pg_dumpall">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="reference-client.html" title="PostgreSQL Client Applications">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="app-pgreceivewal.html" title="pg_receivewal">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top"><span xmlns="http://www.w3.org/1999/xhtml" class="application">pg_dumpall</span>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;pg_receivewal</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/app-pg-isready.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

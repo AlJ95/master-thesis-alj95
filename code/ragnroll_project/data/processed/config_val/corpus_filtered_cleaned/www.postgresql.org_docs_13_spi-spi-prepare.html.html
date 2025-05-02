@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: SPI_prepare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/spi-spi-prepare.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="SPI_prepare" />
+  <meta property="og:description" content="SPI_prepare SPI_prepare — prepare a statement, without executing it yet Synopsis SPIPlanPtr SPI_prepare(const char * command, int nargs, Oid * …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/spi-spi-prepare.html" title="PostgreSQL 17 - SPI_prepare" >Current</a>
+                          (<a href="/docs/17/spi-spi-prepare.html" title="PostgreSQL 17 - SPI_prepare" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/spi-spi-prepare.html" title="PostgreSQL 16 - SPI_prepare" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/spi-spi-prepare.html" title="PostgreSQL 15 - SPI_prepare" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/spi-spi-prepare.html" title="PostgreSQL 14 - SPI_prepare" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/spi-spi-prepare.html" title="PostgreSQL 13 - SPI_prepare" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/spi-spi-prepare.html" title="PostgreSQL devel - SPI_prepare"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/spi-spi-prepare.html" title="PostgreSQL 12 - SPI_prepare"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/spi-spi-prepare.html" title="PostgreSQL 11 - SPI_prepare"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/spi-spi-prepare.html" title="PostgreSQL 10 - SPI_prepare"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/spi-spi-prepare.html" title="PostgreSQL 9.6 - SPI_prepare"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/spi-spi-prepare.html" title="PostgreSQL 9.5 - SPI_prepare"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/spi-spi-prepare.html" title="PostgreSQL 9.4 - SPI_prepare"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/spi-spi-prepare.html" title="PostgreSQL 9.3 - SPI_prepare"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/spi-spi-prepare.html" title="PostgreSQL 9.2 - SPI_prepare"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/spi-spi-prepare.html" title="PostgreSQL 9.1 - SPI_prepare"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/spi-spi-prepare.html" title="PostgreSQL 9.0 - SPI_prepare"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/spi-spi-prepare.html" title="PostgreSQL 8.4 - SPI_prepare"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/spi-spi-prepare.html" title="PostgreSQL 8.3 - SPI_prepare"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/spi-spi-prepare.html" title="PostgreSQL 8.2 - SPI_prepare"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/spi-spi-prepare.html" title="PostgreSQL 8.1 - SPI_prepare"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/spi-spi-prepare.html" title="PostgreSQL 8.0 - SPI_prepare"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/spi-spi-prepare.html" title="PostgreSQL 7.4 - SPI_prepare"  rel="nofollow">7.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">SPI_prepare</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="spi-spi-execute-with-args.html" title="SPI_execute_with_args">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="spi-interface.html" title="46.1.&nbsp;Interface Functions">Up</a></td>
+      <th width="60%" align="center">46.1.&nbsp;Interface Functions</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="spi-spi-prepare-cursor.html" title="SPI_prepare_cursor">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SPI-SPI-PREPARE">
+  <div class="titlepage"></div><a id="id-1.8.12.8.7.1" class="indexterm" name="id-1.8.12.8.7.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">SPI_prepare</span></h2>
+    <p>SPI_prepare — prepare a statement, without executing it yet</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+SPIPlanPtr SPI_prepare(const char * <em class="parameter"><code>command</code></em>, int <em class="parameter"><code>nargs</code></em>, Oid * <em class="parameter"><code>argtypes</code></em>)
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.8.12.8.7.5">
+    <h2>Description</h2>
+    <p><code class="function">SPI_prepare</code> creates and returns a prepared statement for the specified command, but doesn't execute the command. The prepared statement can later be executed repeatedly using <code class="function">SPI_execute_plan</code>.</p>
+    <p>When the same or a similar command is to be executed repeatedly, it is generally advantageous to perform parse analysis only once, and might furthermore be advantageous to re-use an execution plan for the command. <code class="function">SPI_prepare</code> converts a command string into a prepared statement that encapsulates the results of parse analysis. The prepared statement also provides a place for caching an execution plan if it is found that generating a custom plan for each execution is not helpful.</p>
+    <p>A prepared command can be generalized by writing parameters (<code class="literal">$1</code>, <code class="literal">$2</code>, etc.) in place of what would be constants in a normal command. The actual values of the parameters are then specified when <code class="function">SPI_execute_plan</code> is called. This allows the prepared command to be used over a wider range of situations than would be possible without parameters.</p>
+    <p>The statement returned by <code class="function">SPI_prepare</code> can be used only in the current invocation of the C function, since <code class="function">SPI_finish</code> frees memory allocated for such a statement. But the statement can be saved for longer using the functions <code class="function">SPI_keepplan</code> or <code class="function">SPI_saveplan</code>.</p>
+  </div>
+  <div class="refsect1" id="id-1.8.12.8.7.6">
+    <h2>Arguments</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="literal">const char * <em class="parameter"><code>command</code></em></code></span></dt>
+        <dd>
+          <p>command string</p>
+        </dd>
+        <dt><span class="term"><code class="literal">int <em class="parameter"><code>nargs</code></em></code></span></dt>
+        <dd>
+          <p>number of input parameters (<code class="literal">$1</code>, <code class="literal">$2</code>, etc.)</p>
+        </dd>
+        <dt><span class="term"><code class="literal">Oid * <em class="parameter"><code>argtypes</code></em></code></span></dt>
+        <dd>
+          <p>pointer to an array containing the <acronym class="acronym">OID</acronym>s of the data types of the parameters</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.8.12.8.7.7">
+    <h2>Return Value</h2>
+    <p><code class="function">SPI_prepare</code> returns a non-null pointer to an <code class="type">SPIPlan</code>, which is an opaque struct representing a prepared statement. On error, <code class="symbol">NULL</code> will be returned, and <code class="varname">SPI_result</code> will be set to one of the same error codes used by <code class="function">SPI_execute</code>, except that it is set to <code class="symbol">SPI_ERROR_ARGUMENT</code> if <em class="parameter"><code>command</code></em> is <code class="symbol">NULL</code>, or if <em class="parameter"><code>nargs</code></em> is less than 0, or if <em class="parameter"><code>nargs</code></em> is greater than 0 and <em class="parameter"><code>argtypes</code></em> is <code class="symbol">NULL</code>.</p>
+  </div>
+  <div class="refsect1" id="id-1.8.12.8.7.8">
+    <h2>Notes</h2>
+    <p>If no parameters are defined, a generic plan will be created at the first use of <code class="function">SPI_execute_plan</code>, and used for all subsequent executions as well. If there are parameters, the first few uses of <code class="function">SPI_execute_plan</code> will generate custom plans that are specific to the supplied parameter values. After enough uses of the same prepared statement, <code class="function">SPI_execute_plan</code> will build a generic plan, and if that is not too much more expensive than the custom plans, it will start using the generic plan instead of re-planning each time. If this default behavior is unsuitable, you can alter it by passing the <code class="literal">CURSOR_OPT_GENERIC_PLAN</code> or <code class="literal">CURSOR_OPT_CUSTOM_PLAN</code> flag to <code class="function">SPI_prepare_cursor</code>, to force use of generic or custom plans respectively.</p>
+    <p>Although the main point of a prepared statement is to avoid repeated parse analysis and planning of the statement, <span class="productname">PostgreSQL</span> will force re-analysis and re-planning of the statement before using it whenever database objects used in the statement have undergone definitional (DDL) changes since the previous use of the prepared statement. Also, if the value of <a class="xref" href="runtime-config-client.html#GUC-SEARCH-PATH">search_path</a> changes from one use to the next, the statement will be re-parsed using the new <code class="varname">search_path</code>. (This latter behavior is new as of <span class="productname">PostgreSQL</span> 9.3.) See <a class="xref" href="sql-prepare.html" title="PREPARE"><span class="refentrytitle">PREPARE</span></a> for more information about the behavior of prepared statements.</p>
+    <p>This function should only be called from a connected C function.</p>
+    <p><code class="type">SPIPlanPtr</code> is declared as a pointer to an opaque struct type in <code class="filename">spi.h</code>. It is unwise to try to access its contents directly, as that makes your code much more likely to break in future revisions of <span class="productname">PostgreSQL</span>.</p>
+    <p>The name <code class="type">SPIPlanPtr</code> is somewhat historical, since the data structure no longer necessarily contains an execution plan.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="spi-spi-execute-with-args.html" title="SPI_execute_with_args">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="spi-interface.html" title="46.1.&nbsp;Interface Functions">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="spi-spi-prepare-cursor.html" title="SPI_prepare_cursor">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">SPI_execute_with_args&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;SPI_prepare_cursor</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/spi-spi-prepare.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

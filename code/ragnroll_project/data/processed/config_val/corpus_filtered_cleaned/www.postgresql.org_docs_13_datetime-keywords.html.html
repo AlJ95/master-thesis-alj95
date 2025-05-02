@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: B.3. Date/Time Key Words</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/datetime-keywords.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="B.3. Date/Time Key Words" />
+  <meta property="og:description" content="B.3.&amp;nbsp;Date/Time Key Words Table&amp;nbsp;B.1 shows the tokens that are recognized as names of months. Table&amp;nbsp;B.1.&amp;nbsp;Month Names Month Abbreviations January Jan …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/datetime-keywords.html" title="PostgreSQL 17 - B.3. Date/Time Key Words" >Current</a>
+                          (<a href="/docs/17/datetime-keywords.html" title="PostgreSQL 17 - B.3. Date/Time Key Words" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/datetime-keywords.html" title="PostgreSQL 16 - B.3. Date/Time Key Words" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/datetime-keywords.html" title="PostgreSQL 15 - B.3. Date/Time Key Words" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/datetime-keywords.html" title="PostgreSQL 14 - B.3. Date/Time Key Words" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/datetime-keywords.html" title="PostgreSQL 13 - B.3. Date/Time Key Words" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/datetime-keywords.html" title="PostgreSQL devel - B.3. Date/Time Key Words"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/datetime-keywords.html" title="PostgreSQL 12 - B.3. Date/Time Key Words"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/datetime-keywords.html" title="PostgreSQL 11 - B.3. Date/Time Key Words"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/datetime-keywords.html" title="PostgreSQL 10 - B.3. Date/Time Key Words"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/datetime-keywords.html" title="PostgreSQL 9.6 - B.3. Date/Time Key Words"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/datetime-keywords.html" title="PostgreSQL 9.5 - B.3. Date/Time Key Words"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/datetime-keywords.html" title="PostgreSQL 9.4 - B.3. Date/Time Key Words"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/datetime-keywords.html" title="PostgreSQL 9.3 - B.3. Date/Time Key Words"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/datetime-keywords.html" title="PostgreSQL 9.2 - B.3. Date/Time Key Words"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/datetime-keywords.html" title="PostgreSQL 9.1 - B.3. Date/Time Key Words"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/datetime-keywords.html" title="PostgreSQL 9.0 - B.3. Date/Time Key Words"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/datetime-keywords.html" title="PostgreSQL 8.4 - B.3. Date/Time Key Words"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/datetime-keywords.html" title="PostgreSQL 8.3 - B.3. Date/Time Key Words"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/datetime-keywords.html" title="PostgreSQL 8.2 - B.3. Date/Time Key Words"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/datetime-keywords.html" title="PostgreSQL 8.1 - B.3. Date/Time Key Words"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/datetime-keywords.html" title="PostgreSQL 8.0 - B.3. Date/Time Key Words"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/datetime-keywords.html" title="PostgreSQL 7.4 - B.3. Date/Time Key Words"  rel="nofollow">7.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">B.3.&nbsp;Date/Time Key Words</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="datetime-invalid-input.html" title="B.2.&nbsp;Handling of Invalid or Ambiguous Timestamps">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="datetime-appendix.html" title="Appendix&nbsp;B.&nbsp;Date/Time Support">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;B.&nbsp;Date/Time Support</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="datetime-config-files.html" title="B.4.&nbsp;Date/Time Configuration Files">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="DATETIME-KEYWORDS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">B.3.&nbsp;Date/Time Key Words</h2>
+      </div>
+    </div>
+  </div>
+  <p><a class="xref" href="datetime-keywords.html#DATETIME-MONTH-TABLE" title="Table&nbsp;B.1.&nbsp;Month Names">Table&nbsp;B.1</a> shows the tokens that are recognized as names of months.</p>
+  <div class="table" id="DATETIME-MONTH-TABLE">
+    <p class="title"><strong>Table&nbsp;B.1.&nbsp;Month Names</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="Month Names" border="1">
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Abbreviations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>January</td>
+            <td>Jan</td>
+          </tr>
+          <tr>
+            <td>February</td>
+            <td>Feb</td>
+          </tr>
+          <tr>
+            <td>March</td>
+            <td>Mar</td>
+          </tr>
+          <tr>
+            <td>April</td>
+            <td>Apr</td>
+          </tr>
+          <tr>
+            <td>May</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>June</td>
+            <td>Jun</td>
+          </tr>
+          <tr>
+            <td>July</td>
+            <td>Jul</td>
+          </tr>
+          <tr>
+            <td>August</td>
+            <td>Aug</td>
+          </tr>
+          <tr>
+            <td>September</td>
+            <td>Sep, Sept</td>
+          </tr>
+          <tr>
+            <td>October</td>
+            <td>Oct</td>
+          </tr>
+          <tr>
+            <td>November</td>
+            <td>Nov</td>
+          </tr>
+          <tr>
+            <td>December</td>
+            <td>Dec</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+  <p><a class="xref" href="datetime-keywords.html#DATETIME-DOW-TABLE" title="Table&nbsp;B.2.&nbsp;Day of the Week Names">Table&nbsp;B.2</a> shows the tokens that are recognized as names of days of the week.</p>
+  <div class="table" id="DATETIME-DOW-TABLE">
+    <p class="title"><strong>Table&nbsp;B.2.&nbsp;Day of the Week Names</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="Day of the Week Names" border="1">
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Abbreviations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sunday</td>
+            <td>Sun</td>
+          </tr>
+          <tr>
+            <td>Monday</td>
+            <td>Mon</td>
+          </tr>
+          <tr>
+            <td>Tuesday</td>
+            <td>Tue, Tues</td>
+          </tr>
+          <tr>
+            <td>Wednesday</td>
+            <td>Wed, Weds</td>
+          </tr>
+          <tr>
+            <td>Thursday</td>
+            <td>Thu, Thur, Thurs</td>
+          </tr>
+          <tr>
+            <td>Friday</td>
+            <td>Fri</td>
+          </tr>
+          <tr>
+            <td>Saturday</td>
+            <td>Sat</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+  <p><a class="xref" href="datetime-keywords.html#DATETIME-MOD-TABLE" title="Table&nbsp;B.3.&nbsp;Date/Time Field Modifiers">Table&nbsp;B.3</a> shows the tokens that serve various modifier purposes.</p>
+  <div class="table" id="DATETIME-MOD-TABLE">
+    <p class="title"><strong>Table&nbsp;B.3.&nbsp;Date/Time Field Modifiers</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="Date/Time Field Modifiers" border="1">
+        <colgroup>
+          <col />
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Identifier</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="literal">AM</code></td>
+            <td>Time is before 12:00</td>
+          </tr>
+          <tr>
+            <td><code class="literal">AT</code></td>
+            <td>Ignored</td>
+          </tr>
+          <tr>
+            <td><code class="literal">JULIAN</code>, <code class="literal">JD</code>, <code class="literal">J</code></td>
+            <td>Next field is Julian Date</td>
+          </tr>
+          <tr>
+            <td><code class="literal">ON</code></td>
+            <td>Ignored</td>
+          </tr>
+          <tr>
+            <td><code class="literal">PM</code></td>
+            <td>Time is on or after 12:00</td>
+          </tr>
+          <tr>
+            <td><code class="literal">T</code></td>
+            <td>Next field is time</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="datetime-invalid-input.html" title="B.2.&nbsp;Handling of Invalid or Ambiguous Timestamps">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="datetime-appendix.html" title="Appendix&nbsp;B.&nbsp;Date/Time Support">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="datetime-config-files.html" title="B.4.&nbsp;Date/Time Configuration Files">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">B.2.&nbsp;Handling of Invalid or Ambiguous Timestamps&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;B.4.&nbsp;Date/Time Configuration Files</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/datetime-keywords.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

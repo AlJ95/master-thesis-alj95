@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Async Profiler Servlet for Hadoop</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Async Profiler Servlet for Hadoop</h1>
+<ul>
+
+
+</ul>
+<section>
+<h2><a name="Purpose"></a>Purpose</h2>
+<p>This document describes how to configure and use async profiler with Hadoop applications. Async profiler is a low overhead sampling profiler for Java that does not suffer from Safepoint bias problem. It features HotSpot-specific APIs to collect stack traces and to track memory allocations. The profiler works with OpenJDK, Oracle JDK and other Java runtimes based on the HotSpot JVM.</p>
+<p>Hadoop profiler servlet supports Async Profiler major versions 1.x and 2.x.</p></section><section>
+<h2><a name="Prerequisites"></a>Prerequisites</h2>
+<p>Make sure Hadoop is installed, configured and setup correctly. For more information see:</p>
+<ul>
+
+<li><a href="./SingleCluster.html">Single Node Setup</a> for first-time users.</li>
+<li><a href="./ClusterSetup.html">Cluster Setup</a> for large, distributed clusters.</li>
+</ul>
+<p>Go to <a class="externalLink" href="https://github.com/jvm-profiling-tools/async-profiler">https://github.com/jvm-profiling-tools/async-profiler</a>, download a release appropriate for your platform, and install on every cluster host.</p>
+<p>Set <code>ASYNC_PROFILER_HOME</code> in the environment (put it in hadoop-env.sh) to the root directory of the async-profiler install location, or pass it on the Hadoop daemon&#x2019;s command line as a system property as <code>-Dasync.profiler.home=/path/to/async-profiler</code>.</p></section><section>
+<h2><a name="Usage"></a>Usage</h2>
+<p>Once the prerequisites have been satisfied, access to the async-profiler is available by using Namenode or ResourceManager UI.</p>
+<p>Following options from async-profiler can be specified as query paramater. *  <code>-e event</code>          profiling event: cpu|alloc|lock|cache-misses etc. *  <code>-d duration</code>       run profiling for &#x2018;duration&#x2019; seconds (integer) *  <code>-i interval</code>       sampling interval in nanoseconds (long) *  <code>-j jstackdepth</code>    maximum Java stack depth (integer) *  <code>-b bufsize</code>        frame buffer size (long) *  <code>-t</code>                profile different threads separately *  <code>-s</code>                simple class names instead of FQN *  <code>-o fmt[,fmt...]</code>   output format: summary|traces|flat|collapsed|svg|tree|jfr|html *  <code>--width px</code>        SVG width pixels (integer) *  <code>--height px</code>       SVG frame height pixels (integer) *  <code>--minwidth px</code>     skip frames smaller than px (double) *  <code>--reverse</code>         generate stack-reversed FlameGraph / Call tree</p>
+<p>Example: If Namenode http address is localhost:9870, and ResourceManager http address is localhost:8088, ProfileServlet running with async-profiler setup can be accessed with <a class="externalLink" href="http://localhost:9870/prof">http://localhost:9870/prof</a> and <a class="externalLink" href="http://localhost:8088/prof">http://localhost:8088/prof</a> for Namenode and ResourceManager processes respectively.</p>
+<p>Diving deep into some params:</p>
+<ul>
+
+<li>To collect 10 second CPU profile of current process (returns FlameGraph svg)</li>
+<li><code>curl http://localhost:9870/prof</code> (FlameGraph svg for Namenode)</li>
+<li><code>curl http://localhost:8088/prof</code> (FlameGraph svg for ResourceManager)</li>
+<li>To collect 10 second CPU profile of pid 12345 (returns FlameGraph svg)</li>
+<li><code>curl http://localhost:9870/prof?pid=12345</code> (For instance, provide pid of Datanode here)</li>
+<li>To collect 30 second CPU profile of pid 12345 (returns FlameGraph svg)</li>
+<li><code>curl http://localhost:9870/prof?pid=12345&amp;duration=30</code></li>
+<li>To collect 1 minute CPU profile of current process and output in tree format (html)</li>
+<li><code>curl http://localhost:9870/prof?output=tree&amp;amp;duration=60</code></li>
+<li>To collect 10 second heap allocation profile of current process (returns FlameGraph svg)</li>
+<li><code>curl http://localhost:9870/prof?event=alloc</code></li>
+<li>To collect lock contention profile of current process (returns FlameGraph svg)</li>
+<li><code>curl http://localhost:9870/prof?event=lock</code></li>
+</ul>
+<p>The following event types are supported by async-profiler. Use the &#x2018;event&#x2019; parameter to specify. Default is &#x2018;cpu&#x2019;. Not all operating systems will support all types.</p>
+<p>Perf events:</p>
+<ul>
+
+<li>cpu</li>
+<li>page-faults</li>
+<li>context-switches</li>
+<li>cycles</li>
+<li>instructions</li>
+<li>cache-references</li>
+<li>cache-misses</li>
+<li>branches</li>
+<li>branch-misses</li>
+<li>bus-cycles</li>
+<li>L1-dcache-load-misses</li>
+<li>LLC-load-misses</li>
+<li>dTLB-load-misses</li>
+</ul>
+<p>Java events:</p>
+<ul>
+
+<li>alloc</li>
+<li>lock</li>
+</ul>
+<p>The following output formats are supported. Use the &#x2018;output&#x2019; parameter to specify. Default is &#x2018;flamegraph&#x2019;.</p>
+<p>Output formats:</p>
+<ul>
+
+<li>summary: A dump of basic profiling statistics.</li>
+<li>traces: Call traces.</li>
+<li>flat: Flat profile (top N hot methods).</li>
+<li>collapsed: Collapsed call traces in the format used by FlameGraph script. This is a collection of call stacks, where each line is a semicolon separated list of frames followed by a counter.</li>
+<li>svg: FlameGraph in SVG format.</li>
+<li>tree: Call tree in HTML format.</li>
+<li>jfr: Call traces in Java Flight Recorder format.</li>
+</ul>
+<p>The &#x2018;duration&#x2019; parameter specifies how long to collect trace data before generating output, specified in seconds. The default is 10 seconds.</p></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 1.10 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/1.10/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 1.10 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-1-10-release-notes">
+<span id="django-1-10-release-notes"></span><h1>Django 1.10 release notes<a class="headerlink" href="#django-1-10-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>August 1, 2016</em></p>
+<p>Welcome to Django 1.10!</p>
+<p>These release notes cover the <a class="reference internal" href="#whats-new-1-10"><span class="std std-ref">new features</span></a>, as well as
+some <a class="reference internal" href="#backwards-incompatible-1-10"><span class="std std-ref">backwards incompatible changes</span></a> you’ll
+want to be aware of when upgrading from Django 1.9 or older versions. We’ve
+<a class="reference internal" href="#removed-features-1-10"><span class="std std-ref">dropped some features</span></a> that have reached the end
+of their deprecation cycle, and we’ve <a class="reference internal" href="#deprecated-features-1-10"><span class="std std-ref">begun the deprecation process for
+some features</span></a>.</p>
+<p>See the <a class="reference internal" href="../../howto/upgrade-version/"><span class="doc">How to upgrade Django to a newer version</span></a> guide if you’re updating an existing
+project.</p>
+<div class="section" id="s-python-compatibility">
+<span id="python-compatibility"></span><h2>Python compatibility<a class="headerlink" href="#python-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Like Django 1.9, Django 1.10 requires Python 2.7, 3.4, or 3.5. We <strong>highly
+recommend</strong> and only officially support the latest release of each series.</p>
+</div>
+<div class="section" id="s-what-s-new-in-django-1-10">
+<span id="s-whats-new-1-10"></span><span id="what-s-new-in-django-1-10"></span><span id="whats-new-1-10"></span><h2>What’s new in Django 1.10<a class="headerlink" href="#what-s-new-in-django-1-10" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-full-text-search-for-postgresql">
+<span id="full-text-search-for-postgresql"></span><h3>Full text search for PostgreSQL<a class="headerlink" href="#full-text-search-for-postgresql" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">django.contrib.postgres</span></code> now includes a <a class="reference internal" href="../../ref/contrib/postgres/search/"><span class="doc">collection of database
+functions</span></a> to allow the use of the full text
+search engine. You can search across multiple fields in your relational
+database, combine the searches with other lookups, use different language
+configurations and weightings, and rank the results by relevance.</p>
+<p>It also now includes trigram support, using the <a class="reference internal" href="../../ref/contrib/postgres/lookups/#std-fieldlookup-trigram_similar"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">trigram_similar</span></code></a>
+lookup, and the <a class="reference internal" href="../../ref/contrib/postgres/search/#django.contrib.postgres.search.TrigramSimilarity" title="django.contrib.postgres.search.TrigramSimilarity"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrigramSimilarity</span></code></a> and
+<a class="reference internal" href="../../ref/contrib/postgres/search/#django.contrib.postgres.search.TrigramDistance" title="django.contrib.postgres.search.TrigramDistance"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrigramDistance</span></code></a> expressions.</p>
+</div>
+<div class="section" id="s-new-style-middleware">
+<span id="new-style-middleware"></span><h3>New-style middleware<a class="headerlink" href="#new-style-middleware" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../../topics/http/middleware/"><span class="doc">A new style of middleware is introduced</span></a> to
+solve the lack of strict request/response layering of the old-style of
+middleware described in <a class="reference external" href="https://github.com/django/deps/blob/main/final/0005-improved-middleware.rst">DEP 0005</a>.
+You’ll need to <a class="reference internal" href="../../topics/http/middleware/#upgrading-middleware"><span class="std std-ref">adapt old, custom middleware</span></a> and
+switch from the <code class="docutils literal notranslate"><span class="pre">MIDDLEWARE_CLASSES</span></code> setting to the new <a class="reference internal" href="../../ref/settings/#std-setting-MIDDLEWARE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MIDDLEWARE</span></code></a>
+setting to take advantage of the improvements.</p>
+</div>
+<div class="section" id="s-official-support-for-unicode-usernames">
+<span id="official-support-for-unicode-usernames"></span><h3>Official support for Unicode usernames<a class="headerlink" href="#official-support-for-unicode-usernames" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.models.User" title="django.contrib.auth.models.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> model in <code class="docutils literal notranslate"><span class="pre">django.contrib.auth</span></code>
+originally only accepted ASCII letters and numbers in usernames. Although it
+wasn’t a deliberate choice, Unicode characters have always been accepted when
+using Python 3.</p>
+<p>The username validator now explicitly accepts Unicode characters by
+default on Python 3 only.</p>
+<p>Custom user models may use the new
+<a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.validators.ASCIIUsernameValidator" title="django.contrib.auth.validators.ASCIIUsernameValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ASCIIUsernameValidator</span></code></a> or
+<a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.validators.UnicodeUsernameValidator" title="django.contrib.auth.validators.UnicodeUsernameValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnicodeUsernameValidator</span></code></a>.</p>
+</div>
+<div class="section" id="s-minor-features">
+<span id="minor-features"></span><h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="s-django-contrib-admin">
+<span id="django-contrib-admin"></span><h4><a class="reference internal" href="../../ref/contrib/admin/#module-django.contrib.admin" title="django.contrib.admin: Django's admin site."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.admin</span></code></a><a class="headerlink" href="#django-contrib-admin" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>For sites running on a subpath, the default <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.AdminSite.site_url" title="django.contrib.admin.AdminSite.site_url"><code class="xref py py-attr docutils literal notranslate"><span class="pre">URL</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">&quot;View</span> <span class="pre">site&quot;</span>
+<span class="pre">link</span></code></a> at the top of each admin page
+will now point to <code class="docutils literal notranslate"><span class="pre">request.META['SCRIPT_NAME']</span></code> if set, instead of <code class="docutils literal notranslate"><span class="pre">/</span></code>.</li>
+<li>The success message that appears after adding or editing an object now
+contains a link to the object’s change form.</li>
+<li>All inline JavaScript is removed so you can enable the
+<code class="docutils literal notranslate"><span class="pre">Content-Security-Policy</span></code> HTTP header if you wish.</li>
+<li>The new <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.InlineModelAdmin.classes" title="django.contrib.admin.InlineModelAdmin.classes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InlineModelAdmin.classes</span></code></a> attribute allows specifying
+classes on inline fieldsets. Inlines with a <code class="docutils literal notranslate"><span class="pre">collapse</span></code> class will be
+initially collapsed and their header will have a small “show” link.</li>
+<li>If a user doesn’t have the add permission, the <code class="docutils literal notranslate"><span class="pre">object-tools</span></code> block on a
+model’s changelist will now be rendered (without the add button). This makes
+it easier to add custom tools in this case.</li>
+<li>The <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.models.LogEntry" title="django.contrib.admin.models.LogEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">LogEntry</span></code></a> model now stores change
+messages in a JSON structure so that the message can be dynamically translated
+using the current active language. A new <code class="docutils literal notranslate"><span class="pre">LogEntry.get_change_message()</span></code>
+method is now the preferred way of retrieving the change message.</li>
+<li>Selected objects for fields in <code class="docutils literal notranslate"><span class="pre">ModelAdmin.raw_id_fields</span></code> now have a link
+to object’s change form.</li>
+<li>Added “No date” and “Has date” choices for <code class="docutils literal notranslate"><span class="pre">DateFieldListFilter</span></code> if the
+field is nullable.</li>
+<li>The jQuery library embedded in the admin is upgraded from version 2.1.4 to
+2.2.3.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-auth">
+<span id="django-contrib-auth"></span><h4><a class="reference internal" href="../../topics/auth/#module-django.contrib.auth" title="django.contrib.auth: Django's authentication framework."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.auth</span></code></a><a class="headerlink" href="#django-contrib-auth" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Added support for the <a class="reference internal" href="../../topics/auth/passwords/#argon2-usage"><span class="std std-ref">Argon2 password hash</span></a>. It’s
+recommended over PBKDF2, however, it’s not the default as it requires a
+third-party library.</li>
+<li>The default iteration count for the PBKDF2 password hasher has been increased
+by 25%. This backwards compatible change will not affect users who have
+subclassed <code class="docutils literal notranslate"><span class="pre">django.contrib.auth.hashers.PBKDF2PasswordHasher</span></code> to change the
+default value.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.logout()</span></code> view sends “no-cache” headers
+to prevent an issue where Safari caches redirects and prevents a user from
+being able to log out.</li>
+<li>Added the optional <code class="docutils literal notranslate"><span class="pre">backend</span></code> argument to <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.login" title="django.contrib.auth.login"><code class="xref py py-func docutils literal notranslate"><span class="pre">django.contrib.auth.login()</span></code></a>
+to allow using it without credentials.</li>
+<li>The new <a class="reference internal" href="../../ref/settings/#std-setting-LOGOUT_REDIRECT_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOGOUT_REDIRECT_URL</span></code></a> setting controls the redirect of the
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.logout()</span></code> view, if the view doesn’t get a
+<code class="docutils literal notranslate"><span class="pre">next_page</span></code> argument.</li>
+<li>The new <code class="docutils literal notranslate"><span class="pre">redirect_authenticated_user</span></code> parameter for the
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.login()</span></code> view allows redirecting
+authenticated users visiting the login page.</li>
+<li>The new <a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.backends.AllowAllUsersModelBackend" title="django.contrib.auth.backends.AllowAllUsersModelBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">AllowAllUsersModelBackend</span></code></a> and
+<a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.backends.AllowAllUsersRemoteUserBackend" title="django.contrib.auth.backends.AllowAllUsersRemoteUserBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">AllowAllUsersRemoteUserBackend</span></code></a> ignore
+the value of <code class="docutils literal notranslate"><span class="pre">User.is_active</span></code>, while
+<a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.backends.ModelBackend" title="django.contrib.auth.backends.ModelBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelBackend</span></code></a> and
+<a class="reference internal" href="../../ref/contrib/auth/#django.contrib.auth.backends.RemoteUserBackend" title="django.contrib.auth.backends.RemoteUserBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteUserBackend</span></code></a> now reject inactive
+users.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-gis">
+<span id="django-contrib-gis"></span><h4><a class="reference internal" href="../../ref/contrib/gis/#module-django.contrib.gis" title="django.contrib.gis: Geographic Information System (GIS) extensions for Django"><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.gis</span></code></a><a class="headerlink" href="#django-contrib-gis" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

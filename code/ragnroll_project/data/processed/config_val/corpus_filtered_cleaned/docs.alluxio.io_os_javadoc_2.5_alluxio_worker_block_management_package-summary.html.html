@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.worker.block.management (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.worker.block.management</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/BlockManagementTask.html" title="interface in alluxio.worker.block.management">BlockManagementTask</a></td>
+<td class="colLast">
+<div class="block">An interface for BlockStore management task.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/ManagementTaskProvider.html" title="interface in alluxio.worker.block.management">ManagementTaskProvider</a></td>
+<td class="colLast">
+<div class="block">Used as factory interface of management tasks for particular management functions.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/StoreLoadTracker.html" title="interface in alluxio.worker.block.management">StoreLoadTracker</a></td>
+<td class="colLast">
+<div class="block">Interface for detecting user activity on worker locations.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/AbstractBlockManagementTask.html" title="class in alluxio.worker.block.management">AbstractBlockManagementTask</a></td>
+<td class="colLast">
+<div class="block">Abstract block management task implementation.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/BlockManagementTaskResult.html" title="class in alluxio.worker.block.management">BlockManagementTaskResult</a></td>
+<td class="colLast">
+<div class="block">Holds results of a <a href="../../../../alluxio/worker/block/management/BlockManagementTask.html" title="interface in alluxio.worker.block.management"><code>BlockManagementTask</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/BlockOperationResult.html" title="class in alluxio.worker.block.management">BlockOperationResult</a></td>
+<td class="colLast">
+<div class="block">Result container for unique block management sub-task.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/BlockTransferExecutor.html" title="class in alluxio.worker.block.management">BlockTransferExecutor</a></td>
+<td class="colLast">
+<div class="block">Used to execute list of <a href="../../../../alluxio/worker/block/evictor/BlockTransferInfo.html" title="class in alluxio.worker.block.evictor"><code>BlockTransferInfo</code></a> orders concurrently.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/BlockTransferPartitioner.html" title="class in alluxio.worker.block.management">BlockTransferPartitioner</a></td>
+<td class="colLast">
+<div class="block">Used to partition transfers for concurrent execution.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/DefaultStoreLoadTracker.html" title="class in alluxio.worker.block.management">DefaultStoreLoadTracker</a></td>
+<td class="colLast">
+<div class="block">Default <a href="../../../../alluxio/worker/block/management/StoreLoadTracker.html" title="interface in alluxio.worker.block.management"><code>StoreLoadTracker</code></a> that reports load based on open reader/writer streams to the
+ local block store.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/ManagementTaskCoordinator.html" title="class in alluxio.worker.block.management">ManagementTaskCoordinator</a></td>
+<td class="colLast">
+<div class="block">Coordinator for instantiating and running various block management tasks.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/management/BlockOperationType.html" title="enum in alluxio.worker.block.management">BlockOperationType</a></td>
+<td class="colLast">
+<div class="block">Used to specify several operation stages executed by <a href="../../../../alluxio/worker/block/management/BlockManagementTask.html" title="interface in alluxio.worker.block.management"><code>BlockManagementTask</code></a>s.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

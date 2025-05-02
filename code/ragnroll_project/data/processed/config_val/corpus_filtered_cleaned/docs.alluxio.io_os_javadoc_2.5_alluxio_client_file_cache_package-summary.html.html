@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.client.file.cache (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.client.file.cache</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/CacheEvictor.html" title="interface in alluxio.client.file.cache">CacheEvictor</a></td>
+<td class="colLast">
+<div class="block">Interface for client-side cache eviction policy.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/CacheManager.html" title="interface in alluxio.client.file.cache">CacheManager</a></td>
+<td class="colLast">
+<div class="block">Interface for managing cached pages.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/LocalCacheFileInStream.FileInStreamOpener.html" title="interface in alluxio.client.file.cache">LocalCacheFileInStream.FileInStreamOpener</a></td>
+<td class="colLast">
+<div class="block">Interface to wrap open method of file system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/MetaStore.html" title="interface in alluxio.client.file.cache">MetaStore</a></td>
+<td class="colLast">
+<div class="block">The metadata store for pages stored in cache.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/PageStore.html" title="interface in alluxio.client.file.cache">PageStore</a></td>
+<td class="colLast">
+<div class="block">A simple abstraction on the storage to put, get and delete pages.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/CacheManager.Factory.html" title="class in alluxio.client.file.cache">CacheManager.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory class to get or create a CacheManager.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/DefaultMetaStore.html" title="class in alluxio.client.file.cache">DefaultMetaStore</a></td>
+<td class="colLast">
+<div class="block">The default implementation of a metadata store for pages stored in cache.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/LocalCacheFileInStream.html" title="class in alluxio.client.file.cache">LocalCacheFileInStream</a></td>
+<td class="colLast">
+<div class="block">Implementation of <a href="../../../../alluxio/client/file/FileInStream.html" title="class in alluxio.client.file"><code>FileInStream</code></a> that reads from a local cache if possible.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/LocalCacheFileSystem.html" title="class in alluxio.client.file.cache">LocalCacheFileSystem</a></td>
+<td class="colLast">
+<div class="block">A FileSystem implementation with a local cache.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/LocalCacheManager.html" title="class in alluxio.client.file.cache">LocalCacheManager</a></td>
+<td class="colLast">
+<div class="block">A class to manage & serve cached pages.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/NoExceptionCacheManager.html" title="class in alluxio.client.file.cache">NoExceptionCacheManager</a></td>
+<td class="colLast">
+<div class="block">A wrapper class of CacheManager without throwing unchecked exceptions.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/PageId.html" title="class in alluxio.client.file.cache">PageId</a></td>
+<td class="colLast">
+<div class="block">A class identifies a single cached page.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/PageInfo.html" title="class in alluxio.client.file.cache">PageInfo</a></td>
+<td class="colLast">
+<div class="block">A class identifies the information of a single cached page.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/PageStore.Metrics.html" title="class in alluxio.client.file.cache">PageStore.Metrics</a></td>
+<td class="colLast">
+<div class="block">Metrics.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/QuotaMetaStore.html" title="class in alluxio.client.file.cache">QuotaMetaStore</a></td>
+<td class="colLast">
+<div class="block">A metastore implementation that tracking usage associated with each cache scope.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/TimeBoundPageStore.html" title="class in alluxio.client.file.cache">TimeBoundPageStore</a></td>
+<td class="colLast">
+<div class="block">A wrapper class on PageStore with timeout.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/client/file/cache/CacheManager.State.html" title="enum in alluxio.client.file.cache">CacheManager.State</a></td>
+<td class="colLast">
+<div class="block">State of a cache.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

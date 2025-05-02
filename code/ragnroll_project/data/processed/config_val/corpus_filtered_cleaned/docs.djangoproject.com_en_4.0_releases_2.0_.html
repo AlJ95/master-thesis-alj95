@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 2.0 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/2.0/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 2.0 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-2-0-release-notes">
+<span id="django-2-0-release-notes"></span><h1>Django 2.0 release notes<a class="headerlink" href="#django-2-0-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>December 2, 2017</em></p>
+<p>Welcome to Django 2.0!</p>
+<p>These release notes cover the <a class="reference internal" href="#whats-new-2-0"><span class="std std-ref">new features</span></a>, as well as
+some <a class="reference internal" href="#backwards-incompatible-2-0"><span class="std std-ref">backwards incompatible changes</span></a> you’ll
+want to be aware of when upgrading from Django 1.11 or earlier. We’ve
+<a class="reference internal" href="#removed-features-2-0"><span class="std std-ref">dropped some features</span></a> that have reached the end of
+their deprecation cycle, and we’ve <a class="reference internal" href="#deprecated-features-2-0"><span class="std std-ref">begun the deprecation process for some
+features</span></a>.</p>
+<p>This release starts Django’s use of a <a class="reference internal" href="../../internals/release-process/#internal-release-cadence"><span class="std std-ref">loose form of semantic versioning</span></a>, but there aren’t any major backwards incompatible
+changes that might be expected of a 2.0 release. Upgrading should be a similar
+amount of effort as past feature releases.</p>
+<p>See the <a class="reference internal" href="../../howto/upgrade-version/"><span class="doc">How to upgrade Django to a newer version</span></a> guide if you’re updating an existing
+project.</p>
+<div class="section" id="s-python-compatibility">
+<span id="python-compatibility"></span><h2>Python compatibility<a class="headerlink" href="#python-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Django 2.0 supports Python 3.4, 3.5, 3.6, and 3.7. We <strong>highly recommend</strong> and
+only officially support the latest release of each series.</p>
+<p>The Django 1.11.x series is the last to support Python 2.7.</p>
+<p>Django 2.0 will be the last release series to support Python 3.4. If you plan
+a deployment of Python 3.4 beyond the end-of-life for Django 2.0 (April 2019),
+stick with Django 1.11 LTS (supported until April 2020) instead. Note, however,
+that the end-of-life for Python 3.4 is March 2019.</p>
+</div>
+<div class="section" id="s-third-party-library-support-for-older-version-of-django">
+<span id="third-party-library-support-for-older-version-of-django"></span><h2>Third-party library support for older version of Django<a class="headerlink" href="#third-party-library-support-for-older-version-of-django" title="Permalink to this headline">¶</a></h2>
+<p>Following the release of Django 2.0, we suggest that third-party app authors
+drop support for all versions of Django prior to 1.11. At that time, you should
+be able to run your package’s tests using <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-Wd</span></code> so that deprecation
+warnings do appear. After making the deprecation warning fixes, your app should
+be compatible with Django 2.0.</p>
+</div>
+<div class="section" id="s-what-s-new-in-django-2-0">
+<span id="s-whats-new-2-0"></span><span id="what-s-new-in-django-2-0"></span><span id="whats-new-2-0"></span><h2>What’s new in Django 2.0<a class="headerlink" href="#what-s-new-in-django-2-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-simplified-url-routing-syntax">
+<span id="simplified-url-routing-syntax"></span><h3>Simplified URL routing syntax<a class="headerlink" href="#simplified-url-routing-syntax" title="Permalink to this headline">¶</a></h3>
+<p>The new <a class="reference internal" href="../../ref/urls/#django.urls.path" title="django.urls.path"><code class="xref py py-func docutils literal notranslate"><span class="pre">django.urls.path()</span></code></a> function allows a simpler, more readable URL
+routing syntax. For example, this example from previous Django releases:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^articles/(?P&lt;year&gt;[0-9]</span><span class="si">{4}</span><span class="s1">)/$&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">year_archive</span><span class="p">),</span>
+</pre></div>
+</div>
+<p>could be written as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span><span class="p">(</span><span class="s1">&#39;articles/&lt;int:year&gt;/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">year_archive</span><span class="p">),</span>
+</pre></div>
+</div>
+<p>The new syntax supports type coercion of URL parameters. In the example, the
+view will receive the <code class="docutils literal notranslate"><span class="pre">year</span></code> keyword argument as an integer rather than as
+a string. Also, the URLs that will match are slightly less constrained in the
+rewritten example. For example, the year 10000 will now match since the year
+integers aren’t constrained to be exactly four digits long as they are in the
+regular expression.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">django.conf.urls.url()</span></code> function from previous versions is now available
+as <a class="reference internal" href="../../ref/urls/#django.urls.re_path" title="django.urls.re_path"><code class="xref py py-func docutils literal notranslate"><span class="pre">django.urls.re_path()</span></code></a>. The old location remains for backwards
+compatibility, without an imminent deprecation. The old
+<code class="docutils literal notranslate"><span class="pre">django.conf.urls.include()</span></code> function is now importable from <code class="docutils literal notranslate"><span class="pre">django.urls</span></code>
+so you can use <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">django.urls</span> <span class="pre">import</span> <span class="pre">include,</span> <span class="pre">path,</span> <span class="pre">re_path</span></code> in your
+URLconfs.</p>
+<p>The <a class="reference internal" href="../../topics/http/urls/"><span class="doc">URL dispatcher</span></a> document is rewritten to feature the new syntax
+and provide more details.</p>
+</div>
+<div class="section" id="s-mobile-friendly-contrib-admin">
+<span id="mobile-friendly-contrib-admin"></span><h3>Mobile-friendly <code class="docutils literal notranslate"><span class="pre">contrib.admin</span></code><a class="headerlink" href="#mobile-friendly-contrib-admin" title="Permalink to this headline">¶</a></h3>
+<p>The admin is now responsive and supports all major mobile devices. Older
+browsers may experience varying levels of graceful degradation.</p>
+</div>
+<div class="section" id="s-window-expressions">
+<span id="window-expressions"></span><h3>Window expressions<a class="headerlink" href="#window-expressions" title="Permalink to this headline">¶</a></h3>
+<p>The new <a class="reference internal" href="../../ref/models/expressions/#django.db.models.expressions.Window" title="django.db.models.expressions.Window"><code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code></a> expression allows
+adding an <code class="docutils literal notranslate"><span class="pre">OVER</span></code> clause to querysets. You can use <a class="reference internal" href="../../ref/models/database-functions/#window-functions"><span class="std std-ref">window functions</span></a> and <a class="reference internal" href="../../ref/models/querysets/#aggregation-functions"><span class="std std-ref">aggregate functions</span></a> in
+the expression.</p>
+</div>
+<div class="section" id="s-minor-features">
+<span id="minor-features"></span><h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="s-django-contrib-admin">
+<span id="django-contrib-admin"></span><h4><a class="reference internal" href="../../ref/contrib/admin/#module-django.contrib.admin" title="django.contrib.admin: Django's admin site."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.admin</span></code></a><a class="headerlink" href="#django-contrib-admin" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The new <a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.autocomplete_fields" title="django.contrib.admin.ModelAdmin.autocomplete_fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ModelAdmin.autocomplete_fields</span></code></a> attribute and
+<a class="reference internal" href="../../ref/contrib/admin/#django.contrib.admin.ModelAdmin.get_autocomplete_fields" title="django.contrib.admin.ModelAdmin.get_autocomplete_fields"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModelAdmin.get_autocomplete_fields()</span></code></a> method allow using a
+<a class="reference external" href="https://select2.org/">Select2</a> search widget for <code class="docutils literal notranslate"><span class="pre">ForeignKey</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ManyToManyField</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-auth">
+<span id="django-contrib-auth"></span><h4><a class="reference internal" href="../../topics/auth/#module-django.contrib.auth" title="django.contrib.auth: Django's authentication framework."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.auth</span></code></a><a class="headerlink" href="#django-contrib-auth" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The default iteration count for the PBKDF2 password hasher is increased from
+36,000 to 100,000.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-gis">
+<span id="django-contrib-gis"></span><h4><a class="reference internal" href="../../ref/contrib/gis/#module-django.contrib.gis" title="django.contrib.gis: Geographic Information System (GIS) extensions for Django"><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.gis</span></code></a><a class="headerlink" href="#django-contrib-gis" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Added MySQL support for the
+<a class="reference internal" href="../../ref/contrib/gis/functions/#django.contrib.gis.db.models.functions.AsGeoJSON" title="django.contrib.gis.db.models.functions.AsGeoJSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsGeoJSON</span></code></a> function,
+<a class="reference internal" href="../../ref/contrib/gis/functions/#django.contrib.gis.db.models.functions.GeoHash" title="django.contrib.gis.db.models.functions.GeoHash"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeoHash</span></code></a> function,
+<a class="reference internal" href="../../ref/contrib/gis/functions/#django.contrib.gis.db.models.functions.IsValid" title="django.contrib.gis.db.models.functions.IsValid"><code class="xref py py-class docutils literal notranslate"><span class="pre">IsValid</span></code></a> function,
+<a class="reference internal" href="../../ref/contrib/gis/geoquerysets/#std-fieldlookup-isvalid"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">isvalid</span></code></a> lookup, and <a class="reference internal" href="../../ref/contrib/gis/geoquerysets/#distance-lookups"><span class="std std-ref">distance lookups</span></a>.</li>
+<li>Added the <a class="reference internal" href="../../ref/contrib/gis/functions/#django.contrib.gis.db.models.functions.Azimuth" title="django.contrib.gis.db.models.functions.Azimuth"><code class="xref py py-class docutils literal notranslate"><span class="pre">Azimuth</span></code></a> and
+<a class="reference internal" href="../../ref/contrib/gis/functions/#django.contrib.gis.db.models.functions.LineLocatePoint" title="django.contrib.gis.db.models.functions.LineLocatePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineLocatePoint</span></code></a> functions,
+supported on PostGIS and SpatiaLite.</li>
+<li>Any <a class="reference internal" href="../../ref/contrib/gis/geos/#django.contrib.gis.geos.GEOSGeometry" title="django.contrib.gis.geos.GEOSGeometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">GEOSGeometry</span></code></a> imported from GeoJSON now
+has its SRID set.</li>
+<li>Added the <a class="reference internal" href="../../ref/contrib/gis/forms-api/#django.contrib.gis.forms.widgets.OSMWidget.default_zoom" title="django.contrib.gis.forms.widgets.OSMWidget.default_zoom"><code class="xref py py-attr docutils literal notranslate"><span class="pre">OSMWidget.default_zoom</span></code></a> attribute to customize the map’s
+default zoom level.</li>
+<li>Made metadata readable and editable on rasters through the
+<a class="reference internal" href="../../ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALRaster.metadata" title="django.contrib.gis.gdal.GDALRaster.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a>,
+<a class="reference internal" href="../../ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALRaster.info" title="django.contrib.gis.gdal.GDALRaster.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">info</span></code></a>, and
+<a class="reference internal" href="../../ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALBand.metadata" title="django.contrib.gis.gdal.GDALBand.metadata"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metadata</span></code></a> attributes.</li>
+<li>Allowed passing driver-specific creation options to
+<a class="reference internal" href="../../ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALRaster" title="django.contrib.gis.gdal.GDALRaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">GDALRaster</span></code></a> objects using <code class="docutils literal notranslate"><span class="pre">papsz_options</span></code>.</li>
+<li>Allowed creating <a class="reference internal" href="../../ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALRaster" title="django.contrib.gis.gdal.GDALRaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">GDALRaster</span></code></a> objects in
+GDAL’s internal virtual filesystem. Rasters can now be <a class="reference internal" href="../../ref/contrib/gis/gdal/#gdal-raster-vsimem"><span class="std std-ref">created from and
+converted to binary data</span></a> in-memory.</li>
+<li>The new <a class="reference internal" href="../../ref/contrib/gis/gdal/#django.contrib.gis.gdal.GDALBand.color_interp" title="django.contrib.gis.gdal.GDALBand.color_interp"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GDALBand.color_interp()</span></code></a> method returns the color
+interpretation for the band.</li>
+</ul>
+</div>
+<div class="section" id="s-django-contrib-postgres">
+<span id="django-contrib-postgres"></span><h4><a class="reference internal" href="../../ref/contrib/postgres/#module-django.contrib.postgres" title="django.contrib.postgres: PostgreSQL-specific fields and features"><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.postgres</span></code></a><a class="headerlink" href="#django-contrib-postgres" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The new <code class="docutils literal notranslate"><span class="pre">distinct</span></code> argument for
+<a class="reference internal" href="../../ref/contrib/postgres/aggregates/#django.contrib.postgres.aggregates.ArrayAgg" title="django.contrib.postgres.aggregates.ArrayAgg"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayAgg</span></code></a> determines if
+concatenated values will be distinct.</li>
+<li>The new <a class="reference internal" href="../../ref/contrib/postgres/functions/#django.contrib.postgres.functions.RandomUUID" title="django.contrib.postgres.functions.RandomUUID"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomUUID</span></code></a> database
+function returns a version 4 UUID. It requires use of PostgreSQL’s
+<code class="docutils literal notranslate"><span class="pre">pgcrypto</span></code> extension which can be activated using the new
+<a class="reference internal" href="../../ref/contrib/postgres/operations/#django.contrib.postgres.operations.CryptoExtension" title="django.contrib.postgres.operations.CryptoExtension"><code class="xref py py-class docutils literal notranslate"><span class="pre">CryptoExtension</span></code></a> migration
+operation.</li>
+
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

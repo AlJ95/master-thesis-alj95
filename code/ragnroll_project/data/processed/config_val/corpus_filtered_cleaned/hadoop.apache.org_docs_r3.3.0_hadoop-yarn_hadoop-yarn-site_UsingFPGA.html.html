@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Using FPGA On YARN</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Using FPGA On YARN
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Using FPGA On YARN</h1>
+<h1>Prerequisites</h1>
+<ul>
+
+<li>The FPGA resource is supported by YARN but only shipped with &#x201c;IntelFpgaOpenclPlugin&#x201d; for now</li>
+<li>YARN node managers have to be pre-installed with vendor drivers and configured with needed environment variables</li>
+<li>Docker support is not supported yet</li>
+</ul>
+<h1>Configs</h1>
+<div class="section">
+<h2><a name="FPGA_scheduling"></a>FPGA scheduling</h2>
+<p>In <tt>resource-types.xml</tt></p>
+<p>Add following properties</p>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+  &lt;property&gt;
+     &lt;name&gt;yarn.resource-types&lt;/name&gt;
+     &lt;value&gt;yarn.io/fpga&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</pre></div></div>
+
+<p>For <tt>Capacity Scheduler</tt>, <tt>DominantResourceCalculator</tt> MUST be configured to enable FPGA scheduling/isolation. Use following property to configure <tt>DominantResourceCalculator</tt> (In <tt>capacity-scheduler.xml</tt>):</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.scheduler.capacity.resource-calculator </td>
+<td> org.apache.hadoop.yarn.util.resource.DominantResourceCalculator </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h2><a name="FPGA_Isolation"></a>FPGA Isolation</h2>
+<div class="section">
+<h3><a name="In_yarn-site.xml"></a>In <tt>yarn-site.xml</tt></h3>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;yarn.nodemanager.resource-plugins&lt;/name&gt;
+    &lt;value&gt;yarn.io/fpga&lt;/value&gt;
+  &lt;/property&gt;
+
+</pre></div></div>
+
+<p>This is to enable FPGA isolation module on NodeManager side.</p>
+<p>By default, YARN will automatically detect and config FPGAs when above config is set. Following configs need to be set in <tt>yarn-site.xml</tt> only if admin has specialized requirements.</p>
+<p><b>1) Allowed FPGA Devices</b></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.resource-plugins.fpga.allowed-fpga-devices </td>
+<td> auto </td></tr>
+</tbody>
+</table>
+<p>Specify FPGA devices which can be managed by YARN NodeManager, split by comma Number of FPGA devices will be reported to RM to make scheduling decisions. Set to auto (default) let YARN automatically discover FPGA resource from system.</p>
+<p>Manually specify FPGA devices if admin only want subset of FPGA devices managed by YARN. At present, since we can only configure one major number in c-e.cfg, FPGA device is identified by their minor device number. For Intel devices, a common approach to get minor device number of FPGA is using &#x201c;aocl diagnose&#x201d; and check uevent with device name.</p>
+<p><b>2) Executable to discover FPGAs</b></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.resource-plugins.fpga.path-to-discovery-executables </td>
+<td> </td></tr>
+</tbody>
+</table>
+<p>When yarn.nodemanager.resource.fpga.allowed-fpga-devices=auto specified, YARN NodeManager needs to run FPGA discovery binary (now only support IntelFpgaOpenclPlugin) to get FPGA information. When value is empty (default), YARN NodeManager will try to locate discovery executable from vendor plugin&#x2019;s preference. For instance, the &#x201c;IntelFpgaOpenclPlugin&#x201d; will try to find &#x201c;aocl&#x201d; in directory got from environment &#x201c;ALTERAOCLSDKROOT&#x201d;</p>
+<p><b>3) FPGA plugin to use</b></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.resource-plugins.fpga.vendor-plugin.class </td>
+<td> org.apache.hadoop.yarn.server.nodemanager.containermanager.resourceplugin.fpga.IntelFpgaOpenclPlugin </td></tr>
+</tbody>
+</table>
+<p>For now, only Intel OpenCL SDK for FPGA is supported. The IP program(.aocx file) running on FPGA should be written with OpenCL based on Intel platform.</p>
+<p><b>4) CGroups mount</b> FPGA isolation uses CGroup <a class="externalLink" href="https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt">devices controller</a> to do per-FPGA device isolation. Following configs should be added to <tt>yarn-site.xml</tt> to automatically mount CGroup sub devices, otherwise admin has to manually create devices subfolder in order to use this feature.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.linux-container-executor.cgroups.mount </td>
+<td> true </td></tr>
+</tbody>
+</table>
+<p>For more details of YARN CGroups configurations, please refer to <a class="externalLink" href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/NodeManagerCgroups.html">Using CGroups with YARN</a></p></div>
+<div class="section">
+<h3><a name="In_container-executor.cfg"></a>In <tt>container-executor.cfg</tt></h3>
+<p>In general, following config needs to be added to <tt>container-executor.cfg</tt>. The fpga.major-device-number and allowed-device-minor-numbers are optional allowed devices.</p>
+
+<div>
+<div>
+<pre class="source">[fpga]
+module.enabled=true
+fpga.major-device-number=## Major device number of FPGA, by default is 246. Strongly recommend setting this
+fpga.allowed-device-minor-numbers=## Comma separated allowed minor device numbers, empty means all FPGA devices managed by YARN.
+</pre></div></div>
+
+<p>When user needs to run FPGA applications under non-Docker environment:</p>
+
+<div>
+<div>
+<pre class="source">[cgroups]
+# Root of system cgroups (Cannot be empty or &quot;/&quot;)
+root=/cgroup
+# Parent folder of YARN's CGroups
+yarn-hierarchy=yarn
+</pre></div></div>
+
+<h1>Use it</h1></div></div>
+<div class="section">
+<h2><a name="Distributed-shell_.2B_FPGA"></a>Distributed-shell + FPGA</h2>
+<p>Distributed shell currently support specify additional resource types other than memory and vcores</p>
+<p>Run distributed shell without using docker container (the .bashrc contains some SDK related environment variables):</p>
+
+<div>
+<div>
+<pre class="source">yarn jar &lt;path/to/hadoop-yarn-applications-distributedshell.jar&gt; \
+  -jar &lt;path/to/hadoop-yarn-applications-distributedshell.jar&gt; \
+  -shell_command &quot;source /home/yarn/.bashrc &amp;&amp; aocl diagnose&quot; \
+  -container_resources memory-mb=2048,vcores=2,yarn.io/fpga=1 \
+  -num_containers 1
+</pre></div></div>
+
+<p>You should be able to see output like</p>
+
+<div>
+<div>
+<pre class="source">aocl diagnose: Running diagnose from /home/fpga/intelFPGA_pro/17.0/hld/board/nalla_pcie/linux64/libexec
+
+------------------------- acl0 -------------------------
+Vendor: Nallatech ltd
+
+Phys Dev Name  Status   Information
+
+aclnalla_pcie0Passed   nalla_pcie (aclnalla_pcie0)
+                       PCIe dev_id = 2494, bus:slot.func = 02:00.00, Gen3 x8
+                       FPGA temperature = 54.4 degrees C.
+                       Total Card Power Usage = 32.4 Watts.
+                       Device Power Usage = 0.0 Watts.
+
+DIAGNOSTIC_PASSED
+---------------------------------------------------------
+
+</pre></div></div>
+
+<p><b>Specify IP that YARN should configure before launch container</b></p>
+<p>For FPGA resource, the container can have an environment variable &#x201c;REQUESTED_FPGA_IP_ID&#x201d; to make YARN download and flash an IP for it before launch. For instance, REQUESTED_FPGA_IP_ID=&#x201c;matrix_mul&#x201d; will lead to a searching in container&#x2019;s local directory for IP file(&#x201c;.aocx&#x201d; file) whose name contains &#x201c;matirx_mul&#x201d; (the application should distribute it first). We only support flashing one IP for all devices for now. If user don&#x2019;t set this environment variable, we assume that user&#x2019;s application can find the IP file by itself. Note that the IP downloading and reprogramming in advance in YARN is not necessary because the OpenCL application may find the IP file and reprogram device on the fly. But YARN do this for the containers will achieve the quickest re-programming path.</p></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

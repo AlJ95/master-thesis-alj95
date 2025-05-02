@@ -1,0 +1,638 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Archival Storage, SSD & Memory</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Archival Storage, SSD &amp; Memory</h1>
+<ul>
+
+
+
+
+</ul></li>
+</ul></li>
+</ul></li></ul></li>
+
+
+
+
+
+
+</ul></li></ul>
+<section>
+<h2><a name="Introduction"></a>Introduction</h2>
+<p><i>Archival Storage</i> is a solution to decouple growing storage capacity from compute capacity. Nodes with higher density and less expensive storage with low compute power are becoming available and can be used as cold storage in the clusters. Based on policy the data from hot can be moved to the cold. Adding more nodes to the cold storage can grow the storage independent of the compute capacity in the cluster.</p>
+<p>The frameworks provided by Heterogeneous Storage and Archival Storage generalizes the HDFS architecture to include other kinds of storage media including <i>SSD</i> and <i>memory</i>. Users may choose to store their data in SSD or memory for a better performance.</p></section><section>
+<h2><a name="Storage_Types_and_Storage_Policies"></a>Storage Types and Storage Policies</h2><section>
+<h3><a name="Storage_Types:_ARCHIVE.2C_DISK.2C_SSD.2C_RAM_DISK_and_NVDIMM"></a>Storage Types: ARCHIVE, DISK, SSD, RAM_DISK and NVDIMM</h3>
+<p>The first phase of <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-2832">Heterogeneous Storage (HDFS-2832)</a> changed datanode storage model from a single storage, which may correspond to multiple physical storage medias, to a collection of storages with each storage corresponding to a physical storage media. It also added the notion of storage types, DISK and SSD, where DISK is the default storage type.</p>
+<p>A new storage type <i>ARCHIVE</i>, which has high storage density (petabyte of storage) but little compute power, is added for supporting archival storage.</p>
+<p>Another new storage type <i>RAM_DISK</i> is added for supporting writing single replica files in memory.</p>
+<p>From Hadoop 3.4, a new storage type <i>NVDIMM</i> is added for supporting writing replica files in non-volatile memory that has the capability to hold saved data even if the power is turned off.</p></section><section>
+<h3><a name="Storage_Policies:_Hot.2C_Warm.2C_Cold.2C_All_SSD.2C_One_SSD.2C_Lazy_Persist.2C_Provided_and_All_NVDIMM"></a>Storage Policies: Hot, Warm, Cold, All_SSD, One_SSD, Lazy_Persist, Provided and All_NVDIMM</h3>
+<p>A new concept of storage policies is introduced in order to allow files to be stored in different storage types according to the storage policy.</p>
+<p>We have the following storage policies:</p>
+<ul>
+
+<li><b>Hot</b> - for both storage and compute. The data that is popular and still being used for processing will stay in this policy. When a block is hot, all replicas are stored in DISK.</li>
+<li><b>Cold</b> - only for storage with limited compute. The data that is no longer being used, or data that needs to be archived is moved from hot storage to cold storage. When a block is cold, all replicas are stored in ARCHIVE.</li>
+<li><b>Warm</b> - partially hot and partially cold. When a block is warm, some of its replicas are stored in DISK and the remaining replicas are stored in ARCHIVE.</li>
+<li><b>All_SSD</b> - for storing all replicas in SSD.</li>
+<li><b>One_SSD</b> - for storing one of the replicas in SSD. The remaining replicas are stored in DISK.</li>
+<li><b>Lazy_Persist</b> - for writing blocks with single replica in memory. The replica is first written in RAM_DISK and then it is lazily persisted in DISK.</li>
+<li><b>Provided</b> - for storing data outside HDFS. See also <a href="./HdfsProvidedStorage.html">HDFS Provided Storage</a>.</li>
+<li><b>All_NVDIMM</b> - for storing all replicas in NVDIMM.</li>
+</ul>
+<p>More formally, a storage policy consists of the following fields:</p>
+<ol style="list-style-type: decimal">
+
+<li>Policy ID</li>
+<li>Policy name</li>
+<li>A list of storage types for block placement</li>
+<li>A list of fallback storage types for file creation</li>
+<li>A list of fallback storage types for replication</li>
+</ol>
+<p>When there is enough space, block replicas are stored according to the storage type list specified in #3. When some of the storage types in list #3 are running out of space, the fallback storage type lists specified in #4 and #5 are used to replace the out-of-space storage types for file creation and replication, respectively.</p>
+<p>The following is a typical storage policy table.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> <b>Policy</b> <b>ID</b> </th>
+<th align="left"> <b>Policy</b> <b>Name</b> </th>
+<th align="left"> <b>Block Placement</b> <b>(n&#xa0; replicas)</b> </th>
+<th align="left"> <b>Fallback storages</b> <b>for creation</b> </th>
+<th align="left"> <b>Fallback storages</b> <b>for replication</b> </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> 15 </td>
+<td align="left"> Lazy_Persist </td>
+<td align="left"> RAM_DISK: 1, DISK: <i>n</i>-1 </td>
+<td align="left"> DISK </td>
+<td align="left"> DISK </td></tr>
+<tr class="a">
+<td align="left"> 14 </td>
+<td align="left"> All_NVDIMM </td>
+<td align="left"> NVDIMM: <i>n</i> </td>
+<td align="left"> DISK </td>
+<td align="left"> DISK </td></tr>
+<tr class="b">
+<td align="left"> 12 </td>
+<td align="left"> All_SSD </td>
+<td align="left"> SSD: <i>n</i> </td>
+<td align="left"> DISK </td>
+<td align="left"> DISK </td></tr>
+<tr class="a">
+<td align="left"> 10 </td>
+<td align="left"> One_SSD </td>
+<td align="left"> SSD: 1, DISK: <i>n</i>-1 </td>
+<td align="left"> SSD, DISK </td>
+<td align="left"> SSD, DISK </td></tr>
+<tr class="b">
+<td align="left"> 7 </td>
+<td align="left"> Hot (default) </td>
+<td align="left"> DISK: <i>n</i> </td>
+<td align="left"> &lt;none&gt; </td>
+<td align="left"> ARCHIVE </td></tr>
+<tr class="a">
+<td align="left"> 5 </td>
+<td align="left"> Warm </td>
+<td align="left"> DISK: 1, ARCHIVE: <i>n</i>-1 </td>
+<td align="left"> ARCHIVE, DISK </td>
+<td align="left"> ARCHIVE, DISK </td></tr>
+<tr class="b">
+<td align="left"> 2 </td>
+<td align="left"> Cold </td>
+<td align="left"> ARCHIVE: <i>n</i> </td>
+<td align="left"> &lt;none&gt; </td>
+<td align="left"> &lt;none&gt; </td></tr>
+<tr class="a">
+<td align="left"> 1 </td>
+<td align="left"> Provided </td>
+<td align="left"> PROVIDED: 1, DISK: <i>n</i>-1 </td>
+<td align="left"> PROVIDED, DISK </td>
+<td align="left"> PROVIDED, DISK </td></tr>
+</tbody>
+</table>
+<p>Note 1: The Lazy_Persist policy is useful only for single replica blocks. For blocks with more than one replicas, all the replicas will be written to DISK since writing only one of the replicas to RAM_DISK does not improve the overall performance.</p>
+<p>Note 2: For the erasure coded files with striping layout, the suitable storage policies are All_SSD, Hot, Cold and All_NVDIMM. So, if user sets the policy for striped EC files other than the mentioned policies, it will not follow that policy while creating or moving block.</p></section><section>
+<h3><a name="Storage_Policy_Resolution"></a>Storage Policy Resolution</h3>
+<p>When a file or directory is created, its storage policy is <i>unspecified</i>. The storage policy can be specified using the &#x201c;<a href="#Set_Storage_Policy"><code>storagepolicies -setStoragePolicy</code></a>&#x201d; command. The effective storage policy of a file or directory is resolved by the following rules.</p>
+<ol style="list-style-type: decimal">
+
+<li>
+
+<p>If the file or directory is specified with a storage policy, return it.</p>
+</li>
+<li>
+
+<p>For an unspecified file or directory, if it is the root directory, return the <i>default storage policy</i>. Otherwise, return its parent&#x2019;s effective storage policy.</p>
+</li>
+</ol>
+<p>The effective storage policy can be retrieved by the &#x201c;<a href="#Get_Storage_Policy"><code>storagepolicies -getStoragePolicy</code></a>&#x201d; command.</p></section><section>
+<h3><a name="Configuration"></a>Configuration</h3>
+<ul>
+
+<li><b>dfs.storage.policy.enabled</b> - for enabling/disabling the storage policy feature. The default value is <code>true</code>.</li>
+<li><b>dfs.storage.default.policy</b> - Set the default storage policy with the policy name. The default value is <code>HOT</code>.  All possible policies are defined in enum StoragePolicy, including <code>LAZY_PERSIST</code> <code>ALL_SSD</code> <code>ONE_SSD</code> <code>HOT</code> <code>WARM</code> <code>COLD</code> <code>PROVIDED</code> and <code>ALL_NVDIMM</code>.</li>
+<li><b>dfs.datanode.data.dir</b> - on each data node, the comma-separated storage locations should be tagged with their storage types. This allows storage policies to place the blocks on different storage types according to policy. For example:
+<ol style="list-style-type: decimal">
+
+<li>A datanode storage location /grid/dn/disk0 on DISK should be configured with <code>[DISK]file:///grid/dn/disk0</code></li>
+<li>A datanode storage location /grid/dn/ssd0 on SSD should be configured with <code>[SSD]file:///grid/dn/ssd0</code></li>
+<li>A datanode storage location /grid/dn/archive0 on ARCHIVE should be configured with <code>[ARCHIVE]file:///grid/dn/archive0</code></li>
+<li>A datanode storage location /grid/dn/ram0 on RAM_DISK should be configured with <code>[RAM_DISK]file:///grid/dn/ram0</code></li>
+<li>A datanode storage location /grid/dn/nvdimm0 on NVDIMM should be configured with <code>[NVDIMM]file:///grid/dn/nvdimm0</code></li>
+</ol>
+<p>The default storage type of a datanode storage location will be DISK if it does not have a storage type tagged explicitly.</p>
+<p>Sometimes, users can setup the DataNode data directory to point to multiple volumes with different storage types. It is important to check if the volume is mounted correctly before initializing the storage locations. The user has the option to enforce the filesystem for a storage key with the following key: <b>dfs.datanode.storagetype.*.filesystem</b> - replace the &#x2018;*&#x2019; to any storage type, for example, dfs.datanode.storagetype.ARCHIVE.filesystem=fuse_filesystem</p>
+</li>
+</ul></section></section><section>
+<h2><a name="Storage_Policy_Based_Data_Movement"></a>Storage Policy Based Data Movement</h2>
+<p>Setting a new storage policy on already existing file/dir will change the policy in Namespace, but it will not move the blocks physically across storage medias. Following 2 options will allow users to move the blocks based on new policy set. So, once user change/set to a new policy on file/directory, user should also perform one of the following options to achieve the desired data movement. Note that both options cannot be allowed to run simultaneously.</p><section>
+<h3><a name="Storage_Policy_Satisfier_.28SPS.29"></a><u>S</u>torage <u>P</u>olicy <u>S</u>atisfier (SPS)</h3>
+<p>When user changes the storage policy on a file/directory, user can call <code>HdfsAdmin</code> API <code>satisfyStoragePolicy()</code> to move the blocks as per the new policy set. The SPS tool running external to namenode periodically scans for the storage mismatches between new policy set and the physical blocks placed. This will only track the files/directories for which user invoked satisfyStoragePolicy. If SPS identifies some blocks to be moved for a file, then it will schedule block movement tasks to datanodes. If there are any failures in movement, the SPS will re-attempt by sending new block movement tasks.</p>
+<p>SPS can be enabled as an external service outside Namenode or disabled dynamically without restarting the Namenode.</p>
+<p>Detailed design documentation can be found at <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-10285">Storage Policy Satisfier(SPS) (HDFS-10285)</a></p>
+<ul>
+
+<li>
+
+<p><b>Note</b>: When user invokes <code>satisfyStoragePolicy()</code> API on a directory, SPS will scan all sub-directories and consider all the files for satisfy the policy..</p>
+</li>
+<li>
+
+<p>HdfsAdmin API : <code>public void satisfyStoragePolicy(final Path path) throws IOException</code></p>
+</li>
+<li>
+
+<p>Arguments :</p>
+</li>
+</ul>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> </th>
+<th align="left"> </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <code>path</code> </td>
+<td align="left"> A path which requires blocks storage movement. </td></tr>
+</tbody>
+</table><section>
+<h4><a name="Configurations:"></a>Configurations:</h4>
+<ul>
+
+<li>
+
+<p><b>dfs.storage.policy.satisfier.mode</b> - Used to enable external service outside NN or disable SPS. Following string values are supported - <code>external</code>, <code>none</code>. Configuring <code>external</code> value represents SPS is enable and <code>none</code> to disable. The default value is <code>none</code>.</p>
+</li>
+<li>
+
+<p><b>dfs.storage.policy.satisfier.recheck.timeout.millis</b> - A timeout to re-check the processed block storage movement command results from Datanodes.</p>
+</li>
+<li>
+
+<p><b>dfs.storage.policy.satisfier.self.retry.timeout.millis</b> - A timeout to retry if no block movement results reported from Datanode in this configured timeout.</p>
+</li>
+</ul></section></section><section>
+<h3><a name="Mover_-_A_New_Data_Migration_Tool"></a>Mover - A New Data Migration Tool</h3>
+<p>A new data migration tool is added for archiving data. The tool is similar to Balancer. It periodically scans the files in HDFS to check if the block placement satisfies the storage policy. For the blocks violating the storage policy, it moves the replicas to a different storage type in order to fulfill the storage policy requirement. Note that it always tries to move block replicas within the same node whenever possible. If that is not possible (e.g. when a node doesn&#x2019;t have the target storage type) then it will copy the block replicas to another node over the network.</p>
+<ul>
+
+<li>
+
+<p>Command:</p>
+
+<div class="source">
+<div class="source">
+<pre>hdfs mover [-p &lt;files/dirs&gt; | -f &lt;local file name&gt;]
+</pre></div></div>
+</li>
+<li>
+
+<p>Arguments:</p>
+</li>
+</ul>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> </th>
+<th align="left"> </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <code>-p &lt;files/dirs&gt;</code> </td>
+<td align="left"> Specify a space separated list of HDFS files/dirs to migrate. </td></tr>
+<tr class="a">
+<td align="left"> <code>-f &lt;local file&gt;</code> </td>
+<td align="left"> Specify a local file containing a list of HDFS files/dirs to migrate. </td></tr>
+</tbody>
+</table>
+<p>Note that, when both -p and -f options are omitted, the default path is the root directory.</p><section>
+<h4><a name="Administrator_notes:"></a>Administrator notes:</h4>
+<p><code>StoragePolicySatisfier</code> and <code>Mover tool</code> cannot run simultaneously. If a Mover instance is already triggered and running, SPS will be disabled while starting. In that case, administrator should make sure, Mover execution finished and then enable external SPS service again. Similarly when SPS enabled already, Mover cannot be run. If administrator is looking to run Mover tool explicitly, then he/she should make sure to disable SPS first and then run Mover. Please look at the commands section to know how to enable external service outside NN or disable SPS dynamically.</p></section></section></section><section>
+<h2><a name="Storage_Policy_Commands"></a>Storage Policy Commands</h2><section>
+<h3><a name="List_Storage_Policies"></a>List Storage Policies</h3>
+<p>List out all the storage policies.</p>
+<ul>
+
+<li>
+
+<p>Command:</p>
+
+<div class="source">
+<div class="source">
+<pre>hdfs storagepolicies -listPolicies
+</pre></div></div>
+</li>
+<li>
+
+<p>Arguments: none.</p>
+</li>
+</ul></section><section>
+<h3><a name="Set_Storage_Policy"></a>Set Storage Policy</h3>
+<p>Set a storage policy to a file or a directory.</p>
+<ul>
+
+<li>
+
+<p>Command:</p>
+
+<div class="source">
+<div class="source">
+<pre>hdfs storagepolicies -setStoragePolicy -path &lt;path&gt; -policy &lt;policy&gt;
+</pre></div></div>
+</li>
+<li>
+
+<p>Arguments:</p>
+</li>
+</ul>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> </th>
+<th align="left"> </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <code>-path &lt;path&gt;</code> </td>
+<td align="left"> The path referring to either a directory or a file. </td></tr>
+<tr class="a">
+<td align="left"> <code>-policy &lt;policy&gt;</code> </td>
+<td align="left"> The name of the storage policy. </td></tr>
+</tbody>
+</table></section><section>
+<h3><a name="Unset_Storage_Policy"></a>Unset Storage Policy</h3>
+<p>Unset a storage policy to a file or a directory. After the unset command the storage policy of the nearest ancestor will apply, and if there is no policy on any ancestor then the default storage policy will apply.</p>
+<ul>
+
+<li>
+
+<p>Command:</p>
+
+<div class="source">
+<div class="source">
+<pre>hdfs storagepolicies -unsetStoragePolicy -path &lt;path&gt;
+</pre></div></div>
+</li>
+<li>
+
+<p>Arguments:</p>
+</li>
+</ul>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> </th>
+<th align="left"> </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <code>-path &lt;path&gt;</code> </td>
+<td align="left"> The path referring to either a directory or a file. </td></tr>
+</tbody>
+</table></section><section>
+<h3><a name="Get_Storage_Policy"></a>Get Storage Policy</h3>
+<p>Get the storage policy of a file or a directory.</p>
+<ul>
+
+<li>
+
+<p>Command:</p>
+
+<div class="source">
+<div class="source">
+<pre>hdfs storagepolicies -getStoragePolicy -path &lt;path&gt;
+</pre></div></div>
+</li>
+<li>
+
+<p>Arguments:</p>
+</li>
+</ul>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> </th>
+<th align="left"> </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <code>-path &lt;path&gt;</code> </td>
+<td align="left"> The path referring to either a directory or a file. </td></tr>
+</tbody>
+</table></section><section>
+<h3><a name="Satisfy_Storage_Policy"></a>Satisfy Storage Policy</h3>
+<p>Schedule blocks to move based on file&#x2019;s/directory&#x2019;s current storage policy.</p>
+<ul>
+
+<li>
+
+<p>Command:</p>
+
+<div class="source">
+<div class="source">
+<pre>hdfs storagepolicies -satisfyStoragePolicy -path &lt;path&gt;
+</pre></div></div>
+</li>
+<li>
+
+<p>Arguments:</p>
+</li>
+</ul>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> </th>
+<th align="left"> </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <code>-path &lt;path&gt;</code> </td>
+<td align="left"> The path referring to either a directory or a file. </td></tr>
+</tbody>
+</table></section><section>
+<h3><a name="Enable_external_service_outside_NN_or_Disable_SPS_without_restarting_Namenode"></a>Enable external service outside NN or Disable SPS without restarting Namenode</h3>
+<p>If administrator wants to switch modes of SPS feature while Namenode is running, first he/she needs to update the desired value(external or none) for the configuration item <code>dfs.storage.policy.satisfier.mode</code> in configuration file (<code>hdfs-site.xml</code>) and then run the following Namenode reconfig command</p>
+<ul>
+
+<li>Command:
+<p>hdfs dfsadmin -reconfig namenode <a href="host:ipc_port">host:ipc_port</a> start</p></li>
+</ul></section><section>
+<h3><a name="Start_External_SPS_Service."></a>Start External SPS Service.</h3>
+<p>If administrator wants to start external sps, first he/she needs to configure property <code>dfs.storage.policy.satisfier.mode</code> with <code>external</code> value in configuration file (<code>hdfs-site.xml</code>) and then run Namenode reconfig command. Please ensure that network topology configurations in the configuration file are same as namenode, this cluster will be used for matching target nodes. After this, start external sps service using following command</p>
+<ul>
+
+<li>Command:
+<p>hdfs &#x2013;daemon start sps</p></li>
+</ul></section></section>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>
