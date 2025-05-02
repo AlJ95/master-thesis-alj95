@@ -15,7 +15,7 @@ class CiriAnswerExtractor():
                 return {"answer": [True]}
         except json.JSONDecodeError as e:
             print(e)
-            return {"answer": [False]}
+            return {"answers": [False]}
     
 @component
 class CiriAnswerBuilder():
