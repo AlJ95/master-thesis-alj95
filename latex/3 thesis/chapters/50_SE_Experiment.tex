@@ -36,7 +36,7 @@ A key difference in our evaluation approach compared to the original Ciri experi
 
 
 \subsection{Experimental Setup} \label{sec:exp_setup}
-The experiments were conducted using the computational resources specified below. The primary environment for running the evaluation framework, including data processing, baseline evaluations, and RAG pipeline executions involving API-based LLMs or CPU-based components, was a dedicated server hosted by Hetzner. We haven chosen closed as well as open source models and used OpenRouter.ai\cite{openrouter-inc-2023} for all API requests. We chose not to self-host a model by ourself, because this would skew system metrics such as latency.
+The experiments were conducted using the computational resources specified below. The primary environment for running the evaluation framework, including data processing, baseline evaluations, and RAG pipeline executions involving API-based LLMs or CPU-based components, was a dedicated server hosted by Hetzner. We haven chosen closed as well as open source models and used \\OpenRouter.ai\cite{openrouter-inc-2023} for all API requests. We chose not to self-host a model by ourself, because this would skew system metrics such as latency.
 
 We chose the CCX23 dedicated CPU server\cite{hetzner-online-gmbh-2025} for all our tests
 \begin{itemize}
@@ -44,8 +44,6 @@ We chose the CCX23 dedicated CPU server\cite{hetzner-online-gmbh-2025} for all o
     \item RAM: 16 GB
     \item SSD: 160 GB
 \end{itemize}
-
-\subsection{Reconfiguration Phases} \label{sec:exp_results} 
 
 \paragraph{Dataset} 
 We used the CTest dataset, prepared by the team behind Ciri\cite{Lian.2024}\cite{xlab-uiuc-2025}. The data consists of real world missconfiguration scenarios, augmented with synthetic data. We had 907 test cases in total. In the following table is the distribution per system.
@@ -72,7 +70,7 @@ We used the CTest dataset, prepared by the team behind Ciri\cite{Lian.2024}\cite
     \label{tab:technology_values}
 \end{table}
 
-The ingestion of data into our vector database required scraping official documentation for each specific version. However, we could not find documentation or a manual for this specific Redis version. Below are the documentation sources we scraped.
+The ingestion of data into our vector database required scraping official documentation for each specific version. However, we could not find documentation or a manual for this specific Redis version as well as for hbase, hcommon and hdfs. Table \ref{tab:technology_documentation} shows the documentation sources we scraped.
 
 \begin{table}[h]
     \centering
@@ -96,22 +94,76 @@ The ingestion of data into our vector database required scraping official docume
     \label{tab:technology_documentation}
 \end{table}
 
+\subsection{Reconfiguration Phases} \label{sec:exp_results} 
+
 \paragraph{Initial Configuration and Baselines} \label{sec:exp_initial_config}
 We used several baselines as comparison. At first we ran our experiment with the baselines defined in section \ref{chap:design} - as standalone LLM and a predefined minimal RAG system with BM25 sparse retrieval. For both baselines we used OpenAI's GPT-4o-mini\cite{OpenAI_2022}. The standalone system has only a generator and an answer builder for extracting "valid" or "invalid" from the generated output. The second baseline adds an retriever right before the generator and lists the top-10 documents before without any pre- or postprocessing. This basic architectures ensure that we figure out if complex adjustments improve the validator quality at all.
 
-We also rebuilt the Ciri system within our Haystack RAG architecture and used it as baseline. As we only used our framework for running evaluations there are some minor differences in methodology due to implementation limitations. We did not look at the results per system, which means that we do not have knowledge if our system works better for django or alluxio systems. However we could run for each system a separat experiment, but we chose against for better comparability of the final result and cost reduction of the experiment. We also did only evaluate file-level validation. Ciri used few-shot examples with a number of valid and invalid configurations. We did not vary the number of valid or invalid shots, but we have chosen the best performing configuration with one valid and three invalid shots. Lastly Ciri used several language models for its experiments. However we only could use \textit{gpt-3.5-turbo-0125}\cite{OpenAI_2022}. Other models were either unavaillable, because the used version is outdated and continuously trained or too expensive for the experiment to run with our budget. However we achieved a F1-Score of \textit{0.68} which close to the Ciri reported F1-Score of \textit{0.72}. All pipeline figures can be found in the appendix.
+We also rebuilt the Ciri system within our Haystack RAG architecture and used it as baseline. As we only used our framework for running evaluations there are some minor differences in methodology due to implementation limitations. We did not look at the results per system, which means that we do not have knowledge if our system works better for django or alluxio systems. However we could run for each system a separat experiment, but we chose against for better comparability of the final result and cost reduction of the experiment. We also did only evaluate file-level validation. Ciri used few-shot examples with a number of valid and invalid configurations. We did not vary the number of valid or invalid shots, but we have chosen the best performing configuration with one valid and three invalid shots. Lastly Ciri used several language models for its experiments. We could just use \textit{gpt-3.5-turbo-0125}\cite{OpenAI_2022}. Other models were either unavaillable, because the used version is outdated and continuously trained or too expensive for the experiment to run with our budget. However we achieved a F1-Score of \textit{0.68} which close to the Ciri reported F1-Score of \textit{0.72}. All pipeline figures can be found in the appendix.
 
 \subparagraph{Initial RAG Configuration} 
+At first we tried different standalone LLMs for measuring the current state of LLM without complex system architecture. For our evaluation, we chose Qwen's \textit{QwQ-32B} \cite{qwq32b} and \textit{Qwen-2.5-coder-32b-instruct} \cite{hui2024qwen2}\cite{qwen2}\cite{qwen2.5}, OpenAI's versionized \textit{o1-mini}, \textit{gpt-4o-mini} version as well as an up-to-date version of \textit{gpt-4o-mini} for comparison. We also tested OpenAI's web-search version of \textit{gpt-4o-mini}, which appears to be an out-of-the-box RAG-system \cite{OpenAI_2022}. Lastly we added deepseeks most recent model \textit{V3} \cite{deepseekai2024deepseekv3technicalreport} to the list. 
+
+Results can be seen in figure \ref{fig:LLMStandalone-Results}. The most recent \textit{GPT-4o-mini} model does perform best for F1-Score. The evaluated models to differ stronger on False-Positives-Rate and False-Negative-Rate than on F1-Scores. \textit{GPT-4o-mini} does have the lowest False-Negative-Rate and the highest False-Positive-Rate. Positives are valid configurations, so \textit{GPT-4o-mini} does classify invalid configurations more often as valid ones and does more rarely classify valid configurations as invalid. The older version of \textit{GPT-4o-mini} from 2024 and the web-search model have a slightly worse F1-Score, but more balanced FNR and FPR metrics. Even without few-shot learning as done by the Ciri team, the most recent version of \textit{gpt-4o-mini} did score an higher F1-Score than the configuration from the Ciri team with \textit{gpt-3.5-turbo-0125}
 
 
-\paragraph{Reconfiguration I} \label{sec:exp_reconfig_1}
-Based on the analysis of the initial configuration, the first reconfiguration phase focused on ...
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/LLMStandalone-by-model.png}\\[6pt]
+    \includegraphics[width=\textwidth]{images/LLMStandalone-by-model-FNRFPR.png}
+    \caption{Upper: F1-Score for standalone Large Language Models for configuration validation. }
+    \label{fig:LLMStandalone-Results}
+  \end{figure}
+
+Next, we defined configurations for common retrieval techniques. A basic BM25 retriever is predefined as baseline. We also added one dense retriever with OpenAI's \textit{text-embedding-3-small}\cite{OpenAI_2022} and an hybrid version, which merges the results of the mentioned retriever with 3 different weight distributions with respect to the retrieved document list \textit{(1 ,2), (1, 1), (2, 1)}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/LLMStandalone-by-model.png}\\[6pt]
+    \includegraphics[width=\textwidth]{images/LLMStandalone-by-model-FNRFPR.png}
+    \caption{\textcolor{red}{SHOW HERE RETRIEVERS FROM CONFPHASE0} }
+    \label{fig:conf-phase-0-retrievers}
+\end{figure}
+  
+\textcolor{red}{MAP-at-K and ContextRelevance einblenden und zeigen, dass Retrieval der Bottleneck ist}
+\textcolor{blue}{Weil Auch verschiedene Retrieval Strategien nicht funktioniert haben, wurde ein andere Embedder versucht. Dieser war sehr langsam und musste mehrere Tage die Embeddings machen.}
+
+\textcolor{red}{Hier muss kommen, dass ich verschiedene Chunking Parameter versucht habe, aber auch diese keinen nennensewerten Impact hatten.}
+\textcolor{blue}{Weil auch die Chunking Strategien nicht viel am Retrieval verbessern konnten, habe ich versucht, die Daten an sich zu verbessern.}
 
 
-\paragraph{Reconfiguration II} \label{sec:exp_reconfig_2}
+\textcolor{blue}{Da auch dies nicht funktioneirte, war die Idee die Daten zu verbessern, da derzeit nicht klar war, ob der Retriever das Bottleneck war, oder die Daten zu unsauber waren, gefunden zu werden.}
 
 
-\paragraph{Reconfiguration III} \label{sec:exp_reconfig_3}
+\textcolor{red}{Precision: From all valid classified configs, how many were actually valid\\Recall: From all actual valid configurations, how many did we classify correctly.}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|r|r|r|r|}
+        \hline
+        \textbf{System} & \textbf{Files} & \textbf{Original Size} & \textbf{New Size} & \textbf{Reduction} \\
+        \hline
+        alluxio & 230 & 20.64MB & 19.58MB & 5.16\% \\
+        django & 634 & 37.10MB & 22.05MB & 40.58\% \\
+        etcd & 113 & 19.27MB & 1.86MB & 90.33\% \\
+        hbase & 440 & 26.42MB & 18.30MB & 30.74\% \\
+        hdfs & 108 & 2.83MB & 2.09MB & 26.18\% \\
+        postgresql & 1137 & 26.50MB & 22.94MB & 13.43\% \\
+        redis & 515 & 93.69MB & 8.33MB & 91.11\% \\
+        yarn & 563 & 40.93MB & 27.43MB & 32.99\% \\
+        zookeeper & 35 & 2.29MB & 2.12MB & 7.45\% \\
+        \hline
+        \textbf{TOTAL} & \textbf{3775} & \textbf{269.68MB} & \textbf{124.70MB} & \textbf{37.55\%} \\
+        \hline
+    \end{tabular}
+    \caption{HTML Documentation Cleanup Statistics}
+    \label{tab:cleanup_stats}
+\end{table}
+
+\textcolor{red}{Hier müssen die Ergebnisse hin, zwischen alten und neuen Daten}
+
+\textcolor{blue}{Because this also did not achieve significant improvements, we wanted to add ciri few-shot learnings to new models}
+
+
 
 \subsection{Generalization Test} \label{sec:exp_generalization}
 % Present the results of the final selected configuration(s) on the held-out test set (Sec 4.1, Sec 4.6).
@@ -126,6 +178,12 @@ Based on the analysis of the initial configuration, the first reconfiguration ph
 % Was the added complexity of advanced RAG justified?
 % Discuss the implications of the findings for the specific task (configuration validation).
 % Acknowledge limitations of the experiment (e.g., dataset size, scope of configurations tested).
+
+An high recall score for configurations without retrieval suggests, that LLMs tend to classify wrong configurations as valid more often. That makes sense. We assume that if LLMs do not have enough knowledge about particular configuration parameters, then they can not invalidate them. 
+
+While precision score increased with both sparse and dense embedding, only dense embedding showed increased accuracy values.
+
+Ressource preparation and data preprocessing is more valuable then blindly selecting a lot of models or system configurations. Improving retrieval quality is the most difficult part for enhancing configuration validation. 
 
 \subsection{Conclusion} \label{sec:exp_conclusion}
 % Summarize the main findings and contributions of this specific experiment.
