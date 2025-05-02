@@ -192,7 +192,7 @@ components:
     init_parameters:
       required_variables:
       - query
-      template: "The following query consists of a configuraiton. Rewrite this as\
+      template: "The following query consists of a configuration. Rewrite this as\
         \ sort of documentation page for each of this configuration. Create at maximum\
         \ 5 documentations. Focus on the configuration items that can lead easily\
         \ to errors / misconfigurations.\nExample (docker):\nQuery:\n```\nFROM python:3.10\n\

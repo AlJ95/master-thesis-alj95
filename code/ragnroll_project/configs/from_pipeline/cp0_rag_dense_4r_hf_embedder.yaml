@@ -6,18 +6,31 @@ components:
     type: haystack.components.builders.answer_builder.AnswerBuilder
   embedder:
     init_parameters:
-      api_base_url: null
-      api_key:
-        env_vars:
-        - OPENAI_API_KEY
-        strict: true
-        type: env_var
-      dimensions: null
-      model: text-embedding-3-small
-      organization: null
+      backend: torch
+      batch_size: 8
+      config_kwargs: null
+      device:
+        device: cpu
+        type: single
+      encode_kwargs: null
+      model: infly/inf-retriever-v1-1.5b
+      model_kwargs: null
+      normalize_embeddings: false
+      precision: float32
       prefix: ''
+      progress_bar: true
       suffix: ''
-    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
+      token:
+        env_vars:
+        - HF_API_TOKEN
+        - HF_TOKEN
+        strict: false
+        type: env_var
+      tokenizer_kwargs:
+        model_max_length: 2048
+      truncate_dim: null
+      trust_remote_code: false
+    type: haystack.components.embedders.sentence_transformers_text_embedder.SentenceTransformersTextEmbedder
   llm:
     init_parameters:
       api_base_url: https://openrouter.ai/api/v1
@@ -27,7 +40,7 @@ components:
         strict: true
         type: env_var
       generation_kwargs: {}
-      model: gpt-4o-mini
+      model: gpt-4o-mini-2024-07-18
       organization: null
       streaming_callback: null
       system_prompt: null
@@ -41,7 +54,8 @@ components:
     type: haystack.components.converters.output_adapter.OutputAdapter
   prompt_builder:
     init_parameters:
-      required_variables: query
+      required_variables:
+      - query
       template: "\n\n        Given these documents, answer the question.\n       \
         \                                                \n        Is the following\
         \ configuration valid?\n\n        Your answer is used within a pipeline and\
@@ -68,7 +82,7 @@ components:
           bm25_parameters: {}
           bm25_tokenization_regex: (?u)\b\w\w+\b
           embedding_similarity_function: dot_product
-          index: 3b899b9e-80e2-45f0-ac12-cb9fccecacbe
+          index: 46714958-6dc4-4ee4-b718-729cd2a59d1a
         type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
       filter_policy: replace
       filters: null
@@ -85,14 +99,15 @@ components:
         strict: true
         type: env_var
       generation_kwargs: {}
-      model: gpt-4o-mini
+      model: gpt-4o-mini-2024-07-18
       organization: null
       streaming_callback: null
       system_prompt: null
     type: haystack.components.generators.openai.OpenAIGenerator
   rewriter_prompt:
     init_parameters:
-      required_variables: query
+      required_variables:
+      - query
       template: "The following query consists of a configuration. Rewrite this as\
         \ sort of documentation page for each of this configuration.\nExample (docker):\n\
         #######################################################\nQuery:\n```\nFROM\
