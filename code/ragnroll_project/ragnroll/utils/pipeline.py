@@ -1,3 +1,4 @@
+from pipelines.components import *
 from haystack import Pipeline
 from haystack.core.component import InputSocket, OutputSocket
 from pathlib import Path
