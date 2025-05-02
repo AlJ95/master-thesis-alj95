@@ -118,17 +118,31 @@ Results can be seen in figure \ref{fig:LLMStandalone-Results}. The most recent \
     \label{fig:LLMStandalone-Results}
   \end{figure}
 
-Next, we defined configurations for common retrieval techniques. A basic BM25 retriever is predefined as baseline. We also added one dense retriever with OpenAI's \textit{text-embedding-3-small}\cite{OpenAI_2022} and an hybrid version, which merges the results of the mentioned retriever with 3 different weight distributions with respect to the retrieved document list \textit{(1 ,2), (1, 1), (2, 1)}.
+Next, we defined configurations for common retrieval techniques. A basic BM25 retriever is predefined as baseline. We also added one dense retriever with OpenAI's \textit{text-embedding-3-small}\cite{OpenAI_2022} and an hybrid version, which merges the results of the mentioned retriever with 3 different weight distributions with respect to the retrieved document list \textit{(1 ,2), (1, 1), (2, 1)}. We have evaluated the performance of these configurations with the both \textit{gpt-4o-mini-2024-08-06} and the most recent \textit{gpt-4o-mini} model. The results can be seen in figure \ref{fig:conf-phase-0-retrievers}. The results show that the selected model has more impact on the overall performance than the retrieval technique in this experiment. The retrieval metrics can be seen in table \ref{tab:retrieval_metrics}. Overall the sparse retriever performs better than the dense retriever. Both retrieval techniques perform poorly on retrieval quality. The weight distribution of the hybrid retriever had just a small impact on the performance, ranging F1-Score from \textit{0.567} to \textit{0.582}.
 
-\begin{figure}[h]
+\begin{table}[h]
     \centering
-    \includegraphics[width=0.95\textwidth]{images/LLMStandalone-by-model.png}\\[6pt]
-    \includegraphics[width=\textwidth]{images/LLMStandalone-by-model-FNRFPR.png}
-    \caption{\textcolor{red}{SHOW HERE RETRIEVERS FROM CONFPHASE0} }
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Metric} & \textbf{BM25} & \textbf{Dense} \\
+        \hline
+        ContextRelevance & 0.3962 & 0.1761 \\
+        MAP@K & 0.0964 & 0.0297 \\
+        \hline
+    \end{tabular}
+    \caption{Retrieval metrics comparison between BM25 and Dense retrieval}
+    \label{tab:retrieval_metrics}
+\end{table}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/RetrievalTypes-vs-LLM-f1.png}\\[6pt]
+    \includegraphics[width=\textwidth]{images/RetrievalTypes-vs-LLM-Recall.png}
+    \caption{Experiments with different retrieval techniques and models. In both figures the upper model is the versionized \textit{gpt-4o-mini} and the lower model is the most recent \textit{gpt-4o-mini}.}
     \label{fig:conf-phase-0-retrievers}
 \end{figure}
-  
-\textcolor{red}{MAP-at-K and ContextRelevance einblenden und zeigen, dass Retrieval der Bottleneck ist}
+
+
 \textcolor{blue}{Weil Auch verschiedene Retrieval Strategien nicht funktioniert haben, wurde ein andere Embedder versucht. Dieser war sehr langsam und musste mehrere Tage die Embeddings machen.}
 
 \textcolor{red}{Hier muss kommen, dass ich verschiedene Chunking Parameter versucht habe, aber auch diese keinen nennensewerten Impact hatten.}
