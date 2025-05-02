@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Proxy user - Superusers Acting On Behalf Of Other Users</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Proxy user - Superusers Acting On Behalf Of Other Users
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Proxy user - Superusers Acting On Behalf Of Other Users</h1>
+<ul>
+
+
+
+
+</ul>
+
+<div class="section">
+<h2><a name="Introduction"></a>Introduction</h2>
+<p>This document describes how a superuser can submit jobs or access hdfs on behalf of another user.</p></div>
+<div class="section">
+<h2><a name="Use_Case"></a>Use Case</h2>
+<p>The code example described in the next section is applicable for the following use case.</p>
+<p>A superuser with username &#x2018;super&#x2019; wants to submit job and access hdfs on behalf of a user joe. The superuser has kerberos credentials but user joe doesn&#x2019;t have any. The tasks are required to run as user joe and any file accesses on namenode are required to be done as user joe. It is required that user joe can connect to the namenode or job tracker on a connection authenticated with super&#x2019;s kerberos credentials. In other words super is impersonating the user joe.</p>
+<p>Some products such as Apache Oozie need this.</p></div>
+<div class="section">
+<h2><a name="Code_example"></a>Code example</h2>
+<p>In this example super&#x2019;s credentials are used for login and a proxy user ugi object is created for joe. The operations are performed within the doAs method of this proxy user ugi object.</p>
+
+<div>
+<div>
+<pre class="source">    ...
+    //Create ugi for joe. The login user is 'super'.
+    UserGroupInformation ugi =
+            UserGroupInformation.createProxyUser(&quot;joe&quot;, UserGroupInformation.getLoginUser());
+    ugi.doAs(new PrivilegedExceptionAction&lt;Void&gt;() {
+      public Void run() throws Exception {
+        //Submit a job
+        JobClient jc = new JobClient(conf);
+        jc.submitJob(conf);
+        //OR access hdfs
+        FileSystem fs = FileSystem.get(conf);
+        fs.mkdir(someFilePath);
+      }
+    }
+</pre></div></div>
+</div>
+<div class="section">
+<h2><a name="Configurations"></a>Configurations</h2>
+<p>You can configure proxy user using properties <tt>hadoop.proxyuser.$superuser.hosts</tt> along with either or both of <tt>hadoop.proxyuser.$superuser.groups</tt> and <tt>hadoop.proxyuser.$superuser.users</tt>.</p>
+<p>By specifying as below in core-site.xml, the superuser named <tt>super</tt> can connect only from <tt>host1</tt> and <tt>host2</tt> to impersonate a user belonging to <tt>group1</tt> and <tt>group2</tt>.</p>
+
+<div>
+<div>
+<pre class="source">   &lt;property&gt;
+     &lt;name&gt;hadoop.proxyuser.super.hosts&lt;/name&gt;
+     &lt;value&gt;host1,host2&lt;/value&gt;
+   &lt;/property&gt;
+   &lt;property&gt;
+     &lt;name&gt;hadoop.proxyuser.super.groups&lt;/name&gt;
+     &lt;value&gt;group1,group2&lt;/value&gt;
+   &lt;/property&gt;
+</pre></div></div>
+
+<p>If these configurations are not present, impersonation will not be allowed and connection will fail.</p>
+<p>If more lax security is preferred, the wildcard value * may be used to allow impersonation from any host or of any user. For example, by specifying as below in core-site.xml, user named <tt>oozie</tt> accessing from any host can impersonate any user belonging to any group.</p>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;hadoop.proxyuser.oozie.hosts&lt;/name&gt;
+    &lt;value&gt;*&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property&gt;
+    &lt;name&gt;hadoop.proxyuser.oozie.groups&lt;/name&gt;
+    &lt;value&gt;*&lt;/value&gt;
+  &lt;/property&gt;
+</pre></div></div>
+
+<p>The <tt>hadoop.proxyuser.$superuser.hosts</tt> accepts list of ip addresses, ip address ranges in CIDR format and/or host names. For example, by specifying as below, user named <tt>super</tt> accessing from hosts in the range <tt>10.222.0.0-15</tt> and <tt>10.113.221.221</tt> can impersonate <tt>user1</tt> and <tt>user2</tt>.</p>
+
+<div>
+<div>
+<pre class="source">   &lt;property&gt;
+     &lt;name&gt;hadoop.proxyuser.super.hosts&lt;/name&gt;
+     &lt;value&gt;10.222.0.0/16,10.113.221.221&lt;/value&gt;
+   &lt;/property&gt;
+   &lt;property&gt;
+     &lt;name&gt;hadoop.proxyuser.super.users&lt;/name&gt;
+     &lt;value&gt;user1,user2&lt;/value&gt;
+   &lt;/property&gt;
+</pre></div></div>
+</div>
+<div class="section">
+<h2><a name="Caveats"></a>Caveats</h2>
+<p>If the cluster is running in <a href="./SecureMode.html">Secure Mode</a>, the superuser must have kerberos credentials to be able to impersonate another user.</p>
+<p>It cannot use delegation tokens for this feature. It would be wrong if superuser adds its own delegation token to the proxy user ugi, as it will allow the proxy user to connect to the service with the privileges of the superuser.</p>
+<p>However, if the superuser does want to give a delegation token to joe, it must first impersonate joe and get a delegation token for joe, in the same way as the code example above, and add it to the ugi of joe. In this way the delegation token will have the owner as joe.</p></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

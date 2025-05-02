@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 4.0.10 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/4.0.10/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 4.0.10 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-4-0-10-release-notes">
+<span id="django-4-0-10-release-notes"></span><h1>Django 4.0.10 release notes<a class="headerlink" href="#django-4-0-10-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>February 14, 2023</em></p>
+<p>Django 4.0.10 fixes a security issue with severity “moderate” in 4.0.9.</p>
+<div class="section" id="s-cve-2023-24580-potential-denial-of-service-vulnerability-in-file-uploads">
+<span id="cve-2023-24580-potential-denial-of-service-vulnerability-in-file-uploads"></span><h2>CVE-2023-24580: Potential denial-of-service vulnerability in file uploads<a class="headerlink" href="#cve-2023-24580-potential-denial-of-service-vulnerability-in-file-uploads" title="Permalink to this headline">¶</a></h2>
+<p>Passing certain inputs to multipart forms could result in too many open files
+or memory exhaustion, and provided a potential vector for a denial-of-service
+attack.</p>
+<p>The number of files parts parsed is now limited via the new
+<a class="reference internal" href="../../ref/settings/#std-setting-DATA_UPLOAD_MAX_NUMBER_FILES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DATA_UPLOAD_MAX_NUMBER_FILES</span></code></a> setting.</p>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

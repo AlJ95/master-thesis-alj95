@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>FileSystem (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+
+<div class="header">
+<div class="subTitle">org.apache.hadoop.fs</div>
+<h2 title="Class FileSystem" class="title">Class FileSystem</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+
+<li>
+<ul class="inheritance">
+
+<li>
+<ul class="inheritance">
+<li>org.apache.hadoop.fs.FileSystem</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a>, <a href="../../../../org/apache/hadoop/conf/Configurable.html" title="interface in org.apache.hadoop.conf">Configurable</a>, org.apache.hadoop.fs.PathCapabilities, org.apache.hadoop.security.token.DelegationTokenIssuer</dd>
+</dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../org/apache/hadoop/fs/adl/AdlFileSystem.html" title="class in org.apache.hadoop.fs.adl">AdlFileSystem</a>, <a href="../../../../org/apache/hadoop/fs/FilterFileSystem.html" title="class in org.apache.hadoop.fs">FilterFileSystem</a>, <a href="../../../../org/apache/hadoop/fs/ftp/FTPFileSystem.html" title="class in org.apache.hadoop.fs.ftp">FTPFileSystem</a>, <a href="../../../../org/apache/hadoop/fs/azure/NativeAzureFileSystem.html" title="class in org.apache.hadoop.fs.azure">NativeAzureFileSystem</a>, <a href="../../../../org/apache/hadoop/fs/s3native/NativeS3FileSystem.html" title="class in org.apache.hadoop.fs.s3native">NativeS3FileSystem</a>, <a href="../../../../org/apache/hadoop/fs/RawLocalFileSystem.html" title="class in org.apache.hadoop.fs">RawLocalFileSystem</a>, <a href="../../../../org/apache/hadoop/fs/viewfs/ViewFileSystem.html" title="class in org.apache.hadoop.fs.viewfs">ViewFileSystem</a></dd>
+</dl>
+<hr>
+<br>
+<pre>@InterfaceAudience.Public
+ @InterfaceStability.Stable
+public abstract class <span class="typeNameLabel">FileSystem</span>
+extends <a href="../../../../org/apache/hadoop/conf/Configured.html" title="class in org.apache.hadoop.conf">Configured</a>
+implements <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a>, org.apache.hadoop.security.token.DelegationTokenIssuer, org.apache.hadoop.fs.PathCapabilities</pre>
+<div class="block">An abstract base class for a fairly generic filesystem.  It
+ may be implemented as a distributed filesystem, or as a "local"
+ one that reflects the locally-connected disk.  The local version
+ exists for small Hadoop instances and for testing.
+
+ <p>
+
+ All user code that may potentially use the Hadoop Distributed
+ File System should be written to use a FileSystem object or its
+ successor, <a href="../../../../org/apache/hadoop/fs/FileContext.html" title="class in org.apache.hadoop.fs"><code>FileContext</code></a>.
+
+ <p>
+ The local implementation is <a href="../../../../org/apache/hadoop/fs/LocalFileSystem.html" title="class in org.apache.hadoop.fs"><code>LocalFileSystem</code></a> and distributed
+ implementation is DistributedFileSystem. There are other implementations
+ for object stores and (outside the Apache Hadoop codebase),
+ third party filesystems.
+ <p>
+ Notes
+ <ol>
+ <li>The behaviour of the filesystem is
+ <a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/filesystem/filesystem.html">
+ specified in the Hadoop documentation. </a>
+ However, the normative specification of the behavior of this class is
+ actually HDFS: if HDFS does not behave the way these Javadocs or
+ the specification in the Hadoop documentations define, assume that
+ the documentation is incorrect.
+ </li>
+ <li>The term <code>FileSystem</code> refers to an instance of this class.</li>
+ <li>The acronym "FS" is used as an abbreviation of FileSystem.</li>
+ <li>The term <code>filesystem</code> refers to the distributed/local filesystem
+ itself, rather than the class used to interact with it.</li>
+ <li>The term "file" refers to a file in the remote filesystem,
+ rather than instances of <code>java.io.File</code>.</li>
+ </ol>
+
+ This is a carefully evolving class.
+ New methods may be marked as Unstable or Evolving for their initial release,
+ as a warning that they are new and may change based on the
+ experience of use in applications.
+ <b>Important note for developers</b>
+
+ If you're making changes here to the public API or protected methods,
+ you must review the following subclasses and make sure that
+ they are filtering/passing through new methods as appropriate.
+
+ <a href="../../../../org/apache/hadoop/fs/FilterFileSystem.html" title="class in org.apache.hadoop.fs"><code>FilterFileSystem</code></a>: methods are passed through.
+ <a href="../../../../org/apache/hadoop/fs/ChecksumFileSystem.html" title="class in org.apache.hadoop.fs"><code>ChecksumFileSystem</code></a>: checksums are created and
+ verified.
+ <code>TestHarFileSystem</code> will need its <code>MustNotImplement</code>
+ interface updated.
+
+ There are some external places your changes will break things.
+ Do co-ordinate changes here.
+
+ HBase: HBoss
+ Hive: HiveShim23
+ <code>shims/0.23/src/main/java/org/apache/hadoop/hive/shims/Hadoop23Shims.java</code></div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+
+<ul class="blockList">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

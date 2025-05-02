@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>FileContext (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+
+<div class="header">
+<div class="subTitle">org.apache.hadoop.fs</div>
+<h2 title="Class FileContext" class="title">Class FileContext</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+
+<li>
+<ul class="inheritance">
+<li>org.apache.hadoop.fs.FileContext</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd>org.apache.hadoop.fs.PathCapabilities</dd>
+</dl>
+<hr>
+<br>
+<pre>@InterfaceAudience.Public
+ @InterfaceStability.Stable
+public class <span class="typeNameLabel">FileContext</span>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+implements org.apache.hadoop.fs.PathCapabilities</pre>
+<div class="block">The FileContext class provides an interface for users of the Hadoop
+ file system. It exposes a number of file system operations, e.g. create,
+ open, list.
+ 
+ <h2>Path Names</h2>
+ 
+ The Hadoop file system supports a URI namespace and URI names. This enables
+ multiple types of file systems to be referenced using fully-qualified URIs.
+ Two common Hadoop file system implementations are
+ <ul>
+ <li>the local file system: file:///path
+ <li>the HDFS file system: hdfs://nnAddress:nnPort/path
+ </ul>
+ 
+ The Hadoop file system also supports additional naming schemes besides URIs.
+ Hadoop has the concept of a <i>default file system</i>, which implies a
+ default URI scheme and authority. This enables <i>slash-relative names</i>
+ relative to the default FS, which are more convenient for users and
+ application writers. The default FS is typically set by the user's
+ environment, though it can also be manually specified.
+ <p>
+ 
+ Hadoop also supports <i>working-directory-relative</i> names, which are paths
+ relative to the current working directory (similar to Unix). The working
+ directory can be in a different file system than the default FS.
+ <p>
+ Thus, Hadoop path names can be specified as one of the following:
+ <ul>
+ <li>a fully-qualified URI: scheme://authority/path (e.g.
+ hdfs://nnAddress:nnPort/foo/bar)
+ <li>a slash-relative name: path relative to the default file system (e.g.
+ /foo/bar)
+ <li>a working-directory-relative name: path relative to the working dir (e.g.
+ foo/bar)
+ </ul>
+  Relative paths with scheme (scheme:foo/bar) are illegal.
+  
+ <h2>Role of FileContext and Configuration Defaults</h2>
+
+ The FileContext is the analogue of per-process file-related state in Unix. It
+ contains two properties:
+ 
+ <ul>
+ <li>the default file system (for resolving slash-relative names)
+ <li>the umask (for file permissions)
+ </ul>
+ In general, these properties are obtained from the default configuration file
+ in the user's environment (see <a href="../../../../org/apache/hadoop/conf/Configuration.html" title="class in org.apache.hadoop.conf"><code>Configuration</code></a>).
+ 
+ Further file system properties are specified on the server-side. File system
+ operations default to using these server-side defaults unless otherwise
+ specified.
+ <p>
+ The file system related server-side defaults are:
+  <ul>
+  <li> the home directory (default is "/user/userName")
+  <li> the initial wd (only for local fs)
+  <li> replication factor
+  <li> block size
+  <li> buffer size
+  <li> encryptDataTransfer 
+  <li> checksum option. (checksumType and  bytesPerChecksum)
+  </ul>
+
+ <h2>Example Usage</h2>
+
+ Example 1: use the default config read from the $HADOOP_CONFIG/core.xml.
+   Unspecified values come from core-defaults.xml in the release jar.
+  <ul>  
+  <li> myFContext = FileContext.getFileContext(); // uses the default config
+                                                // which has your default FS 
+  <li>  myFContext.create(path, ...);
+  <li>  myFContext.setWorkingDir(path);
+  <li>  myFContext.open (path, ...);  
+  <li>...
+  </ul>  
+ Example 2: Get a FileContext with a specific URI as the default FS
+  <ul>  
+  <li> myFContext = FileContext.getFileContext(URI);
+  <li> myFContext.create(path, ...);
+  <li>...
+ </ul>
+ Example 3: FileContext with local file system as the default
+  <ul> 
+  <li> myFContext = FileContext.getLocalFSFileContext();
+  <li> myFContext.create(path, ...);
+  <li> ...
+  </ul> 
+ Example 4: Use a specific config, ignoring $HADOOP_CONFIG
+  Generally you should not need use a config unless you are doing
+   <ul> 
+   <li> configX = someConfigSomeOnePassedToYou;
+   <li> myFContext = getFileContext(configX); // configX is not changed,
+                                              // is passed down 
+   <li> myFContext.create(path, ...);
+   <li>...
+  </ul></div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+
+<ul class="blockList">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

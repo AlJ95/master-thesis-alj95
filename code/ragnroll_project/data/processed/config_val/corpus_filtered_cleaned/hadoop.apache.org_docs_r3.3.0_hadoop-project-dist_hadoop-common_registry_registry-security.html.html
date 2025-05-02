@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Registry Security</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Registry Security
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Registry Security</h1>
+<p>This document describes how security is implemented in the service registry</p>
+<p>In a non-Kerberos-enabled Hadoop cluster, the Registry does not offer any security at all: the registry is world writeable.</p>
+<p>This document is therefore relevant only to secure clusters.</p>
+<div class="section">
+<h2><a name="Security_Model"></a>Security Model</h2>
+<p>The security model of the registry is designed to meet the following goals a secure registry: 1. Deliver functional security on a secure ZK installation. 1. Allow the RM to create per-user regions of the registration space 1. Allow applications belonging to a user to write registry entries into their part of the space. These may be short-lived or long-lived YARN applications,  or they may be be static applications. 1. Prevent other users from writing into another user&#x2019;s part of the registry. 1. Allow system services to register to a <tt>/services</tt> section of the registry. 1. Provide read access to clients of a registry. 1. Permit future support of DNS 1. Permit the future support of registering data private to a user. This allows a service to publish binding credentials (keys &amp;c) for clients to use. 1. Not require a ZK keytab on every user&#x2019;s home directory in a YARN cluster. This implies that kerberos credentials cannot be used by YARN applications.</p>
+<p>ZK security uses an ACL model, documented in <a class="externalLink" href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zookeeper+and+SASL">Zookeeper and SASL</a> In which different authentication schemes may be used to restrict access to different znodes. This permits the registry to use a mixed Kerberos + Private password model.</p>
+<ul>
+
+<li>The YARN-based registry (the <tt>RMRegistryOperationsService</tt>), uses kerberos as the authentication mechanism for YARN itself.</li>
+<li>The registry configures the base of the registry to be writeable only by itself and other hadoop system accounts holding the relevant kerberos credentials.</li>
+<li>The user specific parts of the tree are also configured to allow the same system accounts to write and manipulate that part of the tree.</li>
+<li>User accounts are created with a <tt>(username,password)</tt> keypair granted write access to their part of the tree.</li>
+<li>The secret part of the keypair is stored in the users&#x2019; home directory on HDFS, using the Hadoop Credentials API.</li>
+<li>Initially, the entire registry tree will be world readable.</li>
+</ul>
+<p>What are the limitations of such a scheme?</p>
+<ol style="list-style-type: decimal">
+
+<li>It is critical that the user-specific registry keypair is kept a secret. This relies on filesystem security to keep the file readable only by the (authenticated) user.</li>
+<li>As the <a class="externalLink" href="http://zookeeper.apache.org/doc/r3.4.6/zookeeperProgrammers.html#sc_ZooKeeperAccessControl">ZK Documentation says</a>, *&quot; Authentication is done by sending the username:password in clear text&quot;</li>
+<li>While it is possible to change the password for an account, this involves a recursive walk down the registry tree, and will stop all running services from being able to authenticate for write access until they reload the key.</li>
+<li>A world-readable registry tree is exposing information about the cluster. There is some mitigation here in that access may be restricted by IP Address.</li>
+<li>There&#x2019;s also the need to propagate information from the registry down to the clients for setting up ACLs.</li>
+</ol></div>
+<div class="section">
+<h2><a name="ACL_Configuration_propagation"></a>ACL Configuration propagation</h2>
+<p>The registry manager cannot rely on clients consistently setting ZK permissions. At the very least, they cannot relay on client applications unintentionally wrong values for the accounts of the system services</p>
+<p><i>Solution</i>: Initially, a registry permission is used here.</p>
+<div class="section">
+<h3><a name="Automatic_domain_extension"></a>Automatic domain extension</h3>
+<p>In a kerberos domain, it is possible for a kerberized client to determine the realm of a cluster at run time from the local user&#x2019;s kerberos credentials as used to talk to YARN or HDFS.</p>
+<p>This can be used to auto-generate account names with the correct realm for the system accounts hence aid having valid constants.</p>
+<p>This allows the registry to support a default configuration value for <tt>hadoop.registry.system.accounts</tt> of:</p>
+
+<div>
+<div>
+<pre class="source">  &quot;sasl:yarn@, sasl:mapred@, sasl:hdfs@, sasl:hadoop@&quot;;
+</pre></div></div>
+
+<div class="section">
+<h4><a name="In-registry_publishing_of_core_binding_data"></a>In-registry publishing of core binding data</h4>
+<p>Another strategy could be to have a <tt>ServiceRecord</tt> at the root of the registry that actually defines the registry &#x2014;including listing those default binding values in the <tt>data</tt> field..</p></div></div>
+<div class="section">
+<h3><a name="Auditing"></a>Auditing</h3>
+<p>Something (perhaps the RM) could scan a user&#x2019;s portion of the registry and detect some ACL problems: IP/world access too lax, admin account settings wrong. It cannot view or fix the ACL permissions unless it has the <tt>ADMIN</tt> permission, though that situation can at least be detected. Given the RM must have <tt>DELETE</tt> permissions further up the stack, it would be in a position to delete the errant part of the tree &#x2014;though this could be a destructive overreaction.</p></div></div>
+<div class="section">
+<h2><a name="Further_Reading"></a>Further Reading</h2>
+<ul>
+
+
+
+</ul></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

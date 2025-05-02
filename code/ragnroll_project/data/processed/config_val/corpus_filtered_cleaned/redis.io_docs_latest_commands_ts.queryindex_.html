@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>TS.QUERYINDEX | Docs</title>
+    <meta name="description" content="Get all time series keys matching a filter list">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/ts.queryindex/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="TS.QUERYINDEX">
+  <meta property="og:description" content="Get all time series keys matching a filter list">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="TS.QUERYINDEX">
+  <meta itemprop="description" content="Get all time series keys matching a filter list">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="377">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TS.QUERYINDEX">
+  <meta name="twitter:description" content="Get all time series keys matching a filter list">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">TS.QUERYINDEX
+        </h1>
+        
+        
+        
+        
+          
+            
+          
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">TS.QUERYINDEX filterExpr...
+</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available in:</dt>
+          <dd class="m-0">
+            Redis CE</a> / TimeSeries 1.0.0</a>
+          </dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(n) where n is the number of time-series that match the filters</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@timeseries</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Get all time series keys matching a filter list. Note: all matching keys will be listed, whether or not the user has read access.</p>
+<p><a href="#examples">Examples</a></p>
+<h2 id="required-arguments">Required arguments</h2>
+<details open>
+<summary><code>filterExpr...</code></summary>
+<p>filters time series based on their labels and label values. Each filter expression has one of the following syntaxes:</p>
+<ul>
+<li><code>label!=</code> - the time series has a label named <code>label</code></li>
+<li><code>label=value</code> - the time series has a label named <code>label</code> with a value equal to <code>value</code></li>
+<li><code>label=(value1,value2,...)</code> - the time series has a label named <code>label</code> with a value equal to one of the values in the list</li>
+<li><code>label=</code> - the time series does not have a label named <code>label</code></li>
+<li><code>label!=value</code> - the time series does not have a label named <code>label</code> with a value equal to <code>value</code></li>
+<li><code>label!=(value1,value2,...)</code> - the time series does not have a label named <code>label</code> with a value equal to any of the values in the list</li>
+</ul>
+<p><note><b>Notes:</b></p>
+<ul>
+<li>At least one filter expression with a syntax <code>label=value</code> or <code>label=(value1,value2,...)</code> is required.</li>
+<li>Filter expressions are conjunctive. For example, the filter <code>type=temperature room=study</code> means that a time series is a temperature time series of a study room.</li>
+<li>Whitespaces are unallowed in a filter expression except between quotes or double quotes in values - e.g., <code>x=&quot;y y&quot;</code> or <code>x='(y y,z z)'</code>.
+</note></li>
+</ul>
+</details>
+<p><note><b>Note:</b> The <code>QUERYINDEX</code> command cannot be part of a transaction when running on a Redis cluster.</note></p>
+<h2 id="return-value">Return value</h2>
+<p>Returns one of these replies:</p>
+<ul>
+<li><a href="/docs/latest/develop/reference/protocol-spec/#arrays">Array reply</a> where each element is a <a href="/docs/latest/develop/reference/protocol-spec/#bulk-strings">Bulk string reply</a>: a time series key. The array is empty if no time series matches the filter.</li>
+<li>[] (e.g., on invalid filter expression)</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<details open>
+<summary><b>Find keys by location and sensor type</b></summary>
+<p>Create a set of sensors to measure temperature and humidity in your study and kitchen.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.CREATE telemetry:study:temperature LABELS room study <span class="nb">type</span> temperature
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.CREATE telemetry:study:humidity LABELS room study <span class="nb">type</span> humidity
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.CREATE telemetry:kitchen:temperature LABELS room kitchen <span class="nb">type</span> temperature
+</span></span><span class="line"><span class="cl">OK
+</span></span><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.CREATE telemetry:kitchen:humidity LABELS room kitchen <span class="nb">type</span> humidity
+</span></span><span class="line"><span class="cl">OK</span></span></code></pre></div>
+<p>Retrieve keys of all time series representing sensors located in the kitchen.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.QUERYINDEX <span class="nv">room</span><span class="o">=</span>kitchen
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="s2">&#34;telemetry:kitchen:humidity&#34;</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;telemetry:kitchen:temperature&#34;</span></span></span></code></pre></div>
+<p>To retrieve the keys of all time series representing sensors that measure temperature, use this query:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">127.0.0.1:6379&gt; TS.QUERYINDEX <span class="nv">type</span><span class="o">=</span>temperature
+</span></span><span class="line"><span class="cl">1<span class="o">)</span> <span class="s2">&#34;telemetry:kitchen:temperature&#34;</span>
+</span></span><span class="line"><span class="cl">2<span class="o">)</span> <span class="s2">&#34;telemetry:study:temperature&#34;</span></span></span></code></pre></div>
+</details>
+<h2 id="see-also">See also</h2>
+<p><a href="/docs/latest/commands/ts.create/"><code>TS.CREATE</code></a> | <a href="/docs/latest/commands/ts.mrange/"><code>TS.MRANGE</code></a> | <a href="/docs/latest/commands/ts.mrevrange/"><code>TS.MREVRANGE</code></a> | <a href="/docs/latest/commands/ts.mget/"><code>TS.MGET</code></a></p>
+<h2 id="related-topics">Related topics</h2>
+<p><a href="/docs/latest/develop/data-types/timeseries/">RedisTimeSeries</a></p>
+
+
+        
+        
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/ts.queryindex/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.10. dblink</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/dblink.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.10. dblink" />
+  <meta property="og:description" content="F.10.&amp;nbsp;dblink dblink_connect — opens a persistent connection to a remote database dblink_connect_u — opens a persistent connection to a remote …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/dblink.html" title="PostgreSQL 17 - F.10. dblink" >Current</a>
+                          (<a href="/docs/17/dblink.html" title="PostgreSQL 17 - F.10. dblink" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/dblink.html" title="PostgreSQL 16 - F.10. dblink" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/dblink.html" title="PostgreSQL 15 - F.10. dblink" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/dblink.html" title="PostgreSQL 14 - F.10. dblink" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/dblink.html" title="PostgreSQL 13 - F.10. dblink" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/dblink.html" title="PostgreSQL devel - F.10. dblink"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/dblink.html" title="PostgreSQL 12 - F.10. dblink"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/dblink.html" title="PostgreSQL 11 - F.10. dblink"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/dblink.html" title="PostgreSQL 10 - F.10. dblink"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/dblink.html" title="PostgreSQL 9.6 - F.10. dblink"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/dblink.html" title="PostgreSQL 9.5 - F.10. dblink"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/dblink.html" title="PostgreSQL 9.4 - F.10. dblink"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/dblink.html" title="PostgreSQL 9.3 - F.10. dblink"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/dblink.html" title="PostgreSQL 9.2 - F.10. dblink"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/dblink.html" title="PostgreSQL 9.1 - F.10. dblink"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/dblink.html" title="PostgreSQL 9.0 - F.10. dblink"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/dblink.html" title="PostgreSQL 8.4 - F.10. dblink"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/dblink.html" title="PostgreSQL 8.3 - F.10. dblink"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.10.&nbsp;dblink</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="cube.html" title="F.9.&nbsp;cube">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="contrib-dblink-connect.html" title="dblink_connect">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="DBLINK">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.10.&nbsp;dblink</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="refentrytitle"><a href="contrib-dblink-connect.html">dblink_connect</a></span> <span class="refpurpose">— opens a persistent connection to a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-connect-u.html">dblink_connect_u</a></span> <span class="refpurpose">— opens a persistent connection to a remote database, insecurely</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-disconnect.html">dblink_disconnect</a></span> <span class="refpurpose">— closes a persistent connection to a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-function.html">dblink</a></span> <span class="refpurpose">— executes a query in a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-exec.html">dblink_exec</a></span> <span class="refpurpose">— executes a command in a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-open.html">dblink_open</a></span> <span class="refpurpose">— opens a cursor in a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-fetch.html">dblink_fetch</a></span> <span class="refpurpose">— returns rows from an open cursor in a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-close.html">dblink_close</a></span> <span class="refpurpose">— closes a cursor in a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-get-connections.html">dblink_get_connections</a></span> <span class="refpurpose">— returns the names of all open named dblink connections</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-error-message.html">dblink_error_message</a></span> <span class="refpurpose">— gets last error message on the named connection</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-send-query.html">dblink_send_query</a></span> <span class="refpurpose">— sends an async query to a remote database</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-is-busy.html">dblink_is_busy</a></span> <span class="refpurpose">— checks if connection is busy with an async query</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-get-notify.html">dblink_get_notify</a></span> <span class="refpurpose">— retrieve async notifications on a connection</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-get-result.html">dblink_get_result</a></span> <span class="refpurpose">— gets an async query result</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-cancel-query.html">dblink_cancel_query</a></span> <span class="refpurpose">— cancels any active query on the named connection</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-get-pkey.html">dblink_get_pkey</a></span> <span class="refpurpose">— returns the positions and field names of a relation's primary key fields</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-build-sql-insert.html">dblink_build_sql_insert</a></span> <span class="refpurpose">— builds an INSERT statement using a local tuple, replacing the primary key field values with alternative supplied values</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-build-sql-delete.html">dblink_build_sql_delete</a></span> <span class="refpurpose">— builds a DELETE statement using supplied values for primary key field values</span></dt>
+      <dt><span class="refentrytitle"><a href="contrib-dblink-build-sql-update.html">dblink_build_sql_update</a></span> <span class="refpurpose">— builds an UPDATE statement using a local tuple, replacing the primary key field values with alternative supplied values</span></dt>
+    </dl>
+  </div><a id="id-1.11.7.19.2" class="indexterm" name="id-1.11.7.19.2"></a>
+  <p><code class="filename">dblink</code> is a module that supports connections to other <span class="productname">PostgreSQL</span> databases from within a database session.</p>
+  <p>See also <a class="xref" href="postgres-fdw.html" title="F.33.&nbsp;postgres_fdw">postgres_fdw</a>, which provides roughly the same functionality using a more modern and standards-compliant infrastructure.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="cube.html" title="F.9.&nbsp;cube">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="contrib-dblink-connect.html" title="dblink_connect">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.9.&nbsp;cube&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;dblink_connect</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/dblink.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

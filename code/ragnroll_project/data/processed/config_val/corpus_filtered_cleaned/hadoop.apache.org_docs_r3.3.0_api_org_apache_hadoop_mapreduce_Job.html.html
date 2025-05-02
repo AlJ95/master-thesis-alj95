@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Job (Apache Hadoop Main 3.3.0 API)</title>
+<meta name="date" content="2020-07-06">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+
+<div class="header">
+<div class="subTitle">org.apache.hadoop.mapreduce</div>
+<h2 title="Class Job" class="title">Class Job</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+
+<li>
+<ul class="inheritance">
+<li>org.apache.hadoop.mapreduce.task.JobContextImpl</li>
+<li>
+<ul class="inheritance">
+<li>org.apache.hadoop.mapreduce.Job</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a>, <a href="../../../../org/apache/hadoop/mapreduce/JobContext.html" title="interface in org.apache.hadoop.mapreduce">JobContext</a>, org.apache.hadoop.mapreduce.MRJobConfig</dd>
+</dl>
+<hr>
+<br>
+<pre>@InterfaceAudience.Public
+ @InterfaceStability.Evolving
+public class <span class="typeNameLabel">Job</span>
+extends org.apache.hadoop.mapreduce.task.JobContextImpl
+implements <a href="../../../../org/apache/hadoop/mapreduce/JobContext.html" title="interface in org.apache.hadoop.mapreduce">JobContext</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></pre>
+<div class="block">The job submitter's view of the Job.
+ 
+ <p>It allows the user to configure the
+ job, submit it, control its execution, and query the state. The set methods
+ only work until the job is submitted, afterwards they will throw an 
+ IllegalStateException. </p>
+ 
+ <p>
+ Normally the user creates the application, describes various facets of the
+ job via <a href="../../../../org/apache/hadoop/mapreduce/Job.html" title="class in org.apache.hadoop.mapreduce"><code>Job</code></a> and then submits the job and monitor its progress.</p>
+ 
+ <p>Here is an example on how to submit a job:</p>
+ <p><blockquote><pre>
+     // Create a new Job
+     Job job = Job.getInstance();
+     job.setJarByClass(MyJob.class);
+     
+     // Specify various job-specific parameters     
+     job.setJobName("myjob");
+     
+     job.setInputPath(new Path("in"));
+     job.setOutputPath(new Path("out"));
+     
+     job.setMapperClass(MyJob.MyMapper.class);
+     job.setReducerClass(MyJob.MyReducer.class);
+
+     // Submit the job, then poll for progress until the job is complete
+     job.waitForCompletion(true);
+ </pre></blockquote></div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+
+<ul class="blockList">
+
+
+<li class="navBarCell1Rev">Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+
+</ul>
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2020 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: CREATE EXTENSION</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-createextension.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="CREATE EXTENSION" />
+  <meta property="og:description" content="CREATE EXTENSION CREATE EXTENSION — install an extension Synopsis CREATE EXTENSION [ IF NOT EXISTS ] extension_name [ WITH ] …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-createextension.html" title="PostgreSQL 17 - CREATE EXTENSION" >Current</a>
+                          (<a href="/docs/17/sql-createextension.html" title="PostgreSQL 17 - CREATE EXTENSION" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-createextension.html" title="PostgreSQL 16 - CREATE EXTENSION" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-createextension.html" title="PostgreSQL 15 - CREATE EXTENSION" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-createextension.html" title="PostgreSQL 14 - CREATE EXTENSION" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-createextension.html" title="PostgreSQL 13 - CREATE EXTENSION" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-createextension.html" title="PostgreSQL devel - CREATE EXTENSION"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-createextension.html" title="PostgreSQL 12 - CREATE EXTENSION"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-createextension.html" title="PostgreSQL 11 - CREATE EXTENSION"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-createextension.html" title="PostgreSQL 10 - CREATE EXTENSION"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-createextension.html" title="PostgreSQL 9.6 - CREATE EXTENSION"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-createextension.html" title="PostgreSQL 9.5 - CREATE EXTENSION"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-createextension.html" title="PostgreSQL 9.4 - CREATE EXTENSION"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-createextension.html" title="PostgreSQL 9.3 - CREATE EXTENSION"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-createextension.html" title="PostgreSQL 9.2 - CREATE EXTENSION"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-createextension.html" title="PostgreSQL 9.1 - CREATE EXTENSION"  rel="nofollow">9.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">CREATE EXTENSION</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-createeventtrigger.html" title="CREATE EVENT TRIGGER">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-createforeigndatawrapper.html" title="CREATE FOREIGN DATA WRAPPER">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-CREATEEXTENSION">
+  <div class="titlepage"></div><a id="id-1.9.3.64.1" class="indexterm" name="id-1.9.3.64.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">CREATE EXTENSION</span></h2>
+    <p>CREATE EXTENSION — install an extension</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+CREATE EXTENSION [ IF NOT EXISTS ] <em class="replaceable"><code>extension_name</code></em>
+    [ WITH ] [ SCHEMA <em class="replaceable"><code>schema_name</code></em> ]
+             [ VERSION <em class="replaceable"><code>version</code></em> ]
+             [ CASCADE ]
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.64.5">
+    <h2>Description</h2>
+    <p><code class="command">CREATE EXTENSION</code> loads a new extension into the current database. There must not be an extension of the same name already loaded.</p>
+    <p>Loading an extension essentially amounts to running the extension's script file. The script will typically create new <acronym class="acronym">SQL</acronym> objects such as functions, data types, operators and index support methods. <code class="command">CREATE EXTENSION</code> additionally records the identities of all the created objects, so that they can be dropped again if <code class="command">DROP EXTENSION</code> is issued.</p>
+    <p>The user who runs <code class="command">CREATE EXTENSION</code> becomes the owner of the extension for purposes of later privilege checks, and normally also becomes the owner of any objects created by the extension's script.</p>
+    <p>Loading an extension ordinarily requires the same privileges that would be required to create its component objects. For many extensions this means superuser privileges are needed. However, if the extension is marked <em class="firstterm">trusted</em> in its control file, then it can be installed by any user who has <code class="literal">CREATE</code> privilege on the current database. In this case the extension object itself will be owned by the calling user, but the contained objects will be owned by the bootstrap superuser (unless the extension's script explicitly assigns them to the calling user). This configuration gives the calling user the right to drop the extension, but not to modify individual objects within it.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.64.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><code class="literal">IF NOT EXISTS</code></span></dt>
+        <dd>
+          <p>Do not throw an error if an extension with the same name already exists. A notice is issued in this case. Note that there is no guarantee that the existing extension is anything like the one that would have been created from the currently-available script file.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>extension_name</code></em></span></dt>
+        <dd>
+          <p>The name of the extension to be installed. <span class="productname">PostgreSQL</span> will create the extension using details from the file <code class="literal">SHAREDIR/extension/</code><em class="replaceable"><code>extension_name</code></em><code class="literal">.control</code>.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>schema_name</code></em></span></dt>
+        <dd>
+          <p>The name of the schema in which to install the extension's objects, given that the extension allows its contents to be relocated. The named schema must already exist. If not specified, and the extension's control file does not specify a schema either, the current default object creation schema is used.</p>
+          <p>If the extension specifies a <code class="literal">schema</code> parameter in its control file, then that schema cannot be overridden with a <code class="literal">SCHEMA</code> clause. Normally, an error will be raised if a <code class="literal">SCHEMA</code> clause is given and it conflicts with the extension's <code class="literal">schema</code> parameter. However, if the <code class="literal">CASCADE</code> clause is also given, then <em class="replaceable"><code>schema_name</code></em> is ignored when it conflicts. The given <em class="replaceable"><code>schema_name</code></em> will be used for installation of any needed extensions that do not specify <code class="literal">schema</code> in their control files.</p>
+          <p>Remember that the extension itself is not considered to be within any schema: extensions have unqualified names that must be unique database-wide. But objects belonging to the extension can be within schemas.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>version</code></em></span></dt>
+        <dd>
+          <p>The version of the extension to install. This can be written as either an identifier or a string literal. The default version is whatever is specified in the extension's control file.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">CASCADE</code></span></dt>
+        <dd>
+          <p>Automatically install any extensions that this extension depends on that are not already installed. Their dependencies are likewise automatically installed, recursively. The <code class="literal">SCHEMA</code> clause, if given, applies to all extensions that get installed this way. Other options of the statement are not applied to automatically-installed extensions; in particular, their default versions are always selected.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.3.64.7">
+    <h2>Notes</h2>
+    <p>Before you can use <code class="command">CREATE EXTENSION</code> to load an extension into a database, the extension's supporting files must be installed. Information about installing the extensions supplied with <span class="productname">PostgreSQL</span> can be found in <a class="link" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Additional Supplied Modules</a>.</p>
+    <p>The extensions currently available for loading can be identified from the <a class="link" href="view-pg-available-extensions.html" title="51.65.&nbsp;pg_available_extensions"><code class="structname">pg_available_extensions</code></a> or <a class="link" href="view-pg-available-extension-versions.html" title="51.66.&nbsp;pg_available_extension_versions"><code class="structname">pg_available_extension_versions</code></a> system views.</p>
+    <div class="caution">
+      <h3 class="title">Caution</h3>
+      <p>Installing an extension as superuser requires trusting that the extension's author wrote the extension installation script in a secure fashion. It is not terribly difficult for a malicious user to create trojan-horse objects that will compromise later execution of a carelessly-written extension script, allowing that user to acquire superuser privileges. However, trojan-horse objects are only hazardous if they are in the <code class="varname">search_path</code> during script execution, meaning that they are in the extension's installation target schema or in the schema of some extension it depends on. Therefore, a good rule of thumb when dealing with extensions whose scripts have not been carefully vetted is to install them only into schemas for which CREATE privilege has not been and will not be granted to any untrusted users. Likewise for any extensions they depend on.</p>
+      <p>The extensions supplied with <span class="productname">PostgreSQL</span> are believed to be secure against installation-time attacks of this sort, except for a few that depend on other extensions. As stated in the documentation for those extensions, they should be installed into secure schemas, or installed into the same schemas as the extensions they depend on, or both.</p>
+    </div>
+    <p>For information about writing new extensions, see <a class="xref" href="extend-extensions.html" title="37.17.&nbsp;Packaging Related Objects into an Extension">Section&nbsp;37.17</a>.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.64.8">
+    <h2>Examples</h2>
+    <p>Install the <a class="link" href="hstore.html" title="F.16.&nbsp;hstore">hstore</a> extension into the current database, placing its objects in schema <code class="literal">addons</code>:</p>
+    <pre class="programlisting">
+CREATE EXTENSION hstore SCHEMA addons;
+</pre>
+    <p>Another way to accomplish the same thing:</p>
+    <pre class="programlisting">
+SET search_path = addons;
+CREATE EXTENSION hstore;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.64.9">
+    <h2>Compatibility</h2>
+    <p><code class="command">CREATE EXTENSION</code> is a <span class="productname">PostgreSQL</span> extension.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.64.10">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-alterextension.html" title="ALTER EXTENSION"><span class="refentrytitle">ALTER EXTENSION</span></a>, <a class="xref" href="sql-dropextension.html" title="DROP EXTENSION"><span class="refentrytitle">DROP EXTENSION</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-createeventtrigger.html" title="CREATE EVENT TRIGGER">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-createforeigndatawrapper.html" title="CREATE FOREIGN DATA WRAPPER">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">CREATE EVENT TRIGGER&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;CREATE FOREIGN DATA WRAPPER</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-createextension.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

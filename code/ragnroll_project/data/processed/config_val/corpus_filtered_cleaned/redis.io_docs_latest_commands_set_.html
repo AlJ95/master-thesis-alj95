@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>SET | Docs</title>
+    <meta name="description" content="Sets the string value of a key, ignoring its type. The key is created if it doesn&#39;t exist.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/set/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="SET">
+  <meta property="og:description" content="Sets the string value of a key, ignoring its type. The key is created if it doesn&#39;t exist.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="SET">
+  <meta itemprop="description" content="Sets the string value of a key, ignoring its type. The key is created if it doesn&#39;t exist.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="682">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SET">
+  <meta name="twitter:description" content="Sets the string value of a key, ignoring its type. The key is created if it doesn&#39;t exist.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">SET
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">SET key value [NX | XX] [GET] [EX seconds | PX milliseconds |
+  EXAT unix-time-seconds | PXAT unix-time-milliseconds | KEEPTTL]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 1.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@string</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Set <code>key</code> to hold the string <code>value</code>.
+If <code>key</code> already holds a value, it is overwritten, regardless of its type.
+Any previous time to live associated with the key is discarded on successful <code>SET</code> operation.</p>
+<h2 id="options">Options</h2>
+<p>The <code>SET</code> command supports a set of options that modify its behavior:</p>
+<ul>
+<li><code>EX</code> <em>seconds</em> -- Set the specified expire time, in seconds (a positive integer).</li>
+<li><code>PX</code> <em>milliseconds</em> -- Set the specified expire time, in milliseconds (a positive integer).</li>
+<li><code>EXAT</code> <em>timestamp-seconds</em> -- Set the specified Unix time at which the key will expire, in seconds (a positive integer).</li>
+<li><code>PXAT</code> <em>timestamp-milliseconds</em> -- Set the specified Unix time at which the key will expire, in milliseconds (a positive integer).</li>
+<li><code>NX</code> -- Only set the key if it does not already exist.</li>
+<li><code>XX</code> -- Only set the key if it already exists.</li>
+<li><code>KEEPTTL</code> -- Retain the time to live associated with the key.</li>
+<li><code>GET</code> -- Return the old string stored at key, or nil if key did not exist. An error is returned and <code>SET</code> aborted if the value stored at key is not a string.</li>
+</ul>
+<p>Note: Since the <code>SET</code> command options can replace <a href="/docs/latest/commands/setnx/"><code>SETNX</code></a>, <a href="/docs/latest/commands/setex/"><code>SETEX</code></a>, <a href="/docs/latest/commands/psetex/"><code>PSETEX</code></a>, <a href="/docs/latest/commands/getset/"><code>GETSET</code></a>, it is possible that in future versions of Redis these commands will be deprecated and finally removed.</p>
+<h2 id="examples">Examples</h2>
+<div class="bg-slate-900 border-b border-slate-700 rounded-t-xl px-4 py-3 w-full flex">
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+</div>  
+<form class="redis-cli overflow-y-auto max-h-80">
+SET mykey "Hello"
+GET mykey
+<p>SET anotherkey &quot;will expire in a minute&quot; EX 60</p>
+</form>
+<h3 id="code-examples">Code examples</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+                
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+                
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+                
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+                
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+                
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="codetabs cli group flex justify-start items-center flex-wrap box-border rounded-lg mt-0 mb-0 mx-auto bg-slate-900" id="set_and_get-step">
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="set_and_get-step" id="Python_set_and_get-step" data-lang="Python" class="radiotab w-0 h-0"
+               checked
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Python_set_and_get-step">
+            
+                Python
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Python_set_and_get-step" role="tabpanel" tabindex="0" aria-labelledby="tab-set_and_get-step">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Code samples for data structure store quickstart pages:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    https://redis.io/docs/latest/develop/get-started/data-store/
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redis</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;localhost&#34;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&#34;bike:1&#34;</span><span class="p">,</span> <span class="s2">&#34;Process 134&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;bike:1&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; &#34;Process 134&#34;</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Python_set_and_get-step')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Python_set_and_get-step" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/redis-py/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Python Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/redis-py/tree/master/doctests/string_set_get.py' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="set_and_get-step" id="Nodejs_set_and_get-step" data-lang="Node-js" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Nodejs_set_and_get-step">
+            
+                Node.js
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Nodejs_set_and_get-step" role="tabpanel" tabindex="0" aria-labelledby="tab-set_and_get-step">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line hl"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createClient</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">createClient</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">client</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Redis Client Error&#39;</span><span class="p">,</span> <span class="nx">err</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">().</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;bike:1&#39;</span><span class="p">,</span> <span class="s1">&#39;Process 134&#39;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;bike:1&#39;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1">// returns &#39;Process 134&#39;
+</span></span></span><span class="line hl"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Nodejs_set_and_get-step')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Nodejs_set_and_get-step" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/nodejs/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Node.js Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/node-redis/tree/emb-examples/doctests/string-set-get-example.js' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="set_and_get-step" id="Java-Sync_set_and_get-step" data-lang="Java-Sync" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Java-Sync_set_and_get-step">
+            
+                Java-Sync
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Java-Sync_set_and_get-step" role="tabpanel" tabindex="0" aria-labelledby="tab-set_and_get-step">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">package</span><span class="w"> </span><span class="nn">io.redis.examples</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.UnifiedJedis</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SetGetExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">UnifiedJedis</span><span class="w"> </span><span class="n">jedis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnifiedJedis</span><span class="p">(</span><span class="s">&#34;redis://localhost:6379&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&#34;bike:1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;Process 134&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s">&#34;OK&#34;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">status</span><span class="p">))</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;Successfully added a bike.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;bike:1&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;The name of the bike is: &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34;.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">jedis</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Java-Sync_set_and_get-step')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Java-Sync_set_and_get-step" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/jedis/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Java-Sync Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/jedis/tree/master/src/test/java/io/redis/examples/SetGetExample.java' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="set_and_get-step" id="Go_set_and_get-step" data-lang="Go" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Go_set_and_get-step">
+            
+                Go
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Go_set_and_get-step" role="tabpanel" tabindex="0" aria-labelledby="tab-set_and_get-step">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">example_commands_test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/redis/go-redis/v9&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_Set_and_get</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;bike:1&#34;</span><span class="p">,</span> <span class="s">&#34;Process 134&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="nf">Err</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;OK&#34;</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">value</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;bike:1&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;The name of the bike is %s&#34;</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Go_set_and_get-step')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Go_set_and_get-step" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/go/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Go Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/go-redis/tree/master/doctests/set_get_test.go' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="set_and_get-step" id="Csharp_set_and_get-step" data-lang="dotnet" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Csharp_set_and_get-step">
+            
+                C#
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Csharp_set_and_get-step" role="tabpanel" tabindex="0" aria-labelledby="tab-set_and_get-step">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">NRedisStack.Tests</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">StackExchange.Redis</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">SetGetExample</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="k">void</span> <span class="n">run</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">muxer</span> <span class="p">=</span> <span class="n">ConnectionMultiplexer</span><span class="p">.</span><span class="n">Connect</span><span class="p">(</span><span class="s">&#34;localhost:6379&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">db</span> <span class="p">=</span> <span class="n">muxer</span><span class="p">.</span><span class="n">GetDatabase</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="kt">bool</span> <span class="n">status</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">StringSet</span><span class="p">(</span><span class="s">&#34;bike:1&#34;</span><span class="p">,</span> <span class="s">&#34;Process 134&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;Successfully added a bike.&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="kt">var</span> <span class="k">value</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="n">StringGet</span><span class="p">(</span><span class="s">&#34;bike:1&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">value</span><span class="p">.</span><span class="n">HasValue</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&#34;The name of the bike is: &#34;</span> <span class="p">+</span> <span class="k">value</span> <span class="p">+</span> <span class="s">&#34;.&#34;</span><span class="p">);</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Csharp_set_and_get-step')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Csharp_set_and_get-step" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/dotnet/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                C# Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/NRedisStack/tree/master/tests/Doc/SetGetExample.cs' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+
+</div>
+
+
+
+
+<h2 id="patterns">Patterns</h2>
+<p><strong>Note:</strong> The following pattern is discouraged in favor of <a href="/docs/latest/develop/use/patterns/distributed-locks/">the Redlock algorithm</a> which is only a bit more complex to implement, but offers better guarantees and is fault tolerant.</p>
+<p>The command <code>SET resource-name anystring NX EX max-lock-time</code> is a simple way to implement a locking system with Redis.</p>
+<p>A client can acquire the lock if the above command returns <code>OK</code> (or retry after some time if the command returns Nil), and remove the lock just using <a href="/docs/latest/commands/del/"><code>DEL</code></a>.</p>
+<p>The lock will be auto-released after the expire time is reached.</p>
+<p>It is possible to make this system more robust modifying the unlock schema as follows:</p>
+<ul>
+<li>Instead of setting a fixed string, set a non-guessable large random string, called token.</li>
+<li>Instead of releasing the lock with <a href="/docs/latest/commands/del/"><code>DEL</code></a>, send a script that only removes the key if the value matches.</li>
+</ul>
+<p>This avoids that a client will try to release the lock after the expire time deleting the key created by another client that acquired the lock later.</p>
+<p>An example of unlock script would be similar to the following:</p>
+<pre><code>if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1]
+then
+    return redis.call(&quot;del&quot;,KEYS[1])
+else
+    return 0
+end
+</code></pre>
+<p>The script should be called with <code>EVAL ...script... 1 resource-name token-value</code></p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>Any of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: <code>GET</code> not given: Operation was aborted (conflict with one of the <code>XX</code>/<code>NX</code> options).</li>
+<li><a href="../../develop/reference/protocol-spec#simple-strings">Simple string reply</a>: <code>OK</code>. <code>GET</code> not given: The key was set.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: <code>GET</code> given: The key didn't exist before the <code>SET</code>.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: <code>GET</code> given: The previous value of the key.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>Any of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: <code>GET</code> not given: Operation was aborted (conflict with one of the <code>XX</code>/<code>NX</code> options).</li>
+<li><a href="../../develop/reference/protocol-spec#simple-strings">Simple string reply</a>: <code>OK</code>. <code>GET</code> not given: The key was set.</li>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: <code>GET</code> given: The key didn't exist before the <code>SET</code>.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: <code>GET</code> given: The previous value of the key.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 2.6.12: Added the <code>EX</code>, <code>PX</code>, <code>NX</code> and <code>XX</code> options.</li>
+            
+            <li>Starting with Redis version 6.0.0: Added the <code>KEEPTTL</code> option.</li>
+            
+            <li>Starting with Redis version 6.2.0: Added the <code>GET</code>, <code>EXAT</code> and <code>PXAT</code> option.</li>
+            
+            <li>Starting with Redis version 7.0.0: Allowed the <code>NX</code> and <code>GET</code> options to be used together.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/set/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

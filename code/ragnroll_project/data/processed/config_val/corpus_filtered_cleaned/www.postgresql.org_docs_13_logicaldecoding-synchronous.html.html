@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 48.8. Synchronous Replication Support for Logical Decoding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/logicaldecoding-synchronous.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="48.8. Synchronous Replication Support for Logical Decoding" />
+  <meta property="og:description" content="48.8.&amp;nbsp;Synchronous Replication Support for Logical Decoding 48.8.1. Overview 48.8.2. Caveats 48.8.1.&amp;nbsp;Overview Logical decoding can be used to build synchronous replication …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/logicaldecoding-synchronous.html" title="PostgreSQL 17 - 48.8. Synchronous Replication Support for Logical Decoding" >Current</a>
+                          (<a href="/docs/17/logicaldecoding-synchronous.html" title="PostgreSQL 17 - 48.8. Synchronous Replication Support for Logical Decoding" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/logicaldecoding-synchronous.html" title="PostgreSQL 16 - 48.8. Synchronous Replication Support for Logical Decoding" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/logicaldecoding-synchronous.html" title="PostgreSQL 15 - 48.8. Synchronous Replication Support for Logical Decoding" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/logicaldecoding-synchronous.html" title="PostgreSQL 14 - 48.8. Synchronous Replication Support for Logical Decoding" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/logicaldecoding-synchronous.html" title="PostgreSQL 13 - 48.8. Synchronous Replication Support for Logical Decoding" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/logicaldecoding-synchronous.html" title="PostgreSQL devel - 48.8. Synchronous Replication Support for Logical Decoding"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/logicaldecoding-synchronous.html" title="PostgreSQL 12 - 48.8. Synchronous Replication Support for Logical Decoding"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/logicaldecoding-synchronous.html" title="PostgreSQL 11 - 48.8. Synchronous Replication Support for Logical Decoding"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/logicaldecoding-synchronous.html" title="PostgreSQL 10 - 48.8. Synchronous Replication Support for Logical Decoding"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/logicaldecoding-synchronous.html" title="PostgreSQL 9.6 - 48.8. Synchronous Replication Support for Logical Decoding"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/logicaldecoding-synchronous.html" title="PostgreSQL 9.5 - 48.8. Synchronous Replication Support for Logical Decoding"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/logicaldecoding-synchronous.html" title="PostgreSQL 9.4 - 48.8. Synchronous Replication Support for Logical Decoding"  rel="nofollow">9.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">48.8.&nbsp;Synchronous Replication Support for Logical Decoding</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="logicaldecoding-writer.html" title="48.7.&nbsp;Logical Decoding Output Writers">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="logicaldecoding.html" title="Chapter&nbsp;48.&nbsp;Logical Decoding">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;48.&nbsp;Logical Decoding</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="replication-origins.html" title="Chapter&nbsp;49.&nbsp;Replication Progress Tracking">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="LOGICALDECODING-SYNCHRONOUS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">48.8.&nbsp;Synchronous Replication Support for Logical Decoding</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="logicaldecoding-synchronous.html#id-1.8.14.14.2">48.8.1. Overview</a></span></dt>
+      <dt><span class="sect2"><a href="logicaldecoding-synchronous.html#LOGICALDECODING-SYNCHRONOUS-CAVEATS">48.8.2. Caveats</a></span></dt>
+    </dl>
+  </div>
+  <div class="sect2" id="id-1.8.14.14.2">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">48.8.1.&nbsp;Overview</h3>
+        </div>
+      </div>
+    </div>
+    <p>Logical decoding can be used to build <a class="link" href="warm-standby.html#SYNCHRONOUS-REPLICATION" title="26.2.8.&nbsp;Synchronous Replication">synchronous replication</a> solutions with the same user interface as synchronous replication for <a class="link" href="warm-standby.html#STREAMING-REPLICATION" title="26.2.5.&nbsp;Streaming Replication">streaming replication</a>. To do this, the streaming replication interface (see <a class="xref" href="logicaldecoding-walsender.html" title="48.3.&nbsp;Streaming Replication Protocol Interface">Section&nbsp;48.3</a>) must be used to stream out data. Clients have to send <code class="literal">Standby status update (F)</code> (see <a class="xref" href="protocol-replication.html" title="52.4.&nbsp;Streaming Replication Protocol">Section&nbsp;52.4</a>) messages, just like streaming replication clients do.</p>
+    <div class="note">
+      <h3 class="title">Note</h3>
+      <p>A synchronous replica receiving changes via logical decoding will work in the scope of a single database. Since, in contrast to that, <em class="parameter"><code>synchronous_standby_names</code></em> currently is server wide, this means this technique will not work properly if more than one database is actively used.</p>
+    </div>
+  </div>
+  <div class="sect2" id="LOGICALDECODING-SYNCHRONOUS-CAVEATS">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">48.8.2.&nbsp;Caveats</h3>
+        </div>
+      </div>
+    </div>
+    <p>In synchronous replication setup, a deadlock can happen, if the transaction has locked [user] catalog tables exclusively. See <a class="xref" href="logicaldecoding-output-plugin.html#LOGICALDECODING-CAPABILITIES" title="48.6.2.&nbsp;Capabilities">Section&nbsp;48.6.2</a> for information on user catalog tables. This is because logical decoding of transactions can lock catalog tables to access them. To avoid this users must refrain from taking an exclusive lock on [user] catalog tables. This can happen in the following ways:</p>
+    <div class="itemizedlist">
+      <ul class="itemizedlist" style="list-style-type: disc;">
+        <li class="listitem">
+          <p>Issuing an explicit <code class="command">LOCK</code> on <code class="structname">pg_class</code> in a transaction.</p>
+        </li>
+        <li class="listitem">
+          <p>Perform <code class="command">CLUSTER</code> on <code class="structname">pg_class</code> in a transaction.</p>
+        </li>
+        <li class="listitem">
+          <p>Executing <code class="command">TRUNCATE</code> on [user] catalog table in a transaction.</p>
+        </li>
+      </ul>
+    </div>
+    <p>Note that these commands that can cause deadlock apply to not only explicitly indicated system catalog tables above but also to any other [user] catalog table.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="logicaldecoding-writer.html" title="48.7.&nbsp;Logical Decoding Output Writers">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="logicaldecoding.html" title="Chapter&nbsp;48.&nbsp;Logical Decoding">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="replication-origins.html" title="Chapter&nbsp;49.&nbsp;Replication Progress Tracking">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">48.7.&nbsp;Logical Decoding Output Writers&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;49.&nbsp;Replication Progress Tracking</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/logicaldecoding-synchronous.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

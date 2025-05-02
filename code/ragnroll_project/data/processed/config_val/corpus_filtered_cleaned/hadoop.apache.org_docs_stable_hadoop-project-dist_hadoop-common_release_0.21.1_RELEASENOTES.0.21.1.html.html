@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  0.21.1 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  0.21.1 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-2032">MAPREDUCE-2032</a> | <i>Major</i> | <b>TestJobOutputCommitter fails in ant test run</b></li>
+</ul>
+<p>Clears a problem that {{TestJobCleanup}} leaves behind files that cause {{TestJobOutputCommitter}} to error out.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-6971">HADOOP-6971</a> | <i>Major</i> | <b>Clover build doesn&#x2019;t generate per-test coverage</b></li>
+</ul>
+<p>This fix requires that test coverage is running under Clover 3.0+</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-1420">HDFS-1420</a> | <i>Major</i> | <b>Clover build doesn&#x2019;t generate per-test coverage</b></li>
+</ul>
+<p>This fix requires that test coverage is running under Clover 3.0+</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-2090">MAPREDUCE-2090</a> | <i>Major</i> | <b>Clover build doesn&#x2019;t generate per-test coverage</b></li>
+</ul>
+<p>This fix requires that test coverage is running under Clover 3.0+</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-2040">MAPREDUCE-2040</a> | <i>Minor</i> | <b>Forrest Documentation for Dynamic Priority Scheduler</b></li>
+</ul>
+<p>Forrest Documentation for Dynamic Priority Scheduler</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-6944">HADOOP-6944</a> | <i>Major</i> | <b>[Herriot] Implement a functionality for getting proxy users definitions like groups and hosts.</b></li>
+</ul>
+<p>I have just committed this to 0.21 and trunk. Thanks Vinay.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-1905">MAPREDUCE-1905</a> | <i>Blocker</i> | <b>Context.setStatus() and progress() api are ignored</b></li>
+</ul>
+<p>Moved the api public Counter getCounter(Enum&lt;?&gt; counterName), public Counter getCounter(String groupName, String counterName) from org.apache.hadoop.mapreduce.TaskInputOutputContext to org.apache.hadoop.mapreduce.TaskAttemptContext</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-1596">HDFS-1596</a> | <i>Major</i> | <b>Move secondary namenode checkpoint configs from core-default.xml to hdfs-default.xml</b></li>
+</ul>
+<p>Removed references to the older fs.checkpoint.* properties that resided in core-site.xml</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-7117">HADOOP-7117</a> | <i>Major</i> | <b>Move secondary namenode checkpoint configs from core-default.xml to hdfs-default.xml</b></li>
+</ul>
+<p>Removed references to the older fs.checkpoint.* properties that resided in core-site.xml</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-7193">HADOOP-7193</a> | <i>Minor</i> | <b>Help message is wrong for touchz command.</b></li>
+</ul>
+<p>Updated the help for the touchz command.</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

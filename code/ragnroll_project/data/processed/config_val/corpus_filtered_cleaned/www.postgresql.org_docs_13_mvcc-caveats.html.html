@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 13.5. Caveats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/mvcc-caveats.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="13.5. Caveats" />
+  <meta property="og:description" content="13.5.&amp;nbsp;Caveats Some DDL commands, currently only TRUNCATE and the table-rewriting forms of ALTER TABLE, are not MVCC-safe. This means that …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/mvcc-caveats.html" title="PostgreSQL 17 - 13.5. Caveats" >Current</a>
+                          (<a href="/docs/17/mvcc-caveats.html" title="PostgreSQL 17 - 13.5. Caveats" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/mvcc-caveats.html" title="PostgreSQL 16 - 13.5. Caveats" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/mvcc-caveats.html" title="PostgreSQL 15 - 13.5. Caveats" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/mvcc-caveats.html" title="PostgreSQL 14 - 13.5. Caveats" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/mvcc-caveats.html" title="PostgreSQL 13 - 13.5. Caveats" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/mvcc-caveats.html" title="PostgreSQL devel - 13.5. Caveats"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/mvcc-caveats.html" title="PostgreSQL 12 - 13.5. Caveats"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/mvcc-caveats.html" title="PostgreSQL 11 - 13.5. Caveats"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/mvcc-caveats.html" title="PostgreSQL 10 - 13.5. Caveats"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/mvcc-caveats.html" title="PostgreSQL 9.6 - 13.5. Caveats"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/mvcc-caveats.html" title="PostgreSQL 9.5 - 13.5. Caveats"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/mvcc-caveats.html" title="PostgreSQL 9.4 - 13.5. Caveats"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/mvcc-caveats.html" title="PostgreSQL 9.3 - 13.5. Caveats"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/mvcc-caveats.html" title="PostgreSQL 9.2 - 13.5. Caveats"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/mvcc-caveats.html" title="PostgreSQL 9.1 - 13.5. Caveats"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/mvcc-caveats.html" title="PostgreSQL 9.0 - 13.5. Caveats"  rel="nofollow">9.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">13.5.&nbsp;Caveats</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="applevel-consistency.html" title="13.4.&nbsp;Data Consistency Checks at the Application Level">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="mvcc.html" title="Chapter&nbsp;13.&nbsp;Concurrency Control">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;13.&nbsp;Concurrency Control</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="locking-indexes.html" title="13.6.&nbsp;Locking and Indexes">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="MVCC-CAVEATS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">13.5.&nbsp;Caveats</h2>
+      </div>
+    </div>
+  </div>
+  <p>Some DDL commands, currently only <a class="xref" href="sql-truncate.html" title="TRUNCATE"><span class="refentrytitle">TRUNCATE</span></a> and the table-rewriting forms of <a class="xref" href="sql-altertable.html" title="ALTER TABLE"><span class="refentrytitle">ALTER TABLE</span></a>, are not MVCC-safe. This means that after the truncation or rewrite commits, the table will appear empty to concurrent transactions, if they are using a snapshot taken before the DDL command committed. This will only be an issue for a transaction that did not access the table in question before the DDL command started — any transaction that has done so would hold at least an <code class="literal">ACCESS SHARE</code> table lock, which would block the DDL command until that transaction completes. So these commands will not cause any apparent inconsistency in the table contents for successive queries on the target table, but they could cause visible inconsistency between the contents of the target table and other tables in the database.</p>
+  <p>Support for the Serializable transaction isolation level has not yet been added to Hot Standby replication targets (described in <a class="xref" href="hot-standby.html" title="26.5.&nbsp;Hot Standby">Section&nbsp;26.5</a>). The strictest isolation level currently supported in hot standby mode is Repeatable Read. While performing all permanent database writes within Serializable transactions on the master will ensure that all standbys will eventually reach a consistent state, a Repeatable Read transaction run on the standby can sometimes see a transient state that is inconsistent with any serial execution of the transactions on the master.</p>
+  <p>Internal access to the system catalogs is not done using the isolation level of the current transaction. This means that newly created database objects such as tables are visible to concurrent Repeatable Read and Serializable transactions, even though the rows they contain are not. In contrast, queries that explicitly examine the system catalogs don't see rows representing concurrently created database objects, in the higher isolation levels.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="applevel-consistency.html" title="13.4.&nbsp;Data Consistency Checks at the Application Level">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="mvcc.html" title="Chapter&nbsp;13.&nbsp;Concurrency Control">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="locking-indexes.html" title="13.6.&nbsp;Locking and Indexes">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">13.4.&nbsp;Data Consistency Checks at the Application Level&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;13.6.&nbsp;Locking and Indexes</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/mvcc-caveats.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  0.18.3 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  0.18.3 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4150">HADOOP-4150</a> | <i>Blocker</i> | <b>Include librecordio as part of the release</b></li>
+</ul>
+<p>Included librecordio in release for use by xerces-c  (ant  -Dlibrecordio=true -Dxercescroot=&lt;path to the xerces-c root&gt;)</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4061">HADOOP-4061</a> | <i>Major</i> | <b>Large number of decommission freezes the Namenode</b></li>
+</ul>
+<p>Added a new conf property dfs.namenode.decommission.nodes.per.interval so that NameNode checks decommission status of x nodes for every y seconds, where x is the value of dfs.namenode.decommission.nodes.per.interval and y is the value of dfs.namenode.decommission.interval.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4659">HADOOP-4659</a> | <i>Blocker</i> | <b>Root cause of connection failure is being lost to code that uses it for delaying startup</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4542">HADOOP-4542</a> | <i>Minor</i> | <b>Fault in TestDistributedUpgrade</b></li>
+</ul>
+<p>TestDistributedUpgrade used succeed for wrong reasons.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4635">HADOOP-4635</a> | <i>Blocker</i> | <b>Memory leak ?</b></li>
+</ul>
+<p>fix memory leak of user/group information in fuse-dfs</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4679">HADOOP-4679</a> | <i>Major</i> | <b>Datanode prints tons of log messages: Waiting for threadgroup to exit, active theads is XX</b></li>
+</ul>
+<ol style="list-style-type: decimal">
+
+<li>Only datanode&#x2019;s offerService thread shutdown the datanode to avoid deadlock;</li>
+<li>Datanode checks disk in case of failure on creating a block file.</li>
+</ol><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4620">HADOOP-4620</a> | <i>Major</i> | <b>Streaming mapper never completes if the mapper does not write to stdout</b></li>
+</ul>
+<p>This patch HADOOP-4620.patch (1) solves the hanging problem on map side with empty input and nonempty output &#x2014; this map task generates output properly to intermediate files similar to other map tasks. (2) solves the problem of hanging reducer with empty input to reduce task and nonempty output &#x2014; this reduce task doesn&#x2019;t generate output if input to reduce task is empty.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4797">HADOOP-4797</a> | <i>Blocker</i> | <b>RPC Server can leave a lot of direct buffers</b></li>
+</ul>
+<p>Improve how RPC server reads and writes large buffers. Avoids soft-leak of direct buffers and excess copies in NIO layer.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4971">HADOOP-4971</a> | <i>Blocker</i> | <b>Block report times from datanodes could converge to same time.</b></li>
+</ul>
+<p>A long (unexpected) delay at datanodes could make subsequent block reports from many datanode at the same time.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-4997">HADOOP-4997</a> | <i>Blocker</i> | <b>workaround for tmp file handling on DataNodes in 0.18 (HADOOP-4663)</b></li>
+</ul>
+<p>Revert tmp files handling on DataNodes back to 0.17. sync() introduced in 0.18 has less gaurantees.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-5077">HADOOP-5077</a> | <i>Blocker</i> | <b>JavaDoc errors in 0.18.3</b></li>
+</ul>
+<p>Fix couple of JavaDoc warnings.</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

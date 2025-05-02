@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.metrics (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.metrics</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricsAggregator.html" title="interface in alluxio.metrics">MetricsAggregator</a></td>
+<td class="colLast">
+<div class="block">Interface for the aggregator that aggregates a cluster-level metric from the metrics of different
+ hosts.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MultiValueMetricsAggregator.html" title="interface in alluxio.metrics">MultiValueMetricsAggregator</a></td>
+<td class="colLast">
+<div class="block">An interface for the aggregator that aggregates metrics of different hosts into multiple
+ cluster-level metrics.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/SingleValueAggregator.html" title="interface in alluxio.metrics">SingleValueAggregator</a></td>
+<td class="colLast">
+<div class="block">Interface for the aggregator that aggregates into a single value from the metrics of different
+ hosts.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/Metric.html" title="class in alluxio.metrics">Metric</a></td>
+<td class="colLast">
+<div class="block">A metric of a given instance.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricInfo.html" title="class in alluxio.metrics">MetricInfo</a></td>
+<td class="colLast">
+<div class="block">Metric information.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricKey.html" title="class in alluxio.metrics">MetricKey</a></td>
+<td class="colLast">
+<div class="block">Metric keys.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricKey.Builder.html" title="class in alluxio.metrics">MetricKey.Builder</a></td>
+<td class="colLast">
+<div class="block">Builder to create <a href="../../alluxio/metrics/MetricKey.html" title="class in alluxio.metrics"><code>MetricKey</code></a> instances.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricKey.Name.html" title="class in alluxio.metrics">MetricKey.Name</a></td>
+<td class="colLast">
+<div class="block">A nested class to hold named string constants for their corresponding metrics.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricsConfig.html" title="class in alluxio.metrics">MetricsConfig</a></td>
+<td class="colLast">
+<div class="block">Configurations used by the metrics system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricsFilter.html" title="class in alluxio.metrics">MetricsFilter</a></td>
+<td class="colLast">
+<div class="block">A filter that matches the instance-level metrics by the instance type and metric name.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricsSystem.html" title="class in alluxio.metrics">MetricsSystem</a></td>
+<td class="colLast">
+<div class="block">A MetricsSystem is created by a specific instance(master, worker).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/TimeSeries.html" title="class in alluxio.metrics">TimeSeries</a></td>
+<td class="colLast">
+<div class="block">Represents a time series which can be graphed in the UI.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricInfo.UfsOps.html" title="enum in alluxio.metrics">MetricInfo.UfsOps</a></td>
+<td class="colLast">
+<div class="block">The list of under filesystem operations triggered by master or workers.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/metrics/MetricsSystem.InstanceType.html" title="enum in alluxio.metrics">MetricsSystem.InstanceType</a></td>
+<td class="colLast">
+<div class="block">An enum of supported instance type.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

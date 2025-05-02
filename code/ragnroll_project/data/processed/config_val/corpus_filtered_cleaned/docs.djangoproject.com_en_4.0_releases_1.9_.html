@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Django 1.9 release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/1.9/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Django 1.9 release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-django-1-9-release-notes">
+<span id="django-1-9-release-notes"></span><h1>Django 1.9 release notes<a class="headerlink" href="#django-1-9-release-notes" title="Permalink to this headline">¶</a></h1>
+<p><em>December 1, 2015</em></p>
+<p>Welcome to Django 1.9!</p>
+<p>These release notes cover the <a class="reference internal" href="#whats-new-1-9"><span class="std std-ref">new features</span></a>, as well as
+some <a class="reference internal" href="#backwards-incompatible-1-9"><span class="std std-ref">backwards incompatible changes</span></a> you’ll
+want to be aware of when upgrading from Django 1.8 or older versions. We’ve
+<a class="reference internal" href="#removed-features-1-9"><span class="std std-ref">dropped some features</span></a> that have reached the end of
+their deprecation cycle, and we’ve <a class="reference internal" href="#deprecated-features-1-9"><span class="std std-ref">begun the deprecation process for some
+features</span></a>.</p>
+<p>See the <a class="reference internal" href="../../howto/upgrade-version/"><span class="doc">How to upgrade Django to a newer version</span></a> guide if you’re updating an existing
+project.</p>
+<div class="section" id="s-python-compatibility">
+<span id="python-compatibility"></span><h2>Python compatibility<a class="headerlink" href="#python-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Django 1.9 requires Python 2.7, 3.4, or 3.5. We <strong>highly recommend</strong> and only
+officially support the latest release of each series.</p>
+<p>The Django 1.8 series is the last to support Python 3.2 and 3.3.</p>
+</div>
+<div class="section" id="s-what-s-new-in-django-1-9">
+<span id="s-whats-new-1-9"></span><span id="what-s-new-in-django-1-9"></span><span id="whats-new-1-9"></span><h2>What’s new in Django 1.9<a class="headerlink" href="#what-s-new-in-django-1-9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-performing-actions-after-a-transaction-commit">
+<span id="performing-actions-after-a-transaction-commit"></span><h3>Performing actions after a transaction commit<a class="headerlink" href="#performing-actions-after-a-transaction-commit" title="Permalink to this headline">¶</a></h3>
+<p>The new <a class="reference internal" href="../../topics/db/transactions/#django.db.transaction.on_commit" title="django.db.transaction.on_commit"><code class="xref py py-func docutils literal notranslate"><span class="pre">on_commit()</span></code></a> hook allows performing actions
+after a database transaction is successfully committed. This is useful for
+tasks such as sending notification emails, creating queued tasks, or
+invalidating caches.</p>
+<p>This functionality from the <a class="reference external" href="https://pypi.org/project/django-transaction-hooks/">django-transaction-hooks</a> package has been
+integrated into Django.</p>
+</div>
+<div class="section" id="s-password-validation">
+<span id="password-validation"></span><h3>Password validation<a class="headerlink" href="#password-validation" title="Permalink to this headline">¶</a></h3>
+<p>Django now offers password validation to help prevent the usage of weak
+passwords by users. The validation is integrated in the included password
+change and reset forms and is simple to integrate in any other code.
+Validation is performed by one or more validators, configured in the new
+<a class="reference internal" href="../../ref/settings/#std-setting-AUTH_PASSWORD_VALIDATORS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">AUTH_PASSWORD_VALIDATORS</span></code></a> setting.</p>
+<p>Four validators are included in Django, which can enforce a minimum length,
+compare the password to the user’s attributes like their name, ensure
+passwords aren’t entirely numeric, or check against an included list of common
+passwords. You can combine multiple validators, and some validators have
+custom configuration options. For example, you can choose to provide a custom
+list of common passwords. Each validator provides a help text to explain its
+requirements to the user.</p>
+<p>By default, no validation is performed and all passwords are accepted, so if
+you don’t set <a class="reference internal" href="../../ref/settings/#std-setting-AUTH_PASSWORD_VALIDATORS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">AUTH_PASSWORD_VALIDATORS</span></code></a>, you will not see any
+change. In new projects created with the default <a class="reference internal" href="../../ref/django-admin/#django-admin-startproject"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">startproject</span></code></a>
+template, a simple set of validators is enabled. To enable basic validation in
+the included auth forms for your project, you could set, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AUTH_PASSWORD_VALIDATORS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;django.contrib.auth.password_validation.UserAttributeSimilarityValidator&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;django.contrib.auth.password_validation.MinimumLengthValidator&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;django.contrib.auth.password_validation.CommonPasswordValidator&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;django.contrib.auth.password_validation.NumericPasswordValidator&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../../topics/auth/passwords/#password-validation"><span class="std std-ref">Password validation</span></a> for more details.</p>
+</div>
+<div class="section" id="s-permission-mixins-for-class-based-views">
+<span id="permission-mixins-for-class-based-views"></span><h3>Permission mixins for class-based views<a class="headerlink" href="#permission-mixins-for-class-based-views" title="Permalink to this headline">¶</a></h3>
+<p>Django now ships with the mixins
+<a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.AccessMixin" title="django.contrib.auth.mixins.AccessMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccessMixin</span></code></a>,
+<a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.LoginRequiredMixin" title="django.contrib.auth.mixins.LoginRequiredMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code></a>,
+<a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.PermissionRequiredMixin" title="django.contrib.auth.mixins.PermissionRequiredMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">PermissionRequiredMixin</span></code></a>, and
+<a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.UserPassesTestMixin" title="django.contrib.auth.mixins.UserPassesTestMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserPassesTestMixin</span></code></a> to provide the
+functionality of the <code class="docutils literal notranslate"><span class="pre">django.contrib.auth.decorators</span></code> for class-based views.
+These mixins have been taken from, or are at least inspired by, the
+<a class="reference external" href="https://django-braces.readthedocs.io/en/latest/index.html">django-braces</a> project.</p>
+<p>There are a few differences between Django’s and <code class="docutils literal notranslate"><span class="pre">django-braces</span></code>'
+implementation, though:</p>
+<ul class="simple">
+<li>The <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.AccessMixin.raise_exception" title="django.contrib.auth.mixins.AccessMixin.raise_exception"><code class="xref py py-attr docutils literal notranslate"><span class="pre">raise_exception</span></code></a> attribute
+can only be <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>. Custom exceptions or callables are not
+supported.</li>
+<li>The <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.AccessMixin.handle_no_permission" title="django.contrib.auth.mixins.AccessMixin.handle_no_permission"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_no_permission()</span></code></a>
+method does not take a <code class="docutils literal notranslate"><span class="pre">request</span></code> argument. The current request is available
+in <code class="docutils literal notranslate"><span class="pre">self.request</span></code>.</li>
+<li>The custom <code class="docutils literal notranslate"><span class="pre">test_func()</span></code> of <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.UserPassesTestMixin" title="django.contrib.auth.mixins.UserPassesTestMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserPassesTestMixin</span></code></a>
+does not take a <code class="docutils literal notranslate"><span class="pre">user</span></code> argument. The current user is available in
+<code class="docutils literal notranslate"><span class="pre">self.request.user</span></code>.</li>
+<li>The <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.PermissionRequiredMixin" title="django.contrib.auth.mixins.PermissionRequiredMixin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">permission_required</span></code></a>
+attribute supports a string (defining one permission) or a list/tuple of
+strings (defining multiple permissions) that need to be fulfilled to grant
+access.</li>
+<li>The new <a class="reference internal" href="../../topics/auth/default/#django.contrib.auth.mixins.AccessMixin.permission_denied_message" title="django.contrib.auth.mixins.AccessMixin.permission_denied_message"><code class="xref py py-attr docutils literal notranslate"><span class="pre">permission_denied_message</span></code></a>
+attribute allows passing a message to the <code class="docutils literal notranslate"><span class="pre">PermissionDenied</span></code> exception.</li>
+</ul>
+</div>
+<div class="section" id="s-new-styling-for-contrib-admin">
+<span id="new-styling-for-contrib-admin"></span><h3>New styling for <code class="docutils literal notranslate"><span class="pre">contrib.admin</span></code><a class="headerlink" href="#new-styling-for-contrib-admin" title="Permalink to this headline">¶</a></h3>
+<p>The admin sports a modern, flat design with new SVG icons which look perfect
+on HiDPI screens. It still provides a fully-functional experience to <a class="reference external" href="https://github.com/yui/yui3/wiki/Graded-Browser-Support">YUI’s
+A-grade</a> browsers. Older browser may experience varying levels of graceful
+degradation.</p>
+</div>
+<div class="section" id="s-running-tests-in-parallel">
+<span id="running-tests-in-parallel"></span><h3>Running tests in parallel<a class="headerlink" href="#running-tests-in-parallel" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="../../ref/django-admin/#django-admin-test"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">test</span></code></a> command now supports a <a class="reference internal" href="../../ref/django-admin/#cmdoption-test-parallel"><code class="xref std std-option docutils literal notranslate"><span class="pre">--parallel</span></code></a> option to run a project’s tests in multiple processes in parallel.</p>
+<p>Each process gets its own database. You must ensure that different test cases
+don’t access the same resources. For instance, test cases that touch the
+filesystem should create a temporary directory for their own use.</p>
+<p>This option is enabled by default for Django’s own test suite provided:</p>
+<ul class="simple">
+<li>the OS supports it (all but Windows)</li>
+<li>the database backend supports it (all the built-in backends but Oracle)</li>
+</ul>
+</div>
+<div class="section" id="s-minor-features">
+<span id="minor-features"></span><h3>Minor features<a class="headerlink" href="#minor-features" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="s-django-contrib-admin">
+<span id="django-contrib-admin"></span><h4><a class="reference internal" href="../../ref/contrib/admin/#module-django.contrib.admin" title="django.contrib.admin: Django's admin site."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.admin</span></code></a><a class="headerlink" href="#django-contrib-admin" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Admin views now have <code class="docutils literal notranslate"><span class="pre">model_admin</span></code> or <code class="docutils literal notranslate"><span class="pre">admin_site</span></code> attributes.</li>
+<li>The URL of the admin change view has been changed (was at
+<code class="docutils literal notranslate"><span class="pre">/admin/&lt;app&gt;/&lt;model&gt;/&lt;pk&gt;/</span></code> by default and is now at
+<code class="docutils literal notranslate"><span class="pre">/admin/&lt;app&gt;/&lt;model&gt;/&lt;pk&gt;/change/</span></code>). This should not affect your
+application unless you have hardcoded admin URLs. In that case, replace those
+links by <a class="reference internal" href="../../ref/contrib/admin/#admin-reverse-urls"><span class="std std-ref">reversing admin URLs</span></a> instead. Note that
+the old URL still redirects to the new one for backwards compatibility, but
+it may be removed in a future version.</li>
+
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

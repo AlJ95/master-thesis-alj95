@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Using GPU On YARN</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Using GPU On YARN
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Using GPU On YARN</h1>
+<h1>Prerequisites</h1>
+<ul>
+
+<li>As of now, only Nvidia GPUs are supported by YARN</li>
+<li>YARN node managers have to be pre-installed with Nvidia drivers.</li>
+<li>When Docker is used as container runtime context, nvidia-docker 1.0 needs to be installed (Current supported version in YARN for nvidia-docker).</li>
+</ul>
+<h1>Configs</h1>
+<div class="section">
+<h2><a name="GPU_scheduling"></a>GPU scheduling</h2>
+<p>In <tt>resource-types.xml</tt></p>
+<p>Add following properties</p>
+
+<div>
+<div>
+<pre class="source">&lt;configuration&gt;
+  &lt;property&gt;
+     &lt;name&gt;yarn.resource-types&lt;/name&gt;
+     &lt;value&gt;yarn.io/gpu&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/configuration&gt;
+</pre></div></div>
+
+<p>In <tt>yarn-site.xml</tt></p>
+<p><tt>DominantResourceCalculator</tt> MUST be configured to enable GPU scheduling/isolation.</p>
+<p>For <tt>Capacity Scheduler</tt>, use following property to configure <tt>DominantResourceCalculator</tt> (In <tt>capacity-scheduler.xml</tt>):</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> 	yarn.scheduler.capacity.resource-calculator </td>
+<td> org.apache.hadoop.yarn.util.resource.DominantResourceCalculator </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h2><a name="GPU_Isolation"></a>GPU Isolation</h2>
+<div class="section">
+<h3><a name="In_yarn-site.xml"></a>In <tt>yarn-site.xml</tt></h3>
+
+<div>
+<div>
+<pre class="source">  &lt;property&gt;
+    &lt;name&gt;yarn.nodemanager.resource-plugins&lt;/name&gt;
+    &lt;value&gt;yarn.io/gpu&lt;/value&gt;
+  &lt;/property&gt;
+</pre></div></div>
+
+<p>This is to enable GPU isolation module on NodeManager side.</p>
+<p>By default, YARN will automatically detect and config GPUs when above config is set. Following configs need to be set in <tt>yarn-site.xml</tt> only if admin has specialized requirements.</p>
+<p><b>1) Allowed GPU Devices</b></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.resource-plugins.gpu.allowed-gpu-devices </td>
+<td> auto </td></tr>
+</tbody>
+</table>
+<p>Specify GPU devices which can be managed by YARN NodeManager (split by comma). Number of GPU devices will be reported to RM to make scheduling decisions. Set to auto (default) let YARN automatically discover GPU resource from system.</p>
+<p>Manually specify GPU devices if auto detect GPU device failed or admin only want subset of GPU devices managed by YARN. GPU device is identified by their minor device number and index. A common approach to get minor device number of GPUs is using <tt>nvidia-smi -q</tt> and search <tt>Minor Number</tt> output.</p>
+<p>When minor numbers are specified manually, admin needs to include indice of GPUs as well, format is <tt>index:minor_number[,index:minor_number...]</tt>. An example of manual specification is <tt>0:0,1:1,2:2,3:4&quot;</tt>to allow YARN NodeManager to manage GPU devices with indices <tt>0/1/2/3</tt> and minor number <tt>0/1/2/4</tt>. numbers .</p>
+<p><b>2) Executable to discover GPUs</b></p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.resource-plugins.gpu.path-to-discovery-executables </td>
+<td> /absolute/path/to/nvidia-smi </td></tr>
+</tbody>
+</table>
+<p>When <tt>yarn.nodemanager.resource.gpu.allowed-gpu-devices=auto</tt> specified, YARN NodeManager needs to run GPU discovery binary (now only support <tt>nvidia-smi</tt>) to get GPU-related information. When value is empty (default), YARN NodeManager will try to locate discovery executable itself. An example of the config value is: <tt>/usr/local/bin/nvidia-smi</tt></p>
+<p><b>3) Docker Plugin Related Configs</b></p>
+<p>Following configs can be customized when user needs to run GPU applications inside Docker container. They&#x2019;re not required if admin follows default installation/configuration of <tt>nvidia-docker</tt>.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.resource-plugins.gpu.docker-plugin </td>
+<td> nvidia-docker-v1 </td></tr>
+</tbody>
+</table>
+<p>Specify docker command plugin for GPU. By default uses Nvidia docker V1.0, <tt>nvidia-docker-v2</tt> is available for V2.x.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.resource-plugins.gpu.docker-plugin.nvidia-docker-v1.endpoint </td>
+<td> <a class="externalLink" href="http://localhost:3476/v1.0/docker/cli">http://localhost:3476/v1.0/docker/cli</a> </td></tr>
+</tbody>
+</table>
+<p>Specify end point of <tt>nvidia-docker-plugin</tt>. Please find documentation: <a class="externalLink" href="https://github.com/NVIDIA/nvidia-docker/wiki">https://github.com/NVIDIA/nvidia-docker/wiki</a> For more details.</p>
+<p><b>4) CGroups mount</b></p>
+<p>GPU isolation uses CGroup <a class="externalLink" href="https://www.kernel.org/doc/Documentation/cgroup-v1/devices.txt">devices controller</a> to do per-GPU device isolation. Following configs should be added to <tt>yarn-site.xml</tt> to automatically mount CGroup sub devices, otherwise admin has to manually create devices subfolder in order to use this feature.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th> Property </th>
+<th> Default value </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td> yarn.nodemanager.linux-container-executor.cgroups.mount </td>
+<td> true </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="In_container-executor.cfg"></a>In <tt>container-executor.cfg</tt></h3>
+<p>In general, following config needs to be added to <tt>container-executor.cfg</tt></p>
+
+<div>
+<div>
+<pre class="source">[gpu]
+module.enabled=true
+</pre></div></div>
+
+<p>When user needs to run GPU applications under non-Docker environment:</p>
+
+<div>
+<div>
+<pre class="source">[cgroups]
+# This should be same as yarn.nodemanager.linux-container-executor.cgroups.mount-path inside yarn-site.xml
+root=/sys/fs/cgroup
+# This should be same as yarn.nodemanager.linux-container-executor.cgroups.hierarchy inside yarn-site.xml
+yarn-hierarchy=yarn
+</pre></div></div>
+
+<p>When user needs to run GPU applications under Docker environment:</p>
+<p><b>1) Add GPU related devices to docker section:</b></p>
+<p>Values separated by comma, you can get this by running <tt>ls /dev/nvidia*</tt></p>
+
+<div>
+<div>
+<pre class="source">[docker]
+docker.allowed.devices=/dev/nvidiactl,/dev/nvidia-uvm,/dev/nvidia-uvm-tools,/dev/nvidia1,/dev/nvidia0
+</pre></div></div>
+
+<p><b>2) Add <tt>nvidia-docker</tt> to volume-driver whitelist.</b></p>
+
+<div>
+<div>
+<pre class="source">[docker]
+...
+docker.allowed.volume-drivers
+</pre></div></div>
+
+<p><b>3) Add <tt>nvidia_driver_&lt;version&gt;</tt> to readonly mounts whitelist.</b></p>
+
+<div>
+<div>
+<pre class="source">[docker]
+...
+docker.allowed.ro-mounts=nvidia_driver_375.66
+</pre></div></div>
+
+<p><b>4) If use <tt>nvidia-docker-v2</tt> as gpu docker plugin, add <tt>nvidia</tt> to runtimes whitelist.</b></p>
+
+<div>
+<div>
+<pre class="source">[docker]
+...
+docker.allowed.runtimes=nvidia
+</pre></div></div>
+
+<h1>Use it</h1></div></div>
+<div class="section">
+<h2><a name="Distributed-shell_.2B_GPU"></a>Distributed-shell + GPU</h2>
+<p>Distributed shell currently support specify additional resource types other than memory and vcores.</p>
+<div class="section">
+<h3><a name="Distributed-shell_.2B_GPU_without_Docker"></a>Distributed-shell + GPU without Docker</h3>
+<p>Run distributed shell without using docker container (Asks 2 tasks, each task has 3GB memory, 1 vcore, 2 GPU device resource):</p>
+
+<div>
+<div>
+<pre class="source">yarn jar &lt;path/to/hadoop-yarn-applications-distributedshell.jar&gt; \
+  -jar &lt;path/to/hadoop-yarn-applications-distributedshell.jar&gt; \
+  -shell_command /usr/local/nvidia/bin/nvidia-smi \
+  -container_resources memory-mb=3072,vcores=1,yarn.io/gpu=2 \
+  -num_containers 2
+</pre></div></div>
+
+<p>You should be able to see output like</p>
+
+<div>
+<div>
+<pre class="source">Tue Dec  5 22:21:47 2017
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla P100-PCIE...  Off  | 0000:04:00.0     Off |                    0 |
+| N/A   30C    P0    24W / 250W |      0MiB / 12193MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+|   1  Tesla P100-PCIE...  Off  | 0000:82:00.0     Off |                    0 |
+| N/A   34C    P0    25W / 250W |      0MiB / 12193MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID  Type  Process name                               Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+</pre></div></div>
+
+<p>For launched container task.</p></div>
+<div class="section">
+<h3><a name="Distributed-shell_.2B_GPU_with_Docker"></a>Distributed-shell + GPU with Docker</h3>
+<p>You can also run distributed shell with Docker container. <tt>YARN_CONTAINER_RUNTIME_TYPE</tt>/<tt>YARN_CONTAINER_RUNTIME_DOCKER_IMAGE</tt> must be specified to use docker container.</p>
+
+<div>
+<div>
+<pre class="source">yarn jar &lt;path/to/hadoop-yarn-applications-distributedshell.jar&gt; \
+       -jar &lt;path/to/hadoop-yarn-applications-distributedshell.jar&gt; \
+       -shell_env YARN_CONTAINER_RUNTIME_TYPE=docker \
+       -shell_env YARN_CONTAINER_RUNTIME_DOCKER_IMAGE=&lt;docker-image-name&gt; \
+       -shell_command nvidia-smi \
+       -container_resources memory-mb=3072,vcores=1,yarn.io/gpu=2 \
+       -num_containers 2
+</pre></div></div></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

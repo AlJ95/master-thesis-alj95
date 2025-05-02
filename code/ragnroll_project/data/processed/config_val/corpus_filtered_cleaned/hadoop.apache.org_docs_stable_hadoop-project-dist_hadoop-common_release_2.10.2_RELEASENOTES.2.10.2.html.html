@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  2.10.2 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>&#x201c;Apache Hadoop&#x201d;  2.10.2 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-10650">HDFS-10650</a> | <i>Minor</i> | <b>DFSClient#mkdirs and DFSClient#primitiveMkdir should use default directory permission</b></li>
+</ul>
+<p>If the caller does not supply a permission, DFSClient#mkdirs and DFSClient#primitiveMkdir will create a new directory with the default directory permission 00777 now, instead of 00666.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-13174">HDFS-13174</a> | <i>Major</i> | <b>hdfs mover -p /path times out after 20 min</b></li>
+</ul>
+<p>Mover could have fail after 20+ minutes if a block move was enqueued for this long, between two DataNodes due to an internal constant that was introduced for Balancer, but affected Mover as well. The internal constant can be configured with the dfs.balancer.max-iteration-time parameter after the patch, and affects only the Balancer. Default is 20 minutes.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-10036">YARN-10036</a> | <i>Major</i> | <b>Install yarnpkg and upgrade nodejs in Dockerfile</b></li>
+</ul>
+<p>In the Dockerfile, nodejs is upgraded to 8.17.0 and yarn 1.12.1 is installed.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-16054">HADOOP-16054</a> | <i>Major</i> | <b>Update Dockerfile to use Bionic</b></li>
+</ul>
+<p>The build image has been upgraded to Bionic.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-17338">HADOOP-17338</a> | <i>Major</i> | <b>Intermittent S3AInputStream failures: Premature end of Content-Length delimited message body etc</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-16748">HADOOP-16748</a> | <i>Major</i> | <b>Migrate to Python 3 and upgrade Yetus to 0.13.0</b></li>
+</ul>
+
+<ul>
+
+<li>Upgraded Yetus to 0.13.0.</li>
+<li>Removed determine-flaky-tests-hadoop.py.</li>
+<li>Temporarily disabled shelldocs check in the Jenkins jobs due to YETUS-1099.</li>
+</ul><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-16870">HADOOP-16870</a> | <i>Major</i> | <b>Use spotbugs-maven-plugin instead of findbugs-maven-plugin</b></li>
+</ul>
+<p>Removed findbugs from the hadoop build images and added spotbugs instead. Upgraded SpotBugs to 4.2.2 and spotbugs-maven-plugin to 4.2.0.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-8234">YARN-8234</a> | <i>Critical</i> | <b>Improve RM system metrics publisher&#x2019;s performance by pushing events to timeline server in batch</b></li>
+</ul>
+<p>When Timeline Service V1 or V1.5 is used, if &#x201c;yarn.resourcemanager.system-metrics-publisher.timeline-server-v1.enable-batch&#x201d; is set to true, ResourceManager sends timeline events in batch. The default value is false. If this functionality is enabled, the maximum number that events published in batch is configured by &#x201c;yarn.resourcemanager.system-metrics-publisher.timeline-server-v1.batch-size&#x201d;. The default value is 1000. The interval of publishing events can be configured by &#x201c;yarn.resourcemanager.system-metrics-publisher.timeline-server-v1.interval-seconds&#x201d;. By default, it is set to 60 seconds.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-18088">HADOOP-18088</a> | <i>Major</i> | <b>Replace log4j 1.x with reload4j</b></li>
+</ul>
+<p>log4j 1 was replaced with reload4j which is fork of log4j 1.2.17 with the goal of fixing pressing security issues.</p>
+<p>If you are depending on the hadoop artifacts in your build were explicitly excluding log4 artifacts, and now want to exclude the reload4j files, you will need to update your exclusion lists &lt;exclusion&gt; &lt;groupId&gt;org.slf4j&lt;/groupId&gt; &lt;artifactId&gt;slf4j-reload4j&lt;/artifactId&gt; &lt;/exclusion&gt; &lt;exclusion&gt; &lt;groupId&gt;ch.qos.reload4j&lt;/groupId&gt; &lt;artifactId&gt;reload4j&lt;/artifactId&gt; &lt;/exclusion&gt;</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

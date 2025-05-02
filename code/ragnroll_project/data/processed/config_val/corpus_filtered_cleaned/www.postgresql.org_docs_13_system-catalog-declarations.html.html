@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 70.1. System Catalog Declaration Rules</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/system-catalog-declarations.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="70.1. System Catalog Declaration Rules" />
+  <meta property="og:description" content="70.1.&amp;nbsp;System Catalog Declaration Rules The key part of a catalog header file is a C structure definition describing the layout …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/system-catalog-declarations.html" title="PostgreSQL 17 - 70.1. System Catalog Declaration Rules" >Current</a>
+                          (<a href="/docs/17/system-catalog-declarations.html" title="PostgreSQL 17 - 70.1. System Catalog Declaration Rules" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/system-catalog-declarations.html" title="PostgreSQL 16 - 70.1. System Catalog Declaration Rules" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/system-catalog-declarations.html" title="PostgreSQL 15 - 70.1. System Catalog Declaration Rules" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/system-catalog-declarations.html" title="PostgreSQL 14 - 70.1. System Catalog Declaration Rules" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/system-catalog-declarations.html" title="PostgreSQL 13 - 70.1. System Catalog Declaration Rules" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/system-catalog-declarations.html" title="PostgreSQL devel - 70.1. System Catalog Declaration Rules"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/system-catalog-declarations.html" title="PostgreSQL 12 - 70.1. System Catalog Declaration Rules"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/system-catalog-declarations.html" title="PostgreSQL 11 - 70.1. System Catalog Declaration Rules"  rel="nofollow">11</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">70.1.&nbsp;System Catalog Declaration Rules</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="bki.html" title="Chapter&nbsp;70.&nbsp;System Catalog Declarations and Initial Contents">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="bki.html" title="Chapter&nbsp;70.&nbsp;System Catalog Declarations and Initial Contents">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;70.&nbsp;System Catalog Declarations and Initial Contents</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="system-catalog-initial-data.html" title="70.2.&nbsp;System Catalog Initial Data">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="SYSTEM-CATALOG-DECLARATIONS">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">70.1.&nbsp;System Catalog Declaration Rules</h2>
+      </div>
+    </div>
+  </div>
+  <p>The key part of a catalog header file is a C structure definition describing the layout of each row of the catalog. This begins with a <code class="literal">CATALOG</code> macro, which so far as the C compiler is concerned is just shorthand for <code class="literal">typedef struct FormData_<em class="replaceable"><code>catalogname</code></em></code>. Each field in the struct gives rise to a catalog column. Fields can be annotated using the BKI property macros described in <code class="filename">genbki.h</code>, for example to define a default value for a field or mark it as nullable or not nullable. The <code class="literal">CATALOG</code> line can also be annotated, with some other BKI property macros described in <code class="filename">genbki.h</code>, to define other properties of the catalog as a whole, such as whether it is a shared relation.</p>
+  <p>The system catalog cache code (and most catalog-munging code in general) assumes that the fixed-length portions of all system catalog tuples are in fact present, because it maps this C struct declaration onto them. Thus, all variable-length fields and nullable fields must be placed at the end, and they cannot be accessed as struct fields. For example, if you tried to set <code class="structname">pg_type</code>.<code class="structfield">typrelid</code> to be NULL, it would fail when some piece of code tried to reference <code class="literal">typetup-&gt;typrelid</code> (or worse, <code class="literal">typetup-&gt;typelem</code>, because that follows <code class="structfield">typrelid</code>). This would result in random errors or even segmentation violations.</p>
+  <p>As a partial guard against this type of error, variable-length or nullable fields should not be made directly visible to the C compiler. This is accomplished by wrapping them in <code class="literal">#ifdef CATALOG_VARLEN</code> ... <code class="literal">#endif</code> (where <code class="literal">CATALOG_VARLEN</code> is a symbol that is never defined). This prevents C code from carelessly trying to access fields that might not be there or might be at some other offset. As an independent guard against creating incorrect rows, we require all columns that should be non-nullable to be marked so in <code class="structname">pg_attribute</code>. The bootstrap code will automatically mark catalog columns as <code class="literal">NOT NULL</code> if they are fixed-width and are not preceded by any nullable column. Where this rule is inadequate, you can force correct marking by using <code class="literal">BKI_FORCE_NOT_NULL</code> and <code class="literal">BKI_FORCE_NULL</code> annotations as needed.</p>
+  <p>Frontend code should not include any <code class="filename">pg_xxx.h</code> catalog header file, as these files may contain C code that won't compile outside the backend. (Typically, that happens because these files also contain declarations for functions in <code class="filename">src/backend/catalog/</code> files.) Instead, frontend code may include the corresponding generated <code class="filename">pg_xxx_d.h</code> header, which will contain OID <code class="literal">#define</code>s and any other data that might be of use on the client side. If you want macros or other code in a catalog header to be visible to frontend code, write <code class="literal">#ifdef EXPOSE_TO_CLIENT_CODE</code> ... <code class="literal">#endif</code> around that section to instruct <code class="filename">genbki.pl</code> to copy that section to the <code class="filename">pg_xxx_d.h</code> header.</p>
+  <p>A few of the catalogs are so fundamental that they can't even be created by the <acronym class="acronym">BKI</acronym> <code class="literal">create</code> command that's used for most catalogs, because that command needs to write information into these catalogs to describe the new catalog. These are called <em class="firstterm">bootstrap</em> catalogs, and defining one takes a lot of extra work: you have to manually prepare appropriate entries for them in the pre-loaded contents of <code class="structname">pg_class</code> and <code class="structname">pg_type</code>, and those entries will need to be updated for subsequent changes to the catalog's structure. (Bootstrap catalogs also need pre-loaded entries in <code class="structname">pg_attribute</code>, but fortunately <code class="filename">genbki.pl</code> handles that chore nowadays.) Avoid making new catalogs be bootstrap catalogs if at all possible.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="bki.html" title="Chapter&nbsp;70.&nbsp;System Catalog Declarations and Initial Contents">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="bki.html" title="Chapter&nbsp;70.&nbsp;System Catalog Declarations and Initial Contents">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="system-catalog-initial-data.html" title="70.2.&nbsp;System Catalog Initial Data">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Chapter&nbsp;70.&nbsp;System Catalog Declarations and Initial Contents&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;70.2.&nbsp;System Catalog Initial Data</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/system-catalog-declarations.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

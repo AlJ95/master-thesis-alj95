@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>BITPOS | Docs</title>
+    <meta name="description" content="Finds the first set (1) or clear (0) bit in a string.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/bitpos/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="BITPOS">
+  <meta property="og:description" content="Finds the first set (1) or clear (0) bit in a string.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="BITPOS">
+  <meta itemprop="description" content="Finds the first set (1) or clear (0) bit in a string.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="341">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BITPOS">
+  <meta name="twitter:description" content="Finds the first set (1) or clear (0) bit in a string.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">BITPOS
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">BITPOS key bit [start [end [BYTE | BIT]]]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 2.8.7</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@bitmap</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Return the position of the first bit set to 1 or 0 in a string.</p>
+<p>The position is returned, thinking of the string as an array of bits from left to
+right, where the first byte's most significant bit is at position 0, the second
+byte's most significant bit is at position 8, and so forth.</p>
+<p>The same bit position convention is followed by <a href="/docs/latest/commands/getbit/"><code>GETBIT</code></a> and <a href="/docs/latest/commands/setbit/"><code>SETBIT</code></a>.</p>
+<p>By default, all the bytes contained in the string are examined.
+It is possible to look for bits only in a specified interval passing the additional arguments <em>start</em> and <em>end</em> (it is possible to just pass <em>start</em>, the operation will assume that the end is the last byte of the string. However there are semantic differences as explained later).
+By default, the range is interpreted as a range of bytes and not a range of bits, so <code>start=0</code> and <code>end=2</code> means to look at the first three bytes.</p>
+<p>You can use the optional <code>BIT</code> modifier to specify that the range should be interpreted as a range of bits.
+So <code>start=0</code> and <code>end=2</code> means to look at the first three bits.</p>
+<p>Note that bit positions are returned always as absolute values starting from bit zero even when <em>start</em> and <em>end</em> are used to specify a range.</p>
+<p>Like for the <a href="/docs/latest/commands/getrange/"><code>GETRANGE</code></a> command start and end can contain negative values in
+order to index bytes starting from the end of the string, where -1 is the last
+byte, -2 is the penultimate, and so forth. When <code>BIT</code> is specified, -1 is the last
+bit, -2 is the penultimate, and so forth.</p>
+<p>Non-existent keys are treated as empty strings.</p>
+<h2 id="examples">Examples</h2>
+<pre tabindex="0"><code class="language-redis" data-lang="redis">redis&gt; SET mykey &#34;\xff\xf0\x00&#34;
+OK
+redis&gt; BITPOS mykey 0
+(integer) 12
+redis&gt; SET mykey &#34;\x00\xff\xf0&#34;
+OK
+redis&gt; BITPOS mykey 1 0
+(integer) 8
+redis&gt; BITPOS mykey 1 2
+(integer) 16
+redis&gt; BITPOS mykey 1 2 -1 BYTE
+(integer) 16
+redis&gt; BITPOS mykey 1 7 15 BIT
+(integer) 8
+redis&gt; set mykey &#34;\x00\x00\x00&#34;
+OK
+redis&gt; BITPOS mykey 1
+(integer) -1
+redis&gt; BITPOS mykey 1 7 -3 BIT
+(integer) -1
+</code></pre>
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: the position of the first bit set to 1 or 0 according to the request</li>
+<li><a href="../../develop/reference/protocol-spec#integers">Integer reply</a>: <code>-1</code>. In case the <code>bit</code> argument is 1 and the string is empty or composed of just zero bytes</li>
+</ul>
+<p>If we look for set bits (the bit argument is 1) and the string is empty or composed of just zero bytes, -1 is returned.</p>
+<p>If we look for clear bits (the bit argument is 0) and the string only contains bits set to 1, the function returns the first bit not part of the string on the right. So if the string is three bytes set to the value <code>0xff</code> the command <code>BITPOS key 0</code> will return 24, since up to bit 23 all the bits are 1.</p>
+<p>The function considers the right of the string as padded with zeros if you look for clear bits and specify no range or the <em>start</em> argument <strong>only</strong>.</p>
+<p>However, this behavior changes if you are looking for clear bits and specify a range with both <em>start</em> and <em>end</em>.
+If a clear bit isn't found in the specified range, the function returns -1 as the user specified a clear range and there are no 0 bits in that range.</p>
+
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 7.0.0: Added the <code>BYTE|BIT</code> option.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/bitpos/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

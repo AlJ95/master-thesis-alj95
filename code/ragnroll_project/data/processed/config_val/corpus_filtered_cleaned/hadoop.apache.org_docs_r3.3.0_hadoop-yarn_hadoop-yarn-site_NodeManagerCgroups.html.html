@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Using CGroups with YARN</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Using CGroups with YARN
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Using CGroups with YARN</h1>
+<ul>
+
+
+</ul>
+
+<p>CGroups is a mechanism for aggregating/partitioning sets of tasks, and all their future children, into hierarchical groups with specialized behaviour. CGroups is a Linux kernel feature and was merged into kernel version 2.6.24. From a YARN perspective, this allows containers to be limited in their resource usage. A good example of this is CPU usage. Without CGroups, it becomes hard to limit container CPU usage.</p>
+<div class="section">
+<h2><a name="CGroups_Configuration"></a>CGroups Configuration</h2>
+<p>This section describes the configuration variables for using CGroups.</p>
+<p>The following settings are related to setting up CGroups. These need to be set in <i>yarn-site.xml</i>.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left">Configuration Name </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>yarn.nodemanager.container-executor.class</tt> </td>
+<td align="left"> This should be set to &#x201c;org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor&#x201d;. CGroups is a Linux kernel feature and is exposed via the LinuxContainerExecutor. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.nodemanager.linux-container-executor.resources-handler.class</tt> </td>
+<td align="left"> This should be set to &#x201c;org.apache.hadoop.yarn.server.nodemanager.util.CgroupsLCEResourcesHandler&#x201d;. Using the LinuxContainerExecutor doesn&#x2019;t force you to use CGroups. If you wish to use CGroups, the resource-handler-class must be set to CGroupsLCEResourceHandler. DefaultLCEResourcesHandler won&#x2019;t work. </td></tr>
+<tr class="b">
+<td align="left"> <tt>yarn.nodemanager.linux-container-executor.cgroups.hierarchy</tt> </td>
+<td align="left"> The cgroups hierarchy under which to place YARN proccesses(cannot contain commas). If yarn.nodemanager.linux-container-executor.cgroups.mount is false (that is, if cgroups have been pre-configured) and the YARN user has write access to the parent directory, then the directory will be created. If the directory already exists, the administrator has to give YARN write permissions to it recursively. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.nodemanager.linux-container-executor.cgroups.mount</tt> </td>
+<td align="left"> Whether the LCE should attempt to mount cgroups if not found - can be true or false. </td></tr>
+<tr class="b">
+<td align="left"> <tt>yarn.nodemanager.linux-container-executor.cgroups.mount-path</tt> </td>
+<td align="left"> Optional. Where CGroups are located. LCE will try to mount them here, if <tt>yarn.nodemanager.linux-container-executor.cgroups.mount</tt> is true. LCE will try to use CGroups from this location, if <tt>yarn.nodemanager.linux-container-executor.cgroups.mount</tt> is false. If specified, this path and its subdirectories (CGroup hierarchies) must exist and they should be readable and writable by YARN before the NodeManager is launched. See CGroups mount options below for details. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.nodemanager.linux-container-executor.group</tt> </td>
+<td align="left"> The Unix group of the NodeManager. It should match the setting in &#x201c;container-executor.cfg&#x201d;. This configuration is required for validating the secure access of the container-executor binary. </td></tr>
+</tbody>
+</table>
+<p>Once CGroups enabled, the following settings related to limiting resource usage of YARN containers can works:</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left">Configuration Name </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <tt>yarn.nodemanager.resource.percentage-physical-cpu-limit</tt> </td>
+<td align="left"> This setting lets you limit the cpu usage of all YARN containers. It sets a hard upper limit on the cumulative CPU usage of the containers. For example, if set to 60, the combined CPU usage of all YARN containers will not exceed 60%. </td></tr>
+<tr class="a">
+<td align="left"> <tt>yarn.nodemanager.linux-container-executor.cgroups.strict-resource-usage</tt> </td>
+<td align="left"> CGroups allows cpu usage limits to be hard or soft. When this setting is true, containers cannot use more CPU usage than allocated even if spare CPU is available. This ensures that containers can only use CPU that they were allocated. When set to false, containers can use spare CPU if available. It should be noted that irrespective of whether set to true or false, at no time can the combined CPU usage of all containers exceed the value specified in &#x201c;yarn.nodemanager.resource.percentage-physical-cpu-limit&#x201d;. </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h2><a name="CGroups_mount_options"></a>CGroups mount options</h2>
+<p>YARN uses CGroups through a directory structure mounted into the file system by the kernel. There are three options to attach to CGroups.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> Option </th>
+<th align="left"> Description </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> Discover CGroups mounted already </td>
+<td align="left"> This should be used on newer systems like RHEL7 or Ubuntu16 or if the administrator mounts CGroups before YARN starts. Set <tt>yarn.nodemanager.linux-container-executor.cgroups.mount</tt> to false and leave other settings set to their defaults. YARN will locate the mount points in <tt>/proc/mounts</tt>. Common locations include <tt>/sys/fs/cgroup</tt> and <tt>/cgroup</tt>. The default location can vary depending on the Linux distribution in use.</td></tr>
+<tr class="a">
+<td align="left"> CGroups mounted by YARN </td>
+<td align="left"> IMPORTANT: This option is deprecated due to security reasons with the <tt>container-executor.cfg</tt> option <tt>feature.mount-cgroup.enabled=0</tt> by default. Please mount cgroups before launching YARN.</td></tr>
+<tr class="b">
+<td align="left"> CGroups mounted already or linked but not in <tt>/proc/mounts</tt> </td>
+<td align="left"> If cgroups is accessible through lxcfs or simulated by another filesystem, then point <tt>yarn.nodemanager.linux-container-executor.cgroups.mount-path</tt> to your CGroups root directory. Set <tt>yarn.nodemanager.linux-container-executor.cgroups.mount</tt> to false. YARN tries to use this path first, before any CGroup mount point discovery. The path should have a subdirectory for each CGroup hierarchy named by the comma separated CGroup subsystems supported like <tt>&lt;path&gt;/cpu,cpuacct</tt>. Valid subsystem names are <tt>cpu, cpuacct, cpuset, memory, net_cls, blkio, freezer, devices</tt>.</td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h2><a name="CGroups_and_security"></a>CGroups and security</h2>
+<p>CGroups itself has no requirements related to security. However, the LinuxContainerExecutor does have some requirements. If running in non-secure mode, by default, the LCE runs all jobs as user &#x201c;nobody&#x201d;. This user can be changed by setting &#x201c;yarn.nodemanager.linux-container-executor.nonsecure-mode.local-user&#x201d; to the desired user. However, it can also be configured to run jobs as the user submitting the job. In that case &#x201c;yarn.nodemanager.linux-container-executor.nonsecure-mode.limit-users&#x201d; should be set to false.</p>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> yarn.nodemanager.linux-container-executor.nonsecure-mode.local-user </th>
+<th align="left"> yarn.nodemanager.linux-container-executor.nonsecure-mode.limit-users </th>
+<th align="left"> User running jobs </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> (default) </td>
+<td align="left"> (default) </td>
+<td align="left"> nobody </td></tr>
+<tr class="a">
+<td align="left"> yarn </td>
+<td align="left"> (default) </td>
+<td align="left"> yarn </td></tr>
+<tr class="b">
+<td align="left"> yarn </td>
+<td align="left"> false </td>
+<td align="left"> (User submitting the job) </td></tr>
+</tbody>
+</table></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

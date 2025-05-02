@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: LOCK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-lock.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="LOCK" />
+  <meta property="og:description" content="LOCK LOCK — lock a table Synopsis LOCK [ TABLE ] [ ONLY ] name [ * ] [, ...] …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-lock.html" title="PostgreSQL 17 - LOCK" >Current</a>
+                          (<a href="/docs/17/sql-lock.html" title="PostgreSQL 17 - LOCK" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-lock.html" title="PostgreSQL 16 - LOCK" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-lock.html" title="PostgreSQL 15 - LOCK" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-lock.html" title="PostgreSQL 14 - LOCK" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-lock.html" title="PostgreSQL 13 - LOCK" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-lock.html" title="PostgreSQL devel - LOCK"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-lock.html" title="PostgreSQL 12 - LOCK"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-lock.html" title="PostgreSQL 11 - LOCK"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-lock.html" title="PostgreSQL 10 - LOCK"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-lock.html" title="PostgreSQL 9.6 - LOCK"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-lock.html" title="PostgreSQL 9.5 - LOCK"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-lock.html" title="PostgreSQL 9.4 - LOCK"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-lock.html" title="PostgreSQL 9.3 - LOCK"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-lock.html" title="PostgreSQL 9.2 - LOCK"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-lock.html" title="PostgreSQL 9.1 - LOCK"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-lock.html" title="PostgreSQL 9.0 - LOCK"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/sql-lock.html" title="PostgreSQL 8.4 - LOCK"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/sql-lock.html" title="PostgreSQL 8.3 - LOCK"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/sql-lock.html" title="PostgreSQL 8.2 - LOCK"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/sql-lock.html" title="PostgreSQL 8.1 - LOCK"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/sql-lock.html" title="PostgreSQL 8.0 - LOCK"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/sql-lock.html" title="PostgreSQL 7.4 - LOCK"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/sql-lock.html" title="PostgreSQL 7.3 - LOCK"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/sql-lock.html" title="PostgreSQL 7.2 - LOCK"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/sql-lock.html" title="PostgreSQL 7.1 - LOCK"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">LOCK</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-load.html" title="LOAD">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-move.html" title="MOVE">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-LOCK">
+  <div class="titlepage"></div><a id="id-1.9.3.155.1" class="indexterm" name="id-1.9.3.155.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">LOCK</span></h2>
+    <p>LOCK — lock a table</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+LOCK [ TABLE ] [ ONLY ] <em class="replaceable"><code>name</code></em> [ * ] [, ...] [ IN <em class="replaceable"><code>lockmode</code></em> MODE ] [ NOWAIT ]
+
+<span class="phrase">where <em class="replaceable"><code>lockmode</code></em> is one of:</span>
+
+    ACCESS SHARE | ROW SHARE | ROW EXCLUSIVE | SHARE UPDATE EXCLUSIVE
+    | SHARE | SHARE ROW EXCLUSIVE | EXCLUSIVE | ACCESS EXCLUSIVE
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.155.5">
+    <h2>Description</h2>
+    <p><code class="command">LOCK TABLE</code> obtains a table-level lock, waiting if necessary for any conflicting locks to be released. If <code class="literal">NOWAIT</code> is specified, <code class="command">LOCK TABLE</code> does not wait to acquire the desired lock: if it cannot be acquired immediately, the command is aborted and an error is emitted. Once obtained, the lock is held for the remainder of the current transaction. (There is no <code class="command">UNLOCK TABLE</code> command; locks are always released at transaction end.)</p>
+    <p>When a view is locked, all relations appearing in the view definition query are also locked recursively with the same lock mode.</p>
+    <p>When acquiring locks automatically for commands that reference tables, <span class="productname">PostgreSQL</span> always uses the least restrictive lock mode possible. <code class="command">LOCK TABLE</code> provides for cases when you might need more restrictive locking. For example, suppose an application runs a transaction at the <code class="literal">READ COMMITTED</code> isolation level and needs to ensure that data in a table remains stable for the duration of the transaction. To achieve this you could obtain <code class="literal">SHARE</code> lock mode over the table before querying. This will prevent concurrent data changes and ensure subsequent reads of the table see a stable view of committed data, because <code class="literal">SHARE</code> lock mode conflicts with the <code class="literal">ROW EXCLUSIVE</code> lock acquired by writers, and your <code class="command">LOCK TABLE <em class="replaceable"><code>name</code></em> IN SHARE MODE</code> statement will wait until any concurrent holders of <code class="literal">ROW EXCLUSIVE</code> mode locks commit or roll back. Thus, once you obtain the lock, there are no uncommitted writes outstanding; furthermore none can begin until you release the lock.</p>
+    <p>To achieve a similar effect when running a transaction at the <code class="literal">REPEATABLE READ</code> or <code class="literal">SERIALIZABLE</code> isolation level, you have to execute the <code class="command">LOCK TABLE</code> statement before executing any <code class="command">SELECT</code> or data modification statement. A <code class="literal">REPEATABLE READ</code> or <code class="literal">SERIALIZABLE</code> transaction's view of data will be frozen when its first <code class="command">SELECT</code> or data modification statement begins. A <code class="command">LOCK TABLE</code> later in the transaction will still prevent concurrent writes — but it won't ensure that what the transaction reads corresponds to the latest committed values.</p>
+    <p>If a transaction of this sort is going to change the data in the table, then it should use <code class="literal">SHARE ROW EXCLUSIVE</code> lock mode instead of <code class="literal">SHARE</code> mode. This ensures that only one transaction of this type runs at a time. Without this, a deadlock is possible: two transactions might both acquire <code class="literal">SHARE</code> mode, and then be unable to also acquire <code class="literal">ROW EXCLUSIVE</code> mode to actually perform their updates. (Note that a transaction's own locks never conflict, so a transaction can acquire <code class="literal">ROW EXCLUSIVE</code> mode when it holds <code class="literal">SHARE</code> mode — but not if anyone else holds <code class="literal">SHARE</code> mode.) To avoid deadlocks, make sure all transactions acquire locks on the same objects in the same order, and if multiple lock modes are involved for a single object, then transactions should always acquire the most restrictive mode first.</p>
+    <p>More information about the lock modes and locking strategies can be found in <a class="xref" href="explicit-locking.html" title="13.3.&nbsp;Explicit Locking">Section&nbsp;13.3</a>.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.155.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>name</code></em></span></dt>
+        <dd>
+          <p>The name (optionally schema-qualified) of an existing table to lock. If <code class="literal">ONLY</code> is specified before the table name, only that table is locked. If <code class="literal">ONLY</code> is not specified, the table and all its descendant tables (if any) are locked. Optionally, <code class="literal">*</code> can be specified after the table name to explicitly indicate that descendant tables are included.</p>
+          <p>The command <code class="literal">LOCK TABLE a, b;</code> is equivalent to <code class="literal">LOCK TABLE a; LOCK TABLE b;</code>. The tables are locked one-by-one in the order specified in the <code class="command">LOCK TABLE</code> command.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>lockmode</code></em></span></dt>
+        <dd>
+          <p>The lock mode specifies which locks this lock conflicts with. Lock modes are described in <a class="xref" href="explicit-locking.html" title="13.3.&nbsp;Explicit Locking">Section&nbsp;13.3</a>.</p>
+          <p>If no lock mode is specified, then <code class="literal">ACCESS EXCLUSIVE</code>, the most restrictive mode, is used.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">NOWAIT</code></span></dt>
+        <dd>
+          <p>Specifies that <code class="command">LOCK TABLE</code> should not wait for any conflicting locks to be released: if the specified lock(s) cannot be acquired immediately without waiting, the transaction is aborted.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.3.155.7">
+    <h2>Notes</h2>
+    <p><code class="literal">LOCK TABLE ... IN ACCESS SHARE MODE</code> requires <code class="literal">SELECT</code> privileges on the target table. <code class="literal">LOCK TABLE ... IN ROW EXCLUSIVE MODE</code> requires <code class="literal">INSERT</code>, <code class="literal">UPDATE</code>, <code class="literal">DELETE</code>, or <code class="literal">TRUNCATE</code> privileges on the target table. All other forms of <code class="command">LOCK</code> require table-level <code class="literal">UPDATE</code>, <code class="literal">DELETE</code>, or <code class="literal">TRUNCATE</code> privileges.</p>
+    <p>The user performing the lock on the view must have the corresponding privilege on the view. In addition the view's owner must have the relevant privileges on the underlying base relations, but the user performing the lock does not need any permissions on the underlying base relations.</p>
+    <p><code class="command">LOCK TABLE</code> is useless outside a transaction block: the lock would remain held only to the completion of the statement. Therefore <span class="productname">PostgreSQL</span> reports an error if <code class="command">LOCK</code> is used outside a transaction block. Use <a class="xref" href="sql-begin.html" title="BEGIN"><span class="refentrytitle">BEGIN</span></a> and <a class="xref" href="sql-commit.html" title="COMMIT"><span class="refentrytitle">COMMIT</span></a> (or <a class="xref" href="sql-rollback.html" title="ROLLBACK"><span class="refentrytitle">ROLLBACK</span></a>) to define a transaction block.</p>
+    <p><code class="command">LOCK TABLE</code> only deals with table-level locks, and so the mode names involving <code class="literal">ROW</code> are all misnomers. These mode names should generally be read as indicating the intention of the user to acquire row-level locks within the locked table. Also, <code class="literal">ROW EXCLUSIVE</code> mode is a shareable table lock. Keep in mind that all the lock modes have identical semantics so far as <code class="command">LOCK TABLE</code> is concerned, differing only in the rules about which modes conflict with which. For information on how to acquire an actual row-level lock, see <a class="xref" href="explicit-locking.html#LOCKING-ROWS" title="13.3.2.&nbsp;Row-Level Locks">Section&nbsp;13.3.2</a> and <a class="xref" href="sql-select.html#SQL-FOR-UPDATE-SHARE" title="The Locking Clause">The Locking Clause</a> in the <a class="xref" href="sql-select.html" title="SELECT"><span class="refentrytitle">SELECT</span></a> documentation.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.155.8">
+    <h2>Examples</h2>
+    <p>Obtain a <code class="literal">SHARE</code> lock on a primary key table when going to perform inserts into a foreign key table:</p>
+    <pre class="programlisting">
+BEGIN WORK;
+LOCK TABLE films IN SHARE MODE;
+SELECT id FROM films
+    WHERE name = 'Star Wars: Episode I - The Phantom Menace';
+-- Do ROLLBACK if record was not returned
+INSERT INTO films_user_comments VALUES
+    (_id_, 'GREAT! I was waiting for it for so long!');
+COMMIT WORK;
+</pre>
+    <p>Take a <code class="literal">SHARE ROW EXCLUSIVE</code> lock on a primary key table when going to perform a delete operation:</p>
+    <pre class="programlisting">
+BEGIN WORK;
+LOCK TABLE films IN SHARE ROW EXCLUSIVE MODE;
+DELETE FROM films_user_comments WHERE id IN
+    (SELECT id FROM films WHERE rating &lt; 5);
+DELETE FROM films WHERE rating &lt; 5;
+COMMIT WORK;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.155.9">
+    <h2>Compatibility</h2>
+    <p>There is no <code class="command">LOCK TABLE</code> in the SQL standard, which instead uses <code class="command">SET TRANSACTION</code> to specify concurrency levels on transactions. <span class="productname">PostgreSQL</span> supports that too; see <a class="xref" href="sql-set-transaction.html" title="SET TRANSACTION"><span class="refentrytitle">SET TRANSACTION</span></a> for details.</p>
+    <p>Except for <code class="literal">ACCESS SHARE</code>, <code class="literal">ACCESS EXCLUSIVE</code>, and <code class="literal">SHARE UPDATE EXCLUSIVE</code> lock modes, the <span class="productname">PostgreSQL</span> lock modes and the <code class="command">LOCK TABLE</code> syntax are compatible with those present in <span class="productname">Oracle</span>.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-load.html" title="LOAD">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-move.html" title="MOVE">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">LOAD&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;MOVE</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-lock.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

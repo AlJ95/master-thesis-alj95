@@ -1,0 +1,226 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Clustering Guide | etcd</title>
+<meta name=description content="Bootstrapping an etcd cluster: Static, etcd Discovery, and DNS Discovery"><meta property="og:url" content="https://etcd.io/docs/v3.5/op-guide/clustering/"><meta property="og:site_name" content="etcd"><meta property="og:title" content="Clustering Guide"><meta property="og:description" content="Bootstrapping an etcd cluster: Static, etcd Discovery, and DNS Discovery"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="docs"><meta property="article:modified_time" content="2021-10-26T19:14:25-04:00"><meta itemprop=name content="Clustering Guide"><meta itemprop=description content="Bootstrapping an etcd cluster: Static, etcd Discovery, and DNS Discovery"><meta itemprop=dateModified content="2021-10-26T19:14:25-04:00"><meta itemprop=wordCount content="2353"><meta name=twitter:card content="summary"><meta name=twitter:title content="Clustering Guide"><meta name=twitter:description content="Bootstrapping an etcd cluster: Static, etcd Discovery, and DNS Discovery"></head><body class=td-page><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><main class="col-12 col-md-9 col-xl-8 ps-md-5" role=main><div class=td-content><h1>Clustering Guide</h1><div class=lead>Bootstrapping an etcd cluster: Static, etcd Discovery, and DNS Discovery</div><h2 id=overview>Overview</h2><p>Starting an etcd cluster statically requires that each member knows another in the cluster. In a number of cases, the IPs of the cluster members may be unknown ahead of time. In these cases, the etcd cluster can be bootstrapped with the help of a discovery service.</p><p>Once an etcd cluster is up and running, adding or removing members is done via <a href=../runtime-configuration/>runtime reconfiguration</a>. To better understand the design behind runtime reconfiguration, we suggest reading <a href=../runtime-reconf-design/>the runtime configuration design document</a>.</p><p>This guide will cover the following mechanisms for bootstrapping an etcd cluster:</p><ul></ul><p>Each of the bootstrapping mechanisms will be used to create a three machine etcd cluster with the following details:</p><table><thead><tr><th>Name</th><th>Address</th><th>Hostname</th></tr></thead><tbody><tr><td>infra0</td><td>10.0.1.10</td><td>infra0.example.com</td></tr><tr><td>infra1</td><td>10.0.1.11</td><td>infra1.example.com</td></tr><tr><td>infra2</td><td>10.0.1.12</td><td>infra2.example.com</td></tr></tbody></table><h2 id=static>Static</h2><p>As we know the cluster members, their addresses and the size of the cluster before starting, we can use an offline bootstrap configuration by setting the <code>initial-cluster</code> flag. Each machine will get either the following environment variables or command line:</p><pre tabindex=0><code>ETCD_INITIAL_CLUSTER=&#34;infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380&#34;
+ETCD_INITIAL_CLUSTER_STATE=new
+</code></pre><pre tabindex=0><code>--initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+--initial-cluster-state new
+</code></pre><p>Note that the URLs specified in <code>initial-cluster</code> are the <em>advertised peer URLs</em>, i.e. they should match the value of <code>initial-advertise-peer-urls</code> on the respective nodes.</p><p>If spinning up multiple clusters (or creating and destroying a single cluster) with same configuration for testing purpose, it is highly recommended that each cluster is given a unique <code>initial-cluster-token</code>. By doing this, etcd can generate unique cluster IDs and member IDs for the clusters even if they otherwise have the exact same configuration. This can protect etcd from cross-cluster-interaction, which might corrupt the clusters.</p><p>etcd listens on <a href=../configuration/#member><code>listen-client-urls</code></a> to accept client traffic. etcd member advertises the URLs specified in <a href=../configuration/#clustering><code>advertise-client-urls</code></a> to other members, proxies, clients. Please make sure the <code>advertise-client-urls</code> are reachable from intended clients. A common mistake is setting <code>advertise-client-urls</code> to localhost or leave it as default if the remote clients should reach etcd.</p><p>On each machine, start etcd with these flags:</p><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls http://10.0.1.10:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+  --listen-client-urls http://10.0.1.10:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.10:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new
+</code></pre><pre tabindex=0><code>$ etcd --name infra1 --initial-advertise-peer-urls http://10.0.1.11:2380 \
+  --listen-peer-urls http://10.0.1.11:2380 \
+  --listen-client-urls http://10.0.1.11:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.11:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new
+</code></pre><pre tabindex=0><code>$ etcd --name infra2 --initial-advertise-peer-urls http://10.0.1.12:2380 \
+  --listen-peer-urls http://10.0.1.12:2380 \
+  --listen-client-urls http://10.0.1.12:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.12:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state new
+</code></pre><p>The command line parameters starting with <code>--initial-cluster</code> will be ignored on subsequent runs of etcd. Feel free to remove the environment variables or command line flags after the initial bootstrap process. If the configuration needs changes later (for example, adding or removing members to/from the cluster), see the <a href=../runtime-configuration/>runtime configuration</a> guide.</p><h3 id=tls>TLS</h3><p>etcd supports encrypted communication through the TLS protocol. TLS channels can be used for encrypted internal cluster communication between peers as well as encrypted client traffic. This section provides examples for setting up a cluster with peer and client TLS. Additional information detailing etcd&rsquo;s TLS support can be found in the <a href=../security/>security guide</a>.</p><h4 id=self-signed-certificates>Self-signed certificates</h4><p>A cluster using self-signed certificates both encrypts traffic and authenticates its connections. To start a cluster with self-signed certificates, each cluster member should have a unique key pair (<code>member.crt</code>, <code>member.key</code>) signed by a shared cluster CA certificate (<code>ca.crt</code>) for both peer connections and client connections. Certificates may be generated by following the etcd <a href=https://github.com/etcd-io/etcd/tree/master/hack/tls-setup target=_blank rel=noopener>TLS setup</a> example.</p><p>On each machine, etcd would be started with these flags:</p><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls https://10.0.1.10:2380 \
+  --listen-peer-urls https://10.0.1.10:2380 \
+  --listen-client-urls https://10.0.1.10:2379,https://127.0.0.1:2379 \
+  --advertise-client-urls https://10.0.1.10:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=https://10.0.1.10:2380,infra1=https://10.0.1.11:2380,infra2=https://10.0.1.12:2380 \
+  --initial-cluster-state new \
+  --client-cert-auth --trusted-ca-file=/path/to/ca-client.crt \
+  --cert-file=/path/to/infra0-client.crt --key-file=/path/to/infra0-client.key \
+  --peer-client-cert-auth --peer-trusted-ca-file=ca-peer.crt \
+  --peer-cert-file=/path/to/infra0-peer.crt --peer-key-file=/path/to/infra0-peer.key
+</code></pre><pre tabindex=0><code>$ etcd --name infra1 --initial-advertise-peer-urls https://10.0.1.11:2380 \
+  --listen-peer-urls https://10.0.1.11:2380 \
+  --listen-client-urls https://10.0.1.11:2379,https://127.0.0.1:2379 \
+  --advertise-client-urls https://10.0.1.11:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=https://10.0.1.10:2380,infra1=https://10.0.1.11:2380,infra2=https://10.0.1.12:2380 \
+  --initial-cluster-state new \
+  --client-cert-auth --trusted-ca-file=/path/to/ca-client.crt \
+  --cert-file=/path/to/infra1-client.crt --key-file=/path/to/infra1-client.key \
+  --peer-client-cert-auth --peer-trusted-ca-file=ca-peer.crt \
+  --peer-cert-file=/path/to/infra1-peer.crt --peer-key-file=/path/to/infra1-peer.key
+</code></pre><pre tabindex=0><code>$ etcd --name infra2 --initial-advertise-peer-urls https://10.0.1.12:2380 \
+  --listen-peer-urls https://10.0.1.12:2380 \
+  --listen-client-urls https://10.0.1.12:2379,https://127.0.0.1:2379 \
+  --advertise-client-urls https://10.0.1.12:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=https://10.0.1.10:2380,infra1=https://10.0.1.11:2380,infra2=https://10.0.1.12:2380 \
+  --initial-cluster-state new \
+  --client-cert-auth --trusted-ca-file=/path/to/ca-client.crt \
+  --cert-file=/path/to/infra2-client.crt --key-file=/path/to/infra2-client.key \
+  --peer-client-cert-auth --peer-trusted-ca-file=ca-peer.crt \
+  --peer-cert-file=/path/to/infra2-peer.crt --peer-key-file=/path/to/infra2-peer.key
+</code></pre><h4 id=automatic-certificates>Automatic certificates</h4><p>If the cluster needs encrypted communication but does not require authenticated connections, etcd can be configured to automatically generate its keys. On initialization, each member creates its own set of keys based on its advertised IP addresses and hosts.</p><p>On each machine, etcd would be started with these flags:</p><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls https://10.0.1.10:2380 \
+  --listen-peer-urls https://10.0.1.10:2380 \
+  --listen-client-urls https://10.0.1.10:2379,https://127.0.0.1:2379 \
+  --advertise-client-urls https://10.0.1.10:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=https://10.0.1.10:2380,infra1=https://10.0.1.11:2380,infra2=https://10.0.1.12:2380 \
+  --initial-cluster-state new \
+  --auto-tls \
+  --peer-auto-tls
+</code></pre><pre tabindex=0><code>$ etcd --name infra1 --initial-advertise-peer-urls https://10.0.1.11:2380 \
+  --listen-peer-urls https://10.0.1.11:2380 \
+  --listen-client-urls https://10.0.1.11:2379,https://127.0.0.1:2379 \
+  --advertise-client-urls https://10.0.1.11:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=https://10.0.1.10:2380,infra1=https://10.0.1.11:2380,infra2=https://10.0.1.12:2380 \
+  --initial-cluster-state new \
+  --auto-tls \
+  --peer-auto-tls
+</code></pre><pre tabindex=0><code>$ etcd --name infra2 --initial-advertise-peer-urls https://10.0.1.12:2380 \
+  --listen-peer-urls https://10.0.1.12:2380 \
+  --listen-client-urls https://10.0.1.12:2379,https://127.0.0.1:2379 \
+  --advertise-client-urls https://10.0.1.12:2379 \
+  --initial-cluster-token etcd-cluster-1 \
+  --initial-cluster infra0=https://10.0.1.10:2380,infra1=https://10.0.1.11:2380,infra2=https://10.0.1.12:2380 \
+  --initial-cluster-state new \
+  --auto-tls \
+  --peer-auto-tls
+</code></pre><h3 id=error-cases>Error cases</h3><p>In the following example, we have not included our new host in the list of enumerated nodes. If this is a new cluster, the node <em>must</em> be added to the list of initial cluster members.</p><pre tabindex=0><code>$ etcd --name infra1 --initial-advertise-peer-urls http://10.0.1.11:2380 \
+  --listen-peer-urls https://10.0.1.11:2380 \
+  --listen-client-urls http://10.0.1.11:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.11:2379 \
+  --initial-cluster infra0=http://10.0.1.10:2380 \
+  --initial-cluster-state new
+etcd: infra1 not listed in the initial cluster config
+exit 1
+</code></pre><p>In this example, we are attempting to map a node (infra0) on a different address (127.0.0.1:2380) than its enumerated address in the cluster list (10.0.1.10:2380). If this node is to listen on multiple addresses, all addresses <em>must</em> be reflected in the &ldquo;initial-cluster&rdquo; configuration directive.</p><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls http://127.0.0.1:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+  --listen-client-urls http://10.0.1.10:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.10:2379 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra2=http://10.0.1.12:2380 \
+  --initial-cluster-state=new
+etcd: error setting up initial cluster: infra0 has different advertised URLs in the cluster and advertised peer URLs list
+exit 1
+</code></pre><p>If a peer is configured with a different set of configuration arguments and attempts to join this cluster, etcd will report a cluster ID mismatch will exit.</p><pre tabindex=0><code>$ etcd --name infra3 --initial-advertise-peer-urls http://10.0.1.13:2380 \
+  --listen-peer-urls http://10.0.1.13:2380 \
+  --listen-client-urls http://10.0.1.13:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.13:2379 \
+  --initial-cluster infra0=http://10.0.1.10:2380,infra1=http://10.0.1.11:2380,infra3=http://10.0.1.13:2380 \
+  --initial-cluster-state=new
+etcd: conflicting cluster ID to the target cluster (c6ab534d07e8fcc4 != bc25ea2a74fb18b0). Exiting.
+exit 1
+</code></pre><h2 id=discovery>Discovery</h2><p>In a number of cases, the IPs of the cluster peers may not be known ahead of time. This is common when utilizing cloud providers or when the network uses DHCP. In these cases, rather than specifying a static configuration, use an existing etcd cluster to bootstrap a new one. This process is called &ldquo;discovery&rdquo;.</p><p>There two methods that can be used for discovery:</p><ul><li>etcd discovery service</li><li>DNS SRV records</li></ul><h3 id=etcd-discovery>etcd discovery</h3><p>To better understand the design of the discovery service protocol, we suggest reading the discovery service protocol <a href=../../dev-internal/discovery_protocol/>documentation</a>.</p><h4 id=lifetime-of-a-discovery-url>Lifetime of a discovery URL</h4><p>A discovery URL identifies a unique etcd cluster. Instead of reusing an existing discovery URL, each etcd instance shares a new discovery URL to bootstrap the new cluster.</p><p>Moreover, discovery URLs should ONLY be used for the initial bootstrapping of a cluster. To change cluster membership after the cluster is already running, see the <a href=../runtime-configuration/>runtime reconfiguration</a> guide.</p><h4 id=custom-etcd-discovery-service>Custom etcd discovery service</h4><p>Discovery uses an existing cluster to bootstrap itself. If using a private etcd cluster, create a URL like so:</p><pre tabindex=0><code>$ curl -X PUT https://myetcd.local/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0fb83/_config/size -d value=3
+</code></pre><p>By setting the size key to the URL, a discovery URL is created with an expected cluster size of 3.</p><p>The URL to use in this case will be <code>https://myetcd.local/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0fb83</code> and the etcd members will use the <code>https://myetcd.local/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0fb83</code> directory for registration as they start.</p><p><strong>Each member must have a different name flag specified. <code>Hostname</code> or <code>machine-id</code> can be a good choice. Or discovery will fail due to duplicated name.</strong></p><p>Now we start etcd with those relevant flags for each member:</p><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls http://10.0.1.10:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+  --listen-client-urls http://10.0.1.10:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.10:2379 \
+  --discovery https://myetcd.local/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0fb83
+</code></pre><pre tabindex=0><code>$ etcd --name infra1 --initial-advertise-peer-urls http://10.0.1.11:2380 \
+  --listen-peer-urls http://10.0.1.11:2380 \
+  --listen-client-urls http://10.0.1.11:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.11:2379 \
+  --discovery https://myetcd.local/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0fb83
+</code></pre><pre tabindex=0><code>$ etcd --name infra2 --initial-advertise-peer-urls http://10.0.1.12:2380 \
+  --listen-peer-urls http://10.0.1.12:2380 \
+  --listen-client-urls http://10.0.1.12:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.12:2379 \
+  --discovery https://myetcd.local/v2/keys/discovery/6c007a14875d53d9bf0ef5a6fc0257c817f0fb83
+</code></pre><p>This will cause each member to register itself with the custom etcd discovery service and begin the cluster once all machines have been registered.</p><h4 id=public-etcd-discovery-service>Public etcd discovery service</h4><p>If no exiting cluster is available, use the public discovery service hosted at <code>discovery.etcd.io</code>. To create a private discovery URL using the &ldquo;new&rdquo; endpoint, use the command:</p><pre tabindex=0><code>$ curl https://discovery.etcd.io/new?size=3
+https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+</code></pre><p>This will create the cluster with an initial size of 3 members. If no size is specified, a default of 3 is used.</p><pre tabindex=0><code>ETCD_DISCOVERY=https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+</code></pre><pre tabindex=0><code>--discovery https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+</code></pre><p><strong>Each member must have a different name flag specified or else discovery will fail due to duplicated names. <code>Hostname</code> or <code>machine-id</code> can be a good choice.</strong></p><p>Now we start etcd with those relevant flags for each member:</p><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls http://10.0.1.10:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+  --listen-client-urls http://10.0.1.10:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.10:2379 \
+  --discovery https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+</code></pre><pre tabindex=0><code>$ etcd --name infra1 --initial-advertise-peer-urls http://10.0.1.11:2380 \
+  --listen-peer-urls http://10.0.1.11:2380 \
+  --listen-client-urls http://10.0.1.11:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.11:2379 \
+  --discovery https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+</code></pre><pre tabindex=0><code>$ etcd --name infra2 --initial-advertise-peer-urls http://10.0.1.12:2380 \
+  --listen-peer-urls http://10.0.1.12:2380 \
+  --listen-client-urls http://10.0.1.12:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.12:2379 \
+  --discovery https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+</code></pre><p>This will cause each member to register itself with the discovery service and begin the cluster once all members have been registered.</p><p>Use the environment variable <code>ETCD_DISCOVERY_PROXY</code> to cause etcd to use an HTTP proxy to connect to the discovery service.</p><h4 id=error-and-warning-cases>Error and warning cases</h4><h5 id=discovery-server-errors>Discovery server errors</h5><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls http://10.0.1.10:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+  --listen-client-urls http://10.0.1.10:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.10:2379 \
+  --discovery https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+etcd: error: the cluster doesn’t have a size configuration value in https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de/_config
+exit 1
+</code></pre><h5 id=warnings>Warnings</h5><p>This is a harmless warning indicating the discovery URL will be ignored on this machine.</p><pre tabindex=0><code>$ etcd --name infra0 --initial-advertise-peer-urls http://10.0.1.10:2380 \
+  --listen-peer-urls http://10.0.1.10:2380 \
+  --listen-client-urls http://10.0.1.10:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls http://10.0.1.10:2379 \
+  --discovery https://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de
+etcdserver: discovery token ignored since a cluster has already been initialized. Valid log found at /var/lib/etcd
+</code></pre><h3 id=dns-discovery>DNS discovery</h3><p>DNS <a href=http://www.ietf.org/rfc/rfc2052.txt target=_blank rel=noopener>SRV records</a> can be used as a discovery mechanism.
+The <code>--discovery-srv</code> flag can be used to set the DNS domain name where the discovery SRV records can be found.
+Setting <code>--discovery-srv example.com</code> causes DNS SRV records to be looked up in the listed order:</p><ul><li>_etcd-server-ssl._tcp.example.com</li><li>_etcd-server._tcp.example.com</li></ul><p>If <code>_etcd-server-ssl._tcp.example.com</code> is found then etcd will attempt the bootstrapping process over TLS.</p><p>To help clients discover the etcd cluster, the following DNS SRV records are looked up in the listed order:</p><ul><li>_etcd-client._tcp.example.com</li><li>_etcd-client-ssl._tcp.example.com</li></ul><p>If <code>_etcd-client-ssl._tcp.example.com</code> is found, clients will attempt to communicate with the etcd cluster over SSL/TLS.</p><p>If etcd is using TLS, the discovery SRV record (e.g. <code>example.com</code>) must be included in the SSL certificate DNS SAN along with the hostname, or clustering will fail with log messages like the following:</p><pre tabindex=0><code>[...] rejected connection from &#34;10.0.1.11:53162&#34; (error &#34;remote error: tls: bad certificate&#34;, ServerName &#34;example.com&#34;)
+</code></pre><p>If etcd is using TLS without a custom certificate authority, the discovery domain (e.g., example.com) must match the SRV record domain (e.g., infra1.example.com). This is to mitigate attacks that forge SRV records to point to a different domain; the domain would have a valid certificate under PKI but be controlled by an unknown third party.</p><p>The <code>-discovery-srv-name</code> flag additionally configures a suffix to the SRV name that is queried during discovery.
+Use this flag to differentiate between multiple etcd clusters under the same domain.
+For example, if <code>discovery-srv=example.com</code> and <code>-discovery-srv-name=foo</code> are set, the following DNS SRV queries are made:</p><ul><li>_etcd-server-ssl-foo._tcp.example.com</li><li>_etcd-server-foo._tcp.example.com</li></ul><h4 id=create-dns-srv-records>Create DNS SRV records</h4><pre tabindex=0><code>$ dig +noall +answer SRV _etcd-server._tcp.example.com
+_etcd-server._tcp.example.com. 300 IN  SRV  0 0 2380 infra0.example.com.
+_etcd-server._tcp.example.com. 300 IN  SRV  0 0 2380 infra1.example.com.
+_etcd-server._tcp.example.com. 300 IN  SRV  0 0 2380 infra2.example.com.
+</code></pre><pre tabindex=0><code>$ dig +noall +answer SRV _etcd-client._tcp.example.com
+_etcd-client._tcp.example.com. 300 IN SRV 0 0 2379 infra0.example.com.
+_etcd-client._tcp.example.com. 300 IN SRV 0 0 2379 infra1.example.com.
+_etcd-client._tcp.example.com. 300 IN SRV 0 0 2379 infra2.example.com.
+</code></pre><pre tabindex=0><code>$ dig +noall +answer infra0.example.com infra1.example.com infra2.example.com
+infra0.example.com.  300  IN  A  10.0.1.10
+infra1.example.com.  300  IN  A  10.0.1.11
+infra2.example.com.  300  IN  A  10.0.1.12
+</code></pre><h4 id=bootstrap-the-etcd-cluster-using-dns>Bootstrap the etcd cluster using DNS</h4><p>etcd cluster members can advertise domain names or IP address, the bootstrap process will resolve DNS A records.
+Since 3.2 (3.1 prints warnings) <code>--listen-peer-urls</code> and <code>--listen-client-urls</code> will reject domain name for the network interface binding.</p><p>The resolved address in <code>--initial-advertise-peer-urls</code> <em>must match</em> one of the resolved addresses in the SRV targets. The etcd member reads the resolved address to find out if it belongs to the cluster defined in the SRV records.</p><pre tabindex=0><code>$ etcd --name infra0 \
+--discovery-srv example.com \
+--initial-advertise-peer-urls http://infra0.example.com:2380 \
+--initial-cluster-token etcd-cluster-1 \
+--initial-cluster-state new \
+--advertise-client-urls http://infra0.example.com:2379 \
+--listen-client-urls http://0.0.0.0:2379 \
+--listen-peer-urls http://0.0.0.0:2380
+</code></pre><pre tabindex=0><code>$ etcd --name infra1 \
+--discovery-srv example.com \
+--initial-advertise-peer-urls http://infra1.example.com:2380 \
+--initial-cluster-token etcd-cluster-1 \
+--initial-cluster-state new \
+--advertise-client-urls http://infra1.example.com:2379 \
+--listen-client-urls http://0.0.0.0:2379 \
+--listen-peer-urls http://0.0.0.0:2380
+</code></pre><pre tabindex=0><code>$ etcd --name infra2 \
+--discovery-srv example.com \
+--initial-advertise-peer-urls http://infra2.example.com:2380 \
+--initial-cluster-token etcd-cluster-1 \
+--initial-cluster-state new \
+--advertise-client-urls http://infra2.example.com:2379 \
+--listen-client-urls http://0.0.0.0:2379 \
+--listen-peer-urls http://0.0.0.0:2380
+</code></pre><p>The cluster can also bootstrap using IP addresses instead of domain names:</p><pre tabindex=0><code>$ etcd --name infra0 \
+--discovery-srv example.com \
+--initial-advertise-peer-urls http://10.0.1.10:2380 \
+--initial-cluster-token etcd-cluster-1 \
+--initial-cluster-state new \
+--advertise-client-urls http://10.0.1.10:2379 \
+--listen-client-urls http://10.0.1.10:2379 \
+--listen-peer-urls http://10.0.1.10:2380
+</code></pre><pre tabindex=0><code>$ etcd --name infra1 \
+--discovery-srv example.com \
+--initial-advertise-peer-urls http://10.0.1.11:2380 \
+--initial-cluster-token etcd-cluster-1 \
+--initial-cluster-state new \
+--advertise-client-urls http://10.0.1.11:2379 \
+--listen-client-urls http://10.0.1.11:2379 \
+--listen-peer-urls http://10.0.1.11:2380
+</code></pre><pre tabindex=0><code>$ etcd --name infra2 \
+--discovery-srv example.com \
+--initial-advertise-peer-urls http://10.0.1.12:2380 \
+--initial-cluster-token etcd-cluster-1 \
+--initial-cluster-state new \
+--advertise-client-urls http://10.0.1.12:2379 \
+--listen-client-urls http://10.0.1.12:2379 \
+--listen-peer-urls http://10.0.1.12:2380
+</code></pre><p>Since v3.1.0 (except v3.2.9), when <code>etcd --discovery-srv=example.com</code> is configured with TLS, server will only authenticate peers/clients when the provided certs have root domain <code>example.com</code> as an entry in Subject Alternative Name (SAN) field. See <a href=../security/#notes-for-dns-srv>Notes for DNS SRV</a>.</p><h3 id=gateway>Gateway</h3><p>etcd gateway is a simple TCP proxy that forwards network data to the etcd cluster. Please read <a href=../gateway/>gateway guide</a> for more information.</p><h3 id=proxy>Proxy</h3><p>When the <code>--proxy</code> flag is set, etcd runs in <a href=https://github.com/etcd-io/etcd/blob/release-2.3/Documentation/proxy.md target=_blank rel=noopener>proxy mode</a>. This proxy mode only supports the etcd v2 API; there are no plans to support the v3 API. Instead, for v3 API support, there will be a new proxy with enhanced features following the etcd 3.0 release.</p><p>To setup an etcd cluster with proxies of v2 API, please read the the <a href=https://github.com/etcd-io/etcd/blob/release-2.3/Documentation/clustering.md target=_blank rel=noopener>clustering doc in etcd 2.3 release</a>.</p><div class=d-print-none><h2 class=feedback--title>Feedback</h2><p class=feedback--question>Was this page helpful?</p><button class="btn btn-primary mb-4 feedback--answer feedback--answer-yes">Yes</button>
+<button class="btn btn-primary mb-4 feedback--answer feedback--answer-no">No</button><p class="feedback--response feedback--response-yes">Glad to hear it! Please <a href=https://github.com/etcd-io/website/issues/new>tell us how we can improve</a>.</p><p class="feedback--response feedback--response-no">Sorry to hear that. Please <a href=https://github.com/etcd-io/website/issues/new>tell us how we can improve</a>.</p></div><br><div class=td-page-meta__lastmod>Last modified October 26, 2021: <a href=https://github.com/etcd-io/website/commit/29c07319e2f7b01f9b6b4ed9b8c389d534bb2e8b>Configuration page rework: remove duplication, make easier to maintain, add missing flag (#491) (29c0731)</a></div></div></main></div></div></div></body></html>

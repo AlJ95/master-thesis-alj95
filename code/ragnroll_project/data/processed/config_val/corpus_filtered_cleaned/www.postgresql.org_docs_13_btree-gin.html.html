@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.6. btree_gin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/btree-gin.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.6. btree_gin" />
+  <meta property="og:description" content="F.6.&amp;nbsp;btree_gin F.6.1. Example Usage F.6.2. Authors btree_gin provides sample GIN operator classes that implement B-tree equivalent behavior for the data …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/btree-gin.html" title="PostgreSQL 17 - F.6. btree_gin" >Current</a>
+                          (<a href="/docs/17/btree-gin.html" title="PostgreSQL 17 - F.6. btree_gin" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/btree-gin.html" title="PostgreSQL 16 - F.6. btree_gin" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/btree-gin.html" title="PostgreSQL 15 - F.6. btree_gin" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/btree-gin.html" title="PostgreSQL 14 - F.6. btree_gin" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/btree-gin.html" title="PostgreSQL 13 - F.6. btree_gin" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/btree-gin.html" title="PostgreSQL devel - F.6. btree_gin"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/btree-gin.html" title="PostgreSQL 12 - F.6. btree_gin"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/btree-gin.html" title="PostgreSQL 11 - F.6. btree_gin"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/btree-gin.html" title="PostgreSQL 10 - F.6. btree_gin"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/btree-gin.html" title="PostgreSQL 9.6 - F.6. btree_gin"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/btree-gin.html" title="PostgreSQL 9.5 - F.6. btree_gin"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/btree-gin.html" title="PostgreSQL 9.4 - F.6. btree_gin"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/btree-gin.html" title="PostgreSQL 9.3 - F.6. btree_gin"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/btree-gin.html" title="PostgreSQL 9.2 - F.6. btree_gin"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/btree-gin.html" title="PostgreSQL 9.1 - F.6. btree_gin"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/btree-gin.html" title="PostgreSQL 9.0 - F.6. btree_gin"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/btree-gin.html" title="PostgreSQL 8.4 - F.6. btree_gin"  rel="nofollow">8.4</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.6.&nbsp;btree_gin</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="bloom.html" title="F.5.&nbsp;bloom">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="btree-gist.html" title="F.7.&nbsp;btree_gist">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="BTREE-GIN">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.6.&nbsp;btree_gin</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="btree-gin.html#id-1.11.7.15.6">F.6.1. Example Usage</a></span></dt>
+      <dt><span class="sect2"><a href="btree-gin.html#id-1.11.7.15.7">F.6.2. Authors</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.15.2" class="indexterm" name="id-1.11.7.15.2"></a>
+  <p><code class="filename">btree_gin</code> provides sample GIN operator classes that implement B-tree equivalent behavior for the data types <code class="type">int2</code>, <code class="type">int4</code>, <code class="type">int8</code>, <code class="type">float4</code>, <code class="type">float8</code>, <code class="type">timestamp with time zone</code>, <code class="type">timestamp without time zone</code>, <code class="type">time with time zone</code>, <code class="type">time without time zone</code>, <code class="type">date</code>, <code class="type">interval</code>, <code class="type">oid</code>, <code class="type">money</code>, <code class="type">"char"</code>, <code class="type">varchar</code>, <code class="type">text</code>, <code class="type">bytea</code>, <code class="type">bit</code>, <code class="type">varbit</code>, <code class="type">macaddr</code>, <code class="type">macaddr8</code>, <code class="type">inet</code>, <code class="type">cidr</code>, <code class="type">uuid</code>, <code class="type">name</code>, <code class="type">bool</code>, <code class="type">bpchar</code>, and all <code class="type">enum</code> types.</p>
+  <p>In general, these operator classes will not outperform the equivalent standard B-tree index methods, and they lack one major feature of the standard B-tree code: the ability to enforce uniqueness. However, they are useful for GIN testing and as a base for developing other GIN operator classes. Also, for queries that test both a GIN-indexable column and a B-tree-indexable column, it might be more efficient to create a multicolumn GIN index that uses one of these operator classes than to create two separate indexes that would have to be combined via bitmap ANDing.</p>
+  <p>This module is considered <span class="quote">“<span class="quote">trusted</span>”</span>, that is, it can be installed by non-superusers who have <code class="literal">CREATE</code> privilege on the current database.</p>
+  <div class="sect2" id="id-1.11.7.15.6">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.6.1.&nbsp;Example Usage</h3>
+        </div>
+      </div>
+    </div>
+    <pre class="programlisting">
+CREATE TABLE test (a int4);
+-- create index
+CREATE INDEX testidx ON test USING GIN (a);
+-- query
+SELECT * FROM test WHERE a &lt; 10;
+</pre>
+  </div>
+  <div class="sect2" id="id-1.11.7.15.7">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.6.2.&nbsp;Authors</h3>
+        </div>
+      </div>
+    </div>
+    <p>Teodor Sigaev (<code class="email">&lt;<a class="email" href="mailto:teodor@stack.net">teodor@stack.net</a>&gt;</code>) and Oleg Bartunov (<code class="email">&lt;<a class="email" href="mailto:oleg@sai.msu.su">oleg@sai.msu.su</a>&gt;</code>). See <a class="ulink" href="http://www.sai.msu.su/~megera/oddmuse/index.cgi/Gin" target="_top">http://www.sai.msu.su/~megera/oddmuse/index.cgi/Gin</a> for additional information.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="bloom.html" title="F.5.&nbsp;bloom">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="btree-gist.html" title="F.7.&nbsp;btree_gist">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.5.&nbsp;bloom&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.7.&nbsp;btree_gist</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/btree-gin.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

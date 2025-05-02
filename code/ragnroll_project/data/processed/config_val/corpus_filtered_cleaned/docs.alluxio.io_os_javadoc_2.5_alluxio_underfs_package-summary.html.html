@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.underfs (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.underfs</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/AtomicFileOutputStreamCallback.html" title="interface in alluxio.underfs">AtomicFileOutputStreamCallback</a></td>
+<td class="colLast">
+<div class="block">A <a href="../../alluxio/underfs/AtomicFileOutputStreamCallback.html" title="interface in alluxio.underfs"><code>AtomicFileOutputStreamCallback</code></a> is the callback interface used when using a
+ <a href="../../alluxio/underfs/AtomicFileOutputStream.html" title="class in alluxio.underfs"><code>AtomicFileOutputStream</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/ObjectUnderFileSystem.ObjectListingChunk.html" title="interface in alluxio.underfs">ObjectUnderFileSystem.ObjectListingChunk</a></td>
+<td class="colLast">
+<div class="block">A chunk of listing results.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UfsManager.html" title="interface in alluxio.underfs">UfsManager</a></td>
+<td class="colLast">
+<div class="block">A class that manages the UFS used by different services.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystem.html" title="interface in alluxio.underfs">UnderFileSystem</a></td>
+<td class="colLast">
+<div class="block">Alluxio stores data into an under layer file system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystemFactory.html" title="interface in alluxio.underfs">UnderFileSystemFactory</a></td>
+<td class="colLast">
+<div class="block">Interface for under file system factories.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/AbstractUfsManager.html" title="class in alluxio.underfs">AbstractUfsManager</a></td>
+<td class="colLast">
+<div class="block">Basic implementation of <a href="../../alluxio/underfs/UfsManager.html" title="interface in alluxio.underfs"><code>UfsManager</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/AbstractUfsManager.Key.html" title="class in alluxio.underfs">AbstractUfsManager.Key</a></td>
+<td class="colLast">
+<div class="block">The key of the UFS cache.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/AtomicFileOutputStream.html" title="class in alluxio.underfs">AtomicFileOutputStream</a></td>
+<td class="colLast">
+<div class="block">A <a href="../../alluxio/underfs/AtomicFileOutputStream.html" title="class in alluxio.underfs"><code>AtomicFileOutputStream</code></a> writes to a temporary file and renames on close.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/BaseUnderFileSystem.html" title="class in alluxio.underfs">BaseUnderFileSystem</a></td>
+<td class="colLast">
+<div class="block">A base abstract <a href="../../alluxio/underfs/UnderFileSystem.html" title="interface in alluxio.underfs"><code>UnderFileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/ConsistentUnderFileSystem.html" title="class in alluxio.underfs">ConsistentUnderFileSystem</a></td>
+<td class="colLast">
+<div class="block">Represents a consistent under filesystem
+ which does not have eventual consistency issues.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/Fingerprint.html" title="class in alluxio.underfs">Fingerprint</a></td>
+<td class="colLast">
+<div class="block">Fingerprint for a UFS file or directory.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/JobUfsManager.html" title="class in alluxio.underfs">JobUfsManager</a></td>
+<td class="colLast">
+<div class="block">Implementation of UfsManager to manage the ufs used by different job service processes.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/MasterUfsManager.html" title="class in alluxio.underfs">MasterUfsManager</a></td>
+<td class="colLast">
+<div class="block">A class that manages the UFS for master servers.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/MultiRangeObjectInputStream.html" title="class in alluxio.underfs">MultiRangeObjectInputStream</a></td>
+<td class="colLast">
+<div class="block">A stream for reading data using range queries.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/ObjectUnderFileSystem.html" title="class in alluxio.underfs">ObjectUnderFileSystem</a></td>
+<td class="colLast">
+<div class="block">An object based abstract <a href="../../alluxio/underfs/UnderFileSystem.html" title="interface in alluxio.underfs"><code>UnderFileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/SeekableUnderFileInputStream.html" title="class in alluxio.underfs">SeekableUnderFileInputStream</a></td>
+<td class="colLast">
+<div class="block">A seekable under file input stream wrapper that encapsulates the under file input stream.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UfsDirectoryStatus.html" title="class in alluxio.underfs">UfsDirectoryStatus</a></td>
+<td class="colLast">
+<div class="block">Information about a directory in the under file system.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UfsFileStatus.html" title="class in alluxio.underfs">UfsFileStatus</a></td>
+<td class="colLast">
+<div class="block">Information about a file in <a href="../../alluxio/underfs/UnderFileSystem.html" title="interface in alluxio.underfs"><code>UnderFileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UfsManager.UfsClient.html" title="class in alluxio.underfs">UfsManager.UfsClient</a></td>
+<td class="colLast">
+<div class="block">Container for a UFS and the URI for that UFS.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UfsStatus.html" title="class in alluxio.underfs">UfsStatus</a></td>
+<td class="colLast">
+<div class="block">Information about a file or a directory in the under file system.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UfsStatusCache.html" title="class in alluxio.underfs">UfsStatusCache</a></td>
+<td class="colLast">
+<div class="block">This class is a cache from an Alluxio namespace URI (<a href="../../alluxio/AlluxioURI.html" title="class in alluxio"><code>AlluxioURI</code></a>, i.e.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystem.Factory.html" title="class in alluxio.underfs">UnderFileSystem.Factory</a></td>
+<td class="colLast">
+<div class="block">The factory for the <a href="../../alluxio/underfs/UnderFileSystem.html" title="interface in alluxio.underfs"><code>UnderFileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystemConfiguration.html" title="class in alluxio.underfs">UnderFileSystemConfiguration</a></td>
+<td class="colLast">
+<div class="block">
+ Ufs configuration properties, including ufs specific configuration and global configuration.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystemFactoryRegistry.html" title="class in alluxio.underfs">UnderFileSystemFactoryRegistry</a></td>
+<td class="colLast">
+<div class="block">
+ Central registry of available <a href="../../alluxio/underfs/UnderFileSystemFactory.html" title="interface in alluxio.underfs"><code>UnderFileSystemFactory</code></a> instances that uses the
+ <a href="http://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html?is-external=true" title="class or interface in java.util"><code>ServiceLoader</code></a> mechanism to automatically discover available factories and provides a
+ central place for obtaining actual <a href="../../alluxio/underfs/UnderFileSystem.html" title="interface in alluxio.underfs"><code>UnderFileSystem</code></a> instances.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystemWithLogging.html" title="class in alluxio.underfs">UnderFileSystemWithLogging</a></td>
+<td class="colLast">
+<div class="block">This class forwards all calls to the <a href="../../alluxio/underfs/UnderFileSystem.html" title="interface in alluxio.underfs"><code>UnderFileSystem</code></a> interface to an internal
+ implementation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystemWithLogging.UfsCallable.html" title="class in alluxio.underfs">UnderFileSystemWithLogging.UfsCallable</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">Interface representing a callable to the under storage system which throws an
+ <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io"><code>IOException</code></a> if an error occurs during the external communication.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/WorkerUfsManager.html" title="class in alluxio.underfs">WorkerUfsManager</a></td>
+<td class="colLast">
+<div class="block">The default implementation of UfsManager to manage the ufs used by different worker services.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Enum Summary table, listing enums, and an explanation">
+<caption><span>Enum Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/Fingerprint.Tag.html" title="enum in alluxio.underfs">Fingerprint.Tag</a></td>
+<td class="colLast">
+<div class="block">The possible tags within the fingerprint.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/Fingerprint.Type.html" title="enum in alluxio.underfs">Fingerprint.Type</a></td>
+<td class="colLast">
+<div class="block">The possible types of the fingerprint.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UfsMode.html" title="enum in alluxio.underfs">UfsMode</a></td>
+<td class="colLast">
+<div class="block">Operation mode for under storage.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../alluxio/underfs/UnderFileSystem.SpaceType.html" title="enum in alluxio.underfs">UnderFileSystem.SpaceType</a></td>
+<td class="colLast">
+<div class="block">The different types of space indicate the total space, the free space and the space used in the
+ under file system.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

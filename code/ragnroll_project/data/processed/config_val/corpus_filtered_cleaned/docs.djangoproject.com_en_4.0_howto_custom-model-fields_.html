@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="How to create custom model fields | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/howto/custom-model-fields/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>How to create custom model fields | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-how-to-create-custom-model-fields">
+<span id="how-to-create-custom-model-fields"></span><h1>How to create custom model fields<a class="headerlink" href="#how-to-create-custom-model-fields" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="s-introduction">
+<span id="introduction"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../../topics/db/models/"><span class="doc">model reference</span></a> documentation explains how to use
+Django’s standard field classes – <a class="reference internal" href="../../ref/models/fields/#django.db.models.CharField" title="django.db.models.CharField"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a>,
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.DateField" title="django.db.models.DateField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateField</span></code></a>, etc. For many purposes, those classes are
+all you’ll need. Sometimes, though, the Django version won’t meet your precise
+requirements, or you’ll want to use a field that is entirely different from
+those shipped with Django.</p>
+<p>Django’s built-in field types don’t cover every possible database column type –
+only the common types, such as <code class="docutils literal notranslate"><span class="pre">VARCHAR</span></code> and <code class="docutils literal notranslate"><span class="pre">INTEGER</span></code>. For more obscure
+column types, such as geographic polygons or even user-created types such as
+<a class="reference external" href="https://www.postgresql.org/docs/current/sql-createtype.html">PostgreSQL custom types</a>, you can define your own Django <code class="docutils literal notranslate"><span class="pre">Field</span></code> subclasses.</p>
+<p>Alternatively, you may have a complex Python object that can somehow be
+serialized to fit into a standard database column type. This is another case
+where a <code class="docutils literal notranslate"><span class="pre">Field</span></code> subclass will help you use your object with your models.</p>
+<div class="section" id="s-our-example-object">
+<span id="our-example-object"></span><h3>Our example object<a class="headerlink" href="#our-example-object" title="Permalink to this headline">¶</a></h3>
+<p>Creating custom fields requires a bit of attention to detail. To make things
+easier to follow, we’ll use a consistent example throughout this document:
+wrapping a Python object representing the deal of cards in a hand of <a class="reference external" href="https://en.wikipedia.org/wiki/Contract_bridge">Bridge</a>.
+Don’t worry, you don’t have to know how to play Bridge to follow this example.
+You only need to know that 52 cards are dealt out equally to four players, who
+are traditionally called <em>north</em>, <em>east</em>, <em>south</em> and <em>west</em>.  Our class looks
+something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Hand</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A hand of cards (bridge style)&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">north</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">south</span><span class="p">,</span> <span class="n">west</span><span class="p">):</span>
+        <span class="c1"># Input parameters are lists of cards (&#39;Ah&#39;, &#39;9s&#39;, etc.)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">north</span> <span class="o">=</span> <span class="n">north</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">east</span> <span class="o">=</span> <span class="n">east</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">south</span> <span class="o">=</span> <span class="n">south</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">west</span> <span class="o">=</span> <span class="n">west</span>
+
+    <span class="c1"># ... (other possibly useful methods omitted) ...</span>
+</pre></div>
+</div>
+<p>This is an ordinary Python class, with nothing Django-specific about it.
+We’d like to be able to do things like this in our models (we assume the
+<code class="docutils literal notranslate"><span class="pre">hand</span></code> attribute on the model is an instance of <code class="docutils literal notranslate"><span class="pre">Hand</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">example</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">hand</span><span class="o">.</span><span class="n">north</span><span class="p">)</span>
+
+<span class="n">new_hand</span> <span class="o">=</span> <span class="n">Hand</span><span class="p">(</span><span class="n">north</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">south</span><span class="p">,</span> <span class="n">west</span><span class="p">)</span>
+<span class="n">example</span><span class="o">.</span><span class="n">hand</span> <span class="o">=</span> <span class="n">new_hand</span>
+<span class="n">example</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We assign to and retrieve from the <code class="docutils literal notranslate"><span class="pre">hand</span></code> attribute in our model just like
+any other Python class. The trick is to tell Django how to handle saving and
+loading such an object.</p>
+<p>In order to use the <code class="docutils literal notranslate"><span class="pre">Hand</span></code> class in our models, we <strong>do not</strong> have to change
+this class at all. This is ideal, because it means you can easily write
+model support for existing classes where you cannot change the source code.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You might only be wanting to take advantage of custom database column
+types and deal with the data as standard Python types in your models;
+strings, or floats, for example. This case is similar to our <code class="docutils literal notranslate"><span class="pre">Hand</span></code>
+example and we’ll note any differences as we go along.</p>
+</div>
+</div>
+</div>
+<div class="section" id="s-background-theory">
+<span id="background-theory"></span><h2>Background theory<a class="headerlink" href="#background-theory" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-database-storage">
+<span id="database-storage"></span><h3>Database storage<a class="headerlink" href="#database-storage" title="Permalink to this headline">¶</a></h3>
+<p>Let’s start with model fields. If you break it down, a model field provides a
+way to take a normal Python object – string, boolean, <code class="docutils literal notranslate"><span class="pre">datetime</span></code>, or
+something more complex like <code class="docutils literal notranslate"><span class="pre">Hand</span></code> – and convert it to and from a format
+that is useful when dealing with the database. (Such a format is also useful
+for serialization, but as we’ll see later, that is easier once you have the
+database side under control).</p>
+<p>Fields in a model must somehow be converted to fit into an existing database
+column type. Different databases provide different sets of valid column types,
+but the rule is still the same: those are the only types you have to work
+with. Anything you want to store in the database must fit into one of
+those types.</p>
+<p>Normally, you’re either writing a Django field to match a particular database
+column type, or you will need a way to convert your data to, say, a string.</p>
+<p>For our <code class="docutils literal notranslate"><span class="pre">Hand</span></code> example, we could convert the card data to a string of 104
+characters by concatenating all the cards together in a pre-determined order –
+say, all the <em>north</em> cards first, then the <em>east</em>, <em>south</em> and <em>west</em> cards. So
+<code class="docutils literal notranslate"><span class="pre">Hand</span></code> objects can be saved to text or character columns in the database.</p>
+</div>
+<div class="section" id="s-what-does-a-field-class-do">
+<span id="what-does-a-field-class-do"></span><h3>What does a field class do?<a class="headerlink" href="#what-does-a-field-class-do" title="Permalink to this headline">¶</a></h3>
+<p>All of Django’s fields (and when we say <em>fields</em> in this document, we always
+mean model fields and not <a class="reference internal" href="../../ref/forms/fields/"><span class="doc">form fields</span></a>) are subclasses
+of <a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.Field</span></code></a>. Most of the information that Django records
+about a field is common to all fields – name, help text, uniqueness and so
+forth. Storing all that information is handled by <code class="docutils literal notranslate"><span class="pre">Field</span></code>. We’ll get into the
+precise details of what <code class="docutils literal notranslate"><span class="pre">Field</span></code> can do later on; for now, suffice it to say
+that everything descends from <code class="docutils literal notranslate"><span class="pre">Field</span></code> and then customizes key pieces of the
+class behavior.</p>
+<p>It’s important to realize that a Django field class is not what is stored in
+your model attributes. The model attributes contain normal Python objects. The
+field classes you define in a model are actually stored in the <code class="docutils literal notranslate"><span class="pre">Meta</span></code> class
+when the model class is created (the precise details of how this is done are
+unimportant here). This is because the field classes aren’t necessary when
+you’re just creating and modifying attributes. Instead, they provide the
+machinery for converting between the attribute value and what is stored in the
+database or sent to the <a class="reference internal" href="../../topics/serialization/"><span class="doc">serializer</span></a>.</p>
+<p>Keep this in mind when creating your own custom fields. The Django <code class="docutils literal notranslate"><span class="pre">Field</span></code>
+subclass you write provides the machinery for converting between your Python
+instances and the database/serializer values in various ways (there are
+differences between storing a value and using a value for lookups, for
+example). If this sounds a bit tricky, don’t worry – it will become clearer in
+the examples below. Just remember that you will often end up creating two
+classes when you want a custom field:</p>
+<ul class="simple">
+<li>The first class is the Python object that your users will manipulate.
+They will assign it to the model attribute, they will read from it for
+displaying purposes, things like that. This is the <code class="docutils literal notranslate"><span class="pre">Hand</span></code> class in our
+example.</li>
+<li>The second class is the <code class="docutils literal notranslate"><span class="pre">Field</span></code> subclass. This is the class that knows
+how to convert your first class back and forth between its permanent
+storage form and the Python form.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="s-writing-a-field-subclass">
+<span id="writing-a-field-subclass"></span><h2>Writing a field subclass<a class="headerlink" href="#writing-a-field-subclass" title="Permalink to this headline">¶</a></h2>
+<p>When planning your <a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> subclass, first give some
+thought to which existing <a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> class your new field
+is most similar to. Can you subclass an existing Django field and save yourself
+some work? If not, you should subclass the <a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a>
+class, from which everything is descended.</p>
+<p>Initializing your new field is a matter of separating out any arguments that are
+specific to your case from the common arguments and passing the latter to the
+<code class="docutils literal notranslate"><span class="pre">__init__()</span></code> method of <a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> (or your parent
+class).</p>
+<p>In our example, we’ll call our field <code class="docutils literal notranslate"><span class="pre">HandField</span></code>. (It’s a good idea to call
+your <a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> subclass <code class="docutils literal notranslate"><span class="pre">&lt;Something&gt;Field</span></code>, so it’s
+easily identifiable as a <a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> subclass.) It doesn’t
+behave like any existing field, so we’ll subclass directly from
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">HandField</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Field</span><span class="p">):</span>
+
+    <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;A hand of cards (bridge style)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;max_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">104</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Our <code class="docutils literal notranslate"><span class="pre">HandField</span></code> accepts most of the standard field options (see the list
+below), but we ensure it has a fixed length, since it only needs to hold 52
+card values plus their suits; 104 characters in total.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Many of Django’s model fields accept options that they don’t do anything
+with. For example, you can pass both
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field.editable" title="django.db.models.Field.editable"><code class="xref py py-attr docutils literal notranslate"><span class="pre">editable</span></code></a> and
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.DateField.auto_now" title="django.db.models.DateField.auto_now"><code class="xref py py-attr docutils literal notranslate"><span class="pre">auto_now</span></code></a> to a
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.DateField" title="django.db.models.DateField"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.DateField</span></code></a> and it will ignore the
+<a class="reference internal" href="../../ref/models/fields/#django.db.models.Field.editable" title="django.db.models.Field.editable"><code class="xref py py-attr docutils literal notranslate"><span class="pre">editable</span></code></a> parameter
+(<a class="reference internal" href="../../ref/models/fields/#django.db.models.DateField.auto_now" title="django.db.models.DateField.auto_now"><code class="xref py py-attr docutils literal notranslate"><span class="pre">auto_now</span></code></a> being set implies
+<code class="docutils literal notranslate"><span class="pre">editable=False</span></code>). No error is raised in this case.</p>
+<p class="last">This behavior simplifies the field classes, because they don’t need to
+check for options that aren’t necessary. They pass all the options to
+the parent class and then don’t use them later on. It’s up to you whether
+you want your fields to be more strict about the options they select, or to
+use the more permissive behavior of the current fields.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Field.__init__()</span></code> method takes the following parameters:</p>
+<ul class="simple">
+
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code></li>
+
+
+
+
+
+
+<li><code class="docutils literal notranslate"><span class="pre">rel</span></code>: Used for related fields (like <a class="reference internal" href="../../ref/models/fields/#django.db.models.ForeignKey" title="django.db.models.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>). For advanced
+use only.</li>
+
+
+<li><code class="docutils literal notranslate"><span class="pre">serialize</span></code>: If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the field will not be serialized when the model
+is passed to Django’s <a class="reference internal" href="../../topics/serialization/"><span class="doc">serializers</span></a>. Defaults to
+<code class="docutils literal notranslate"><span class="pre">True</span></code>.</li>
+
+
+
+
+
+
+
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+</ul>
+</li>
+
+
+</ul>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

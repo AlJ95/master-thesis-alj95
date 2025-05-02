@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 51.15. pg_database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/catalog-pg-database.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="51.15. pg_database" />
+  <meta property="og:description" content="51.15.&amp;nbsp;pg_database The catalog pg_database stores information about the available databases. Databases are created with the CREATE DATABASE command. Consult Chapter&amp;nbsp;22 …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/catalog-pg-database.html" title="PostgreSQL 17 - 51.15. pg_database" >Current</a>
+                          (<a href="/docs/17/catalog-pg-database.html" title="PostgreSQL 17 - 51.15. pg_database" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/catalog-pg-database.html" title="PostgreSQL 16 - 51.15. pg_database" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/catalog-pg-database.html" title="PostgreSQL 15 - 51.15. pg_database" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/catalog-pg-database.html" title="PostgreSQL 14 - 51.15. pg_database" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/catalog-pg-database.html" title="PostgreSQL 13 - 51.15. pg_database" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/catalog-pg-database.html" title="PostgreSQL devel - 51.15. pg_database"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/catalog-pg-database.html" title="PostgreSQL 12 - 51.15. pg_database"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/catalog-pg-database.html" title="PostgreSQL 11 - 51.15. pg_database"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/catalog-pg-database.html" title="PostgreSQL 10 - 51.15. pg_database"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/catalog-pg-database.html" title="PostgreSQL 9.6 - 51.15. pg_database"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/catalog-pg-database.html" title="PostgreSQL 9.5 - 51.15. pg_database"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/catalog-pg-database.html" title="PostgreSQL 9.4 - 51.15. pg_database"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/catalog-pg-database.html" title="PostgreSQL 9.3 - 51.15. pg_database"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/catalog-pg-database.html" title="PostgreSQL 9.2 - 51.15. pg_database"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/catalog-pg-database.html" title="PostgreSQL 9.1 - 51.15. pg_database"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/catalog-pg-database.html" title="PostgreSQL 9.0 - 51.15. pg_database"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/catalog-pg-database.html" title="PostgreSQL 8.4 - 51.15. pg_database"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/catalog-pg-database.html" title="PostgreSQL 8.3 - 51.15. pg_database"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/catalog-pg-database.html" title="PostgreSQL 8.2 - 51.15. pg_database"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/catalog-pg-database.html" title="PostgreSQL 8.1 - 51.15. pg_database"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/catalog-pg-database.html" title="PostgreSQL 8.0 - 51.15. pg_database"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/catalog-pg-database.html" title="PostgreSQL 7.4 - 51.15. pg_database"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/catalog-pg-database.html" title="PostgreSQL 7.3 - 51.15. pg_database"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/catalog-pg-database.html" title="PostgreSQL 7.2 - 51.15. pg_database"  rel="nofollow">7.2</a>
+                    
+                       / 
+                      <a href="/docs/7.1/catalog-pg-database.html" title="PostgreSQL 7.1 - 51.15. pg_database"  rel="nofollow">7.1</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">51.15.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_database</code></th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="catalog-pg-conversion.html" title="51.14.&nbsp;pg_conversion">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="catalogs.html" title="Chapter&nbsp;51.&nbsp;System Catalogs">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;51.&nbsp;System Catalogs</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="catalog-pg-db-role-setting.html" title="51.16.&nbsp;pg_db_role_setting">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="CATALOG-PG-DATABASE">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">51.15.&nbsp;<code class="structname">pg_database</code></h2>
+      </div>
+    </div>
+  </div><a id="id-1.10.4.17.2" class="indexterm" name="id-1.10.4.17.2"></a>
+  <p>The catalog <code class="structname">pg_database</code> stores information about the available databases. Databases are created with the <a class="xref" href="sql-createdatabase.html" title="CREATE DATABASE"><span class="refentrytitle">CREATE DATABASE</span></a> command. Consult <a class="xref" href="managing-databases.html" title="Chapter&nbsp;22.&nbsp;Managing Databases">Chapter&nbsp;22</a> for details about the meaning of some of the parameters.</p>
+  <p>Unlike most system catalogs, <code class="structname">pg_database</code> is shared across all databases of a cluster: there is only one copy of <code class="structname">pg_database</code> per cluster, not one per database.</p>
+  <div class="table" id="id-1.10.4.17.5">
+    <p class="title"><strong>Table&nbsp;51.15.&nbsp;<code class="structname">pg_database</code> Columns</strong></p>
+    <div class="table-contents">
+      <table class="table" summary="pg_database Columns" border="1">
+        <colgroup>
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="catalog_table_entry">
+              <p class="column_definition">Column Type</p>
+              <p>Description</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">oid</code> <code class="type">oid</code></p>
+              <p>Row identifier</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datname</code> <code class="type">name</code></p>
+              <p>Database name</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datdba</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-authid.html" title="51.8.&nbsp;pg_authid"><code class="structname">pg_authid</code></a>.<code class="structfield">oid</code>)</p>
+              <p>Owner of the database, usually the user who created it</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">encoding</code> <code class="type">int4</code></p>
+              <p>Character encoding for this database (<code class="function">pg_encoding_to_char()</code> can translate this number to the encoding name)</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datcollate</code> <code class="type">name</code></p>
+              <p>LC_COLLATE for this database</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datctype</code> <code class="type">name</code></p>
+              <p>LC_CTYPE for this database</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datistemplate</code> <code class="type">bool</code></p>
+              <p>If true, then this database can be cloned by any user with <code class="literal">CREATEDB</code> privileges; if false, then only superusers or the owner of the database can clone it.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datallowconn</code> <code class="type">bool</code></p>
+              <p>If false then no one can connect to this database. This is used to protect the <code class="literal">template0</code> database from being altered.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datconnlimit</code> <code class="type">int4</code></p>
+              <p>Sets maximum number of concurrent connections that can be made to this database. -1 means no limit, -2 indicates the database is invalid.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datlastsysoid</code> <code class="type">oid</code></p>
+              <p>Last system OID in the database; useful particularly to <span class="application">pg_dump</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datfrozenxid</code> <code class="type">xid</code></p>
+              <p>All transaction IDs before this one have been replaced with a permanent (<span class="quote">“<span class="quote">frozen</span>”</span>) transaction ID in this database. This is used to track whether the database needs to be vacuumed in order to prevent transaction ID wraparound or to allow <code class="literal">pg_xact</code> to be shrunk. It is the minimum of the per-table <code class="structname">pg_class</code>.<code class="structfield">relfrozenxid</code> values.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datminmxid</code> <code class="type">xid</code></p>
+              <p>All multixact IDs before this one have been replaced with a transaction ID in this database. This is used to track whether the database needs to be vacuumed in order to prevent multixact ID wraparound or to allow <code class="literal">pg_multixact</code> to be shrunk. It is the minimum of the per-table <code class="structname">pg_class</code>.<code class="structfield">relminmxid</code> values.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">dattablespace</code> <code class="type">oid</code> (references <a class="link" href="catalog-pg-tablespace.html" title="51.54.&nbsp;pg_tablespace"><code class="structname">pg_tablespace</code></a>.<code class="structfield">oid</code>)</p>
+              <p>The default tablespace for the database. Within this database, all tables for which <code class="structname">pg_class</code>.<code class="structfield">reltablespace</code> is zero will be stored in this tablespace; in particular, all the non-shared system catalogs will be there.</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="catalog_table_entry">
+              <p class="column_definition"><code class="structfield">datacl</code> <code class="type">aclitem[]</code></p>
+              <p>Access privileges; see <a class="xref" href="ddl-priv.html" title="5.7.&nbsp;Privileges">Section&nbsp;5.7</a> for details</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div><br class="table-break" />
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="catalog-pg-conversion.html" title="51.14.&nbsp;pg_conversion">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="catalogs.html" title="Chapter&nbsp;51.&nbsp;System Catalogs">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="catalog-pg-db-role-setting.html" title="51.16.&nbsp;pg_db_role_setting">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">51.14.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_conversion</code>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;51.16.&nbsp;<code xmlns="http://www.w3.org/1999/xhtml" class="structname">pg_db_role_setting</code></td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/catalog-pg-database.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

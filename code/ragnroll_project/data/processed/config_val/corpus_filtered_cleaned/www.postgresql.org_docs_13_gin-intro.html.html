@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 66.1. Introduction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/gin-intro.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="66.1. Introduction" />
+  <meta property="og:description" content="66.1.&amp;nbsp;Introduction GIN stands for Generalized Inverted Index. GIN is designed for handling cases where the items to be indexed are …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/16/gin-intro.html" title="PostgreSQL 16 - 66.1. Introduction" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/gin-intro.html" title="PostgreSQL 15 - 66.1. Introduction" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/gin-intro.html" title="PostgreSQL 14 - 66.1. Introduction" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/gin-intro.html" title="PostgreSQL 13 - 66.1. Introduction" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/gin-intro.html" title="PostgreSQL 12 - 66.1. Introduction"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/gin-intro.html" title="PostgreSQL 11 - 66.1. Introduction"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/gin-intro.html" title="PostgreSQL 10 - 66.1. Introduction"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/gin-intro.html" title="PostgreSQL 9.6 - 66.1. Introduction"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/gin-intro.html" title="PostgreSQL 9.5 - 66.1. Introduction"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/gin-intro.html" title="PostgreSQL 9.4 - 66.1. Introduction"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/gin-intro.html" title="PostgreSQL 9.3 - 66.1. Introduction"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/gin-intro.html" title="PostgreSQL 9.2 - 66.1. Introduction"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/gin-intro.html" title="PostgreSQL 9.1 - 66.1. Introduction"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/gin-intro.html" title="PostgreSQL 9.0 - 66.1. Introduction"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/gin-intro.html" title="PostgreSQL 8.4 - 66.1. Introduction"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/gin-intro.html" title="PostgreSQL 8.3 - 66.1. Introduction"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/gin-intro.html" title="PostgreSQL 8.2 - 66.1. Introduction"  rel="nofollow">8.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">66.1.&nbsp;Introduction</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="gin.html" title="Chapter&nbsp;66.&nbsp;GIN Indexes">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="gin.html" title="Chapter&nbsp;66.&nbsp;GIN Indexes">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;66.&nbsp;GIN Indexes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="gin-builtin-opclasses.html" title="66.2.&nbsp;Built-in Operator Classes">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="GIN-INTRO">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">66.1.&nbsp;Introduction</h2>
+      </div>
+    </div>
+  </div>
+  <p><acronym class="acronym">GIN</acronym> stands for Generalized Inverted Index. <acronym class="acronym">GIN</acronym> is designed for handling cases where the items to be indexed are composite values, and the queries to be handled by the index need to search for element values that appear within the composite items. For example, the items could be documents, and the queries could be searches for documents containing specific words.</p>
+  <p>We use the word <em class="firstterm">item</em> to refer to a composite value that is to be indexed, and the word <em class="firstterm">key</em> to refer to an element value. <acronym class="acronym">GIN</acronym> always stores and searches for keys, not item values per se.</p>
+  <p>A <acronym class="acronym">GIN</acronym> index stores a set of (key, posting list) pairs, where a <em class="firstterm">posting list</em> is a set of row IDs in which the key occurs. The same row ID can appear in multiple posting lists, since an item can contain more than one key. Each key value is stored only once, so a <acronym class="acronym">GIN</acronym> index is very compact for cases where the same key appears many times.</p>
+  <p><acronym class="acronym">GIN</acronym> is generalized in the sense that the <acronym class="acronym">GIN</acronym> access method code does not need to know the specific operations that it accelerates. Instead, it uses custom strategies defined for particular data types. The strategy defines how keys are extracted from indexed items and query conditions, and how to determine whether a row that contains some of the key values in a query actually satisfies the query.</p>
+  <p>One advantage of <acronym class="acronym">GIN</acronym> is that it allows the development of custom data types with the appropriate access methods, by an expert in the domain of the data type, rather than a database expert. This is much the same advantage as using <acronym class="acronym">GiST</acronym>.</p>
+  <p>The <acronym class="acronym">GIN</acronym> implementation in <span class="productname">PostgreSQL</span> is primarily maintained by Teodor Sigaev and Oleg Bartunov. There is more information about <acronym class="acronym">GIN</acronym> on their <a class="ulink" href="http://www.sai.msu.su/~megera/wiki/Gin" target="_top">website</a>.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="gin.html" title="Chapter&nbsp;66.&nbsp;GIN Indexes">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="gin.html" title="Chapter&nbsp;66.&nbsp;GIN Indexes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="gin-builtin-opclasses.html" title="66.2.&nbsp;Built-in Operator Classes">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Chapter&nbsp;66.&nbsp;GIN Indexes&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;66.2.&nbsp;Built-in Operator Classes</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/gin-intro.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

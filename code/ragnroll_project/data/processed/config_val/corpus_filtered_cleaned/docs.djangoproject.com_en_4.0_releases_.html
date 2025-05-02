@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    
+  
+    
+      
+    
+  
+  
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+    
+      
+    
+    
+  
+
+  
+
+    
+    
+    
+    
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="https://static.djangoproject.com/img/icon-tile.b01ac0ef9f67.png">
+    <meta name="theme-color" content="#0C4B33">
+
+    
+      <meta property="og:title" content="Release notes | Django documentation" />
+      <meta property="og:description" content="The web framework for perfectionists with deadlines." />
+      <meta property="og:image" content="https://static.djangoproject.com/img/logos/django-logo-negative.1d528e2cb5fb.png" />
+      <meta property="og:image:alt" content="Django logo" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="546" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="https://docs.djangoproject.com/en/4.0/releases/" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="summary">
+    
+
+    <title>Release notes | Django documentation | Django</title>
+
+    
+
+    
+    
+  </head>
+
+  <body id="generic" class="">
+
+    
+
+
+    <section class="copy-banner">
+      <div class="container 
+  container--flex container--flex--wrap--mobile
+">
+        
+  <p><a href="https://docs.djangoproject.com/en/4.0/">Documentation</a></p>
+  
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="https://docs.djangoproject.com/en/4.0/search/">
+    <label id="docs-search-label" class="visuallyhidden" for="id_q">Search 4.0 documentation</label>
+    <input type="search" name="q" placeholder="Search 4.0 documentation" id="id_q">
+
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">Submit</span>
+    </button>
+  </form>
+</search>
+
+
+      </div>
+    </section>
+
+    
+
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <main>
+
+        
+          
+        
+
+        
+  <div id="version-switcher">
+    <ul id="faq-link">
+      
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="Click on the links on the left to switch to another language.">
+        <span>Language: <strong>en</strong></span>
+      </li>
+    </ul>
+
+    
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      <li class="current"
+          title="This document describes Django 4.0. Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>4.0</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      
+    </ul>
+  </div>
+
+  
+    <article id="docs-content">
+      <div class="section" id="s-release-notes">
+<span id="release-notes"></span><h1>Release notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<p>Release notes for the official Django releases. Each release note will tell you
+what’s new in each version, and will also describe any backwards-incompatible
+changes made in that version.</p>
+<p>For those <a class="reference internal" href="../howto/upgrade-version/"><span class="doc">upgrading to a new version of Django</span></a>,
+you will need to check all the backwards-incompatible changes and
+<a class="reference internal" href="../internals/deprecation/"><span class="doc">deprecated features</span></a> for each ‘final’ release
+from the one after your current Django version, up to and including the new
+version.</p>
+<div class="section" id="s-final-releases">
+<span id="final-releases"></span><h2>Final releases<a class="headerlink" href="#final-releases" title="Permalink to this headline">¶</a></h2>
+<p>Below are release notes through Django 4.0 and its patch releases. Newer
+versions of the documentation contain the release notes for any later releases.</p>
+<div class="section" id="s-release">
+<span id="s-development-release-notes"></span><span id="release"></span><span id="development-release-notes"></span><h3>4.0 release<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id1">
+<span id="id1"></span><h3>3.2 release<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id2">
+<span id="id2"></span><h3>3.1 release<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id3">
+<span id="id3"></span><h3>3.0 release<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id4">
+<span id="id4"></span><h3>2.2 release<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id5">
+<span id="id5"></span><h3>2.1 release<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id6">
+<span id="id6"></span><h3>2.0 release<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id7">
+<span id="id7"></span><h3>1.11 release<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id8">
+<span id="id8"></span><h3>1.10 release<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id9">
+<span id="id9"></span><h3>1.9 release<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id10">
+<span id="id10"></span><h3>1.8 release<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id11">
+<span id="id11"></span><h3>1.7 release<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id12">
+<span id="id12"></span><h3>1.6 release<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id13">
+<span id="id13"></span><h3>1.5 release<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id14">
+<span id="id14"></span><h3>1.4 release<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id15">
+<span id="id15"></span><h3>1.3 release<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id16">
+<span id="id16"></span><h3>1.2 release<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id17">
+<span id="id17"></span><h3>1.1 release<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-id18">
+<span id="id18"></span><h3>1.0 release<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+
+</ul>
+</div>
+</div>
+<div class="section" id="s-pre-1-0-releases">
+<span id="pre-1-0-releases"></span><h3>Pre-1.0 releases<a class="headerlink" href="#pre-1-0-releases" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+
+
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="s-security-releases">
+<span id="security-releases"></span><h2>Security releases<a class="headerlink" href="#security-releases" title="Permalink to this headline">¶</a></h2>
+<p>Whenever a security issue is disclosed via <a class="reference internal" href="../internals/security/"><span class="doc">Django’s security
+policies</span></a>, appropriate release notes are now
+added to all affected release series.</p>
+<p>Additionally, <a class="reference internal" href="security/"><span class="doc">an archive of disclosed security issues</span></a> is maintained.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+    </article>
+  
+
+  
+    
+  
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </main>
+
+      
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+
+    
+
+
+  <div class="fundraising-sidebar">
+    <h3>Support Django!</h3>
+
+    <div class="small-heart">
+      
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+    
+      <h3>Contents</h3>
+      
+        <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+</li>
+
+</ul>
+</li>
+</ul>
+
+      
+    
+
+    
+      
+    
+
+    
+      <nav aria-labelledby="breadcrumbs-header">
+        <h3 id="breadcrumbs-header">You are here:</h3>
+        <ul>
+          
+            
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-involved">
+          <h3>Get Involved</h3>
+          <ul>
+            
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h3>Get Help</h3>
+          <ul>
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h3>Follow Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h3>Support Us</h3>
+          <ul>
+            
+            
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="in-kind-donors" href="https://www.djangoproject.com/fundraising/#in-kind-donors">In-kind
+            donors</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2025
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+          Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+          trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    
+
+    
+    
+    
+    
+  
+    <div id="outdated-warning" class="doc-floating-warning">
+      This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!
+    </div>
+  
+
+    
+  </body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Apache Hadoop  2.8.2 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Apache Hadoop  2.8.2 Release Notes
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  2.8.2 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-8312">HDFS-8312</a> | <i>Critical</i> | <b>Trash does not descent into child directories to check for permissions</b></li>
+</ul>
+<p>Permissions are now checked when moving a file to Trash.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-13119">HADOOP-13119</a> | <i>Major</i> | <b>Add ability to secure log servlet using proxy users</b></li>
+</ul>
+<p><b>WARNING: No release note provided for this change.</b></p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-11499">HDFS-11499</a> | <i>Major</i> | <b>Decommissioning stuck because of failing recovery</b></li>
+</ul>
+<p>Allow a block to complete if the number of replicas on live nodes, decommissioning nodes and nodes in maintenance mode satisfies minimum replication factor. The fix prevents block recovery failure if replica of last block is being decommissioned. Vice versa, the decommissioning will be stuck, waiting for the last block to be completed. In addition, file close() operation will not fail due to last block being decommissioned.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14038">HADOOP-14038</a> | <i>Minor</i> | <b>Rename ADLS credential properties</b></li>
+</ul>
+
+<ul>
+
+<li>Properties {{dfs.adls.<i>}} are renamed {{fs.adl.</i>}}</li>
+<li>Property {{adl.dfs.enable.client.latency.tracker}} is renamed {{adl.enable.client.latency.tracker}}</li>
+<li>Old properties are still supported</li>
+</ul><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-14174">HADOOP-14174</a> | <i>Major</i> | <b>Set default ADLS access token provider type to ClientCredential</b></li>
+</ul>
+<p>Switch the default ADLS access token provider type from Custom to ClientCredential.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-9016">HDFS-9016</a> | <i>Major</i> | <b>Display upgrade domain information in fsck</b></li>
+</ul>
+<p>New fsck option &#x201c;-upgradedomains&#x201d; has been added to display upgrade domains of any block.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-11661">HDFS-11661</a> | <i>Blocker</i> | <b>GetContentSummary uses excessive amounts of memory</b></li>
+</ul>
+<p>Reverted HDFS-10797 to fix a scalability regression brought by the commit.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-10326">HDFS-10326</a> | <i>Major</i> | <b>Disable setting tcp socket send/receive buffers for write pipelines</b></li>
+</ul>
+<p>The size of the TCP socket buffers are no longer hardcoded by default. Instead the OS now will automatically tune the size for the buffer.</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

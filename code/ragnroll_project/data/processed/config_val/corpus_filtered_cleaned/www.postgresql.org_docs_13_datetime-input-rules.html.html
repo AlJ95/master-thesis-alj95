@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: B.1. Date/Time Input Interpretation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/datetime-input-rules.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="B.1. Date/Time Input Interpretation" />
+  <meta property="og:description" content="B.1.&amp;nbsp;Date/Time Input Interpretation Date/time input strings are decoded using the following procedure. Break the input string into tokens and categorize …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/datetime-input-rules.html" title="PostgreSQL 17 - B.1. Date/Time Input Interpretation" >Current</a>
+                          (<a href="/docs/17/datetime-input-rules.html" title="PostgreSQL 17 - B.1. Date/Time Input Interpretation" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/datetime-input-rules.html" title="PostgreSQL 16 - B.1. Date/Time Input Interpretation" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/datetime-input-rules.html" title="PostgreSQL 15 - B.1. Date/Time Input Interpretation" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/datetime-input-rules.html" title="PostgreSQL 14 - B.1. Date/Time Input Interpretation" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/datetime-input-rules.html" title="PostgreSQL 13 - B.1. Date/Time Input Interpretation" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/datetime-input-rules.html" title="PostgreSQL devel - B.1. Date/Time Input Interpretation"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/datetime-input-rules.html" title="PostgreSQL 12 - B.1. Date/Time Input Interpretation"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/datetime-input-rules.html" title="PostgreSQL 11 - B.1. Date/Time Input Interpretation"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/datetime-input-rules.html" title="PostgreSQL 10 - B.1. Date/Time Input Interpretation"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/datetime-input-rules.html" title="PostgreSQL 9.6 - B.1. Date/Time Input Interpretation"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/datetime-input-rules.html" title="PostgreSQL 9.5 - B.1. Date/Time Input Interpretation"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/datetime-input-rules.html" title="PostgreSQL 9.4 - B.1. Date/Time Input Interpretation"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/datetime-input-rules.html" title="PostgreSQL 9.3 - B.1. Date/Time Input Interpretation"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/datetime-input-rules.html" title="PostgreSQL 9.2 - B.1. Date/Time Input Interpretation"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/datetime-input-rules.html" title="PostgreSQL 9.1 - B.1. Date/Time Input Interpretation"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/datetime-input-rules.html" title="PostgreSQL 9.0 - B.1. Date/Time Input Interpretation"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/datetime-input-rules.html" title="PostgreSQL 8.4 - B.1. Date/Time Input Interpretation"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/datetime-input-rules.html" title="PostgreSQL 8.3 - B.1. Date/Time Input Interpretation"  rel="nofollow">8.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">B.1.&nbsp;Date/Time Input Interpretation</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="datetime-appendix.html" title="Appendix&nbsp;B.&nbsp;Date/Time Support">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="datetime-appendix.html" title="Appendix&nbsp;B.&nbsp;Date/Time Support">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;B.&nbsp;Date/Time Support</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="datetime-invalid-input.html" title="B.2.&nbsp;Handling of Invalid or Ambiguous Timestamps">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="DATETIME-INPUT-RULES">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">B.1.&nbsp;Date/Time Input Interpretation</h2>
+      </div>
+    </div>
+  </div>
+  <p>Date/time input strings are decoded using the following procedure.</p>
+  <div class="procedure">
+    <ol class="procedure" type="1">
+      <li class="step">
+        <p>Break the input string into tokens and categorize each token as a string, time, time zone, or number.</p>
+        <ol type="a" class="substeps">
+          <li class="step">
+            <p>If the numeric token contains a colon (<code class="literal">:</code>), this is a time string. Include all subsequent digits and colons.</p>
+          </li>
+          <li class="step">
+            <p>If the numeric token contains a dash (<code class="literal">-</code>), slash (<code class="literal">/</code>), or two or more dots (<code class="literal">.</code>), this is a date string which might have a text month. If a date token has already been seen, it is instead interpreted as a time zone name (e.g., <code class="literal">America/New_York</code>).</p>
+          </li>
+          <li class="step">
+            <p>If the token is numeric only, then it is either a single field or an ISO 8601 concatenated date (e.g., <code class="literal">19990113</code> for January 13, 1999) or time (e.g., <code class="literal">141516</code> for 14:15:16).</p>
+          </li>
+          <li class="step">
+            <p>If the token starts with a plus (<code class="literal">+</code>) or minus (<code class="literal">-</code>), then it is either a numeric time zone or a special field.</p>
+          </li>
+        </ol>
+      </li>
+      <li class="step">
+        <p>If the token is an alphabetic string, match up with possible strings:</p>
+        <ol type="a" class="substeps">
+          <li class="step">
+            <p>See if the token matches any known time zone abbreviation. These abbreviations are supplied by the configuration file described in <a class="xref" href="datetime-config-files.html" title="B.4.&nbsp;Date/Time Configuration Files">Section&nbsp;B.4</a>.</p>
+          </li>
+          <li class="step">
+            <p>If not found, search an internal table to match the token as either a special string (e.g., <code class="literal">today</code>), day (e.g., <code class="literal">Thursday</code>), month (e.g., <code class="literal">January</code>), or noise word (e.g., <code class="literal">at</code>, <code class="literal">on</code>).</p>
+          </li>
+          <li class="step">
+            <p>If still not found, throw an error.</p>
+          </li>
+        </ol>
+      </li>
+      <li class="step">
+        <p>When the token is a number or number field:</p>
+        <ol type="a" class="substeps">
+          <li class="step">
+            <p>If there are eight or six digits, and if no other date fields have been previously read, then interpret as a <span class="quote">“<span class="quote">concatenated date</span>”</span> (e.g., <code class="literal">19990118</code> or <code class="literal">990118</code>). The interpretation is <code class="literal">YYYYMMDD</code> or <code class="literal">YYMMDD</code>.</p>
+          </li>
+          <li class="step">
+            <p>If the token is three digits and a year has already been read, then interpret as day of year.</p>
+          </li>
+          <li class="step">
+            <p>If four or six digits and a year has already been read, then interpret as a time (<code class="literal">HHMM</code> or <code class="literal">HHMMSS</code>).</p>
+          </li>
+          <li class="step">
+            <p>If three or more digits and no date fields have yet been found, interpret as a year (this forces yy-mm-dd ordering of the remaining date fields).</p>
+          </li>
+          <li class="step">
+            <p>Otherwise the date field ordering is assumed to follow the <code class="varname">DateStyle</code> setting: mm-dd-yy, dd-mm-yy, or yy-mm-dd. Throw an error if a month or day field is found to be out of range.</p>
+          </li>
+        </ol>
+      </li>
+      <li class="step">
+        <p>If BC has been specified, negate the year and add one for internal storage. (There is no year zero in the Gregorian calendar, so numerically 1 BC becomes year zero.)</p>
+      </li>
+      <li class="step">
+        <p>If BC was not specified, and if the year field was two digits in length, then adjust the year to four digits. If the field is less than 70, then add 2000, otherwise add 1900.</p>
+        <div class="tip">
+          <h3 class="title">Tip</h3>
+          <p>Gregorian years AD 1–99 can be entered by using 4 digits with leading zeros (e.g., <code class="literal">0099</code> is AD 99).</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="datetime-appendix.html" title="Appendix&nbsp;B.&nbsp;Date/Time Support">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="datetime-appendix.html" title="Appendix&nbsp;B.&nbsp;Date/Time Support">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="datetime-invalid-input.html" title="B.2.&nbsp;Handling of Invalid or Ambiguous Timestamps">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Appendix&nbsp;B.&nbsp;Date/Time Support&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;B.2.&nbsp;Handling of Invalid or Ambiguous Timestamps</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/datetime-input-rules.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

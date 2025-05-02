@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: CREATE SCHEMA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-createschema.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="CREATE SCHEMA" />
+  <meta property="og:description" content="CREATE SCHEMA CREATE SCHEMA — define a new schema Synopsis CREATE SCHEMA schema_name [ AUTHORIZATION role_specification ] [ schema_element [ …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-createschema.html" title="PostgreSQL 17 - CREATE SCHEMA" >Current</a>
+                          (<a href="/docs/17/sql-createschema.html" title="PostgreSQL 17 - CREATE SCHEMA" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-createschema.html" title="PostgreSQL 16 - CREATE SCHEMA" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-createschema.html" title="PostgreSQL 15 - CREATE SCHEMA" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-createschema.html" title="PostgreSQL 14 - CREATE SCHEMA" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-createschema.html" title="PostgreSQL 13 - CREATE SCHEMA" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-createschema.html" title="PostgreSQL devel - CREATE SCHEMA"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-createschema.html" title="PostgreSQL 12 - CREATE SCHEMA"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-createschema.html" title="PostgreSQL 11 - CREATE SCHEMA"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-createschema.html" title="PostgreSQL 10 - CREATE SCHEMA"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-createschema.html" title="PostgreSQL 9.6 - CREATE SCHEMA"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-createschema.html" title="PostgreSQL 9.5 - CREATE SCHEMA"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-createschema.html" title="PostgreSQL 9.4 - CREATE SCHEMA"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-createschema.html" title="PostgreSQL 9.3 - CREATE SCHEMA"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-createschema.html" title="PostgreSQL 9.2 - CREATE SCHEMA"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-createschema.html" title="PostgreSQL 9.1 - CREATE SCHEMA"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-createschema.html" title="PostgreSQL 9.0 - CREATE SCHEMA"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/sql-createschema.html" title="PostgreSQL 8.4 - CREATE SCHEMA"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/sql-createschema.html" title="PostgreSQL 8.3 - CREATE SCHEMA"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/sql-createschema.html" title="PostgreSQL 8.2 - CREATE SCHEMA"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/sql-createschema.html" title="PostgreSQL 8.1 - CREATE SCHEMA"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/sql-createschema.html" title="PostgreSQL 8.0 - CREATE SCHEMA"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/sql-createschema.html" title="PostgreSQL 7.4 - CREATE SCHEMA"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/sql-createschema.html" title="PostgreSQL 7.3 - CREATE SCHEMA"  rel="nofollow">7.3</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">CREATE SCHEMA</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-createrule.html" title="CREATE RULE">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-createsequence.html" title="CREATE SEQUENCE">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-CREATESCHEMA">
+  <div class="titlepage"></div><a id="id-1.9.3.80.1" class="indexterm" name="id-1.9.3.80.1"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">CREATE SCHEMA</span></h2>
+    <p>CREATE SCHEMA — define a new schema</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+CREATE SCHEMA <em class="replaceable"><code>schema_name</code></em> [ AUTHORIZATION <em class="replaceable"><code>role_specification</code></em> ] [ <em class="replaceable"><code>schema_element</code></em> [ ... ] ]
+CREATE SCHEMA AUTHORIZATION <em class="replaceable"><code>role_specification</code></em> [ <em class="replaceable"><code>schema_element</code></em> [ ... ] ]
+CREATE SCHEMA IF NOT EXISTS <em class="replaceable"><code>schema_name</code></em> [ AUTHORIZATION <em class="replaceable"><code>role_specification</code></em> ]
+CREATE SCHEMA IF NOT EXISTS AUTHORIZATION <em class="replaceable"><code>role_specification</code></em>
+
+<span class="phrase">where <em class="replaceable"><code>role_specification</code></em> can be:</span>
+
+    <em class="replaceable"><code>user_name</code></em>
+  | CURRENT_USER
+  | SESSION_USER
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.80.5">
+    <h2>Description</h2>
+    <p><code class="command">CREATE SCHEMA</code> enters a new schema into the current database. The schema name must be distinct from the name of any existing schema in the current database.</p>
+    <p>A schema is essentially a namespace: it contains named objects (tables, data types, functions, and operators) whose names can duplicate those of other objects existing in other schemas. Named objects are accessed either by <span class="quote">“<span class="quote">qualifying</span>”</span> their names with the schema name as a prefix, or by setting a search path that includes the desired schema(s). A <code class="literal">CREATE</code> command specifying an unqualified object name creates the object in the current schema (the one at the front of the search path, which can be determined with the function <code class="function">current_schema</code>).</p>
+    <p>Optionally, <code class="command">CREATE SCHEMA</code> can include subcommands to create objects within the new schema. The subcommands are treated essentially the same as separate commands issued after creating the schema, except that if the <code class="literal">AUTHORIZATION</code> clause is used, all the created objects will be owned by that user.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.80.6">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>schema_name</code></em></span></dt>
+        <dd>
+          <p>The name of a schema to be created. If this is omitted, the <em class="replaceable"><code>user_name</code></em> is used as the schema name. The name cannot begin with <code class="literal">pg_</code>, as such names are reserved for system schemas.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>user_name</code></em></span></dt>
+        <dd>
+          <p>The role name of the user who will own the new schema. If omitted, defaults to the user executing the command. To create a schema owned by another role, you must be a direct or indirect member of that role, or be a superuser.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>schema_element</code></em></span></dt>
+        <dd>
+          <p>An SQL statement defining an object to be created within the schema. Currently, only <code class="command">CREATE TABLE</code>, <code class="command">CREATE VIEW</code>, <code class="command">CREATE INDEX</code>, <code class="command">CREATE SEQUENCE</code>, <code class="command">CREATE TRIGGER</code> and <code class="command">GRANT</code> are accepted as clauses within <code class="command">CREATE SCHEMA</code>. Other kinds of objects may be created in separate commands after the schema is created.</p>
+        </dd>
+        <dt><span class="term"><code class="literal">IF NOT EXISTS</code></span></dt>
+        <dd>
+          <p>Do nothing (except issuing a notice) if a schema with the same name already exists. <em class="replaceable"><code>schema_element</code></em> subcommands cannot be included when this option is used.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.3.80.7">
+    <h2>Notes</h2>
+    <p>To create a schema, the invoking user must have the <code class="literal">CREATE</code> privilege for the current database. (Of course, superusers bypass this check.)</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.80.8">
+    <h2>Examples</h2>
+    <p>Create a schema:</p>
+    <pre class="programlisting">
+CREATE SCHEMA myschema;
+</pre>
+    <p>Create a schema for user <code class="literal">joe</code>; the schema will also be named <code class="literal">joe</code>:</p>
+    <pre class="programlisting">
+CREATE SCHEMA AUTHORIZATION joe;
+</pre>
+    <p>Create a schema named <code class="literal">test</code> that will be owned by user <code class="literal">joe</code>, unless there already is a schema named <code class="literal">test</code>. (It does not matter whether <code class="literal">joe</code> owns the pre-existing schema.)</p>
+    <pre class="programlisting">
+CREATE SCHEMA IF NOT EXISTS test AUTHORIZATION joe;
+</pre>
+    <p>Create a schema and create a table and view within it:</p>
+    <pre class="programlisting">
+CREATE SCHEMA hollywood
+    CREATE TABLE films (title text, release date, awards text[])
+    CREATE VIEW winners AS
+        SELECT title, release FROM films WHERE awards IS NOT NULL;
+</pre>
+    <p>Notice that the individual subcommands do not end with semicolons.</p>
+    <p>The following is an equivalent way of accomplishing the same result:</p>
+    <pre class="programlisting">
+CREATE SCHEMA hollywood;
+CREATE TABLE hollywood.films (title text, release date, awards text[]);
+CREATE VIEW hollywood.winners AS
+    SELECT title, release FROM hollywood.films WHERE awards IS NOT NULL;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.80.9">
+    <h2>Compatibility</h2>
+    <p>The SQL standard allows a <code class="literal">DEFAULT CHARACTER SET</code> clause in <code class="command">CREATE SCHEMA</code>, as well as more subcommand types than are presently accepted by <span class="productname">PostgreSQL</span>.</p>
+    <p>The SQL standard specifies that the subcommands in <code class="command">CREATE SCHEMA</code> can appear in any order. The present <span class="productname">PostgreSQL</span> implementation does not handle all cases of forward references in subcommands; it might sometimes be necessary to reorder the subcommands in order to avoid forward references.</p>
+    <p>According to the SQL standard, the owner of a schema always owns all objects within it. <span class="productname">PostgreSQL</span> allows schemas to contain objects owned by users other than the schema owner. This can happen only if the schema owner grants the <code class="literal">CREATE</code> privilege on their schema to someone else, or a superuser chooses to create objects in it.</p>
+    <p>The <code class="literal">IF NOT EXISTS</code> option is a <span class="productname">PostgreSQL</span> extension.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.80.10">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-alterschema.html" title="ALTER SCHEMA"><span class="refentrytitle">ALTER SCHEMA</span></a>, <a class="xref" href="sql-dropschema.html" title="DROP SCHEMA"><span class="refentrytitle">DROP SCHEMA</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-createrule.html" title="CREATE RULE">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-createsequence.html" title="CREATE SEQUENCE">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">CREATE RULE&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;CREATE SEQUENCE</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-createschema.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

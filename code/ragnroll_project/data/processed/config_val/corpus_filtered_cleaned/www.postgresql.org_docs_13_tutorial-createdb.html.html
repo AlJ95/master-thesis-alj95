@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 1.3. Creating a Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/tutorial-createdb.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="1.3. Creating a Database" />
+  <meta property="og:description" content="1.3.&amp;nbsp;Creating a Database The first test to see whether you can access the database server is to try to create …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/tutorial-createdb.html" title="PostgreSQL 17 - 1.3. Creating a Database" >Current</a>
+                          (<a href="/docs/17/tutorial-createdb.html" title="PostgreSQL 17 - 1.3. Creating a Database" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/tutorial-createdb.html" title="PostgreSQL 16 - 1.3. Creating a Database" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/tutorial-createdb.html" title="PostgreSQL 15 - 1.3. Creating a Database" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/tutorial-createdb.html" title="PostgreSQL 14 - 1.3. Creating a Database" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/tutorial-createdb.html" title="PostgreSQL 13 - 1.3. Creating a Database" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/tutorial-createdb.html" title="PostgreSQL devel - 1.3. Creating a Database"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/tutorial-createdb.html" title="PostgreSQL 12 - 1.3. Creating a Database"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/tutorial-createdb.html" title="PostgreSQL 11 - 1.3. Creating a Database"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/tutorial-createdb.html" title="PostgreSQL 10 - 1.3. Creating a Database"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/tutorial-createdb.html" title="PostgreSQL 9.6 - 1.3. Creating a Database"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/tutorial-createdb.html" title="PostgreSQL 9.5 - 1.3. Creating a Database"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/tutorial-createdb.html" title="PostgreSQL 9.4 - 1.3. Creating a Database"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/tutorial-createdb.html" title="PostgreSQL 9.3 - 1.3. Creating a Database"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/tutorial-createdb.html" title="PostgreSQL 9.2 - 1.3. Creating a Database"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/tutorial-createdb.html" title="PostgreSQL 9.1 - 1.3. Creating a Database"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/tutorial-createdb.html" title="PostgreSQL 9.0 - 1.3. Creating a Database"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/tutorial-createdb.html" title="PostgreSQL 8.4 - 1.3. Creating a Database"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/tutorial-createdb.html" title="PostgreSQL 8.3 - 1.3. Creating a Database"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/tutorial-createdb.html" title="PostgreSQL 8.2 - 1.3. Creating a Database"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/tutorial-createdb.html" title="PostgreSQL 8.1 - 1.3. Creating a Database"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/tutorial-createdb.html" title="PostgreSQL 8.0 - 1.3. Creating a Database"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/tutorial-createdb.html" title="PostgreSQL 7.4 - 1.3. Creating a Database"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/tutorial-createdb.html" title="PostgreSQL 7.3 - 1.3. Creating a Database"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/tutorial-createdb.html" title="PostgreSQL 7.2 - 1.3. Creating a Database"  rel="nofollow">7.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">1.3.&nbsp;Creating a Database</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="tutorial-arch.html" title="1.2.&nbsp;Architectural Fundamentals">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="tutorial-start.html" title="Chapter&nbsp;1.&nbsp;Getting Started">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;1.&nbsp;Getting Started</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="tutorial-accessdb.html" title="1.4.&nbsp;Accessing a Database">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="TUTORIAL-CREATEDB">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">1.3.&nbsp;Creating a Database</h2>
+      </div>
+    </div>
+  </div><a id="id-1.4.3.4.2" class="indexterm" name="id-1.4.3.4.2"></a><a id="id-1.4.3.4.3" class="indexterm" name="id-1.4.3.4.3"></a>
+  <p>The first test to see whether you can access the database server is to try to create a database. A running <span class="productname">PostgreSQL</span> server can manage many databases. Typically, a separate database is used for each project or for each user.</p>
+  <p>Possibly, your site administrator has already created a database for your use. In that case you can omit this step and skip ahead to the next section.</p>
+  <p>To create a new database, in this example named <code class="literal">mydb</code>, you use the following command:</p>
+  <pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>createdb mydb</code></strong>
+</pre>
+  <p>If this produces no response then this step was successful and you can skip over the remainder of this section.</p>
+  <p>If you see a message similar to:</p>
+  <pre class="screen">
+createdb: command not found
+</pre>
+  <p>then <span class="productname">PostgreSQL</span> was not installed properly. Either it was not installed at all or your shell's search path was not set to include it. Try calling the command with an absolute path instead:</p>
+  <pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>/usr/local/pgsql/bin/createdb mydb</code></strong>
+</pre>
+  <p>The path at your site might be different. Contact your site administrator or check the installation instructions to correct the situation.</p>
+  <p>Another response could be this:</p>
+  <pre class="screen">
+createdb: could not connect to database postgres: could not connect to server: No such file or directory
+        Is the server running locally and accepting
+        connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
+</pre>
+  <p>This means that the server was not started, or it was not started where <code class="command">createdb</code> expected it. Again, check the installation instructions or consult the administrator.</p>
+  <p>Another response could be this:</p>
+  <pre class="screen">
+createdb: could not connect to database postgres: FATAL:  role "joe" does not exist
+</pre>
+  <p>where your own login name is mentioned. This will happen if the administrator has not created a <span class="productname">PostgreSQL</span> user account for you. (<span class="productname">PostgreSQL</span> user accounts are distinct from operating system user accounts.) If you are the administrator, see <a class="xref" href="user-manag.html" title="Chapter&nbsp;21.&nbsp;Database Roles">Chapter&nbsp;21</a> for help creating accounts. You will need to become the operating system user under which <span class="productname">PostgreSQL</span> was installed (usually <code class="literal">postgres</code>) to create the first user account. It could also be that you were assigned a <span class="productname">PostgreSQL</span> user name that is different from your operating system user name; in that case you need to use the <code class="option">-U</code> switch or set the <code class="envar">PGUSER</code> environment variable to specify your <span class="productname">PostgreSQL</span> user name.</p>
+  <p>If you have a user account but it does not have the privileges required to create a database, you will see the following:</p>
+  <pre class="screen">
+createdb: database creation failed: ERROR:  permission denied to create database
+</pre>
+  <p>Not every user has authorization to create new databases. If <span class="productname">PostgreSQL</span> refuses to create databases for you then the site administrator needs to grant you permission to create databases. Consult your site administrator if this occurs. If you installed <span class="productname">PostgreSQL</span> yourself then you should log in for the purposes of this tutorial under the user account that you started the server as. <a href="#ftn.id-1.4.3.4.10.4" class="footnote"><sup class="footnote" id="id-1.4.3.4.10.4">[1]</sup></a></p>
+  <p>You can also create databases with other names. <span class="productname">PostgreSQL</span> allows you to create any number of databases at a given site. Database names must have an alphabetic first character and are limited to 63 bytes in length. A convenient choice is to create a database with the same name as your current user name. Many tools assume that database name as the default, so it can save you some typing. To create that database, simply type:</p>
+  <pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>createdb</code></strong>
+</pre>
+  <p>If you do not want to use your database anymore you can remove it. For example, if you are the owner (creator) of the database <code class="literal">mydb</code>, you can destroy it using the following command:</p>
+  <pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>dropdb mydb</code></strong>
+</pre>
+  <p>(For this command, the database name does not default to the user account name. You always need to specify it.) This action physically removes all files associated with the database and cannot be undone, so this should only be done with a great deal of forethought.</p>
+  <p>More about <code class="command">createdb</code> and <code class="command">dropdb</code> can be found in <a class="xref" href="app-createdb.html" title="createdb"><span class="refentrytitle"><span class="application">createdb</span></span></a> and <a class="xref" href="app-dropdb.html" title="dropdb"><span class="refentrytitle"><span class="application">dropdb</span></span></a> respectively.</p>
+  <div class="footnotes">
+    <br />
+    <hr style="width:100; text-align:left;margin-left: 0" />
+    <div id="ftn.id-1.4.3.4.10.4" class="footnote">
+      <p><a href="#id-1.4.3.4.10.4" class="para"><sup class="para">[1]</sup></a> As an explanation for why this works: <span class="productname">PostgreSQL</span> user names are separate from operating system user accounts. When you connect to a database, you can choose what <span class="productname">PostgreSQL</span> user name to connect as; if you don't, it will default to the same name as your current operating system account. As it happens, there will always be a <span class="productname">PostgreSQL</span> user account that has the same name as the operating system user that started the server, and it also happens that that user always has permission to create databases. Instead of logging in as that user you can also specify the <code class="option">-U</code> option everywhere to select a <span class="productname">PostgreSQL</span> user name to connect as.</p>
+    </div>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="tutorial-arch.html" title="1.2.&nbsp;Architectural Fundamentals">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="tutorial-start.html" title="Chapter&nbsp;1.&nbsp;Getting Started">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="tutorial-accessdb.html" title="1.4.&nbsp;Accessing a Database">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">1.2.&nbsp;Architectural Fundamentals&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;1.4.&nbsp;Accessing a Database</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/tutorial-createdb.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

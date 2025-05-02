@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.4.1 &#x2013; Apache Hadoop  3.2.1 Release Notes</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20241009" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                     <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2024-10-09
+              &nbsp;| Version: 3.4.1
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop  3.2.1 Release Notes</h1>
+<p>These release notes cover new developer and user-facing incompatibilities, important issues, features, and major improvements.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-8986">YARN-8986</a> | <i>Minor</i> | <b>publish all exposed ports to random ports when using bridge network</b></li>
+</ul>
+<p>support -p and -P for bridge type network;</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-9071">YARN-9071</a> | <i>Critical</i> | <b>NM and service AM don&#x2019;t have updated status for reinitialized containers</b></li>
+</ul>
+<p>In progress upgrade status may show READY state sooner than actual upgrade operations.  External caller to upgrade API is recommended to wait minimum 30 seconds before querying yarn app -status.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-9084">YARN-9084</a> | <i>Major</i> | <b>Service Upgrade: With default readiness check, the status of upgrade is reported to be successful prematurely</b></li>
+</ul>
+<p>Improve transient container status accuracy for upgrade.</p><hr />
+<ul>
+
+<li>
+
+<p><a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-15922">HADOOP-15922</a> | <i>Major</i> | <b>DelegationTokenAuthenticationFilter get wrong doAsUser since it does not decode URL</b></p>
+</li>
+<li>
+
+<p>Fix DelegationTokenAuthentication filter for incorrectly double encode doAs user parameter.</p>
+</li>
+</ul><hr />
+<ul>
+
+<li>
+
+<p><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-8761">YARN-8761</a> | <i>Major</i> | <b>Service AM support for decommissioning component instances</b></p>
+</li>
+<li>
+
+<p>Component instance number is not linear increment when decommission feature is used.  Application with assumption of linear increment component instance number maybe impacted by introduction of this feature.</p>
+</li>
+</ul><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-14305">HDFS-14305</a> | <i>Major</i> | <b>Serial number in BlockTokenSecretManager could overlap between different namenodes</b></li>
+</ul>
+<p>NameNodes rely on independent block token key ranges to communicate block token identities to DataNodes and clients in a way that does not create conflicts between the tokens issued by multiple NameNodes. HDFS-6440 introduced the potential for overlaps in key ranges; this fixes the issue by creating 64 possible key ranges that NameNodes assign themselves to, allowing for up to 64 NameNodes to run safely. This limitation only applies within a single Namespace; there may be more than 64 NameNodes total spread among multiple federated Namespaces.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-14396">HDFS-14396</a> | <i>Blocker</i> | <b>Failed to load image from FSImageFile when downgrade from 3.x to 2.x</b></li>
+</ul>
+<p>During a rolling upgrade from Hadoop 2.x to 3.x, NameNode cannot persist erasure coding information, and therefore a user cannot start using erasure coding feature until finalize is done.</p><hr />
+<ul>
+
+<li><a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-7055">YARN-7055</a> | <i>Major</i> | <b>YARN Timeline Service v.2: beta 1 / GA</b></li>
+</ul>
+<p>Application Timeline Server v2 is ready for production. It is GA from 3.2.1 release on wards.</p>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2024
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

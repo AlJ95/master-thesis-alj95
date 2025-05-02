@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master.meta (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master.meta</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/MetaMaster.html" title="interface in alluxio.master.meta">MetaMaster</a></td>
+<td class="colLast">
+<div class="block">The interface of meta master.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/AlluxioMasterRestServiceHandler.html" title="class in alluxio.master.meta">AlluxioMasterRestServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a REST handler for requesting general master information.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/DailyMetadataBackup.html" title="class in alluxio.master.meta">DailyMetadataBackup</a></td>
+<td class="colLast">
+<div class="block">Backing up primary master metadata everyday at a fixed UTC time.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/DefaultMetaMaster.html" title="class in alluxio.master.meta">DefaultMetaMaster</a></td>
+<td class="colLast">
+<div class="block">The default meta master.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/DefaultMetaMaster.State.html" title="class in alluxio.master.meta">DefaultMetaMaster.State</a></td>
+<td class="colLast">
+<div class="block">Journaled state for MetaMaster.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/MasterInfo.html" title="class in alluxio.master.meta">MasterInfo</a></td>
+<td class="colLast">
+<div class="block">Master information.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/MetaMasterClientServiceHandler.html" title="class in alluxio.master.meta">MetaMasterClientServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a gRPC handler for meta master RPCs.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/MetaMasterConfigurationServiceHandler.html" title="class in alluxio.master.meta">MetaMasterConfigurationServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a gRPC handler for meta master RPCs.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/MetaMasterFactory.html" title="class in alluxio.master.meta">MetaMasterFactory</a></td>
+<td class="colLast">
+<div class="block">Factory to create a <a href="../../../alluxio/master/meta/MetaMaster.html" title="interface in alluxio.master.meta"><code>MetaMaster</code></a> instance.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/MetaMasterMasterServiceHandler.html" title="class in alluxio.master.meta">MetaMasterMasterServiceHandler</a></td>
+<td class="colLast">
+<div class="block">This class is a gRPC handler for meta master RPCs invoked by an Alluxio standby master.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/MetaMasterSync.html" title="class in alluxio.master.meta">MetaMasterSync</a></td>
+<td class="colLast">
+<div class="block">If a master is detected as a standby master.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/PathProperties.html" title="class in alluxio.master.meta">PathProperties</a></td>
+<td class="colLast">
+<div class="block">Source of truth for path level properties.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/PathProperties.State.html" title="class in alluxio.master.meta">PathProperties.State</a></td>
+<td class="colLast">
+<div class="block">Journaled state of path level properties.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/PathPropertiesView.html" title="class in alluxio.master.meta">PathPropertiesView</a></td>
+<td class="colLast">
+<div class="block">Read-only view of path level properties.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/RetryHandlingMetaMasterMasterClient.html" title="class in alluxio.master.meta">RetryHandlingMetaMasterMasterClient</a></td>
+<td class="colLast">
+<div class="block">A wrapper for the gRPC client to interact with the primary meta master,
+ used by Alluxio standby masters.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/UpdateCheck.html" title="class in alluxio.master.meta">UpdateCheck</a></td>
+<td class="colLast">
+<div class="block">Check for updates.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/meta/UpdateChecker.html" title="class in alluxio.master.meta">UpdateChecker</a></td>
+<td class="colLast">
+<div class="block">Periodically Alluxio version update check.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

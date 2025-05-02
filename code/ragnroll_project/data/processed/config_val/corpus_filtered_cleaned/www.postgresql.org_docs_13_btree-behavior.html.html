@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 63.2. Behavior of B-Tree Operator Classes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/btree-behavior.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="63.2. Behavior of B-Tree Operator Classes" />
+  <meta property="og:description" content="63.2.&amp;nbsp;Behavior of B-Tree Operator Classes As shown in Table&amp;nbsp;37.3, a btree operator class must provide five comparison operators, &amp;lt;, &amp;lt;=, …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/16/btree-behavior.html" title="PostgreSQL 16 - 63.2. Behavior of B-Tree Operator Classes" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/btree-behavior.html" title="PostgreSQL 15 - 63.2. Behavior of B-Tree Operator Classes" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/btree-behavior.html" title="PostgreSQL 14 - 63.2. Behavior of B-Tree Operator Classes" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/btree-behavior.html" title="PostgreSQL 13 - 63.2. Behavior of B-Tree Operator Classes" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/btree-behavior.html" title="PostgreSQL 12 - 63.2. Behavior of B-Tree Operator Classes"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/btree-behavior.html" title="PostgreSQL 11 - 63.2. Behavior of B-Tree Operator Classes"  rel="nofollow">11</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">63.2.&nbsp;Behavior of B-Tree Operator Classes</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="btree-intro.html" title="63.1.&nbsp;Introduction">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="btree.html" title="Chapter&nbsp;63.&nbsp;B-Tree Indexes">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;63.&nbsp;B-Tree Indexes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="btree-support-funcs.html" title="63.3.&nbsp;B-Tree Support Functions">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="BTREE-BEHAVIOR">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">63.2.&nbsp;Behavior of B-Tree Operator Classes</h2>
+      </div>
+    </div>
+  </div>
+  <p>As shown in <a class="xref" href="xindex.html#XINDEX-BTREE-STRAT-TABLE" title="Table&nbsp;37.3.&nbsp;B-Tree Strategies">Table&nbsp;37.3</a>, a btree operator class must provide five comparison operators, <code class="literal">&lt;</code>, <code class="literal">&lt;=</code>, <code class="literal">=</code>, <code class="literal">&gt;=</code> and <code class="literal">&gt;</code>. One might expect that <code class="literal">&lt;&gt;</code> should also be part of the operator class, but it is not, because it would almost never be useful to use a <code class="literal">&lt;&gt;</code> WHERE clause in an index search. (For some purposes, the planner treats <code class="literal">&lt;&gt;</code> as associated with a btree operator class; but it finds that operator via the <code class="literal">=</code> operator's negator link, rather than from <code class="structname">pg_amop</code>.)</p>
+  <p>When several data types share near-identical sorting semantics, their operator classes can be grouped into an operator family. Doing so is advantageous because it allows the planner to make deductions about cross-type comparisons. Each operator class within the family should contain the single-type operators (and associated support functions) for its input data type, while cross-type comparison operators and support functions are <span class="quote">“<span class="quote">loose</span>”</span> in the family. It is recommendable that a complete set of cross-type operators be included in the family, thus ensuring that the planner can represent any comparison conditions that it deduces from transitivity.</p>
+  <p>There are some basic assumptions that a btree operator family must satisfy:</p>
+  <div class="itemizedlist">
+    <ul class="itemizedlist" style="list-style-type: disc;">
+      <li class="listitem">
+        <p>An <code class="literal">=</code> operator must be an equivalence relation; that is, for all non-null values <em class="replaceable"><code>A</code></em>, <em class="replaceable"><code>B</code></em>, <em class="replaceable"><code>C</code></em> of the data type:</p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist" style="list-style-type: circle;">
+            <li class="listitem">
+              <p><em class="replaceable"><code>A</code></em> <code class="literal">=</code> <em class="replaceable"><code>A</code></em> is true (<em class="firstterm">reflexive law</em>)</p>
+            </li>
+            <li class="listitem">
+              <p>if <em class="replaceable"><code>A</code></em> <code class="literal">=</code> <em class="replaceable"><code>B</code></em>, then <em class="replaceable"><code>B</code></em> <code class="literal">=</code> <em class="replaceable"><code>A</code></em> (<em class="firstterm">symmetric law</em>)</p>
+            </li>
+            <li class="listitem">
+              <p>if <em class="replaceable"><code>A</code></em> <code class="literal">=</code> <em class="replaceable"><code>B</code></em> and <em class="replaceable"><code>B</code></em> <code class="literal">=</code> <em class="replaceable"><code>C</code></em>, then <em class="replaceable"><code>A</code></em> <code class="literal">=</code> <em class="replaceable"><code>C</code></em> (<em class="firstterm">transitive law</em>)</p>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="listitem">
+        <p>A <code class="literal">&lt;</code> operator must be a strong ordering relation; that is, for all non-null values <em class="replaceable"><code>A</code></em>, <em class="replaceable"><code>B</code></em>, <em class="replaceable"><code>C</code></em>:</p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist" style="list-style-type: circle;">
+            <li class="listitem">
+              <p><em class="replaceable"><code>A</code></em> <code class="literal">&lt;</code> <em class="replaceable"><code>A</code></em> is false (<em class="firstterm">irreflexive law</em>)</p>
+            </li>
+            <li class="listitem">
+              <p>if <em class="replaceable"><code>A</code></em> <code class="literal">&lt;</code> <em class="replaceable"><code>B</code></em> and <em class="replaceable"><code>B</code></em> <code class="literal">&lt;</code> <em class="replaceable"><code>C</code></em>, then <em class="replaceable"><code>A</code></em> <code class="literal">&lt;</code> <em class="replaceable"><code>C</code></em> (<em class="firstterm">transitive law</em>)</p>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="listitem">
+        <p>Furthermore, the ordering is total; that is, for all non-null values <em class="replaceable"><code>A</code></em>, <em class="replaceable"><code>B</code></em>:</p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist" style="list-style-type: circle;">
+            <li class="listitem">
+              <p>exactly one of <em class="replaceable"><code>A</code></em> <code class="literal">&lt;</code> <em class="replaceable"><code>B</code></em>, <em class="replaceable"><code>A</code></em> <code class="literal">=</code> <em class="replaceable"><code>B</code></em>, and <em class="replaceable"><code>B</code></em> <code class="literal">&lt;</code> <em class="replaceable"><code>A</code></em> is true (<em class="firstterm">trichotomy law</em>)</p>
+            </li>
+          </ul>
+        </div>
+        <p>(The trichotomy law justifies the definition of the comparison support function, of course.)</p>
+      </li>
+    </ul>
+  </div>
+  <p>The other three operators are defined in terms of <code class="literal">=</code> and <code class="literal">&lt;</code> in the obvious way, and must act consistently with them.</p>
+  <p>For an operator family supporting multiple data types, the above laws must hold when <em class="replaceable"><code>A</code></em>, <em class="replaceable"><code>B</code></em>, <em class="replaceable"><code>C</code></em> are taken from any data types in the family. The transitive laws are the trickiest to ensure, as in cross-type situations they represent statements that the behaviors of two or three different operators are consistent. As an example, it would not work to put <code class="type">float8</code> and <code class="type">numeric</code> into the same operator family, at least not with the current semantics that <code class="type">numeric</code> values are converted to <code class="type">float8</code> for comparison to a <code class="type">float8</code>. Because of the limited accuracy of <code class="type">float8</code>, this means there are distinct <code class="type">numeric</code> values that will compare equal to the same <code class="type">float8</code> value, and thus the transitive law would fail.</p>
+  <p>Another requirement for a multiple-data-type family is that any implicit or binary-coercion casts that are defined between data types included in the operator family must not change the associated sort ordering.</p>
+  <p>It should be fairly clear why a btree index requires these laws to hold within a single data type: without them there is no ordering to arrange the keys with. Also, index searches using a comparison key of a different data type require comparisons to behave sanely across two data types. The extensions to three or more data types within a family are not strictly required by the btree index mechanism itself, but the planner relies on them for optimization purposes.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="btree-intro.html" title="63.1.&nbsp;Introduction">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="btree.html" title="Chapter&nbsp;63.&nbsp;B-Tree Indexes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="btree-support-funcs.html" title="63.3.&nbsp;B-Tree Support Functions">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">63.1.&nbsp;Introduction&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;63.3.&nbsp;B-Tree Support Functions</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/btree-behavior.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

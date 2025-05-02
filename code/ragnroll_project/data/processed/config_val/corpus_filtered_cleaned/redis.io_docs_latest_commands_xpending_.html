@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>XPENDING | Docs</title>
+    <meta name="description" content="Returns the information and entries from a stream consumer group&#39;s pending entries list.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/xpending/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="XPENDING">
+  <meta property="og:description" content="Returns the information and entries from a stream consumer group&#39;s pending entries list.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="XPENDING">
+  <meta itemprop="description" content="Returns the information and entries from a stream consumer group&#39;s pending entries list.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="852">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XPENDING">
+  <meta name="twitter:description" content="Returns the information and entries from a stream consumer group&#39;s pending entries list.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">XPENDING
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">XPENDING key group [[IDLE min-idle-time] start end count [consumer]]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 5.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(N) with N being the number of elements returned, so asking for a small fixed number of entries per call is O(1). O(M), where M is the total number of entries scanned when used with the IDLE filter. When the command returns just the summary and the list of consumers is small, it runs in O(1) time; otherwise, an additional O(N) time for iterating every consumer.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@read</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@stream</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>Fetching data from a stream via a consumer group, and not acknowledging
+such data, has the effect of creating <em>pending entries</em>. This is
+well explained in the <a href="/docs/latest/commands/xreadgroup/"><code>XREADGROUP</code></a> command, and even better in our
+<a href="/docs/latest/develop/data-types/streams/">introduction to Redis Streams</a>. The <a href="/docs/latest/commands/xack/"><code>XACK</code></a> command
+will immediately remove the pending entry from the Pending Entries List (PEL)
+since once a message is successfully processed, there is no longer need
+for the consumer group to track it and to remember the current owner
+of the message.</p>
+<p>The <code>XPENDING</code> command is the interface to inspect the list of pending
+messages, and is as thus a very important command in order to observe
+and understand what is happening with a streams consumer groups: what
+clients are active, what messages are pending to be consumed, or to see
+if there are idle messages. Moreover this command, together with <a href="/docs/latest/commands/xclaim/"><code>XCLAIM</code></a>
+is used in order to implement recovering of consumers that are failing
+for a long time, and as a result certain messages are not processed: a
+different consumer can claim the message and continue. This is better
+explained in the <a href="/docs/latest/develop/data-types/streams/">streams intro</a> and in the
+<a href="/docs/latest/commands/xclaim/"><code>XCLAIM</code></a> command page, and is not covered here.</p>
+<h2 id="summary-form-of-xpending">Summary form of XPENDING</h2>
+<p>When <code>XPENDING</code> is called with just a key name and a consumer group
+name, it just outputs a summary about the pending messages in a given
+consumer group. In the following example, we create a consumer group and
+immediately create a pending message by reading from the group with
+<a href="/docs/latest/commands/xreadgroup/"><code>XREADGROUP</code></a>.</p>
+<pre tabindex="0"><code>&gt; XGROUP CREATE mystream group55 0-0
+OK
+
+&gt; XREADGROUP GROUP group55 consumer-123 COUNT 1 STREAMS mystream &gt;
+1) 1) &#34;mystream&#34;
+   2) 1) 1) 1526984818136-0
+         2) 1) &#34;duration&#34;
+            2) &#34;1532&#34;
+            3) &#34;event-id&#34;
+            4) &#34;5&#34;
+            5) &#34;user-id&#34;
+            6) &#34;7782813&#34;
+</code></pre><p>We expect the pending entries list for the consumer group <code>group55</code> to
+have a message right now: consumer named <code>consumer-123</code> fetched the
+message without acknowledging its processing. The simple <code>XPENDING</code>
+form will give us this information:</p>
+<pre tabindex="0"><code>&gt; XPENDING mystream group55
+1) (integer) 1
+2) 1526984818136-0
+3) 1526984818136-0
+4) 1) 1) &#34;consumer-123&#34;
+      2) &#34;1&#34;
+</code></pre><p>In this form, the command outputs the total number of pending messages for this
+consumer group, which is one, followed by the smallest and greatest ID among the
+pending messages, and then list every consumer in the consumer group with
+at least one pending message, and the number of pending messages it has.</p>
+<h2 id="extended-form-of-xpending">Extended form of XPENDING</h2>
+<p>The summary provides a good overview, but sometimes we are interested in the
+details. In order to see all the pending messages with more associated
+information we need to also pass a range of IDs, in a similar way we do it with
+<a href="/docs/latest/commands/xrange/"><code>XRANGE</code></a>, and a non optional <em>count</em> argument, to limit the number
+of messages returned per call:</p>
+<pre tabindex="0"><code>&gt; XPENDING mystream group55 - + 10
+1) 1) 1526984818136-0
+   2) &#34;consumer-123&#34;
+   3) (integer) 196415
+   4) (integer) 1
+</code></pre><p>In the extended form we no longer see the summary information, instead there
+is detailed information for each message in the pending entries list. For
+each message four attributes are returned:</p>
+<ol>
+<li>The ID of the message.</li>
+<li>The name of the consumer that fetched the message and has still to acknowledge it. We call it the current <em>owner</em> of the message.</li>
+<li>The number of milliseconds that elapsed since the last time this message was delivered to this consumer.</li>
+<li>The number of times this message was delivered.</li>
+</ol>
+<p>The deliveries counter, that is the fourth element in the array, is incremented
+when some other consumer <em>claims</em> the message with <a href="/docs/latest/commands/xclaim/"><code>XCLAIM</code></a>, or when the
+message is delivered again via <a href="/docs/latest/commands/xreadgroup/"><code>XREADGROUP</code></a>, when accessing the history
+of a consumer in a consumer group (see the <a href="/docs/latest/commands/xreadgroup/"><code>XREADGROUP</code></a> page for more info).</p>
+<p>It is possible to pass an additional argument to the command, in order
+to see the messages having a specific owner:</p>
+<pre tabindex="0"><code>&gt; XPENDING mystream group55 - + 10 consumer-123
+</code></pre><p>But in the above case the output would be the same, since we have pending
+messages only for a single consumer. However what is important to keep in
+mind is that this operation, filtering by a specific consumer, is not
+inefficient even when there are many pending messages from many consumers:
+we have a pending entries list data structure both globally, and for
+every consumer, so we can very efficiently show just messages pending for
+a single consumer.</p>
+<h2 id="idle-time-filter">Idle time filter</h2>
+<p>It is also possible to filter pending stream entries by their idle-time,
+given in milliseconds (useful for <a href="/docs/latest/commands/xclaim/"><code>XCLAIM</code></a>ing entries that have not been
+processed for some time):</p>
+<pre tabindex="0"><code>&gt; XPENDING mystream group55 IDLE 9000 - + 10
+&gt; XPENDING mystream group55 IDLE 9000 - + 10 consumer-123
+</code></pre><p>The first case will return the first 10 (or less) PEL entries of the entire group
+that are idle for over 9 seconds, whereas in the second case only those of
+<code>consumer-123</code>.</p>
+<h2 id="exclusive-ranges-and-iterating-the-pel">Exclusive ranges and iterating the PEL</h2>
+<p>The <code>XPENDING</code> command allows iterating over the pending entries just like
+<a href="/docs/latest/commands/xrange/"><code>XRANGE</code></a> and <a href="/docs/latest/commands/xrevrange/"><code>XREVRANGE</code></a> allow for the stream's entries. You can do this by
+prefixing the ID of the last-read pending entry with the <code>(</code> character that
+denotes an open (exclusive) range, and proving it to the subsequent call to the
+command.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+              
+              <ul>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: different data depending on the way XPENDING is called, as explained on this page.</li>
+</ul>
+
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 6.2.0: Added the <code>IDLE</code> option and exclusive range intervals.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/xpending/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

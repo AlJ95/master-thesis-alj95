@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Apache Hadoop Changelog</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../../index.html">Apache Hadoop Project Dist POM</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Apache Hadoop Changelog
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Apache Hadoop Changelog</h1>
+<div class="section">
+<h2><a name="Release_0.23.4_-_2012-10-15"></a>Release 0.23.4 - 2012-10-15</h2>
+<div class="section">
+<h3><a name="NEW_FEATURES:"></a>NEW FEATURES:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-7788">HADOOP-7788</a> </td>
+<td align="left"> HA: Simple HealthMonitor class to watch an HAService </td>
+<td align="left">  Major </td>
+<td align="left"> ha </td>
+<td align="left"> Todd Lipcon </td>
+<td align="left"> Todd Lipcon </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4651">MAPREDUCE-4651</a> </td>
+<td align="left"> Benchmarking random reads with DFSIO </td>
+<td align="left">  Major </td>
+<td align="left"> benchmarks, test </td>
+<td align="left"> Konstantin Shvachko </td>
+<td align="left"> Konstantin Shvachko </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="IMPROVEMENTS:"></a>IMPROVEMENTS:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8183">HADOOP-8183</a> </td>
+<td align="left"> Stop using &#x201c;mapred.used.genericoptionsparser&#x201d; to avoid unnecessary warnings </td>
+<td align="left">  Minor </td>
+<td align="left"> util </td>
+<td align="left"> Harsh J </td>
+<td align="left"> Harsh J </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8623">HADOOP-8623</a> </td>
+<td align="left"> hadoop jar command should respect HADOOP_OPTS </td>
+<td align="left">  Minor </td>
+<td align="left"> scripts </td>
+<td align="left"> Steven Willis </td>
+<td align="left"> Steven Willis </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4408">MAPREDUCE-4408</a> </td>
+<td align="left"> allow jobs to set a JAR that is in the distributed cached </td>
+<td align="left">  Major </td>
+<td align="left"> mrv1, mrv2 </td>
+<td align="left"> Alejandro Abdelnur </td>
+<td align="left"> Robert Kanter </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-2786">MAPREDUCE-2786</a> </td>
+<td align="left"> TestDFSIO should also test compression reading/writing from command-line. </td>
+<td align="left">  Minor </td>
+<td align="left"> benchmarks </td>
+<td align="left"> Plamen Jeliazkov </td>
+<td align="left"> Plamen Jeliazkov </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-57">YARN-57</a> </td>
+<td align="left"> Plugable process tree </td>
+<td align="left">  Major </td>
+<td align="left"> nodemanager </td>
+<td align="left"> Radim Kolar </td>
+<td align="left"> Radim Kolar </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4645">MAPREDUCE-4645</a> </td>
+<td align="left"> Providing a random seed to Slive should make the sequence of filenames completely deterministic </td>
+<td align="left">  Major </td>
+<td align="left"> performance, test </td>
+<td align="left"> Ravi Prakash </td>
+<td align="left"> Ravi Prakash </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-137">YARN-137</a> </td>
+<td align="left"> Change the default scheduler to the CapacityScheduler </td>
+<td align="left">  Major </td>
+<td align="left"> scheduler </td>
+<td align="left"> Siddharth Seth </td>
+<td align="left"> Siddharth Seth </td></tr>
+</tbody>
+</table></div>
+<div class="section">
+<h3><a name="BUG_FIXES:"></a>BUG FIXES:</h3>
+<table border="0" class="bodyTable">
+<thead>
+
+<tr class="a">
+<th align="left"> JIRA </th>
+<th align="left"> Summary </th>
+<th align="left"> Priority </th>
+<th align="left"> Component </th>
+<th align="left"> Reporter </th>
+<th align="left"> Contributor </th></tr>
+</thead><tbody>
+
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4193">MAPREDUCE-4193</a> </td>
+<td align="left"> broken doc link for yarn-default.xml in site.xml </td>
+<td align="left">  Major </td>
+<td align="left"> documentation </td>
+<td align="left"> Patrick Hunt </td>
+<td align="left"> Patrick Hunt </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8310">HADOOP-8310</a> </td>
+<td align="left"> FileContext#checkPath should handle URIs with no port </td>
+<td align="left">  Major </td>
+<td align="left"> fs </td>
+<td align="left"> Aaron T. Myers </td>
+<td align="left"> Aaron T. Myers </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3860">HDFS-3860</a> </td>
+<td align="left"> HeartbeatManager#Monitor may wrongly hold the writelock of namesystem </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Jing Zhao </td>
+<td align="left"> Jing Zhao </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8684">HADOOP-8684</a> </td>
+<td align="left"> Deadlock between WritableComparator and WritableComparable </td>
+<td align="left">  Minor </td>
+<td align="left"> io </td>
+<td align="left"> Hiroshi Ikeda </td>
+<td align="left"> Jing Zhao </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-42">YARN-42</a> </td>
+<td align="left"> Node Manager throws NPE on startup </td>
+<td align="left">  Major </td>
+<td align="left"> nodemanager </td>
+<td align="left"> Devaraj K </td>
+<td align="left"> Devaraj K </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-75">YARN-75</a> </td>
+<td align="left"> RMContainer should handle a RELEASE event while RUNNING </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Siddharth Seth </td>
+<td align="left"> Siddharth Seth </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4646">MAPREDUCE-4646</a> </td>
+<td align="left"> client does not receive job diagnostics for failed jobs </td>
+<td align="left">  Major </td>
+<td align="left"> mrv2 </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-93">YARN-93</a> </td>
+<td align="left"> Diagnostics missing from applications that have finished but failed </td>
+<td align="left">  Major </td>
+<td align="left"> resourcemanager </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-108">YARN-108</a> </td>
+<td align="left"> FSDownload can create cache directories with the wrong permissions </td>
+<td align="left">  Critical </td>
+<td align="left"> nodemanager </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-88">YARN-88</a> </td>
+<td align="left"> DefaultContainerExecutor can fail to set proper permissions </td>
+<td align="left">  Major </td>
+<td align="left"> nodemanager </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8822">HADOOP-8822</a> </td>
+<td align="left"> relnotes.py was deleted post mavenization </td>
+<td align="left">  Major </td>
+<td align="left"> . </td>
+<td align="left"> Robert Joseph Evans </td>
+<td align="left"> Robert Joseph Evans </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4647">MAPREDUCE-4647</a> </td>
+<td align="left"> We should only unjar jobjar if there is a lib directory in it. </td>
+<td align="left">  Major </td>
+<td align="left"> mrv2 </td>
+<td align="left"> Robert Joseph Evans </td>
+<td align="left"> Robert Joseph Evans </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HADOOP-8843">HADOOP-8843</a> </td>
+<td align="left"> Old trash directories are never deleted on upgrade from 1.x </td>
+<td align="left">  Critical </td>
+<td align="left"> . </td>
+<td align="left"> Robert Joseph Evans </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3831">HDFS-3831</a> </td>
+<td align="left"> Failure to renew tokens due to test-sources left in classpath </td>
+<td align="left">  Critical </td>
+<td align="left"> security </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3922">HDFS-3922</a> </td>
+<td align="left"> 0.22 and 0.23 namenode throws away blocks under construction on restart </td>
+<td align="left">  Critical </td>
+<td align="left"> namenode </td>
+<td align="left"> Kihwal Lee </td>
+<td align="left"> Kihwal Lee </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3731">HDFS-3731</a> </td>
+<td align="left"> 2.0 release upgrade must handle blocks being written from 1.0 </td>
+<td align="left">  Blocker </td>
+<td align="left"> datanode </td>
+<td align="left"> Suresh Srinivas </td>
+<td align="left"> Kihwal Lee </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3373">HDFS-3373</a> </td>
+<td align="left"> FileContext HDFS implementation can leak socket caches </td>
+<td align="left">  Major </td>
+<td align="left"> hdfs-client </td>
+<td align="left"> Todd Lipcon </td>
+<td align="left"> John George </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-106">YARN-106</a> </td>
+<td align="left"> Nodemanager needs to set permissions of local directories </td>
+<td align="left">  Major </td>
+<td align="left"> nodemanager </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4691">MAPREDUCE-4691</a> </td>
+<td align="left"> Historyserver can report &#x201c;Unknown job&#x201d; after RM says job has completed </td>
+<td align="left">  Critical </td>
+<td align="left"> jobhistoryserver, mrv2 </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Robert Joseph Evans </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/MAPREDUCE-4689">MAPREDUCE-4689</a> </td>
+<td align="left"> JobClient.getMapTaskReports on failed job results in NPE </td>
+<td align="left">  Major </td>
+<td align="left"> client </td>
+<td align="left"> Jason Lowe </td>
+<td align="left"> Jason Lowe </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/YARN-138">YARN-138</a> </td>
+<td align="left"> Improve default config values for YARN </td>
+<td align="left">  Major </td>
+<td align="left"> resourcemanager, scheduler </td>
+<td align="left"> Arun C Murthy </td>
+<td align="left"> Harsh J </td></tr>
+<tr class="a">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3626">HDFS-3626</a> </td>
+<td align="left"> Creating file with invalid path can corrupt edit log </td>
+<td align="left">  Blocker </td>
+<td align="left"> namenode </td>
+<td align="left"> Todd Lipcon </td>
+<td align="left"> Todd Lipcon </td></tr>
+<tr class="b">
+<td align="left"> <a class="externalLink" href="https://issues.apache.org/jira/browse/HDFS-3553">HDFS-3553</a> </td>
+<td align="left"> Hftp proxy tokens are broken </td>
+<td align="left">  Blocker </td>
+<td align="left"> . </td>
+<td align="left"> Daryn Sharp </td>
+<td align="left"> Daryn Sharp </td></tr>
+</tbody>
+</table></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

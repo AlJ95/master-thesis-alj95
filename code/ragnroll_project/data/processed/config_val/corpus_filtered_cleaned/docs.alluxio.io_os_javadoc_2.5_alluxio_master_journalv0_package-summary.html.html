@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.master.journalv0 (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.master.journalv0</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/Journal.html" title="interface in alluxio.master.journalv0">Journal</a></td>
+<td class="colLast">
+<div class="block">The read-only journal.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalCheckpointStreamable.html" title="interface in alluxio.master.journalv0">JournalCheckpointStreamable</a></td>
+<td class="colLast">
+<div class="block">This interface enables streaming out to the journal checkpoint.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalEntryRepresentable.html" title="interface in alluxio.master.journalv0">JournalEntryRepresentable</a></td>
+<td class="colLast">
+<div class="block">This interface enables representing a class as a <a href="../../../alluxio/proto/journal/Journal.JournalEntry.html" title="class in alluxio.proto.journal"><code>Journal.JournalEntry</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalFactory.html" title="interface in alluxio.master.journalv0">JournalFactory</a></td>
+<td class="colLast">
+<div class="block">Factory for creating named journals.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalFormatter.html" title="interface in alluxio.master.journalv0">JournalFormatter</a></td>
+<td class="colLast">
+<div class="block">This describes the interface for serializing and de-serializing entries in the journal.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalInputStream.html" title="interface in alluxio.master.journalv0">JournalInputStream</a></td>
+<td class="colLast">
+<div class="block">This input stream retrieves <a href="../../../alluxio/proto/journal/Journal.JournalEntry.html" title="class in alluxio.proto.journal"><code>Journal.JournalEntry</code></a> from journal checkpoints and journal logs.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalOutputStream.html" title="interface in alluxio.master.journalv0">JournalOutputStream</a></td>
+<td class="colLast">
+<div class="block">This output stream writes <a href="../../../alluxio/proto/journal/Journal.JournalEntry.html" title="class in alluxio.proto.journal"><code>Journal.JournalEntry</code></a> objects to the journal.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalReader.html" title="interface in alluxio.master.journalv0">JournalReader</a></td>
+<td class="colLast">
+<div class="block">This class manages reading from the journal.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalWriter.html" title="interface in alluxio.master.journalv0">JournalWriter</a></td>
+<td class="colLast">
+<div class="block">This class manages all the writes to the journal.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/MutableJournal.html" title="interface in alluxio.master.journalv0">MutableJournal</a></td>
+<td class="colLast">
+<div class="block">The read-write journal.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/AsyncJournalWriter.html" title="class in alluxio.master.journalv0">AsyncJournalWriter</a></td>
+<td class="colLast">
+<div class="block">This enables async journal writing, as well as some batched journal flushing.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/Journal.Factory.html" title="class in alluxio.master.journalv0">Journal.Factory</a></td>
+<td class="colLast">
+<div class="block">A <a href="../../../alluxio/master/journalv0/Journal.html" title="interface in alluxio.master.journalv0"><code>Journal</code></a> factory.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalFormatter.Factory.html" title="class in alluxio.master.journalv0">JournalFormatter.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../../alluxio/master/journalv0/JournalFormatter.html" title="interface in alluxio.master.journalv0"><code>JournalFormatter</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/JournalTool.html" title="class in alluxio.master.journalv0">JournalTool</a></td>
+<td class="colLast">
+<div class="block">Tool for reading the journal.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/MutableJournal.Factory.html" title="class in alluxio.master.journalv0">MutableJournal.Factory</a></td>
+<td class="colLast">
+<div class="block">A <a href="../../../alluxio/master/journalv0/MutableJournal.html" title="interface in alluxio.master.journalv0"><code>MutableJournal</code></a> factory.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/master/journalv0/ProtoBufJournalFormatter.html" title="class in alluxio.master.journalv0">ProtoBufJournalFormatter</a></td>
+<td class="colLast">
+<div class="block">Reads and writes protocol buffer journal entries.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>XREADGROUP | Docs</title>
+    <meta name="description" content="Returns new or historical messages from a stream for a consumer in a group. Blocks until a message is available otherwise.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/xreadgroup/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="XREADGROUP">
+  <meta property="og:description" content="Returns new or historical messages from a stream for a consumer in a group. Blocks until a message is available otherwise.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="XREADGROUP">
+  <meta itemprop="description" content="Returns new or historical messages from a stream for a consumer in a group. Blocks until a message is available otherwise.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="1202">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="XREADGROUP">
+  <meta name="twitter:description" content="Returns new or historical messages from a stream for a consumer in a group. Blocks until a message is available otherwise.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">XREADGROUP
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">XREADGROUP GROUP group consumer [COUNT count] [BLOCK milliseconds]
+  [NOACK] STREAMS key [key ...] id [id ...]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 5.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">For each stream mentioned: O(M) with M being the number of elements returned. If M is constant (e.g. always asking for the first 10 elements with COUNT), you can consider it O(1). On the other side when XREADGROUP blocks, XADD will pay the O(N) time in order to serve the N clients blocked on the stream getting new data.</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@write</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@stream</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@blocking</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>The <code>XREADGROUP</code> command is a special version of the <a href="/docs/latest/commands/xread/"><code>XREAD</code></a> command
+with support for consumer groups. Probably you will have to understand the
+<a href="/docs/latest/commands/xread/"><code>XREAD</code></a> command before reading this page will makes sense.</p>
+<p>Moreover, if you are new to streams, we recommend to read our
+<a href="/docs/latest/develop/data-types/streams/">introduction to Redis Streams</a>.
+Make sure to understand the concept of consumer group in the introduction
+so that following how this command works will be simpler.</p>
+<h2 id="consumer-groups-in-30-seconds">Consumer groups in 30 seconds</h2>
+<p>The difference between this command and the vanilla <a href="/docs/latest/commands/xread/"><code>XREAD</code></a> is that this
+one supports consumer groups.</p>
+<p>Without consumer groups, just using <a href="/docs/latest/commands/xread/"><code>XREAD</code></a>, all the clients are served with all the entries arriving in a stream. Instead using consumer groups with <code>XREADGROUP</code>, it is possible to create groups of clients that consume different parts of the messages arriving in a given stream. If, for instance, the stream gets the new entries A, B, and C and there are two consumers reading via a consumer group, one client will get, for instance, the messages A and C, and the other the message B, and so forth.</p>
+<p>Within a consumer group, a given consumer (that is, just a client consuming messages from the stream), has to identify with a unique <em>consumer name</em>. Which is just a string.</p>
+<p>One of the guarantees of consumer groups is that a given consumer can only see the history of messages that were delivered to it, so a message has just a single owner. However there is a special feature called <em>message claiming</em> that allows other consumers to claim messages in case there is a non recoverable failure of some consumer. In order to implement such semantics, consumer groups require explicit acknowledgment of the messages successfully processed by the consumer, via the <a href="/docs/latest/commands/xack/"><code>XACK</code></a> command. This is needed because the stream will track, for each consumer group, who is processing what message.</p>
+<p>This is how to understand if you want to use a consumer group or not:</p>
+<ol>
+<li>If you have a stream and multiple clients, and you want all the clients to get all the messages, you do not need a consumer group.</li>
+<li>If you have a stream and multiple clients, and you want the stream to be <em>partitioned</em> or <em>sharded</em> across your clients, so that each client will get a sub set of the messages arriving in a stream, you need a consumer group.</li>
+</ol>
+<h2 id="differences-between-xread-and-xreadgroup">Differences between XREAD and XREADGROUP</h2>
+<p>From the point of view of the syntax, the commands are almost the same,
+however <code>XREADGROUP</code> <em>requires</em> a special and mandatory option:</p>
+<pre><code>GROUP &lt;group-name&gt; &lt;consumer-name&gt;
+</code></pre>
+<p>The group name is just the name of a consumer group associated to the stream.
+The group is created using the <a href="/docs/latest/commands/xgroup/"><code>XGROUP</code></a> command. The consumer name is the
+string that is used by the client to identify itself inside the group.
+The consumer is auto created inside the consumer group the first time it
+is seen. Different clients should select a different consumer name.</p>
+<p>When you read with <code>XREADGROUP</code>, the server will <em>remember</em> that a given
+message was delivered to you: the message will be stored inside the
+consumer group in what is called a Pending Entries List (PEL), that is
+a list of message IDs delivered but not yet acknowledged.</p>
+<p>The client will have to acknowledge the message processing using <a href="/docs/latest/commands/xack/"><code>XACK</code></a>
+in order for the pending entry to be removed from the PEL. The PEL
+can be inspected using the <a href="/docs/latest/commands/xpending/"><code>XPENDING</code></a> command.</p>
+<p>The <code>NOACK</code> subcommand can be used to avoid adding the message to the PEL in
+cases where reliability is not a requirement and the occasional message loss
+is acceptable. This is equivalent to acknowledging the message when it is read.</p>
+<p>The ID to specify in the <strong>STREAMS</strong> option when using <code>XREADGROUP</code> can
+be one of the following two:</p>
+<ul>
+<li>The special <code>&gt;</code> ID, which means that the consumer want to receive only messages that were <em>never delivered to any other consumer</em>. It just means, give me new messages.</li>
+<li>Any other ID, that is, 0 or any other valid ID or incomplete ID (just the millisecond time part), will have the effect of returning entries that are pending for the consumer sending the command with IDs greater than the one provided. So basically if the ID is not <code>&gt;</code>, then the command will just let the client access its pending entries: messages delivered to it, but not yet acknowledged. Note that in this case, both <code>BLOCK</code> and <code>NOACK</code> are ignored.</li>
+</ul>
+<p>Like <a href="/docs/latest/commands/xread/"><code>XREAD</code></a> the <code>XREADGROUP</code> command can be used in a blocking way. There
+are no differences in this regard.</p>
+<h2 id="what-happens-when-a-message-is-delivered-to-a-consumer">What happens when a message is delivered to a consumer?</h2>
+<p>Two things:</p>
+<ol>
+<li>If the message was never delivered to anyone, that is, if we are talking about a new message, then a PEL (Pending Entries List) is created.</li>
+<li>If instead the message was already delivered to this consumer, and it is just re-fetching the same message again, then the <em>last delivery counter</em> is updated to the current time, and the <em>number of deliveries</em> is incremented by one. You can access those message properties using the <a href="/docs/latest/commands/xpending/"><code>XPENDING</code></a> command.</li>
+</ol>
+<h2 id="usage-example">Usage example</h2>
+<p>Normally you use the command like that in order to get new messages and
+process them. In pseudo-code:</p>
+<pre tabindex="0"><code>WHILE true
+    entries = XREADGROUP GROUP $GroupName $ConsumerName BLOCK 2000 COUNT 10 STREAMS mystream &gt;
+    if entries == nil
+        puts &#34;Timeout... try again&#34;
+        CONTINUE
+    end
+
+    FOREACH entries AS stream_entries
+        FOREACH stream_entries as message
+            process_message(message.id,message.fields)
+
+            # ACK the message as processed
+            XACK mystream $GroupName message.id
+        END
+    END
+END
+</code></pre><p>In this way the example consumer code will fetch only new messages, process
+them, and acknowledge them via <a href="/docs/latest/commands/xack/"><code>XACK</code></a>. However the example code above is
+not complete, because it does not handle recovering after a crash. What
+will happen if we crash in the middle of processing messages, is that our
+messages will remain in the pending entries list, so we can access our
+history by giving <code>XREADGROUP</code> initially an ID of 0, and performing the same
+loop. Once providing an ID of 0 the reply is an empty set of messages, we
+know that we processed and acknowledged all the pending messages: we
+can start to use <code>&gt;</code> as ID, in order to get the new messages and rejoin the
+consumers that are processing new things.</p>
+<p>To see how the command actually replies, please check the <a href="/docs/latest/commands/xread/"><code>XREAD</code></a> command page.</p>
+<h2 id="what-happens-when-a-pending-message-is-deleted">What happens when a pending message is deleted?</h2>
+<p>Entries may be deleted from the stream due to trimming or explicit calls to <a href="/docs/latest/commands/xdel/"><code>XDEL</code></a> at any time.
+By design, Redis doesn't prevent the deletion of entries that are present in the stream's PELs.
+When this happens, the PELs retain the deleted entries' IDs, but the actual entry payload is no longer available.
+Therefore, when reading such PEL entries, Redis will return a null value in place of their respective data.</p>
+<p>Example:</p>
+<pre tabindex="0"><code>&gt; XADD mystream 1 myfield mydata
+&#34;1-0&#34;
+&gt; XGROUP CREATE mystream mygroup 0
+OK
+&gt; XREADGROUP GROUP mygroup myconsumer STREAMS mystream &gt;
+1) 1) &#34;mystream&#34;
+   2) 1) 1) &#34;1-0&#34;
+         2) 1) &#34;myfield&#34;
+            2) &#34;mydata&#34;
+&gt; XDEL mystream 1-0
+(integer) 1
+&gt; XREADGROUP GROUP mygroup myconsumer STREAMS mystream 0
+1) 1) &#34;mystream&#34;
+   2) 1) 1) &#34;1-0&#34;
+         2) (nil)
+</code></pre><p>Reading the <a href="/docs/latest/develop/data-types/streams/">Redis Streams introduction</a> is highly
+suggested in order to understand more about the streams overall behavior
+and semantics.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+          
+
+          
+          
+            
+              
+                <h2 id="resp2-reply">RESP2 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#arrays">Array reply</a>: an array where each element is an array composed of a two elements containing the key name and the entries reported for that key. The entries reported are full stream entries, having IDs and the list of all the fields and values. Field and values are guaranteed to be reported in the same order they were added by <code>XADD</code>.</li>
+<li><a href="../../develop/reference/protocol-spec#bulk-strings">Nil reply</a>: if the <em>BLOCK</em> option is given and a timeout occurs, or if there is no stream that can be served.</li>
+</ul>
+            
+          
+            
+              
+                <h2 id="resp3-reply">RESP3 Reply</h2>
+
+                
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p>One of the following:</p>
+<ul>
+<li><a href="../../develop/reference/protocol-spec#maps">Map reply</a>: A map of key-value elements where each element is composed of the key name and the entries reported for that key. The entries reported are full stream entries, having IDs and the list of all the fields and values. Field and values are guaranteed to be reported in the same order they were added by <code>XADD</code>.</li>
+<li><a href="../../develop/reference/protocol-spec#nulls">Null reply</a>: if the <em>BLOCK</em> option is given and a timeout occurs, or if there is no stream that can be served.</li>
+</ul>
+            
+          
+        
+        <br />
+
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/xreadgroup/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: 68.1. Overview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/hash-intro.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="68.1. Overview" />
+  <meta property="og:description" content="68.1.&amp;nbsp;Overview PostgreSQL includes an implementation of persistent on-disk hash indexes, which are fully crash recoverable. Any data type can be …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/16/hash-intro.html" title="PostgreSQL 16 - 68.1. Overview" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/hash-intro.html" title="PostgreSQL 15 - 68.1. Overview" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/hash-intro.html" title="PostgreSQL 14 - 68.1. Overview" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/hash-intro.html" title="PostgreSQL 13 - 68.1. Overview" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/hash-intro.html" title="PostgreSQL 12 - 68.1. Overview"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/hash-intro.html" title="PostgreSQL 11 - 68.1. Overview"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/hash-intro.html" title="PostgreSQL 10 - 68.1. Overview"  rel="nofollow">10</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">68.1.&nbsp;Overview</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="hash-index.html" title="Chapter&nbsp;68.&nbsp;Hash Indexes">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="hash-index.html" title="Chapter&nbsp;68.&nbsp;Hash Indexes">Up</a></td>
+      <th width="60%" align="center">Chapter&nbsp;68.&nbsp;Hash Indexes</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="hash-implementation.html" title="68.2.&nbsp;Implementation">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="HASH-INTRO">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">68.1.&nbsp;Overview</h2>
+      </div>
+    </div>
+  </div>
+  <p><span class="productname">PostgreSQL</span> includes an implementation of persistent on-disk hash indexes, which are fully crash recoverable. Any data type can be indexed by a hash index, including data types that do not have a well-defined linear ordering. Hash indexes store only the hash value of the data being indexed, thus there are no restrictions on the size of the data column being indexed.</p>
+  <p>Hash indexes support only single-column indexes and do not allow uniqueness checking.</p>
+  <p>Hash indexes support only the <code class="literal">=</code> operator, so WHERE clauses that specify range operations will not be able to take advantage of hash indexes.</p>
+  <p>Each hash index tuple stores just the 4-byte hash value, not the actual column value. As a result, hash indexes may be much smaller than B-trees when indexing longer data items such as UUIDs, URLs, etc. The absence of the column value also makes all hash index scans lossy. Hash indexes may take part in bitmap index scans and backward scans.</p>
+  <p>Hash indexes are best optimized for SELECT and UPDATE-heavy workloads that use equality scans on larger tables. In a B-tree index, searches must descend through the tree until the leaf page is found. In tables with millions of rows, this descent can increase access time to data. The equivalent of a leaf page in a hash index is referred to as a bucket page. In contrast, a hash index allows accessing the bucket pages directly, thereby potentially reducing index access time in larger tables. This reduction in "logical I/O" becomes even more pronounced on indexes/data larger than shared_buffers/RAM.</p>
+  <p>Hash indexes have been designed to cope with uneven distributions of hash values. Direct access to the bucket pages works well if the hash values are evenly distributed. When inserts mean that the bucket page becomes full, additional overflow pages are chained to that specific bucket page, locally expanding the storage for index tuples that match that hash value. When scanning a hash bucket during queries, we need to scan through all of the overflow pages. Thus an unbalanced hash index might actually be worse than a B-tree in terms of number of block accesses required, for some data.</p>
+  <p>As a result of the overflow cases, we can say that hash indexes are most suitable for unique, nearly unique data or data with a low number of rows per hash bucket. One possible way to avoid problems is to exclude highly non-unique values from the index using a partial index condition, but this may not be suitable in many cases.</p>
+  <p>Like B-Trees, hash indexes perform simple index tuple deletion. This is a deferred maintenance operation that deletes index tuples that are known to be safe to delete (those whose item identifier's LP_DEAD bit is already set). If an insert finds no space is available on a page we try to avoid creating a new overflow page by attempting to remove dead index tuples. Removal cannot occur if the page is pinned at that time. Deletion of dead index pointers also occurs during VACUUM.</p>
+  <p>If it can, VACUUM will also try to squeeze the index tuples onto as few overflow pages as possible, minimizing the overflow chain. If an overflow page becomes empty, overflow pages can be recycled for reuse in other buckets, though we never return them to the operating system. There is currently no provision to shrink a hash index, other than by rebuilding it with REINDEX. There is no provision for reducing the number of buckets, either.</p>
+  <p>Hash indexes may expand the number of bucket pages as the number of rows indexed grows. The hash key-to-bucket-number mapping is chosen so that the index can be incrementally expanded. When a new bucket is to be added to the index, exactly one existing bucket will need to be "split", with some of its tuples being transferred to the new bucket according to the updated key-to-bucket-number mapping.</p>
+  <p>The expansion occurs in the foreground, which could increase execution time for user inserts. Thus, hash indexes may not be suitable for tables with rapidly increasing number of rows.</p>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="hash-index.html" title="Chapter&nbsp;68.&nbsp;Hash Indexes">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="hash-index.html" title="Chapter&nbsp;68.&nbsp;Hash Indexes">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="hash-implementation.html" title="68.2.&nbsp;Implementation">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">Chapter&nbsp;68.&nbsp;Hash Indexes&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;68.2.&nbsp;Implementation</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/hash-intro.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

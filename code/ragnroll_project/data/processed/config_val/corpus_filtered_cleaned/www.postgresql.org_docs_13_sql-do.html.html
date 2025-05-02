@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: DO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/sql-do.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="DO" />
+  <meta property="og:description" content="DO DO — execute an anonymous code block Synopsis DO [ LANGUAGE lang_name ] code Description DO executes an anonymous …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/sql-do.html" title="PostgreSQL 17 - DO" >Current</a>
+                          (<a href="/docs/17/sql-do.html" title="PostgreSQL 17 - DO" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/sql-do.html" title="PostgreSQL 16 - DO" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/sql-do.html" title="PostgreSQL 15 - DO" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/sql-do.html" title="PostgreSQL 14 - DO" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/sql-do.html" title="PostgreSQL 13 - DO" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/sql-do.html" title="PostgreSQL devel - DO"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/sql-do.html" title="PostgreSQL 12 - DO"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/sql-do.html" title="PostgreSQL 11 - DO"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/sql-do.html" title="PostgreSQL 10 - DO"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/sql-do.html" title="PostgreSQL 9.6 - DO"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/sql-do.html" title="PostgreSQL 9.5 - DO"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/sql-do.html" title="PostgreSQL 9.4 - DO"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/sql-do.html" title="PostgreSQL 9.3 - DO"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/sql-do.html" title="PostgreSQL 9.2 - DO"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/sql-do.html" title="PostgreSQL 9.1 - DO"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/sql-do.html" title="PostgreSQL 9.0 - DO"  rel="nofollow">9.0</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">DO</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="sql-discard.html" title="DISCARD">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <th width="60%" align="center">SQL Commands</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="sql-drop-access-method.html" title="DROP ACCESS METHOD">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="refentry" id="SQL-DO">
+  <div class="titlepage"></div><a id="id-1.9.3.102.1" class="indexterm" name="id-1.9.3.102.1"></a><a id="id-1.9.3.102.2" class="indexterm" name="id-1.9.3.102.2"></a>
+  <div class="refnamediv">
+    <h2><span class="refentrytitle">DO</span></h2>
+    <p>DO — execute an anonymous code block</p>
+  </div>
+  <div class="refsynopsisdiv">
+    <h2>Synopsis</h2>
+    <pre class="synopsis">
+DO [ LANGUAGE <em class="replaceable"><code>lang_name</code></em> ] <em class="replaceable"><code>code</code></em>
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.102.6">
+    <h2>Description</h2>
+    <p><code class="command">DO</code> executes an anonymous code block, or in other words a transient anonymous function in a procedural language.</p>
+    <p>The code block is treated as though it were the body of a function with no parameters, returning <code class="type">void</code>. It is parsed and executed a single time.</p>
+    <p>The optional <code class="literal">LANGUAGE</code> clause can be written either before or after the code block.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.102.7">
+    <h2>Parameters</h2>
+    <div class="variablelist">
+      <dl class="variablelist">
+        <dt><span class="term"><em class="replaceable"><code>code</code></em></span></dt>
+        <dd>
+          <p>The procedural language code to be executed. This must be specified as a string literal, just as in <code class="command">CREATE FUNCTION</code>. Use of a dollar-quoted literal is recommended.</p>
+        </dd>
+        <dt><span class="term"><em class="replaceable"><code>lang_name</code></em></span></dt>
+        <dd>
+          <p>The name of the procedural language the code is written in. If omitted, the default is <code class="literal">plpgsql</code>.</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="refsect1" id="id-1.9.3.102.8">
+    <h2>Notes</h2>
+    <p>The procedural language to be used must already have been installed into the current database by means of <code class="command">CREATE EXTENSION</code>. <code class="literal">plpgsql</code> is installed by default, but other languages are not.</p>
+    <p>The user must have <code class="literal">USAGE</code> privilege for the procedural language, or must be a superuser if the language is untrusted. This is the same privilege requirement as for creating a function in the language.</p>
+    <p>If <code class="command">DO</code> is executed in a transaction block, then the procedure code cannot execute transaction control statements. Transaction control statements are only allowed if <code class="command">DO</code> is executed in its own transaction.</p>
+  </div>
+  <div class="refsect1" id="SQL-DO-EXAMPLES">
+    <h2>Examples</h2>
+    <p>Grant all privileges on all views in schema <code class="literal">public</code> to role <code class="literal">webuser</code>:</p>
+    <pre class="programlisting">
+DO $$DECLARE r record;
+BEGIN
+    FOR r IN SELECT table_schema, table_name FROM information_schema.tables
+             WHERE table_type = 'VIEW' AND table_schema = 'public'
+    LOOP
+        EXECUTE 'GRANT ALL ON ' || quote_ident(r.table_schema) || '.' || quote_ident(r.table_name) || ' TO webuser';
+    END LOOP;
+END$$;
+</pre>
+  </div>
+  <div class="refsect1" id="id-1.9.3.102.10">
+    <h2>Compatibility</h2>
+    <p>There is no <code class="command">DO</code> statement in the SQL standard.</p>
+  </div>
+  <div class="refsect1" id="id-1.9.3.102.11">
+    <h2>See Also</h2><span class="simplelist"><a class="xref" href="sql-createlanguage.html" title="CREATE LANGUAGE"><span class="refentrytitle">CREATE LANGUAGE</span></a></span>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="sql-discard.html" title="DISCARD">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="sql-commands.html" title="SQL Commands">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="sql-drop-access-method.html" title="DROP ACCESS METHOD">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">DISCARD&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;DROP ACCESS METHOD</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/sql-do.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

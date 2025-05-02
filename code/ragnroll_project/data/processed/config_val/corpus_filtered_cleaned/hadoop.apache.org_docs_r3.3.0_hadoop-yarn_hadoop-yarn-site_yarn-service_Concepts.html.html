@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Apache Hadoop 3.3.0 &#x2013; Concepts</title>
+    
+    
+        <meta name="Date-Revision-yyyymmdd" content="20200706" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                </head>
+  <body class="composite">
+    <div id="banner">
+                        <a href="http://hadoop.apache.org/" id="bannerLeft">
+                                        
+                </a>
+                              <a href="http://www.apache.org/" id="bannerRight">
+                                        
+                </a>
+            <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="breadcrumbs">
+            
+                                   <div class="xleft">
+                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+        &gt;
+                  <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+        &gt;
+                  <a href="../../index.html">Apache Hadoop YARN</a>
+        &gt;
+                  <a href="../index.html">Apache Hadoop 3.3.0</a>
+        &gt;
+        Concepts
+        </div>
+            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            |
+                <a href="https://gitbox.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
+            |
+                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+              
+                                   &nbsp;| Last Published: 2020-07-06
+              &nbsp;| Version: 3.3.0
+            </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+    <div id="leftColumn">
+      <div id="navcolumn">
+             
+                                                   <h5>General</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Common</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>HDFS</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>MapReduce REST APIs</h5>
+                  <ul>
+                  
+                  
+          </ul>
+                       <h5>YARN</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN REST APIs</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>YARN Service</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Hadoop Compatible File Systems</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Auth</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Tools</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Reference</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+          </ul>
+                       <h5>Configuration</h5>
+                  <ul>
+                  
+                  
+                  
+                  
+                  
+                  
+          </ul>
+                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+          
+        </a>
+                       
+                               </div>
+    </div>
+    <div id="bodyColumn">
+      <div id="contentBox">
+        
+<h1>Concepts</h1>
+<p>This document describes some key concepts and features that makes YARN as a first-class platform in order to natively support long running services on YARN.</p>
+<div class="section">
+<div class="section">
+<h3><a name="Service_Framework_.28ApplicationMaster.29_on_YARN"></a>Service Framework (ApplicationMaster) on YARN</h3>
+<p>A container orchestration framework is implemented to help deploying services on YARN. In a nutshell, the framework is an ApplicationMaster that requests containers from ResourceManager based on service definition provided by the user and launch the containers across the cluster adhering to placement policies. It also does all the heavy lifting work such as resolving the service definition and configurations, managing component life cycles such as automatically restarting failed containers, monitoring components&#x2019; healthiness and readiness, ensuring dependency start order across components, flexing up/down components, upgrading components etc. The end goal of the framework is to make sure the service is up and running as the state that user desired.</p>
+<p>In addition, it leverages a lot of features in YARN core to accomplish scheduling constraints, such as affinity and anti-affinity scheduling, log aggregation for services, automatically restart a container if it fails, and do in-place upgrade of a container.</p></div>
+<div class="section">
+<h3><a name="A_Restful_API-Server_for_deploying.2Fmanaging_services_on_YARN"></a>A Restful API-Server for deploying/managing services on YARN</h3>
+<p>A restful API server is developed to allow users to deploy/manage their services on YARN via a simple JSON spec. This avoids users from dealing with the low-level APIs, writing complex code to bring their services onto YARN. The REST layer acts as a unified REST based entry for creation and lifecycle management of YARN services. Services here can range from simple single-component apps to the most complex, multi-component applications needing special orchestration needs. Please refer to this <a href="YarnServiceAPI.html">API doc</a> for detailed API documentations.</p>
+<p>The API-server is stateless, which means users can simply spin up multiple instances, and have a load balancer fronting them to support HA, distribute the load etc.</p></div>
+<div class="section">
+<h3><a name="Service_Discovery"></a>Service Discovery</h3>
+<p>A DNS server is implemented to enable discovering services on YARN via the standard mechanism: DNS lookup.</p>
+<p>The framework posts container information such as hostname and ip into the <a href="../registry/index.html">YARN service registry</a>. And the DNS server essentially exposes the information in YARN service registry by translating them into DNS records such as A record and SRV record. Clients can then discover the IPs of containers via standard DNS lookup.</p>
+<p>The previous read mechanisms of YARN Service Registry were limited to a registry specific (java) API and a REST interface and are difficult to wireup existing clients and services. The DNS based service discovery eliminates this gap. Please refer to this <a href="ServiceDiscovery.html">Service Discovery doc</a> for more details.</p></div></div>
+      </div>
+    </div>
+    <div class="clear">
+      <hr/>
+    </div>
+    <div id="footer">
+      <div class="xright">
+        &#169;            2008-2020
+              Apache Software Foundation
+            
+                          - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.
+        Apache Maven, Maven, Apache, the Apache feather logo, and the Apache Maven project logos are trademarks of The Apache Software Foundation.
+      </div>
+      <div class="clear">
+        <hr/>
+      </div>
+    </div>
+  </body>
+</html>

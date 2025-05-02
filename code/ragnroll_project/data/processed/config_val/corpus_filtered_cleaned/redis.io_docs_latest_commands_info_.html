@@ -1,0 +1,1512 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth w-full">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="generator" content="Hugo 0.143.1">
+    <meta name="robots" content="index, follow">
+      <meta name="google-site-verification" content="suIo51jDr2z6o48kiD53RKtRvp-JgZ-njy8SWMdrkMo">
+      
+    
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="/docs/latest/images/favicons/mstile-144x144.png" />
+<meta name="msapplication-square70x70logo" content="/docs/latest/images/favicons/mstile-70x70.png" />
+<meta name="msapplication-square150x150logo" content="/docs/latest/images/favicons/mstile-150x150.png" />
+<meta name="msapplication-wide310x150logo" content="/docs/latest/images/favicons/mstile-310x150.png" /> 
+<meta name="msapplication-square310x310logo" content="/docs/latest/images/favicons/mstile-310x310.png" />
+
+    <title>INFO | Docs</title>
+    <meta name="description" content="Returns information and statistics about the server.">
+    <meta property="og:url" content="https://redis.io/docs/latest/commands/info/">
+  <meta property="og:site_name" content="Docs">
+  <meta property="og:title" content="INFO">
+  <meta property="og:description" content="Returns information and statistics about the server.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="commands">
+    <meta property="article:modified_time" content="2025-04-24T15:45:45+01:00">
+
+  <meta itemprop="name" content="INFO">
+  <meta itemprop="description" content="Returns information and statistics about the server.">
+  <meta itemprop="dateModified" content="2025-04-24T15:45:45+01:00">
+  <meta itemprop="wordCount" content="5806">
+  <meta itemprop="keywords" content="Docs,Develop,Stack,Rs,Rc,Oss,Kubernetes,Clients">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="INFO">
+  <meta name="twitter:description" content="Returns information and statistics about the server.">
+
+  
+  
+  
+
+
+    
+
+
+  
+
+
+
+    
+  
+  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+  </head>
+  <body class="antialiased tracking-[-0.01em] bg-white w-full">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKZ6J9R"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+    
+
+
+
+
+    
+  
+  
+  <main class="docs w-full max-w-[1920px] mx-auto px-5 flex flex-col md:flex-row overflow-hidden">
+    
+
+
+<div class="md:block w-full md:w-96 h-fit md:h-full shrink-0 text-base font-mono font-normal py-6">
+  
+
+
+      <section class="prose w-full py-12">
+        <h1 class="command-name">INFO
+        </h1>
+        
+        
+        
+        
+        
+        <div class="font-semibold text-redis-ink-900">Syntax</div>
+        <pre class="command-syntax">INFO [section [section ...]]</pre>
+        
+        <dl class="grid grid-cols-[auto,1fr] gap-2 mb-12">
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Available since:</dt>
+          <dd class="m-0">Redis CE 1.0.0</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">Time complexity:</dt>
+          <dd class="m-0">O(1)</dd>
+          
+          <dt class="font-semibold text-redis-ink-900 m-0">ACL categories:</dt>
+            <dd class="m-0">
+              
+                <code>@slow</code><span class='mr-1 last:hidden'>,</span>
+              
+                <code>@dangerous</code><span class='mr-1 last:hidden'>,</span>
+              
+            </dd>
+          
+        </dl>
+
+        <p>The <code>INFO</code> command returns information and statistics about the server in a
+format that is simple to parse by computers and easy to read by humans.</p>
+<p>The optional parameter can be used to select a specific section of information:</p>
+<ul>
+<li><code>server</code>: General information about the Redis server</li>
+<li><code>clients</code>: Client connections section</li>
+<li><code>memory</code>: Memory consumption related information</li>
+<li><code>persistence</code>: RDB and AOF related information</li>
+<li><code>threads</code>: I/O threads information</li>
+<li><code>stats</code>: General statistics</li>
+<li><code>replication</code>: Master/replica replication information</li>
+<li><code>cpu</code>: CPU consumption statistics</li>
+<li><code>commandstats</code>: Redis command statistics</li>
+<li><code>latencystats</code>: Redis command latency percentile distribution statistics</li>
+<li><code>sentinel</code>: Redis Sentinel section (only applicable to Sentinel instances)</li>
+<li><code>cluster</code>: Redis Cluster section</li>
+<li><code>modules</code>: Modules section</li>
+<li><code>keyspace</code>: Database related statistics</li>
+<li><code>errorstats</code>: Redis error statistics</li>
+</ul>
+<p>It can also take the following values:</p>
+<ul>
+<li><code>all</code>: Return all sections (excluding module generated ones)</li>
+<li><code>default</code>: Return only the default set of sections</li>
+<li><code>everything</code>: Includes <code>all</code> and <code>modules</code></li>
+</ul>
+<p>When no parameter is provided, the <code>default</code> option is assumed.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+        
+        
+        
+        
+            
+        
+        
+        
+        
+        
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="codetabs cli group flex justify-start items-center flex-wrap box-border rounded-lg mt-0 mb-0 mx-auto bg-slate-900" id="cmds_servermgmt-stepinfo">
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_servermgmt-stepinfo" id="redis-cli_cmds_servermgmt-stepinfo" data-lang="redis-cli" class="radiotab w-0 h-0"
+               checked
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="redis-cli_cmds_servermgmt-stepinfo">
+            
+                &gt;_ Redis CLI
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_redis-cli_cmds_servermgmt-stepinfo" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_servermgmt-stepinfo">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line hl"><span class="cl">INFO</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_redis-cli_cmds_servermgmt-stepinfo')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+                <div class="flex-1 text-xs text-white overflow-ellipsis">Are you tired of using redis-cli? Try Redis Insight - the developer GUI for Redis.</div>
+                <div class="text-right">
+                    <a href="https://redis.com/redis-enterprise/redis-insight/" tabindex="1" class="rounded rounded-mx px-2 py-1 flex items-center text-white text-xs
+                    hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                    focus:ring-2 focus:white focus:border-slate-500" title="Get Redis Insight">
+                        
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                        </svg>
+                        <span>Get Redis Insight</span>
+                    </a>
+                </div>
+            
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_servermgmt-stepinfo" id="Python_cmds_servermgmt-stepinfo" data-lang="Python" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Python_cmds_servermgmt-stepinfo">
+            
+                Python
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Python_cmds_servermgmt-stepinfo" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_servermgmt-stepinfo">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">redis</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">decode_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res1</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">flushall</span><span class="p">(</span><span class="n">asynchronous</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; True</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">res2</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span> <span class="c1"># &gt;&gt;&gt; []</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="n">res3</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">res3</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1"># &gt;&gt;&gt; {&#39;redis_version&#39;: &#39;7.4.0&#39;, &#39;redis_git_sha1&#39;: &#39;c9d29f6a&#39;,...}</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Python_cmds_servermgmt-stepinfo')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Python_cmds_servermgmt-stepinfo" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/redis-py/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Python Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/redis-py/tree/master/doctests/cmds_servermgmt.py' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_servermgmt-stepinfo" id="Nodejs_cmds_servermgmt-stepinfo" data-lang="Node-js" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Nodejs_cmds_servermgmt-stepinfo">
+            
+                Node.js
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Nodejs_cmds_servermgmt-stepinfo" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_servermgmt-stepinfo">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-node.js" data-lang="node.js"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">createClient</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;redis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">createClient</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">connect</span><span class="p">().</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res1</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">flushAll</span><span class="p">(</span><span class="s1">&#39;SYNC&#39;</span><span class="p">);</span> <span class="c1">// or ASYNC
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res1</span><span class="p">);</span> <span class="c1">// OK
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">res2</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res2</span><span class="p">);</span> <span class="c1">// []
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl"><span class="kr">const</span> <span class="nx">res3</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">info</span><span class="p">();</span>
+</span></span><span class="line hl"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res3</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl"><span class="c1">// # Server
+</span></span></span><span class="line hl"><span class="cl"><span class="c1">// redis_version:7.4.0
+</span></span></span><span class="line hl"><span class="cl"><span class="c1">// redis_git_sha1:c9d29f6a
+</span></span></span><span class="line hl"><span class="cl"><span class="c1">// redis_git_dirty:0
+</span></span></span><span class="line hl"><span class="cl"><span class="c1">// redis_build_id:4c367a16e3f9616
+</span></span></span><span class="line hl"><span class="cl"><span class="c1">// redis_mode:standalone
+</span></span></span><span class="line hl"><span class="cl"><span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kr">await</span> <span class="nx">client</span><span class="p">.</span><span class="nx">quit</span><span class="p">();</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Nodejs_cmds_servermgmt-stepinfo')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Nodejs_cmds_servermgmt-stepinfo" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/nodejs/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Node.js Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/node-redis/tree/emb-examples/doctests/cmds-servermgmt.js' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_servermgmt-stepinfo" id="Java-Sync_cmds_servermgmt-stepinfo" data-lang="Java-Sync" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Java-Sync_cmds_servermgmt-stepinfo">
+            
+                Java-Sync
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Java-Sync_cmds_servermgmt-stepinfo" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_servermgmt-stepinfo">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Set</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.Jedis</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">redis.clients.jedis.UnifiedJedis</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import static</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Assertions.assertEquals</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CmdsServerMgmtExample</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">UnifiedJedis</span><span class="w"> </span><span class="n">jedis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnifiedJedis</span><span class="p">(</span><span class="s">&#34;redis://localhost:6379&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">flushAllResult1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">flushAll</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">flushAllResult1</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; OK</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">flushAllResult2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis</span><span class="p">.</span><span class="na">keys</span><span class="p">(</span><span class="s">&#34;*&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">flushAllResult2</span><span class="p">);</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; []</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// Note: you must use the `Jedis` class to access the `info`</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// command rather than `UnifiedJedis`.</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">Jedis</span><span class="w"> </span><span class="n">jedis2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Jedis</span><span class="p">(</span><span class="s">&#34;redis://localhost:6379&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">infoResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">jedis2</span><span class="p">.</span><span class="na">info</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// Check the first 8 characters of the result (the full `info` string</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="c1">// is much longer than this).</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">infoResult</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">0</span><span class="p">,</span><span class="w"> </span><span class="n">8</span><span class="p">));</span><span class="w"> </span><span class="c1">// &gt;&gt;&gt; # Server</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">        </span><span class="n">jedis2</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">jedis</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Java-Sync_cmds_servermgmt-stepinfo')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Java-Sync_cmds_servermgmt-stepinfo" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/jedis/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Java-Sync Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/jedis/tree/master/src/test/java/io/redis/examples/CmdsServerMgmtExample.java' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+        
+        
+        
+        
+        <input tabindex="1" type="radio" name="cmds_servermgmt-stepinfo" id="Go_cmds_servermgmt-stepinfo" data-lang="Go" class="radiotab w-0 h-0"
+               
+        />
+        <label class="justify-left label ml-1.5 pt-3.5 px-1 pb-1 cursor-pointer text-sm text-center bg-redis-ink-900
+        hover:text-redis-red-600  rounded rounded-mx transition duration-150 ease-in-out"
+               title="Open example" for="Go_cmds_servermgmt-stepinfo">
+            
+                Go
+            
+        </label>
+
+        <div class="panel order-last hidden w-full mt-0  relative" id="panel_Go_cmds_servermgmt-stepinfo" role="tabpanel" tabindex="0" aria-labelledby="tab-cmds_servermgmt-stepinfo">
+            <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">example_commands_test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/redis/go-redis/v9&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_cmd_flushall</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">flushAllResult1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">FlushAll</span><span class="p">(</span><span class="nx">ctx</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">flushAllResult1</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; OK</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">flushAllResult2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">Keys</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="s">&#34;*&#34;</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">flushAllResult2</span><span class="p">)</span> <span class="c1">// &gt;&gt;&gt; []</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ExampleClient_cmd_info</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">rdb</span> <span class="o">:=</span> <span class="nx">redis</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">redis</span><span class="p">.</span><span class="nx">Options</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Addr</span><span class="p">:</span>     <span class="s">&#34;localhost:6379&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Password</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="c1">// no password docs</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">DB</span><span class="p">:</span>       <span class="mi">0</span><span class="p">,</span>  <span class="c1">// use default DB</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="nx">infoResult</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">rdb</span><span class="p">.</span><span class="nf">Info</span><span class="p">(</span><span class="nx">ctx</span><span class="p">).</span><span class="nf">Result</span><span class="p">()</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line hl"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line hl"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line hl"><span class="cl">
+</span></span><span class="line hl"><span class="cl">	<span class="c1">// Check the first 8 characters (the full info string contains</span>
+</span></span><span class="line hl"><span class="cl">	<span class="c1">// much more text than this).</span>
+</span></span><span class="line hl"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">infoResult</span><span class="p">[:</span><span class="mi">8</span><span class="p">])</span> <span class="c1">// &gt;&gt;&gt; # Server</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+            <button tabindex="1" class="clipboard-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-10 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Copy to clipboard" onclick="copyCodeToClipboard('#panel_Go_cmds_servermgmt-stepinfo')">
+                
+                    
+                </svg>
+                <div class="tooltip relative inline-block">
+                    <span class="tooltiptext hidden bg-slate-200 rounded rounded-mx text-slate-800 text-center text-xs p-1 absolute right-6 bottom-4">Copied!</span>
+                </div>
+            </button>
+            
+            <button tabindex="1" class="visibility-button text-neutral-400 hover:text-slate-100 bg-slate-600 absolute -top-8 right-2 h-7 w-7 mr-2 mt-2 p-1 rounded rounded-mx"
+                    title="Toggle visibility" aria-controls="panel_Go_cmds_servermgmt-stepinfo" onclick="toggleVisibleLines(this)">
+                
+                    
+                </svg>
+                
+                    
+                </svg>
+            </button>
+            
+
+            
+            <div class="cli-footer flex items-center justify-between rounded-b-md bg-slate-900 mt-0 px-4 pt-0 mb-0 transition-opacity ease-in-out duration-300 opacity-0 invisible
+group-hover:opacity-100 group-hover:visible">
+            
+              
+              <a href='https://redis.io/docs/latest/develop/clients/go/' tabindex="1" class="rounded rounded-mx px-3 py-1 text-white text-xs
+                                hover:text-white hover:bg-slate-600 hover:border-transparent focus:outline-none
+                                focus:ring-2 focus:white focus:border-slate-500" title="Quick-Start">
+                Go Quick-Start
+              </a>
+              <div class="w-1/2"></div>
+              <div class="flex-1 text-right">
+                <a href='https://github.com/redis/go-redis/tree/master/doctests/cmds_servermgmt_test.go' tabindex="1" class="button text-neutral-400 hover:text-slate-100 h-6 w-6 p-1" title="Improve this code example">
+                  
+                    
+                  </svg>
+                </a>
+              </div>
+           
+           </div>
+           
+        </div>
+
+    
+
+</div>
+
+
+
+
+<p>Give these commands a try in the interactive console:</p>
+<div class="bg-slate-900 border-b border-slate-700 rounded-t-xl px-4 py-3 w-full flex">
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+  
+    </path>
+</svg>
+</div>  
+<form class="redis-cli overflow-y-auto max-h-80">
+INFO
+</form>
+<h2 id="notes">Notes</h2>
+<p>Please note depending on the version of Redis some of the fields have been
+added or removed. A robust client application should therefore parse the
+result of this command by skipping unknown properties, and gracefully handle
+missing fields.</p>
+<p>Here is the description of fields for Redis &gt;= 2.4.</p>
+<p>Here is the meaning of all fields in the <strong>server</strong> section:</p>
+<ul>
+<li><code>redis_version</code>: Version of the Redis server</li>
+<li><code>redis_git_sha1</code>:  Git SHA1</li>
+<li><code>redis_git_dirty</code>: Git dirty flag</li>
+<li><code>redis_build_id</code>: The build id</li>
+<li><code>redis_mode</code>: The server's mode (&quot;standalone&quot;, &quot;sentinel&quot; or &quot;cluster&quot;)</li>
+<li><code>os</code>: Operating system hosting the Redis server</li>
+<li><code>arch_bits</code>: Architecture (32 or 64 bits)</li>
+<li><code>multiplexing_api</code>: Event loop mechanism used by Redis</li>
+<li><code>atomicvar_api</code>: Atomicvar API used by Redis</li>
+<li><code>gcc_version</code>: Version of the GCC compiler used to compile the Redis server</li>
+<li><code>process_id</code>: PID of the server process</li>
+<li><code>process_supervised</code>: Supervised system (&quot;upstart&quot;, &quot;systemd&quot;, &quot;unknown&quot; or &quot;no&quot;)</li>
+<li><code>run_id</code>: Random value identifying the Redis server (to be used by Sentinel
+and Cluster)</li>
+<li><code>tcp_port</code>: TCP/IP listen port</li>
+<li><code>server_time_usec</code>: Epoch-based system time with microsecond precision</li>
+<li><code>uptime_in_seconds</code>: Number of seconds since Redis server start</li>
+<li><code>uptime_in_days</code>: Same value expressed in days</li>
+<li><code>hz</code>: The server's current frequency setting</li>
+<li><code>configured_hz</code>: The server's configured frequency setting</li>
+<li><code>lru_clock</code>: Clock incrementing every minute, for LRU management</li>
+<li><code>executable</code>: The path to the server's executable</li>
+<li><code>config_file</code>: The path to the config file</li>
+<li><code>io_threads_active</code>: Flag indicating if I/O threads are active</li>
+<li><code>shutdown_in_milliseconds</code>: The maximum time remaining for replicas to catch up the replication before completing the shutdown sequence.
+This field is only present during shutdown.</li>
+</ul>
+<p>Here is the meaning of all fields in the <strong>clients</strong> section:</p>
+<ul>
+<li><code>connected_clients</code>: Number of client connections (excluding connections
+from replicas)</li>
+<li><code>cluster_connections</code>: An approximation of the number of sockets used by the
+cluster's bus</li>
+<li><code>maxclients</code>: The value of the <code>maxclients</code> configuration directive. This is
+the upper limit for the sum of <code>connected_clients</code>, <code>connected_slaves</code> and
+<code>cluster_connections</code>.</li>
+<li><code>client_recent_max_input_buffer</code>: Biggest input buffer among current client connections</li>
+<li><code>client_recent_max_output_buffer</code>: Biggest output buffer among current client connections</li>
+<li><code>blocked_clients</code>: Number of clients pending on a blocking call (<a href="/docs/latest/commands/blpop/"><code>BLPOP</code></a>,
+<a href="/docs/latest/commands/brpop/"><code>BRPOP</code></a>, <a href="/docs/latest/commands/brpoplpush/"><code>BRPOPLPUSH</code></a>, <a href="/docs/latest/commands/blmove/"><code>BLMOVE</code></a>, <a href="/docs/latest/commands/bzpopmin/"><code>BZPOPMIN</code></a>, <a href="/docs/latest/commands/bzpopmax/"><code>BZPOPMAX</code></a>)</li>
+<li><code>tracking_clients</code>: Number of clients being tracked (<a href="/docs/latest/commands/client-tracking/"><code>CLIENT TRACKING</code></a>)</li>
+<li><code>pubsub_clients</code>: Number of clients in pubsub mode (<a href="/docs/latest/commands/subscribe/"><code>SUBSCRIBE</code></a>, <a href="/docs/latest/commands/psubscribe/"><code>PSUBSCRIBE</code></a>, <a href="/docs/latest/commands/ssubscribe/"><code>SSUBSCRIBE</code></a>). Added in Redis 7.4</li>
+<li><code>watching_clients</code>: Number of clients in watching mode (<a href="/docs/latest/commands/watch/"><code>WATCH</code></a>). Added in Redis 7.4</li>
+<li><code>clients_in_timeout_table</code>: Number of clients in the clients timeout table</li>
+<li><code>total_watched_keys</code>: Number of watched keys. Added in Redis 7.4.</li>
+<li><code>total_blocking_keys</code>: Number of blocking keys. Added in Redis 7.2.</li>
+<li><code>total_blocking_keys_on_nokey</code>: Number of blocking keys that one or more clients that would like to be unblocked when the key is deleted. Added in Redis 7.2.</li>
+</ul>
+<p>Here is the meaning of all fields in the <strong>memory</strong> section:</p>
+<ul>
+<li><code>used_memory</code>: Total number of bytes allocated by Redis using its
+allocator (either standard <strong>libc</strong>, <strong>jemalloc</strong>, or an alternative
+allocator such as <a href="http://code.google.com/p/google-perftools/"><strong>tcmalloc</strong></a>)</li>
+<li><code>used_memory_human</code>: Human readable representation of previous value</li>
+<li><code>used_memory_rss</code>: Number of bytes that Redis allocated as seen by the
+operating system (a.k.a resident set size). This is the number reported by
+tools such as <code>top(1)</code> and <code>ps(1)</code></li>
+<li><code>used_memory_rss_human</code>: Human readable representation of previous value</li>
+<li><code>used_memory_peak</code>: Peak memory consumed by Redis (in bytes)</li>
+<li><code>used_memory_peak_human</code>: Human readable representation of previous value</li>
+<li><code>used_memory_peak_perc</code>: The percentage of <code>used_memory</code> out of <code>used_memory_peak</code></li>
+<li><code>used_memory_overhead</code>: The sum in bytes of all overheads that the server
+allocated for managing its internal data structures</li>
+<li><code>used_memory_startup</code>: Initial amount of memory consumed by Redis at startup
+in bytes</li>
+<li><code>used_memory_dataset</code>: The size in bytes of the dataset
+(<code>used_memory_overhead</code> subtracted from <code>used_memory</code>)</li>
+<li><code>used_memory_dataset_perc</code>: The percentage of <code>used_memory_dataset</code> out of
+the net memory usage (<code>used_memory</code> minus <code>used_memory_startup</code>)</li>
+<li><code>total_system_memory</code>: The total amount of memory that the Redis host has</li>
+<li><code>total_system_memory_human</code>: Human readable representation of previous value</li>
+<li><code>used_memory_lua</code>: Number of bytes used by the Lua engine for EVAL scripts. Deprecated in Redis 7.0, renamed to <code>used_memory_vm_eval</code></li>
+<li><code>used_memory_vm_eval</code>: Number of bytes used by the script VM engines for EVAL framework (not part of used_memory). Added in Redis 7.0</li>
+<li><code>used_memory_lua_human</code>: Human readable representation of previous value. Deprecated in Redis 7.0</li>
+<li><code>used_memory_scripts_eval</code>: Number of bytes overhead by the EVAL scripts (part of used_memory). Added in Redis 7.0</li>
+<li><code>number_of_cached_scripts</code>: The number of EVAL scripts cached by the server. Added in Redis 7.0</li>
+<li><code>number_of_functions</code>: The number of functions. Added in Redis 7.0</li>
+<li><code>number_of_libraries</code>: The number of libraries. Added in Redis 7.0</li>
+<li><code>used_memory_vm_functions</code>: Number of bytes used by the script VM engines for Functions framework (not part of used_memory). Added in Redis 7.0</li>
+<li><code>used_memory_vm_total</code>: <code>used_memory_vm_eval</code> + <code>used_memory_vm_functions</code> (not part of used_memory). Added in Redis 7.0</li>
+<li><code>used_memory_vm_total_human</code>: Human readable representation of previous value.</li>
+<li><code>used_memory_functions</code>: Number of bytes overhead by Function scripts (part of used_memory). Added in Redis 7.0</li>
+<li><code>used_memory_scripts</code>: <code>used_memory_scripts_eval</code> + <code>used_memory_functions</code> (part of used_memory). Added in Redis 7.0</li>
+<li><code>used_memory_scripts_human</code>: Human readable representation of previous value</li>
+<li><code>maxmemory</code>: The value of the <code>maxmemory</code> configuration directive</li>
+<li><code>maxmemory_human</code>: Human readable representation of previous value</li>
+<li><code>maxmemory_policy</code>: The value of the <code>maxmemory-policy</code> configuration
+directive</li>
+<li><code>mem_fragmentation_ratio</code>: Ratio between <code>used_memory_rss</code> and <code>used_memory</code>.
+Note that this doesn't only includes fragmentation, but also other process overheads (see the <code>allocator_*</code> metrics), and also overheads like code, shared libraries, stack, etc.</li>
+<li><code>mem_fragmentation_bytes</code>: Delta between <code>used_memory_rss</code> and <code>used_memory</code>.
+Note that when the total fragmentation bytes is low (few megabytes), a high ratio (e.g. 1.5 and above) is not an indication of an issue.</li>
+<li><code>allocator_frag_ratio:</code>: Ratio between <code>allocator_active</code> and <code>allocator_allocated</code>. This is the true (external) fragmentation metric (not <code>mem_fragmentation_ratio</code>).</li>
+<li><code>allocator_frag_bytes</code> Delta between <code>allocator_active</code> and <code>allocator_allocated</code>. See note about <code>mem_fragmentation_bytes</code>.</li>
+<li><code>allocator_rss_ratio</code>: Ratio between <code>allocator_resident</code> and <code>allocator_active</code>. This usually indicates pages that the allocator can and probably will soon release back to the OS.</li>
+<li><code>allocator_rss_bytes</code>: Delta between <code>allocator_resident</code> and <code>allocator_active</code></li>
+<li><code>rss_overhead_ratio</code>: Ratio between <code>used_memory_rss</code> (the process RSS) and <code>allocator_resident</code>. This includes RSS overheads that are not allocator or heap related.</li>
+<li><code>rss_overhead_bytes</code>: Delta between <code>used_memory_rss</code> (the process RSS) and <code>allocator_resident</code></li>
+<li><code>allocator_allocated</code>: Total bytes allocated form the allocator, including internal-fragmentation. Normally the same as <code>used_memory</code>.</li>
+<li><code>allocator_active</code>: Total bytes in the allocator active pages, this includes external-fragmentation.</li>
+<li><code>allocator_resident</code>: Total bytes resident (RSS) in the allocator, this includes pages that can be released to the OS (by <a href="/docs/latest/commands/memory-purge/"><code>MEMORY PURGE</code></a>, or just waiting).</li>
+<li><code>allocator_muzzy</code>: Total bytes of 'muzzy' memory (RSS) in the allocator. Muzzy memory is memory that has been freed, but not yet fully returned to the operating system. It can be reused immediately when needed or reclaimed by the OS when system pressure increases.</li>
+<li><code>mem_not_counted_for_evict</code>: Used memory that's not counted for key eviction. This is basically transient replica and AOF buffers.</li>
+<li><code>mem_clients_slaves</code>: Memory used by replica clients - Starting Redis 7.0, replica buffers share memory with the replication backlog, so this field can show 0 when replicas don't trigger an increase of memory usage.</li>
+<li><code>mem_clients_normal</code>: Memory used by normal clients</li>
+<li><code>mem_cluster_links</code>: Memory used by links to peers on the cluster bus when cluster mode is enabled.</li>
+<li><code>mem_aof_buffer</code>: Transient memory used for AOF and AOF rewrite buffers</li>
+<li><code>mem_replication_backlog</code>: Memory used by replication backlog</li>
+<li><code>mem_total_replication_buffers</code>: Total memory consumed for replication buffers - Added in Redis 7.0.</li>
+<li><code>mem_allocator</code>: Memory allocator, chosen at compile time.</li>
+<li><code>mem_overhead_db_hashtable_rehashing</code>: Temporary memory overhead of database dictionaries currently being rehashed - Added in 7.4.</li>
+<li><code>active_defrag_running</code>: When <code>activedefrag</code> is enabled, this indicates whether defragmentation is currently active, and the CPU percentage it intends to utilize.</li>
+<li><code>lazyfree_pending_objects</code>: The number of objects waiting to be freed (as a
+result of calling <a href="/docs/latest/commands/unlink/"><code>UNLINK</code></a>, or <a href="/docs/latest/commands/flushdb/"><code>FLUSHDB</code></a> and <a href="/docs/latest/commands/flushall/"><code>FLUSHALL</code></a> with the <strong>ASYNC</strong>
+option)</li>
+<li><code>lazyfreed_objects</code>: The number of objects that have been lazy freed.</li>
+</ul>
+<p>Ideally, the <code>used_memory_rss</code> value should be only slightly higher than
+<code>used_memory</code>.
+When rss &gt;&gt; used, a large difference may mean there is (external) memory fragmentation, which can be evaluated by checking
+<code>allocator_frag_ratio</code>, <code>allocator_frag_bytes</code>.
+When used &gt;&gt; rss, it means part of Redis memory has been swapped off by the
+operating system: expect some significant latencies.</p>
+<p>Because Redis does not have control over how its allocations are mapped to
+memory pages, high <code>used_memory_rss</code> is often the result of a spike in memory
+usage.</p>
+<p>When Redis frees memory, the memory is given back to the allocator, and the
+allocator may or may not give the memory back to the system. There may be
+a discrepancy between the <code>used_memory</code> value and memory consumption as
+reported by the operating system. It may be due to the fact memory has been
+used and released by Redis, but not given back to the system. The
+<code>used_memory_peak</code> value is generally useful to check this point.</p>
+<p>Additional introspective information about the server's memory can be obtained
+by referring to the <a href="/docs/latest/commands/memory-stats/"><code>MEMORY STATS</code></a> command and the <a href="/docs/latest/commands/memory-doctor/"><code>MEMORY DOCTOR</code></a>.</p>
+<p>Here is the meaning of all fields in the <strong>persistence</strong> section:</p>
+<ul>
+<li><code>loading</code>: Flag indicating if the load of a dump file is on-going</li>
+<li><code>async_loading</code>: Currently loading replication data-set asynchronously while serving old data. This means <code>repl-diskless-load</code> is enabled and set to <code>swapdb</code>. Added in Redis 7.0.</li>
+<li><code>current_cow_peak</code>: The peak size in bytes of copy-on-write memory
+while a child fork is running</li>
+<li><code>current_cow_size</code>: The size in bytes of copy-on-write memory
+while a child fork is running</li>
+<li><code>current_cow_size_age</code>: The age, in seconds, of the <code>current_cow_size</code> value.</li>
+<li><code>current_fork_perc</code>: The percentage of progress of the current fork process. For AOF and RDB forks it is the percentage of <code>current_save_keys_processed</code> out of <code>current_save_keys_total</code>.</li>
+<li><code>current_save_keys_processed</code>: Number of keys processed by the current save operation</li>
+<li><code>current_save_keys_total</code>: Number of keys at the beginning of the current save operation</li>
+<li><code>rdb_changes_since_last_save</code>: Number of changes since the last dump</li>
+<li><code>rdb_bgsave_in_progress</code>: Flag indicating a RDB save is on-going</li>
+<li><code>rdb_last_save_time</code>: Epoch-based timestamp of last successful RDB save</li>
+<li><code>rdb_last_bgsave_status</code>: Status of the last RDB save operation</li>
+<li><code>rdb_last_bgsave_time_sec</code>: Duration of the last RDB save operation in
+seconds</li>
+<li><code>rdb_current_bgsave_time_sec</code>: Duration of the on-going RDB save operation
+if any</li>
+<li><code>rdb_last_cow_size</code>: The size in bytes of copy-on-write memory during
+the last RDB save operation</li>
+<li><code>rdb_last_load_keys_expired</code>: Number of volatile keys deleted during the last RDB loading. Added in Redis 7.0.</li>
+<li><code>rdb_last_load_keys_loaded</code>: Number of keys loaded during the last RDB loading. Added in Redis 7.0.</li>
+<li><code>aof_enabled</code>: Flag indicating AOF logging is activated</li>
+<li><code>aof_rewrite_in_progress</code>: Flag indicating a AOF rewrite operation is
+on-going</li>
+<li><code>aof_rewrite_scheduled</code>: Flag indicating an AOF rewrite operation
+will be scheduled once the on-going RDB save is complete.</li>
+<li><code>aof_last_rewrite_time_sec</code>: Duration of the last AOF rewrite operation in
+seconds</li>
+<li><code>aof_current_rewrite_time_sec</code>: Duration of the on-going AOF rewrite
+operation if any</li>
+<li><code>aof_last_bgrewrite_status</code>: Status of the last AOF rewrite operation</li>
+<li><code>aof_last_write_status</code>: Status of the last write operation to the AOF</li>
+<li><code>aof_last_cow_size</code>: The size in bytes of copy-on-write memory during
+the last AOF rewrite operation</li>
+<li><code>module_fork_in_progress</code>: Flag indicating a module fork is on-going</li>
+<li><code>module_fork_last_cow_size</code>: The size in bytes of copy-on-write memory
+during the last module fork operation</li>
+<li><code>aof_rewrites</code>: Number of AOF rewrites performed since startup</li>
+<li><code>rdb_saves</code>: Number of RDB snapshots performed since startup</li>
+</ul>
+<p><code>rdb_changes_since_last_save</code> refers to the number of operations that produced
+some kind of changes in the dataset since the last time either <a href="/docs/latest/commands/save/"><code>SAVE</code></a> or
+<a href="/docs/latest/commands/bgsave/"><code>BGSAVE</code></a> was called.</p>
+<p>If AOF is activated, these additional fields will be added:</p>
+<ul>
+<li><code>aof_current_size</code>: AOF current file size</li>
+<li><code>aof_base_size</code>: AOF file size on latest startup or rewrite</li>
+<li><code>aof_pending_rewrite</code>: Flag indicating an AOF rewrite operation
+will be scheduled once the on-going RDB save is complete.</li>
+<li><code>aof_buffer_length</code>: Size of the AOF buffer</li>
+<li><code>aof_rewrite_buffer_length</code>: Size of the AOF rewrite buffer. Note this field was removed in Redis 7.0</li>
+<li><code>aof_pending_bio_fsync</code>: Number of fsync pending jobs in background I/O
+queue</li>
+<li><code>aof_delayed_fsync</code>: Delayed fsync counter</li>
+</ul>
+<p>If a load operation is on-going, these additional fields will be added:</p>
+<ul>
+<li><code>loading_start_time</code>: Epoch-based timestamp of the start of the load
+operation</li>
+<li><code>loading_total_bytes</code>: Total file size</li>
+<li><code>loading_rdb_used_mem</code>: The memory usage of the server that had generated
+the RDB file at the time of the file's creation</li>
+<li><code>loading_loaded_bytes</code>: Number of bytes already loaded</li>
+<li><code>loading_loaded_perc</code>: Same value expressed as a percentage</li>
+<li><code>loading_eta_seconds</code>: ETA in seconds for the load to be complete</li>
+</ul>
+<p>The <strong>threads</strong> section provides statistics on I/O threads.
+The statistics are the number of assigned clients,
+the number of read events processed, and the number of write events processed.
+Added in Redis 8.0.</p>
+<p>For each I/O thread, the following line is added:</p>
+<ul>
+<li><code>io_thread_XXX</code>: <code>clients=XXX,reads=XXX,writes=XXX</code></li>
+</ul>
+<p>Here is the meaning of all fields in the <strong>stats</strong> section:</p>
+<ul>
+<li><code>total_connections_received</code>: Total number of connections accepted by the
+server</li>
+<li><code>total_commands_processed</code>: Total number of commands processed by the server</li>
+<li><code>instantaneous_ops_per_sec</code>: Number of commands processed per second</li>
+<li><code>total_net_input_bytes</code>: The total number of bytes read from the network</li>
+<li><code>total_net_output_bytes</code>: The total number of bytes written to the network</li>
+<li><code>total_net_repl_input_bytes</code>: The total number of bytes read from the network for replication purposes</li>
+<li><code>total_net_repl_output_bytes</code>: The total number of bytes written to the network for replication purposes</li>
+<li><code>instantaneous_input_kbps</code>: The network's read rate per second in KB/sec</li>
+<li><code>instantaneous_output_kbps</code>: The network's write rate per second in KB/sec</li>
+<li><code>instantaneous_input_repl_kbps</code>: The network's read rate per second in KB/sec for replication purposes</li>
+<li><code>instantaneous_output_repl_kbps</code>: The network's write rate per second in KB/sec for replication purposes</li>
+<li><code>rejected_connections</code>: Number of connections rejected because of
+<code>maxclients</code> limit</li>
+<li><code>sync_full</code>: The number of full resyncs with replicas</li>
+<li><code>sync_partial_ok</code>: The number of accepted partial resync requests</li>
+<li><code>sync_partial_err</code>: The number of denied partial resync requests</li>
+<li><code>expired_subkeys</code>: The number of hash field expiration events</li>
+<li><code>expired_keys</code>: Total number of key expiration events</li>
+<li><code>expired_stale_perc</code>: The percentage of keys probably expired</li>
+<li><code>expired_time_cap_reached_count</code>: The count of times that active expiry cycles have stopped early</li>
+<li><code>expire_cycle_cpu_milliseconds</code>: The cumulative amount of time spent on active expiry cycles</li>
+<li><code>evicted_keys</code>: Number of evicted keys due to <code>maxmemory</code> limit</li>
+<li><code>evicted_clients</code>: Number of evicted clients due to <code>maxmemory-clients</code> limit. Added in Redis 7.0.</li>
+<li><code>evicted_scripts</code>: Number of evicted EVAL scripts due to LRU policy, see <a href="/docs/latest/commands/eval/"><code>EVAL</code></a> for more details. Added in Redis 7.4.</li>
+<li><code>total_eviction_exceeded_time</code>:  Total time <code>used_memory</code> was greater than <code>maxmemory</code> since server startup, in milliseconds</li>
+<li><code>current_eviction_exceeded_time</code>: The time passed since <code>used_memory</code> last rose above <code>maxmemory</code>, in milliseconds</li>
+<li><code>keyspace_hits</code>: Number of successful lookup of keys in the main dictionary</li>
+<li><code>keyspace_misses</code>: Number of failed lookup of keys in the main dictionary</li>
+<li><code>pubsub_channels</code>: Global number of pub/sub channels with client
+subscriptions</li>
+<li><code>pubsub_patterns</code>: Global number of pub/sub pattern with client
+subscriptions</li>
+<li><code>pubsubshard_channels</code>: Global number of pub/sub shard channels with client subscriptions. Added in Redis 7.0.3</li>
+<li><code>latest_fork_usec</code>: Duration of the latest fork operation in microseconds</li>
+<li><code>total_forks</code>: Total number of fork operations since the server start</li>
+<li><code>migrate_cached_sockets</code>: The number of sockets open for <a href="/docs/latest/commands/migrate/"><code>MIGRATE</code></a> purposes</li>
+<li><code>slave_expires_tracked_keys</code>: The number of keys tracked for expiry purposes
+(applicable only to writable replicas)</li>
+<li><code>active_defrag_hits</code>: Number of value reallocations performed by active the
+defragmentation process</li>
+<li><code>active_defrag_misses</code>: Number of aborted value reallocations started by the
+active defragmentation process</li>
+<li><code>active_defrag_key_hits</code>: Number of keys that were actively defragmented</li>
+<li><code>active_defrag_key_misses</code>: Number of keys that were skipped by the active
+defragmentation process</li>
+<li><code>total_active_defrag_time</code>: Total time memory fragmentation was over the limit, in milliseconds</li>
+<li><code>current_active_defrag_time</code>: The time passed since memory fragmentation last was over the limit, in milliseconds</li>
+<li><code>tracking_total_keys</code>: Number of keys being tracked by the server</li>
+<li><code>tracking_total_items</code>: Number of items, that is the sum of clients number for
+each key, that are being tracked</li>
+<li><code>tracking_total_prefixes</code>: Number of tracked prefixes in server's prefix table
+(only applicable for broadcast mode)</li>
+<li><code>unexpected_error_replies</code>: Number of unexpected error replies, that are types
+of errors from an AOF load or replication</li>
+<li><code>total_error_replies</code>: Total number of issued error replies, that is the sum of
+rejected commands (errors prior command execution) and
+failed commands (errors within the command execution)</li>
+<li><code>dump_payload_sanitizations</code>: Total number of dump payload deep integrity validations (see <code>sanitize-dump-payload</code> config).</li>
+<li><code>total_reads_processed</code>: Total number of read events processed</li>
+<li><code>total_writes_processed</code>: Total number of write events processed</li>
+<li><code>io_threaded_reads_processed</code>: Number of read events processed by I/O threads</li>
+<li><code>io_threaded_writes_processed</code>: Number of write events processed by I/O threads</li>
+<li><code>client_query_buffer_limit_disconnections</code>: Total number of disconnections due to client reaching query buffer limit</li>
+<li><code>client_output_buffer_limit_disconnections</code>: Total number of disconnections due to client reaching output buffer limit</li>
+<li><code>reply_buffer_shrinks</code>: Total number of output buffer shrinks</li>
+<li><code>reply_buffer_expands</code>: Total number of output buffer expands</li>
+<li><code>eventloop_cycles</code>: Total number of eventloop cycles</li>
+<li><code>eventloop_duration_sum</code>: Total time spent in the eventloop in microseconds (including I/O and command processing)</li>
+<li><code>eventloop_duration_cmd_sum</code>: Total time spent on executing commands in microseconds</li>
+<li><code>instantaneous_eventloop_cycles_per_sec</code>: Number of eventloop cycles per second</li>
+<li><code>instantaneous_eventloop_duration_usec</code>: Average time spent in a single eventloop cycle in microseconds</li>
+<li><code>acl_access_denied_auth</code>: Number of authentication failures</li>
+<li><code>acl_access_denied_cmd</code>: Number of commands rejected because of access denied to the command</li>
+<li><code>acl_access_denied_key</code>: Number of commands rejected because of access denied to a key</li>
+<li><code>acl_access_denied_channel</code>: Number of commands rejected because of access denied to a channel</li>
+</ul>
+<p>Here is the meaning of all fields in the <strong>replication</strong> section:</p>
+<ul>
+<li><code>role</code>: Value is &quot;master&quot; if the instance is replica of no one, or &quot;slave&quot; if the instance is a replica of some master instance.
+Note that a replica can be master of another replica (chained replication).</li>
+<li><code>master_failover_state</code>: The state of an ongoing failover, if any.</li>
+<li><code>master_replid</code>: The replication ID of the Redis server.</li>
+<li><code>master_replid2</code>: The secondary replication ID, used for PSYNC after a failover.</li>
+<li><code>master_repl_offset</code>: The server's current replication offset</li>
+<li><code>second_repl_offset</code>: The offset up to which replication IDs are accepted</li>
+<li><code>repl_backlog_active</code>: Flag indicating replication backlog is active</li>
+<li><code>repl_backlog_size</code>: Total size in bytes of the replication backlog buffer</li>
+<li><code>repl_backlog_first_byte_offset</code>: The master offset of the replication
+backlog buffer</li>
+<li><code>repl_backlog_histlen</code>: Size in bytes of the data in the replication backlog
+buffer</li>
+</ul>
+<p>If the instance is a replica, these additional fields are provided:</p>
+<ul>
+<li><code>master_host</code>: Host or IP address of the master</li>
+<li><code>master_port</code>: Master listening TCP port</li>
+<li><code>master_link_status</code>: Status of the link (up/down)</li>
+<li><code>master_last_io_seconds_ago</code>: Number of seconds since the last interaction
+with master</li>
+<li><code>master_sync_in_progress</code>: Indicate the master is syncing to the replica</li>
+<li><code>slave_read_repl_offset</code>: The read replication offset of the replica instance.</li>
+<li><code>slave_repl_offset</code>: The replication offset of the replica instance</li>
+<li><code>slave_priority</code>: The priority of the instance as a candidate for failover</li>
+<li><code>slave_read_only</code>: Flag indicating if the replica is read-only</li>
+<li><code>replica_announced</code>: Flag indicating if the replica is announced by Sentinel.</li>
+</ul>
+<p>If a SYNC operation is on-going, these additional fields are provided:</p>
+<ul>
+<li><code>master_sync_total_bytes</code>: Total number of bytes that need to be
+transferred. this may be 0 when the size is unknown (for example, when
+the <code>repl-diskless-sync</code> configuration directive is used)</li>
+<li><code>master_sync_read_bytes</code>: Number of bytes already transferred</li>
+<li><code>master_sync_left_bytes</code>: Number of bytes left before syncing is complete
+(may be negative when <code>master_sync_total_bytes</code> is 0)</li>
+<li><code>master_sync_perc</code>: The percentage <code>master_sync_read_bytes</code> from
+<code>master_sync_total_bytes</code>, or an approximation that uses
+<code>loading_rdb_used_mem</code> when <code>master_sync_total_bytes</code> is 0</li>
+<li><code>master_sync_last_io_seconds_ago</code>: Number of seconds since last transfer I/O
+during a SYNC operation</li>
+</ul>
+<p>If the link between master and replica is down, an additional field is provided:</p>
+<ul>
+<li><code>master_link_down_since_seconds</code>: Number of seconds since the link is down</li>
+</ul>
+<p>The following field is always provided:</p>
+<ul>
+<li><code>connected_slaves</code>: Number of connected replicas</li>
+</ul>
+<p>If the server is configured with the <code>min-slaves-to-write</code> (or starting with Redis 5 with the <code>min-replicas-to-write</code>) directive, an additional field is provided:</p>
+<ul>
+<li><code>min_slaves_good_slaves</code>: Number of replicas currently considered good</li>
+</ul>
+<p>For each replica, the following line is added:</p>
+<ul>
+<li><code>slaveXXX</code>: id, IP address, port, state, offset, lag</li>
+</ul>
+<p>Here is the meaning of all fields in the <strong>cpu</strong> section:</p>
+<ul>
+<li><code>used_cpu_sys</code>: System CPU consumed by the Redis server, which is the sum of system CPU consumed by all threads of the server process (main thread and background threads)</li>
+<li><code>used_cpu_user</code>: User CPU consumed by the Redis server, which is the sum of user CPU consumed by all threads of the server process (main thread and background threads)</li>
+<li><code>used_cpu_sys_children</code>: System CPU consumed by the background processes</li>
+<li><code>used_cpu_user_children</code>: User CPU consumed by the background processes</li>
+<li><code>used_cpu_sys_main_thread</code>: System CPU consumed by the Redis server main thread</li>
+<li><code>used_cpu_user_main_thread</code>: User CPU consumed by the Redis server main thread</li>
+</ul>
+<p>The <strong>commandstats</strong> section provides statistics based on the command type,
+including the number of calls that reached command execution (not rejected),
+the total CPU time consumed by these commands, the average CPU consumed
+per command execution, the number of rejected calls
+(errors prior command execution), and the number of failed calls
+(errors within the command execution).</p>
+<p>For each command type, the following line is added:</p>
+<ul>
+<li><code>cmdstat_XXX</code>: <code>calls=XXX,usec=XXX,usec_per_call=XXX,rejected_calls=XXX,failed_calls=XXX</code></li>
+</ul>
+<p>The <strong>latencystats</strong> section provides latency percentile distribution statistics based on the command type.</p>
+<p>By default, the exported latency percentiles are the p50, p99, and p999.
+If you need to change the exported percentiles, use <code>CONFIG SET latency-tracking-info-percentiles &quot;50.0 99.0 99.9&quot;</code>.</p>
+<p>This section requires the extended latency monitoring feature to be enabled (by default it's enabled).
+If you need to enable it, use <code>CONFIG SET latency-tracking yes</code>.</p>
+<p>For each command type, the following line is added:</p>
+<ul>
+<li><code>latency_percentiles_usec_XXX: p&lt;percentile 1&gt;=&lt;percentile 1 value&gt;,p&lt;percentile 2&gt;=&lt;percentile 2 value&gt;,...</code></li>
+</ul>
+<p>The <strong>errorstats</strong> section enables keeping track of the different errors that occurred within Redis,
+based upon the reply error prefix ( The first word after the &quot;-&quot;, up to the first space. Example: <code>ERR</code> ).</p>
+<p>For each error type, the following line is added:</p>
+<ul>
+<li><code>errorstat_XXX</code>: <code>count=XXX</code></li>
+</ul>
+<p>If the server detects that this section was flooded with an excessive number of errors, it will be disabled, show a single <code>ERRORSTATS_DISABLED</code> error, and print the errors to the server log.
+This can be reset by <code>CONFIG RESETSTAT</code>.</p>
+<p>The <strong>sentinel</strong> section is only available in Redis Sentinel instances. It consists of the following fields:</p>
+<ul>
+<li><code>sentinel_masters</code>: Number of Redis masters monitored by this Sentinel instance</li>
+<li><code>sentinel_tilt</code>: A value of 1 means this sentinel is in TILT mode</li>
+<li><code>sentinel_tilt_since_seconds</code>: Duration in seconds of current TILT, or -1 if not TILTed. Added in Redis 7.0.0</li>
+<li><code>sentinel_running_scripts</code>: The number of scripts this Sentinel is currently executing</li>
+<li><code>sentinel_scripts_queue_length</code>: The length of the queue of user scripts that are pending execution</li>
+<li><code>sentinel_simulate_failure_flags</code>: Flags for the <code>SENTINEL SIMULATE-FAILURE</code> command</li>
+</ul>
+<p>The <strong>cluster</strong> section currently only contains a unique field:</p>
+<ul>
+<li><code>cluster_enabled</code>: Indicate Redis cluster is enabled</li>
+</ul>
+<p>The <strong>modules</strong> section contains additional information about loaded modules if the modules provide it. The field part of property lines in this section are always prefixed with the module's name.</p>
+<p><strong>RediSearch fields</strong></p>
+<ul>
+<li>
+<p><code>search_gc_bytes_collected</code>: The total amount of memory freed by the garbage collectors from indexes in the shard's memory in bytes. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_bytes_collected</code>: The total amount of memory freed by the garbage collectors from indexes in the shard's memory in bytes. Deprecated in 8.0 (renamed <code>search_gc_bytes_collected</code>), but still available in older versions. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_gc_marked_deleted_vectors</code>: The number of vectors marked as deleted in the vector indexes that have not yet been cleaned. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_marked_deleted_vectors</code>: The number of vectors marked as deleted in the vector indexes that have not yet been cleaned. Deprecated in 8.0 (renamed <code>search_gc_marked_delete_vectors</code>), but still available in older versions. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_gc_total_cycles</code>: The total number of garbage collection cycles executed. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_total_cycles</code>: The total number of garbage collection cycles executed. Deprecated in 8.0 (renamed <code>search_gc_total_cycles</code>), but still available in older versions. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_gc_total_docs_not_collected_by_gc</code>: The number of documents marked as deleted, whose memory has not yet been freed by the garbage collector. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_total_docs_not_collected_by_gc</code>: The number of documents marked as deleted, whose memory has not yet been freed by the garbage collector. Deprecated in 8.0 (renamed <code>search_gc_total_docs_not_collected</code>), but still available in older versions. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_gc_total_ms_run</code>: The total duration of all garbage collection cycles in the shard, measured in milliseconds. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_total_ms_run</code>: The total duration of all garbage collection cycles in the shard, measured in milliseconds. Deprecated in 8.0 (renamed <code>search_gc_total_ms_run</code>), but still available in older versions. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_cursors_internal_idle</code>: The total number of coordinator cursors that are currently holding pending results in the shard. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_cursors_user_idle</code>: The total number of cursors that were explicitly requested by users, that are currently holding pending results in the shard. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_global_idle</code>: The total number of user and internal cursors currently holding pending results in the shard. Deprecated in 8.0 (split into <code>search_cursors_internal_idle</code> and <code>search_cursors_user_idle</code>) but still available in older versions. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_cursors_internal_active</code>: The total number of coordinator cursors in the shard, either holding pending results or actively executing <code>FT.CURSOR READ</code>. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_cursors_user_active</code>: The total number of user cursors in the shard, either holding pending results or actively executing <code>FT.CURSOR READ</code>. <sup><a href="#tnote-3">3</a></sup></p>
+</li>
+<li>
+<p><code>search_global_total</code>: The total number of user and internal cursors in the shard, either holding pending results or actively executing <code>FT.CURSOR READ</code>. Deprecated in 8.0 (split into <code>search_cursors_internal_active</code> and <code>search_cursors_user_active</code>), but still available in older versions. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_number_of_indexes</code>: The total number of indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_number_of_active_indexes</code>: The total number of indexes running a background indexing and/or background query processing operation. Background indexing refers to vector ingestion process, or in-progress background indexer. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_number_of_active_indexes_running_queries</code>: The total count of indexes currently running a background query process. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_number_of_active_indexes_indexing</code>: The total count of indexes currently undergoing a background indexing process. Background indexing refers to a vector ingestion process, or an in-progress background indexer. This metric is limited by the number of WORKER threads allocated for writing operations plus the number of indexes. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_active_write_threads</code>: The total count of background write (indexing) processes currently running in the shard. Background indexing refers to a vector ingestion process, or an in-progress background indexer. This metric is limited by the number of threads allocated for writing operations. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_text_Text</code>: The total number of <code>TEXT</code> fields across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_text_Sortable</code>: The total number of <code>SORTABLE TEXT</code> fields across all indexes in the shard. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_text_NoIndex</code>: The total number of <code>NOINDEX TEXT</code> fields across all indexes in the shard, which are used for sorting only but not indexed. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_numeric_Numeric</code>: The total number of <code>NUMERIC</code> fields across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_numeric_Sortable</code>: The total number of <code>SORTABLE NUMERIC</code> fields across all indexes in the shard. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_numeric_NoIndex</code>: The total number of <code>NOINDEX NUMERIC</code> fields across all indexes in the shard; i.e., used for sorting only but not indexed. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_tag_Tag</code>: The total number of <code>TAG</code> fields across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_tag_Sortable</code>: The total number of <code>SORTABLE TAG</code> fields across all indexes in the shard. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_tag_NoIndex</code>: The total number of <code>NOINDEX TAG</code> fields across all indexes in the shard; i.e., used for sorting only but not indexed. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_tag_CaseSensitive</code>: The total number of <code>CASESENSITIVE TAG</code> fields across all indexes in the shard. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_geo_Geo</code>: The total number of <code>GEO</code> fields across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_geo_Sortable</code>: The total number of <code>SORTABLE GEO</code> fields across all indexes in the shard. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_geo_NoIndex</code>: The total number of <code>NOINDEX GEO</code> fields across all indexes in the shard; i.e., used for sorting only but not indexed. This field appears only if its value is larger than 0. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_vector_Vector</code>: The total number of <code>VECTOR</code> fields across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_vector_Flat</code>: The total number of <code>FLAT VECTOR</code> fields across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_vector_HNSW</code>: The total number of <code>HNSW VECTOR</code> fields across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_geoshape_Geoshape</code>: The total number of <code>GEOSHAPE</code> fields across all indexes in the shard. <sup><a href="#tnote-2">2</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_geoshape_Sortable</code>: The total number of <code>SORTABLE GEOSHAPE</code> fields across all indexes in the shard. This field appears only if its value is larger than 0. <sup><a href="#tnote-2">2</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_geoshape_NoIndex</code>: The total number of <code>NOINDEX GEOSHAPE</code> fields across all indexes in the shard; i.e., used for sorting only but not indexed. This field appears only if its value is larger than 0. <sup><a href="#tnote-2">2</a></sup></p>
+</li>
+<li>
+<p><code>search_fields_&lt;field&gt;_IndexErrors</code>: The total number of indexing failures caused by attempts to index a document containing <field> field. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_used_memory_indexes</code>: The total memory allocated by all indexes in the shard in bytes. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_used_memory_indexes_human</code>: The total memory allocated by all indexes in the shard in MB. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_smallest_memory_index</code>: The memory usage of the index with the smallest memory usage in the shard in bytes. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_smallest_memory_index_human</code>: The memory usage of the index with the smallest memory usage in the shard in MB. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_largest_memory_index</code>: The memory usage of the index with the largest memory usage in the shard in bytes. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_largest_memory_index_human</code>: The memory usage of the index with the largest memory usage in the shard in MB. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_indexing_time</code>: The total time spent on indexing operations, excluding the background indexing of vectors in the HNSW graph. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_used_memory_vector_index</code>: The total memory usage of all vector indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_bytes_collected</code>: The total amount of memory freed by the garbage collectors from indexes in the shard memory in bytes. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_cycles</code>: The total number of garbage collection cycles executed. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_ms_run</code>: The total duration of all garbage collection cycles in the shard, measured in milliseconds. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_docs_not_collected_by_gc</code>: The number of documents marked as deleted whose memory has not yet been freed by the garbage collector. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_marked_deleted_vectors</code>: The number of vectors marked as deleted in the vector indexes that have not yet been cleaned. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_queries_processed</code>: The total number of successful query executions (When using cursors, not counting reading from existing cursors) in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_query_commands</code>: The total number of successful query command executions (including <code>FT.SEARCH</code>, <code>FT.AGGREGATE</code>, and <code>FT.CURSOR READ</code>). <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_query_execution_time_ms</code>: The cumulative execution time of all query commands, including <code>FT.SEARCH</code>, <code>FT.AGGREGATE</code>, and <code>FT.CURSOR</code> READ, measured in ms. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_total_active_queries</code>: The total number of background queries currently being executed in the shard, excluding <code>FT.CURSOR READ</code>. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_errors_indexing_failures</code>: The total number of indexing failures recorded across all indexes in the shard. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+<li>
+<p><code>search_errors_for_index_with_max_failures</code>: The number of indexing failures in the index with the highest count of failures. <sup><a href="#tnote-1">1</a></sup></p>
+</li>
+</ul>
+<ol>
+<li><a name="tnote-1"></a> Available in RediSearch 2.6.</li>
+<li><a name="tnote-2"></a> Available in RediSearch 2.8.</li>
+<li><a name="tnote-3"></a> Available in RediSearch 8.0.</li>
+</ol>
+<p>The <strong>keyspace</strong> section provides statistics on the main dictionary of each database.
+The statistics are the number of keys, and the number of keys with an expiration.</p>
+<p>For each database, the following line is added:</p>
+<ul>
+<li><code>dbXXX</code>: <code>keys=XXX,expires=XXX,avg_ttl=XXX,subexpiry=XXX</code></li>
+</ul>
+<p>The <strong>debug</strong> section contains experimental metrics, which might change or get removed in future versions.
+It won't be included when <code>INFO</code> or <code>INFO ALL</code> are called, and it is returned only when <code>INFO DEBUG</code> is used.</p>
+<ul>
+<li><code>eventloop_duration_aof_sum</code>: Total time spent on flushing AOF in eventloop in microseconds.</li>
+<li><code>eventloop_duration_cron_sum</code>: Total time consumption of cron in microseconds (including serverCron and beforeSleep, but excluding IO and AOF flushing).</li>
+<li><code>eventloop_duration_max</code>: The maximal time spent in a single eventloop cycle in microseconds.</li>
+<li><code>eventloop_cmd_per_cycle_max</code>: The maximal number of commands processed in a single eventloop cycle.</li>
+<li><code>allocator_allocated_lua</code>: Total bytes allocated from the allocator specifically for Lua, including internal-fragmentation.</li>
+<li><code>allocator_active_lua</code>: Total bytes in the allocator active pages specifically for Lua, including external-fragmentation.</li>
+<li><code>allocator_resident_lua</code>: Total bytes resident (RSS) in the allocator specifically for Lua. This includes pages that can be released to the OS (by <code>MEMORY PURGE</code>, or just waiting).</li>
+<li><code>allocator_frag_bytes_lua</code>: Delta between <code>allocator_active_lua</code> and <code>allocator_allocated_lua</code>.</li>
+</ul>
+<p><strong>A note about the word slave used in this man page</strong>: Starting with Redis 5, if not for backward compatibility, the Redis project no longer uses the word slave. Unfortunately in this command the word slave is part of the protocol, so we'll be able to remove such occurrences only when this API will be naturally deprecated.</p>
+<p><strong>Modules generated sections</strong>: Starting with Redis 6, modules can inject their information into the <code>INFO</code> command. These are excluded by default even when the <code>all</code> argument is provided (it will include a list of loaded modules but not their generated info fields). To get these you must use either the <code>modules</code> argument or <code>everything</code>.</p>
+<h2 id="redis-software-and-redis-cloud-compatibility">Redis Software and Redis Cloud compatibility</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Redis<br />Enterprise</th>
+          <th style="text-align: left">Redis<br />Cloud</th>
+          <th style="text-align: left"><span style="min-width: 9em; display: table-cell">Notes</span></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><span title="Supported">✅ Standard</span><br /><span title="Supported"><nobr>✅ Active-Active</nobr></span></td>
+          <td style="text-align: left"><span title="Supported">✅ Standard</span><br /><span title="Supported"><nobr>✅ Active-Active</nobr></span></td>
+          <td style="text-align: left">In Redis Enterprise, <code>INFO</code> returns a different set of fields than Redis Community Edition.<br />Not supported for <a href="/docs/latest/develop/interact/programmability/">scripts</a>.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Note: key memory usage is different on Redis Software or Redis Cloud active-active databases than on non-active-active databases. This is because memory usage includes some amount of CRDB overhead.</p>
+<p>Additionally, for JSON keys, Redis implements a “shared string” mechanism to save memory when the same JSON field names or field values of type string are used more than once (either inter-key or intra-key).
+In such cases, instead of storing the field names or values many times, Redis stores them only once. This mechanism is not in place for active-active databases.</p>
+<p>On non-active-active databases, <code>INFO</code> (Memory &gt; used_memory) reports that the shared memory is counted, but only once for all keys. On active-active databases, there is no shared memory, so if strings are repeated, they are stored multiple times.</p>
+<p><strong>Example</strong></p>
+<p>Suppose you have ten JSON keys, and each key has 5KB of unique content and 5KB of shared content.</p>
+<p>For non-active-active databases, <code>INFO</code> (used_memory) would report (10 keys * 5KB) + 5KB ~= 55KB. The last term, &quot;+ 5KB&quot;, is the size of the shared content.</p>
+<p>For active-active databases, <code>INFO</code> (used_memory) would report 10 keys * 20KB ~= 200KB. This number includes some amount of CRDB overhead per JSON key.</p>
+
+
+        
+        
+        
+          
+          
+          
+          
+            
+            
+            <h2 id="resp2resp3-reply">RESP2/RESP3 Reply</h2>
+
+          
+
+          
+          
+            
+              
+              
+              
+                
+              
+                
+              
+                
+              
+              
+              <p><a href="../../develop/reference/protocol-spec#bulk-strings">Bulk string reply</a>: a map of info fields, one field per line in the form of <code>&lt;field&gt;:&lt;value&gt;</code> where the value can be a comma separated map like <code>&lt;key&gt;=&lt;val&gt;</code>. Also contains section header lines starting with <code>#</code> and blank lines.</p>
+<p>Lines can contain a section name (starting with a <code>#</code> character) or a property. All the properties are in the form of <code>field:value</code> terminated by <code>\r\n</code>.</p>
+
+            
+          
+        
+        <br />
+
+        
+          <h2>History</h2>
+          <ul>
+            
+            <li>Starting with Redis version 7.0.0: Added support for taking multiple section arguments.</li>
+            
+          </ul>
+        
+
+        
+<form id="page-feedback" name="page-feedback" class="text-sm w-full mt-24 pt-5 border-t border-t-redis-pen-700 border-opacity-50">
+  <input name="origin" value="https://redis.io/docs/latest/commands/info/" class="hidden"/>
+  <div class="flex flex-row justify-between">
+    <div class="grid justify-center">
+      <span class="font-mono">RATE THIS PAGE</span>
+      <div class="star-rating">
+        
+        <input type="radio" id="5-stars" name="rating" value="5" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="5-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="4-stars" name="rating" value="4" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="4-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="3-stars" name="rating" value="3" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="3-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="2-stars" name="rating" value="2" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="2-stars" class="star">&#9733;</label>
+        
+        <input type="radio" id="1-stars" name="rating" value="1" onchange="document.querySelector('#feedback-form').classList.remove('hidden')"/>
+        <label for="1-stars" class="star">&#9733;</label>
+        
+      </div>
+    </div>  
+    <a href="#" class="font-mono no-underline">
+      Back to top ↑
+    </a>
+  </div>
+  <div id="feedback-form" class="hidden">
+    <div class="grid gap-2">
+      <textarea
+        name="comment"
+        placeholder="Why did you choose this rating?"
+        class=" p-2 mt-1 block w-full h-24 border border-opacity-50 border-redis-ink-900 rounded-md"
+        rows="3"
+      ></textarea>
+      <button class="font-mono button text-redis-ink-900 border border-solid border-transparent bg-redis-red-500 hover:bg-redis-red-600 focus:bg-red-600 focus:ring-red-600; w-min justify-self-end" type="submit">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+      </section>
+    </div>
+
+    
+
+  </main>
+
+
+    
+
+    
+    
+
+    
+
+<div class="sr-only w-screen h-screen fixed z-[200] top-0 left-0 cursor-auto flex flex-col bg-redis-ink-900/75 p-4 sm:p-6 md:p-[10vh] lg:p-[12vh]" id="search-container" role="button" aria-expanded="true" aria-haspopup="listbox" aria-labelledby="search-label" tabindex="0">
+<div class="my-0 mx-auto w-full max-w-[47.375rem] flex flex-col min-h-0 rounded-lg shadow-lg bg-white p-6 gap-4">
+  
+  <dl id="search-results" class="min-h-48 overflow-auto px-2" role="listbox"></dl>
+</div>
+</div>
+
+
+  </body>
+</html>

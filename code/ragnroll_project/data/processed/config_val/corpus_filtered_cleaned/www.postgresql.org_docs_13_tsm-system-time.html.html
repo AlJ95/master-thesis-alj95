@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 13: F.42. tsm_system_time</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/13/tsm-system-time.html" />
+  <meta property="og:type" content="article" />
+  <meta property="article:published_time" content="2025-02-20T14:13:26" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="F.42. tsm_system_time" />
+  <meta property="og:description" content="F.42.&amp;nbsp;tsm_system_time F.42.1. Examples The tsm_system_time module provides the table sampling method SYSTEM_TIME, which can be used in the TABLESAMPLE clause …" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          
+          
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">February 20, 2025: <a href="/about/news/postgresql-174-168-1512-1417-and-1320-released-3018/">
+  PostgreSQL 17.4, 16.8, 15.12, 14.17, and 13.20 Released!
+</a>
+
+</div>
+      </div>
+    </div>
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/13/index.html">PostgreSQL 13</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/tsm-system-time.html" title="PostgreSQL 17 - F.42. tsm_system_time" >Current</a>
+                          (<a href="/docs/17/tsm-system-time.html" title="PostgreSQL 17 - F.42. tsm_system_time" >17</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/tsm-system-time.html" title="PostgreSQL 16 - F.42. tsm_system_time" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/tsm-system-time.html" title="PostgreSQL 15 - F.42. tsm_system_time" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/tsm-system-time.html" title="PostgreSQL 14 - F.42. tsm_system_time" >14</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/13/tsm-system-time.html" title="PostgreSQL 13 - F.42. tsm_system_time" class="docs-version-selected">13</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/devel/tsm-system-time.html" title="PostgreSQL devel - F.42. tsm_system_time"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/12/tsm-system-time.html" title="PostgreSQL 12 - F.42. tsm_system_time"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/tsm-system-time.html" title="PostgreSQL 11 - F.42. tsm_system_time"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/tsm-system-time.html" title="PostgreSQL 10 - F.42. tsm_system_time"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/tsm-system-time.html" title="PostgreSQL 9.6 - F.42. tsm_system_time"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/tsm-system-time.html" title="PostgreSQL 9.5 - F.42. tsm_system_time"  rel="nofollow">9.5</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/13/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="docContent">
+            <div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navheader">
+  <table width="100%" summary="Navigation header">
+    <tr>
+      <th colspan="5" align="center">F.42.&nbsp;tsm_system_time</th>
+    </tr>
+    <tr>
+      <td width="10%" align="left"><a accesskey="p" href="tsm-system-rows.html" title="F.41.&nbsp;tsm_system_rows">Prev</a>&nbsp;</td>
+      <td width="10%" align="left"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <th width="60%" align="center">Appendix&nbsp;F.&nbsp;Additional Supplied Modules</th>
+      <td width="10%" align="right"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="10%" align="right">&nbsp;<a accesskey="n" href="unaccent.html" title="F.43.&nbsp;unaccent">Next</a></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<div class="sect1" id="TSM-SYSTEM-TIME">
+  <div class="titlepage">
+    <div>
+      <div>
+        <h2 class="title" style="clear: both">F.42.&nbsp;tsm_system_time</h2>
+      </div>
+    </div>
+  </div>
+  <div class="toc">
+    <dl class="toc">
+      <dt><span class="sect2"><a href="tsm-system-time.html#id-1.11.7.51.8">F.42.1. Examples</a></span></dt>
+    </dl>
+  </div><a id="id-1.11.7.51.2" class="indexterm" name="id-1.11.7.51.2"></a>
+  <p>The <code class="filename">tsm_system_time</code> module provides the table sampling method <code class="literal">SYSTEM_TIME</code>, which can be used in the <code class="literal">TABLESAMPLE</code> clause of a <a class="xref" href="sql-select.html" title="SELECT"><span class="refentrytitle">SELECT</span></a> command.</p>
+  <p>This table sampling method accepts a single floating-point argument that is the maximum number of milliseconds to spend reading the table. This gives you direct control over how long the query takes, at the price that the size of the sample becomes hard to predict. The resulting sample will contain as many rows as could be read in the specified time, unless the whole table has been read first.</p>
+  <p>Like the built-in <code class="literal">SYSTEM</code> sampling method, <code class="literal">SYSTEM_TIME</code> performs block-level sampling, so that the sample is not completely random but may be subject to clustering effects, especially if only a small number of rows are selected.</p>
+  <p><code class="literal">SYSTEM_TIME</code> does not support the <code class="literal">REPEATABLE</code> clause.</p>
+  <p>This module is considered <span class="quote">“<span class="quote">trusted</span>”</span>, that is, it can be installed by non-superusers who have <code class="literal">CREATE</code> privilege on the current database.</p>
+  <div class="sect2" id="id-1.11.7.51.8">
+    <div class="titlepage">
+      <div>
+        <div>
+          <h3 class="title">F.42.1.&nbsp;Examples</h3>
+        </div>
+      </div>
+    </div>
+    <p>Here is an example of selecting a sample of a table with <code class="literal">SYSTEM_TIME</code>. First install the extension:</p>
+    <pre class="programlisting">
+CREATE EXTENSION tsm_system_time;
+</pre>
+    <p>Then you can use it in a <code class="command">SELECT</code> command, for instance:</p>
+    <pre class="programlisting">
+SELECT * FROM my_table TABLESAMPLE SYSTEM_TIME(1000);
+</pre>
+    <p>This command will return as large a sample of <code class="structname">my_table</code> as it can read in 1 second (1000 milliseconds). Of course, if the whole table can be read in under 1 second, all its rows will be returned.</p>
+  </div>
+</div>
+<div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter">
+  <hr />
+  <table width="100%" summary="Navigation footer">
+    <tr>
+      <td width="40%" align="left"><a accesskey="p" href="tsm-system-rows.html" title="F.41.&nbsp;tsm_system_rows">Prev</a>&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="u" href="contrib.html" title="Appendix&nbsp;F.&nbsp;Additional Supplied Modules">Up</a></td>
+      <td width="40%" align="right">&nbsp;<a accesskey="n" href="unaccent.html" title="F.43.&nbsp;unaccent">Next</a></td>
+    </tr>
+    <tr>
+      <td width="40%" align="left" valign="top">F.41.&nbsp;tsm_system_rows&nbsp;</td>
+      <td width="20%" align="center"><a accesskey="h" href="index.html" title="PostgreSQL 13.20 Documentation">Home</a></td>
+      <td width="40%" align="right" valign="top">&nbsp;F.43.&nbsp;unaccent</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+            <div id="docComments">
+              <h2>Submit correction</h2>
+              <p>
+              If you see anything in the documentation that is not correct, does not match
+              your experience with the particular feature or requires further clarification,
+              please use
+              <a href="/account/comments/new/13/tsm-system-time.html/" rel="nofollow">this form</a>
+              to report a documentation issue.
+              </p>
+            </div>
+          
+        </div> 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+  </body>
+</html>

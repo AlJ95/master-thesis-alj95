@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.worker.block.meta (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.worker.block.meta</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/AbstractBlockMeta.html" title="class in alluxio.worker.block.meta">AbstractBlockMeta</a></td>
+<td class="colLast">
+<div class="block">A base class of the metadata of blocks in Alluxio managed storage.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/BlockMeta.html" title="class in alluxio.worker.block.meta">BlockMeta</a></td>
+<td class="colLast">
+<div class="block">Represents the metadata of a block in Alluxio managed storage.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageDir.html" title="class in alluxio.worker.block.meta">StorageDir</a></td>
+<td class="colLast">
+<div class="block">Represents a directory in a storage tier.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageDirAllocatorView.html" title="class in alluxio.worker.block.meta">StorageDirAllocatorView</a></td>
+<td class="colLast">
+<div class="block">This class is a wrapper of <a href="../../../../alluxio/worker/block/meta/StorageDir.html" title="class in alluxio.worker.block.meta"><code>StorageDir</code></a> to provide more limited access for allocators.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageDirEvictorView.html" title="class in alluxio.worker.block.meta">StorageDirEvictorView</a></td>
+<td class="colLast">
+<div class="block">This class is a wrapper of <a href="../../../../alluxio/worker/block/meta/StorageDir.html" title="class in alluxio.worker.block.meta"><code>StorageDir</code></a> to provide more limited access for evictors.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageDirView.html" title="class in alluxio.worker.block.meta">StorageDirView</a></td>
+<td class="colLast">
+<div class="block">This class is a wrapper of <a href="../../../../alluxio/worker/block/meta/StorageDir.html" title="class in alluxio.worker.block.meta"><code>StorageDir</code></a> to provide more limited access.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageTier.html" title="class in alluxio.worker.block.meta">StorageTier</a></td>
+<td class="colLast">
+<div class="block">Represents a tier of storage, for example memory or SSD.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageTierAllocatorView.html" title="class in alluxio.worker.block.meta">StorageTierAllocatorView</a></td>
+<td class="colLast">
+<div class="block">This class is a wrapper of <a href="../../../../alluxio/worker/block/meta/StorageTier.html" title="class in alluxio.worker.block.meta"><code>StorageTier</code></a> to provide more limited access for allocators.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageTierEvictorView.html" title="class in alluxio.worker.block.meta">StorageTierEvictorView</a></td>
+<td class="colLast">
+<div class="block">This class is a wrapper of <a href="../../../../alluxio/worker/block/meta/StorageTier.html" title="class in alluxio.worker.block.meta"><code>StorageTier</code></a> to provide more limited access for evictors.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/StorageTierView.html" title="class in alluxio.worker.block.meta">StorageTierView</a></td>
+<td class="colLast">
+<div class="block">This class is an abstract class for allocators and evictors to extend to provide
+ limited access to <a href="../../../../alluxio/worker/block/meta/StorageTier.html" title="class in alluxio.worker.block.meta"><code>StorageTier</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/TempBlockMeta.html" title="class in alluxio.worker.block.meta">TempBlockMeta</a></td>
+<td class="colLast">
+<div class="block">Represents the metadata of an uncommitted block in Alluxio managed storage.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../alluxio/worker/block/meta/UnderFileSystemBlockMeta.html" title="class in alluxio.worker.block.meta">UnderFileSystemBlockMeta</a></td>
+<td class="colLast">
+<div class="block">This class represents the metadata of a block that is in UFS.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

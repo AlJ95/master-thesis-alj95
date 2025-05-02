@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.concurrent.jsr (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.concurrent.jsr</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/CompletableFuture.AsynchronousCompletionTask.html" title="interface in alluxio.concurrent.jsr">CompletableFuture.AsynchronousCompletionTask</a></td>
+<td class="colLast">
+<div class="block">A marker interface identifying asynchronous tasks produced by <code>async</code> methods.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/CompletionStage.html" title="interface in alluxio.concurrent.jsr">CompletionStage</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A stage of a possibly asynchronous computation, that performs an action or computes a value when
+ another CompletionStage completes.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/ForkJoinPool.ForkJoinWorkerThreadFactory.html" title="interface in alluxio.concurrent.jsr">ForkJoinPool.ForkJoinWorkerThreadFactory</a></td>
+<td class="colLast">
+<div class="block">Factory for creating new <a href="../../../alluxio/concurrent/jsr/ForkJoinWorkerThread.html" title="class in alluxio.concurrent.jsr"><code>ForkJoinWorkerThread</code></a>s.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/ForkJoinPool.ManagedBlocker.html" title="interface in alluxio.concurrent.jsr">ForkJoinPool.ManagedBlocker</a></td>
+<td class="colLast">
+<div class="block">Interface for extending managed parallelism for tasks running in <a href="../../../alluxio/concurrent/jsr/ForkJoinPool.html" title="class in alluxio.concurrent.jsr"><code>ForkJoinPool</code></a>s.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/CompletableFuture.html" title="class in alluxio.concurrent.jsr">CompletableFuture</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A <a href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Future.html?is-external=true" title="class or interface in java.util.concurrent"><code>Future</code></a> that may be explicitly completed (setting its value and status), and may be used
+ as a <a href="../../../alluxio/concurrent/jsr/CompletionStage.html" title="interface in alluxio.concurrent.jsr"><code>CompletionStage</code></a>, supporting dependent functions and actions that trigger upon its
+ completion.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/CountedCompleter.html" title="class in alluxio.concurrent.jsr">CountedCompleter</a>&lt;T&gt;</td>
+<td class="colLast">
+<div class="block">A <a href="../../../alluxio/concurrent/jsr/ForkJoinTask.html" title="class in alluxio.concurrent.jsr"><code>ForkJoinTask</code></a> with a completion action performed when triggered and there are no
+ remaining pending actions.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/ForkJoinPool.html" title="class in alluxio.concurrent.jsr">ForkJoinPool</a></td>
+<td class="colLast">
+<div class="block">An <a href="http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent"><code>ExecutorService</code></a> for running <a href="../../../alluxio/concurrent/jsr/ForkJoinTask.html" title="class in alluxio.concurrent.jsr"><code>ForkJoinTask</code></a>s.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/ForkJoinPool.AlluxioForkJoinWorkerThreadFactory.html" title="class in alluxio.concurrent.jsr">ForkJoinPool.AlluxioForkJoinWorkerThreadFactory</a></td>
+<td class="colLast">
+<div class="block">Default ForkJoinWorkerThreadFactory implementation; creates a new ForkJoinWorkerThread using
+ the system class loader as the thread context class loader.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/ForkJoinTask.html" title="class in alluxio.concurrent.jsr">ForkJoinTask</a>&lt;V&gt;</td>
+<td class="colLast">
+<div class="block">Abstract base class for tasks that run within a <a href="../../../alluxio/concurrent/jsr/ForkJoinPool.html" title="class in alluxio.concurrent.jsr"><code>ForkJoinPool</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/concurrent/jsr/ForkJoinWorkerThread.html" title="class in alluxio.concurrent.jsr">ForkJoinWorkerThread</a></td>
+<td class="colLast">
+<div class="block">A thread managed by a <a href="../../../alluxio/concurrent/jsr/ForkJoinPool.html" title="class in alluxio.concurrent.jsr"><code>ForkJoinPool</code></a>, which executes <a href="../../../alluxio/concurrent/jsr/ForkJoinTask.html" title="class in alluxio.concurrent.jsr"><code>ForkJoinTask</code></a>s.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>

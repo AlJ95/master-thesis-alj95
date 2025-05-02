@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>alluxio.client.file (Alluxio Parent 2.5.1-SNAPSHOT API)</title>
+<meta name="date" content="2023-05-01">
+
+
+</head>
+<body>
+
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+
+
+<a name="navbar.top.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.top">
+
+</a></div>
+
+<div class="header">
+<h1 title="Package" class="title">Package&nbsp;alluxio.client.file</h1>
+</div>
+<div class="contentContainer">
+<ul class="blockList">
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file">FileSystem</a></td>
+<td class="colLast">
+<div class="block">Basic file system interface supporting metadata operations and data operations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemMasterClient.html" title="interface in alluxio.client.file">FileSystemMasterClient</a></td>
+<td class="colLast">
+<div class="block">A client to use for interacting with a file system master.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/AlluxioFileInStream.html" title="class in alluxio.client.file">AlluxioFileInStream</a></td>
+<td class="colLast">
+<div class="block">An implementation of <a href="../../../alluxio/client/file/FileInStream.html" title="class in alluxio.client.file"><code>FileInStream</code></a> for data stored in Alluxio.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/AlluxioFileOutStream.html" title="class in alluxio.client.file">AlluxioFileOutStream</a></td>
+<td class="colLast">
+<div class="block">Provides a streaming API to write a file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/BaseFileSystem.html" title="class in alluxio.client.file">BaseFileSystem</a></td>
+<td class="colLast">
+<div class="block">Default implementation of the <a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a> interface.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/ConfigHashSync.html" title="class in alluxio.client.file">ConfigHashSync</a></td>
+<td class="colLast">
+<div class="block">Heartbeat task for getting the latest configuration versions from meta master, if versions
+ change, then re-initialize the filesystem context.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/DelegatingFileSystem.html" title="class in alluxio.client.file">DelegatingFileSystem</a></td>
+<td class="colLast">
+<div class="block">A wrapper of a FileSystem instance.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileInStream.html" title="class in alluxio.client.file">FileInStream</a></td>
+<td class="colLast">
+<div class="block">A streaming API to read a file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileOutStream.html" title="class in alluxio.client.file">FileOutStream</a></td>
+<td class="colLast">
+<div class="block">An abstraction of the output stream API in Alluxio to write data to a file or a block.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystem.Factory.html" title="class in alluxio.client.file">FileSystem.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemCache.html" title="class in alluxio.client.file">FileSystemCache</a></td>
+<td class="colLast">
+<div class="block">A cache for storing <a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a> clients.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemCache.Key.html" title="class in alluxio.client.file">FileSystemCache.Key</a></td>
+<td class="colLast">
+<div class="block">A key which can be used to look up a <a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a> instance in the
+ <a href="../../../alluxio/client/file/FileSystemCache.html" title="class in alluxio.client.file"><code>FileSystemCache</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemCache.Value.html" title="class in alluxio.client.file">FileSystemCache.Value</a></td>
+<td class="colLast">
+<div class="block">A value wraps a <a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a> instance and a ref count in the <a href="../../../alluxio/client/file/FileSystemCache.html" title="class in alluxio.client.file"><code>FileSystemCache</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemContext.html" title="class in alluxio.client.file">FileSystemContext</a></td>
+<td class="colLast">
+<div class="block">An object which houses resources and information for performing <a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a> operations.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemContextReinitializer.html" title="class in alluxio.client.file">FileSystemContextReinitializer</a></td>
+<td class="colLast">
+<div class="block">Reinitializes <a href="../../../alluxio/client/file/FileSystemContext.html" title="class in alluxio.client.file"><code>FileSystemContext</code></a> inside <a href="../../../alluxio/client/file/BaseFileSystem.html" title="class in alluxio.client.file"><code>BaseFileSystem</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemContextReinitializer.ReinitAllowerResource.html" title="class in alluxio.client.file">FileSystemContextReinitializer.ReinitAllowerResource</a></td>
+<td class="colLast">
+<div class="block">This resource allows reinitialization.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemContextReinitializer.ReinitBlockerResource.html" title="class in alluxio.client.file">FileSystemContextReinitializer.ReinitBlockerResource</a></td>
+<td class="colLast">
+<div class="block">This resource blocks reinitialization until close.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemMasterClient.Factory.html" title="class in alluxio.client.file">FileSystemMasterClient.Factory</a></td>
+<td class="colLast">
+<div class="block">Factory for <a href="../../../alluxio/client/file/FileSystemMasterClient.html" title="interface in alluxio.client.file"><code>FileSystemMasterClient</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemMasterClientPool.html" title="class in alluxio.client.file">FileSystemMasterClientPool</a></td>
+<td class="colLast">
+<div class="block">A fixed pool of FileSystemMasterClient instances.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/FileSystemUtils.html" title="class in alluxio.client.file">FileSystemUtils</a></td>
+<td class="colLast">
+<div class="block">Collection of utility methods to handle with <a href="../../../alluxio/client/file/FileSystem.html" title="interface in alluxio.client.file"><code>FileSystem</code></a> related objects.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/MetadataCache.html" title="class in alluxio.client.file">MetadataCache</a></td>
+<td class="colLast">
+<div class="block">Cache for metadata of paths.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/MetadataCachingBaseFileSystem.html" title="class in alluxio.client.file">MetadataCachingBaseFileSystem</a></td>
+<td class="colLast">
+<div class="block">FileSystem implementation with the capability of caching metadata of paths.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/RetryHandlingFileSystemMasterClient.html" title="class in alluxio.client.file">RetryHandlingFileSystemMasterClient</a></td>
+<td class="colLast">
+<div class="block">A wrapper for the gRPC client to interact with the file system master, used by alluxio clients.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../alluxio/client/file/URIStatus.html" title="class in alluxio.client.file">URIStatus</a></td>
+<td class="colLast">
+<div class="block">Wrapper around <a href="../../../alluxio/wire/FileInfo.html" title="class in alluxio.wire"><code>FileInfo</code></a>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+
+
+<a name="navbar.bottom.firstrow">
+
+</a>
+<ul class="navList" title="Navigation">
+
+<li class="navBarCell1Rev">Package</li>
+<li>Class</li>
+
+
+
+
+
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+
+
+</ul>
+<ul class="navList">
+
+
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+
+</ul>
+<div>
+
+</div>
+<a name="skip.navbar.bottom">
+
+</a></div>
+
+<p class="legalCopy"><small>Copyright &#169; 2023. All Rights Reserved.</small></p>
+</body>
+</html>
