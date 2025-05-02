@@ -13,6 +13,7 @@ code/ragnroll_project/data/se_vulnerability
 resources/*
 code/ragnroll_project/chroma-data/
 code/ragnroll_project/qdrant_data/
+code/ragnroll_project/raw/clean_html/*
 
 
 # DS_Store
