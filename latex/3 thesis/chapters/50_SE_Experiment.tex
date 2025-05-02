@@ -142,17 +142,8 @@ Next, we defined configurations for common retrieval techniques. A basic BM25 re
     \label{fig:conf-phase-0-retrievers}
 \end{figure}
 
+After this phase we tried to improve the ressource quality of the data. The scraped documentation html files had many elements, that did not provide any information about the configuration parameters such as scripts, images, svg, etc. We removed all of these elements and only kept the relevant ones containing text or metadata. The clean up statistics can be seen in table \ref{tab:cleanup_stats}. However, the retrieval quality for sparse retrievers did decrease after all from \textit{0.6929} to \textit{0.5668}. 
 
-\textcolor{blue}{Weil Auch verschiedene Retrieval Strategien nicht funktioniert haben, wurde ein andere Embedder versucht. Dieser war sehr langsam und musste mehrere Tage die Embeddings machen.}
-
-\textcolor{red}{Hier muss kommen, dass ich verschiedene Chunking Parameter versucht habe, aber auch diese keinen nennensewerten Impact hatten.}
-\textcolor{blue}{Weil auch die Chunking Strategien nicht viel am Retrieval verbessern konnten, habe ich versucht, die Daten an sich zu verbessern.}
-
-
-\textcolor{blue}{Da auch dies nicht funktioneirte, war die Idee die Daten zu verbessern, da derzeit nicht klar war, ob der Retriever das Bottleneck war, oder die Daten zu unsauber waren, gefunden zu werden.}
-
-
-\textcolor{red}{Precision: From all valid classified configs, how many were actually valid\\Recall: From all actual valid configurations, how many did we classify correctly.}
 \begin{table}[h]
     \centering
     \begin{tabular}{|l|r|r|r|r|}
@@ -175,6 +166,20 @@ Next, we defined configurations for common retrieval techniques. A basic BM25 re
     \caption{HTML Documentation Cleanup Statistics}
     \label{tab:cleanup_stats}
 \end{table}
+
+For the dense retriever, we tried next to the improved data quality a different embedding model. We used the \textit{infly/inf-retriever-v1-1.5b}\cite{infly-ai_2025} model. ...
+
+
+\textcolor{blue}{Weil Auch verschiedene Retrieval Strategien nicht funktioniert haben, wurde ein andere Embedder versucht. Dieser war sehr langsam und musste mehrere Tage die Embeddings machen.}
+
+\textcolor{red}{Hier muss kommen, dass ich verschiedene Chunking Parameter versucht habe, aber auch diese keinen nennensewerten Impact hatten.}
+\textcolor{blue}{Weil auch die Chunking Strategien nicht viel am Retrieval verbessern konnten, habe ich versucht, die Daten an sich zu verbessern.}
+
+
+\textcolor{blue}{Da auch dies nicht funktioneirte, war die Idee die Daten zu verbessern, da derzeit nicht klar war, ob der Retriever das Bottleneck war, oder die Daten zu unsauber waren, gefunden zu werden.}
+
+
+\textcolor{red}{Precision: From all valid classified configs, how many were actually valid\\Recall: From all actual valid configurations, how many did we classify correctly.}
 
 \textcolor{red}{Hier müssen die Ergebnisse hin, zwischen alten und neuen Daten}
 
