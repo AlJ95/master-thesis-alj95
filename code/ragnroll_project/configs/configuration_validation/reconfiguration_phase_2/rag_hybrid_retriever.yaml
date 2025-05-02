@@ -123,5 +123,8 @@ metadata:
     chunk_overlap: 150
     chunk_separator: "\n\n"
   hypothesis: "Hybrid RAGs have a higher retrieval quality than sparse or dense RAGs."
+  hypothesis2: "Data Cleaning is more important then Architecture Design."
+  ciri_eval_dataset: True
   reasoning: false
   retrieval_type: hybrid
+  reconfiguration_phase: 2

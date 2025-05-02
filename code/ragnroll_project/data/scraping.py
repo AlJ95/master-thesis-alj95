@@ -33,15 +33,15 @@ MAX_REQUESTS_PER_SECOND = 5
 REQUEST_INTERVAL = 1.0 / MAX_REQUESTS_PER_SECOND
 
 base_urls = {
-    "alluxio": "https://docs.alluxio.io/os/javadoc/2.5/",
-    "django": "https://docs.djangoproject.com/en/4.0/",
-    "etcd": "https://etcd.io/docs/v3.5/",
-    "hbase": "https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/",
-    "hdfs": "https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/",
-    "postgresql": "https://www.postgresql.org/docs/13/index.html",
-    "redis": "https://redis.io/docs/latest/commands/",
-    "yarn": "https://hadoop.apache.org/docs/r3.3.0/",
-    "zookeeper": "https://zookeeper.apache.org/doc/r3.7.0/apidocs/zookeeper-server/"
+    # "alluxio": "https://docs.alluxio.io/os/javadoc/2.5/",
+    # "django": "https://docs.djangoproject.com/en/4.0/",
+    # "etcd": "https://etcd.io/docs/v3.5/",
+    # "hbase": "https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/",
+    # "hdfs": "https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/",
+    "postgresql": "https://www.postgresql.org/docs/13/",
+    # "redis": "https://redis.io/docs/latest/commands/",
+    # "yarn": "https://hadoop.apache.org/docs/r3.3.0/",
+    # "zookeeper-server": "https://zookeeper.apache.org/doc/r3.7.0/apidocs/zookeeper-server/",
 }
 
 
@@ -135,12 +135,9 @@ async def scrape_url_async(url, base_url, visited_urls, system_urls, session, sy
                         # Clean the URL by removing hash fragments
                         href = clean_url(href)
                         
-                        # Skip if already visited or not related to base_url
-                        parsed_base = urlparse(base_url)
-                        parsed_href = urlparse(href)
-                        
+                        # Only consider URLs that start with the base_url
                         if (href not in visited_urls and 
-                            parsed_href.netloc == parsed_base.netloc and
+                            href.startswith(base_url) and
                             href not in system_urls):
                             new_urls.append(href)
                             system_urls.append(href)
