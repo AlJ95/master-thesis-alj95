@@ -2,8 +2,11 @@ import os
 import logging
 from typing import List, Dict, Any, Optional, Union, Tuple
 import openai
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
+
+load_dotenv()
 
 class LLMAsAJudge:
     """
@@ -16,7 +19,7 @@ class LLMAsAJudge:
     DEFAULT_API_PARAMS = {
         "google/gemini-2.0-flash-001": {
             "api_key": os.environ.get("OPENROUTER_API_KEY"),
-            "api_url": "https://api.openrouter.ai/v1"
+            "api_url": "https://openrouter.ai/api/v1"
         },
         "gpt-4o-mini": {
             "api_key": os.environ.get("OPENAI_API_KEY"),
@@ -24,7 +27,7 @@ class LLMAsAJudge:
         },
         "meta-llama/llama-3.3-70b-instruct": {
             "api_key": os.environ.get("OPENROUTER_API_KEY"),
-            "api_url": "https://api.openrouter.ai/v1"
+            "api_url": "https://openrouter.ai/api/v1"
         }
     }
     
@@ -60,7 +63,7 @@ class LLMAsAJudge:
         # Set API key from input or environment variables
         self.api_key = self.DEFAULT_API_PARAMS[self.model]["api_key"]
         self.api_url = self.DEFAULT_API_PARAMS[self.model]["api_url"]
-        
+        print(self.api_key, self.api_url)
         
         # Initialize OpenAI client
         self.client = openai.OpenAI(

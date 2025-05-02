@@ -111,7 +111,6 @@ def convert_local_files(corpus_dir: Path) -> List[Document]:
     
     # Find all files with supported extensions
     for file_path in corpus_dir.glob("**/*"):
-        print(f"Processing file: {file_path}")
         if file_path.is_file() and file_path.suffix.lower() in supported_extensions:
             try:
                 # Skip the urls.csv file as it's handled separately
@@ -240,7 +239,7 @@ def get_all_documents(corpus_dir: Union[str, Path],
     print(f"Total documents processed: {len(processed_documents)}")
     return processed_documents
 
-def save_documents_to_csv(documents: List[Document], output_path: Path) -> None:
+def save_documents_to_csv(documents: List[Document], output_path: Path, batch_size: int = 1000) -> None:
     """Save a list of Document objects to a CSV file.
     
     Args:
@@ -255,29 +254,33 @@ def save_documents_to_csv(documents: List[Document], output_path: Path) -> None:
         return
     
     try:
-        with open(output_path, "w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
+        # Split documents into batches
+        for i in range(0, len(documents), batch_size):
+            batch = documents[i:i + batch_size]
+            batch_path = output_path.with_suffix(f'.{i//batch_size}.json')
             
-            # Write header
-            writer.writerow(["id", "content", "source", "source_type", "metadata"])
-            
-            # Write documents
-            for doc in documents:
+            # Convert documents to JSON-serializable format
+            docs_json = []
+            for doc in batch:
                 metadata = {k: v for k, v in doc.meta.items() if k not in ["source", "source_type"]} if doc.meta else {}
                 source = doc.meta.get("source", "") if doc.meta else ""
                 source_type = doc.meta.get("source_type", "") if doc.meta else ""
                 
-                writer.writerow([
-                    doc.id,
-                    doc.content,
-                    source,
-                    source_type,
-                    str(metadata)
-                ])
-                
-        logger.info(f"Successfully saved {len(documents)} documents to {output_path}")
+                docs_json.append({
+                    "id": doc.id,
+                    "content": doc.content,
+                    "source": source,
+                    "source_type": source_type,
+                    "metadata": metadata
+                })
+
+            # Write batch to JSON file
+            with open(batch_path, "w", encoding="utf-8") as f:
+                json.dump(docs_json, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"Successfully saved {len(documents)} documents in batches to {output_path}.*")
     except Exception as e:
-        logger.error(f"Error saving documents to CSV: {e}") 
+        logger.error(f"Error saving documents to JSON: {e}")
 
 def load_documents_from_csv(csv_path: Path) -> List[Document]:
     """Load a list of Document objects from a CSV file.

@@ -169,7 +169,7 @@ class Evaluator:
         Gather resource metrics from the resource tracker.
         """
         metrics_summary = resource_tracker.get_metrics_summary()
-                
+
         # Flatten the nested dictionaries
         flat_metrics = {}
         
@@ -196,19 +196,24 @@ class Evaluator:
         # Memory metrics
         if "memory" in metrics_summary and isinstance(metrics_summary["memory"], dict):
             memory = metrics_summary["memory"]
-            if "process" in memory and isinstance(memory["process"], dict):
-                process = memory["process"]
-                flat_metrics["memory_process_mean_mb"] = float(process.get("mean", 0))
-                flat_metrics["memory_process_max_mb"] = float(process.get("max", 0))
-                flat_metrics["memory_process_min_mb"] = float(process.get("min", 0))
+            if "process_mb" in memory and isinstance(memory["process_mb"], dict):
+                process_mb = memory["process_mb"]
+                flat_metrics["memory_process_mean_mb"] = float(process_mb.get("mean", 0))
+                flat_metrics["memory_process_max_mb"] = float(process_mb.get("max", 0))
+                flat_metrics["memory_process_min_mb"] = float(process_mb.get("min", 0))
             
-            if "system" in memory and isinstance(memory["system"], dict):
-                system = memory["system"]
-                if "used" in system and isinstance(system["used"], dict):
-                    used = system["used"]
-                    flat_metrics["memory_system_used_mean_mb"] = float(used.get("mean", 0))
-                    flat_metrics["memory_system_used_max_mb"] = float(used.get("max", 0))
-                    flat_metrics["memory_system_used_min_mb"] = float(used.get("min", 0))
+            if "system_used_gb" in memory and isinstance(memory["system_used_gb"], dict):
+                system_used = memory["system_used_gb"]
+                # Convert GB to MB (1GB = 1024MB)
+                flat_metrics["memory_system_used_mean_mb"] = float(system_used.get("mean", 0)) * 1024
+                flat_metrics["memory_system_used_max_mb"] = float(system_used.get("max", 0)) * 1024
+                flat_metrics["memory_system_used_min_mb"] = float(system_used.get("min", 0)) * 1024
+                
+            if "system_percent" in memory and isinstance(memory["system_percent"], dict):
+                system_percent = memory["system_percent"]
+                flat_metrics["memory_system_percent_mean"] = float(system_percent.get("mean", 0))
+                flat_metrics["memory_system_percent_max"] = float(system_percent.get("max", 0))
+                flat_metrics["memory_system_percent_min"] = float(system_percent.get("min", 0))
         
         # Add system metrics to the scores DataFrame
         system_metrics = pd.DataFrame(flat_metrics, index=[0])

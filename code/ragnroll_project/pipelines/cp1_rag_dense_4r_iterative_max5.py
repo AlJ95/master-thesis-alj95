@@ -54,13 +54,15 @@ class IterativeEmbedding:
         if len(documentations) > 5:
             documentations = documentations[:5]
             warnings.warn(f"Found {len(documentations)} branches. Only the first 5 are used.")
+        elif len(documentations) < 5:
+            documentations.extend([""] * (5 - len(documentations)))
         else:
             print(f"Found {len(documentations)} branches.")
         return {"queries": documentations}
 
 
 # Rewriter
-pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuraiton. Rewrite this as sort of documentation page for each of this configuration. Create at maximum 5 documentations. Focus on the configuration items that can lead easily to errors / misconfigurations.
+pipeline.add_component("rewriter_prompt", PromptBuilder(template="""The following query consists of a configuration. Rewrite this as sort of documentation page for each of this configuration. Create exactly 5 documentations. Focus on the configuration items that can lead easily to errors / misconfigurations.
 Example (docker):
 Query:
 ```
