@@ -1,16 +1,16 @@
 components:
   answer_builder:
     init_parameters: {}
-    type: pipelines.ciri.AnswerBuilder
+    type: pipelines.components.ciri.CiriAnswerBuilder
   answer_extractor1:
     init_parameters: {}
-    type: pipelines.ciri.AnswerExtractor
+    type: pipelines.components.ciri.CiriAnswerExtractor
   answer_extractor2:
     init_parameters: {}
-    type: pipelines.ciri.AnswerExtractor
+    type: pipelines.components.ciri.CiriAnswerExtractor
   answer_extractor3:
     init_parameters: {}
-    type: pipelines.ciri.AnswerExtractor
+    type: pipelines.components.ciri.CiriAnswerExtractor
   list_joiner:
     init_parameters:
       list_type_: typing.List[bool]

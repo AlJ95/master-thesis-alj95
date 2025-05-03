@@ -63,7 +63,6 @@ class LLMAsAJudge:
         # Set API key from input or environment variables
         self.api_key = self.DEFAULT_API_PARAMS[self.model]["api_key"]
         self.api_url = self.DEFAULT_API_PARAMS[self.model]["api_url"]
-        print(self.api_key, self.api_url)
         
         # Initialize OpenAI client
         self.client = openai.OpenAI(

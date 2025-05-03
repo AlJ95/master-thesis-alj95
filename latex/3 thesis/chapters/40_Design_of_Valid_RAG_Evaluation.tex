@@ -115,7 +115,7 @@ Even when the final prediction is simply \textit{True} or \textit{False}, the un
   \label{fig:answerreason}
 \end{figure}
 
-This has several positive side affects. First, we can measure the reasoning to assess context utilization or answer relevancy, which are important to debug the system. If the context of retrieval is not utilized enough, then we won't figure that out by analyzing binary classes. Second, we enable reasearchers to the current test-time compute paradigm shift for large language models or \textit{large reasoning models}. In practice, they use \textit{<think>...</think>} and use different search algorithms for the best reasoning path before these model answer the query. This leads to significantly better results.\cite{Xu.16.01.2025}
+This has several positive side effects. First, we can measure the reasoning to assess context utilization or answer relevance, which are important for debugging the system. If the context of retrieval is not utilized enough, then we won't figure that out by analyzing binary classes. Second, we enable researchers to leverage the current test-time compute paradigm shift for large language models or \textit{large reasoning models}. In practice, they use \textit{<think>...</think>} and different search algorithms to find the best reasoning path before these models answer the query. This leads to significantly better results.\cite{Xu.16.01.2025}
 
 
 \subsection{Component Block Evaluation}
@@ -198,9 +198,9 @@ components:
 \end{minted}
 
 
-Vector databases can make differences in functionalities and performance, especially while ingestion. In this framework, we support three different vector databases for experimentation:
+Vector databases can differ in functionalities and performance, especially during ingestion. In this framework, we support three different vector databases for experimentation:
 \begin{itemize}
-  \item In-Memory builtin vector database by Haystack
+  \item In-Memory built-in vector database by Haystack
   \item Chroma vector database\cite{Chroma}
   \item Qdrant vector database\cite{qdrant}
 \end{itemize}
@@ -275,13 +275,13 @@ The framework loads the necessary pipeline components and data, and begins by ev
 \label{fig:langfuse}
 \end{figure}
 
-The framework's CLI, built using Typer, provides commands to streamline the evaluation workflow. The two primary commands are: \texttt{run-evaluations}, which executes the main evaluation loop on the validation set (running baselines and specified YAML configurations); and \texttt{test-generalization}, which runs specified configurations against the held-out test set to assess generalization. Both commands log results and parameters to MLflow and traces to Langfuse. This integration supports efficient, reproducible, and transparent RAG development. The framework is on Github publicly availlable \cite{albrecht-2025}.
+The framework's CLI, built using Typer, provides commands to streamline the evaluation workflow. The two primary commands are: \texttt{run-evaluations}, which executes the main evaluation loop on the validation set (running baselines and specified YAML configurations); and \texttt{test-generalization}, which runs specified configurations against the held-out test set to assess generalization. Both commands log results and parameters to MLflow and traces to Langfuse. This integration supports efficient, reproducible, and transparent RAG development. The framework is publicly available on GitHub \cite{albrecht-2025}.
 
 \section{Limitations}
 
 The current implementation of this framework primarily focuses on evaluating RAG systems for classification tasks, with built-in support for relevant metrics. However, its design allows for expansion via custom metric implementations, enabling users, in principle, to adapt it for evaluating generative tasks by defining appropriate metric classes.
 
-We implemented the framework as modular as possible so that every possible architecture with all customized components can be evaluated. We can not guarantee that every architecture is possible and supporting agentic workflows might need further work.
+We implemented the framework to be as modular as possible so that every possible architecture with all customized components can be evaluated. We cannot guarantee that every architecture is possible, and supporting agentic workflows might need further work.
 
 
 

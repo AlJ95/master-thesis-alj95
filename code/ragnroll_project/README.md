@@ -80,6 +80,7 @@ You can create Haystack RAG pipelines in three different ways:
   - **Retrievers**: Must have the type `*.retrievers.*`
   
 If you use custom generators or retrievers, you must inherit from the `Generator` or `Retriever` classes respectively.
+Custom components must be declared in pipelines/components/__init__.py
 
 ### Configuring Document Chunking
 
