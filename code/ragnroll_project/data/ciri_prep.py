@@ -4,6 +4,16 @@
 # args.validconfig_shot_num = 1
 # args.misconfig_shot_num = 3
 # args.input_file_content = <file_content>
+prompt_reasoning = """Question: Are there any mistakes in the above configuration file for {system} version {version}? 
+Before you answer the question, please reason about the configuration file. Go through all critical parameters and check if they are set correctly. After the reasoning, respond in a json with the following format:
+{{
+    "hasError": boolean, // true if there are errors, false if there are none.
+    "errParameter": [], // List containing properties with errors. If there are no errors, leave this as an empty array.
+    "reason": [] // List containing explanations for each error. If there are no errors, leave this as an empty array.
+}}
+
+Answer:
+```json"""
 
 prompt = """Question: Are there any mistakes in the above configuration file for {system} version {version}? Respond in a json format similar to the following:
 {{
@@ -38,9 +48,9 @@ sys.path.append(str(Path(__file__).parent.parent.parent.parent / "ciri"))
 from ciri.pre_processing.shot.shot_selection import ShotSelection
 
 data_paths = [
-    "data/processed/config_val_ciri/evaluation_data.json",
-    "data/processed/config_val_ciri/val/evaluation_data.json",
-    "data/processed/config_val_ciri/test/evaluation_data.json"
+    "data/processed/config_val_ciri_reasoning/evaluation_data.json",
+    "data/processed/config_val_ciri_reasoning/val/evaluation_data.json",
+    "data/processed/config_val_ciri_reasoning/test/evaluation_data.json"
 ]
 
 for data_path in data_paths:
@@ -66,7 +76,7 @@ for data_path in data_paths:
         )
             
         shot_selection = shot_selection.select()
-        test_case["input"] = shot_selection + "\n" + test_case["input"] + "\n" + prompt.format(system=args.system, version=versions[args.system])
+        test_case["input"] = shot_selection + "\n" + test_case["input"] + "\n" + prompt_reasoning.format(system=args.system, version=versions[args.system])
 
         new_eval_data["test_cases"].append(test_case)
 
