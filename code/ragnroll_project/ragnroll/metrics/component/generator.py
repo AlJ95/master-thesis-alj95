@@ -100,15 +100,16 @@ class FormatValidatorMetric(BaseMetric):
         # Extract actual outputs from component outputs
         actual_outputs = []
         for output in component_outputs:
-            if "replies" in output:
+            if "answers" in output:
+                # Handle AnswerBuilder component output
+                actual_outputs.append(output["answers"][0])
+            elif "replies" in output:
                 # Handle LLM component output
                 actual_outputs.append(output["replies"][0])
-            elif "answer" in output:
-                # Handle AnswerBuilder component output
-                actual_outputs.append(output["answer"])
             else:
                 raise ValueError(f"Unknown generator output format: {output}")
         
+        logger.info(f"Number of actual outputs: {len(actual_outputs)}")
         # Validate format of each output
         format_valid = []
         detailed_results = []
