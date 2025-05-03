@@ -290,6 +290,9 @@ class Evaluator:
                 results_df = pd.concat([results_df, resource_metrics], axis=1)
 
             return results_df
+        except Exception as e:
+            logger.warning(f"Error evaluating: {e}")
+            return pd.DataFrame()
         finally:
             if track_resources and resource_tracker:
                 resource_tracker.stop_tracking()

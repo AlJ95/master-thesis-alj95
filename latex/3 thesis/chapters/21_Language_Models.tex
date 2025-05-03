@@ -1,12 +1,4 @@
-% 03.12.2024: 645 Words - 7
-%15 Min: 
-%(1) 139 Words - 4
-%(2) 315 - 2
-
-% 10.12.2204: +1 +3 +1 +2
-% 1287 - 645 = 642 -> 64 + 7 = 71
-
-LLMs are deep neural network models trained on large corpora of text data. They are predominantly based on the Transformer architecture \cite{Wolf.09.10.2019}. Understanding Large Language Models and its hyperparameters like temperature or top-p is crucial for the development of RAG applications. Below, we explain the Transformer architecture and its main components.
+LLMs are deep neural network models trained on large corpora of text data. They are predominantly based on the Transformer architecture \cite{Wolf.09.10.2019}. Understanding Large Language Models and their hyperparameters like temperature or top-p is crucial for the development of RAG applications. Below, we explain the Transformer architecture and its main components.
 
 \subsection{Transformer Architecture}
 There are many well-known models based on the Transformer architecture, such as BERT, GPT-3.5, LLaMA, and others \cite{Yin.2024}. The Transformer architecture was introduced by Vaswani et al. in 2017. It's based on the self-attention mechanism, which allows the model to weigh the importance of each word in a sentence. The architecture has been shown to outperform other architectures in various NLP tasks.
@@ -20,9 +12,9 @@ There are many well-known models based on the Transformer architecture, such as 
 \end{figure}
 
 Figure \ref{fig:transformer_architecture} illustrates the Transformer architecture. Both encoder and decoder can be standalone models. Text must be tokenized through a dictionary to have a fixed size and frozen vocabulary.
-The encoder embeds a sequence of tokens and passes them to the the positional encoding layer to preserve informatin for token position. Subsequently, it passes through multiple layers of multi-head self-attention and feed-forward neural network blocks. Attention heads compute token relevance via scaled dot-product 
-$softmax(QK^T/\sqrt{d_k})V$ where Q,K,V are learned projections. The outputs of the encoder is a real-valued numberical vector and can be passed to the decoder. 
-The decoder embeds an empty or predefined sequence. It gets passed to several layers of masked and non-masked multi-head self-attention, plus a feed forward neural network blocks. The mask ensures the decoder can only use preceding tokens. The output probabilities forecast the next token in sequence. Therefore prior decoder outputs can be used to autoregressively generating sequences of tokens.
+The encoder embeds a sequence of tokens and passes them to the the positional encoding layer to preserve information for token position. Subsequently, it passes through multiple layers of multi-head self-attention and feed-forward neural network blocks. Attention heads compute token relevance via scaled dot-product
+$softmax(QK^T/\sqrt{d_k})V$ where Q,K,V are learned projections. The outputs of the encoder is a real-valued numberical vector and can be passed to the decoder.
+The decoder embeds an empty or predefined sequence. It gets passed to several layers of masked and non-masked multi-head self-attention, plus a feed forward neural network blocks. The mask ensures the decoder can only use preceding tokens. The output probabilities forecast the next token in sequence. Therefore prior decoder outputs can be used to autoregressively generate sequences of tokens.
 
 % \paragraph{Encoder}
 
@@ -31,7 +23,7 @@ The decoder embeds an empty or predefined sequence. It gets passed to several la
 % \paragraph{Decoder}
 
 % In the encoder-decoder architecture the decoder begins with an initial output sequence or an empty sequence. The output sequence is passed to the output embedding layer and to the positional encoding layer. After that it gets passed to several layers of masked and non-masked multi-head self-attention, plus a feed forward neural network blocks. The outputs of the decoder is passed to the output layer, which is a linear layer followed by a softmax function. The output layer predicts the next token in the output sequence. The output sequence is passed to the decoder again, so that the model can predict the next token based on the previous tokens. This process is called autoregressive generation.
-% The decoder can also stand alone for autoregressive tasks like code completion, text to code generation, debugging, etc. as shown in \citet{Hou.8212023}.
+% The decoder can also stand-alone for autoregressive tasks like code completion, text to code generation, debugging, etc. as shown in \citet{Hou.8212023}.
 
 % \paragraph{Input Embedding}
 % Depending on the model, the input and output sequences are tokenized into subwords, words or characters. The input embedding layer converts tokenized sequences into dense vector representations. The input embedding layer is trained along with the rest of the model. The output of the input embedding layer is passed to the positional encoding layer. The positional encoding layer adds information about the position of each token in the input sequence, so that the model can distinguish between words with the same token but different positions. Positional encodings are combined with input embeddings before being fed into the encoder. The output embedding is equivalent to the input embedding, but it is used to convert the output tokens into a dense vector representation. The output embedding is used in the decoder part of the Transformer architecture.
@@ -79,7 +71,7 @@ Top-K sampling \cite{Fan.13.05.2018} randomly selects from the top K tokens with
 The Top-P sampling \cite{Holtzman.22.04.2019} randomly selects from the smallest set of tokens whose cumulative probability exceeds the probability P. Therefore the higher the P value, the more tokens are considered for sampling. The outcomes gets more random. It is a generalization of Top-K sampling, where the number of tokens to sample from is not fixed.
 
 \subsection{Prompting Techniques}
-The Transformer architecture is not deterministic as shown in previous sections. Additionally LLMs have a high variance for its outputs too. The input prompt critically influences output quality. Therefore there are plenty of prompting techniques, to stabilize desired outputs. Schulhoff created a taxonomy and recognized 58 LLM prompting techniques \cite{Schulhoff.06.06.2024}. I discuss four representative prompting techniques: Few-Shot, Zero-Shot, Chain-of-Thought (CoT), and Chain-of-Verification (CoVe). The list is not complete, but those are very commonly used and easy to implement.
+The Transformer architecture is not deterministic as shown in previous sections. Additionally LLMs have a high variance for its outputs too. The input prompt critically influences output quality. Therefore there are plenty of prompting techniques to stabilize desired outputs. Schulhoff created a taxonomy and recognized 58 LLM prompting techniques \cite{Schulhoff.06.06.2024}. I discuss four representative prompting techniques: Few-Shot, Zero-Shot, Chain-of-Thought (CoT), and Chain-of-Verification (CoVe). The list is not complete, but those are very commonly used and easy to implement.
 
 \paragraph{Few-Shot vs. Zero-Shot}
 
@@ -103,6 +95,6 @@ Few-Short prompting is a form of In-Context Learning (ICL), in which the prompt 
 \end{figure}
 
 
-This method introduced by Wei leverages Few-Shot learning through simulating a written thought process in prior examples \cite{Wei.28.01.2022}. The LLM is therefore forced to take over this behaviour, which leads to more accurate outputs in reasoning and math problems. Schulhoff refers it to the class of Thought Generation techniques \cite{Schulhoff.06.06.2024}. Figure \ref{fig:CoT} shows an example prompt.
+This method introduced by Wei leverages Few-Shot learning through simulating a written thought process in prior examples \cite{Wei.28.01.2022}. The LLM is therefore forced to take over this behaviour, which leads to more accurate outputs in reasoning and math problems. Schulhoff refers to it as the class of Thought Generation techniques \cite{Schulhoff.06.06.2024}. Figure \ref{fig:CoT} shows an example prompt.
 
 \paragraph{Chain-of-Verification}

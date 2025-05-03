@@ -1,0 +1,33 @@
+components:
+  document_embedder:
+    init_parameters:
+      api_base_url: https://w7mxnj4radnct8-8000.proxy.runpod.net/v1
+      api_key:
+        env_vars:
+        - VLLM_API_KEY
+        strict: true
+        type: env_var
+      batch_size: 32
+      dimensions: null
+      embedding_separator: '\n\n'
+      meta_fields_to_embed: []
+      model: infly/inf-retriever-v1-1.5b
+      organization: null
+      prefix: ''
+      progress_bar: true
+      suffix: ''
+    type: haystack.components.embedders.openai_document_embedder.OpenAIDocumentEmbedder
+  embedder:
+    init_parameters:
+      api_base_url: https://w7mxnj4radnct8-8000.proxy.runpod.net/v1
+      api_key:
+        env_vars:
+        - VLLM_API_KEY
+        strict: true
+        type: env_var
+      dimensions: null
+      model: infly/inf-retriever-v1-1.5b
+      organization: null
+      prefix: ''
+      suffix: ''
+    type: haystack.components.embedders.openai_text_embedder.OpenAITextEmbedder
