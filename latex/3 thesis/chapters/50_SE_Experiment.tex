@@ -70,6 +70,8 @@ We used the CTest dataset, prepared by the team behind Ciri\cite{Lian.2024}\cite
     \label{tab:technology_values}
 \end{table}
 
+We then defined the validation-test split paramter. We chose a test size of 20 \%, resulting in 725 validation data points and 182 test data points.  
+
 The ingestion of data into our vector database required scraping official documentation for each specific version. However, we could not find documentation or a manual for this specific Redis version as well as for hbase, hcommon and hdfs. Table \ref{tab:technology_documentation} shows the documentation sources we scraped.
 
 \begin{table}[h]
@@ -97,6 +99,8 @@ The ingestion of data into our vector database required scraping official docume
     \label{tab:technology_documentation}
 \end{table}
 
+The ingestion of the data was ad-hoc before each experiment to have comparable results for ingestion times. 
+
 \subsection{Reconfiguration Phases} \label{sec:exp_results} 
 
 \paragraph{Initial Configuration and Baselines} \label{sec:exp_initial_config}
@@ -107,7 +111,7 @@ We also rebuilt the Ciri system within our Haystack RAG architecture and used it
 \subparagraph{Initial RAG Configuration} 
 At first we tried different standalone LLMs for measuring the current state of LLM without complex system architecture. For our evaluation, we chose Qwen's \textit{QwQ-32B} \cite{qwq32b} and \textit{Qwen-2.5-coder-32b-instruct} \cite{hui2024qwen2}\cite{qwen2}\cite{qwen2.5}, OpenAI's versionized \textit{o1-mini}, \textit{gpt-4o-mini} version as well as an up-to-date version of \textit{gpt-4o-mini} for comparison. We also tested OpenAI's web-search version of \textit{gpt-4o-mini}, which appears to be an out-of-the-box RAG-system \cite{OpenAI_2022}. Lastly we added deepseeks most recent model \textit{V3} \cite{deepseekai2024deepseekv3technicalreport} to the list. 
 
-Results can be seen in figure \ref{fig:LLMStandalone-Results}. The most recent \textit{GPT-4o-mini} model does perform best for F1-Score. The evaluated models to differ stronger on False-Positives-Rate and False-Negative-Rate than on F1-Scores. \textit{GPT-4o-mini} does have the lowest False-Negative-Rate and the highest False-Positive-Rate. Positives are valid configurations, so \textit{GPT-4o-mini} does classify invalid configurations more often as valid ones and does more rarely classify valid configurations as invalid. The older version of \textit{GPT-4o-mini} from 2024 and the web-search model have a slightly worse F1-Score, but more balanced FNR and FPR metrics. Even without few-shot learning as done by the Ciri team, the most recent version of \textit{gpt-4o-mini} did score an higher F1-Score than the configuration from the Ciri team with \textit{gpt-3.5-turbo-0125}
+Results can be seen in figure \ref{fig:LLMStandalone-Results}. The most recent \textit{GPT-4o-mini} model does perform best for F1-Score. The evaluated models to differ stronger on False-Positives-Rate and False-Negative-Rate than on F1-Scores. \textit{GPT-4o-mini} does have the lowest False-Negative-Rate and the highest False-Positive-Rate. Positives are valid configurations, so \textit{GPT-4o-mini} does classify invalid configurations more often as valid ones and does more rarely classify valid configurations as invalid. The older version of \textit{GPT-4o-mini} from 2024 and the web-search model have a slightly worse F1-Score, but more balanced FNR and FPR metrics. Even without few-shot learning as done by the Ciri team, the most recent version of \textit{gpt-4o-mini} did score an slightly higher average F1-Score ($0.6808$) than the configuration from the Ciri team with \textit{gpt-3.5-turbo-0125} ($0.6801$). In contrast to other models we did run the most recent version of gpt-4o-mini more frequently as baseline in later experiment runs. It now shows that the variance of the F1-Scores is with $1.41 \cdot 10^{-5}$ relatively small. 
 
 
 \begin{figure}[h]
@@ -129,6 +133,7 @@ Next, we defined configurations for common retrieval techniques. A basic BM25 re
 \end{figure}
   
 \textcolor{red}{MAP-at-K and ContextRelevance einblenden und zeigen, dass Retrieval der Bottleneck ist}
+
 \textcolor{blue}{Weil Auch verschiedene Retrieval Strategien nicht funktioniert haben, wurde ein andere Embedder versucht. Dieser war sehr langsam und musste mehrere Tage die Embeddings machen.}
 
 \textcolor{red}{Hier muss kommen, dass ich verschiedene Chunking Parameter versucht habe, aber auch diese keinen nennensewerten Impact hatten.}
