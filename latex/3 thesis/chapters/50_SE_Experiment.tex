@@ -171,7 +171,7 @@ After this phase we tried to improve the ressource quality of the data. The scra
     \label{tab:cleanup_stats}
 \end{table}
 
-For the dense retriever, we tried next to the improved data quality a different embedding model. We used the \textit{infly/inf-retriever-v1-1.5b}\cite{infly-ai_2025} model. ...
+As the results were not improving, we feeled forced to change more parameters within a configuration step. So for the dense retriever, we tried next to the improved data quality a different embedding model. We used the \textit{infly/inf-retriever-v1-1.5b} \cite{inflyai2025} model, because it is small enough for self-hosting and scores in its size at best in the MTEB \cite{muennighoff2022mteb} \cite{MTEB} in category "Code". We also applied a 4R-architecture with rewriter, that rewrites the to be validated configuration question into hypothetical documentation pages so that the embedded retriever could in theory map those documentations with the real ones in the embedded space. Lastly we added a Lost-in-the-middle reranker \cite{Liu.06.07.2023}. The results improved greatly to a F1-Score of \textit{0.6825} which exceeded the results we measured for Ciri. 
 
 
 \textcolor{blue}{Weil Auch verschiedene Retrieval Strategien nicht funktioniert haben, wurde ein andere Embedder versucht. Dieser war sehr langsam und musste mehrere Tage die Embeddings machen.}
@@ -185,9 +185,34 @@ For the dense retriever, we tried next to the improved data quality a different 
 
 \textcolor{red}{Precision: From all valid classified configs, how many were actually valid\\Recall: From all actual valid configurations, how many did we classify correctly.}
 
-\textcolor{red}{Hier müssen die Ergebnisse hin, zwischen alten und neuen Daten}
+Lastly we wanted to update Ciri's results with more up-to-date state-of-the-art models. Therefore we did test the Ciri-configuration with the models \textit{gpt-4o-mini-2024-08-06} and the most recent version of \textit{gpt-4o-mini} \cite{OpenAI_2022}. We also used \textit{gemini-2.5-flash} \cite{gemini-2.0}, \textit{deepseek-chat-v3-0324} \cite{deepseekai2024deepseekv3technicalreport}, and the in april 2025 released models from Alibaba \textit{qwen3-32b} and \textit{qwen3-235b-a22b} \cite{qwen3}. We evaluated those models in two different scenarios: one without explicit reasoning before answering the question and one with reasoning before answering the question. 
 
-\textcolor{blue}{Because this also did not achieve significant improvements, we wanted to add ciri few-shot learnings to new models}
+% Add this to your preamble:
+% \usepackage{multirow}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+        \hline
+        \textbf{Model} & \multicolumn{3}{c|}{\textbf{Without Reasoning}} & \multicolumn{3}{c|}{\textbf{With Reasoning}} \\
+        \hline
+        & \textbf{F1} & \textbf{R} & \textbf{P} & \textbf{F1} & \textbf{R} & \textbf{P} \\
+        \hline
+        gpt-4o-mini & 0.618 & 0.517 & 0.768 & 0.481 & 0.353 & 0.758 \\
+        gpt-4o-mini-2024-08-06 & 0.636 & 0.535 & 0.784 & 0.468 & 0.338 & 0.760 \\
+        gemini-2.5-flash & \textbf{0.721} & \textbf{0.678} & 0.770 & 0.456 & 0.318 & \textbf{0.810} \\
+        deepseek-chat-v3-0324 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+        qwen3-32b & 0.592 & 0.469 & 0.803 & 0.0 & 0.0 & 0.0 \\
+        qwen3-235b-a22b & 0.596 & 0.485 & 0.773 & 0.0 & 0.0 & 0.0 \\
+        \hline
+    \end{tabular}
+    \caption{Model performance comparison with and without explicit reasoning with F1-Score, precision (P) and recall (R)}
+    \label{tab:model_comparison}
+\end{table}
+
+Reasoning decreases the F1-score and recall, but did not had an high impact on precision scores. So, from all valid configurations, fewer were actual classified as valid, but from all as valid classified configurations, the percentage of valid ones did not remain on the same level.
+
+The best scored F1-Score (0.721) did score the gemini-2.5-flash model within the Ciri configuration. We did overall good, but not matching results (0.6929) for one sparse configuration with the most recent version of gpt-4o-mini. We also came close to this results with a dense 4R-architecture and the \textit{infly/inf-retriever-v1-1.5b} embedder (0.6825). 
 
 
 
