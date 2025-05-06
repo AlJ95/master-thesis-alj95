@@ -53,7 +53,10 @@ def test_generalization_error(
     corpus_dir: str = typer.Argument(..., help="Path to directory containing corpus"),
     output_directory: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
+    run_id: str = typer.Option(..., help="Run ID"),
     strict: bool = typer.Option(True, help="Do not use the same config twice."),
+    positive_label: str = typer.Option("valid", help="Positive label"),
+    negative_label: str = typer.Option("invalid", help="Negative label"),
 ):
     """
     Test generalization error of a model.
@@ -69,7 +72,17 @@ def test_generalization_error(
     test_data_path = eval_data_path.parent / "test" / eval_data_path.name
 
 
-    mlflow.set_tracking_uri("http://localhost:8080")
+    if os.getenv("MLFLOW_TRACKING_URI"):
+        uri = os.getenv("MLFLOW_TRACKING_URI")
+    else:
+        uri = "http://localhost:8080"
+
+    # check if uri is accessible
+    try:
+        mlflow.set_tracking_uri(uri=uri)
+    except Exception as e:
+        raise ValueError(f"Failed to set tracking URI: {e}")
+    
     experiment = mlflow.get_experiment_by_name(experiment_name)
     if experiment:
         mlflow.set_experiment(experiment_id=experiment.experiment_id)
@@ -78,16 +91,15 @@ def test_generalization_error(
 
     runs = mlflow.search_runs(experiment_ids=[experiment.experiment_id])
 
-    if runs.empty:
-        raise ValueError(f"No runs found for experiment {experiment_name}. Create a new evaluation dataset or use --no-strict (not recommended)")
-
+    if run_id:
+        runs = runs[runs['run_id'] == run_id]
+    
     if "params.used_test_sets" in runs.columns and strict:
-        # Check if the testset path is already in the params
-        already_used_configs = runs[
-            runs['params.used_test_sets'].str.contains(str(test_data_path))
-            ]['params.config'].unique()
-        
-        runs = runs[~runs['params.config'].isin(already_used_configs)]
+        # Check if the testset path empty
+        runs = runs[runs['params.used_test_sets'].isna()]
+    
+    if runs.empty:
+        raise ValueError(f"No runs found for experiment {experiment_name} ({run_id if run_id else 'all runs'}). Create a new evaluation dataset or use --no-strict (not recommended)")
 
     gathered_results = []
     for _, run in runs.iterrows():
@@ -98,11 +110,11 @@ def test_generalization_error(
             pipeline = config_to_pipeline(configuration_dict=eval(run["params.config"]))
             validate_pipeline(pipeline)
 
-            pipeline = index_documents(corpus_dir, pipeline)
-            pipeline.add_component("tracer", LangfuseConnector(run_name))
+            pipeline, indexing_duration = index_documents(corpus_dir, pipeline)
+            # pipeline.add_component("tracer", LangfuseConnector(run_name))
             data = load_evaluation_data(test_data_path)
 
-            evaluator = Evaluator(pipeline)
+            evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
             result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=False)
 
             traces = fetch_current_traces(run_name)
@@ -111,13 +123,7 @@ def test_generalization_error(
                 metric_name = ".".join(("TEST",) + col)
                 mlflow.log_metrics({metric_name: result[col].values[0]})
             
-            if "params.used_test_sets" in run:
-                used_test_sets = run["params.used_test_sets"]
-            else:
-                used_test_sets = []
-
-            used_test_sets.append(str(test_data_path))
-            mlflow.log_param("used_test_sets", used_test_sets)
+            mlflow.log_param("used_test_sets", str(test_data_path))
 
             results = pd.concat([result, traces], axis=1)
             gathered_results.append(results)
@@ -169,7 +175,7 @@ def run_evaluations(
     eval_data_path = Path(eval_data_file)
 
     # Split the evaluation data into val, test sets based on Simon et al. (2024) 
-    val_test_split(eval_data_path, test_size=20, random_state=42)
+    val_test_split(eval_data_path, test_size=test_size, random_state=random_state)
 
     if not eval_data_path.exists():
         warnings.warn(f"Evaluation data path {eval_data_path} does not exist")
