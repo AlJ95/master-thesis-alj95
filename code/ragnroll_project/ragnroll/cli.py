@@ -54,6 +54,8 @@ def test_generalization_error(
     output_directory: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
     strict: bool = typer.Option(True, help="Do not use the same config twice."),
+    positive_label: str = typer.Option("valid", help="Positive label"),
+    negative_label: str = typer.Option("invalid", help="Negative label"),
 ):
     """
     Test generalization error of a model.
@@ -108,11 +110,11 @@ def test_generalization_error(
             pipeline = config_to_pipeline(configuration_dict=eval(run["params.config"]))
             validate_pipeline(pipeline)
 
-            pipeline = index_documents(corpus_dir, pipeline)
+            pipeline, indexing_duration = index_documents(corpus_dir, pipeline)
             # pipeline.add_component("tracer", LangfuseConnector(run_name))
             data = load_evaluation_data(test_data_path)
 
-            evaluator = Evaluator(pipeline)
+            evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
             result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=False)
 
             traces = fetch_current_traces(run_name)
