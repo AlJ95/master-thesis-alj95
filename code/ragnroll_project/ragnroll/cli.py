@@ -95,8 +95,8 @@ def test_generalization_error(
         runs = runs[runs['run_id'] == run_id]
     
     if "params.used_test_sets" in runs.columns and strict:
-        # Check if the testset path not empty
-        runs = runs[runs['params.used_test_sets'].notna()]
+        # Check if the testset path empty
+        runs = runs[runs['params.used_test_sets'].isna()]
     
     if runs.empty:
         raise ValueError(f"No runs found for experiment {experiment_name} ({run_id if run_id else 'all runs'}). Create a new evaluation dataset or use --no-strict (not recommended)")
