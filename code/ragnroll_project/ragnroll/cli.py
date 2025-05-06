@@ -93,17 +93,13 @@ def test_generalization_error(
 
     if run_id:
         runs = runs[runs['run_id'] == run_id]
-
+    
+    if "params.used_test_sets" in runs.columns and strict:
+        # Check if the testset path not empty
+        runs = runs[runs['params.used_test_sets'].notna()]
+    
     if runs.empty:
         raise ValueError(f"No runs found for experiment {experiment_name} ({run_id if run_id else 'all runs'}). Create a new evaluation dataset or use --no-strict (not recommended)")
-
-    if "params.used_test_sets" in runs.columns and strict:
-        # Check if the testset path is already in the params
-        already_used_configs = runs[
-            runs['params.used_test_sets'].str.contains(str(test_data_path))
-            ]['params.config'].unique()
-        
-        runs = runs[~runs['params.config'].isin(already_used_configs)]
 
     gathered_results = []
     for _, run in runs.iterrows():
@@ -127,13 +123,7 @@ def test_generalization_error(
                 metric_name = ".".join(("TEST",) + col)
                 mlflow.log_metrics({metric_name: result[col].values[0]})
             
-            if "params.used_test_sets" in run:
-                used_test_sets = run["params.used_test_sets"]
-            else:
-                used_test_sets = []
-
-            used_test_sets.append(str(test_data_path))
-            mlflow.log_param("used_test_sets", used_test_sets)
+            mlflow.log_param("used_test_sets", str(test_data_path))
 
             results = pd.concat([result, traces], axis=1)
             gathered_results.append(results)
