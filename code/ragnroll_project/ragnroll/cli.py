@@ -69,7 +69,17 @@ def test_generalization_error(
     test_data_path = eval_data_path.parent / "test" / eval_data_path.name
 
 
-    mlflow.set_tracking_uri("http://localhost:8080")
+    if os.getenv("MLFLOW_TRACKING_URI"):
+        uri = os.getenv("MLFLOW_TRACKING_URI")
+    else:
+        uri = "http://localhost:8080"
+
+    # check if uri is accessible
+    try:
+        mlflow.set_tracking_uri(uri=uri)
+    except Exception as e:
+        raise ValueError(f"Failed to set tracking URI: {e}")
+    
     experiment = mlflow.get_experiment_by_name(experiment_name)
     if experiment:
         mlflow.set_experiment(experiment_id=experiment.experiment_id)
@@ -99,7 +109,7 @@ def test_generalization_error(
             validate_pipeline(pipeline)
 
             pipeline = index_documents(corpus_dir, pipeline)
-            pipeline.add_component("tracer", LangfuseConnector(run_name))
+            # pipeline.add_component("tracer", LangfuseConnector(run_name))
             data = load_evaluation_data(test_data_path)
 
             evaluator = Evaluator(pipeline)
@@ -169,7 +179,7 @@ def run_evaluations(
     eval_data_path = Path(eval_data_file)
 
     # Split the evaluation data into val, test sets based on Simon et al. (2024) 
-    val_test_split(eval_data_path, test_size=20, random_state=42)
+    val_test_split(eval_data_path, test_size=test_size, random_state=random_state)
 
     if not eval_data_path.exists():
         warnings.warn(f"Evaluation data path {eval_data_path} does not exist")
