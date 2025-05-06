@@ -53,6 +53,7 @@ def test_generalization_error(
     corpus_dir: str = typer.Argument(..., help="Path to directory containing corpus"),
     output_directory: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
+    run_id: str = typer.Option(..., help="Run ID"),
     strict: bool = typer.Option(True, help="Do not use the same config twice."),
     positive_label: str = typer.Option("valid", help="Positive label"),
     negative_label: str = typer.Option("invalid", help="Negative label"),
@@ -90,8 +91,11 @@ def test_generalization_error(
 
     runs = mlflow.search_runs(experiment_ids=[experiment.experiment_id])
 
+    if run_id:
+        runs = runs[runs['run_id'] == run_id]
+
     if runs.empty:
-        raise ValueError(f"No runs found for experiment {experiment_name}. Create a new evaluation dataset or use --no-strict (not recommended)")
+        raise ValueError(f"No runs found for experiment {experiment_name} ({run_id if run_id else 'all runs'}). Create a new evaluation dataset or use --no-strict (not recommended)")
 
     if "params.used_test_sets" in runs.columns and strict:
         # Check if the testset path is already in the params
