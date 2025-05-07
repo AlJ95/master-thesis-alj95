@@ -108,12 +108,12 @@ The ingestion of the data was ad-hoc before each experiment to have comparable r
 \paragraph{Initial Configuration and Baselines} \label{sec:exp_initial_config}
 We used several baselines as comparison. At first we ran our experiment with the baselines defined in section \ref{chap:design} - as standalone LLM and a predefined minimal RAG system with BM25 sparse retrieval. For both baselines we used OpenAI's GPT-4o-mini\cite{OpenAI_2022}. The standalone system has only a generator and an answer builder for extracting "valid" or "invalid" from the generated output. The second baseline adds an retriever right before the generator and lists the top-10 documents before without any pre- or postprocessing. This basic architectures ensure that we figure out if complex adjustments improve the validator quality at all.
 
-We also rebuilt the Ciri system within our Haystack RAG architecture and used it as baseline. As we only used our framework for running evaluations there are some minor differences in methodology due to implementation limitations. We did not look at the results per system, which means that we do not have knowledge if our system works better for django or alluxio systems. However we could run for each system a separat experiment, but we chose against for better comparability of the final result and cost reduction of the experiment. We also did only evaluate file-level validation. Ciri used few-shot examples with a number of valid and invalid configurations. We did not vary the number of valid or invalid shots, but we have chosen the best performing configuration with one valid and three invalid shots. Lastly Ciri used several language models for its experiments. We could just use \textit{gpt-3.5-turbo-0125}\cite{OpenAI_2022}. Other models were either unavaillable, because the used version is outdated and continuously trained or too expensive for the experiment to run with our budget. However we achieved a F1-Score of \textit{0.68} which close to the Ciri reported F1-Score of \textit{0.72}. All pipeline figures can be found in the appendix.
+We also rebuilt the Ciri system within our Haystack RAG architecture and used it as baseline. As we only used our framework for running evaluations there are some minor differences in methodology due to implementation limitations. We did not look at the results per system, which means that we do not have knowledge if our system works better for django or alluxio systems. However we could run for each system a separat experiment, but we chose against for better comparability of the final result and cost reduction of the experiment. We also did only evaluate file-level validation. Ciri used few-shot examples with a number of valid and invalid configurations. We did not vary the number of valid or invalid shots, but we have chosen the best performing configuration with one valid and three invalid shots. Lastly Ciri used several language models for its experiments. We could just use \textit{gpt-3.5-turbo-0125}\cite{OpenAI_2022}. Other models were either unavaillable, because the used version is outdated and continuously trained or too expensive for the experiment to run with our budget. However we achieved a F1-Score of \textit{0.680} which close to the Ciri reported F1-Score of \textit{0.720}. All pipeline figures can be found in the appendix.
 
 \subparagraph{Initial RAG Configuration} 
 At first we tried different standalone LLMs for measuring the current state of LLM without complex system architecture. For our evaluation, we chose Qwen's \textit{QwQ-32B} \cite{qwq32b} and \textit{Qwen-2.5-coder-32b-instruct} \cite{hui2024qwen2}\cite{qwen2}\cite{qwen2.5}, OpenAI's versionized \textit{o1-mini}, \textit{gpt-4o-mini} version as well as an up-to-date version of \textit{gpt-4o-mini} for comparison. We also tested OpenAI's web-search version of \textit{gpt-4o-mini}, which appears to be an out-of-the-box RAG-system \cite{OpenAI_2022}. Lastly we added deepseeks most recent model \textit{V3} \cite{deepseekai2024deepseekv3technicalreport} to the list. 
 
-Results can be seen in figure \ref{fig:LLMStandalone-Results}. The most recent \textit{GPT-4o-mini} model does perform best for F1-Score. The evaluated models to differ stronger on False-Positives-Rate and False-Negative-Rate than on F1-Scores. \textit{GPT-4o-mini} does have the lowest False-Negative-Rate and the highest False-Positive-Rate. Positives are valid configurations, so \textit{GPT-4o-mini} does classify invalid configurations more often as valid ones and does more rarely classify valid configurations as invalid. The older version of \textit{GPT-4o-mini} from 2024 and the web-search model have a slightly worse F1-Score, but more balanced FNR and FPR metrics. Even without few-shot learning as done by the Ciri team, the most recent version of \textit{gpt-4o-mini} did score an slightly higher average F1-Score ($0.6808$) than the configuration from the Ciri team with \textit{gpt-3.5-turbo-0125} ($0.6801$). In contrast to other models we did run the most recent version of gpt-4o-mini more frequently as baseline in later experiment runs. It now shows that the variance of the F1-Scores is with $1.41 \cdot 10^{-5}$ relatively small. 
+Results can be seen in figure \ref{fig:LLMStandalone-Results}. The most recent \textit{GPT-4o-mini} model does perform best for F1-Score. The evaluated models to differ stronger on False-Positives-Rate and False-Negative-Rate than on F1-Scores. \textit{GPT-4o-mini} does have the lowest False-Negative-Rate and the highest False-Positive-Rate. Positives are valid configurations, so \textit{GPT-4o-mini} does classify invalid configurations more often as valid ones and does more rarely classify valid configurations as invalid. The older version of \textit{GPT-4o-mini} from 2024 and the web-search model have a slightly worse F1-Score, but more balanced FNR and FPR metrics. Even without few-shot learning as done by the Ciri team, the most recent version of \textit{gpt-4o-mini} did score an slightly higher average F1-Score ($0.681$) than the configuration from the Ciri team with \textit{gpt-3.5-turbo-0125} ($0.680$). In contrast to other models we did run the most recent version of gpt-4o-mini more frequently as baseline in later experiment runs. It now shows that the variance of the F1-Scores is with $1.41 \cdot 10^{-5}$ relatively small. 
 
 
 \begin{figure}[h]
@@ -132,8 +132,8 @@ Next, we defined configurations for common retrieval techniques. A basic BM25 re
         \hline
         \textbf{Metric} & \textbf{BM25} & \textbf{Dense} \\
         \hline
-        ContextRelevance & 0.3962 & 0.1761 \\
-        MAP@K & 0.0964 & 0.0297 \\
+        ContextRelevance & 0.396 & 0.176 \\
+        MAP@K & 0.096 & 0.030 \\
         \hline
     \end{tabular}
     \caption{Retrieval metrics comparison between BM25 and Dense retrieval}
@@ -148,7 +148,7 @@ Next, we defined configurations for common retrieval techniques. A basic BM25 re
     \label{fig:conf-phase-0-retrievers}
 \end{figure}
 
-After this phase we tried to improve the ressource quality of the data. The scraped documentation html files had many elements, that did not provide any information about the configuration parameters such as scripts, images, svg, etc. We removed all of these elements and only kept the relevant ones containing text or metadata. The clean up statistics can be seen in table \ref{tab:cleanup_stats}. However, the retrieval quality for sparse retrievers did decrease after all from \textit{0.6929} to \textit{0.5668}. 
+After this phase we tried to improve the ressource quality of the data. The scraped documentation html files had many elements, that did not provide any information about the configuration parameters such as scripts, images, svg, etc. We removed all of these elements and only kept the relevant ones containing text or metadata. The clean up statistics can be seen in table \ref{tab:cleanup_stats}. However, the retrieval quality for sparse retrievers did decrease after all from \textit{0.693} to \textit{0.567}. 
 
 \begin{table}[h]
     \centering
@@ -157,7 +157,7 @@ After this phase we tried to improve the ressource quality of the data. The scra
         \textbf{System} & \textbf{Files} & \textbf{Original Size} & \textbf{New Size} & \textbf{Reduction} \\
         \hline
         alluxio & 230 & 20.64MB & 19.58MB & 5.16\% \\
-        django & 634 & 37.10MB & 22.05MB & 40.58\% \\
+        django & 634 & 37.10MB & 22.05MB & 4f58\% \\
         etcd & 113 & 19.27MB & 1.86MB & 90.33\% \\
         hbase & 440 & 26.42MB & 18.30MB & 30.74\% \\
         hdfs & 108 & 2.83MB & 2.09MB & 26.18\% \\
@@ -189,10 +189,10 @@ Lastly we wanted to update Ciri's results with more up-to-date state-of-the-art 
         \hline
         & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} &  \textbf{P} & \textbf{R} \\
         \hline
-        gpt-4o-mini             & 0.658 & 0.738 & 0.593 & 0.425 & 0.750 & 0.296 \\
-        gpt-4o-mini-2024-08-06  & 0.629 & 0.726 & 0.556 & 0.463 & 0.700 & 0.346 \\
-        gemini-2.5-flash        & \textbf{0.771} & \textbf{0.808} & \textbf{0.737} & 0.471 & 0.800 & 0.333 \\
-        deepseek-chat-v3-0324   & 0.723 & 0.750 & 0.698 & 0.667 & 0.793 & 0.575 \\
+        gpt-4o-mini             & 0.688 & 0.785 & 0.613 & 0.508 & 0.796 & 0.373 \\
+        gpt-4o-mini-2024-08-06  & 0.699 & 0.784 & 0.630 & 0.501 & 0.776 & 0.370\\
+        gemini-2.5-flash        & 0.747 & 0.806 & 0.697 & 0.456 & \textbf{0.829} & 0.315 \\
+        deepseek-chat-v3-0324   & \textbf{0.776} & 0.794 & \textbf{0.759} & 0.666 & 0.790 & 0.575 \\
         qwen3-32b$^1$ & - & - & - & - & - & - \\
         qwen3-235b-a22b$^1$ & - & - & - & - & - & - \\
         \hline
@@ -203,7 +203,7 @@ Lastly we wanted to update Ciri's results with more up-to-date state-of-the-art 
 
 Reasoning decreases the F1-score and recall, but did not had an high impact on precision scores. So, from all valid configurations, fewer were actual classified as valid, but from all as valid classified configurations, the percentage of valid ones did not remain on the same level.
 
-The best scored F1-Score (0.721) did score the gemini-2.5-flash model within the Ciri configuration. We did overall good, but not matching results (0.6929) for one sparse configuration with the most recent version of gpt-4o-mini. We also came close to this results with a dense 4R-architecture and the \textit{infly/inf-retriever-v1-1.5b} embedder (0.6825). 
+The best scored F1-Score (0.776) did score the \textit{deepseek-chat-v3-0324} model within the Ciri configuration. We did overall good, but not matching results (0.693) for one sparse configuration with the most recent version of gpt-4o-mini. We also came close to this results with a dense 4R-architecture and the \textit{infly/inf-retriever-v1-1.5b} embedder (0.683). 
 
 
 
@@ -213,9 +213,28 @@ The best scored F1-Score (0.721) did score the gemini-2.5-flash model within the
 % Use tables/figures.
 % Discuss any significant differences and potential signs of overfitting.
 
-In this section we want to address the generalization error for our experiments. In theory this happens, if we tune the parameters to fit it best to the data - not to the underlying problem. In our reconfiguration phases, we had little success with RAG-configurations. Therefore this could not be properly evaluated in this experiment. The reason is that we had to tune our parameters to get better results in general. We did not have enough successful configurations to test for overfitting. The only configuration that showed promising results was the dense 4R-architecture with the infly/inf-retriever-v1-1.5b embedder. However, even this configuration did not perform well enough to justify the costs of the generalization test. 
+In this section we want to address the generalization error for our experiments. In theory this happens, if we tune the parameters to fit it best to the data - not to the underlying problem. In our reconfiguration phases, we had little success with RAG-configurations. Therefore this could not be properly evaluated in this experiment. The reason is that we had to tune our parameters to get better results in general. We did not have enough successful configurations to test for overfitting. The only configuration that showed promising results was the dense 4R-architecture with the infly/inf-retriever-v1-1.5b embedder. However, even this configuration did not perform well enough to justify the additional costs of the generalization test. 
 
-We decided to do the generalization tests on the \textit{gemini-2.5-flash} \cite{gemini-2.0}, \textit{deepseek-chat-v3-0324}. We did not tune them, beside the few-shot learning by the ciri configuration. However we still might estimate the variance in the results by running this configuration on the test data.
+We decided to do the generalization tests on the best-performing models in the table \ref{tab:model_comparison}. We chose \textit{deepseek-chat-v3-0324} and \textit{gemini-2.5-flash} and the original Ciri configuration with \textit{gpt-3.5-turbo}. We did not tune them, beside the few-shot learning by the ciri configuration, which does mean, that it does not justify the test dataset. However we still might estimate the variance in the results by running this configuration on the test data.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|c|c|}
+        \hline
+        \textbf{Model} & \multicolumn{3}{c|}{\textbf{Validation Set}} & \multicolumn{3}{c|}{\textbf{Test Set}} \\
+        \hline
+        & \textbf{F1} & \textbf{P} & \textbf{R} & \textbf{F1} &  \textbf{P} & \textbf{R} \\
+        \hline
+        gpt-3.5-turbo          & 0.680 & 0.735 & 0.633 & 0.650 & 0.663 & 0.639 \\
+        gemini-2.5-flash       & 0.747 & 0.806 & 0.697 & 0.735 & 0.735 & 0.735 \\
+        deepseek-chat-v3-0324  & \textbf{0.776} & 0.794 & \textbf{0.759} &  &  & \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of model performance between validation and test sets with F1-Score, precision (P) and recall (R).}
+    \label{tab:generalization_comparison}
+\end{table}
+
+
 
 \subsection{System Metrics}
 
@@ -278,9 +297,8 @@ Lastly there are the costs for the models and embeddings. It was not possible to
     \end{tabular}
 \end{table}
 
-Estimating the cost of embedding is more difficult. At first we have the OpenAI API costs for \textit{text-embedding-small-3}. One run on the validation data with 725 samples were about \textcolor{red}{XXX} million tokens by a price of 0.02 \$ per million tokens makes \textcolor{red}{XXX} \$. For the vllm embedding, we need the indexing time of the run, which was around 598 seconds. With 0.69 \$ per hour, this makes around 0.11 \$ for the ingestion. 
+Estimating the cost of embedding is more difficult. At first we have the OpenAI API costs for \textit{text-embedding-small-3}. One run on the validation data with 725 samples were about 9 million tokens by a price of 0.02 \$ per million tokens makes 0.18 \$ for the whole run including ingestion and query embeddings. For the vllm embedding, we need the indexing time of the run, which was around 598 seconds. With 0.69 \$ per hour, this makes around 0.11 \$ for the ingestion. However, we only considered ingestion here. Indexing the whole corpus is the predominant factor of cost in a token-based pricing, but for a time-based pricing like the vllm embedder, the duration of the whole experiment is the predominant factor of cost, because each query must be embedded prior the retrieval. The experiment ran for 6.1 hours, so that the cost of the embedding is 4.21 \$. 
 
-However, we only considered ingestion here. Indexing the whole corpus is the predominant factor of cost in a token-based pricing, but for a time-based pricing like the vllm embedder, the duration of the whole experiment is the predominant factor of cost, because each query must be embedded prior the retrieval. The experiment ran for 6.1 hours, so that the cost of the embedding is 4.21 \$. 
 
 
 
@@ -323,4 +341,6 @@ Even if we ignore the ingestion time, systems that contain at least one retrieve
 % Summarize the main findings and contributions of this specific experiment.
 % Reiterate the performance of the best RAG system found.
 
-We must conclude that while we could not find a RAG system that outperformed standalone LLMs for configuration validation, our systematic evaluation using RAGBench provided valuable insights. The experiment demonstrated that newer LLM models like Gemini-2.5-Flash and Deepseek V3 achieve superior performance compared to both RAG systems and older models. Our analysis revealed that the main bottleneck in RAG performance lies in retrieval quality, particularly for technical configuration documentation. While specialized embedding models showed promise, the added complexity and computational overhead of RAG architectures did not translate to better validation accuracy in this specific use case. These findings suggest that for configuration validation tasks, investing in state-of-the-art standalone LLMs may be more effective than implementing complex RAG systems, though this may change when more suited retrieval techniques are applied.
+We showed that configuration validation is still a difficult task for LLM's or RAG's. We did not exceed the results of the Ciri team with any RAG configuration. Retrieval was in our case the bottleneck. Retrieving up-to-date documentation pages for system configurations does not work out-of-the-box with a BM25, a general embedding retriever or a specialised one. Retrieval techniques and parameters such as hybrid retrieval does not have a great impact on retrieval quality. Future work could include metadata filtering, custom retrieval models, more advanced rewriting or adaptive RAG systems (also know as agentic), which were not in our scope.
+
+We showed that more recent models are more capable of correctly validating configurations, but we also saw, that the performance varies and results are not as reliable as needed for this task. We updated the Ciri experiment with more recent models and did a new state of the art result of a F1-score of 0.776 with Deepseek's \textit{deepseek-chat-v3-0324} model with the Ciri configuration.
