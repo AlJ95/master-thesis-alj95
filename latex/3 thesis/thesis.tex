@@ -5,8 +5,8 @@
 %
 % Values
 % ------
-% \ThesisSetTitle{RAGBench - A Benchmark Framework for Retrieval-Augmented Generation Systems}
-\ThesisSetTitle{RAGBench - Torwards Reconfigurable RAG Experimenation Without Overfitting}
+% \ThesisSetTitle{RAGnRoll - A Benchmark Framework for Retrieval-Augmented Generation Systems}
+\ThesisSetTitle{RAGnRoll - Torwards Reconfigurable RAG Experimenation Without Overfitting}
 \ThesisSetKeywords{RAG, benchmarking} % only for PDF meta attributes
 
 \ThesisSetAuthor{Jan Albrecht}
@@ -21,7 +21,7 @@
 %
 % Suggested Packages
 % ------------------
-\usepackage[sort&compress]{natbib}
+\usepackage[numbers, sort&compress]{natbib}
 %   Allows citing in different ways (e.g., only the authors if you use the
 %   citation again within a short time).
 
@@ -71,7 +71,7 @@
 \begin{document}
 \begin{frontmatter}
   \begin{abstract}
-    Retrieval-Augmented Generation (RAG) systems enhance Large Language Models (LLMs) by grounding responses in external knowledge, addressing limitations like knowledge cutoffs and hallucination. However, developing and evaluating RAG systems is complex, involving numerous configurable components and risking overfitting during iterative refinement, often lacking systematic approaches. This thesis introduces RAGBench, a comprehensive benchmarking framework designed to facilitate systematic, reproducible, and generalizable RAG experimentation, ultimately aiming to prevent overfitting during configuration. RAGBench provides a structured methodology encompassing systematic baselining against standalone LLMs and naive RAG, a strict validation-test split for robust generalization assessment, multi-faceted evaluation including end-to-end and component-level metrics with hardware considerations, and tools for transparent experiment logging and tracing. The framework's utility was demonstrated through an experiment in software configuration validation, showcasing its capability to guide iterative development and performance optimization. RAGBench empowers researchers and practitioners to make data-driven decisions, moving beyond ad-hoc tuning towards a principled approach for building effective and reliable RAG solutions.
+    Retrieval-Augmented Generation (RAG) systems enhance Large Language Models (LLMs) by grounding responses in external knowledge, addressing limitations like knowledge cutoffs and hallucination. However, developing and evaluating RAG systems is complex, involving numerous configurable components and risking overfitting during iterative refinement, often lacking systematic approaches. This thesis introduces RAGnRoll, a comprehensive benchmarking framework designed to facilitate systematic, reproducible, and generalizable RAG experimentation, ultimately aiming to prevent overfitting during configuration. RAGnRoll provides a structured methodology encompassing systematic baselining against standalone LLMs and naive RAG, a strict validation-test split for robust generalization assessment, multi-faceted evaluation including end-to-end and component-level metrics with hardware considerations, and tools for transparent experiment logging and tracing. The framework's utility was demonstrated through an experiment in software configuration validation, showcasing its capability to guide iterative development and performance optimization. RAGnRoll empowers researchers and practitioners to make data-driven decisions, moving beyond ad-hoc tuning towards a principled approach for building effective and reliable RAG solutions.
   \end{abstract}
 
   \tableofcontents
@@ -126,7 +126,7 @@
 
 % Bibliography
 % \bibliographystyle{plainnat} % apalike
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{literature.bib}    % load file literature.bib
 
 \end{document}
