@@ -1,7 +1,7 @@
-LLMs are deep neural network models trained on large corpora of text data. They are predominantly based on the Transformer architecture \cite{Wolf.09.10.2019}. Understanding Large Language Models and their hyperparameters like temperature or top-p is crucial for the development of RAG applications. Below, we explain the Transformer architecture and its main components.
+LLMs are deep neural network models trained on large corpora of text data. They are predominantly based on the Transformer architecture \cite{Wolf.09.10.2019}. Understanding Large Language Models and their hyperparameters such as temperature or top-p is crucial for the development of RAG applications. Below, we explain the Transformer architecture and its main components.
 
 \subsection{Transformer Architecture}
-There are many well-known models based on the Transformer architecture, such as BERT, GPT-3.5, LLaMA, and others \cite{Yin.2024}. The Transformer architecture was introduced by Vaswani et al. in 2017. It's based on the self-attention mechanism, which allows the model to weigh the importance of each word in a sentence. The architecture has been shown to outperform other architectures in various NLP tasks.
+There are many well-known models based on the Transformer architecture, such as BERT, GPT-3.5, LLaMA, and others \cite{Yin.2024}. The Transformer architecture was introduced by Vaswani et al. in 2017. It is based on the self-attention mechanism, which allows the model to weigh the importance of each word in a sentence. The architecture has been shown to outperform other architectures in various NLP tasks.
 
 % include graphic of Transformer architecture
 \begin{figure}[!ht]
@@ -12,9 +12,8 @@ There are many well-known models based on the Transformer architecture, such as 
 \end{figure}
 
 Figure \ref{fig:transformer_architecture} illustrates the Transformer architecture. Both encoder and decoder can be standalone models. Text must be tokenized through a dictionary to have a fixed size and frozen vocabulary.
-The encoder embeds a sequence of tokens and passes them to the the positional encoding layer to preserve information for token position. Subsequently, it passes through multiple layers of multi-head self-attention and feed-forward neural network blocks. Attention heads compute token relevance via scaled dot-product
-$softmax(QK^T/\sqrt{d_k})V$ where Q,K,V are learned projections. The outputs of the encoder is a real-valued numberical vector and can be passed to the decoder.
-The decoder embeds an empty or predefined sequence. It gets passed to several layers of masked and non-masked multi-head self-attention, plus a feed forward neural network blocks. The mask ensures the decoder can only use preceding tokens. The output probabilities forecast the next token in sequence. Therefore prior decoder outputs can be used to autoregressively generate sequences of tokens.
+The encoder embeds a sequence of tokens and passes them to the positional encoding layer to preserve information about token position. Subsequently, it passes through multiple layers of multi-head self-attention and feed-forward neural network blocks. Attention heads compute token relevance via scaled dot-product attention: $softmax(QK^T/\sqrt{d_k})V$, where Q, K, and V are learned projections. The output of the encoder is a real-valued numerical vector and can be passed to the decoder.
+The decoder embeds an empty or predefined sequence. It gets passed to several layers of masked and non-masked multi-head self-attention and feed-forward neural network blocks. The mask ensures the decoder can only use preceding tokens. The output probabilities forecast the next token in sequence. Therefore, prior decoder outputs can be used to autoregressively generate sequences of tokens.
 
 % \paragraph{Encoder}
 
@@ -54,47 +53,47 @@ The temperature parameter is used to control the randomness of the generated tex
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.6\textwidth]{images/temperature.png}
-    \caption{The softmax function with different temperature values, T=1.0 (solid), T=4.0 (dashed), T=0.25 (dotted), Source: Ackey et al.\cite{ACKLEY.1985}}
+    \caption{The softmax function with different temperature values, T=1.0 (solid), T=4.0 (dashed), T=0.25 (dotted), Source: Ackley et al.\cite{ACKLEY.1985}}
     \label{fig:temperature}
 \end{figure}
 
-$$softmax: o(z)_i = \frac{e^{\beta z_i}}{\sum_{j=1}^K e^{\beta z_i}}$$
+$$softmax: o(z)_i = \frac{e^{z_i/T}}{\sum_{j=1}^K e^{z_j/T}}$$
 
-In figure \ref{fig:temperature} the softmax function is shown. A low temperature value leads to a peaky distribution, while a high temperature value leads to a more uniform distribution and therefore to more randomness.
+Figure \ref{fig:temperature} shows the softmax function. A low temperature value leads to a peaky distribution, while a high temperature value leads to a more uniform distribution and, therefore, to more randomness.
 
 
 % split paragraph in two parts
 \paragraph{Top-K Sampling}
-Top-K sampling \cite{Fan.13.05.2018} randomly selects from the top K tokens with the highest probability before applying the softmax function. Therefore the higher the K value, the more tokens are considered for sampling. Higher values increase output randomness. With Top-K equal to 1, the model behaves like greedy decoding.
+Top-K sampling \cite{Fan.13.05.2018} randomly selects from the top K tokens with the highest probability before applying the softmax function. Therefore, the higher the K value, the more tokens are considered for sampling. Higher values increase output randomness. With Top-K equal to 1, the model behaves like greedy decoding.
 
 \paragraph{Top-P Sampling}
-The Top-P sampling \cite{Holtzman.22.04.2019} randomly selects from the smallest set of tokens whose cumulative probability exceeds the probability P. Therefore the higher the P value, the more tokens are considered for sampling. The outcomes gets more random. It is a generalization of Top-K sampling, where the number of tokens to sample from is not fixed.
+The Top-P sampling \cite{Holtzman.22.04.2019} randomly selects from the smallest set of tokens whose cumulative probability exceeds the probability P. Therefore, the higher the P value, the more tokens are considered for sampling. The outcomes get more random. It is a generalization of Top-K sampling, where the number of tokens to sample from is not fixed.
 
 \subsection{Prompting Techniques}
-The Transformer architecture is not deterministic as shown in previous sections. Additionally LLMs have a high variance for its outputs too. The input prompt critically influences output quality. Therefore there are plenty of prompting techniques to stabilize desired outputs. Schulhoff created a taxonomy and recognized 58 LLM prompting techniques \cite{Schulhoff.06.06.2024}. We discuss four representative prompting techniques: Few-Shot, Zero-Shot, Chain-of-Thought (CoT), and Chain-of-Verification (CoVe). The list is not complete, but those are very commonly used and easy to implement.
+The Transformer architecture is not deterministic as shown in previous sections. Additionally, LLMs also exhibit high variance in their outputs. The input prompt critically influences output quality. Therefore, there are numerous prompting techniques to stabilize desired outputs. Schulhoff created a taxonomy and recognized 58 LLM prompting techniques \cite{Schulhoff.06.06.2024}. We discuss four representative prompting techniques: Few-Shot, Zero-Shot, Chain-of-Thought (CoT), and Chain-of-Verification (CoVe). The list is not exhaustive, but these techniques are very commonly used and easy to implement.
 
 \paragraph{Few-Shot vs. Zero-Shot}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/FewShot vs ZeroSHot.pdf}
-    \caption{An example with a difficult query, that many LLM struggle, first without example (Zero-Shot) and below with one example (Few-Shot).}
+    \caption{An example with a difficult query that many LLMs struggle with, first without an example (Zero-Shot) and then with one example (Few-Shot).}
     \label{fig:FewZeroShot}
 \end{figure}
 
 
-Few-Short prompting is a form of In-Context Learning (ICL), in which the prompt has examples of similar tasks to show the model how a task should be done. Brown showed that large models can leverage examples for various tasks \cite{Brown.28.05.2020}. Zero-Shot prompting refers then to prompting without showing examples before the task. Even though Few-Shot prompting might increase performance of LLMs, it comes with increased costs, as there are more tokens to process. An example of those prompting methods can be seen in figure \ref{fig:FewZeroShot}.
+Few-shot prompting is a form of In-Context Learning (ICL), in which the prompt includes examples of similar tasks to show the model how a task should be done. Brown showed that large models can leverage examples for various tasks \cite{Brown.28.05.2020}. Zero-shot prompting then refers to prompting without showing examples before the task. Even though few-shot prompting might increase the performance of LLMs, it also comes with increased costs, as there are more tokens to process. An example of these prompting methods can be seen in Figure \ref{fig:FewZeroShot}.
 
 \paragraph{Chain-of-Thought}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{images/Chain-of-Thought.pdf}
-    \caption{An Chain-of-Thought example with a difficult query, that many LLM struggle without prompting techniques}
+    \caption{A Chain-of-Thought example with a difficult query that many LLMs struggle with without prompting techniques}
     \label{fig:CoT}
 \end{figure}
 
 
-This method introduced by Wei leverages Few-Shot learning through simulating a written thought process in prior examples \cite{Wei.28.01.2022}. The LLM is therefore forced to take over this behaviour, which leads to more accurate outputs in reasoning and math problems. Schulhoff refers to it as the class of Thought Generation techniques \cite{Schulhoff.06.06.2024}. Figure \ref{fig:CoT} shows an example prompt.
+This method introduced by Wei leverages few-shot learning through simulating a written thought process in prior examples \cite{Wei.28.01.2022}. The LLM is therefore forced to adopt this behavior, which leads to more accurate outputs in reasoning and math problems. Schulhoff refers to it as the class of Thought Generation techniques \cite{Schulhoff.06.06.2024}. Figure \ref{fig:CoT} shows an example prompt.
 
 \paragraph{Chain-of-Verification}

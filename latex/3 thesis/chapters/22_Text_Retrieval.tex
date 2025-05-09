@@ -31,12 +31,12 @@ The BM25 score is an advanced version of the TF-IDF score with two free paramete
 
 Dense Passage Retrieval as shown in Karpukhin \cite{karpukhin2020densepassageretrievalopendomain} utilizes Bidirectional Encoder Representation from Transformers (BERT, \cite{devlin2019bertpretrainingdeepbidirectional}). BERT corresponds to the encoder component of a sequence-to-sequence Transformer architecture.Therefore it can be used to encode the text passages used as contexts at the classification token [CLS]. Text passages are mapped into a d-dimensional vector space under the assumption that semantically similar passages exhibit proximity. The query is also encoded into this space and the similarity between the mapped query vector and each passage vector is calculated. The similarity is calculated by the dot product or other similarity functions. The top-k similar passages are then selected and used for the generation.
 
-Contemporary specialized embedding models are benchmarked through frameworks like HuggingFace's MTEB \cite{muennighoff2022mteb}. While MTEB rankings suggest optimal embedding models, no universal solution exists. Embedding models are language- and domain-sensitive as Gao \cite{Gao.18.12.2023} points out. 
+Contemporary specialized embedding models are benchmarked through frameworks such as HuggingFace's MTEB \cite{muennighoff2022mteb}. While MTEB rankings suggest optimal embedding models, no universal solution exists. Embedding models are language- and domain-sensitive, as Gao \cite{Gao.18.12.2023} points out. 
 
 \subsection{Hybrid Retrieval}
 \label{sec:hybrid_retrieval}
 
-Both sparse retrieval techniques TF-IDF and BM25 are good for keyword specific searches, but perform poorly on a semantic comparison of documents and query. Encoders like BERT, trained for language understanding, excel at semantic comparisons. Often it is not trivial to determine if a text retrieval needs a keyword-relevant sparse retrieval or dense retrieval considering semantics.
+Both sparse retrieval techniques TF-IDF and BM25 are good for keyword-specific searches, but perform poorly on a semantic comparison of documents and query. Encoders such as BERT, trained for language understanding, excel at semantic comparisons. Often, it is not trivial to determine whether a text retrieval task requires keyword-relevant sparse retrieval or dense retrieval that considers semantics.
 
 Hybrid models compute both dense and sparse retrieval scores, combining them through weighted summation.
 $$\alpha \cdot dense+(1 - \alpha )\cdot sparse$$ A factor $\alpha=1$ results in using only dense retrieval. There is no universal performant value for $\alpha$. This makes $\alpha$ a tunable hyperparameter requiring optimization.
