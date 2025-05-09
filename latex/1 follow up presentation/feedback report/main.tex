@@ -76,7 +76,7 @@ Daher ist es wichtig, dass die Evaluierungen nicht parallel gestartet werden, so
 
 Für die Neuausrichtung des Fokus, werde ich noch sicherstellen, dass ein solches Framework noch nicht existiert.
 
-\paragraph{AutoRAG\cite{AutoRAG}}
+\paragraph{AutoRAG \cite{AutoRAG}}
 AutoRAG ist ein Tool für Hyperparameter-Tuning für RAG-Systeme. Der Nutzer erstellt eine Konfigurationsdatei, welche 
 die sogenannten Nodes (Retriever, Generator, Reranker) definiert und die Hyperparameter (Top-K, Models, Prompts) angibt. 
 Danach läuft die Analyse und es wird die Konfiguration des besten Systems angegeben. 
@@ -84,26 +84,26 @@ Danach läuft die Analyse und es wird die Konfiguration des besten Systems angeg
 Das Tool nutzt nur End-to-End-Evaluation und ist schwierig anpassbar. Laut den Entwicklern im Discord sind fortgeschrittene Methoden (IRA) derzeit nicht möglich. 
 Es bietet keine Möglichkeit ein Baseline-LLM zu evaluieren. 
 
-\paragraph{Llama-Index\cite{Liu_LlamaIndex_2022} \& Langchain\cite{Chase_LangChain_2022}}
+\paragraph{Llama-Index \cite{Liu_LlamaIndex_2022} \& Langchain \cite{Chase_LangChain_2022}}
 Llama-Index und Langchain sind umfangreiche Bibliotheken für die Entwicklung von RAG-Pipelines. 
 Sie bieten jedoch keine zeiteffiziente Möglichkeit zum Benchmarken vieler RAG-Systeme.
 
-\paragraph{RaLLe\cite{ralle}}
+\paragraph{RaLLe \cite{ralle}}
 RaLLe ist eine Bibliothek zur zeiteffizienten Entwicklung von RAG-Systemen. Der letzte Commit ist über ein Jahr alt und die Bibliothek scheint sehr restriktv. Unter anderem ist es nur möglich .tsv-Dateien mit einer vorgegebenen Struktur zu nutzen. Fortgeschrittene Methoden sind nicht möglich.
 
-\paragraph{FlashRAG\cite{FlashRAG}}
+\paragraph{FlashRAG \cite{FlashRAG}}
 
 FlashRAG ist ein Python Toolkit, dass eine ähnliche Motivation hat, wie ich sie hier versuche umzusetzen. 
-Es bietet eine Konfigurationsdatei als Start, es hat eine Auswahl von Task-spezifischen Metriken und eine Vielzahl an RAG-Komponenten. Es lassen sich viele RAG-Varianten und einige Spezialfälle damit umsetzen (IRA, Self-RAG\cite{Asai.10172023}, FLARE\cite{Jiang.5112023}, IRCoT\cite{Trivedi.12202022}).
+Es bietet eine Konfigurationsdatei als Start, es hat eine Auswahl von Task-spezifischen Metriken und eine Vielzahl an RAG-Komponenten. Es lassen sich viele RAG-Varianten und einige Spezialfälle damit umsetzen (IRA, Self-RAG \cite{Asai.10172023}, FLARE \cite{Jiang.5112023}, IRCoT \cite{Trivedi.12202022}).
 
 \paragraph{RAGLAB\cite{zhang-etal-2024-raglab}}
 RAGLAB ist das neueste Framework und bietet ähnliche Funktionalitäten wie dessen Vorgänger. Es führt "Fair Comparison" ein, einen faireren Vergleich für LLM's und Retriever zum Beispiel das Entfernen von Special Tokens im Training oder dem Seedsetzen in Retrieval und Generator Pipelines.
 
 
-\paragraph{Haystack\cite{Pietsch_Haystack_the_end-to-end_2019} \& FastRAG\cite{Izsak_fastRAG_Efficient_Retrieval_2023}}
+\paragraph{Haystack\cite{Pietsch_Haystack_the_end-to-end_2019} \& FastRAG \cite{Izsak_fastRAG_Efficient_Retrieval_2023}}
 Haystack ist ähnlich wie Llama-Index und LangChain eine umfangreiche Bibliothek für die Entwicklung von RAG-Pipelines. Sie bietet Pipeline Definition mittels YAML oder JSON Dateien und ist stark modular aufgebaut. Es lassen sich IRA Methoden damit entwickeln. 
 FastRAG ist kompatibel mit Haystack und hat eine Vielzahl an RAG-Komponenten entwickelt, mit denen es möglich ist Spezialfälle aus Papers zu entwickeln. 
-Darunter zählen zum Beispiel REPLUG\cite{shi2023replugretrievalaugmentedblackboxlanguage}, PLAID\cite{santhanam2022plaidefficientenginelate}, ColBERT\cite{santhanam2022colbertv2effectiveefficientretrieval} oder quantized LLM's.\\
+Darunter zählen zum Beispiel REPLUG\cite{shi2023replugretrievalaugmentedblackboxlanguage}, PLAID \cite{santhanam2022plaidefficientenginelate}, ColBERT\cite{santhanam2022colbertv2effectiveefficientretrieval} oder quantized LLM's.\\
 
 \subsubsection{Einordnung bestehender Frameworks und Bibliotheken}
 

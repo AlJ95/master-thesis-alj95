@@ -20,9 +20,9 @@ Lian et al. \cite{Lian.2024} introduced Ciri, a method that uses Large Language 
 \section{Experiment Design and Execution} \label{sec:exp_design_exec}
 The following sections detail the design and execution of our configuration validation experiment. This experiment adheres strictly to the methodology established by the RAGBench framework presented in Chapter \ref{chap:design}. The core principle is to split the evaluation dataset into validation and test sets. All system configuration, evaluation, and iterative refinement are performed exclusively on the validation set. Finally, generalization is assessed on the held-out test set. Specifically, we employed a 70/30 validation-test split for the extended CTest dataset to ensure a sufficiently large test set for estimating generalization error (as discussed in Section \ref{sec:valtestsplit}).
 
-Our experimental workflow begins by establishing performance baselines using a standalone LLM and a naive RAG system (Section \ref{sec:framework-baselines}). We then evaluate an initial RAG configuration. Subsequent steps involve analyzing performance bottlenecks and failures using the framework's end-to-end and component-level metrics, alongside detailed trace analysis facilitated by MLflow and Langfuse (Section \ref{sec:evaluation-techniques}). Insights from this analysis guide iterative reconfiguration cycles aimed at improving performance on the validation set.
+Our experimental workflow begins by establishing performance baselines using a standalone LLM and a naive RAG system (Section \ref{sec:e2e}). We then evaluate an initial RAG configuration. Subsequent steps involve analyzing performance bottlenecks and failures using the framework's end-to-end and component-level metrics, alongside detailed trace analysis facilitated by MLflow and Langfuse (Section \ref{sec:ui}). Insights from this analysis guide iterative reconfiguration cycles aimed at improving performance on the validation set.
 
-A key difference in our evaluation approach compared to the original Ciri experiment \cite{Lian.2024} lies in handling output formatting. While Ciri reran queries until a correctly formatted answer was obtained, our framework employs a strict format check; if the generator's output does not conform to the expected format (such as providing a clear "valid" or "invalid" classification with reasoning, as detailed in Section \ref{sec:generator-evaluation}), the response is marked as incorrect. This reflects a scenario where automated post-processing requires predictable output.
+A key difference in our evaluation approach compared to the original Ciri experiment \cite{Lian.2024} lies in handling output formatting. While Ciri reran queries until a correctly formatted answer was obtained, our framework employs a strict format check; if the generator's output does not conform to the expected format (such as providing a clear "valid" or "invalid" classification with reasoning), the response is marked as incorrect. This reflects a scenario where automated post-processing requires predictable output.
 
 
 \subsection{Experimental Setup} \label{sec:exp_setup}
@@ -38,7 +38,7 @@ We chose the CCX23 dedicated CPU server\cite{hetzner-online-gmbh-2025} for all o
 We also used runpod.io\cite{runpod-2025} and deployed a RTX 4090 with 24GB VRAM for our experiments with vllm \cite{Kwon.12.09.2023} embedding models.
 
 \paragraph{Dataset} 
-We used the CTest dataset, prepared by the team behind Ciri\cite{Lian.2024}\cite{xlab-uiuc-2025}. The data consists of real-world misconfiguration scenarios, augmented with synthetic data. We had 907 test cases in total. The distribution per system is shown in the following table.
+We used the CTest dataset, prepared by the team behind Ciri \cite{Lian.2024}\cite{xlab-uiuc-2025}. The data consists of real-world misconfiguration scenarios, augmented with synthetic data. We had 907 test cases in total. The distribution per system is shown in the following table.
 
 \begin{table}[h]
     \centering
@@ -58,7 +58,7 @@ We used the CTest dataset, prepared by the team behind Ciri\cite{Lian.2024}\cite
         zookeeper & 72 & 3.7.0 \\
         \hline
     \end{tabular}
-    \caption{Number of configuration files and versions per system.}
+    \caption{Evaluation Dataset: Number of configuration files and versions per system.}
     \label{tab:technology_values}
 \end{table}
 
@@ -87,7 +87,7 @@ The ingestion of data into our vector database required scraping official docume
         & \hspace{0.25cm} \texttt{/apidocs/zookeeper-server/} \\
         \hline
     \end{tabular}
-    \caption{Technology and Documentation Links}
+    \caption{Technology and Documentation Links: Starting at those documentation pages as base URLs, we scraped every linked page with the same base URL as a prefix recursively.}
     \label{tab:technology_documentation}
 \end{table}
 
@@ -103,10 +103,7 @@ We also rebuilt the Ciri system within our Haystack RAG architecture and used it
 \subparagraph{Initial RAG Configuration} 
 First, we tested different standalone LLMs for measuring the performance of LLMs without complex system architecture. For our evaluation, we chose Qwen's \textit{QwQ-32B} \cite{qwq32b} and \textit{Qwen-2.5-coder-32b-instruct} \cite{hui2024qwen2}\cite{qwen2}\cite{qwen2.5}, OpenAI's versioned \textit{o1-mini}, an earlier version of \textit{gpt-4o-mini} (\textit{gpt-4o-mini-2024-08-06}), and an up-to-date version of \textit{gpt-4o-mini} for comparison. We also tested OpenAI's web-search version of \textit{gpt-4o-mini}, which appears to be an out-of-the-box RAG-system \cite{OpenAI_2022}. Lastly we added DeepSeek's most recent model \textit{V3} \cite{deepseekai2024deepseekv3technicalreport} to the list. 
 
-Results can be seen in Figure \ref{fig:LLMStandalone-Results}. The most recent \textit{GPT-4o-mini} model performs best for F1-Score. The evaluated models differ more strongly on False-Positives Rate and False-Negative Rate than on F1-Scores. \textit{GPT-4o-mini} has the lowest False-Negative-Rate and the highest False-Positive-Rate. Since positives represent valid configurations, \textit{GPT-4o-mini} classifies invalid configurations as valid more often, and conversely, classifies valid configurations as invalid less frequently. The older version of \textit{GPT-4o-mini} from 2024 and the web-search model have a slightly worse F1-Score, but more balanced FNR and FPR metrics. Even without few-shot learning as done by the Ciri team, the most recent version of \textit{gpt-4o-mini} did score a slightly higher average F1-Score ($0.681$) than the configuration from the Ciri team with \textit{gpt-3.5-turbo-0125} ($0.680$). In contrast to other models, we ran the most recent version of gpt-4o-mini more frequently as baseline in later experiment runs. The variance in F1-Scores in those runs is relatively small ($1.41 \cdot 10^{-5}$).
-
-
-\begin{figure}[h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.95\textwidth]{images/LLMStandalone-by-model.png}\\[6pt]
     \includegraphics[width=\textwidth]{images/LLMStandalone-by-model-FNRFPR.png}
@@ -114,9 +111,12 @@ Results can be seen in Figure \ref{fig:LLMStandalone-Results}. The most recent \
     \label{fig:LLMStandalone-Results}
   \end{figure}
 
+Results can be seen in Figure \ref{fig:LLMStandalone-Results}. The most recent \textit{GPT-4o-mini} model performs best for F1-Score. The evaluated models differ more strongly on False-Positives Rate and False-Negative Rate than on F1-Scores. \textit{GPT-4o-mini} has the lowest False-Negative-Rate and the highest False-Positive-Rate. Since positives represent valid configurations, \textit{GPT-4o-mini} classifies invalid configurations as valid more often, and conversely, classifies valid configurations as invalid less frequently. The older version of \textit{GPT-4o-mini} from 2024 and the web-search model have a slightly worse F1-Score, but more balanced FNR and FPR metrics. Even without few-shot learning as done by the Ciri team, the most recent version of \textit{gpt-4o-mini} did score a slightly higher average F1-Score ($0.681$) than the configuration from the Ciri team with \textit{gpt-3.5-turbo-0125} ($0.680$). In contrast to other models, we ran the most recent version of gpt-4o-mini more frequently as baseline in later experiment runs. The variance in F1-Scores in those runs is relatively small ($1.41 \cdot 10^{-5}$).
+
+
   Next, beyond the basic BM25 retriever (predefined as a baseline), we evaluated additional retrieval configurations. First, we tested a configuration employing only a dense retriever with OpenAI's \textit{text-embedding-3-small} \cite{OpenAI_2022}. Second, we implemented a hybrid retrieval configuration. This hybrid approach combined the results from the BM25 retriever and the aforementioned dense retriever, using three different weighting schemes for their respective scores: (1:2), (1:1), and (2:1), where the ratios represent (BM25 score : Dense score). We have evaluated the performance of these configurations with both the \textit{gpt-4o-mini-2024-08-06} and the most recent \textit{gpt-4o-mini} model. The results can be seen in Figure \ref{fig:conf-phase-0-retrievers}. The results show that the selected model has more impact on the overall performance than the retrieval technique in this experiment. The retrieval metrics can be seen in Table \ref{tab:retrieval_metrics}. Overall, the sparse retriever performed better than the dense retriever. Both retrieval techniques performed poorly on retrieval quality. The weight distribution of the hybrid retriever had only a small impact on the performance, with F1-Score ranging from \textit{0.567} to \textit{0.582}.
 
-\begin{table}[h]
+\begin{table}[!ht]
     \centering
     \begin{tabular}{|l|c|c|}
         \hline
@@ -293,7 +293,7 @@ Estimating the cost of embedding is more complex. First, consider the OpenAI API
 
 
 
-\subsection{Discussion} \label{sec:exp_discussion}
+\section{Discussion} \label{sec:exp_discussion}
 % Interpret the overall results of the experiment.
 % Which configuration performed best overall?
 % Did the RAG systems outperform the baselines?
@@ -328,7 +328,37 @@ Resource preparation and data preprocessing are more valuable than blindly selec
 
 Even ignoring ingestion time, systems incorporating a retriever consistently required longer computation times and more RAM during runtime compared to the standalone baseline. Additionally, computation times were also model-dependent, as indicated by outliers for certain configurations in Figure \ref{fig:evaluation-time}.
 
-\subsection{Conclusion} \label{sec:exp_conclusion}
+\section{Threats to Validity} \label{sec:exp_threats}
+
+This section discusses potential threats to the validity of the experimental findings presented in this chapter.
+
+\paragraph{Internal Validity}
+Internal validity refers to the extent to which the observed outcomes can be attributed to the experimental manipulations rather than extraneous factors.
+
+\begin{itemize}
+    \item \textbf{Baseline Reimplementation:} While efforts were made to faithfully replicate the Ciri system as a baseline, minor differences in our Haystack-based implementation compared to the original Ciri architecture could exist. These might subtly influence direct performance comparisons.
+    \item \textbf{Documentation Corpus Integrity:} The web scraping process for documentation, while automated, might have encountered transient network issues or website structure changes leading to incomplete data or 404 errors for some pages. This could affect the completeness of the knowledge base for certain systems or versions.
+    \item \textbf{API Reliability and Model Stability:} Reliance on external LLM APIs introduces a dependency on their uptime and consistent behavior. API errors or undocumented changes in underlying unversioned models (such as the most recent versions of \textit{gpt-4o-mini} or \textit{gemini-2.5-flash} used to test contemporary performance) could lead to failed queries or performance variations. While some of these failures might average out across many queries, they could also reflect issues with specific models or providers beyond our direct control.
+    \item \textbf{System-Level Aggregation:} The decision to evaluate performance across all software systems in the CTest dataset, rather than per individual system (e.g., Django vs. Alluxio), was made for comparability and cost-efficiency. However, this aggregation might mask varying performance characteristics of the RAG configurations on specific systems.
+    \item \textbf{LLM-as-a-Judge for Retrieval Metrics:} While we mitigated preference leakage by ensuring that the LLM judge (e.g., \textit{gpt-4o-mini}) was from a different family than the model generating the content being assessed for retrieval metrics where possible, the inherent subjectivity and potential biases of LLM judges remain an area of active research and could influence metrics like Context Relevance.
+\end{itemize}
+
+\paragraph{External Validity}
+External validity concerns the generalizability of the experimental findings to other contexts.
+
+\begin{itemize}
+    \item \textbf{Corpus Specificity:} The document corpus was constructed specifically for the software systems and versions present in the CTest dataset. Therefore, the performance results, particularly for RAG configurations reliant on this corpus, may not directly generalize to newer software versions, different software systems, or entirely different documentation sets.
+    \item \textbf{Task Scope:} This experiment focused on file-level configuration validation. The findings may not be directly applicable to parameter-level validation, inter-configuration dependency checking, or other types of software engineering tasks that might require different RAG strategies or knowledge representations.
+    \item \textbf{Dataset Representativeness:} While CTest includes real-world and synthetic misconfigurations, the specific distribution and nature of these examples might not encompass all possible configuration errors or documentation complexities found in other operational environments.
+\end{itemize}
+
+\paragraph{Construct Validity}
+Construct validity relates to how well the operationalizations (e.g., metrics, experimental setup) measure the intended theoretical constructs.
+\begin{itemize}
+   \item \textbf{Metrics for Validation Quality:} Standard classification metrics (F1-score, precision, recall) were used. While informative, they might not fully capture nuanced aspects of validation quality, such as the interpretability or actionability of the reasoning provided alongside a "valid" or "invalid" judgment. We used F1-Score for all conclusions for better comparability with the Ciri paper.
+\end{itemize}
+
+\section{Conclusion} \label{sec:exp_conclusion}
 % Summarize the main findings and contributions of this specific experiment.
 % Reiterate the performance of the best RAG system found.
 

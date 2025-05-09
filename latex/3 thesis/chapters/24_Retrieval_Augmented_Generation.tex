@@ -1,4 +1,4 @@
-Large language models (LLMs) exhibit fundamental limitations that cannot be fully resolved through training or prompt engineering. Gao \cite{Gao.18.12.2023} stated that LLMs have significant limitations in knowledge-intensive or domain-specific tasks. Insufficient domain-specific training data often results in erroneous outputs. For large language models, this is called \textit{hallucinations} as defined by Huang \cite{Huang.2023}. In retrieval-augmented generation (RAG) systems, hallucinations refer to outputs unsupported by provided context. Rashkin \cite{Rashkin.} defined hallucinations as any information that is neither inferable from nor stated by an external document. In this thesis we will use the definition for RAG systems.
+Large language models (LLMs) exhibit fundamental limitations that cannot be fully resolved through training or prompt engineering. Gao \cite{Gao.18.12.2023} stated that LLMs have significant limitations in knowledge-intensive or domain-specific tasks. Insufficient domain-specific training data often results in erroneous outputs. For large language models, this is called \textit{hallucinations} as defined by Huang \cite{Huang_2023}. In retrieval-augmented generation (RAG) systems, hallucinations refer to outputs unsupported by provided context. Rashkin \cite{Rashkin.} defined hallucinations as any information that is neither inferable from nor stated by an external document. In this thesis we will use the definition for RAG systems.
 
 Factually incorrect output from an LLM can have several reasons. The required information to answer this question can be private, stored in a database that is not accessible during training. Additionally, the high cost of training/fine-tuning limits update frequency. This creates temporal gaps where post-training information remains unavailable. All those problems can be solved if the LLM is not used for the answer itself, but rather used for building a coherent text passage given a question and its answer. Then a database would store all relevant information and would be updated as frequently as required. During inference, the system retrieves relevant document chunks from the database to inform answer generation.
 
@@ -18,7 +18,7 @@ Naive RAGs represent the foundational implementation of retrieval-augmented gene
     \label{fig:naive_rag}
 \end{figure}
 
-This procedure can be seen in figure \ref{fig:naive_rag}. This generation phase is frequently termed the \textit{read} operation in literature. Gao \cite{Gao.18.12.2023} defines the naive RAG system as \textit{Retrieve-Read}. The retrieval can be done with sparse retrieval (TF-IDF, BM25), dense retrieval (DPR) or a hybrid version as showed in section \ref{retrieval}. 
+This procedure can be seen in figure \ref{fig:naive_rag}. This generation phase is frequently termed the \textit{read} operation in literature. Gao \cite{Gao.18.12.2023} defines the naive RAG system as \textit{Retrieve-Read}. The retrieval can be done with sparse retrieval (TF-IDF, BM25), dense retrieval (DPR) or a hybrid version as showed in section \ref{sec:hybrid_retrieval}. 
 
 \begin{figure}[h!]
     \centering
@@ -42,7 +42,7 @@ There is no strict definition of advanced versions of retrieval-augmented genera
 \paragraph{Chunking}
 \label{sec:chunk}
 % graphic for techniques, such as overlap, fixed sized (sliding window approach), semantic chunks, ...
-Chunking's importance becomes clear through a practical example: Let us use a sentence from Wikipedia \cite{LeipzigWikipedia.2025} for Leipzig from \citeyear{LeipzigWikipedia.2025}. In the section "Music" there is the following sentence.
+Chunking's importance becomes clear through a practical example: Let us use a sentence from Wikipedia \cite{LeipzigWikipedia.2025} for Leipzig. In the section "Music" there is the following sentence.
 
 \begin{quote}
     "Johann Sebastian Bach spent the longest phase of his career in Leipzig, from 1723 until his death in 1750, conducting the Thomanerchor (St. Thomas Church Choir), at the St. Thomas Church, the St. Nicholas Church and the Paulinerkirche, the university church of Leipzig (destroyed in 1968)."
@@ -53,7 +53,7 @@ If there are thousands of wikipedia pages or websites to process, then this can 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/Chunking.pdf}
-    \caption{Differnt types of chunking showed on the example of a wikipedia page of Leipzig\cite{LeipzigWikipedia.2025}}
+    \caption{Differnt types of chunking showed on the example of a wikipedia page of Leipzig \cite{LeipzigWikipedia.2025}}
     \label{fig:chunking}
 \end{figure}
 
@@ -73,7 +73,7 @@ Therefore there are several chunking techniques to consider for tuning the RAG-s
 
 \section{Modular RAG}
 
-There is a variety of different RAG systems with lots of different components. The definition of advanced RAG systems is too strict and sequential for including this variety. Modular RAGs close this gap. Modular RAGs can be seen as individual component blocks that can be added to a pipeline as long as the input and output of these blocks are compatible. Gao et al. introduced this definition and defined more components then the here presented \textit{rewrite, retrieve, rerank and read}.\cite{Gao.18.12.2023} One simple example of the need for modular RAGs is a routing component, that decides if retrieval is necessary at all. Redirecting to the generator can lead to less computational time and better results in some cases.\cite{Mallen.20.12.2022} This modularity is a key requirements for the ability to build custom RAG systems for each use case.
+There is a variety of different RAG systems with lots of different components. The definition of advanced RAG systems is too strict and sequential for including this variety. Modular RAGs close this gap. Modular RAGs can be seen as individual component blocks that can be added to a pipeline as long as the input and output of these blocks are compatible. Gao et al. introduced this definition and defined more components then the here presented \textit{rewrite, retrieve, rerank and read}.\cite{Gao.18.12.2023} One simple example of the need for modular RAGs is a routing component, that decides if retrieval is necessary at all. Redirecting to the generator can lead to less computational time and better results in some cases.\cite{Mallen.2022} This modularity is a key requirements for the ability to build custom RAG systems for each use case.
 
 
 \subsection{Drawbacks of RAGs}

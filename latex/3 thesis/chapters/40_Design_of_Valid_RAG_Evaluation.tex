@@ -20,7 +20,7 @@ However, relying solely on end-to-end evaluation makes it difficult to pinpoint 
   \label{fig:failures}
 \end{figure}
 
-\subsection{End-to-End Evaluation}
+\subsection{End-to-End Evaluation}\label{sec:e2e}
 
 We define end-to-end evaluation as metrics that use the system's input query and its final output, comparing this output against a ground-truth reference to determine correctness. Evaluations that assess intermediate steps, such as retrieval performance or the generator's ability to utilize provided context, are considered component-level evaluations and are distinct from the end-to-end perspective discussed here. In this thesis, our focus is primarily on classification tasks; therefore, the end-to-end metrics employed are limited to those suitable for classification.
 
@@ -47,7 +47,7 @@ In stark contrast to evaluating open-ended generative tasks, classification task
 
 Meaningful end-to-end evaluation requires researchers to establish \textit{baselines} for their experiments. Baselines make results interpretable by providing essential points of comparison. Therefore, this framework implements two default baselines used when initiating an experiment. The first baseline consists solely of a standalone LLM answering the query without retrieval. The second is a naive RAG system employing BM25 retrieval with data from the predefined corpus (a simple retrieve-read pipeline, cf. section \ref{sec:naive_rags}). The standalone LLM baseline helps justify the complexity overhead of implementing a RAG system; if an evaluated RAG system cannot surpass the performance of the LLM baseline, a simpler approach might be preferable. Advanced RAG systems often involve more components, potentially leading to longer computation times and increased costs. Outperforming the naive RAG baseline demonstrates the value added by the more advanced RAG configuration beyond simple keyword retrieval.
 
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{images/FrameworkBaselines.pdf}
   \caption{Framework Overview: Researchers define configuration files for RAG variations, which are evaluated against the standalone LLM and naive RAG baselines using end-to-end metrics.}
@@ -61,7 +61,7 @@ Figure \ref{fig:framework-baselines} illustrates the state of our framework as d
 
 Component evaluation is necessary to detect performance bottlenecks or issues introduced by individual components or problematic interactions between them \cite{Salemi.2024}. In Figure \ref{fig:failures}, we presented a few examples of such failures. While illustrative, this is far from an exhaustive list of potential failure points in a complex RAG system. We argue that potentially *all* components, no matter how seemingly small their impact, can contribute significantly to the overall system's failure rate. Therefore, ideally, it would be necessary to evaluate them all component-wise.
 
-However, current literature on component evaluation primarily focuses on the core retrieval and generation (\textit{read}) stages. Furthermore, we want to emphasize that evaluating components in complete isolation from others is often impractical. If, for example, one wished to evaluate the generator component independently of the retrieval step, it would require providing a ground-truth dataset of ideal retrieved contexts for each query. This might be feasible for simple scenarios requiring only a single, easily identifiable document chunk (e.g., a sentence providing a direct answer). Yet, real-world scenarios frequently involve more complex cases, such as ambiguous queries, multifaceted questions requiring information synthesis, or queries that do not require retrieval at all \cite{Huang.2023}. Furthermore, if the researcher modifies the chunking strategy (e.g., size or technique), the ground-truth contexts would need to be recreated, as the previously selected chunks might no longer exist (cf. section \ref{sec:advanced_rags}).
+However, current literature on component evaluation primarily focuses on the core retrieval and generation (\textit{read}) stages. Furthermore, we want to emphasize that evaluating components in complete isolation from others is often impractical. If, for example, one wished to evaluate the generator component independently of the retrieval step, it would require providing a ground-truth dataset of ideal retrieved contexts for each query. This might be feasible for simple scenarios requiring only a single, easily identifiable document chunk (e.g., a sentence providing a direct answer). Yet, real-world scenarios frequently involve more complex cases, such as ambiguous queries, multifaceted questions requiring information synthesis, or queries that do not require retrieval at all \cite{Huang_2023}. Furthermore, if the researcher modifies the chunking strategy (e.g., size or technique), the ground-truth contexts would need to be recreated, as the previously selected chunks might no longer exist (cf. section \ref{sec:advanced_rags}).
 
 Considering other components besides the retriever, such as query rewriters or document rerankers, establishing ground-truth data becomes even more problematic. The purpose of rewriting a query, for instance, is often to improve subsequent retrieval performance. Thus, its effectiveness is inherently dependent on the specific retriever used and cannot easily be assessed against fixed, retriever-agnostic ground-truth examples in an evaluation dataset.
 
@@ -70,7 +70,7 @@ Given these challenges, the primary purpose of component evaluation shifts towar
 Relying primarily on system input and final ground-truth datasets for evaluation offers significant time savings compared to creating extensive intermediate ground truths. However, detailed failure analysis to pinpoint the root cause of errors still necessitates tracing individual pipeline executions, which we utilize in this framework with Langfuse. The following sections detail our approach to evaluating the key retrieval and generation blocks using a combination of these techniques.
 
 \paragraph{Retrieve}
-Evaluating the retrieval component is arguably one of the most challenging aspects of RAG assessment for several reasons. First, retrieving more documents does not necessarily imply better final results, and it is often unclear which specific set of documents will best enable the generator to produce the optimal answer \cite{Jin.5222024}. Second, real-world indexed corpora often contain redundant and contradictory information \cite{Yu.2024}. Third, some queries require retrieving diverse perspectives on a topic, highlighting various considerations. Fourth, the quality of the input query itself significantly affects retrieval performance; queries can be overly complex or ambiguous, or may not even require retrieval, potentially leading to generator hallucinations if irrelevant or misleading context is fetched \cite{Huang.2023, Mallen.20.12.2022}.
+Evaluating the retrieval component is arguably one of the most challenging aspects of RAG assessment for several reasons. First, retrieving more documents does not necessarily imply better final results, and it is often unclear which specific set of documents will best enable the generator to produce the optimal answer \cite{Jin.5222024}. Second, real-world indexed corpora often contain redundant and contradictory information \cite{Yu.2024}. Third, some queries require retrieving diverse perspectives on a topic, highlighting various considerations. Fourth, the quality of the input query itself significantly affects retrieval performance; queries can be overly complex or ambiguous, or may not even require retrieval, potentially leading to generator hallucinations if irrelevant or misleading context is fetched \cite{Huang_2023, Mallen.2022}.
 
 While retrieved documents can often be assessed in a binary fashion (relevant/irrelevant), allowing for metrics based on \textit{True/False Positives/Negatives}, simple metrics like precision and recall are often not sufficiently sensitive to capture nuanced differences in retrieval quality \cite{Yu.2024}. There is a clear need for evaluation techniques that also consider the ranking of retrieved documents.
 
@@ -95,7 +95,7 @@ $$AP@K=\frac{1}{N}\sum_{k=1}^{K}Precision(k) \cdot rel(k)$$
 
 The formula presented is the standard definition of MAP@K \cite{Lin.13.10.2020}. While in some traditional information retrieval scenarios K might be set very high, this can be computationally expensive and may conflict with the goal of providing concise context. Therefore, we calculate MAP@K based on the actual number of documents retrieved (i.e., the system's configured \textit{Top-K} parameter). \textit{Context Relevance} measures overall retrieval quality by focusing on the proportion of relevant items, while \textit{MAP@K} specifically assesses the ranking quality within the retrieved set. A low \textit{Context Relevance} score alongside a high \textit{MAP@K} score might indicate that while relevant documents are found and ranked well, too many irrelevant documents are also being retrieved, suggesting the \textit{Top-K} parameter could potentially be reduced. Conversely, a low \textit{MAP@K} suggests the retrieval/ranking mechanism itself needs adjustment, as irrelevant documents frequently appear high in the results list.
 
-\begin{figure}
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{images/APatK.pdf}
   \caption{This is an example for AP@K metric for one query. At each retrieved document relevance and precision of the first to K-th document will be averaged through all retrieved documents.}
@@ -108,7 +108,7 @@ Generators in RAG systems, typically based on transformer architectures, were no
 
 Even when the final prediction is simply \textit{True} or \textit{False}, the underlying generation process involves varying degrees of context utilization and reasoning quality. Therefore, in this framework, we adopt a slightly modified output format for classification tasks to gain more insight. Instead of requiring the generator to produce *only* the binary label (e.g., \textit{0}/\textit{1}, \textit{valid}/\textit{invalid}, \textit{True}/\textit{False}), we prompt it to also output its reasoning *alongside* the classification verdict. The primary technical constraint is that the final answer label itself (e.g., the phrase \textit{'The answer is "True"'}) must be present in a predictable pattern within the output, allowing us to extract it reliably, for instance, using a regular expression for end-to-end metric calculation. The figure \ref{fig:answerreason} shows a simple example.
 
-\begin{figure}
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{images/Answer-vs-Reasoning.pdf}
   \caption{This shows the answer of an generator and the final answer which we are using for binary classification.}
@@ -126,7 +126,7 @@ Both rerankers and generators significantly influence, and rely upon, effective 
 
 \paragraph{How to evaluate such component blocks?}
 
-\begin{figure}
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{images/ComponentBlockEvaluation.pdf}
   \caption{Comparison of isolated component evaluation of each component and component block evaluation, where several components with the same goal are evaluated.}
@@ -142,7 +142,7 @@ Since many components beyond the core retriever and generator lack direct, intri
 
 \section{Fast RAG Development}\label{sec:fastrag}
 
-\begin{figure}[b]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/showcase-pipeline.pdf}
     \caption{A simple Retrieve-Read pipeline with both dense and sparse retrieval, definable via YAML.}
@@ -151,7 +151,7 @@ Since many components beyond the core retriever and generator lack direct, intri
 
 RAG systems possess numerous parameters whose optimal settings are often non-obvious. Researchers typically undergo multiple reconfiguration phases until the RAG system achieves satisfactory performance. Intuitively, more iterative refinement cycles can lead to better results. Therefore, enabling short feedback cycles and rapid development is crucial; it allows for the evaluation of numerous configurations and facilitates quick identification and mitigation of performance bottlenecks. This section outlines our approach and considerations for enabling faster RAG development cycles.
 
-There are several RAG development tools and frameworks. Highly used ones are Llama-Index\cite{Liu_LlamaIndex_2022}, Langchain\cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack comes with custom components that enable new component technologies and does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in one YAML-file to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
+There are several RAG development tools and frameworks. Highly used ones are Llama-Index \cite{Liu_LlamaIndex_2022}, Langchain \cite{Chase_LangChain_2022} and Haystack\cite{Pietsch_Haystack_the_end-to-end_2019}. All of them offer comparable functionality for building advanced RAG systems in modularized architecture as introduced by Gao et al.\cite{Gao.18.12.2023}. Haystack comes with custom components that enable new component technologies and does offer a functionality, where users can define a pipeline via a YAML-file. This enhances the reconfiguration of such systems, because instead of editing python files, there are just parameters in one YAML-file to be changed. This enhances the ability to report the methodologies of each experiment too. Instead of saving a python script or module for each configuration, only a YAML is stored that describes the tested RAG architecture fully. An example of this YAML definition can be seen in figure \ref{fig:showcase} and the YAML code below.
 
 There are are more benefits for configuring via YAML files. First, we can copy existing RAG configurations easily. Second pipeline definitions can still be done in python, saving the afterwards into the YAML format. Lastly, Haystack develops an UI\cite{haystack-ui} for developing RAG system, that can be used to create such complex systems on a two-dimensional space.
 
@@ -201,12 +201,12 @@ components:
 Vector databases can differ in functionalities and performance, especially during ingestion. In this framework, we support three different vector databases for experimentation:
 \begin{itemize}
   \item In-Memory built-in vector database by Haystack
-  \item Chroma vector database\cite{Chroma}
-  \item Qdrant vector database\cite{qdrant}
+  \item Chroma vector database \cite{Chroma}
+  \item Qdrant vector database \cite{qdrant}
 \end{itemize}
 
 
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{images/FrameworkFull.pdf}
   \caption{Framework: At first the evaluation data get splitted into validation and hold-out test dataset. Then the validation data is used to evaluate a configured RAG system and compare it against baselines. After failure analyisis several reconfiguration phases can happen. At last the test dataset is used to test all configurations for a potential generalization error.}
@@ -248,27 +248,27 @@ Evaluating semantic correctness in LLM and RAG system outputs often relies on ei
 \paragraph{External Validity}
 Our framework addresses a key aspect of external validity through its mandatory use of a validation-test split. As described previously (Section \ref{sec:valtestsplit}), the evaluation dataset is split, and all system tuning and reconfiguration phases are performed using \textit{only} the validation set. This holds true regardless of whether these phases involve simple parameter tuning or training custom components (like fine-tuning a retriever or generator). The held-out test dataset is used only once at the final stage to estimate the generalization performance of the chosen configurations. Within MLflow, users can easily compare the metrics obtained on the validation set during development against the final metrics calculated on the test set for each experimental run. Significant discrepancies between validation and test performance highlight configurations that may have overfitted to the validation set, failing to generalize well.
 
-\begin{figure}[h] % Moved figure here
-    \centering
-    \includegraphics[width=\textwidth]{images/RAGvsLLM-tuning.pdf}
-    \caption{Comparison of reconfiguration between RAGs and LLMs - both relying on tuning parameters and test data.}
-    \label{fig:tuning}
+\begin{figure}[!ht] 
+  \centering
+  \includegraphics[width=\textwidth]{images/RAGvsLLM-tuning.pdf}
+  \caption{Comparison of reconfiguration between RAGs and LLMs - both relying on tuning parameters and test data.}
+  \label{fig:tuning}
 \end{figure}
 
-\section{User Interface}
+\section{User Interface}\label{sec:ui}
 
 Leveraging the previously discussed Haystack functionalities (like YAML pipelines), we have developed a Command-Line Interface (CLI)-based evaluation framework. The complete workflow orchestrated by the framework is depicted in figure \ref{fig:framework-full}. Given paths to an evaluation dataset, pipeline configurations, and metric definitions, the framework first splits the dataset into validation and test sets based on the specified \textit{test\_size} parameter. Subsequently, it uses the validation split to conduct the evaluations.
 
 The framework loads the necessary pipeline components and data, and begins by evaluating the baselines: first, a standalone LLM (to assess the value of retrieval itself), and second, after ingesting the data into the specified vector database, a naive BM25-based RAG (Retrieve-Read architecture) baseline (to establish a simple RAG performance level). Following the baseline evaluations, the framework executes and evaluates the RAG pipeline(s) defined in the user-provided YAML configuration file(s). Each evaluated configuration (baselines and user-defined) is assessed using both end-to-end and component-level metrics (as configured). Results (metrics and parameters) are logged to MLflow for visualization and comparison (Figure \ref{fig:mlflow}), while detailed execution traces are sent to Langfuse for inspection (Figure \ref{fig:langfuse}). Based on the results and trace analysis, researchers can reconfigure the pipeline YAML and repeat the evaluation process on the validation set.
 
-\begin{figure}
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=\textwidth]{images/MLFlow-Vis.png}
   \caption{Example of an MLflow run view in our framework. Hypothesis, comments, etc., can be defined via metadata within configuration files. These annotations facilitate comparison and interpretation of results.}
   \label{fig:mlflow}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=\textwidth]{images/langfuse.png}
 \caption{Example Langfuse trace view. Traces log input, output, and intermediate steps for each query, tagged here with success status to aid failure analysis.}
@@ -284,8 +284,3 @@ The current implementation of this framework primarily focuses on evaluating RAG
 We implemented the framework to be as modular as possible so that every possible architecture with all customized components can be evaluated. We cannot guarantee that every architecture is possible, and supporting agentic workflows might need further work.
 
 
-
-% Some Explanatory Notes:
-% Do I have to make a minimal manual here? I don't think so. I guess I have to write down What I have decided WHY
-
-% Was unterscheidet mein Framework von existierenden?
