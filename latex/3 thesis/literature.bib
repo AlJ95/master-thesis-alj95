@@ -38,6 +38,8 @@
 @inproceedings{Yin.2024,
  author = {Yin, Junqi and Bose, Avishek and Cong, Guojing and Lyngaas, Isaac and Anthony, Quentin},
  title = {Comparative Study of Large Language Model Architectures on Frontier},
+ volume={},
+ number={},
  pages = {556--569},
  publisher = {IEEE},
  isbn = {979-8-3503-8711-7},
@@ -114,29 +116,52 @@
  file = {2410.08801v1:Attachments/2410.08801v1.pdf:application/pdf}
 }
 
+% This file was created with Citavi 7.0.4.0
+
+@article{AshkanAlinejad.2024,
+ abstract = {This study proposes a straightforward baseline for evaluating retrievers in Retrieval-Augmented Generation (RAG)-based chatbots and considers LLMs{\&}{\#}39; strengths to ignore irrelevant contexts, as well as potential errors and hallucinations in their responses. Question answering systems (QA) utilizing Large Language Models (LLMs) heavily depend on the retrieval component to provide them with domain-specific information and reduce the risk of generating inaccurate responses or hallucinations. Although the evaluation of retrievers dates back to the early research in Information Retrieval, assessing their performance within LLM-based chatbots remains a challenge. This study proposes a straightforward baseline for evaluating retrievers in Retrieval-Augmented Generation (RAG)-based chatbots. Our findings demonstrate that this evaluation framework provides a better image of how the retriever performs and is more aligned with the overall performance of the QA system. Although conventional metrics such as precision, recall, and F1 score may not fully capture LLMs{\&}{\#}39; capabilities - as they can yield accurate responses despite imperfect retrievers - our method considers LLMs{\&}{\#}39; strengths to ignore irrelevant contexts, as well as potential errors and hallucinations in their responses.},
+ author = {{Ashkan Alinejad} and {Krtin Kumar} and {Ali Vahdat}},
+ year = {2024},
+ title = {Evaluating the Retrieval Component in LLM-Based Question Answering Systems},
+ url = {https://www.semanticscholar.org/paper/Evaluating-the-Retrieval-Component-in-LLM-Based-Alinejad-Kumar/d274dccfae844b06de6a2d7d083b264749adc599},
+ journal = {arXiv.org},
+ file = {Ashkan Alinejad, Krtin Kumar et al. 2024 - Evaluating the Retrieval Component:Attachments/Ashkan Alinejad, Krtin Kumar et al. 2024 - Evaluating the Retrieval Component.pdf:application/pdf}
+}
+
+
+
+
 @misc{Yu.2024,
  abstract = {Retrieval-Augmented Generation (RAG) has recently gained traction in natural language processing. Numerous studies and real-world applications are leveraging its ability to enhance generative models through external information retrieval. Evaluating these RAG systems, however, poses unique challenges due to their hybrid structure and reliance on dynamic knowledge sources. To better understand these challenges, we conduct A Unified Evaluation Process of RAG (Auepora) and aim to provide a comprehensive overview of the evaluation and benchmarks of RAG systems. Specifically, we examine and compare several quantifiable metrics of the Retrieval and Generation components, such as relevance, accuracy, and faithfulness, within the current RAG benchmarks, encompassing the possible output and ground truth pairs. We then analyze the various datasets and metrics, discuss the limitations of current benchmarks, and suggest potential directions to advance the field of RAG benchmarks.},
  author = {Yu, Hao and Gan, Aoran and Zhang, Kai and Tong, Shiwei and Liu, Qi and Liu, Zhaofeng},
  year = {2024},
  title = {Evaluation of Retrieval-Augmented Generation: A Survey},
  keywords = {Auepora;Benchmarking;evaluation;Metrics;Retrieval-Augmented Generation},
- file = {Yu, Gan et al. 2024 - Evaluation of Retrieval-Augmented Generation:Attachments/Yu, Gan et al. 2024 - Evaluation of Retrieval-Augmented Generation.pdf:application/pdf}
+ file = {Yu, Gan et al. 2024 - Evaluation of Retrieval-Augmented Generation:Attachments/Yu, Gan et al. 2024 - Evaluation of Retrieval-Augmented Generation.pdf:application/pdf},
+ url = {https://arxiv.org/abs/2405.07437}
 }
 
 % This file was created with Citavi 6.19.2.1
 
 @inproceedings{Salemi.2024,
  author = {Salemi, Alireza and Zamani, Hamed},
- title = {Evaluating Retrieval Quality in Retrieval-Augmented Generation},
- keywords = {Document-level Retrieval Evaluation;eRAG;Retrieval Evaluation;Retrieval Quality;Retrieval-Augmented Generation},
- pages = {2395--2400},
- publisher = {ACM},
- booktitle = {Proceedings of the 47th International ACM SIGIR Conference on Research and Development in Information Retrieval},
- year = {2024},
- address = {New York, NY, USA},
- doi = {10.1145/3626772.3657957},
- file = {Salemi, Zamani 2024 - Evaluating Retrieval Quality in Retrieval-Augmented:Attachments/Salemi, Zamani 2024 - Evaluating Retrieval Quality in Retrieval-Augmented.pdf:application/pdf}
+title = {Evaluating Retrieval Quality in Retrieval-Augmented Generation},
+year = {2024},
+isbn = {9798400704314},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3626772.3657957},
+doi = {10.1145/3626772.3657957},
+abstract = {Evaluating retrieval-augmented generation (RAG) presents challenges, particularly for retrieval models within these systems. Traditional end-to-end evaluation methods are computationally expensive. Furthermore, evaluation of the retrieval model's performance based on query-document relevance labels shows a small correlation with the RAG system's downstream performance. We propose a novel evaluation approach, eRAG, where each document in the retrieval list is individually utilized by the large language model within the RAG system. The output generated for each document is then evaluated based on the downstream task ground truth labels. In this manner, the downstream performance for each document serves as its relevance label. We employ various downstream task metrics to obtain document-level annotations and aggregate them using set-based or ranking metrics. Extensive experiments on a wide range of datasets demonstrate that eRAG achieves a higher correlation with downstream RAG performance compared to baseline methods, with improvements in Kendall's tau correlation ranging from 0.168 to 0.494. Additionally, eRAG offers significant computational advantages, improving runtime and consuming up to 50 times less GPU memory than end-to-end evaluation.},
+booktitle = {Proceedings of the 47th International ACM SIGIR Conference on Research and Development in Information Retrieval},
+pages = {2395–2400},
+numpages = {6},
+keywords = {evaluation, retrieval quality, retrieval-augmented generation},
+location = {Washington DC, USA},
+series = {SIGIR '24}
 }
+
+
 
 
 
@@ -157,17 +182,24 @@
 
 
 @inproceedings{Rashkin.,
- author = {Rashkin, Hannah and Reitter, David and Tomar, Gaurav Singh and Das, Dipanjan},
- title = {Increasing Faithfulness in Knowledge-Grounded Dialogue with Controllable Features},
- keywords = {Hallucinations;LLMs},
- pages = {704--718},
- publisher = {{Association for Computational Linguistics}},
- editor = {Zong, Chengqing and Xia, Fei and Li, Wenjie and Navigli, Roberto},
- booktitle = {Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)},
- address = {Stroudsburg, PA, USA},
- doi = {10.18653/v1/2021.acl-long.58},
- year = {2021},
- file = {Rashkin, Reitter et al. - Increasing Faithfulness in Knowledge-Grounded Dialogue:Attachments/Rashkin, Reitter et al. - Increasing Faithfulness in Knowledge-Grounded Dialogue.pdf:application/pdf}
+     title = "Increasing Faithfulness in Knowledge-Grounded Dialogue with Controllable Features",
+    author = "Rashkin, Hannah  and
+      Reitter, David  and
+      Tomar, Gaurav Singh  and
+      Das, Dipanjan",
+    editor = "Zong, Chengqing  and
+      Xia, Fei  and
+      Li, Wenjie  and
+      Navigli, Roberto",
+    booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 1: Long Papers)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.acl-long.58/",
+    doi = "10.18653/v1/2021.acl-long.58",
+    pages = "704--718",
+    abstract = "Knowledge-grounded dialogue systems are intended to convey information that is based on evidence provided in a given source text. We discuss the challenges of training a generative neural dialogue model for such systems that is controlled to stay faithful to the evidence. Existing datasets contain a mix of conversational responses that are faithful to selected evidence as well as more subjective or chit-chat style responses. We propose different evaluation measures to disentangle these different styles of responses by quantifying the informativeness and objectivity. At training time, additional inputs based on these evaluation measures are given to the dialogue model. At generation time, these additional inputs act as stylistic controls that encourage the model to generate responses that are faithful to the provided evidence. We also investigate the usage of additional controls at decoding time using resampling techniques. In addition to automatic metrics, we perform a human evaluation study where raters judge the output of these controlled generation models to be generally more objective and faithful to the evidence compared to baseline dialogue systems."
 }
 
 
@@ -203,16 +235,32 @@ year = {2024}
 
 
 @inproceedings{zhang-etal-2024-raglab,
-    title = "{RAGLAB}: A Modular and Research-Oriented Unified Framework for Retrieval-Augmented Generation",
-    author = "Zhang, Xuanwang and
-      Song, Yunze and
-      Wang, Yidong and
-      Tang, Shuyun and
-      others",
+   title = "{RAGLAB}: A Modular and Research-Oriented Unified Framework for Retrieval-Augmented Generation",
+    author = "Zhang, Xuanwang  and
+      Song, Yun-Ze  and
+      Wang, Yidong  and
+      Tang, Shuyun  and
+      Li, Xinfeng  and
+      Zeng, Zhengran  and
+      Wu, Zhen  and
+      Ye, Wei  and
+      Xu, Wenyuan  and
+      Zhang, Yue  and
+      Dai, Xinyu  and
+      Zhang, Shikun  and
+      Wen, Qingsong",
+    editor = "Hernandez Farias, Delia Irazu  and
+      Hope, Tom  and
+      Li, Manling",
     booktitle = "Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
-    month = dec,
+    month = nov,
     year = "2024",
+    address = "Miami, Florida, USA",
     publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.emnlp-demo.43/",
+    doi = "10.18653/v1/2024.emnlp-demo.43",
+    pages = "408--418",
+    abstract = "Large Language Models (LLMs) demonstrate human-level capabilities in dialogue, reasoning, and knowledge retention. However, even the most advanced LLMs face challenges such as hallucinations and real-time updating of their knowledge. Current research addresses this bottleneck by equipping LLMs with external knowledge, a technique known as Retrieval Augmented Generation (RAG). However, two key issues constrained the development of RAG. First, there is a growing lack of comprehensive and fair comparisons between novel RAG algorithms. Second, open-source tools such as LlamaIndex and LangChain employ high-level abstractions, which results in a lack of transparency and limits the ability to develop novel algorithms and evaluation metrics. To close this gap, we introduce RAGLAB, a modular and research-oriented open-source library. RAGLAB reproduces 6 existing algorithms and provides a comprehensive ecosystem for investigating RAG algorithms. Leveraging RAGLAB, we conduct a fair comparison of 6 RAG algorithms across 10 benchmarks. With RAGLAB, researchers can efficiently compare the performance of various algorithms and develop novel algorithms."
 }
 
 @software{Izsak_fastRAG_Efficient_Retrieval_2023,
@@ -326,16 +374,18 @@ year = {2019}
 
 % This file was created with Citavi 7.0.4.0
 
-@misc{Huang.2023,
- abstract = {The emergence of large language models (LLMs) has marked a significant breakthrough in natural language processing (NLP), fueling a paradigm shift in information acquisition. Nevertheless, LLMs are prone to hallucination, generating plausible yet nonfactual content. This phenomenon raises significant concerns over the reliability of LLMs in real-world information retrieval (IR) systems and has attracted intensive research to detect and mitigate such hallucinations. Given the open-ended general-purpose attributes inherent to LLMs, LLM hallucinations present distinct challenges that diverge from prior task-specific models. This divergence highlights the urgency for a nuanced understanding and comprehensive overview of recent advances in LLM hallucinations. In this survey, we begin with an innovative taxonomy of hallucination in the era of LLM and then delve into the factors contributing to hallucinations. Subsequently, we present a thorough overview of hallucination detection methods and benchmarks. Our discussion then transfers to representative methodologies for mitigating LLM hallucinations. Additionally, we delve into the current limitations faced by retrieval-augmented LLMs in combating hallucinations, offering insights for developing more robust IR systems. Finally, we highlight the promising research directions on LLM hallucinations, including hallucination in large vision-language models and understanding of knowledge boundaries in LLM hallucinations.},
- author = {Huang, Lei and Yu, Weijiang and Ma, Weitao and Zhong, Weihong and Feng, Zhangyin and Wang, Haotian and Chen, Qianglong and Peng, Weihua and Feng, Xiaocheng and Qin, Bing and Liu, Ting},
- date = {2024},
- year = {2024},
- title = {A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions},
- url = {http://arxiv.org/pdf/2311.05232},
- doi = {10.1145/3703155},
- file = {Huang, Yu et al. 2023 - A Survey on Hallucination:Attachments/Huang, Yu et al. 2023 - A Survey on Hallucination.pdf:application/pdf}
-}
+@article{Huang_2023,
+   title={A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions},
+   volume={43},
+   ISSN={1558-2868},
+   url={http://dx.doi.org/10.1145/3703155},
+   DOI={10.1145/3703155},
+   number={2},
+   journal={ACM Transactions on Information Systems},
+   publisher={Association for Computing Machinery (ACM)},
+   author={Huang, Lei and Yu, Weijiang and Ma, Weitao and Zhong, Weihong and Feng, Zhangyin and Wang, Haotian and Chen, Qianglong and Peng, Weihua and Feng, Xiaocheng and Qin, Bing and Liu, Ting},
+   year={2025},
+   month=jan, pages={1–55} }
 
 
 % This file was created with Citavi 7.0.4.0
@@ -407,14 +457,15 @@ Leipzig has long been a major centre for music, including classical and modern d
 
 % This file was created with Citavi 7.0.4.0
 
-@book{Jing.2024,
- abstract = {This survey explores the synergistic potential of Large Language Models (LLMs) and Vector Databases (VecDBs), a burgeoning but rapidly evolving research area. With the proliferation of LLMs comes a host of challenges, including hallucinations, outdated knowledge, prohibitive commercial application costs, and memory issues. VecDBs emerge as a compelling solution to these issues by offering an efficient means to store, retrieve, and manage the high-dimensional vector representations intrinsic to LLM operations. Through this nuanced review, we delineate the foundational principles of LLMs and VecDBs and critically analyze their integration's impact on enhancing LLM functionalities. This discourse extends into a discussion on the speculative future developments in this domain, aiming to catalyze further research into optimizing the confluence of LLMs and VecDBs for advanced data handling and knowledge extraction capabilities.},
- author = {Jing, Zhi and Su, Yongye and Han, Yikun},
- year = {2024},
- title = {When Large Language Models Meet Vector Databases: A Survey},
- file = {Jing, Su et al. 2024 - When Large Language Models Meet:Attachments/Jing, Su et al. 2024 - When Large Language Models Meet.pdf:application/pdf}
+@misc{Jing.2024,
+      title={When Large Language Models Meet Vector Databases: A Survey}, 
+      author={Zhi Jing and Yongye Su and Yikun Han},
+      year={2024},
+      eprint={2402.01763},
+      archivePrefix={arXiv},
+      primaryClass={cs.DB},
+      url={https://arxiv.org/abs/2402.01763}, 
 }
-
 
 % This file was created with Citavi 7.0.4.0
 
@@ -449,7 +500,7 @@ Leipzig has long been a major centre for music, including classical and modern d
 % This file was created with Citavi 7.0.4.0
 
 @misc{Pinecone.22.01.2025,
- year = {22.01.2025},
+ year = {2025},
  title = {Hierarchical Navigable Small Worlds (HNSW) | Pinecone},
  author = {Pinecone},
  url = {https://www.pinecone.io/learn/series/faiss/hnsw/},
@@ -460,14 +511,17 @@ Leipzig has long been a major centre for music, including classical and modern d
 % This file was created with Citavi 7.0.4.0
 
 @article{Malkov.2014,
- author = {Malkov, Yury and Ponomarenko, Alexander and Logvinov, Andrey and Krylov, Vladimir},
- year = {2014},
  title = {Approximate nearest neighbor algorithm based on navigable small world graphs},
- pages = {61--68},
- volume = {45},
- issn = {03064379},
- journal = {Information Systems},
- doi = {10.1016/j.is.2013.10.006}
+journal = {Information Systems},
+volume = {45},
+pages = {61-68},
+year = {2014},
+issn = {0306-4379},
+doi = {https://doi.org/10.1016/j.is.2013.10.006},
+url = {https://www.sciencedirect.com/science/article/pii/S0306437913001300},
+author = {Yury Malkov and Alexander Ponomarenko and Andrey Logvinov and Vladimir Krylov},
+keywords = {Similarity search, k-Nearest neighbor, Approximate nearest neighbor, Navigable small world, Distributed data structure},
+abstract = {We propose a novel approach to solving the approximate k-nearest neighbor search problem in metric spaces. The search structure is based on a navigable small world graph with vertices corresponding to the stored elements, edges to links between them, and a variation of greedy algorithm for searching. The navigable small world is created simply by keeping old Delaunay graph approximation links produced at the start of construction. The approach is very universal, defined in terms of arbitrary metric spaces and at the same time it is very simple. The algorithm handles insertions in the same way as queries: by finding approximate neighbors for the inserted element and connecting it to them. Both search and insertion can be done in parallel requiring only local information from the structure. The structure can be made distributed. The accuracy of the probabilistic k-nearest neighbor queries can be adjusted without rebuilding the structure. The performed simulation for data in the Euclidean spaces shows that the structure built using the proposed algorithm has small world navigation properties with log2(n) insertion and search complexity at fixed accuracy, and performs well at high dimensionality. Simulation on a CoPHiR dataset revealed its high efficiency in case of large datasets (more than an order of magnitude less metric computations at fixed recall) compared to permutation indexes. Only 0.03% of the 10 million 208-dimensional vector dataset is needed to be evaluated to achieve 0.999 recall (virtually exact search). For recall 0.93 processing speed 2800queries/s can be achieved on a dual Intel X5675 Xenon server node with Java implementation.}
 }
 
 % This file was created with Citavi 7.0.4.0
@@ -490,7 +544,7 @@ Leipzig has long been a major centre for music, including classical and modern d
 @misc{ErikBernhardsson.22.01.2025,
  abstract = {Benchmarks of approximate nearest neighbor libraries in Python - erikbern/ann-benchmarks},
  author = {{Erik Bernhardsson}},
- year = {22.01.2025},
+ year = {2015},
  title = {erikbern/ann-benchmarks: Benchmarks of approximate nearest neighbor libraries in Python},
  url = {https://github.com/erikbern/ann-benchmarks?tab=readme-ov-file},
  urldate = {22.01.2025}
@@ -653,13 +707,14 @@ Leipzig has long been a major centre for music, including classical and modern d
 
 % This file was created with Citavi 7.0.4.0
 
-@book{Es.2023,
- abstract = {We introduce RAGAs (Retrieval Augmented Generation Assessment), a framework for reference-free evaluation of Retrieval Augmented Generation (RAG) pipelines. RAG systems are composed of a retrieval and an LLM based generation module, and provide LLMs with knowledge from a reference textual database, which enables them to act as a natural language layer between a user and textual databases, reducing the risk of hallucinations. Evaluating RAG architectures is, however, challenging because there are several dimensions to consider: the ability of the retrieval system to identify relevant and focused context passages, the ability of the LLM to exploit such passages in a faithful way, or the quality of the generation itself. With RAGAs, we put forward a suite of metrics which can be used to evaluate these different dimensions \textit{without having to rely on ground truth human annotations}. We posit that such a framework can crucially contribute to faster evaluation cycles of RAG architectures, which is especially important given the fast adoption of LLMs.},
- author = {Es, Shahul and James, Jithin and Espinosa-Anke, Luis and Schockaert, Steven},
- year = {2023},
- title = {RAGAS: Automated Evaluation of Retrieval Augmented Generation},
- keywords = {framework;RAGAS;Retrieval-Augmented Generation},
- file = {Es, James et al. 2023 - RAGAS Automated Evaluation of Retrieval:Attachments/Es, James et al. 2023 - RAGAS Automated Evaluation of Retrieval.pdf:application/pdf}
+@misc{Es.2023,
+      title={Ragas: Automated Evaluation of Retrieval Augmented Generation}, 
+      author={Shahul Es and Jithin James and Luis Espinosa-Anke and Steven Schockaert},
+      year={2023},
+      eprint={2309.15217},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2309.15217}, 
 }
 
 
@@ -749,13 +804,14 @@ Leipzig has long been a major centre for music, including classical and modern d
 }
 
 
-@article{KaigeXie.2024,
- abstract = {A novel evaluation framework based on sub-question coverage, which measures how well a RAG system addresses different facets of a question, is introduced, and it is demonstrated that leveraging core sub-questions enhances both retrieval and answer generation in a RAG system, resulting in a 74{\%} win rate over the baseline that lacks sub-questions. Evaluating retrieval-augmented generation (RAG) systems remains challenging, particularly for open-ended questions that lack definitive answers and require coverage of multiple sub-topics. In this paper, we introduce a novel evaluation framework based on sub-question coverage, which measures how well a RAG system addresses different facets of a question. We propose decomposing questions into sub-questions and classifying them into three types -- core, background, and follow-up -- to reflect their roles and importance. Using this categorization, we introduce a fine-grained evaluation protocol that provides insights into the retrieval and generation characteristics of RAG systems, including three commercial generative answer engines: You.com, Perplexity AI, and Bing Chat. Interestingly, we find that while all answer engines cover core sub-questions more often than background or follow-up ones, they still miss around 50{\%} of core sub-questions, revealing clear opportunities for improvement. Further, sub-question coverage metrics prove effective for ranking responses, achieving 82{\%} accuracy compared to human preference annotations. Lastly, we also demonstrate that leveraging core sub-questions enhances both retrieval and answer generation in a RAG system, resulting in a 74{\%} win rate over the baseline that lacks sub-questions.},
- author = {{Kaige Xie} and {Philippe Laban} and {Prafulla Kumar Choubey} and {Caiming Xiong} and {Chien-Sheng Wu}},
- year = {2024},
- title = {Do RAG Systems Cover What Matters? Evaluating and Optimizing Responses with Sub-Question Coverage},
- url = {https://www.semanticscholar.org/paper/Do-RAG-Systems-Cover-What-Matters-Evaluating-and-Xie-Laban/48cd27b420972e5d1af4f071682cc67708d42d73},
- file = {Kaige Xie, Philippe Laban et al. 2024 - Do RAG Systems Cover What:Attachments/Kaige Xie, Philippe Laban et al. 2024 - Do RAG Systems Cover What.pdf:application/pdf}
+@misc{KaigeXie.2024,
+      title={Do RAG Systems Cover What Matters? Evaluating and Optimizing Responses with Sub-Question Coverage}, 
+      author={Kaige Xie and Philippe Laban and Prafulla Kumar Choubey and Caiming Xiong and Chien-Sheng Wu},
+      year={2024},
+      eprint={2410.15531},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2410.15531}, 
 }
 
 
@@ -794,22 +850,30 @@ Leipzig has long been a major centre for music, including classical and modern d
 
 % This file was created with Citavi 7.0.4.0
 
-@article{Gao.2023,
- abstract = {Luyu Gao, Xueguang Ma, Jimmy Lin, Jamie Callan. Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2023.},
- author = {Gao, Luyu and Ma, Xueguang and Lin, Jimmy and Callan, Jamie},
- year = {2023},
- title = {Precise Zero-Shot Dense Retrieval without Relevance Labels},
- url = {https://aclanthology.org/2023.acl-long.99/},
- pages = {1762--1777},
- journal = {Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
- doi = {10.18653/v1/2023.acl-long.99},
- file = {Gao, Ma et al. 2023 - Precise Zero-Shot Dense Retrieval:Attachments/Gao, Ma et al. 2023 - Precise Zero-Shot Dense Retrieval.pdf:application/pdf}
+@inproceedings{Gao.2023,
+    title = "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+    author = "Gao, Luyu  and
+      Ma, Xueguang  and
+      Lin, Jimmy  and
+      Callan, Jamie",
+    editor = "Rogers, Anna  and
+      Boyd-Graber, Jordan  and
+      Okazaki, Naoaki",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-long.99/",
+    doi = "10.18653/v1/2023.acl-long.99",
+    pages = "1762--1777",
+    abstract = "While dense retrieval has been shown to be effective and efficient across tasks and languages, it remains difficult to create effective fully zero-shot dense retrieval systems when no relevance labels are available. In this paper, we recognize the difficulty of zero-shot learning and encoding relevance. Instead, we propose to pivot through Hypothetical Document Embeddings (HyDE). Given a query, HyDE first zero-shot prompts an instruction-following language model (e.g., InstructGPT) to generate a hypothetical document. The document captures relevance patterns but is {\textquotedblleft}fake{\textquotedblright} and may contain hallucinations. Then, an unsupervised contrastively learned encoder (e.g., Contriever) encodes the document into an embedding vector. This vector identifies a neighborhood in the corpus embedding space, from which similar real documents are retrieved based on vector similarity. This second step grounds the generated document to the actual corpus, with the encoder`s dense bottleneck filtering out the hallucinations. Our experiments show that HyDE significantly outperforms the state-of-the-art unsupervised dense retriever Contriever and shows strong performance comparable to fine-tuned retrievers across various tasks (e.g. web search, QA, fact verification) and in non-English languages (e.g., sw, ko, ja, bn)."
 }
 
 
 % This file was created with Citavi 7.0.4.0
 
-@misc{Mallen.20.12.2022,
+@misc{Mallen.2022,
  abstract = {Despite their impressive performance on diverse tasks, large language models (LMs) still struggle with tasks requiring rich world knowledge, implying the limitations of relying solely on their parameters to encode a wealth of world knowledge. This paper aims to understand LMs' strengths and limitations in memorizing factual knowledge, by conducting large-scale knowledge probing experiments of 10 models and 4 augmentation methods on PopQA, our new open-domain QA dataset with 14k questions. We find that LMs struggle with less popular factual knowledge, and that scaling fails to appreciably improve memorization of factual knowledge in the long tail. We then show that retrieval-augmented LMs largely outperform orders of magnitude larger LMs, while unassisted LMs remain competitive in questions about high-popularity entities. Based on those findings, we devise a simple, yet effective, method for powerful and efficient retrieval-augmented LMs, which retrieves non-parametric memories only when necessary. Experimental results show that this significantly improves models' performance while reducing the inference costs.},
  author = {Mallen, Alex and Asai, Akari and Zhong, Victor and Das, Rajarshi and Khashabi, Daniel and Hajishirzi, Hannaneh},
  date = {20.12.2022},
@@ -825,7 +889,8 @@ Leipzig has long been a major centre for music, including classical and modern d
  year = {2021},
  title = {Towards Meaningful Statements in IR Evaluation: Mapping Evaluation Measures to Interval Scales},
  pages = {136182--136216},
- volume = {9},
+ volume={9},
+ number={},
  journal = {IEEE Access},
  doi = {10.1109/ACCESS.2021.3116857}
 }
@@ -834,7 +899,7 @@ Leipzig has long been a major centre for music, including classical and modern d
 
 @misc{EvidentlyAIInc..25.02.2025,
  author = {{Evidently AI, Inc.}},
- year = {25.02.2025},
+ year = {2025},
  title = {Mean Average Precision (MAP) in ranking and recommendations},
  url = {https://www.evidentlyai.com/ranking-metrics/mean-average-precision-map},
  urldate = {26.02.2025}
@@ -856,15 +921,21 @@ Leipzig has long been a major centre for music, including classical and modern d
 % This file was created with Citavi 7.0.4.0
 
 @article{Chiang.2023,
- abstract = {Cheng-Han Chiang, Hung-yi Lee. Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2023.},
- author = {Chiang, Cheng-Han and Lee, Hung-yi},
- year = {2023},
- title = {Can Large Language Models Be an Alternative to Human Evaluations?},
- url = {https://aclanthology.org/2023.acl-long.870/},
- pages = {15607--15631},
- journal = {Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
- doi = {10.18653/v1/2023.acl-long.870},
- file = {Chiang, Lee 2023 - Can Large Language Models Be:Attachments/Chiang, Lee 2023 - Can Large Language Models Be.pdf:application/pdf}
+    title = "Can Large Language Models Be an Alternative to Human Evaluations?",
+    author = "Chiang, Cheng-Han  and
+      Lee, Hung-yi",
+    editor = "Rogers, Anna  and
+      Boyd-Graber, Jordan  and
+      Okazaki, Naoaki",
+    booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.acl-long.870/",
+    doi = "10.18653/v1/2023.acl-long.870",
+    pages = "15607--15631",
+    abstract = "Human evaluation is indispensable and inevitable for assessing the quality of texts generated by machine learning models or written by humans. However, human evaluation is very difficult to reproduce and its quality is notoriously unstable, hindering fair comparisons among different natural language processing (NLP) models and algorithms. Recently, large language models (LLMs) have demonstrated exceptional performance on unseen tasks when only the task instructions are provided. In this paper, we explore if such an ability of the LLMs can be used as an alternative to human evaluation. We present the LLMs with the exact same instructions, samples to be evaluated, and questions used to conduct human evaluation, and then ask the LLMs to generate responses to those questions; we dub this LLM evaluation. We use human evaluation and LLM evaluation to evaluate the texts in two NLP tasks: open-ended story generation and adversarial attacks. We show that the result of LLM evaluation is consistent with the results obtained by expert human evaluation: the texts rated higher by human experts are also rated higher by the LLMs.We also find that the results of LLM evaluation are stable over different formatting of the task instructions and the sampling algorithm used to generate the answer. We are the first to show the potential of using LLMs to assess the quality of texts and discuss the limitations and ethical considerations of LLM evaluation."
 }
 
 
@@ -883,37 +954,35 @@ Leipzig has long been a major centre for music, including classical and modern d
 % This file was created with Citavi 7.0.4.0
 
 @misc{Jin.08.10.2024,
- abstract = {Retrieval-augmented generation (RAG) empowers large language models (LLMs) to utilize external knowledge sources. The increasing capacity of LLMs to process longer input sequences opens up avenues for providing more retrieved information, to potentially enhance the quality of generated outputs. It is plausible to assume that a larger retrieval set would contain more relevant information (higher recall), that might result in improved performance. However, our empirical findings demonstrate that for many long-context LLMs, the quality of generated output initially improves first, but then subsequently declines as the number of retrieved passages increases. This paper investigates this phenomenon, identifying the detrimental impact of retrieved {\textquotedbl}hard negatives{\textquotedbl} as a key contributor. To mitigate this and enhance the robustness of long-context LLM-based RAG, we propose both training-free and training-based approaches. We first showcase the effectiveness of retrieval reordering as a simple yet powerful training-free optimization. Furthermore, we explore training-based methods, specifically RAG-specific implicit LLM fine-tuning and RAG-oriented fine-tuning with intermediate reasoning, demonstrating their capacity for substantial performance gains. Finally, we conduct a systematic analysis of design choices for these training-based methods, including data distribution, retriever selection, and training context length.},
- author = {Jin, Bowen and Yoon, Jinsung and Han, Jiawei and Arik, Sercan O.},
- date = {08.10.2024},
- title = {Long-Context LLMs Meet RAG: Overcoming Challenges for Long Inputs in RAG},
- file = {Jin, Yoon et al 08102024 - Long-Context LLMs Meet RAG:Attachments/Jin, Yoon et al 08102024 - Long-Context LLMs Meet RAG.pdf:application/pdf}
+       title={Long-Context LLMs Meet RAG: Overcoming Challenges for Long Inputs in RAG}, 
+      author={Bowen Jin and Jinsung Yoon and Jiawei Han and Sercan O. Arik},
+      year={2024},
+      eprint={2410.05983},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2410.05983}, 
 }
 
 
 @inproceedings{DBLP:conf/nips/LiaoTRS21,
-  author       = {Thomas Liao and
-                  Rohan Taori and
-                  Deborah Raji and
-                  Ludwig Schmidt},
-  editor       = {Joaquin Vanschoren and
-                  Sai{-}Kit Yeung},
-  title        = {Are We Learning Yet? {A} Meta Review of Evaluation Failures Across
-                  Machine Learning},
-  booktitle    = {Proceedings of the Neural Information Processing Systems Track on
-                  Datasets and Benchmarks 1, NeurIPS Datasets and Benchmarks 2021, December
-                  2021, virtual},
-  year         = {2021},
-  url          = {https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/757b505cfd34c64c85ca5b5690ee5293-Abstract-round2.html},
+ author = {Liao, Thomas and Taori, Rohan and Raji, Deborah and Schmidt, Ludwig},
+ booktitle = {Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks},
+ editor = {J. Vanschoren and S. Yeung},
+ pages = {},
+ publisher = {},
+ title = {Are We Learning Yet? A Meta Review of Evaluation Failures Across Machine Learning},
+   url          = {https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/757b505cfd34c64c85ca5b5690ee5293-Abstract-round2.html},
   timestamp    = {Thu, 05 May 2022 16:53:59 +0200},
   biburl       = {https://dblp.org/rec/conf/nips/LiaoTRS21.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+  bibsource    = {dblp computer science bibliography, https://dblp.org},
+ volume = {1},
+ year = {2021}
 }
 
 % This file was created with Citavi 7.0.4.0
 
 @misc{deepsetstudio.10.03.2025,
- year = {10.03.2025},
+ year = {2025},
  title = {deepset Studio | Sign Up},
  author = {deepset GmbH},
  url = {https://www.deepset.ai/deepset-studio},
@@ -932,7 +1001,7 @@ Leipzig has long been a major centre for music, including classical and modern d
 % This file was created with Citavi 7.0.4.0
 
 @misc{dvc.17.03.2025,
- year = {17.03.2025},
+ year = {2020},
  title = {User Guide | Data Version Control · DVC},
  author = {DataChain Inc.},
  url = {https://dvc.org/doc/user-guide},
@@ -945,7 +1014,8 @@ title={Open Source LLM Engineering Platform},
 url={https://langfuse.com/}, 
 journal={Langfuse}, 
 author={Finto Technologies Inc.},
-urldate = {17.03.2025}
+urldate = {17.03.2025},
+year = {2022},
 } 
 
 @misc{MLflow, 
@@ -953,7 +1023,8 @@ title={MLflow},
 url={https://mlflow.org/}, 
 journal={MLflow}, 
 author={LF Projects, LLC},
-urldate = {17.03.2025}
+urldate = {17.03.2025},
+year = {2018},
 } 
 
 @misc{haystack-ui, 
@@ -961,7 +1032,8 @@ title={Deepset studio: Sign up},
 url={https://www.deepset.ai/deepset-studio}, 
 journal={deepset Studio}, 
 author={deepset GmbH},
-urldate = {17.03.2025}
+urldate = {17.03.2025},
+year = {2025},
 } 
 
 @misc{github-inc-2025,
@@ -1046,12 +1118,14 @@ year = {2025}
 }
 
 
-@book{Lian.2024,
- abstract = {Misconfigurations are major causes of software failures. Existing practices rely on developer-written rules or test cases to validate configurations, which are expensive. Machine learning (ML) for configuration validation is considered a promising direction, but has been facing challenges such as the need of large-scale field data and system-specific models. Recent advances in Large Language Models (LLMs) show promise in addressing some of the long-lasting limitations of ML-based configuration validation. We present a first analysis on the feasibility and effectiveness of using LLMs for configuration validation. We empirically evaluate LLMs as configuration validators by developing a generic LLM-based configuration validation framework, named Ciri. Ciri employs effective prompt engineering with few-shot learning based on both valid configuration and misconfiguration data. Ciri checks outputs from LLMs when producing results, addressing hallucination and nondeterminism of LLMs. We evaluate Ciri's validation effectiveness on eight popular LLMs using configuration data of ten widely deployed open-source systems. Our analysis (1) confirms the potential of using LLMs for configuration validation, (2) explores design space of LLMbased validators like Ciri, and (3) reveals open challenges such as ineffectiveness in detecting certain types of misconfigurations and biases towards popular configuration parameters.},
- author = {Lian, Xinyu and Chen, Yinfang and Cheng, Runxiang and Huang, Jie and Thakkar, Parth and Zhang, Minjia and Xu, Tianyin},
- year = {2024},
- title = {Configuration Validation with Large Language Models},
- file = {Lian, Chen et al. 2024 - Configuration Validation with Large Language:Attachments/Lian, Chen et al. 2024 - Configuration Validation with Large Language.pdf:application/pdf}
+@misc{Lian.2024,
+       title={Configuration Validation with Large Language Models}, 
+      author={Xinyu Lian and Yinfang Chen and Runxiang Cheng and Jie Huang and Parth Thakkar and Minjia Zhang and Tianyin Xu},
+      year={2024},
+      eprint={2310.09690},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2310.09690}, 
 }
 
 
@@ -1087,13 +1161,15 @@ year = {2025}
 
 
 @inproceedings{XudongSun.2020,
- author = {{Xudong Sun} and {Runxiang Cheng} and {Jianyan Chen} and {Elaine Ang} and {Owolabi Legunsen} and {Tianyin Xu}},
- title = {Testing Configuration Changes in Context to Prevent Production Failures},
- url = {https://www.usenix.org/conference/osdi20/presentation/sun},
- pages = {735--751},
- isbn = {978-1-939133-19-9},
- year = {2020},
- file = {Xudong Sun, Runxiang Cheng et al. 2020 - Testing Configuration Changes in Context:Attachments/Xudong Sun, Runxiang Cheng et al. 2020 - Testing Configuration Changes in Context.pdf:application/pdf}
+author = {Xudong Sun and Runxiang Cheng and Jianyan Chen and Elaine Ang and Owolabi Legunsen and Tianyin Xu},
+title = {Testing Configuration Changes in Context to Prevent Production Failures},
+booktitle = {14th USENIX Symposium on Operating Systems Design and Implementation (OSDI 20)},
+year = {2020},
+isbn = {978-1-939133-19-9},
+pages = {735--751},
+url = {https://www.usenix.org/conference/osdi20/presentation/sun},
+publisher = {USENIX Association},
+month = nov
 }
 
 
