@@ -5,7 +5,7 @@ The consequences of misconfiguration can be severe, significantly contributing t
 
 Retrieval-Augmented Generation (RAG) systems offer a promising approach to address this gap. By combining the knowledge retrieval capabilities of search systems with the reasoning power of Large Language Models (LLMs), RAG can potentially interpret complex technical documentation (like configuration manuals) and apply this understanding to validate specific configurations against best practices or requirements.
 
-This chapter aims to demonstrate the practical application of the RAGBench evaluation framework, detailed in Chapter 4, to the specific problem of configuration validation. We will leverage this framework to systematically evaluate the performance of various RAG configurations against established baselines using an extended version of the CTest dataset \cite{Lian.2024}, which includes synthetically generated examples. While acknowledging that configuration validation is a multifaceted problem involving aspects like inter-configuration dependencies, this experiment focuses specifically on validating individual configuration settings based on documented guidelines.
+This chapter aims to demonstrate the practical application of the RAGnRoll evaluation framework, detailed in Chapter 4, to the specific problem of configuration validation. We will leverage this framework to systematically evaluate the performance of various RAG configurations against established baselines using an extended version of the CTest dataset \cite{Lian.2024}, which includes synthetically generated examples. While acknowledging that configuration validation is a multifaceted problem involving aspects like inter-configuration dependencies, this experiment focuses specifically on validating individual configuration settings based on documented guidelines.
 
 The remainder of this chapter is structured as follows: Section \ref{sec:related_works_exp} discusses related work in applying RAG to software engineering tasks, particularly configuration validation. Section \ref{sec:exp_design_exec} details the experiment design, including the dataset, baselines, RAG configurations, evaluation metrics, and tools used, adhering to the methodology outlined in Chapter 4. Section \ref{sec:exp_results} presents and analyzes the results obtained on the validation and test sets, including end-to-end performance, component analysis, and failure analysis. Section \ref{sec:exp_discussion} discusses the overall findings and their implications. Finally, Section \ref{sec:exp_conclusion} summarizes the key outcomes of the experiment.
 % Note: Added \label tags for section references - adjust as needed if you rename sections.
@@ -15,10 +15,10 @@ Several approaches have been developed for validating software configurations.
 
 Specification-based frameworks, such as ConfValley \cite{Huang.2015}, function by having engineers define validation rules explicitly, often in a declarative manner. Configuration Testing validates configuration values by executing the software components that use these values and observing the resulting program behavior \cite{XudongSun.2020}. This method is used to detect the dynamic effects of configuration settings and identify errors.
 
-Lian et al. \cite{Lian.2024} introduced Ciri, a method that uses Large Language Models for configuration validation. Ciri employs prompt engineering and few-shot learning, providing the LLM with examples of both valid and invalid configurations alongside relevant documentation snippets to identify misconfigurations. This work applies Retrieval-Augmented Generation to the configuration validation task presented by Lian et al. \cite{Lian.2024}. We utilize the RAGBench evaluation framework, detailed in Chapter \ref{chap:design}, to systematically assess and reconfigure different RAG systems. The aim is to optimize their performance for this specific task through iterative refinement.
+Lian et al. \cite{Lian.2024} introduced Ciri, a method that uses Large Language Models for configuration validation. Ciri employs prompt engineering and few-shot learning, providing the LLM with examples of both valid and invalid configurations alongside relevant documentation snippets to identify misconfigurations. This work applies Retrieval-Augmented Generation to the configuration validation task presented by Lian et al. \cite{Lian.2024}. We utilize the RAGnRoll evaluation framework, detailed in Chapter \ref{chap:design}, to systematically assess and reconfigure different RAG systems. The aim is to optimize their performance for this specific task through iterative refinement.
 
 \section{Experiment Design and Execution} \label{sec:exp_design_exec}
-The following sections detail the design and execution of our configuration validation experiment. This experiment adheres strictly to the methodology established by the RAGBench framework presented in Chapter \ref{chap:design}. The core principle is to split the evaluation dataset into validation and test sets. All system configuration, evaluation, and iterative refinement are performed exclusively on the validation set. Finally, generalization is assessed on the held-out test set. Specifically, we employed a 70/30 validation-test split for the extended CTest dataset to ensure a sufficiently large test set for estimating generalization error (as discussed in Section \ref{sec:valtestsplit}).
+The following sections detail the design and execution of our configuration validation experiment. This experiment adheres strictly to the methodology established by the RAGnRoll framework presented in Chapter \ref{chap:design}. The core principle is to split the evaluation dataset into validation and test sets. All system configuration, evaluation, and iterative refinement are performed exclusively on the validation set. Finally, generalization is assessed on the held-out test set. Specifically, we employed a 70/30 validation-test split for the extended CTest dataset to ensure a sufficiently large test set for estimating generalization error (as discussed in Section \ref{sec:valtestsplit}).
 
 Our experimental workflow begins by establishing performance baselines using a standalone LLM and a naive RAG system (Section \ref{sec:e2e}). We then evaluate an initial RAG configuration. Subsequent steps involve analyzing performance bottlenecks and failures using the framework's end-to-end and component-level metrics, alongside detailed trace analysis facilitated by MLflow and Langfuse (Section \ref{sec:ui}). Insights from this analysis guide iterative reconfiguration cycles aimed at improving performance on the validation set.
 
@@ -107,7 +107,7 @@ First, we tested different standalone LLMs for measuring the performance of LLMs
     \centering
     \includegraphics[width=0.95\textwidth]{images/LLMStandalone-by-model.png}\\[6pt]
     \includegraphics[width=\textwidth]{images/LLMStandalone-by-model-FNRFPR.png}
-    \caption{(Upper) F1-Scores for standalone Large Language Models on the configuration validation task. (Lower) False-Negative Rate (Left) and False-Positive Rate (Right) for the standalone LLMs on the configuration validation task.}
+    \caption{(Upper) F1-Scores for standalone Large Language Models on the configuration validation task. (Lower) False-Negative Rate (Left) and False-Positive Rate (Right) for the standalone LLMs on the configuration validation task. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to End-to-End metric and the metric name.}
     \label{fig:LLMStandalone-Results}
   \end{figure}
 
@@ -134,7 +134,7 @@ Results can be seen in Figure \ref{fig:LLMStandalone-Results}. The most recent \
     \centering
     \includegraphics[width=\textwidth]{images/RetrievalTypes-vs-LLM-f1.png}\\[6pt]
     \includegraphics[width=\textwidth]{images/RetrievalTypes-vs-LLM-Recall.png}
-    \caption{Experiments with different retrieval techniques and models. In both figures the upper model is the \textit{gpt-4o-mini-2024-08-06} model and the lower model is the most recent \textit{gpt-4o-mini}. The upper figure shows the F1-score and the lower one shows the recall score.}
+    \caption{Experiments with different retrieval techniques and models. In both figures the upper model is the \textit{gpt-4o-mini-2024-08-06} model and the lower model is the most recent \textit{gpt-4o-mini}. The upper figure shows the F1-score and the lower one shows the recall score. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to End-to-End metric and the metric name.}
     \label{fig:conf-phase-0-retrievers}
 \end{figure}
 
@@ -243,7 +243,7 @@ We also measured the evaluation time to assess the usability implications of dif
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/duration-retriever.png}
-    \caption{Evaluation duration comparison between different retriever types (Sparse, Dense, Hybrid) and the standalone LLM baseline (No Retriever).}
+    \caption{Evaluation duration comparison between different retriever types (Sparse, Dense, Hybrid) and the standalone LLM baseline (No Retriever). Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{SYS} refers to system metric and the metric name.}
     \label{fig:evaluation-time}
 \end{figure}
 
@@ -252,7 +252,7 @@ We also measured system memory usage (e.g., peak RAM) to estimate the operationa
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/Max MB RAM.png}
-    \caption{Comparison of maximum memory usage for different retriever types (Sparse, Dense, Hybrid) and the standalone LLM baseline (No Retriever).}
+    \caption{Comparison of maximum memory usage for different retriever types (Sparse, Dense, Hybrid) and the standalone LLM baseline (No Retriever). Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{SYS} refers to system metric and the metric name.}
     \label{fig:memory}
 \end{figure}
 
@@ -308,7 +308,7 @@ A low recall score for reasoning suggests that LLMs tend to classify valid confi
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/FNR-FPR-F1.png}
-    \caption{Contour plot of FNR and FPR vs F1-Score. The darker the blue, the higher the F1-score.}
+    \caption{Contour plot of FNR and FPR vs F1-Score. The darker the blue, the higher the F1-score. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to End-to-End metric and the metric name.}
     \label{fig:fnrfpr}
 \end{figure}
 
