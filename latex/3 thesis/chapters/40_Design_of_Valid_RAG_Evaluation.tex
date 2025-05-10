@@ -228,7 +228,7 @@ metadata:
   seed: 42
 \end{minted}
 
-Reproducibility in machine learning often relies on random seeding. This can be complex in RAG systems, as not all components or underlying services may expose seeding capabilities. We demonstrate seeding for OpenAI generator components in our example configurations and emphasize the importance of utilizing seeding wherever component parameters allow.
+Reproducibility in machine learning often relies on random seeding. This can be complex in RAG systems, as not all components or underlying services may expose seeding capabilities. We define seeds in our validation-test split and emphasize the importance of utilizing seeding wherever component parameters allow.
 
 The transparency measures discussed here - publishing data, versioning code and configurations, embedding metadata, and utilizing seeding - contribute significantly to the reproducibility of RAG experiments conducted using this framework. Our approach primarily assumes a relatively static dataset during an experimental cycle. Handling frequently changing datasets might necessitate integrating tools like DVC, which is currently outside the framework's scope. Besides data stability, full reproducibility depends on the ability to define a seed for all components that include randomness.
 
@@ -257,7 +257,7 @@ Our framework addresses a key aspect of external validity through its mandatory 
 \end{figure}
 
 
-Leveraging the previously discussed Haystack functionalities (like YAML pipe\-lines), we have developed a Command-Line Interface (CLI)-based evaluation framework. The complete workflow orchestrated by the framework is depicted in figure \ref{fig:framework-full}. Given paths to an evaluation dataset, pipeline configurations, and metric definitions, the framework first splits the dataset into validation and test sets based on the specified \textit{test\_size} parameter. Subsequently, it uses the validation split to conduct the evaluations.
+Leveraging the previously discussed Haystack functionalities (like YAML pipe\-lines), we have developed a Command-Line Interface (CLI)-based evaluation framework. The complete workflow orchestrated by the framework is depicted in Figure \ref{fig:framework-full}. Given paths to an evaluation dataset, pipeline configurations, and metric definitions, the framework first splits the dataset into validation and test sets based on the specified \textit{test\_size} parameter. Subsequently, it uses the validation split to conduct the evaluations.
 
 The framework loads the necessary pipeline components and data and begins by evaluating the baselines: first, a standalone LLM (to assess the value of retrieval itself), and second, after ingesting the data into the specified vector database, a naive BM25-based RAG (Retrieve-Read architecture) baseline (to establish a simple RAG performance level). Following the baseline evaluations, the framework executes and evaluates the RAG pipeline(s) defined in the user-provided YAML configuration file(s). Each evaluated configuration (baselines and user-defined) is assessed using both end-to-end and component-level metrics (as configured). Results (metrics and parameters) are logged to MLflow for visualization and comparison (Figure~\ref{fig:mlflow}), while detailed execution traces are sent to Langfuse for inspection (Figure~\ref{fig:langfuse}). Based on the results and trace analysis, researchers can reconfigure the pipeline YAML and repeat the evaluation process on the validation set.
 
