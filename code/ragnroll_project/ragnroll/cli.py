@@ -216,6 +216,7 @@ def run_evaluations(
             params = extract_run_params(config_path)
             params["corpus_dir"] = corpus_dir
             params["val_data_path"] = val_data_path
+            params["commit_hash"] = os.system("git rev-parse HEAD")
             
             mlflow.log_params(params)
 
