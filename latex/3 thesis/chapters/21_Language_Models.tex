@@ -70,7 +70,7 @@ Top-K sampling \cite{Fan.13.05.2018} randomly selects from the top K tokens with
 The Top-P sampling \cite{Holtzman.22.04.2019} randomly selects from the smallest set of tokens whose cumulative probability exceeds the probability P. Therefore, the higher the P value, the more tokens are considered for sampling. The outcomes get more random. It is a generalization of Top-K sampling, where the number of tokens to sample from is not fixed.
 
 \subsection{Prompting Techniques}
-The Transformer architecture is not deterministic as shown in previous sections. Additionally, LLMs also exhibit high variance in their outputs. The input prompt critically influences output quality. Therefore, there are numerous prompting techniques to stabilize desired outputs. Schulhoff created a taxonomy and recognized 58 LLM prompting techniques \cite{Schulhoff.06.06.2024}. We discuss four representative prompting techniques: Few-Shot, Zero-Shot, Chain-of-Thought (CoT), and Chain-of-Verification (CoVe). The list is not exhaustive, but these techniques are very commonly used and easy to implement.
+The Transformer architecture is not deterministic as shown in previous sections. Additionally, LLMs also exhibit high variance in their outputs. The input prompt critically influences output quality. Therefore, there are numerous prompting techniques to stabilize desired outputs. Schulhoff created a taxonomy and recognized 58 LLM prompting techniques \cite{Schulhoff.06.06.2024}. We discuss three representative prompting techniques: Few-Shot, Zero-Shot, and Chain-of-Thought (CoT). The list is not exhaustive, but these techniques are very commonly used and easy to implement.
 
 \paragraph{Few-Shot vs. Zero-Shot}
 
@@ -95,5 +95,3 @@ Few-shot prompting is a form of In-Context Learning (ICL), in which the prompt i
 
 
 This method introduced by Wei leverages few-shot learning through simulating a written thought process in prior examples \cite{Wei.28.01.2022}. The LLM is therefore forced to adopt this behavior, which leads to more accurate outputs in reasoning and math problems. Schulhoff refers to it as the class of Thought Generation techniques \cite{Schulhoff.06.06.2024}. Figure \ref{fig:CoT} shows an example prompt.
-
-\paragraph{Chain-of-Verification}
