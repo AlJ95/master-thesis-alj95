@@ -18,11 +18,11 @@ Specification-based frameworks, such as ConfValley \cite{Huang.2015}, function b
 Lian et al. \cite{Lian.2024} introduced Ciri, a method that uses Large Language Models for configuration validation. Ciri employs prompt engineering and few-shot learning, providing the LLM with examples of both valid and invalid configurations alongside relevant documentation snippets to identify misconfigurations. This work applies Retrieval-Augmented Generation to the configuration validation task presented by Lian et al. \cite{Lian.2024}. We utilize the RAGnRoll evaluation framework, detailed in Chapter \ref{chap:design}, to systematically assess and reconfigure different RAG systems. The aim is to optimize their performance for this specific task through iterative refinement.
 
 \section{Experiment Design and Execution} \label{sec:exp_design_exec}
-The following sections detail the design and execution of our configuration validation experiment. This experiment adheres strictly to the methodology established by the RAGnRoll framework presented in Chapter \ref{chap:design}. The core principle is to split the evaluation dataset into validation and test sets. All system configuration, evaluation, and iterative refinement are performed exclusively on the validation set. Finally, generalization is assessed on the held-out test set. Specifically, we employed a 70/30 validation-test split for the extended CTest dataset to ensure a sufficiently large test set for estimating generalization error (as discussed in Section \ref{sec:valtestsplit}).
+The following sections detail the design and execution of our configuration validation experiment. This experiment adheres strictly to the methodology established by the RAGnRoll framework presented in Chapter \ref{chap:design}. The core principle is to split the evaluation dataset into validation and test sets. All system configuration, evaluation, and iterative refinement are performed exclusively on the validation set. Finally, generalization is assessed on the held-out test set. Specifically, we employed a 80/20 validation-test split for the extended CTest dataset to ensure a sufficiently large test set for estimating generalization error (as discussed in Section \ref{sec:valtestsplit}).
 
 Our experimental workflow begins by establishing performance baselines using a standalone LLM and a naive RAG system (Section \ref{sec:e2e}). We then evaluate an initial RAG configuration. Subsequent steps involve analyzing performance bottlenecks and failures using the framework's end-to-end and component-level metrics, alongside detailed trace analysis facilitated by MLflow and Langfuse (Section \ref{sec:ui}). Insights from this analysis guide iterative reconfiguration cycles aimed at improving performance on the validation set.
 
-A key difference in our evaluation approach compared to the original Ciri experiment \cite{Lian.2024} lies in handling output formatting. While Ciri reran queries until a correctly formatted answer was obtained, our framework employs a strict format check; if the generator's output does not conform to the expected format (such as providing a clear "valid" or "invalid" classification with reasoning), the response is marked as incorrect. This reflects a scenario where automated post-processing requires predictable output.
+Ciri avoids a retrieval architecture by randomly selecting valid configurations and ingesting them into the evaluation prompt. Then, three different generators are used in parallel to obtain a majority vote on whether the provided configuration is valid. The drawn architecture is visualized in the appendix. A key difference in our evaluation approach compared to the original Ciri experiment \cite{Lian.2024} lies in handling output formatting. While Ciri reran queries until a correctly formatted answer was obtained, our framework employs a strict format check; if the generator's output does not conform to the expected format (such as providing a clear "valid" or "invalid" classification with reasoning), the response is marked as incorrect. This reflects a scenario where automated post-processing requires predictable output.
 
 
 \subsection{Experimental Setup} \label{sec:exp_setup}
@@ -35,7 +35,7 @@ We chose the CCX23 dedicated CPU server\cite{hetzner-online-gmbh-2025} for all o
     \item SSD: 160 GB
 \end{itemize}
 
-We also used runpod.io\cite{runpod-2025} and deployed a RTX 4090 with 24GB VRAM for our experiments with vllm \cite{Kwon.12.09.2023} embedding models.
+We also used runpod.io\cite{runpod-2025} and deployed a RTX 4090 with 24GB VRAM for our experiments with via vLLM \cite{Kwon.12.09.2023} deployed embedding models.
 
 \paragraph{Dataset} 
 We used the CTest dataset, prepared by the team behind Ciri \cite{Lian.2024}\cite{xlab-uiuc-2025}. The data consists of real-world misconfiguration scenarios, augmented with synthetic data. We had 907 test cases in total. The distribution per system is shown in the following table.
@@ -107,7 +107,7 @@ First, we tested different standalone LLMs to measure their performance without 
     \centering
     \includegraphics[width=0.95\textwidth]{images/LLMStandalone-by-model.png}\\[6pt]
     \includegraphics[width=\textwidth]{images/LLMStandalone-by-model-FNRFPR.png}
-    \caption{(Upper) F1-Scores for standalone Large Language Models on the configuration validation task. (Lower) False-Negative Rate (Left) and False-Positive Rate (Right) for the standalone LLMs on the configuration validation task. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to End-to-End metric and the metric name.}
+    \caption{(Upper) F1-Scores for standalone Large Language Models on the configuration validation task. (Lower) False-Negative Rate (Left) and False-Positive Rate (Right) for the standalone LLMs on the configuration validation task. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to end-to-end metric and the metric name.}
     \label{fig:LLMStandalone-Results}
   \end{figure}
 
@@ -134,7 +134,7 @@ Results can be seen in Figure \ref{fig:LLMStandalone-Results}. The most recent \
     \centering
     \includegraphics[width=\textwidth]{images/RetrievalTypes-vs-LLM-f1.png}\\[6pt]
     \includegraphics[width=\textwidth]{images/RetrievalTypes-vs-LLM-Recall.png}
-    \caption{Experiments with different retrieval techniques and models. In both figures the upper model is the \textit{gpt-4o-mini-2024-08-06} model and the lower model is the most recent \textit{gpt-4o-mini}. The upper figure shows the F1-score and the lower one shows the recall score. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to End-to-End metric and the metric name.}
+    \caption{Experiments with different retrieval techniques and models. In both figures the upper model is the \textit{gpt-4o-mini-2024-08-06} model and the lower model is the most recent \textit{gpt-4o-mini}. The upper figure shows the F1-score and the lower one shows the recall score. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to end-to-end metric and the metric name.}
     \label{fig:conf-phase-0-retrievers}
 \end{figure}
 
@@ -205,7 +205,7 @@ The highest F1-Score (0.776) was achieved by the \textit{deepseek-chat-v3-0324} 
 
 In this section, we address the generalization error for our experiments. Theoretically, generalization error occurs when parameters are tuned to best fit the evaluation data rather than the underlying problem. During our reconfiguration phases, we had limited success with RAG configurations. Typically, one would identify an effective combination of resources and configuration to address the problem, then fine-tune parameters to achieve the best-performing setup, which would subsequently be tested for generalization error. However, we did not achieve RAG configurations successful enough to warrant such a generalization test focused on potential overfitting from our tuning.
 
-Instead, we decided to perform tests on the held-out test set using the best-performing models from Table \ref{tab:model_comparison} within the Ciri few-shot configuration. While this does not primarily test for generalization error stemming from our own parameter fine-tuning (as these specific model configurations were not iteratively tuned by us), it provides a valuable estimation of their performance variance on unseen data. This helps assess the consistency of these standalone LLM setups in this task. We selected \textit{deepseek-chat-v3-0324}, \textit{gemini-2.5-flash}, and the original Ciri configuration with \textit{gpt-3.5-turbo} for this purpose. 
+Instead, we decided to perform tests on the held-out test dataset using the best-performing models from Table \ref{tab:model_comparison} within the Ciri few-shot configuration. While this does not primarily test for generalization error stemming from our own parameter fine-tuning (as these specific model configurations were not iteratively tuned by us), it provides a valuable estimation of their performance variance on unseen data. This helps assess the consistency of these standalone LLM setups in this task. We selected \textit{deepseek-chat-v3-0324}, \textit{gemini-2.5-flash}, and the original Ciri configuration with \textit{gpt-3.5-turbo} for this purpose. 
 
 \begin{table}[h]
     \centering
@@ -308,7 +308,7 @@ A low recall score for reasoning suggests that LLMs tend to classify valid confi
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/FNR-FPR-F1.png}
-    \caption{Contour plot of FNR and FPR vs F1-Score. The darker the blue, the higher the F1-score. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to End-to-End metric and the metric name.}
+    \caption{Contour plot of FNR and FPR vs F1-Score. The darker the blue, the higher the F1-score. Metric names are concatenated by \textit{VAL} refers to validation dataset, \textit{E2E} refers to end-to-end metric and the metric name.}
     \label{fig:fnrfpr}
 \end{figure}
 
@@ -337,7 +337,6 @@ Internal validity refers to the extent to which the observed outcomes can be att
 
 \begin{itemize}
     \item \textbf{Baseline Reimplementation:} While efforts were made to faithfully replicate the Ciri system as a baseline, minor differences in our Haystack-based implementation compared to the original Ciri architecture could exist. These might subtly influence direct performance comparisons.
-    \item \textbf{Documentation Corpus Integrity:} The web scraping process for documentation, while automated, might have encountered transient network issues or website structure changes leading to incomplete data or 404 errors for some pages. This could affect the completeness of the knowledge base for certain systems or versions.
     \item \textbf{API Reliability and Model Stability:} Reliance on external LLM APIs introduces a dependency on their uptime and consistent behavior. API errors or undocumented changes in underlying unversioned models (such as the most recent versions of \textit{gpt-4o-mini} or \textit{gemini-2.5-flash}, used to test contemporary performance) could lead to failed queries or performance variations. While some of these failures might average out across many queries, they could also reflect issues with specific models or providers beyond our direct control.
     \item \textbf{System-Level Aggregation:} The decision to evaluate performance across all software systems in the CTest dataset, rather than per individual system (e.g., Django vs. Alluxio), was made for comparability and cost-efficiency. However, this aggregation might mask varying performance characteristics of the RAG configurations on specific systems.
     \item \textbf{LLM-as-a-Judge for Retrieval Metrics:} While we mitigated preference leakage by ensuring that the LLM judge (e.g., \textit{gpt-4o-mini}) was from a different family than the model generating the content being assessed for retrieval metrics where possible, the inherent subjectivity and potential biases of LLM judges remain an area of active research and could influence metrics like Context Relevance.
@@ -356,6 +355,8 @@ External validity concerns the generalizability of the experimental findings to 
 Construct validity relates to how well the operationalizations (e.g., metrics, experimental setup) measure the intended theoretical constructs.
 \begin{itemize}
    \item \textbf{Metrics for Validation Quality:} Standard classification metrics (F1-score, precision, recall) were used. While informative, they might not fully capture nuanced aspects of validation quality, such as the interpretability or actionability of the reasoning provided alongside a "valid" or "invalid" judgment. We used the F1-Score for all conclusions for better comparability with the Ciri paper.
+   \item \textbf{Implementation Integrity of the Evaluation Framework:} The RAGnRoll evaluation framework was developed from scratch for this thesis. During the experimental phase, isolated software bugs within the framework were discovered. For instance, some initial experiment runs were affected by premature terminations, which could have skewed end-to-end performance scores. Another identified issue involved inaccuracies in the reporting of retrieval metrics in early iterations. To mitigate these threats, any experiments where end-to-end metrics were potentially compromised by such bugs were rigorously repeated. While retrieval metrics are primarily used for fine-tuning RAG configurations rather than for final comparative judgments, discrepancies in their early reporting were noted. It is important to state that all metrics presented and discussed in this chapter have been verified for correctness and are based on stable, bug-free versions of the reporting mechanisms.
+   \item \textbf{Evolving Reporting Detail:} Throughout the course of the experiments, the necessity to log additional contextual parameters for enhanced traceability and to ensure the unambiguous association of results with specific experimental conditions became apparent. For example, parameters such as the corpus data path and the evaluation data path were explicitly added to the run logs when these paths were first varied. Similarly, the Git commit hash of the codebase was incorporated into the logging process at a later stage to precisely track code versions used for each experiment. Care was taken to ensure that these evolving reporting practices did not compromise the differentiability of results from distinct experimental setups. For instance, runs conducted before the explicit logging of a data path can be reliably attributed to the original, default data path used at that time.
 \end{itemize}
 
 \section{Conclusion} \label{sec:exp_conclusion}
