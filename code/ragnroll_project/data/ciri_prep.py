@@ -39,6 +39,9 @@ versions = {
 
 import json
 
+
+## IMPORTANT: 
+## You need to have the CIRI repository in the parent directory of the code/ repository.
 import sys
 from pathlib import Path
 print(Path(__file__).parent.parent.parent.parent / "ciri")
