@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/525945623195643983/8b9e43a26d574f7baa3bcc1931c4b642/artifacts
+deleted_time: 1745840558350
+end_time: 1745839969045
+entry_point_name: ''
+experiment_id: '525945623195643983'
+lifecycle_stage: deleted
+run_id: 8b9e43a26d574f7baa3bcc1931c4b642
+run_name: 4262d8cd2f7546e7a407e4af3c7148e9
+run_uuid: 8b9e43a26d574f7baa3bcc1931c4b642
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745839968623
+status: 3
+tags: []
+user_id: Besitzer

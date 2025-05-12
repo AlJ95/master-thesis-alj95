@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/113580098883527177/62de284c66464ac8b5451115e15abd49/artifacts
+end_time: 1744680873502
+entry_point_name: ''
+experiment_id: '113580098883527177'
+lifecycle_stage: active
+run_id: 62de284c66464ac8b5451115e15abd49
+run_name: configuration_phase.llm_config_openrouter_websearch.yaml
+run_uuid: 62de284c66464ac8b5451115e15abd49
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1744678729496
+status: 3
+tags: []
+user_id: root

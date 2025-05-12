@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/411003452301968505/49299fc79c6642418da0c812971847eb/artifacts
+end_time: 1746526160614
+entry_point_name: ''
+experiment_id: '411003452301968505'
+lifecycle_stage: active
+run_id: 49299fc79c6642418da0c812971847eb
+run_name: reconfiguration_phase_3.ciri_qwen_235.yaml
+run_uuid: 49299fc79c6642418da0c812971847eb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746465374502
+status: 4
+tags: []
+user_id: root

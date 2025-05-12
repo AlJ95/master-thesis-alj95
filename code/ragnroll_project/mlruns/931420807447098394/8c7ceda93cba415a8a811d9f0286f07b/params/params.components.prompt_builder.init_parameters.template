@@ -1,0 +1,11 @@
+
+Given these documents, answer the question.{{dummy}}
+Is the following configuration valid? Before answering, think step by step. After that, give a JSON response as showed in the examples.
+Here are helpful documents from the documentation:
+{% for doc in documents %}\
+{{ doc.content }}
+{% endfor %}
+
+Configuration: {{query}}
+
+Answer: <think>

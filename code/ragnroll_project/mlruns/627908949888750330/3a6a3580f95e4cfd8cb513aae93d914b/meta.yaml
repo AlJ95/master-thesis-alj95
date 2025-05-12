@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/627908949888750330/3a6a3580f95e4cfd8cb513aae93d914b/artifacts
+end_time: 1746068002259
+entry_point_name: ''
+experiment_id: '627908949888750330'
+lifecycle_stage: active
+run_id: 3a6a3580f95e4cfd8cb513aae93d914b
+run_name: reconfiguration_phase_2.rag_dense_retriever_ciri.yaml
+run_uuid: 3a6a3580f95e4cfd8cb513aae93d914b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746064546113
+status: 3
+tags: []
+user_id: root

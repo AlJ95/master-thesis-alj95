@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/112726126476755834/dd5ea3785a8a491ca1d0a7c2f2f395a9/artifacts
+deleted_time: 1745305548262
+end_time: 1744823377776
+entry_point_name: ''
+experiment_id: '112726126476755834'
+lifecycle_stage: deleted
+run_id: dd5ea3785a8a491ca1d0a7c2f2f395a9
+run_name: configuration_phase.rag_sparse_retriever.yaml
+run_uuid: dd5ea3785a8a491ca1d0a7c2f2f395a9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1744813886392
+status: 3
+tags: []
+user_id: root

@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/113580098883527177/0bc8928f9cae47d9a4ebe049c7258b5e/artifacts
+deleted_time: 1746036890362
+end_time: 1745999344788
+entry_point_name: ''
+experiment_id: '113580098883527177'
+lifecycle_stage: deleted
+run_id: 0bc8928f9cae47d9a4ebe049c7258b5e
+run_name: from_pipeline.cp0_rag_dense_4r_vllm_embedder.yaml
+run_uuid: 0bc8928f9cae47d9a4ebe049c7258b5e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745999337913
+status: 4
+tags: []
+user_id: root

@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/213789150410575727/87a0bbd647294342aeafdda7e771e9be/artifacts
+deleted_time: 1745655805756
+end_time: 1745655779345
+entry_point_name: ''
+experiment_id: '213789150410575727'
+lifecycle_stage: deleted
+run_id: 87a0bbd647294342aeafdda7e771e9be
+run_name: exultant-lark-193
+run_uuid: 87a0bbd647294342aeafdda7e771e9be
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745655778367
+status: 3
+tags: []
+user_id: Besitzer

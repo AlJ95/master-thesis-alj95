@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/213789150410575727/b70a87ecf95c40ab9487ed415a44ecad/artifacts
+deleted_time: 1746258279240
+end_time: 1745656740900
+entry_point_name: ''
+experiment_id: '213789150410575727'
+lifecycle_stage: deleted
+run_id: b70a87ecf95c40ab9487ed415a44ecad
+run_name: baselines.llm_config.yaml
+run_uuid: b70a87ecf95c40ab9487ed415a44ecad
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745572061894
+status: 3
+tags: []
+user_id: root

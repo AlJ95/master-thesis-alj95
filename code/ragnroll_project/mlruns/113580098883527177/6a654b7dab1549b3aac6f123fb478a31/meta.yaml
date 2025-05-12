@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/113580098883527177/6a654b7dab1549b3aac6f123fb478a31/artifacts
+deleted_time: 1744879225343
+end_time: 1744879142951
+entry_point_name: ''
+experiment_id: '113580098883527177'
+lifecycle_stage: deleted
+run_id: 6a654b7dab1549b3aac6f123fb478a31
+run_name: configuration_phase.llm_config_vllm.yaml
+run_uuid: 6a654b7dab1549b3aac6f123fb478a31
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1744879066167
+status: 4
+tags: []
+user_id: root

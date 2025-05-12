@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/213789150410575727/9d78d4f57bf643f8b3f9f851353c750b/artifacts
+end_time: 1745656743722
+entry_point_name: ''
+experiment_id: '213789150410575727'
+lifecycle_stage: active
+run_id: 9d78d4f57bf643f8b3f9f851353c750b
+run_name: from_matrix.rag_dense_4r_iterative_max5_0.yaml
+run_uuid: 9d78d4f57bf643f8b3f9f851353c750b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745408412386
+status: 3
+tags: []
+user_id: root

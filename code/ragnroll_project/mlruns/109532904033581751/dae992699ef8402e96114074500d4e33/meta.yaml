@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/109532904033581751/dae992699ef8402e96114074500d4e33/artifacts
+end_time: 1746175311060
+entry_point_name: ''
+experiment_id: '109532904033581751'
+lifecycle_stage: active
+run_id: dae992699ef8402e96114074500d4e33
+run_name: reconfiguration_phase_3.ciri_gpt_4o_mini_versionized.yaml
+run_uuid: dae992699ef8402e96114074500d4e33
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746175285518
+status: 4
+tags: []
+user_id: root

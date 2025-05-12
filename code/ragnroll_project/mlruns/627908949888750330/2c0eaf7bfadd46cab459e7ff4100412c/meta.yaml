@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/627908949888750330/2c0eaf7bfadd46cab459e7ff4100412c/artifacts
+end_time: 1745995603238
+entry_point_name: ''
+experiment_id: '627908949888750330'
+lifecycle_stage: active
+run_id: 2c0eaf7bfadd46cab459e7ff4100412c
+run_name: reconfiguration_phase_2.rag_sparse_retriever_ciri.yaml
+run_uuid: 2c0eaf7bfadd46cab459e7ff4100412c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745988380403
+status: 4
+tags: []
+user_id: root

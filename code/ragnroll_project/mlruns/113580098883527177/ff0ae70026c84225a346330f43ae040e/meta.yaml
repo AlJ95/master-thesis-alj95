@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/113580098883527177/ff0ae70026c84225a346330f43ae040e/artifacts
+end_time: 1744835314077
+entry_point_name: ''
+experiment_id: '113580098883527177'
+lifecycle_stage: active
+run_id: ff0ae70026c84225a346330f43ae040e
+run_name: configuration_phase.rag_sparse_retriever.yaml
+run_uuid: ff0ae70026c84225a346330f43ae040e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1744825234342
+status: 3
+tags: []
+user_id: root

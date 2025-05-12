@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/113580098883527177/497427e4aff245b69efaaa38120653e9/artifacts
+deleted_time: 1744877242257
+end_time: 1744876969954
+entry_point_name: ''
+experiment_id: '113580098883527177'
+lifecycle_stage: deleted
+run_id: 497427e4aff245b69efaaa38120653e9
+run_name: configuration_phase.llm_config_openrouter_reasoning.yaml
+run_uuid: 497427e4aff245b69efaaa38120653e9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1744876962283
+status: 4
+tags: []
+user_id: root

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/411003452301968505/62f18a7735f74c278fc8096cd6afc765/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '411003452301968505'
+lifecycle_stage: active
+run_id: 62f18a7735f74c278fc8096cd6afc765
+run_name: reconfiguration_phase_3.ciri_gemma_25_flash.yaml
+run_uuid: 62f18a7735f74c278fc8096cd6afc765
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746465374742
+status: 1
+tags: []
+user_id: root

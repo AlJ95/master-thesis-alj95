@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/113580098883527177/9299a5dc28204f5f92482e96325031ec/artifacts
+end_time: 1745342950227
+entry_point_name: ''
+experiment_id: '113580098883527177'
+lifecycle_stage: active
+run_id: 9299a5dc28204f5f92482e96325031ec
+run_name: configuration_phase.llm_config_vllm.yaml
+run_uuid: 9299a5dc28204f5f92482e96325031ec
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745303911420
+status: 3
+tags: []
+user_id: root
