@@ -24,7 +24,7 @@ def test_e2e_metrics_executed(mock_pipeline, processed_test_cases):
         mock.run.return_value = {"score": 0.75}
         mock_metrics[name] = mock
     
-    # Ersetzen Sie die echten Metriken durch Mock-Objekte
+    # Ersetzen der echten Metriken durch Mock-Objekte
     evaluator.end_to_end_metrics = mock_metrics
     
     # Execute

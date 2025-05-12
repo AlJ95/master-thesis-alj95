@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import MagicMock, patch
 from haystack import Pipeline
+from haystack.dataclasses import GeneratedAnswer
 import pandas as pd
 from dotenv import load_dotenv
 from pathlib import Path
@@ -19,32 +20,30 @@ def mock_pipeline():
             "retriever": {
                 "type": "haystack.components.retrievers.InMemoryBM25Retriever"
             },
+            "prompt_builder": {
+                "type": "haystack.components.builders.prompt_builder.PromptBuilder"
+            },
             "llm": {
-                "type": "haystack.components.generators.huggingface.HuggingFaceLocalGenerator"
+                "type": "haystack.components.generators.openai.OpenAIGenerator"
             },
             "answer_builder": {
-                "type": "custom.component"
+                "type": "haystack.components.builders.answer_builder.AnswerBuilder"
             }
         },
         "connections": [
-            {"sender": "retriever.documents", "receiver": "llm.documents"},
+            {"sender": "retriever.documents", "receiver": "prompt_builder.documents"},
+            {"sender": "prompt_builder.prompt", "receiver": "llm.prompt"},
             {"sender": "llm.replies", "receiver": "answer_builder.answer"}
         ]
     }
     
     # Mock pipeline.run() to return a predefined output
     pipeline.run.return_value = {
-        "retriever": {
-            "documents": [
-                {"content": "Document 1 content", "score": 0.95},
-                {"content": "Document 2 content", "score": 0.85}
-            ]
-        },
         "llm": {
-            "replies": ["This is a generated answer."]
+            "replies": ["""This is a generated answer. The final answer is "True"."""]
         },
         "answer_builder": {
-            "answer": "This is a final answer."
+            "answers": [GeneratedAnswer(data="True", query="What is RAG?", documents=[], meta={})]
         }
     }
     
