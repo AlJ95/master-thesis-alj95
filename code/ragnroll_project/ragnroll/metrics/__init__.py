@@ -29,6 +29,13 @@ from ragnroll.metrics.component.generator import (
     AnswerRelevancyMetric
 )
 
+# Import custom metrics
+import sys
+from pathlib import Path
+sys.path.append(Path(__file__).parent.parent.parent / "metrics")
+
+from metrics import *
+
 # Create a convenience dictionary of all available metrics
 AVAILABLE_METRICS = {
     "end-to-end": MetricRegistry.get_end_to_end_metrics(),

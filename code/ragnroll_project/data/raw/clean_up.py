@@ -7,39 +7,39 @@ import threading
 
 # List of patterns to remove from HTML files
 patterns = [
-    # Bestehende Patterns
+    # Existing patterns
     r'<script[\s\S]*?</script>',
-    r'<li[^>]*>\s*<a[\s\S]*?</a>\s*</li>', # Nur Listen-Elemente mit Links entfernen
+    r'<li[^>]*>\s*<a[\s\S]*?</a>\s*</li>', # Only remove list elements with links
     r'<div class="(topNav|bottomNav)">[\s\S]*?</div>',
     r'<!--[\s\S]*?-->',
     r'<style[\s\S]*?</style>',
     r'<link[\s\S]*?>',
     
-    # Neue Patterns
-    # Entferne Seitenleisten/Asides
+    # New patterns
+    # Remove sidebars/asides
     r'<aside[\s\S]*?</aside>',
     
-    # Entferne Navigationsleisten
+    # Remove navigation bars
     r'<nav[\s\S]*?</nav>',
     
-    # Entferne Header
+    # Remove header
     r'<header[\s\S]*?</header>',
     
-    # Entferne alternative Sprachlinks
+    # Remove alternative language links
     r'<link rel="alternate"[\s\S]*?>',
     
-    # Entferne kanonische Links
+    # Remove canonical links
     r'<link rel="canonical"[\s\S]*?>',
     
-    # Entferne Dropdown-Menüs
+    # Remove dropdown menus
     r'<div class="dropdown">[\s\S]*?</div>',
     
-    # Entferne Suchformulare
+    # Remove search forms
     r'<form class="td-sidebar__search[\s\S]*?</form>',
 
-    # Neue Patterns für Hadoop Directory Listing
-    r'<img[^>]*>', # Entferne nur Bilder/Icons
-    r' alt="[^"]*"', # Entferne nur alt Attribute
+    # New patterns for Hadoop Directory Listing
+    r'<img[^>]*>', # Remove only images/icons
+    r' alt="[^"]*"', # Remove only alt attributes
 
     # remove svg
     r'<svg[^>]*>',
@@ -50,7 +50,7 @@ patterns = [
     # remove footer
     r'<footer[\s\S]*?</footer>',
     
-    # Entferne leere Zeilen und Zeilen die nur Leerzeichen enthalten
+    # Remove empty lines and lines that only contain whitespace
     r'^\s*$',
 ]
 

@@ -118,7 +118,6 @@ class Evaluator:
         metrics = {}
         
         for name, metric_cls in MetricRegistry.get_end_to_end_metrics().items():
-            # Überprüfen, ob es sich um eine Klassifikationsmetrik handelt
             metrics[name] = metric_cls(
                 positive_label=self.positive_label,
                 negative_label=self.negative_label
@@ -253,10 +252,9 @@ class Evaluator:
 
         try:
 
-            # TODO Das sollte die FUnktion sein, die ausgeführt wird.
             # Generate dataset with predictions
             dataset = EvaluationDataset(evaluation_data)
-            # Generiere Vorhersagen
+            # Generate predictions
             dataset.generate_predictions(self.pipeline)
             processed_data = dataset.get_processed_data()
             trace_ids = dataset.get_trace_ids()

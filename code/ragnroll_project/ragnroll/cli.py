@@ -43,15 +43,18 @@ def split_data(
     Creates three directories: train, val, test
     """
     from .utils.data import val_test_split
-    val_test_split(path, test_size, random_state)
+    eval_data_path = Path(path)
+
+    # Split the evaluation data into val, test sets based on Simon et al. (2024) 
+    val_test_split(eval_data_path, test_size=test_size, random_state=random_state)
     typer.echo(f"Successfully split data into train/val/test sets in {path}")
-    
+    return
+
 
 @app.command()
 def test_generalization_error(
     eval_data_file: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
     corpus_dir: str = typer.Argument(..., help="Path to directory containing corpus"),
-    output_directory: str = typer.Argument(..., help="Path to directory containing JSON/CSV files"),
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
     run_id: str = typer.Option(..., help="Run ID"),
     strict: bool = typer.Option(True, help="Do not use the same config twice."),
@@ -101,7 +104,6 @@ def test_generalization_error(
     if runs.empty:
         raise ValueError(f"No runs found for experiment {experiment_name} ({run_id if run_id else 'all runs'}). Create a new evaluation dataset or use --no-strict (not recommended)")
 
-    gathered_results = []
     for _, run in runs.iterrows():
 
         with mlflow.start_run(run_id=run.run_id):
@@ -117,7 +119,7 @@ def test_generalization_error(
             evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
             result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=False)
 
-            traces = fetch_current_traces(run_name)
+            fetch_current_traces(run_name)
             
             for col in result.columns:
                 metric_name = ".".join(("TEST",) + col)
@@ -125,23 +127,14 @@ def test_generalization_error(
             
             mlflow.log_param("used_test_sets", str(test_data_path))
 
-            results = pd.concat([result, traces], axis=1)
-            gathered_results.append(results)
-
-            if Path(output_directory).exists():
-                pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
-            else:
-                pd.concat(gathered_results).T.to_csv(output_directory)
-                
-            print(f"Evaluation results saved to {output_directory}")
-
+    print("Evaluation completed")
+    return
 
 @app.command()
 def run_evaluations(
     config_sources: str = typer.Argument(...), 
     eval_data_file : str = typer.Argument(...),
     corpus_dir : str = typer.Argument(...),
-    output_directory: str = typer.Argument(...), # TODO This must be removed to get consistent output name for test set run
     track_resources: bool = typer.Option(True, help="Track system resource usage during evaluation"),
     baselines: bool = typer.Option(True, help="Run baselines"), 
     experiment_name: str = typer.Option("RAG Experimentation", help="Experiment name"),
@@ -201,8 +194,6 @@ def run_evaluations(
     # Gather all config paths from the source file (YAML, MATRIX-YAML, PYTHON)
     config_sources = gather_config_paths(Path(config_sources))
 
-    gathered_results = []
-    
     for config_path in baseline_paths + config_sources:
         print(f"Running evaluation for {config_path}")
 
@@ -229,27 +220,13 @@ def run_evaluations(
             evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
             result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
 
-            traces = fetch_current_traces(run_name)
+            fetch_current_traces(run_name)
             
             for col in result.columns:
                 metric_name = ".".join(("VAL",) + col)
                 mlflow.log_metrics({metric_name: result[col].values[0]})
 
-            results = pd.concat([result, traces], axis=1)
-            gathered_results.append(results)
-
-            try:
-                if Path(output_directory).exists():
-                    pd.concat(gathered_results).T.to_csv(output_directory, mode="a", header=False)
-                else:
-                    pd.concat(gathered_results).T.to_csv(output_directory)
-
-                print(f"Evaluation results saved to {output_directory}")
-            except Exception as e:
-                print(f"Warning: {e}")
-                print(f"Evaluation results not saved to {output_directory}")
-
-
+    print("Evaluation completed")
     return
 
 @app.command()
