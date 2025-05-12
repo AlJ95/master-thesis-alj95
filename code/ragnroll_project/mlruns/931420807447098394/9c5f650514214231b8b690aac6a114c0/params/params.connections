@@ -1,1 +1,0 @@
-[{'receiver': 'llm.prompt', 'sender': 'prompt_builder.prompt'}, {'receiver': 'prompt_builder.documents', 'sender': 'reranker.documents'}, {'receiver': 'reranker.documents', 'sender': 'retriever.documents'}, {'receiver': 'answer_builder.replies', 'sender': 'llm.replies'}]

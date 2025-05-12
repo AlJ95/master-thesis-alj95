@@ -1,7 +1,0 @@
-artifact_location: mlflow-artifacts:/109532904033581751
-creation_time: 1746173449745
-experiment_id: '109532904033581751'
-last_update_time: 1746525808648
-lifecycle_stage: active
-name: test-runs
-tags: {}

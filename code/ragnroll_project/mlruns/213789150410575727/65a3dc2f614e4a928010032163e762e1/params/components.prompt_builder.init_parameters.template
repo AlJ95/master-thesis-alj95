@@ -1,6 +1,0 @@
-
-Given these documents, answer the question:
-{{ query }}
-Your answer is used within a pipeline and must follow the following format: "The answer is "valid"" or "The answer is "invalid"" with quotation marks. After stating your answer, explain your answer in detail.
-Example: Question: London is the capital of France. Answer: "false", because the capital of France is Paris, not London.
-Answer: 
