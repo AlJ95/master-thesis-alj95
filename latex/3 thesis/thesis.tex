@@ -5,8 +5,8 @@
 %
 % Values
 % ------
-% \ThesisSetTitle{RAGBench - A Benchmark Framework for Retrieval-Augmented Generation Systems}
-\ThesisSetTitle{RAGBench - Torwards Reconfigurable RAG Experimenation Without Overfitting}
+% \ThesisSetTitle{RAGnRoll - A Benchmark Framework for Retrieval-Augmented Generation Systems}
+\ThesisSetTitle{RAGnRoll - Towards Reconfigurable RAG Experimentation Without Overfitting}
 \ThesisSetKeywords{RAG, benchmarking} % only for PDF meta attributes
 
 \ThesisSetAuthor{Jan Albrecht}
@@ -14,14 +14,14 @@
 \ThesisSetDateOfBirth{17}{2}{1995}
 \ThesisSetPlaceOfBirth{Freital}
 
-\ThesisSetSupervisors{Prof.\ Dr.\ Norbert Siegmund,Prof.\ Dr.\ Unknown Yet}
+\ThesisSetSupervisors{Prof.\ Dr.\ Norbert Siegmund,Prof.\ Dr.\ Andreas Both}
 
-\ThesisSetSubmissionDate{31}{1}{2025}
+\ThesisSetSubmissionDate{15}{5}{2025}
 
 %
 % Suggested Packages
 % ------------------
-\usepackage[sort&compress]{natbib}
+\usepackage[numbers, sort&compress]{natbib}
 %   Allows citing in different ways (e.g., only the authors if you use the
 %   citation again within a short time).
 
@@ -71,13 +71,13 @@
 \begin{document}
 \begin{frontmatter}
   \begin{abstract}
-    A short summary.
+    Retrieval-Augmented Generation (RAG) systems enhance Large Language Models (LLMs) by grounding responses in external knowledge, addressing limitations like knowledge cutoffs and hallucination. However, developing and evaluating RAG systems is complex, involving numerous configurable components and risking overfitting during iterative refinement, often lacking systematic approaches. This thesis introduces RAGnRoll, a comprehensive benchmarking framework designed to facilitate systematic, reproducible, and generalizable RAG experimentation, ultimately aiming to prevent overfitting during configuration. RAGnRoll provides a structured methodology encompassing systematic baselining against standalone LLMs and naive RAG, a strict validation-test split for robust generalization assessment, multi-faceted evaluation including end-to-end and component-level metrics with hardware considerations, and tools for transparent experiment logging and tracing. The framework's utility was demonstrated through an experiment in software configuration validation, showcasing its capability to guide iterative development and performance optimization. RAGnRoll empowers researchers and practitioners to make data-driven decisions, moving beyond ad-hoc tuning towards a principled approach for building effective and reliable RAG solutions.
   \end{abstract}
 
   \tableofcontents
 
   %\chapter*{Acknowledgements} % optional
-  %I thank the authors of the swsLeipzig template for their excellent work!
+  %I thank the authors of the swsLeipzig template for their excellent work! 
 
   %\listoffigures % optional
 
@@ -120,24 +120,14 @@
 \chapter{Conclusion}\label{chap:Conclusion}
 \input{chapters/60_Conclusion_Framework.tex}
 
-\section{Roter Faden ...}
-RAG seems to be a free lunch (see paper with RAG vs Long Context LLMs), but isn't. 
-\begin{itemize}
-  \item System more complexity increased
-  \item Inference Time increased
-  \item Only useful in some scenarios 
-  \item Hard to evaluate because of its many parts
-  \item ...
-\end{itemize}
-
-All items are interesting in this thesis. The background ellaborated on the variety of advanced RAG techniques and here the conclusion would be that an evaluation framework should include hardware metrics next to performance metrics for measuring the overhead of the RAG compared to a standalone LLM. The usefulness is measured by the three stage evaluation through LLM, Naive RAG, Advanced configured RAG. Here it would be important to point out the failure points within a RAG system, as it was showed in lecture of Prof. Siegmund too. 
+\newpage
 % Appendix
 \appendix
 \input{chapters/70_Appendix.tex}
 
 % Bibliography
 % \bibliographystyle{plainnat} % apalike
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{literature.bib}    % load file literature.bib
 
 \end{document}
