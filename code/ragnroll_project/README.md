@@ -1,107 +1,106 @@
 # Ragnroll Project
 
 ## Motivation
-RAG evaluation is hard! With so many different architectures, optimizing end-to-end metrics while dealing with component bottlenecks and production concerns like latency is challenging. Worse yet, endless reconfigurations often just lead to overfitting on test datasets rather than real improvements.
+Large Language Models (LLMs) have limitations like knowledge cutoffs and difficulty with private or real-time data. Retrieval-Augmented Generation (RAG) systems address this by adding a retrieval step, but evaluating these complex, sensitive systems is challenging. Tuning RAG involves assessing components and end-to-end performance, risking overfitting.
 
-Ragnroll tackles this problem head-on by providing a flexible evaluation framework for modularized RAG systems focused on classification tasks. Our goal is simple: help you build better RAG systems that perform well in the real world, not just on benchmark datasets.
+Ragnroll provides a systematic framework for benchmarking modular RAG systems (initially focused on classification) to facilitate reproducible experiments and build robust systems.
 
 ## Overview
-Ragnroll is a command-line based framework that provides comprehensive tools for evaluating and optimizing RAG systems. The framework requires Docker Compose to run its supporting services:
+Ragnroll is a CLI framework for evaluating and optimizing RAG systems. It uses Docker Compose for supporting services:
 
-- **MLflow**: Used for visualization of evaluation metrics and results, making it easier to compare different RAG configurations and track improvements over time.
-- **Langfuse**: Provides detailed tracing capabilities for monitoring the execution flow of your RAG pipelines. We integrated Langfuse because, at the time of development, MLflow's tracing functionality was not compatible with Haystack pipelines.
+- **MLflow**: Logs parameters and visualizes metrics for comparison and tracking.
+- **Langfuse**: Provides detailed tracing for failure analysis and understanding pipeline flow.
 
-This architecture allows you to thoroughly analyze your RAG system's performance, identify bottlenecks, and make data-driven optimization decisions.
+This setup enables thorough performance analysis and data-driven optimization.
 
-The baselines `llm-standalone` and `naive-rag` serve as essential benchmarks for evaluating RAG systems. They provide a straightforward comparison, allowing users to quickly assess the performance of their configurations against these foundational models. By analyzing results from these baselines, developers can identify key areas for improvement and ensure their RAG systems are optimized for real-world applications. For evaluations that focus solely on custom configurations, the `--no-baselines` option can be used to exclude these benchmarks from the results.
+The framework includes two optional baselines (`llm-standalone` and `naive-rag`) for comparison. The `--no-baselines` flag skips them.
 
 ## Usage
-## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AlJ95/ragnroll
-   cd ragnroll
-   ```
+### Installation
 
-2. Configure environment variables:
-   - Copy `.env.local` to `.env`
-   - Update the values in `.env` with your own settings
-   - Required environment variables:
-     - `OPENAI_API_KEY`: Your OpenAI API key
-     - `LLM_AS_A_JUDGE_MODEL`: The model to use for LLM-as-a-Judge evaluation (default: "gpt-4o-mini")
-     - `OPENAI_BASE_URL`: Base URL for OpenAI API (e.g., "https://openrouter.ai/api/v1" for OpenRouter)
-     - Langfuse configuration variables (see .env.local for details)
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/AlJ95/master-thesis-alj95
+    cd master-thesis-alj95/code/ragnroll_project
+    ```
 
-   **Note:** Custom API-KEY environment variables like using `VLLM_API_KEY` for OpenAI API does not work. You must use OPENAI_API_KEY as environment variable.
+2.  Configure environment variables:
+    - Copy `.env.local` to `.env` and update values.
+    - Required: `OPENAI_API_KEY`, `LLM_AS_A_JUDGE_MODEL`, `OPENAI_BASE_URL`, Langfuse variables.
+    - **Note:** Use `OPENAI_API_KEY` for the primary LLM API key.
 
-3. Update security settings in `docker-compose.yml`:
-   - Find all instances marked with `#CHANGEME` and replace them with secure values
+3.  Update security settings (marked `#CHANGEME`) in `docker-compose.yml`.
 
-4. Start the supporting services:
-   ```bash
-   docker-compose up -d
-   ```
+4.  Start services:
+    ```bash
+    docker-compose up -d
+    ```
 
-## Data Preparation
+### Data Preparation
 
-### Evaluation Data
-Place your evaluation data in `data/processed/<your-eval-data>.json` or `.csv`. The data must follow this format as shown in `synthesize_config.json`:
-- Input text
-- Expected output
-- Reason (optional)
-- Expected retrieval (optional)
+-   **Evaluation Data**: Place `.json` or `.csv` files in `data/processed/`. Required columns depend on the task and its metrics (e.g., input, expected output for classification, or reason for Answer-Relevance).
+-   **Corpus**: Store documents for retrieval in `data/processed/corpus/`. Supports file types: `.pdf`, `.txt`, `.docx`, `.md`, `.html`, `.htm`, `.json`, `.csv`. Optionally add `urls.csv` for web scraping.
 
-### Corpus
-Store your document corpus in `data/processed/corpus/`:
-- You can include an `urls.csv` file for scraping documents before indexing
-- Supported file types include PDF, TXT, DOCX, MD, HTML, JSON, and CSV formats, as defined in `preprocesser.py`, which are used for converting various document types into a standardized format for processing.
+### Creating RAG Pipelines
 
-## Creating RAG Pipelines
+Define Haystack pipelines via:
 
-You can create Haystack RAG pipelines in three different ways:
+1.  **Python Modules**: In `pipelines/<your-module>.py` (see `pipelines/sample.py`).
+2.  **YAML Configuration**: Declaratively in `configs/<your-configuration>.yaml` (see `configs/predefined_4r.yaml`). Enhances reconfigurability.
+3.  **Matrix Configuration (YAML)**: Define multiple variations using lists in `configs/<your-matrix-configuration>.yaml` for automated combinatorial testing (see `configs/matrix_examples.yaml`).
 
-1. **Pipeline Module**:
-   - Create a Python module in `pipelines/<your-module>.py`
-   - See `pipelines/sample.py` for an example
-
-2. **YAML Configuration**:
-   - Define your pipeline in `configs/<your-configuration>.yaml`
-   - See `configs/predefined_4r.yaml` for an example
-
-3. **Matrix Configuration**:
-   - Create a matrix configuration in `configs/<your-matrix-configuration>.yaml`
-   - This generates multiple configurations based on all possible combinations
-   - See `configs/matrix_examples.yaml` for an example
-
-- Ensure you have the following components defined in your configuration:
-  - **Answer Builder**: Atleast one `answer_builder` for the finals answer in the pipeline
-  - **Generators**: Must have the type `*.generators.*`
-  - **Retrievers**: Must have the type `*.retrievers.*`
-  
-If you use custom generators or retrievers, you must inherit from the `Generator` or `Retriever` classes respectively.
-Custom components must be declared in pipelines/components/__init__.py
+Ensure pipelines include necessary components like `answer_builder`, `generators`, and `retrievers`. Register custom components in `pipelines/components/__init__.py`.
 
 ### Configuring Document Chunking
 
-You can configure document chunking parameters in the `metadata` section of your YAML configuration:
+Set chunking parameters (`split`, `chunk_size`, `chunk_overlap`, `chunk_separator`) in the `metadata.chunking` section of your YAML configuration. This affects how documents are split during ingestion.
 
 ```yaml
 metadata:
   chunking:
-    split: true                # Enable/disable chunking
-    chunk_size: 500            # Number of units per chunk
-    chunk_overlap: 150         # Overlap between chunks
-    chunk_separator: "\n\n"    # Separator to use for splitting
+    split: true
+    chunk_size: 500
+    chunk_overlap: 150
+    chunk_separator: "\n\n"
 ```
 
-These parameters control how documents are split during ingestion, which can significantly impact retrieval quality.
+### Running Evaluations
 
+We highly recommend using virtual environments to run the framework.
 
-## Running Evaluations
+1. Create a virtual environment:
+    ```bash
+    python -m venv .venv
+    ```
 
-Start an evaluation with the following command:
+2. Activate the virtual environment:  
+    ```bash
+    source .venv/bin/activate
+    ```
+
+3. Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Run the framework:
+
+   ```bash
+   python -m ragnroll run-evaluations <config_path_or_dir> <eval_data_path> <corpus_dir> [--no-baselines] [--test-size 20]
+   ```
+
+   or
+
+   preparing and running the evaluation using the run-eval.sh script:
+
+   ```bash
+   ./run-eval.sh
+   ```
+
+Example:
 
 ```bash
-python -m ragnroll run-evaluations ./configs/matrix_example.yaml ./data/processed/synthetic_rag_evaluation.json ./data/processed/corpus ./output.csv --no-baselines
+python -m ragnroll run-evaluations ./configs/examples/predefined.yaml ./data/processed/dev_data/synthetic_rag_evaluation.json ./data/dev_data/processed/corpus --no-baselines --test-size 20
 ```
+
