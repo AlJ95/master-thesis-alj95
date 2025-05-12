@@ -19,7 +19,7 @@ The framework includes two optional baselines (`llm-standalone` and `naive-rag`)
 
 ### Installation
 
-1.  Clone the repository:
+1.  Clone the repository (if not already done):
     ```bash
     git clone https://github.com/AlJ95/master-thesis-alj95
     cd master-thesis-alj95/code/ragnroll_project
@@ -32,7 +32,7 @@ The framework includes two optional baselines (`llm-standalone` and `naive-rag`)
 
 3.  Update security settings (marked `#CHANGEME`) in `docker-compose.yml`.
 
-4.  Start services:
+4.  Start services (and wait few minutes):
     ```bash
     docker-compose up -d
     ```
@@ -75,13 +75,19 @@ We highly recommend using virtual environments to run the framework.
     ```
 
 2. Activate the virtual environment:  
+    for Ubuntu / Mac
     ```bash
     source .venv/bin/activate
     ```
 
+    for Windows
+    ```bash
+    .venv/Scripts/activate
+    ```
+
 3. Install dependencies:
     ```bash
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
     ```
 
 4. Run the framework:
@@ -101,6 +107,6 @@ We highly recommend using virtual environments to run the framework.
 Example:
 
 ```bash
-python -m ragnroll run-evaluations ./configs/examples/predefined.yaml ./data/processed/dev_data/synthetic_rag_evaluation.json ./data/dev_data/processed/corpus --no-baselines --test-size 20
+python -m ragnroll run-evaluations ./configs/examples/predefined.yaml ./data/processed/dev_data/synthetic_rag_evaluation.json ./data/dev_data/processed/corpus --test-size 20
 ```
 

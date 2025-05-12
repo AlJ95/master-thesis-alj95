@@ -7,6 +7,10 @@
 .venv-fastrag
 .venv-312
 
+# pytest cache
+**/pytest_cache/**
+.pytest_cache/
+
 # Data 
 code/RAGBench/src/data/
 code/ragnroll_project/data/se_vulnerability
