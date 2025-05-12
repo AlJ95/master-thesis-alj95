@@ -10,7 +10,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./ragnroll_project/:/ragnroll_project/
+      - ./mlruns/:/mlruns/
+      - ./mlartifacts/:/mlartifacts/
     expose:
       - "8080"
     command: >
