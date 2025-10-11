@@ -1,7 +1,0 @@
-artifact_location: mlflow-artifacts:/497091183008409444
-creation_time: 1744638858704
-experiment_id: '497091183008409444'
-last_update_time: 1744642163601
-lifecycle_stage: deleted
-name: RAG Experimentation
-tags: {}
