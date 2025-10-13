@@ -1,6 +1,7 @@
 from typing import Dict, Any, List, Union, Optional
 import re
 import logging
+from haystack import Document
 
 try:
     from ragnroll.metrics.base import BaseMetric, MetricRegistry
@@ -80,7 +81,7 @@ class FormatValidatorMetric(BaseMetric):
     def run(
         self,
         component_outputs: List[Dict[str, Any]],
-        expected_outputs: List[str] = None,
+        expected_outputs: List[str] = [],
         **kwargs
     ) -> Dict[str, Any]:
         """
@@ -146,9 +147,8 @@ class JudgeBasedMetric(BaseMetric):
     def __init__(
         self,
         threshold: float = 0.5,
-        model: str = "gpt-4o-mini",
-        temperature: float = 0.0,
-        max_tokens: int = 1024,
+        model: str = "gpt-5-mini-2025-08-07",
+        max_completion_tokens: int = 1024,
         **kwargs
     ):
         """
@@ -157,8 +157,7 @@ class JudgeBasedMetric(BaseMetric):
         Args:
             threshold: Minimum score for the evaluation to be considered successful
             model: Model name to use
-            temperature: Temperature for sampling
-            max_tokens: Maximum tokens to generate
+            max_completion_tokens: Maximum tokens to generate
             **kwargs: Additional arguments for the LLM API
         """
         super().__init__(threshold=threshold)
@@ -166,8 +165,7 @@ class JudgeBasedMetric(BaseMetric):
         # Create LLM judge with simplified parameters
         self.judge = LLMAsAJudge(
             model=model,
-            temperature=temperature,
-            max_tokens=max_tokens,
+            max_completion_tokens=max_completion_tokens,
             **kwargs
         )
     
@@ -206,8 +204,8 @@ class ContextUtilizationMetric(JudgeBasedMetric):
     def run(
         self,
         component_outputs: List[Dict[str, Any]],
-        queries: List[str] = None,
-        contexts: List[List[str]] = None,
+        queries: List[str] = [],
+        contexts: List[List[Document]] = [],
         **kwargs
     ) -> Dict[str, Any]:
         """
@@ -245,7 +243,7 @@ class ContextUtilizationMetric(JudgeBasedMetric):
         
         for query, answer, context_list in zip(queries, predicted_answers, contexts):
             # Combine contexts into a single string with separators
-            context_text = "\n\n".join([context.content for context in context_list])
+            context_text = "\n\n".join([context.content for context in context_list]) # type: ignore
             
             # Create evaluation prompt
             prompt = f"""Evaluate how well the following answer utilizes the provided context.
@@ -310,7 +308,7 @@ class AnswerRelevancyMetric(JudgeBasedMetric):
     def run(
         self,
         component_outputs: List[Dict[str, Any]],
-        queries: List[str] = None,
+        queries: List[str] = [],
         **kwargs
     ) -> Dict[str, Any]:
         """

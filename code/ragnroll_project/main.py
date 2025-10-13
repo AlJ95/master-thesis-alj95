@@ -5,6 +5,18 @@ Main entry point for the RAGnRoll framework using configuration-based approach.
 import sys
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+ENV_PATH = Path(__file__).parent / ".env"
+
+load_dotenv(ENV_PATH)
+
+print(os.environ["LANGFUSE_HOST"])
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
+
+from haystack import tracing
+from haystack_integrations.components.connectors.langfuse import LangfuseConnector
 
 # Add the ragnroll package to the path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -32,21 +44,21 @@ def main():
     print("=" * 50)
     
     # Check if config.py exists
-    config_path = Path("config.py")
+    config_path = Path("test_minimal_config.py")
     if not config_path.exists():
-        print("Error: config.py not found!")
-        print("Please create a config.py file with your configuration settings.")
+        print("Error: test_minimal_config.py not found!")
+        print("Please create a test_minimal_config.py file with your configuration settings.")
         sys.exit(1)
     
     # Import the configuration
     try:
-        import config
+        import test_minimal_config
     except ImportError as e:
-        print(f"Error importing config.py: {e}")
+        print(f"Error importing test_minimal_config.py: {e}")
         sys.exit(1)
     
     # Process the configuration
-    process_config(config)
+    process_config(test_minimal_config)
 
 def process_config(config):
     """Process the configuration and execute the appropriate functions."""
@@ -185,7 +197,7 @@ def run_evaluations(profile):
                 pipeline, indexing_duration = index_documents(corpus_dir, pipeline)
                 mlflow.log_metrics({"indexing_duration": indexing_duration})
                 
-                # pipeline.add_component("tracer", LangfuseConnector(run_name))
+                pipeline.add_component("tracer", LangfuseConnector(run_name))
                 data = load_evaluation_data(val_data_path)
 
                 evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
@@ -288,7 +300,7 @@ def test_generalization_error(profile):
                 validate_pipeline(pipeline)
 
                 pipeline, indexing_duration = index_documents(corpus_dir, pipeline)
-                # pipeline.add_component("tracer", LangfuseConnector(run_name))
+                pipeline.add_component("tracer", LangfuseConnector(run_name))
                 data = load_evaluation_data(test_data_path)
 
                 evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)

@@ -34,14 +34,13 @@ class LLMAsAJudge:
     # Allowed models
     ALLOWED_MODELS = [
         "google/gemini-2.0-flash-001",
-        "gpt-4o-mini",
+        "gpt-5-mini-2025-08-07",
         "meta-llama/llama-3.3-70b-instruct"
     ]
     
     def __init__(
         self,
-        temperature: float = 0.0,
-        max_tokens: int = 1024,
+        max_completion_tokens: int = 1024,
         **kwargs
     ):
         """
@@ -50,15 +49,14 @@ class LLMAsAJudge:
         Args:
             api_key: API key for the provider (uses env var OPENAI_API_KEY if None)
             api_url: Base URL for the API (uses OpenAI's URL if None)
-            temperature: Temperature for sampling (0.0 = deterministic)
-            max_tokens: Maximum tokens to generate
+            max_completion_tokens: Maximum tokens to generate
             **kwargs: Additional arguments for the API call
         """
-        # Get model from environment variable or default to "gpt-4o-mini"
-        self.model = os.environ.get("LLM_AS_A_JUDGE_MODEL", "gpt-4o-mini")
+        # Get model from environment variable or default to "gpt-5-mini-2025-08-07"
+        self.model = os.environ.get("LLM_AS_A_JUDGE_MODEL", "gpt-5-mini-2025-08-07")
         if self.model not in self.ALLOWED_MODELS:
             logger.warning(f"Model '{self.model}' is not allowed. Defaulting to 'gpt-4o-mini'. This may lead to preference leakage. Possible models are: {', '.join(self.ALLOWED_MODELS)}.")
-            self.model = "gpt-4o-mini"
+            self.model = "gpt-5-mini-2025-08-07"
     
         # Set API key from input or environment variables
         self.api_key = self.DEFAULT_API_PARAMS[self.model]["api_key"]
@@ -71,8 +69,7 @@ class LLMAsAJudge:
         )
         
         # Set generation parameters
-        self.temperature = temperature
-        self.max_tokens = max_tokens
+        self.max_completion_tokens = max_completion_tokens
         self.additional_params = kwargs
     
     def evaluate(self, prompt: str, system_prompt: Optional[str] = None) -> Tuple[str, Dict[str, Any]]:
@@ -99,8 +96,7 @@ class LLMAsAJudge:
             params = {
                 "model": self.model,
                 "messages": messages,
-                "temperature": self.temperature,
-                "max_tokens": self.max_tokens,
+                "max_completion_tokens": self.max_completion_tokens,
                 **self.additional_params
             }
             
