@@ -1,9 +1,10 @@
 """RAGnRoll entry point script."""
 
-from ragnroll import cli, __app_name__
+from ragnroll import __app_name__
+from main import main as ragnroll_main
 
 def main():
-    cli.app(prog_name=__app_name__)
+    ragnroll_main()
 
 if __name__ == "__main__":
     main()
