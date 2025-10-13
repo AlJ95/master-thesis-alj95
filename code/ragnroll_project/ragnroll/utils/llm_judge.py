@@ -21,7 +21,7 @@ class LLMAsAJudge:
             "api_key": os.environ.get("OPENROUTER_API_KEY"),
             "api_url": "https://openrouter.ai/api/v1"
         },
-        "gpt-4o-mini": {
+        "gpt-5-mini-2025-08-07": {
             "api_key": os.environ.get("OPENAI_API_KEY"),
             "api_url": "https://api.openai.com/v1"
         },
