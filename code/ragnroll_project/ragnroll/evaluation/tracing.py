@@ -25,8 +25,8 @@ def fetch_current_traces(run_name: str) -> pd.DataFrame:
             host=os.environ["LANGFUSE_HOST"],
         )
 
-        all_traces = langfuse.fetch_traces().data
-        all_observations = langfuse.fetch_observations().data
+        all_traces = langfuse.api.trace.list().data
+        all_observations = langfuse.api.observations.get_many().data
 
     except Exception as e:
         raise ValueError(f"Langfuse is not configured: {e}")

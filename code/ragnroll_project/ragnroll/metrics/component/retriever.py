@@ -50,8 +50,6 @@ class HaystackContextRelevanceMetric(BaseMetric):
         
         # Initialize the Haystack evaluator
         self.evaluator = ContextRelevanceEvaluator(
-            api_key=api_key,
-            api_params=api_params or ({} if model is None else {"model": model}),
             examples=examples,
             raise_on_failure=raise_on_failure,
             progress_bar=progress_bar
@@ -147,8 +145,6 @@ class MAPAtKMetric(BaseMetric):
         
         # Initialize the Haystack evaluator for document relevance judgments
         self.evaluator = ContextRelevanceEvaluator(
-            api_key=api_key,
-            api_params=api_params or ({} if model is None else {"model": model}),
             examples=examples,
             raise_on_failure=raise_on_failure,
             progress_bar=progress_bar
