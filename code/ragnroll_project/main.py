@@ -6,6 +6,7 @@ import sys
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import asyncio
 
 ENV_PATH = Path(__file__).parent / ".env"
 
@@ -24,11 +25,12 @@ sys.path.insert(0, str(Path(__file__).parent))
 # Import the necessary modules for the RAGnRoll functionality
 try:
     from ragnroll.utils.pipeline import config_to_pipeline, gather_config_paths
-    from ragnroll.evaluation.eval import Evaluator
+    from ragnroll.evaluation.eval import Evaluator, ParallelExecutionStrategy
     from ragnroll.evaluation.data import load_evaluation_data
     from ragnroll.utils.ingestion import index_documents
     from ragnroll.evaluation.tracing import fetch_current_traces
     from ragnroll.utils.config import extract_run_params
+
     import mlflow
     import warnings
     from pathlib import Path
@@ -40,28 +42,20 @@ def main():
     """Main entry point for the RAGnRoll framework."""
     print("RAGnRoll Framework - Configuration-Based Approach")
     print("=" * 50)
-    
-    # Check if config.py exists
-    config_path = Path("config.py")
-    if not config_path.exists():
-        print("Error: config.py not found!")
-        print("Please create a config.py file with your configuration settings.")
-        sys.exit(1)
-    
-    # Import the configuration
+
     try:
         import config
     except ImportError as e:
         print(f"Error importing config.py: {e}")
         sys.exit(1)
-    
+
     # Process the configuration
     process_config(config)
 
 def process_config(config):
     """Process the configuration and execute the evaluation for all profiles."""
     print("Processing configuration...")
-    
+
     # Check if we have profiles
     if hasattr(config, 'profiles') and isinstance(config.profiles, list):
         print(f"Found {len(config.profiles)} configuration profiles")
@@ -79,7 +73,7 @@ def process_config(config):
 def run_evaluations(profile):
     """Execute the run_evaluations functionality using configuration parameters."""
     print("Running evaluations...")
-    
+
     # Extract parameters from profile
     config_sources = profile.get('config_sources', 'configs/from_pipeline/sample.yaml')
     eval_data_file = profile.get('eval_data_file', 'data/processed/dev_data/synthetic_rag_evaluation.json')
@@ -91,7 +85,7 @@ def run_evaluations(profile):
     positive_label = profile.get('positive_label', 'valid')
     negative_label = profile.get('negative_label', 'invalid')
     experiment_name = profile.get('experiment_name', 'RAG Experimentation')
-    
+
     try:
         # Set up MLflow
         if os.getenv("MLFLOW_TRACKING_URI"):
@@ -107,8 +101,8 @@ def run_evaluations(profile):
 
         eval_data_path = Path(eval_data_file)
 
-        # Split the evaluation data into val, test sets based on Simon et al. (2024) 
-        # Note: This is a simplified version - in a real implementation, we'd want to 
+        # Split the evaluation data into val, test sets based on Simon et al. (2024)
+        # Note: This is a simplified version - in a real implementation, we'd want to
         # check if the data has already been split to avoid errors
         from ragnroll.utils.data import val_test_split
         try:
@@ -134,7 +128,7 @@ def run_evaluations(profile):
         BASELINES_PATH = Path(__file__).parent / "configs" / "baselines"
         if baselines:
             baseline_paths = [
-                BASELINES_PATH / "llm_config.yaml", 
+                BASELINES_PATH / "llm_config.yaml",
                 BASELINES_PATH / "predefined_bm25.yaml"
             ]
         else:
@@ -148,7 +142,7 @@ def run_evaluations(profile):
 
             run_name = f"{config_path.parent.name}.{config_path.name}"
             with mlflow.start_run(run_name=run_name):
-                
+
                 # Load and prepare pipelines
                 pipeline = config_to_pipeline(configuration_file_path=config_path)
                 # validate_pipeline(pipeline)  # Commented out for now to avoid potential issues
@@ -157,20 +151,27 @@ def run_evaluations(profile):
                 params["corpus_dir"] = corpus_dir
                 params["val_data_path"] = str(val_data_path)
                 params["commit_hash"] = os.system("git rev-parse HEAD")
-                
+
                 mlflow.log_params(params)
 
                 pipeline, indexing_duration = index_documents(corpus_dir, pipeline)
                 mlflow.log_metrics({"indexing_duration": indexing_duration})
-                
+
                 pipeline.add_component("tracer", LangfuseConnector(run_name))
                 data = load_evaluation_data(val_data_path)
 
-                evaluator = Evaluator(pipeline, positive_label=positive_label, negative_label=negative_label)
+                # Always use parallel execution strategy
+                execution_strategy = ParallelExecutionStrategy()
+                evaluator = Evaluator(
+                    pipeline,
+                    positive_label=positive_label,
+                    negative_label=negative_label,
+                    execution_strategy=execution_strategy
+                )
                 result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
 
                 fetch_current_traces(run_name)
-                
+
                 for col in result.columns:
                     # Clean the column name for MLflow compatibility
                     clean_col = str(col).replace("(", "").replace(")", "").replace("'", "").replace(",", "_")
@@ -178,7 +179,7 @@ def run_evaluations(profile):
                     mlflow.log_metrics({metric_name: result[col].values[0]})
 
         print("Evaluation completed")
-        
+
     except Exception as e:
         print(f"Error in run_evaluations: {e}")
         import traceback

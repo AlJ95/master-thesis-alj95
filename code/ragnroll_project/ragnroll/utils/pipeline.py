@@ -1,5 +1,5 @@
 from pipelines.components import *
-from haystack import Pipeline
+from haystack import AsyncPipeline
 from haystack.core.component import InputSocket, OutputSocket
 from pathlib import Path
 from typing import Dict, Any, List, Tuple
@@ -106,7 +106,7 @@ def generate_pipeline_configurations(configuration_file_path: Path) -> List[Path
 
     return config_paths
 
-def config_to_pipeline(configuration_file_path: Path = None, configuration_dict: Dict[str, Any] = None) -> Pipeline:
+def config_to_pipeline(configuration_file_path: Path = None, configuration_dict: Dict[str, Any] = None) -> AsyncPipeline:
     """
     Load a pipeline from a configuration file and draw it to a PNG file.
 
@@ -120,16 +120,16 @@ def config_to_pipeline(configuration_file_path: Path = None, configuration_dict:
     if configuration_file_path:
         if not configuration_file_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {configuration_file_path.resolve()}")
-    
+
         if configuration_file_path.suffix not in [".yaml", ".yml"]:
             raise ValueError("Configuration file must be a YAML file.")
-    
-        return Pipeline.load(open(configuration_file_path, "r"))
-    
-    return Pipeline.from_dict(configuration_dict)
+
+        return AsyncPipeline.load(open(configuration_file_path, "r"))
+
+    return AsyncPipeline.from_dict(configuration_dict)
 
 
-def extract_component_structure(pipeline: Pipeline) -> Dict[str, Any]:
+def extract_component_structure(pipeline: AsyncPipeline) -> Dict[str, Any]:
     """
     Extract the structure of a pipeline.
     """
@@ -163,7 +163,7 @@ def extract_component_structure(pipeline: Pipeline) -> Dict[str, Any]:
         return structure
 
 
-def get_predecessor_connection_mappings(pipeline: Pipeline, component_name: str) -> List[Tuple[str, InputSocket, OutputSocket]]:
+def get_predecessor_connection_mappings(pipeline: AsyncPipeline, component_name: str) -> List[Tuple[str, InputSocket, OutputSocket]]:
     """
     Get the predecessor connection mappings of a given component.
     """
@@ -186,7 +186,7 @@ def get_predecessor_connection_mappings(pipeline: Pipeline, component_name: str)
     return predecessors
 
 
-def get_last_component_with_documents(pipeline: Pipeline, component_name: str) -> str:
+def get_last_component_with_documents(pipeline: AsyncPipeline, component_name: str) -> str:
     """
     Get the name of the last component that has a documents input socket.
     In Haystack, usually a builder-type component comes before a generator-type component.
@@ -212,7 +212,7 @@ def get_last_component_with_documents(pipeline: Pipeline, component_name: str) -
 
 
 
-def draw_pipeline(pipeline: Pipeline, output_file: str) -> None:
+def draw_pipeline(pipeline: AsyncPipeline, output_file: str) -> None:
     """
     Draw a pipeline to a PNG file.
 
@@ -228,7 +228,7 @@ def draw_pipeline(pipeline: Pipeline, output_file: str) -> None:
     print(f"Pipeline drawn to {output_file}")
 
 
-def validate_pipeline(pipeline: Pipeline) -> None:
+def validate_pipeline(pipeline: AsyncPipeline) -> None:
     """
     Validate a pipeline.
     """
@@ -291,4 +291,3 @@ if __name__ == "__main__":
     if True:
         config_file = Path(__file__).parent.parent.parent / "configs" / "matrix_example.yaml"
         generate_pipeline_configurations(config_file)
-

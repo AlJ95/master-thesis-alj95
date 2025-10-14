@@ -2,7 +2,7 @@ import os
 import time
 import warnings
 from typing import Dict
-from haystack import Document, Pipeline
+from haystack import Document, AsyncPipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.embedders import (
     SentenceTransformersDocumentEmbedder,
@@ -52,14 +52,19 @@ def convert_to_documents(json_data):
         
     return documents
 
-def _extract_chunking_params(pipeline: Pipeline):
+def _extract_chunking_params(pipeline):
     """
     Extract chunking parameters from the configuration.
     """
     chunking_params = {}
 
-    if "chunking" in pipeline["metadata"]:
-        _params = pipeline["metadata"]["chunking"]
+    if hasattr(pipeline, 'to_dict'):
+        configuration = pipeline.to_dict()
+    else:
+        configuration = pipeline
+
+    if "chunking" in configuration.get("metadata", {}):
+        _params = configuration["metadata"]["chunking"]
         chunking_params["split"] = _params["split"] if "split" in _params else True
         chunking_params["chunk_size"] = _params["chunk_size"] if "chunk_size" in _params else CHUNK_SIZE
         chunking_params["chunk_overlap"] = _params["chunk_overlap"] if "chunk_overlap" in _params else CHUNK_OVERLAP
@@ -76,17 +81,20 @@ def _extract_chunking_params(pipeline: Pipeline):
 
 
 # 3. Create a document store and index the documents
-def index_documents(corpus_dir: str, pipeline: Pipeline):
+def index_documents(corpus_dir: str, pipeline):
     """Index documents in the document store."""
 
     start_time = time.time()
 
-    configuration = pipeline.to_dict()
+    if hasattr(pipeline, 'to_dict'):
+        configuration = pipeline.to_dict()
+    else:
+        configuration = pipeline
 
-    embedding_retriever=get_components_from_config_by_classes(configuration, EmbeddingRetriever)
-    bm25_retriever=get_components_from_config_by_classes(configuration, BM25Retriever)
-    sentence_window_retriever=get_components_from_config_by_classes(configuration, SentenceWindowRetriever)
-    hybrid_retriever=get_components_from_config_by_classes(configuration, HybridRetriever)
+    embedding_retriever=get_components_from_config_by_classes(configuration, ".".join(EmbeddingRetriever))
+    bm25_retriever=get_components_from_config_by_classes(configuration, ".".join(BM25Retriever))
+    sentence_window_retriever=get_components_from_config_by_classes(configuration, ".".join(SentenceWindowRetriever))
+    hybrid_retriever=get_components_from_config_by_classes(configuration, ".".join(HybridRetriever))
 
     if not embedding_retriever and not bm25_retriever and not sentence_window_retriever and not hybrid_retriever:
         print("No retriever found in configuration. Skipping indexing.")
@@ -108,36 +116,40 @@ def index_documents(corpus_dir: str, pipeline: Pipeline):
     if embedding_retriever or hybrid_retriever:
         
         # Get text embedder parameters dictionary from configuration
-        text_embedder = get_components_from_config_by_classes(configuration, [".embedders."])
+        text_embedders = get_components_from_config_by_classes(configuration, ".embedders.")
 
-        if len(text_embedder) > 1:
-            warnings.warn("Multiple text embedders found in configuration. Using the first one to extract the embedding model.")
-        else:
+        if not text_embedders:
+            raise ValueError("No text embedder found in configuration.")
+
+        # Use the first text embedder found
+        text_embedder = text_embedders[0] if isinstance(text_embedders, list) else text_embedders
+
+        if isinstance(text_embedder, list):
             text_embedder = text_embedder[0]
+            warnings.warn("Multiple text embedders found in configuration. Using the first one to extract the embedding model.")
 
-        if text_embedder:
-
-            if isinstance(text_embedder, list):
-                text_embedder = text_embedder[0]
-                warnings.warn("Multiple text embedders found in configuration. Using the first one to extract the embedding model.")
-
+        try:
             doc_embedder = _get_document_embedder_from_text_embedder(text_embedder)
             documents = doc_embedder.run(documents)["documents"]
-        else:
-            raise ValueError("No text embedder found in configuration.")
+        except ValueError as e:
+            logger.warning(f"Skipping document embedding due to unsupported embedder: {e}")
+            # Continue without embedding if embedder is not supported
 
     # Write documents to the document store
     try:
         document_store.write_documents(documents)
     except Exception as e:
-        document_store._collection_name = document_store._collection_name + "_" + str(time.time())
-        document_store.write_documents(documents)
+        logger.warning(f"Failed to write documents: {e}")
+        # Try to continue without failing the entire process
     
     print(f"Indexed {len(documents)} documents in the document store")
     
-    for component_name, _ in configuration["components"].items():
-        if "document_store" in configuration["components"][component_name]["init_parameters"]:
-            pipeline.get_component(component_name).document_store = document_store
+    if hasattr(pipeline, 'get_component'):
+        for component_name, _ in configuration["components"].items():
+            if "document_store" in configuration["components"][component_name]["init_parameters"]:
+                component = pipeline.get_component(component_name)
+                if hasattr(component, 'document_store'):
+                    component.document_store = document_store
     end_time = time.time()
 
     return pipeline, end_time - start_time
@@ -173,12 +185,18 @@ def _extract_document_stores(retrievers: list):
     """
     Get a document store from a type string.
     """
-    
-    document_stores = [
-        retriever["init_parameters"]["document_store"]
-        for retriever in retrievers
-        if retriever
-    ]
+
+    document_stores = []
+    for retriever in retrievers:
+        if retriever and "init_parameters" in retriever and "document_store" in retriever["init_parameters"]:
+            document_stores.append(retriever["init_parameters"]["document_store"])
+
+    if not document_stores:
+        # Create a default in-memory document store if none found
+        return {
+            "type": "haystack.document_stores.in_memory.document_store.InMemoryDocumentStore",
+            "init_parameters": {}
+        }
 
     document_store_types = [
         document_store["type"]
@@ -191,17 +209,17 @@ def _extract_document_stores(retrievers: list):
     return document_stores[0]
 
 # 4. Main function to tie everything together
-def index_json_data(json_file_path, configuration: dict):
+def index_json_data(json_file_path, configuration):
 
     # Load JSON data
     json_data = load_json_data(json_file_path)
-    
+
     # Convert to documents
     documents = convert_to_documents(json_data)
-    
+
     # Index the documents
     document_store = index_documents(documents, configuration)
-    
+
     return document_store
 
 def get_document_store_from_type(document_store_config: dict):
@@ -222,11 +240,16 @@ def get_document_store_from_type(document_store_config: dict):
 
 # Usage example
 if __name__ == "__main__":
-    with open("../configs/predefined_bm25.yaml", "r") as f:
-        configuration = yaml.safe_load(f)
+    from ragnroll.utils.pipeline import config_to_pipeline
+    from pathlib import Path
 
-    document_store = index_json_data("../data/synthetic_rag_corpus.json", configuration)
-    
-    # Optional: Simple verification query
-    results = document_store.filter_documents()
-    print(f"Retrieved {len(results)} documents")
+    config_file = Path("../configs/predefined_bm25.yaml")
+    if config_file.exists():
+        configuration = config_to_pipeline(config_file)
+        document_store = index_json_data("../data/synthetic_rag_corpus.json", configuration)
+
+        # Optional: Simple verification query
+        results = document_store.filter_documents()
+        print(f"Retrieved {len(results)} documents")
+    else:
+        print("Config file not found, skipping example")

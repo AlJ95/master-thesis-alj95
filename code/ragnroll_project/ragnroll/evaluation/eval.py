@@ -1,4 +1,8 @@
 import sys, os
+from abc import ABC, abstractmethod
+from typing import List, Dict, Any, Optional
+from multiprocessing import Pool
+import math
 try:
     from ragnroll.metrics import MetricRegistry, BaseMetric
     from ragnroll.metrics.system import SystemResourceTracker
@@ -12,8 +16,7 @@ except ImportError:
     from ragnroll.metrics.system import SystemResourceTracker
     from ragnroll.utils.config import get_components_from_config_by_classes
     from ragnroll.utils.pipeline import get_last_component_with_documents
-from haystack import Pipeline
-from typing import List, Dict, Any, Optional
+from haystack import AsyncPipeline
 import logging
 import pandas as pd
 import os
@@ -23,44 +26,133 @@ DEFAULT_NEGATIVE_LABEL = "invalid"
 
 logger = logging.getLogger(__name__)
 
-class EvaluationDataset:
-    """Class to handle evaluation datasets."""
-    
-    def __init__(self, evaluation_data: Dict[str, Any]):
-        """Initialize with raw evaluation data."""
-        self.evaluation_data = evaluation_data
-        self.processed_data = []
-    
-    def generate_predictions(self, pipeline: Pipeline) -> None:
-        """Generate predictions for all test cases."""
-        for test_case in self.evaluation_data["test_cases"]:
+class ExecutionStrategy(ABC):
+    """Interface für verschiedene Ausführungsstrategien (Open/Closed Principle)"""
+
+    @abstractmethod
+    def execute_pipeline_on_data(
+        self,
+        pipeline: AsyncPipeline,
+        test_cases: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """Führt Pipeline auf Testfällen aus und gibt verarbeitete Daten zurück"""
+        pass
+
+
+
+class ParallelExecutionStrategy(ExecutionStrategy):
+    """Parallele Ausführung mit Multiprocessing"""
+
+    def __init__(self, num_processes: int = 4, chunk_size: Optional[int] = None):
+        self.num_processes = num_processes
+        self.chunk_size = chunk_size
+
+    def execute_pipeline_on_data(
+        self,
+        pipeline: AsyncPipeline,
+        test_cases: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        # Daten in Chunks aufteilen
+        chunks = self._split_data_into_chunks(test_cases)
+
+        # Parallele Verarbeitung mit asyncio.gather
+        import asyncio
+        async def process_chunks():
+            tasks = []
+            for chunk in chunks:
+                task = self._process_chunk_async(chunk, pipeline.to_dict())
+                tasks.append(task)
+
+            results = await asyncio.gather(*tasks)
+
+            # Ergebnisse flachlegen
+            processed_data = []
+            for chunk_result in results:
+                processed_data.extend(chunk_result)
+            return processed_data
+
+        return asyncio.run(process_chunks())
+
+    def _split_data_into_chunks(self, test_cases: List[Dict[str, Any]]) -> List[List[Dict[str, Any]]]:
+        """Teilt Testfälle in Chunks für parallele Verarbeitung."""
+        if self.chunk_size:
+            chunk_size = self.chunk_size
+        else:
+            # Dynamische Chunk-Größe basierend auf Anzahl Prozesse
+            chunk_size = max(1, len(test_cases) // self.num_processes)
+
+        chunks = []
+        for i in range(0, len(test_cases), chunk_size):
+            chunks.append(test_cases[i:i + chunk_size])
+        return chunks
+
+    async def _process_chunk_async(self, chunk: List[Dict[str, Any]], pipeline_dict: Dict[str, Any]):
+        """Asynchrone Methode für parallele Verarbeitung"""
+        # Pipeline aus Dict rekonstruieren
+        pipeline = AsyncPipeline.from_dict(pipeline_dict)
+        processed_chunk = []
+        for test_case in chunk:
             try:
-                input_text = test_case["input"]
-                expected_output = test_case["expected_output"]
-                # Generate the answer using the pipeline
-                response = self._generate_answer(pipeline, input_text)
-                actual_output = self._extract_answer_from_pipeline(response)
-                
-                # Add to dataset
-                self.processed_data.append({
-                    "input": input_text,
-                    "expected_output": expected_output,
+                response = await self._generate_answer_static_async(pipeline, test_case["input"])
+                actual_output = self._extract_answer_from_pipeline_static(response)
+                processed_chunk.append({
+                    "input": test_case["input"],
+                    "expected_output": test_case["expected_output"],
                     "actual_output": actual_output,
                     "component_outputs": response,
                 })
             except Exception as e:
-                logger.error(f"Error generating answer for test case: {e}")
+                logger.error(f"Error processing test case in parallel: {e}")
+                # Im Fehlerfall leeren Eintrag hinzufügen
+                processed_chunk.append({
+                    "input": test_case["input"],
+                    "expected_output": test_case["expected_output"],
+                    "actual_output": "",
+                    "component_outputs": {},
+                })
+        return processed_chunk
+
+    @staticmethod
+    async def _generate_answer_static_async(pipeline: AsyncPipeline, input_text: str) -> Dict[str, Any]:
+        """Asynchrone statische Version von _generate_answer für parallele Verarbeitung."""
+        components = set(pipeline.to_dict()["components"].keys())
+        data = dict(query=input_text)
+        return await pipeline.run_async(data=data, include_outputs_from=components)
+
+    @staticmethod
+    def _extract_answer_from_pipeline_static(response: Dict[str, Any]) -> str:
+        """Statische Version von _extract_answer_from_pipeline für parallele Verarbeitung."""
+        if "answer_builder" in response:
+            return response["answer_builder"]["answers"][0].data
+        else:
+            raise ValueError(f"Could not extract answer from pipeline response: {response}. Make sure the pipeline has an answer_builder component.")
+
+class EvaluationDataset:
+    """Class to handle evaluation datasets."""
     
-    def _generate_answer(self, pipeline: Pipeline, input_text: str) -> Dict[str, Any]:
+    def __init__(self, evaluation_data: Dict[str, Any], execution_strategy: Optional[ExecutionStrategy] = None):
+        """Initialize with raw evaluation data."""
+        self.evaluation_data = evaluation_data
+        self.execution_strategy = execution_strategy or ParallelExecutionStrategy()
+        self.processed_data = []
+    
+    def generate_predictions(self, pipeline: AsyncPipeline) -> None:
+        """Generate predictions for all test cases using the configured execution strategy."""
+        self.processed_data = self.execution_strategy.execute_pipeline_on_data(
+            pipeline,
+            self.evaluation_data["test_cases"]
+        )
+    
+    async def _generate_answer(self, pipeline: AsyncPipeline, input_text: str) -> Dict[str, Any]:
         """Generate an answer using the pipeline."""
-        components = list(pipeline.to_dict()["components"].keys())
+        components = set(pipeline.to_dict()["components"].keys())
         data = dict(query=input_text)
 
         # # Add text to data if embedding retriever is present
         # if get_components_from_config_by_classes(pipeline.to_dict(), ".embedding_retriever."):
         #     data["text"] = input_text
 
-        return pipeline.run(data=data, include_outputs_from=components)
+        return await pipeline.run_async(data=data, include_outputs_from=components)
     
     def _extract_answer_from_pipeline(self, response: Dict[str, Any]) -> str:
         """Extract the answer from the pipeline response."""
@@ -69,7 +161,7 @@ class EvaluationDataset:
         else:
             raise ValueError(f"Could not extract answer from pipeline response: {response}. Make sure the pipeline has an answer_builder component.")
     
-    def get_processed_data(self) -> Dict[str, Any]:
+    def get_processed_data(self) -> List[Dict[str, Any]]:
         """Get the processed data with predictions."""
         return self.processed_data
 
@@ -94,19 +186,22 @@ class EvaluationDataset:
 class Evaluator:
     """Main evaluator class for running metrics on evaluation data."""
     
-    def __init__(self, pipeline: Pipeline, positive_label: str = DEFAULT_POSITIVE_LABEL, 
-                 negative_label: str = DEFAULT_NEGATIVE_LABEL):
+    def __init__(self, pipeline: AsyncPipeline, positive_label: str = DEFAULT_POSITIVE_LABEL,
+                 negative_label: str = DEFAULT_NEGATIVE_LABEL,
+                 execution_strategy: Optional[ExecutionStrategy] = None):
         """
         Initialize with a pipeline to evaluate.
-        
+
         Args:
             pipeline: The pipeline to evaluate
             positive_label: The label to consider as positive class (default: "valid")
             negative_label: The label to consider as negative class (default: "invalid")
+            execution_strategy: The execution strategy to use (default: ParallelExecutionStrategy)
         """
         self.pipeline = pipeline
         self.positive_label = positive_label
         self.negative_label = negative_label
+        self.execution_strategy = execution_strategy or ParallelExecutionStrategy()
         self.end_to_end_metrics = self._instantiate_end_to_end_metrics()
         self.component_metrics = self._instantiate_component_metrics()
         self.individual_scores = {}
@@ -239,10 +334,10 @@ class Evaluator:
     def evaluate(self, evaluation_data: Dict[str, Any], run_name: str, track_resources: bool = False) -> pd.DataFrame:
         """
         Run the evaluation on the provided data.
-        
+
         Args:
             evaluation_data: Test cases to evaluate
-            
+
         Returns:
             Dict[str, Any]: Evaluation results
         """
@@ -253,17 +348,17 @@ class Evaluator:
         try:
 
             # Generate dataset with predictions
-            dataset = EvaluationDataset(evaluation_data)
+            dataset = EvaluationDataset(evaluation_data, self.execution_strategy)
             # Generate predictions
             dataset.generate_predictions(self.pipeline)
             processed_data = dataset.get_processed_data()
             trace_ids = dataset.get_trace_ids()
             # Run end-to-end evaluations
             end_to_end_results = self._evaluate_end_to_end(processed_data, trace_ids)
-            
+
             # Run component-wise evaluations
             component_results = self._evaluate_components(processed_data)
-            
+
             # Combine results
             results = {
                 "end-to-end": end_to_end_results,
@@ -274,7 +369,7 @@ class Evaluator:
 
             # Convert results to pandas DataFrames
             results_df = self._results_to_df(end_to_end_results, component_results, run_name)
-            
+
 
             # Add resource metrics if tracking was enabled
             if track_resources and resource_tracker:
@@ -282,7 +377,7 @@ class Evaluator:
                 resource_metrics = self.gather_resource_metrics(resource_tracker)
                 resource_metrics.loc[:, "run_name"] = run_name
                 resource_metrics.set_index("run_name", inplace=True)
-                
+
                 # apply MultiIndex to resource_metrics
                 resource_metrics.columns = pd.MultiIndex.from_tuples([("SYS","", col) for col in resource_metrics.columns])
                 results_df = pd.concat([results_df, resource_metrics], axis=1)
@@ -375,7 +470,7 @@ class Evaluator:
         
         return results
     
-    def _evaluate_retriever(self, retriever_name: List[str], test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
+    def _evaluate_retriever(self, retriever_name: str, test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
         """
         Evaluate all retriever metrics on the complete set of test cases.
         """
@@ -516,30 +611,33 @@ if __name__ == "__main__":
     from dotenv import load_dotenv
     import sys
 
-    env_path = Path(__file__).parent.parent.parent / ".env"
-    if env_path.exists():
-        load_dotenv(env_path)
-    else:
-        logger.warning(f"No .env file found at {env_path}")
-        exit(1)
+    def main_sync():
+        env_path = Path(__file__).parent.parent.parent / ".env"
+        if env_path.exists():
+            load_dotenv(env_path)
+        else:
+            logger.warning(f"No .env file found at {env_path}")
+            exit(1)
 
-    config_path = Path(__file__).parent.parent.parent / "configs" / "predefined_4r.yaml"
-    assert config_path.exists(), f"Config file {config_path} does not exist"
+        config_path = Path(__file__).parent.parent.parent / "configs" / "predefined_4r.yaml"
+        assert config_path.exists(), f"Config file {config_path} does not exist"
 
-    # Load the test cases
-    from ragnroll.utils.pipeline import config_to_pipeline
-    run_name = "test_run"
-    pipeline = config_to_pipeline(config_path)
+        # Load the test cases
+        from ragnroll.utils.pipeline import config_to_pipeline
+        run_name = "test_run"
+        pipeline = config_to_pipeline(config_path)
 
-    from ragnroll.utils.ingestion import index_documents
-    corpus_dir = Path(__file__).parent.parent.parent / "data" / "processed" / "dev_data" / "corpus"
-    pipeline = index_documents(corpus_dir, pipeline)
+        from ragnroll.utils.ingestion import index_documents
+        corpus_dir = Path(__file__).parent.parent.parent / "data" / "processed" / "dev_data" / "corpus"
+        pipeline = index_documents(corpus_dir, pipeline)
 
-    from ragnroll.evaluation.data import load_evaluation_data
-    data_path = Path(__file__).parent.parent.parent / "data" / "processed" / "dev_data" / "val" / "synthetic_rag_evaluation.json"
-    assert data_path.exists(), f"Data file {data_path} does not exist"
-    data = load_evaluation_data(data_path)
+        from ragnroll.evaluation.data import load_evaluation_data
+        data_path = Path(__file__).parent.parent.parent / "data" / "processed" / "dev_data" / "val" / "synthetic_rag_evaluation.json"
+        assert data_path.exists(), f"Data file {data_path} does not exist"
+        data = load_evaluation_data(data_path)
 
-    evaluator = Evaluator(pipeline)
-    result = evaluator.evaluate(data, run_name, track_resources=True)
-    print(result)
+        evaluator = Evaluator(pipeline)
+        result = evaluator.evaluate(data, run_name, track_resources=True)
+        print(result)
+
+    main_sync()
