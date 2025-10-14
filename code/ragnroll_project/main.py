@@ -12,7 +12,11 @@ ENV_PATH = Path(__file__).parent / ".env"
 
 load_dotenv(ENV_PATH)
 
-print(os.environ["LANGFUSE_HOST"])
+# Initialize logging first
+from ragnroll.utils.logging_config import init_logging
+logger = init_logging()
+
+logger.info(f"Langfuse Host: {os.environ.get('LANGFUSE_HOST', 'Not set')}")
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["HAYSTACK_CONTENT_TRACING_ENABLED"] = "true"
 
@@ -54,25 +58,25 @@ def main():
 
 def process_config(config):
     """Process the configuration and execute the evaluation for all profiles."""
-    print("Processing configuration...")
+    logger.info("Processing configuration...")
 
     # Check if we have profiles
     if hasattr(config, 'profiles') and isinstance(config.profiles, list):
-        print(f"Found {len(config.profiles)} configuration profiles")
+        logger.info(f"Found {len(config.profiles)} configuration profiles")
         for i, profile in enumerate(config.profiles):
-            print(f"Processing profile {i+1}...")
+            logger.info(f"Processing profile {i+1}...")
             run_evaluations(profile)
     else:
-        print("No profiles found in config. Processing single configuration...")
+        logger.info("No profiles found in config. Processing single configuration...")
         # Try to execute as a single config dict
         if hasattr(config, '__dict__'):
             run_evaluations(config.__dict__)
         else:
-            print("Invalid configuration format.")
+            logger.error("Invalid configuration format.")
 
 def run_evaluations(profile):
     """Execute the run_evaluations functionality using configuration parameters."""
-    print("Running evaluations...")
+    logger.info("Running evaluations...")
 
     # Extract parameters from profile
     config_sources = profile.get('config_sources', 'configs/from_pipeline/sample.yaml')
@@ -97,6 +101,7 @@ def run_evaluations(profile):
         try:
             mlflow.set_tracking_uri(uri=uri)
         except Exception as e:
+            logger.error(f"Failed to set tracking URI: {e}")
             raise ValueError(f"Failed to set tracking URI: {e}")
 
         eval_data_path = Path(eval_data_file)
@@ -109,17 +114,19 @@ def run_evaluations(profile):
             val_test_split(eval_data_path, test_size=test_size, random_state=random_state)
         except Exception as e:
             # If data is already split, continue with existing files
-            print(f"Warning: Could not split data (may already be split): {e}")
+            logger.warning(f"Could not split data (may already be split): {e}")
 
         if not eval_data_path.exists():
-            warnings.warn(f"Evaluation data path {eval_data_path} does not exist")
+            logger.warning(f"Evaluation data path {eval_data_path} does not exist")
             return
         if eval_data_path.is_dir():
-            warnings.warn(f"Evaluation data path {eval_data_path} is a directory")
+            logger.warning(f"Evaluation data path {eval_data_path} is a directory")
             return
 
         val_data_path = eval_data_path.parent / "val" / eval_data_path.name
-        assert val_data_path.exists(), f"Validation data path {val_data_path} does not exist"
+        if not val_data_path.exists():
+            logger.error(f"Validation data path {val_data_path} does not exist")
+            return
 
         # Setup Run-ID
         mlflow.set_experiment(experiment_name=experiment_name)
@@ -138,7 +145,7 @@ def run_evaluations(profile):
         config_sources = gather_config_paths(Path(config_sources))
 
         for config_path in baseline_paths + config_sources:
-            print(f"Running evaluation for {config_path}")
+            logger.info(f"Running evaluation for {config_path}")
 
             run_name = f"{config_path.parent.name}.{config_path.name}"
             with mlflow.start_run(run_name=run_name):
@@ -150,7 +157,12 @@ def run_evaluations(profile):
                 params = extract_run_params(str(config_path))
                 params["corpus_dir"] = corpus_dir
                 params["val_data_path"] = str(val_data_path)
-                params["commit_hash"] = os.system("git rev-parse HEAD")
+                import subprocess
+                try:
+                    result = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=Path(__file__).parent)
+                    params["commit_hash"] = result.stdout.strip() if result.returncode == 0 else "unknown"
+                except Exception:
+                    params["commit_hash"] = "unknown"
 
                 mlflow.log_params(params)
 
@@ -178,10 +190,10 @@ def run_evaluations(profile):
                     metric_name = ".".join(("VAL", clean_col))
                     mlflow.log_metrics({metric_name: result[col].values[0]})
 
-        print("Evaluation completed")
+        logger.info("Evaluation completed")
 
     except Exception as e:
-        print(f"Error in run_evaluations: {e}")
+        logger.error(f"Error in run_evaluations: {e}")
         import traceback
         traceback.print_exc()
 

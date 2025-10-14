@@ -104,3 +104,6 @@ ciri/*
 
 # raw html
 **/raw/html/**
+
+# ingestion tracker
+code/ragnroll_project/data/ingestion_tracking.csv

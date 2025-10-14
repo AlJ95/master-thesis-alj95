@@ -7,6 +7,9 @@ from haystack.components.embedders.openai_text_embedder import OpenAITextEmbedde
 from haystack.components.rankers.lost_in_the_middle import LostInTheMiddleRanker
 from haystack.components.builders.answer_builder import AnswerBuilder
 
+import os
+os.environ["OPENAI_API_KEY"] = "sk-..."
+
 pipeline = Pipeline()
 pipeline.add_component("embedder", OpenAITextEmbedder(model="text-embedding-ada-002"))
 pipeline.add_component("retriever", InMemoryEmbeddingRetriever(document_store=InMemoryDocumentStore()))
@@ -36,7 +39,7 @@ pipeline.add_component("prompt_builder", PromptBuilder(template="""
 
         Answer:
 
-        """))
+        """, required_variables=["query", "documents"]))
 pipeline.add_component("generator", OpenAIGenerator())
 pipeline.add_component("answer_builder", AnswerBuilder(pattern="The answer is \"(valid|invalid)\""))
 
@@ -68,3 +71,16 @@ with the reason afterwards
 """
 
 # pipeline.run(data=dict(prompt_builder=dict(query=query), embedder=dict(text=query), answer_builder=dict(query=query)))
+
+dump = pipeline.dumps()
+
+pipeline2 = Pipeline.loads(dump)
+
+print(
+    pipeline2.dumps()
+)
+
+print(
+    "\n"*5,
+    pipeline2.to_dict()
+)

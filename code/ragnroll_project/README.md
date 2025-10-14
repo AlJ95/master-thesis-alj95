@@ -42,6 +42,23 @@ The framework includes two optional baselines (`llm-standalone` and `naive-rag`)
 -   **Evaluation Data**: Place `.json` or `.csv` files in `data/processed/`. Required columns depend on the task and its metrics (e.g., input, expected output for classification, or reason for Answer-Relevance).
 -   **Corpus**: Store documents for retrieval in `data/processed/corpus/`. Supports file types: `.pdf`, `.txt`, `.docx`, `.md`, `.html`, `.htm`, `.json`, `.csv`. Optionally add `urls.csv` for web scraping.
 
+### Ingestion Tracking and Deduplication
+
+RAGnRoll now includes intelligent ingestion tracking to avoid redundant processing:
+
+-   **Deterministic IDs**: Index and document IDs are generated deterministically based on corpus path and processing configuration (chunking parameters, embedding models, etc.).
+-   **Ingestion Tracking**: A CSV file (`data/ingestion_tracking.csv`) tracks all ingestion operations, including status and document IDs.
+-   **Deduplication**: The system checks existing indexes before processing:
+    - Skips ingestion if an identical configuration has been processed successfully
+    - Only ingests missing documents for partial indexes
+    - Creates separate indexes for different processing configurations (e.g., different chunking strategies or embedding models)
+
+The tracking system ensures that:
+- Same corpus with same configuration = skip ingestion
+- Same corpus with different configuration = create new index
+- Different corpora = separate indexes
+- Partial ingestion can be resumed
+
 ### Creating RAG Pipelines
 
 Define Haystack pipelines via:
@@ -109,4 +126,3 @@ Example:
 ```bash
 python -m ragnroll run-evaluations ./configs/examples/predefined.yaml ./data/processed/dev_data/synthetic_rag_evaluation.json ./data/dev_data/processed/corpus --test-size 20
 ```
-

@@ -1,4 +1,9 @@
 components:
+  answer_builder:
+    init_parameters:
+      pattern: The answer is "(valid|invalid)".
+      reference_pattern: null
+    type: haystack.components.builders.answer_builder.AnswerBuilder
   llm:
     init_parameters:
       api_base_url: null
@@ -8,27 +13,27 @@ components:
         strict: true
         type: env_var
       generation_kwargs: {}
-      model: gpt-4o-mini-2024-07-18
+      model: gpt-4o-mini
       organization: null
       streaming_callback: null
       system_prompt: null
     type: haystack.components.generators.openai.OpenAIGenerator
   prompt_builder:
     init_parameters:
-      required_variables: 
-        - query
-        - documents
+      required_variables:
+      - query
+      - documents
       template: '
 
         Given these documents, answer the question.
 
         Your answer is used within a pipeline and must follow the following format:
-        "The answer is "valid"" or "The answer is "invalid"" with quotation marks. Also allowed are "yes" or "no", "true" or "false", "1" or "0".
-        After stating your answer, explain your answer in detail.
+        "The answer is "valid"" or "The answer is "invalid"" with quotation marks.
+        Also allowed are "yes" or "no", "true" or "false", "1" or "0". After stating
+        your answer, explain your answer in detail.
 
-        Example:
-        Question: London is the capital of France.
-        Answer: "false", because the capital of France is Paris, not London.
+        Example: Question: London is the capital of France. Answer: "false", because
+        the capital of France is Paris, not London.
 
         Documents:
 
@@ -36,15 +41,14 @@ components:
 
         {{ doc.content }}
 
-        {% endfor %}        
+        {% endfor %}
 
         Question: {{query}}
-
 
         Answer:
 
         '
-      variables: null
+      variables: query
     type: haystack.components.builders.prompt_builder.PromptBuilder
   retriever:
     init_parameters:
@@ -53,17 +57,12 @@ components:
           bm25_algorithm: BM25L
           bm25_parameters: {}
           bm25_tokenization_regex: (?u)\b\w\w+\b
+          index: documents
         type: haystack.document_stores.in_memory.document_store.InMemoryDocumentStore
       filter_policy: replace
       filters: null
-      scale_score: false
       top_k: 10
     type: haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever
-  answer_builder:
-    init_parameters:
-      pattern: The answer is "(valid|invalid)".
-      reference_pattern: null
-    type: haystack.components.builders.answer_builder.AnswerBuilder
 connections:
 - receiver: llm.prompt
   sender: prompt_builder.prompt

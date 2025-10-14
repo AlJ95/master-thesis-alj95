@@ -206,7 +206,9 @@ class Evaluator:
         self.component_metrics = self._instantiate_component_metrics()
         self.individual_scores = {}
 
-        print(f"Evaluator initialisiert mit Labels: positiv='{self.positive_label}', negativ='{self.negative_label}'")
+        from ragnroll.utils.logging_config import get_logger
+        eval_logger = get_logger(__name__)
+        eval_logger.info(f"Evaluator initialized with labels: positive='{self.positive_label}', negative='{self.negative_label}'")
     
     def _instantiate_end_to_end_metrics(self) -> Dict[str, BaseMetric]:
         """Create instances of all registered end-to-end metrics."""
@@ -580,8 +582,7 @@ class Evaluator:
         Post the individual scores to Langfuse.
         """
         for i, (trace_id, scores) in enumerate(self.individual_scores.items()):
-            self.pipeline.get_component("tracer").tracer._tracer.score(
-                id=f"{trace_id}-{i}",
+            self.pipeline.get_component("tracer").tracer._tracer.create_score(
                 trace_id=trace_id,
                 name=list(scores.keys())[0],
                 value=list(scores.values())[0],

@@ -1,7 +1,7 @@
 import os
 import time
 import warnings
-from typing import Dict
+from typing import Dict, List, Set
 from haystack import Document, AsyncPipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.embedders import (
@@ -15,9 +15,12 @@ from haystack.utils import Secret
 import json
 import logging
 import yaml
+from datetime import datetime
 
 from ragnroll.utils.preprocesser import get_all_documents
 from ragnroll.utils.config import get_components_from_config_by_classes
+from ragnroll.utils.ingestion_tracker import IngestionTracker, IngestionRecord, tracker
+from ragnroll.utils.index_existence_checker import check_index_exists
 
 
 logger = logging.getLogger(__name__)
@@ -82,7 +85,7 @@ def _extract_chunking_params(pipeline):
 
 # 3. Create a document store and index the documents
 def index_documents(corpus_dir: str, pipeline):
-    """Index documents in the document store."""
+    """Index documents in the document store with deduplication and tracking."""
 
     start_time = time.time()
 
@@ -97,10 +100,58 @@ def index_documents(corpus_dir: str, pipeline):
     hybrid_retriever=get_components_from_config_by_classes(configuration, ".".join(HybridRetriever))
 
     if not embedding_retriever and not bm25_retriever and not sentence_window_retriever and not hybrid_retriever:
-        print("No retriever found in configuration. Skipping indexing.")
+        logger.info("No retriever found in configuration. Skipping indexing.")
         return pipeline, 0
 
+    # Extract processing configuration for deterministic ID generation
     chunking_params = _extract_chunking_params(configuration)
+    processing_config = {
+        "chunking": chunking_params,
+        "embedders": get_components_from_config_by_classes(configuration, ".embedders."),
+        "retrievers": {
+            "embedding": embedding_retriever,
+            "bm25": bm25_retriever,
+            "sentence_window": sentence_window_retriever,
+            "hybrid": hybrid_retriever
+        }
+    }
+
+    # Generate deterministic index ID
+    index_id = tracker.generate_index_id(corpus_dir, processing_config)
+
+    # Check if index already exists
+    existing_record = tracker.get_existing_record(index_id)
+    if existing_record:
+        logger.info(f"Index {index_id} already exists with status: {existing_record.status}")
+        if existing_record.status == "completed":
+            logger.info("Skipping ingestion - index is already complete")
+            # Still need to connect document store to pipeline
+            document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
+            document_store = get_document_store_from_type(document_store_config)
+            if hasattr(pipeline, 'get_component'):
+                for component_name, _ in configuration["components"].items():
+                    if "document_store" in configuration["components"][component_name]["init_parameters"]:
+                        component = pipeline.get_component(component_name)
+                        if hasattr(component, 'document_store'):
+                            component.document_store = document_store
+            return pipeline, 0
+
+    # Check if index exists in document store
+    document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
+    index_exists_in_store = check_index_exists(document_store_config, index_id)
+
+    if index_exists_in_store and existing_record and existing_record.status == "completed":
+        logger.info("Index exists in document store and is marked complete. Skipping ingestion.")
+        document_store = get_document_store_from_type(document_store_config)
+        if hasattr(pipeline, 'get_component'):
+            for component_name, _ in configuration["components"].items():
+                if "document_store" in configuration["components"][component_name]["init_parameters"]:
+                    component = pipeline.get_component(component_name)
+                    if hasattr(component, 'document_store'):
+                        component.document_store = document_store
+        return pipeline, 0
+
+    # Load and process documents
     documents = get_all_documents(
         corpus_dir=corpus_dir,
         split=chunking_params["split"],
@@ -109,12 +160,40 @@ def index_documents(corpus_dir: str, pipeline):
         chunk_separator=chunking_params["chunk_separator"]
     )
 
-    document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
+    # Generate document IDs for tracking
+    document_ids = []
+    for doc in documents:
+        doc_content = doc.content or ""  # Handle None content
+        doc_id = tracker.generate_document_id(doc_content, processing_config)
+        doc.id = doc_id  # Set document ID
+        document_ids.append(doc_id)
+
+    # Check for missing documents if index partially exists
+    if existing_record and existing_record.status == "partial":
+        required_doc_ids = set(document_ids)
+        existing_doc_ids = set(existing_record.document_ids)
+        missing_doc_ids = required_doc_ids - existing_doc_ids
+
+        if not missing_doc_ids:
+            logger.info("All documents already exist. Marking index as completed.")
+            tracker.update_record_status(index_id, "completed")
+            document_store = get_document_store_from_type(document_store_config)
+            if hasattr(pipeline, 'get_component'):
+                for component_name, _ in configuration["components"].items():
+                    if "document_store" in configuration["components"][component_name]["init_parameters"]:
+                        component = pipeline.get_component(component_name)
+                        if hasattr(component, 'document_store'):
+                            component.document_store = document_store
+            return pipeline, 0
+
+        # Filter to only missing documents
+        documents = [doc for doc in documents if doc.id in missing_doc_ids]
+        logger.info(f"Ingesting {len(documents)} missing documents")
 
     document_store = get_document_store_from_type(document_store_config)
 
+    # Generate embeddings if needed
     if embedding_retriever or hybrid_retriever:
-        
         # Get text embedder parameters dictionary from configuration
         text_embedders = get_components_from_config_by_classes(configuration, ".embedders.")
 
@@ -138,20 +217,36 @@ def index_documents(corpus_dir: str, pipeline):
     # Write documents to the document store
     try:
         document_store.write_documents(documents)
+        ingestion_status = "completed"
+        logger.info(f"Successfully indexed {len(documents)} documents")
     except Exception as e:
         logger.warning(f"Failed to write documents: {e}")
+        ingestion_status = "failed"
         # Try to continue without failing the entire process
-    
-    print(f"Indexed {len(documents)} documents in the document store")
-    
+
+    # Record the ingestion
+    processing_config_hash = tracker.generate_index_id(corpus_dir, processing_config)  # Reuse for hash
+    record = IngestionRecord(
+        corpus_path=corpus_dir,
+        processing_config_hash=processing_config_hash,
+        index_id=index_id,
+        document_ids=document_ids,
+        timestamp=datetime.now().isoformat(),
+        status=ingestion_status
+    )
+    tracker.record_ingestion(record)
+
+    logger.info(f"Indexed {len(documents)} documents in the document store")
+
+    # Connect document store to pipeline components
     if hasattr(pipeline, 'get_component'):
         for component_name, _ in configuration["components"].items():
             if "document_store" in configuration["components"][component_name]["init_parameters"]:
                 component = pipeline.get_component(component_name)
                 if hasattr(component, 'document_store'):
                     component.document_store = document_store
-    end_time = time.time()
 
+    end_time = time.time()
     return pipeline, end_time - start_time
 
 def _get_document_embedder_from_text_embedder(text_embedder: Dict):
@@ -217,10 +312,11 @@ def index_json_data(json_file_path, configuration):
     # Convert to documents
     documents = convert_to_documents(json_data)
 
-    # Index the documents
-    document_store = index_documents(documents, configuration)
-
-    return document_store
+    # Index the documents - note: this expects a corpus_dir, not documents
+    # For JSON data, we'd need to create a temporary corpus or modify the approach
+    # For now, return None as this function needs refactoring
+    logger.warning("index_json_data needs to be updated for the new ingestion system")
+    return None
 
 def get_document_store_from_type(document_store_config: dict):
     """
@@ -240,16 +336,5 @@ def get_document_store_from_type(document_store_config: dict):
 
 # Usage example
 if __name__ == "__main__":
-    from ragnroll.utils.pipeline import config_to_pipeline
-    from pathlib import Path
-
-    config_file = Path("../configs/predefined_bm25.yaml")
-    if config_file.exists():
-        configuration = config_to_pipeline(config_file)
-        document_store = index_json_data("../data/synthetic_rag_corpus.json", configuration)
-
-        # Optional: Simple verification query
-        results = document_store.filter_documents()
-        print(f"Retrieved {len(results)} documents")
-    else:
-        print("Config file not found, skipping example")
+    logger.info("Ingestion module updated with tracking and deduplication functionality.")
+    logger.info("Use the index_documents function with corpus directories instead of this example.")
