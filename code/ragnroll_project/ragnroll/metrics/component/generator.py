@@ -139,35 +139,40 @@ class FormatValidatorMetric(BaseMetric):
 class JudgeBasedMetric(BaseMetric):
     """
     Base class for metrics that use an LLM as a judge.
-    
+
     This class provides common functionality for creating and using
     an LLM judge for evaluation.
     """
-    
+
     def __init__(
         self,
         threshold: float = 0.5,
         model: str = "gpt-5-mini-2025-08-07",
         max_completion_tokens: int = 1024,
+        num_processes: int = 4,
         **kwargs
     ):
         """
         Initialize the judge-based metric.
-        
+
         Args:
             threshold: Minimum score for the evaluation to be considered successful
             model: Model name to use
             max_completion_tokens: Maximum tokens to generate
+            num_processes: Number of parallel processes for batch evaluation
             **kwargs: Additional arguments for the LLM API
         """
         super().__init__(threshold=threshold)
-        
+
         # Create LLM judge with simplified parameters
         self.judge = LLMAsAJudge(
             model=model,
             max_completion_tokens=max_completion_tokens,
             **kwargs
         )
+
+        # Store parallelization settings
+        self.num_processes = num_processes
     
     def _extract_predicted_answers(self, component_outputs: List[Dict[str, Any]]) -> List[str]:
         """
@@ -236,18 +241,18 @@ class ContextUtilizationMetric(JudgeBasedMetric):
         
         # Extract generated answers
         predicted_answers = self._extract_predicted_answers(component_outputs)
-        
-        # Evaluate each answer
-        individual_scores = []
-        detailed_results = []
-        
+
+        # Create evaluation prompts for batch processing
+        prompts = []
+        prompt_metadata = []
+
         for query, answer, context_list in zip(queries, predicted_answers, contexts):
             # Combine contexts into a single string with separators
             context_text = "\n\n".join([context.content for context in context_list]) # type: ignore
-            
+
             # Create evaluation prompt
             prompt = f"""Evaluate how well the following answer utilizes the provided context.
-            
+
 Question: {query}
 
 Context:
@@ -261,28 +266,36 @@ Evaluate the answer's context utilization on a scale from 0 to 1, where:
 1 = Excellent context utilization, answer effectively uses all and only relevant information from the context
 
 Return just a single number between 0 and 1."""
-            
-            try:
-                # Get rating from judge
-                score = self.judge.judge_rating(prompt, expected_rating_format="0-1 float")
-                individual_scores.append(score)
-                
-                detailed_results.append({
-                    "query": query,
-                    "answer": answer,
-                    "context": context_text[:500] + "..." if len(context_text) > 500 else context_text,
-                    "score": score
-                })
-            except Exception as e:
-                logger.error(f"Error evaluating context utilization: {e}")
-                individual_scores.append(0.0)
-                detailed_results.append({
-                    "query": query,
-                    "answer": answer,
-                    "context": context_text[:100] + "..." if len(context_text) > 100 else context_text,
-                    "score": 0.0,
-                    "error": str(e)
-                })
+
+            prompts.append(prompt)
+            prompt_metadata.append({
+                "query": query,
+                "answer": answer,
+                "context": context_text[:500] + "..." if len(context_text) > 500 else context_text
+            })
+
+        # Evaluate all prompts in parallel
+        import asyncio
+        async def run_batch_evaluation():
+            return await self.judge.async_batch_judge_rating(
+                prompts=prompts,
+                expected_rating_format="0-1 float",
+                num_processes=self.num_processes
+            )
+
+        try:
+            individual_scores = asyncio.run(run_batch_evaluation())
+        except Exception as e:
+            logger.error(f"Error in batch evaluation: {e}")
+            individual_scores = [0.0] * len(prompts)
+
+        # Process results
+        detailed_results = []
+        for score, metadata in zip(individual_scores, prompt_metadata):
+            detailed_results.append({
+                **metadata,
+                "score": score
+            })
         
         # Calculate overall score
         self.score = sum(individual_scores) / len(individual_scores) if individual_scores else 0.0
@@ -327,15 +340,15 @@ class AnswerRelevancyMetric(JudgeBasedMetric):
         
         # Extract generated answers
         predicted_answers = self._extract_predicted_answers(component_outputs)
-        
-        # Evaluate each answer
-        individual_scores = []
-        detailed_results = []
-        
+
+        # Create evaluation prompts for batch processing
+        prompts = []
+        prompt_metadata = []
+
         for query, answer in zip(queries, predicted_answers):
             # Create evaluation prompt
             prompt = f"""Evaluate the relevance of the answer to the question on a scale from 0 to 1.
-            
+
 Question: {query}
 Answer: {answer}
 
@@ -352,26 +365,35 @@ Provide your evaluation as a single number between 0 and 1, where:
 1 = Highly relevant
 
 Your evaluation (single number between 0 and 1):"""
-            
-            try:
-                # Get rating from judge
-                score = self.judge.judge_rating(prompt, expected_rating_format="0-1 float")
-                individual_scores.append(score)
-                
-                detailed_results.append({
-                    "query": query,
-                    "answer": answer,
-                    "score": score
-                })
-            except Exception as e:
-                logger.error(f"Error evaluating answer relevancy: {e}")
-                individual_scores.append(0.0)
-                detailed_results.append({
-                    "query": query,
-                    "answer": answer,
-                    "score": 0.0,
-                    "error": str(e)
-                })
+
+            prompts.append(prompt)
+            prompt_metadata.append({
+                "query": query,
+                "answer": answer
+            })
+
+        # Evaluate all prompts in parallel
+        import asyncio
+        async def run_batch_evaluation():
+            return await self.judge.async_batch_judge_rating(
+                prompts=prompts,
+                expected_rating_format="0-1 float",
+                num_processes=self.num_processes
+            )
+
+        try:
+            individual_scores = asyncio.run(run_batch_evaluation())
+        except Exception as e:
+            logger.error(f"Error in batch evaluation: {e}")
+            individual_scores = [0.0] * len(prompts)
+
+        # Process results
+        detailed_results = []
+        for score, metadata in zip(individual_scores, prompt_metadata):
+            detailed_results.append({
+                **metadata,
+                "score": score
+            })
         
         # Calculate overall score
         self.score = sum(individual_scores) / len(individual_scores) if individual_scores else 0.0
@@ -382,4 +404,4 @@ Your evaluation (single number between 0 and 1):"""
             "success": self.success,
             "individual_scores": individual_scores,
             "detailed_results": detailed_results
-        } 
+        }

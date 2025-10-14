@@ -1,5 +1,6 @@
 import os
 import logging
+import asyncio
 from typing import List, Dict, Any, Optional, Union, Tuple
 import openai
 from dotenv import load_dotenv
@@ -198,3 +199,108 @@ Do not include any explanations or other text in your response."""
             logger.warning(f"Failed to parse rating from '{content}': {e}")
             # Default to middle value
             return 0.0
+
+    async def async_batch_judge_rating(
+        self,
+        prompts: List[str],
+        expected_rating_format: str = "0-1 float",
+        system_prompt: Optional[str] = None,
+        num_processes: Optional[int] = None
+    ) -> List[float]:
+        """
+        Get numerical ratings from the LLM for multiple prompts in parallel.
+
+        Args:
+            prompts: List of prompts asking for numerical ratings
+            expected_rating_format: Description of the expected format
+            system_prompt: Optional system prompt
+            num_processes: Number of parallel processes (default: 4)
+
+        Returns:
+            List of float rating values
+        """
+        if not system_prompt:
+            system_prompt = f"""You are an expert evaluator.
+Your task is to provide an objective rating based on the criteria given.
+Your response must be ONLY a number in the format: {expected_rating_format}.
+Do not include any explanations or other text in your response."""
+
+        # Get number of processes from config if not specified
+        if num_processes is None:
+            try:
+                import sys
+                import os
+                sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+                import config
+                num_processes = config.profiles[0].get("num_data_processes", 4)
+            except (ImportError, AttributeError, IndexError, KeyError):
+                num_processes = 4  # fallback
+
+        # Limit concurrency to prevent overwhelming the API
+        semaphore = asyncio.Semaphore(num_processes)
+
+        async def evaluate_single_prompt(prompt: str) -> float:
+            async with semaphore:
+                try:
+                    # Build messages array
+                    messages = []
+                    if system_prompt:
+                        messages.append({"role": "system", "content": system_prompt})
+                    messages.append({"role": "user", "content": prompt})
+
+                    # Create parameters for the API call
+                    params = {
+                        "model": self.model,
+                        "messages": messages,
+                        "max_completion_tokens": self.max_completion_tokens,
+                        **self.additional_params
+                    }
+
+                    # Make async API call using OpenAI client
+                    response = await asyncio.get_event_loop().run_in_executor(
+                        None, lambda: self.client.chat.completions.create(**params)
+                    )
+
+                    # Extract content
+                    if not response.choices or len(response.choices) == 0:
+                        raise ValueError("Empty response from API")
+
+                    content = response.choices[0].message.content
+
+                    # Try to parse a float from the response
+                    cleaned = content.strip().split("\n")[0].strip()
+
+                    # Handle specific formats
+                    if expected_rating_format == "0-1 float":
+                        rating = float(cleaned)
+                        # Ensure it's in the right range
+                        rating = max(0.0, min(1.0, rating))
+                        return rating
+                    elif expected_rating_format == "1-5 int":
+                        rating = int(cleaned)
+                        # Ensure it's in the right range
+                        rating = max(1, min(5, rating))
+                        return float(rating) / 5.0  # Normalize to 0-1
+                    else:
+                        # Default: just parse as float
+                        return float(cleaned)
+
+                except Exception as e:
+                    logger.warning(f"Failed to parse rating from prompt: {e}")
+                    # Default to middle value
+                    return 0.0
+
+        # Run evaluations in parallel
+        tasks = [evaluate_single_prompt(prompt) for prompt in prompts]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        # Process results and handle exceptions
+        final_results = []
+        for i, result in enumerate(results):
+            if isinstance(result, Exception):
+                logger.warning(f"Exception in async batch evaluation {i}: {result}")
+                final_results.append(0.0)
+            else:
+                final_results.append(result)
+
+        return final_results
