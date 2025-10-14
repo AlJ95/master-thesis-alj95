@@ -94,10 +94,30 @@ def index_documents(corpus_dir: str, pipeline):
     else:
         configuration = pipeline
 
-    embedding_retriever=get_components_from_config_by_classes(configuration, ".".join(EmbeddingRetriever))
-    bm25_retriever=get_components_from_config_by_classes(configuration, ".".join(BM25Retriever))
-    sentence_window_retriever=get_components_from_config_by_classes(configuration, ".".join(SentenceWindowRetriever))
-    hybrid_retriever=get_components_from_config_by_classes(configuration, ".".join(HybridRetriever))
+    # Check for retrievers by trying each type individually
+    embedding_retriever = []
+    for retriever_type in EmbeddingRetriever:
+        found = get_components_from_config_by_classes(configuration, retriever_type)
+        if found:
+            embedding_retriever.extend(found)
+
+    bm25_retriever = []
+    for retriever_type in BM25Retriever:
+        found = get_components_from_config_by_classes(configuration, retriever_type)
+        if found:
+            bm25_retriever.extend(found)
+
+    sentence_window_retriever = []
+    for retriever_type in SentenceWindowRetriever:
+        found = get_components_from_config_by_classes(configuration, retriever_type)
+        if found:
+            sentence_window_retriever.extend(found)
+
+    hybrid_retriever = []
+    for retriever_type in HybridRetriever:
+        found = get_components_from_config_by_classes(configuration, retriever_type)
+        if found:
+            hybrid_retriever.extend(found)
 
     if not embedding_retriever and not bm25_retriever and not sentence_window_retriever and not hybrid_retriever:
         logger.info("No retriever found in configuration. Skipping indexing.")

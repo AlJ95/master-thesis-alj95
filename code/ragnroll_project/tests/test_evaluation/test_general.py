@@ -75,10 +75,14 @@ def test_evaluate_function(mock_print, mock_evaluator_class, mock_dataset_class,
         
         evaluator = Evaluator(mock_pipeline)
         result = evaluator.evaluate(sample_evaluation_data, run_name="test_run")
-        
-        mock_dataset_class.assert_called_once_with(sample_evaluation_data)
+
+        # EvaluationDataset is called with data and execution strategy
+        mock_dataset_class.assert_called_once()
+        args, kwargs = mock_dataset_class.call_args
+        assert args[0] == sample_evaluation_data
+        # Second argument should be the execution strategy
         mock_dataset.generate_predictions.assert_called_once_with(evaluator.pipeline)
         mock_e2e.assert_called_once()
         mock_comp.assert_called_once()
         mock_print.assert_called_once()
-        mock_results_to_df.assert_called_once() 
+        mock_results_to_df.assert_called_once()
