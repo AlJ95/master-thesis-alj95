@@ -1,8 +1,8 @@
 from pipelines.components import *
-from haystack import AsyncPipeline
+from haystack import AsyncPipeline, Pipeline
 from haystack.core.component import InputSocket, OutputSocket
 from pathlib import Path
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 import yaml
 from itertools import product
 import copy  # Add this import for deep copying
@@ -10,9 +10,31 @@ try:
     from .components import *
 except ImportError:
     import sys
-    sys.path.append(Path(__file__).parent.parent)
+    sys.path.append(str(Path(__file__).parent.parent))
     from components import *
 import haystack.dataclasses
+
+def get_variable_source(pipeline: AsyncPipeline, component_name: str, variable_name: str) -> Optional[str]:
+    """
+    Findet die direkte Quellkomponente für eine bestimmte Eingangsvariable.
+    """
+    for sender, receiver, data in pipeline.graph.edges(data=True):
+        if receiver == component_name and data["to_socket"].name == variable_name:
+            return sender
+    return None
+
+def find_document_source_for_llm(pipeline: AsyncPipeline, llm_name: str) -> Optional[str]:
+    """
+    Identifiziert die letzte Quelle der 'Dokumente', die in den Prompt des LLM einfließen.
+    """
+    # Schritt 1: Finde die Komponente, die den 'prompt' an das LLM liefert.
+    prompt_builder_name = get_variable_source(pipeline, llm_name, "prompt")
+    if not prompt_builder_name:
+        return None
+
+    # Schritt 2: Finde die Quelle der 'documents' für den identifizierten PromptBuilder.
+    document_source_name = get_variable_source(pipeline, prompt_builder_name, "documents")
+    return document_source_name
 
 CONFIG_PATH = Path(__file__).parent.parent.parent / "configs"
 FROM_MATRIX_PATH = CONFIG_PATH / "from_matrix"
@@ -186,29 +208,18 @@ def get_predecessor_connection_mappings(pipeline: AsyncPipeline, component_name:
     return predecessors
 
 
-def get_last_component_with_documents(pipeline: AsyncPipeline, component_name: str) -> str:
+def get_last_component_with_documents(pipeline: AsyncPipeline, component_name: str) -> Optional[str]:
     """
     Get the name of the last component that has a documents input socket.
-    In Haystack, usually a builder-type component comes before a generator-type component.
-    Prompt builder can take multiple components as input, so we need to check all predecessors if they have a documents input socket.
+    Uses the new find_document_source_for_llm function for better accuracy.
     """
     component_type = pipeline.to_dict()["components"][component_name]["type"]
 
     if ".generators." not in component_type:
         raise ValueError("Component is not a generator.")
-    
-    prompt_builder = get_predecessor_connection_mappings(pipeline, component_name)[0]
-    predecessors = get_predecessor_connection_mappings(pipeline, prompt_builder[0])
-    predecessor_with_documents = [
-        predecessor
-        for predecessor in predecessors
-        if predecessor[1].type == List[haystack.dataclasses.document.Document]
-        ]
-    
-    if len(predecessor_with_documents) == 0:
-        return None
 
-    return predecessor_with_documents[0][0]
+    # Use the new function to find the document source
+    return find_document_source_for_llm(pipeline, component_name)
 
 
 
