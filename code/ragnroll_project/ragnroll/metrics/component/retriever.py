@@ -1,8 +1,11 @@
 from typing import Dict, Any, List, Union, Callable, Optional
 import logging
 import numpy as np
+import asyncio
 from haystack import Document
 from haystack.components.evaluators import ContextRelevanceEvaluator
+from haystack.components.evaluators.llm_evaluator import LLMEvaluator
+from haystack.components.generators.chat.types import ChatGenerator
 
 
 try:
@@ -14,6 +17,210 @@ except ImportError:
 
 # Import RAGAS components
 logger = logging.getLogger(__name__)
+
+
+class AsyncContextRelevanceEvaluator(LLMEvaluator):
+    """
+    Asynchronous version of ContextRelevanceEvaluator that processes evaluations in parallel.
+
+    This evaluator inherits from LLMEvaluator but overrides the run method to use
+    asyncio.gather() for parallel processing of multiple evaluation requests.
+    """
+
+    def __init__(  # pylint: disable=too-many-positional-arguments
+        self,
+        examples: Optional[list[dict[str, Any]]] = None,
+        progress_bar: bool = True,
+        raise_on_failure: bool = True,
+        chat_generator: Optional[ChatGenerator] = None,
+        num_processes: Optional[int] = None,
+    ):
+        """
+        Creates an instance of AsyncContextRelevanceEvaluator.
+
+        :param examples:
+            Optional few-shot examples. Default examples will be used if none are provided.
+        :param progress_bar:
+            Whether to show a progress bar during the evaluation.
+        :param raise_on_failure:
+            Whether to raise an exception if the API call fails.
+        :param chat_generator:
+            a ChatGenerator instance which represents the LLM.
+        :param num_processes:
+            Number of parallel processes to use. If None, uses config value.
+        """
+        # Use default examples if none provided (same as ContextRelevanceEvaluator)
+        _DEFAULT_EXAMPLES = [
+            {
+                "inputs": {
+                    "questions": "What is the capital of Germany?",
+                    "contexts": ["Berlin is the capital of Germany. Berlin and was founded in 1244."],
+                },
+                "outputs": {"relevant_statements": ["Berlin is the capital of Germany."]},
+            },
+            {
+                "inputs": {
+                    "questions": "What is the capital of France?",
+                    "contexts": [
+                        "Berlin is the capital of Germany and was founded in 1244.",
+                        "Europe is a continent with 44 countries.",
+                        "Madrid is the capital of Spain.",
+                    ],
+                },
+                "outputs": {"relevant_statements": []},
+            },
+            {
+                "inputs": {"questions": "What is the capital of Italy?", "contexts": ["Rome is the capital of Italy."]},
+                "outputs": {"relevant_statements": ["Rome is the capital of Italy."]},
+            },
+        ]
+
+        self.instructions = (
+            "Please extract only sentences from the provided context which are absolutely relevant and "
+            "required to answer the following question. If no relevant sentences are found, or if you "
+            "believe the question cannot be answered from the given context, return an empty list, example: []"
+        )
+        self.inputs = [("questions", list[str]), ("contexts", list[list[str]])]
+        self.outputs = ["relevant_statements"]
+        self.examples = examples or _DEFAULT_EXAMPLES
+        self.num_processes = num_processes
+
+        super().__init__(
+            instructions=self.instructions,
+            inputs=self.inputs,
+            outputs=self.outputs,
+            examples=self.examples,
+            chat_generator=chat_generator,
+            raise_on_failure=raise_on_failure,
+            progress_bar=progress_bar,
+        )
+
+    async def _run_single_evaluation(self, input_names_to_values: dict[str, Any]) -> Optional[dict[str, Any]]:
+        """
+        Run a single evaluation asynchronously.
+
+        :param input_names_to_values: Input values for a single evaluation
+        :returns: Evaluation result or None if failed
+        """
+        from haystack.components.builders import PromptBuilder
+        from haystack.dataclasses.chat_message import ChatMessage
+        import json
+
+        # Build prompt
+        template = self.prepare_template()
+        builder = PromptBuilder(template=template)
+        prompt = builder.run(**input_names_to_values)
+
+        messages = [ChatMessage.from_user(prompt["prompt"])]
+
+        try:
+            result = await asyncio.get_event_loop().run_in_executor(
+                None, self._chat_generator.run, messages
+            )
+        except Exception as e:
+            if self.raise_on_failure:
+                raise ValueError(f"Error while generating response for prompt: {prompt}. Error: {e}")
+            logger.warning("Error while generating response for prompt: {prompt}. Error: {e}", prompt=prompt, e=e)
+            return None
+
+        if self.is_valid_json_and_has_expected_keys(expected=self.outputs, received=result["replies"][0].text):
+            parsed_result = json.loads(result["replies"][0].text)
+            return parsed_result
+        else:
+            return None
+
+    def run(self, **inputs) -> dict[str, Any]:
+        """
+        Run the async LLM evaluator with parallel processing.
+
+        :param questions: A list of questions.
+        :param contexts: A list of lists of contexts. Each list of contexts corresponds to one question.
+        :returns: A dictionary with evaluation results.
+        """
+        from statistics import mean
+
+        self.validate_input_parameters(dict(self.inputs), inputs)
+
+        # Prepare input data
+        input_names, values = inputs.keys(), list(zip(*inputs.values()))
+        list_of_input_names_to_values = [dict(zip(input_names, v)) for v in values]
+
+        # Get number of processes from config if not specified
+        if self.num_processes is None:
+            try:
+                import sys
+                import os
+                sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+                import config
+                self.num_processes = config.profiles[0].get("num_data_processes", 4)
+            except (ImportError, AttributeError, IndexError):
+                self.num_processes = 4  # fallback
+
+        # Limit concurrency to prevent overwhelming the API
+        semaphore = asyncio.Semaphore(self.num_processes)
+
+        async def run_with_semaphore(input_data: dict[str, Any]) -> Optional[dict[str, Any]]:
+            async with semaphore:
+                return await self._run_single_evaluation(input_data)
+
+        async def run_all_evaluations():
+            tasks = [run_with_semaphore(input_data) for input_data in list_of_input_names_to_values]
+            return await asyncio.gather(*tasks, return_exceptions=True)
+
+        # Run evaluations in parallel
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            raw_results = loop.run_until_complete(run_all_evaluations())
+        finally:
+            loop.close()
+
+        # Process results
+        results = []
+        errors = 0
+        metadata = []
+
+        for i, res in enumerate(raw_results):
+            if isinstance(res, Exception):
+                logger.warning(f"Exception in evaluation {i}: {res}")
+                results.append(None)
+                errors += 1
+            elif res is None:
+                results.append(None)
+                errors += 1
+            else:
+                results.append(res)
+                # Note: metadata handling would need to be adapted for async
+
+        if errors > 0:
+            logger.warning(
+                "Async LLM evaluator failed for {errors} out of {len(list_of_input_names_to_values)} inputs.",
+                errors=errors,
+                len=len(list_of_input_names_to_values),
+            )
+
+        # Post-process results (same as ContextRelevanceEvaluator)
+        for idx, res in enumerate(results):
+            if res is None:
+                results[idx] = {"relevant_statements": [], "score": float("nan")}
+                continue
+            if len(res["relevant_statements"]) > 0:
+                res["score"] = 1
+            else:
+                res["score"] = 0
+
+        # Calculate average context relevance score over all queries
+        valid_scores = [res["score"] for res in results if not np.isnan(res["score"])]
+        score = mean(valid_scores) if valid_scores else float("nan")
+        individual_scores = [res["score"] for res in results]
+
+        return {
+            "results": results,
+            "score": score,
+            "individual_scores": individual_scores,
+            "meta": metadata or None
+        }
+
 
 @MetricRegistry.register_component_metric("retriever")
 class HaystackContextRelevanceMetric(BaseMetric):
@@ -47,9 +254,9 @@ class HaystackContextRelevanceMetric(BaseMetric):
             progress_bar: Whether to show a progress bar during evaluation
         """
         super().__init__(threshold=threshold)
-        
-        # Initialize the Haystack evaluator
-        self.evaluator = ContextRelevanceEvaluator(
+
+        # Initialize the async Haystack evaluator
+        self.evaluator = AsyncContextRelevanceEvaluator(
             examples=examples,
             raise_on_failure=raise_on_failure,
             progress_bar=progress_bar
@@ -143,8 +350,8 @@ class MAPAtKMetric(BaseMetric):
         super().__init__(threshold=threshold)
         self.k = k
         
-        # Initialize the Haystack evaluator for document relevance judgments
-        self.evaluator = ContextRelevanceEvaluator(
+        # Initialize the async Haystack evaluator for document relevance judgments
+        self.evaluator = AsyncContextRelevanceEvaluator(
             examples=examples,
             raise_on_failure=raise_on_failure,
             progress_bar=progress_bar
