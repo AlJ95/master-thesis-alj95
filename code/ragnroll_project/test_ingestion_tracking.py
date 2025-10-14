@@ -122,7 +122,7 @@ components:
       model: "sentence-transformers/all-MiniLM-L6-v2"
 
   retriever:
-    type: "haystack.components.retrievers.in_memory_embedding_retriever.InMemoryEmbeddingRetriever"
+    type: "haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever"
     init_parameters:
       document_store:
         type: "haystack.document_stores.in_memory.document_store.InMemoryDocumentStore"
@@ -136,22 +136,41 @@ components:
         import shutil
         shutil.rmtree(self.temp_dir)
 
-    @patch('ragnroll.utils.ingestion.check_index_exists')
-    def test_skip_completed_ingestion(self, mock_check_index):
-        """Test that completed ingestion is skipped."""
-        mock_check_index.return_value = False  # Index doesn't exist in store
-
+    def test_in_memory_store_always_ingests(self):
+        """Test that InMemoryDocumentStore always performs ingestion (no tracking)."""
         # First ingestion
         pipeline = config_to_pipeline(self.config_path)
         pipeline, duration1 = index_documents(str(self.corpus_dir), pipeline)
 
         assert duration1 > 0  # Should have done work
 
-        # Second ingestion with same config - should skip
+        # Second ingestion with same config - should do work again (no persistence)
         pipeline2 = config_to_pipeline(self.config_path)
         pipeline2, duration2 = index_documents(str(self.corpus_dir), pipeline2)
 
-        assert duration2 == 0  # Should skip work
+        assert duration2 > 0  # Should do work again (in-memory stores don't persist)
+
+    @patch('ragnroll.utils.ingestion.check_index_exists')
+    @patch('ragnroll.utils.ingestion.tracker')
+    @patch('ragnroll.utils.ingestion.get_components_from_config_by_classes')
+    def test_persistent_store_skips_completed_ingestion(self, mock_get_components, mock_tracker, mock_check_index):
+        """Test that persistent stores skip ingestion when index already exists."""
+        # Mock get_components_from_config_by_classes to return empty list (no in-memory stores)
+        mock_get_components.return_value = []
+
+        # Mock tracker to simulate existing completed index
+        mock_existing_record = MagicMock()
+        mock_existing_record.status = "completed"
+        mock_tracker.get_existing_record.return_value = mock_existing_record
+
+        # Mock check_index_exists to simulate index exists in store
+        mock_check_index.return_value = True
+
+        # Now use_tracking should be True, and ingestion should be skipped
+        pipeline = config_to_pipeline(self.config_path)
+        pipeline, duration = index_documents(str(self.corpus_dir), pipeline)
+
+        assert duration == 0  # Should skip work (persistent store with existing index)
 
     @patch('ragnroll.utils.ingestion.check_index_exists')
     def test_different_chunking_creates_different_index(self, mock_check_index):
@@ -178,7 +197,7 @@ components:
       model: "sentence-transformers/all-MiniLM-L6-v2"
 
   retriever:
-    type: "haystack.components.retrievers.in_memory_embedding_retriever.InMemoryEmbeddingRetriever"
+    type: "haystack.components.retrievers.in_memory.embedding_retriever.InMemoryEmbeddingRetriever"
     init_parameters:
       document_store:
         type: "haystack.document_stores.in_memory.document_store.InMemoryDocumentStore"

@@ -94,6 +94,13 @@ def index_documents(corpus_dir: str, pipeline):
     else:
         configuration = pipeline
 
+    # Check if using in-memory document store - skip tracking for non-persistent stores
+    in_memory_stores = get_components_from_config_by_classes(configuration, "InMemoryDocumentStore")
+    use_tracking = len(in_memory_stores) == 0
+
+    if not use_tracking:
+        logger.info("Using InMemoryDocumentStore - skipping ingestion tracking")
+
     # Check for retrievers by trying each type individually
     embedding_retriever = []
     for retriever_type in EmbeddingRetriever:
@@ -136,17 +143,34 @@ def index_documents(corpus_dir: str, pipeline):
         }
     }
 
-    # Generate deterministic index ID
-    index_id = tracker.generate_index_id(corpus_dir, processing_config)
+    # Skip tracking logic for in-memory stores
+    if use_tracking:
+        # Generate deterministic index ID
+        index_id = tracker.generate_index_id(corpus_dir, processing_config)
 
-    # Check if index already exists
-    existing_record = tracker.get_existing_record(index_id)
-    if existing_record:
-        logger.info(f"Index {index_id} already exists with status: {existing_record.status}")
-        if existing_record.status == "completed":
-            logger.info("Skipping ingestion - index is already complete")
-            # Still need to connect document store to pipeline
-            document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
+        # Check if index already exists
+        existing_record = tracker.get_existing_record(index_id)
+        if existing_record:
+            logger.info(f"Index {index_id} already exists with status: {existing_record.status}")
+            if existing_record.status == "completed":
+                logger.info("Skipping ingestion - index is already complete")
+                # Still need to connect document store to pipeline
+                document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
+                document_store = get_document_store_from_type(document_store_config)
+                if hasattr(pipeline, 'get_component'):
+                    for component_name, _ in configuration["components"].items():
+                        if "document_store" in configuration["components"][component_name]["init_parameters"]:
+                            component = pipeline.get_component(component_name)
+                            if hasattr(component, 'document_store'):
+                                component.document_store = document_store
+                return pipeline, 0
+
+        # Check if index exists in document store
+        document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
+        index_exists_in_store = check_index_exists(document_store_config, index_id)
+
+        if index_exists_in_store and existing_record and existing_record.status == "completed":
+            logger.info("Index exists in document store and is marked complete. Skipping ingestion.")
             document_store = get_document_store_from_type(document_store_config)
             if hasattr(pipeline, 'get_component'):
                 for component_name, _ in configuration["components"].items():
@@ -155,21 +179,9 @@ def index_documents(corpus_dir: str, pipeline):
                         if hasattr(component, 'document_store'):
                             component.document_store = document_store
             return pipeline, 0
-
-    # Check if index exists in document store
-    document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
-    index_exists_in_store = check_index_exists(document_store_config, index_id)
-
-    if index_exists_in_store and existing_record and existing_record.status == "completed":
-        logger.info("Index exists in document store and is marked complete. Skipping ingestion.")
-        document_store = get_document_store_from_type(document_store_config)
-        if hasattr(pipeline, 'get_component'):
-            for component_name, _ in configuration["components"].items():
-                if "document_store" in configuration["components"][component_name]["init_parameters"]:
-                    component = pipeline.get_component(component_name)
-                    if hasattr(component, 'document_store'):
-                        component.document_store = document_store
-        return pipeline, 0
+    else:
+        # For in-memory stores, always proceed with ingestion
+        document_store_config = _extract_document_stores(embedding_retriever + bm25_retriever + sentence_window_retriever + hybrid_retriever)
 
     # Load and process documents
     documents = get_all_documents(
@@ -188,8 +200,8 @@ def index_documents(corpus_dir: str, pipeline):
         doc.id = doc_id  # Set document ID
         document_ids.append(doc_id)
 
-    # Check for missing documents if index partially exists
-    if existing_record and existing_record.status == "partial":
+    # Skip partial ingestion check for in-memory stores
+    if use_tracking and existing_record and existing_record.status == "partial":
         required_doc_ids = set(document_ids)
         existing_doc_ids = set(existing_record.document_ids)
         missing_doc_ids = required_doc_ids - existing_doc_ids
@@ -244,17 +256,18 @@ def index_documents(corpus_dir: str, pipeline):
         ingestion_status = "failed"
         # Try to continue without failing the entire process
 
-    # Record the ingestion
-    processing_config_hash = tracker.generate_index_id(corpus_dir, processing_config)  # Reuse for hash
-    record = IngestionRecord(
-        corpus_path=corpus_dir,
-        processing_config_hash=processing_config_hash,
-        index_id=index_id,
-        document_ids=document_ids,
-        timestamp=datetime.now().isoformat(),
-        status=ingestion_status
-    )
-    tracker.record_ingestion(record)
+    # Record the ingestion (skip for in-memory stores)
+    if use_tracking:
+        processing_config_hash = tracker.generate_index_id(corpus_dir, processing_config)  # Reuse for hash
+        record = IngestionRecord(
+            corpus_path=corpus_dir,
+            processing_config_hash=processing_config_hash,
+            index_id=index_id,
+            document_ids=document_ids,
+            timestamp=datetime.now().isoformat(),
+            status=ingestion_status
+        )
+        tracker.record_ingestion(record)
 
     logger.info(f"Indexed {len(documents)} documents in the document store")
 
