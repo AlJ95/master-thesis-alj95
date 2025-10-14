@@ -1,4 +1,5 @@
 import yaml
+from typing import List
 
 def extract_run_params(yaml_file: str) -> dict:
     with open(yaml_file, "r") as f:
@@ -47,11 +48,14 @@ def _has_dense_retriever(yaml_config: dict) -> bool:
 def _has_sparse_retriever(yaml_config: dict) -> bool:
     return any("bm25_retriever" in v["type"] for v in yaml_config["components"].values())
 
-def get_components_from_config_by_classes(configuration: dict, component_classes: str):
+def get_components_from_config_by_classes(configuration: dict, component_classes: List[str] | str) -> List[dict]:
     """
     Get a component from the configuration by class name e. g. "haystack.components.retrievers.in_memory.bm25_retriever.InMemoryBM25Retriever"
     """
     components = []
+
+    if isinstance(component_classes, str):
+        component_classes = [component_classes]
 
     for component_class in component_classes:
         for values in configuration["components"].values():
