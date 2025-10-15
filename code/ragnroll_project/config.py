@@ -9,12 +9,12 @@ profiles = [
         # Basic configuration
         "name": "parallel_test_profile",
         "experiment_name": "Parallel Execution Test",
-        
+
         # Data paths
-        "config_sources": "configs/examples/predefined.yaml",
+        "config_sources": "configs/examples/predefined_4r.yaml",
         "eval_data_file": "data/processed/dev_data/synthetic_rag_evaluation.json",
         "corpus_dir": "data/processed/dev_data/corpus",
-        
+
         # Evaluation parameters
         "track_resources": False,
         "baselines": False,
@@ -22,7 +22,10 @@ profiles = [
         "random_state": 42,
         "positive_label": "valid",
         "negative_label": "invalid",
-        
+
+        # Pipeline execution control
+        "stop_at_component": "retriever",  # None = full pipeline, "retriever" = stop at retriever
+
         # Parallel execution configuration
         "data_parallel_execution": True,
         "num_data_processes": 12,

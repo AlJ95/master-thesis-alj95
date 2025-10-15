@@ -15,7 +15,9 @@ components:
     type: haystack.components.generators.openai.OpenAIGenerator
   prompt_builder:
     init_parameters:
-      required_variables: null
+      required_variables: 
+      - query
+      - documents
       template: '
 
         Given these documents, answer the question.

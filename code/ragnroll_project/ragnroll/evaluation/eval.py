@@ -17,6 +17,7 @@ except ImportError:
     from ragnroll.utils.config import get_components_from_config_by_classes
     from ragnroll.utils.pipeline import get_last_component_with_documents
 from haystack import AsyncPipeline
+from haystack_integrations.tracing.langfuse.tracer import tracing_context_var
 import logging
 import pandas as pd
 import os
@@ -33,7 +34,8 @@ class ExecutionStrategy(ABC):
     def execute_pipeline_on_data(
         self,
         pipeline: AsyncPipeline,
-        test_cases: List[Dict[str, Any]]
+        test_cases: List[Dict[str, Any]],
+        stop_component: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """Führt Pipeline auf Testfällen aus und gibt verarbeitete Daten zurück"""
         pass
@@ -50,7 +52,8 @@ class ParallelExecutionStrategy(ExecutionStrategy):
     def execute_pipeline_on_data(
         self,
         pipeline: AsyncPipeline,
-        test_cases: List[Dict[str, Any]]
+        test_cases: List[Dict[str, Any]],
+        stop_component: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         # Daten in Chunks aufteilen
         chunks = self._split_data_into_chunks(test_cases)
@@ -60,7 +63,7 @@ class ParallelExecutionStrategy(ExecutionStrategy):
         async def process_chunks():
             tasks = []
             for chunk in chunks:
-                task = self._process_chunk_async(chunk, pipeline.to_dict())
+                task = self._process_chunk_async(chunk, pipeline.to_dict(), stop_component)
                 tasks.append(task)
 
             results = await asyncio.gather(*tasks)
@@ -86,18 +89,31 @@ class ParallelExecutionStrategy(ExecutionStrategy):
             chunks.append(test_cases[i:i + chunk_size])
         return chunks
 
-    async def _process_chunk_async(self, chunk: List[Dict[str, Any]], pipeline_dict: Dict[str, Any]):
+    async def _process_chunk_async(self, chunk: List[Dict[str, Any]], pipeline_dict: Dict[str, Any], stop_component: Optional[str] = None):
         """Asynchrone Methode für parallele Verarbeitung"""
         # Pipeline aus Dict rekonstruieren
         pipeline = AsyncPipeline.from_dict(pipeline_dict)
+
         processed_chunk = []
         for test_case in chunk:
+            # Vor der Pipeline-Ausführung
+            tracing_context_var.set({
+                "tags": [f"{k}:{v}" for k, v in test_case.get("tags", {}).items()],
+            })
+
             try:
-                response = await self._generate_answer_static_async(pipeline, test_case["input"])
-                actual_output = self._extract_answer_from_pipeline_static(response)
+                # Erstelle Teil-Pipeline falls stop_component gesetzt
+                if stop_component:
+                    filtered_pipeline = self._create_partial_pipeline(pipeline, stop_component)
+                    response = await self._run_pipeline_static_async(filtered_pipeline, test_case["input"])
+                    # Bei Teil-Pipelines keine Antwort-Extraktion nötig
+                    actual_output = ""
+                else:
+                    response = await self._run_pipeline_static_async(pipeline, test_case["input"])
+                    actual_output = self._extract_answer_from_pipeline_static(response)
+
                 processed_chunk.append({
-                    "input": test_case["input"],
-                    "expected_output": test_case["expected_output"],
+                    **test_case,  # Alle ursprünglichen Felder übernehmen (inkl. tags)
                     "actual_output": actual_output,
                     "component_outputs": response,
                 })
@@ -105,16 +121,69 @@ class ParallelExecutionStrategy(ExecutionStrategy):
                 logger.error(f"Error processing test case in parallel: {e}")
                 # Im Fehlerfall leeren Eintrag hinzufügen
                 processed_chunk.append({
-                    "input": test_case["input"],
-                    "expected_output": test_case["expected_output"],
+                    **test_case,  # Alle ursprünglichen Felder übernehmen (inkl. tags)
                     "actual_output": "",
                     "component_outputs": {},
                 })
         return processed_chunk
 
+    def _create_partial_pipeline(self, pipeline: AsyncPipeline, stop_component: str) -> AsyncPipeline:
+        """Erstellt eine Teil-Pipeline, die bei stop_component endet."""
+        pipeline_dict = pipeline.to_dict()
+        reachable_components = self._find_components_before_stop(pipeline_dict, stop_component)
+        filtered_dict = self._filter_pipeline_dict(pipeline_dict, reachable_components)
+        return AsyncPipeline.from_dict(filtered_dict)
+
+    def _find_components_before_stop(self, pipeline_dict: Dict, stop_component: str) -> set[str]:
+        """Findet alle Komponenten, die den stop_component erreichen können."""
+        connections = pipeline_dict.get("connections", [])
+        reverse_graph = {}
+
+        for conn in connections:
+            receiver = conn["receiver"]
+            sender = conn["sender"]
+            if receiver not in reverse_graph:
+                reverse_graph[receiver] = []
+            reverse_graph[receiver].append(sender)
+
+        # BFS rückwärts vom Stop-Punkt
+        reachable = set()
+        queue = [stop_component]
+        reachable.add(stop_component)
+
+        while queue:
+            current = queue.pop(0)
+            for sender in reverse_graph.get(current, []):
+                if sender not in reachable:
+                    reachable.add(sender)
+                    queue.append(sender)
+
+        return reachable
+
+    def _filter_pipeline_dict(self, pipeline_dict: Dict, keep_components: set[str]) -> Dict:
+        """Filtert das Pipeline-Dict, behält nur gewünschte Komponenten und Verbindungen."""
+        filtered = {
+            "components": {},
+            "connections": [],
+            "max_runs_per_component": pipeline_dict.get("max_runs_per_component", 1)
+        }
+
+        # Behalte nur gewünschte Komponenten
+        for comp_name, comp_data in pipeline_dict.get("components", {}).items():
+            if comp_name in keep_components:
+                filtered["components"][comp_name] = comp_data
+
+        # Behalte nur Verbindungen zwischen gewünschten Komponenten
+        for conn in pipeline_dict.get("connections", []):
+            if (conn["sender"] in keep_components and
+                conn["receiver"] in keep_components):
+                filtered["connections"].append(conn)
+
+        return filtered
+
     @staticmethod
-    async def _generate_answer_static_async(pipeline: AsyncPipeline, input_text: str) -> Dict[str, Any]:
-        """Asynchrone statische Version von _generate_answer für parallele Verarbeitung."""
+    async def _run_pipeline_static_async(pipeline: AsyncPipeline, input_text: str) -> Dict[str, Any]:
+        """Führt Pipeline aus und gibt alle Komponenten-Ergebnisse zurück."""
         components = set(pipeline.to_dict()["components"].keys())
         data = dict(query=input_text)
         return await pipeline.run_async(data=data, include_outputs_from=components)
@@ -136,11 +205,12 @@ class EvaluationDataset:
         self.execution_strategy = execution_strategy or ParallelExecutionStrategy()
         self.processed_data = []
     
-    def generate_predictions(self, pipeline: AsyncPipeline) -> None:
+    def generate_predictions(self, pipeline: AsyncPipeline, stop_at_component: Optional[str] = None) -> None:
         """Generate predictions for all test cases using the configured execution strategy."""
         self.processed_data = self.execution_strategy.execute_pipeline_on_data(
             pipeline,
-            self.evaluation_data["test_cases"]
+            self.evaluation_data["test_cases"],
+            stop_component=stop_at_component
         )
     
     async def _generate_answer(self, pipeline: AsyncPipeline, input_text: str) -> Dict[str, Any]:
@@ -205,6 +275,7 @@ class Evaluator:
         self.end_to_end_metrics = self._instantiate_end_to_end_metrics()
         self.component_metrics = self._instantiate_component_metrics()
         self.individual_scores = {}
+        self.processed_data = []  # Store processed data for tag access
 
         from ragnroll.utils.logging_config import get_logger
         eval_logger = get_logger(__name__)
@@ -231,19 +302,19 @@ class Evaluator:
         component_types = {}
         for component_name, component_dict in pipeline_components.items():
             expected_component_type = component_dict["type"]
-            
+
             if ".generators." in expected_component_type:
                 component_types[component_name] = "generator"
-            elif ".retrievers." in expected_component_type:
+            elif ".retrievers." in expected_component_type or ".rankers." in expected_component_type:
                 component_types[component_name] = "retriever"
-        
+
         for expected_component_type, metric_classes in MetricRegistry.get_component_metrics().items():
             # Only include metrics for components that exist in the pipeline
             if expected_component_type in component_types.values():
                 metrics[expected_component_type] = {
                     name: metric_cls() for name, metric_cls in metric_classes.items()
                 }
-                
+
         return metrics
     
     def _track_resources(self, track_resources: bool, run_name: str):
@@ -321,7 +392,7 @@ class Evaluator:
         {'component_name': 'component_type'}
 
         Example:
-        {'llm': 'generator', 'retriever': 'retriever'}
+        {'llm': 'generator', 'retriever': 'retriever', 'ranker': 'retriever'}
         """
         component_types = {}
         pipeline_components = self.pipeline.to_dict()["components"]
@@ -329,19 +400,20 @@ class Evaluator:
             component_type = component_details.get("type", "")
             if ".generators." in component_type:
                 component_types[component_name] = "generator"
-            elif ".retrievers." in component_type:
+            elif ".retrievers." in component_type or ".rankers." in component_type:
                 component_types[component_name] = "retriever"
         return component_types
     
-    def evaluate(self, evaluation_data: Dict[str, Any], run_name: str, track_resources: bool = False) -> pd.DataFrame:
+    def evaluate(self, evaluation_data: Dict[str, Any], run_name: str, track_resources: bool = False, stop_at_component: Optional[str] = None) -> pd.DataFrame:
         """
         Run the evaluation on the provided data.
 
         Args:
             evaluation_data: Test cases to evaluate
+            breakpoint: Optional breakpoint to stop pipeline execution at specific component
 
         Returns:
-            Dict[str, Any]: Evaluation results
+            pd.DataFrame: Evaluation results
         """
 
         if track_resources:
@@ -351,14 +423,20 @@ class Evaluator:
 
             # Generate dataset with predictions
             dataset = EvaluationDataset(evaluation_data, self.execution_strategy)
-            # Generate predictions
-            dataset.generate_predictions(self.pipeline)
+            # Generate predictions with optional stop component
+            dataset.generate_predictions(self.pipeline, stop_at_component=stop_at_component)
             processed_data = dataset.get_processed_data()
+            # Store processed data for tag access in _post_langfuse_scores
+            self.processed_data = processed_data
             trace_ids = dataset.get_trace_ids()
-            # Run end-to-end evaluations
-            end_to_end_results = self._evaluate_end_to_end(processed_data, trace_ids)
 
-            # Run component-wise evaluations
+            # Run end-to-end evaluations ONLY if no stop component (full pipeline run)
+            if stop_at_component is None:
+                end_to_end_results = self._evaluate_end_to_end(processed_data, trace_ids)
+            else:
+                end_to_end_results = {}  # Empty end-to-end results for partial runs
+
+            # Run component-wise evaluations (automatically handles missing components)
             component_results = self._evaluate_components(processed_data)
 
             # Combine results
@@ -477,14 +555,18 @@ class Evaluator:
         Evaluate all retriever metrics on the complete set of test cases.
         """
         results = {}
-        
+
         # Extract queries and retriever outputs from test cases
         queries = [tc["input"] for tc in test_cases]
         retriever_outputs = [
             tc["component_outputs"].get(retriever_name, {})
             for tc in test_cases
         ]
-        
+
+        # If no retriever outputs exist (component not executed), return empty results
+        if all(not output for output in retriever_outputs):
+            return {}
+
         # Apply each retriever metric
         for metric_name, metric in self.component_metrics.get("retriever", {}).items():
             try:
@@ -496,7 +578,7 @@ class Evaluator:
             except Exception as e:
                 logger.error(f"Error evaluating retriever {retriever_name} with {metric_name}: {e}")
                 results[metric_name] = 0.0
-                
+
         return results
         
     def _evaluate_generator(self, generator_name: str, test_cases: List[Dict[str, Any]]) -> Dict[str, float]:
@@ -504,13 +586,18 @@ class Evaluator:
         Evaluate all generator metrics on the complete set of test cases.
         """
         results = {}
-        
+
         # Extract queries and generator outputs from test cases
         queries = [tc["input"] for tc in test_cases]
         generator_outputs = [
             tc["component_outputs"].get(generator_name, {})
             for tc in test_cases
         ]
+
+        # If no generator outputs exist (component not executed), return empty results
+        if all(not output for output in generator_outputs):
+            return {}
+
         component_with_documents = get_last_component_with_documents(self.pipeline, generator_name)
         if component_with_documents is None:
             logger.warning(f"No component with documents found for {generator_name}")
@@ -520,7 +607,7 @@ class Evaluator:
                 tc["component_outputs"][component_with_documents]["documents"]
                 for tc in test_cases
             ]
-        
+
         # Apply each generator metric
         for metric_name, metric in self.component_metrics.get("generator", {}).items():
             try:
@@ -533,7 +620,7 @@ class Evaluator:
             except Exception as e:
                 logger.error(f"Error evaluating generator {generator_name} with {metric_name}: {e}")
                 results[metric_name] = 0.0
-                
+
         return results
         
     def _evaluate_components(self, test_cases: List[Dict[str, Any]]) -> Dict[str, Dict[str, float]]:
@@ -580,14 +667,24 @@ class Evaluator:
     def _post_langfuse_scores(self) -> None:
         """
         Post the individual scores to Langfuse.
+        Also update traces with tags and metadata from test cases.
         """
+        from langfuse import Langfuse
+
+        langfuse = Langfuse()
+
         for i, (trace_id, scores) in enumerate(self.individual_scores.items()):
-            self.pipeline.get_component("tracer").tracer._tracer.create_score(
-                trace_id=trace_id,
-                name=list(scores.keys())[0],
-                value=list(scores.values())[0],
-                data_type="BOOLEAN"
-            )
+            try:
+                # Post the original score using the tracer component
+                tracer_component = self.pipeline.get_component("tracer")
+                tracer_component.tracer._tracer.create_score(
+                    trace_id=trace_id,
+                    name=list(scores.keys())[0],
+                    value=list(scores.values())[0],
+                    data_type="BOOLEAN"
+                )
+            except Exception as e:
+                logger.warning(f"Failed to post score for trace {trace_id}: {e}")
 
 
 def print_scores(scores: Dict[str, Any]) -> None:

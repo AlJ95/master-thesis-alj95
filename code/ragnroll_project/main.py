@@ -89,6 +89,7 @@ def run_evaluations(profile):
     positive_label = profile.get('positive_label', 'valid')
     negative_label = profile.get('negative_label', 'invalid')
     experiment_name = profile.get('experiment_name', 'RAG Experimentation')
+    stop_at_component = profile.get('stop_at_component', None)
 
     try:
         # Set up MLflow
@@ -180,7 +181,7 @@ def run_evaluations(profile):
                     negative_label=negative_label,
                     execution_strategy=execution_strategy
                 )
-                result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources)
+                result = evaluator.evaluate(evaluation_data=data, run_name=run_name, track_resources=track_resources, stop_at_component=stop_at_component)
 
                 fetch_current_traces(run_name)
 
